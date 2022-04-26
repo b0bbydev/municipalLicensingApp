@@ -17,7 +17,7 @@ router.get("/", function (req, res, next) {
 
 /* DELETE dropdown value */
 router.get("/delete/:id", (req, res, next) => {
-  // *NEED TO VALIDATE THIS*
+  /* *NEED TO VALIDATE THIS* */
   var dropdownID = req.params.id;
 
   // create the query.
