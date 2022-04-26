@@ -4,12 +4,6 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
-// include config file.
-const config = require("./config/config");
-
-// include mysql.
-let mysql = require("mysql");
-
 // create routes here.
 var indexRouter = require("./routes/index");
 
@@ -31,23 +25,6 @@ app.use("/", indexRouter);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
-});
-
-// create connection to database.
-let connection = mysql.createConnection({
-  host: config.host,
-  user: config.user,
-  password: config.password,
-  database: config.database,
-});
-
-// connect to db.
-connection.connect(function (err) {
-  if (err) {
-    return console.error("error: " + err.message);
-  }
-  // print success message to the console.
-  console.log("Connected to: testdb");
 });
 
 // error handler

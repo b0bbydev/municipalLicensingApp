@@ -1,8 +1,13 @@
 <div class="container d-flex align-items-center flex-column">
    <h2>Example Form</h2>
-   <select name="dropdown" id="dropdown">
-      <option value="test" disabled selected>select a value...</option>
-   </select>
+   <form method="POST">
+        <select name="dropdown" id="dropdown">
+            <option value="default" disabled selected>select a value...</option>
+            {{#each data}}
+            <option value="dropdownValue">{{this.value}}</option>
+            {{/each}}
+        </select>
+    </form>
 </div>
 
 <!-- Table -->
@@ -16,11 +21,13 @@
             <th>Actions</th>
          </tr>
       <tbody>
+        {{#each data}}
          <tr>
-            <td></td>
-            <td></td>
-            <td><a href="#" class="btn btn-primary">Edit</a> <a href="#" class="btn btn-danger">Delete</a>
+            <td>{{this.dropdownID}}</td>
+            <td>{{this.value}}</td>
+            <td><a href="#" class="btn btn-primary">Edit</a> <a href="/delete/{{this.dropdownID}}" class="btn btn-danger">Delete</a>
          </tr>
+         {{/each}}
       </tbody>
       </thead>
    </table>
