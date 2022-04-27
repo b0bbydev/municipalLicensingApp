@@ -2,14 +2,75 @@
   box-sizing: border-box;
 }
 
-/* Make nav fit to top */
-#nav {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  margin-bottom: 5em;
+body {
+  background-color: #fff !important;
 }
 
-body {
-  background-color: #FFFFFF !important;
+#menu_panel {
+  position: absolute;
+  width: 250px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  border-right: #dedede 1px solid;
+  display: block;
+  background-color: #fff;
+}
+
+a {
+  color: #333 !important;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #333;
+  text-decoration: none !important;
+}
+
+.menu-title {
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.global-toolbar-item-logo-nav {
+  margin-right: auto;
+  height: 80px;
+}
+
+.menu-text {
+  width: 185px;
+  display: inline-block;
+  text-align: left;
+}
+
+.menuitem {
+  line-height: 40px;
+  background-color: #fff;
+  text-align: right;
+  color: #333;
+  font-size: small;
+  cursor: pointer;
+  width: 100%;
+  border-bottom: 1px solid #dedede;
+}
+
+@keyframes hoverAnimation {
+  0% {
+    background-color: #fafafa;
+  }
+  50% {
+    background-color: #efefef;
+  }
+  100% {
+    background-color: #fafafa;
+  }
+}
+
+.UsernameDiv {
+  font-size: 1.2rem;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

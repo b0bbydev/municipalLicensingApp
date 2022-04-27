@@ -1,0 +1,57 @@
+<div class="container d-flex align-items-center flex-column">
+   <h2>Dropdown</h2>
+
+   <select name="dropdown" id="dropdown">
+      <option value="default" disabled selected>select a value...</option>
+      {{#each data}}
+      <option value="dropdownValue">{{this.value}}</option>
+      {{/each}}
+   </select>
+</div>
+
+<!-- Table -->
+<section class="row">
+   <div class="col-12">
+      <table class="table table-striped table-hover">
+         <thead>
+            <tr>
+               <th>Dropdown ID</th>
+               <th>Value</th>
+               <th>Actions</th>
+            </tr>
+         <tbody>
+            {{#each data}}
+            <tr>
+               <td>{{this.dropdownID}}</td>
+               <td>{{this.value}}</td>
+               <td><a href="/delete/{{this.dropdownID}}" class="btn btn-danger">Delete</a>
+            </tr>
+            {{/each}}
+         </tbody>
+         </thead>
+      </table>
+   </div>
+</section>
+
+<!-- Add new dropdown value -->
+<section class="row">
+   <div class="container">
+      <div>
+         <h2>Add new value</h2>
+         <form method="POST">
+            <input name="value" class="form-control" placeholder="Dropdown Value" type="text">
+            <br>
+            <button class="btn btn-primary">Submit</button>
+         </form>
+      </div>
+   </div>
+</section>
+
+{{!-- 
+<section class="row">
+   <div>
+      <h3>Test Functions</h3>
+      <button class="btn btn-primary">Insert test record</button>
+   </div>
+</section>
+--}}
