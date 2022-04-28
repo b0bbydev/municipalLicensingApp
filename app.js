@@ -6,6 +6,7 @@ var logger = require("morgan");
 
 // create routes here.
 var indexRouter = require("./routes/index");
+var dropdownRouter = require("./routes/dropdown");
 
 var app = express();
 
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 // use routes here.
 app.use("/", indexRouter);
+app.use("/dropdown", dropdownRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
