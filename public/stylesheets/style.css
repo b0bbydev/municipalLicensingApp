@@ -1,3 +1,4 @@
+/* general elements */
 body {
   background-color: #fff !important;
   margin-left: 260px;
@@ -36,9 +37,7 @@ a {
 
 .menuitem {
   line-height: 40px;
-  background-color: #fff;
   text-align: right;
-  color: #333;
   font-size: small;
   cursor: pointer;
   width: 100%;
