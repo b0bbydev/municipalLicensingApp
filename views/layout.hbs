@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
     <title>{{title}}</title>
     <!-- Bootstrap CSS -->
@@ -13,7 +14,7 @@
     <!-- custom js -->
     <script src="/js/scripts.js"></script>
   </head>
-  <body>
+  <nav id="side-nav">
     <div id="menu_panel">
       <div class="menu-img text-center">
         <a href="/">
@@ -43,14 +44,15 @@
           <div class="menu-text">Option 3</div>
         </a>
       </div>
+      <!-- added logout id to anchor to bottom of page -->
       <div class="menuitem logout">
         <a href="#">
           <div class="menu-text">Logout</div>
         </a>
       </div>
     </div>
+  </nav>
 
-    {{{body}}}
+  {{{body}}}
 
-  </body>
 </html>
