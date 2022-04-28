@@ -1,10 +1,8 @@
 var express = require("express");
-const app = require("../app");
 var router = express.Router();
+// config files.
 var db = require("../config/dbconfig");
-
-// include auth functions.
-const { adminUser, isLoggedIn } = require("../config/sessionConfig");
+const { genPassword, userExists } = require("../config/sessionConfig");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -31,10 +29,33 @@ router.get("/dropdown/delete/:id", (req, res, next) => {
   res.redirect("/dropdown");
 });
 
+// POST for register.
+router.post("/register", [userExists], (req, res, next) => {
+  const saltHash = genPassword(req.body.password);
+  const salt = saltHash.salt;
+  const hash = saltHash.hash;
+
+  var query =
+    "INSERT INTO users (username, hash, salt, isAdmin) values (?, ?, ?, 0)";
+
+  db.query(
+    query,
+    [req.body.username, hash, salt],
+    function (err, results, fields) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("User Registered!");
+      } // end of if-else.
+      res.redirect("/login");
+    }
+  );
+});
+
 // Logout.
-router.get('/logout', (req, res, next) => {
+router.get("/logout", (req, res, next) => {
   req.logout();
-  res.redirect('/login');
+  res.redirect("/login");
 });
 
 module.exports = router;

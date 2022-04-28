@@ -91,30 +91,6 @@ function validPassword(password, hash, salt) {
   return hash === hashVerify;
 }
 
-function genPassword(password) {
-  var salt = crypto.randomBytes(32).toString("hex");
-  var genhash = crypto
-    .pbkdf2Sync(password, salt, 10000, 60, "sha512")
-    .toString("hex");
-  return { salt: salt, hash: genhash };
-}
-
-function userExists(req, res, next) {
-  connection.query(
-    "SELECT * FROM users WHERE username = ?",
-    [req.body.username],
-    function (error, results, fields) {
-      if (error) {
-        console.log("Error");
-      } else if (results.length > 0) {
-        res.redirect("/login");
-      } else {
-        next();
-      }
-    } // end of function().
-  );
-} // end of userExists().
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
