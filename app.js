@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 
 // create routes here.
+var loginRouter = require("./routes/login");
 var indexRouter = require("./routes/index");
 var dropdownRouter = require("./routes/dropdown");
 
@@ -21,6 +22,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "/public")));
 
 // use routes here.
+app.use("/login", loginRouter);
 app.use("/", indexRouter);
 app.use("/dropdown", dropdownRouter);
 
