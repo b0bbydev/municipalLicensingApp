@@ -1,6 +1,10 @@
 var express = require("express");
+const app = require("../app");
 var router = express.Router();
 var db = require("../config/dbconfig");
+
+// include auth functions.
+const { adminUser, isLoggedIn } = require("../config/sessionConfig");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -25,6 +29,12 @@ router.get("/dropdown/delete/:id", (req, res, next) => {
 
   // redirect to home after success.
   res.redirect("/dropdown");
+});
+
+// Logout.
+router.get('/logout', (req, res, next) => {
+  req.logout();
+  res.redirect('/login');
 });
 
 module.exports = router;

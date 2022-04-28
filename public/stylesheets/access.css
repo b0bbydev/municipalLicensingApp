@@ -1,10 +1,11 @@
-/* Login */
+/* Login & Register */
 body {
   padding: 50px;
-  background-color: rgba(179, 179, 179, 0.16)
+  background-color: rgba(179, 179, 179, 0.16);
 }
 
-.loginForm {
+.loginForm,
+.registerForm {
   width: 350px;
   padding: 10px;
   margin-top: 100px;
@@ -13,11 +14,13 @@ body {
   background-color: #fff;
 }
 
-.loginForm label {
+.loginForm,
+.registerForm label {
   font-weight: 600;
   font-size: 1.2em;
 }
 
-#loginButton {
+#loginButton,
+#registerButton {
   margin-top: 10px;
 }
