@@ -6,12 +6,13 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 // include config files.
+const config = require("./config/config");
 const dbConfig = require("./config/dbConfig");
 const sessionConfig = require("./config/sessionConfig");
 // session related.
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
-var sessionStore = new MySQLStore(sessionConfig);
+var sessionStore = new MySQLStore(config);
 
 // create routes here.
 var loginRouter = require("./routes/login");
@@ -32,11 +33,11 @@ app.use(cookieParser());
 // use session info.
 app.use(
   session({
-    key: sessionConfig.key,
-    secret: sessionConfig.secret,
+    key: "superSecretKey",
+    secret: "superAwesomeSecret",
     store: sessionStore,
-    resave: sessionConfig.resave,
-    saveUninitialized: sessionConfig.saveUninitialized,
+    resave: false,
+    saveUninitialized: false,
   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));
