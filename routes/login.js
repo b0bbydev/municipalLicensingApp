@@ -7,7 +7,6 @@ router.get("/", function (req, res, next) {
     title: "BWG",
     // include hideLayout (just bootstrap/css) to hide nav on login view.
     layout: "hideLayout.hbs",
-    user: req.user,
   });
 });
 
