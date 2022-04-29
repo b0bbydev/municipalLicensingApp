@@ -8,7 +8,10 @@ const mysql = require("mysql");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index", { title: "BWG" });
+  res.render("index", {
+    title: "BWG",
+    user: req.session.username,
+  });
 });
 
 /* honestly not sure why this needs to be included in this route, rather than dropdown.js */
@@ -113,6 +116,8 @@ router.post("/login", (req, res) => {
 
         // compare it using bcrypt and if successful..
         if (await bcrypt.compare(password, hashedPassword)) {
+          // set the username for the session.
+          req.session.username = user;
           // redirect user to index page.
           res.redirect("/");
         } else {
