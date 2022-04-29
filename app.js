@@ -5,14 +5,13 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
-// db config.
-const db = require("./config/dbConfig");
-// session config.
-const config = require("./config/config");
-// session.
+// include config files.
+const dbConfig = require("./config/dbConfig");
+const sessionConfig = require("./config/sessionConfig");
+// session related.
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
-var sessionStore = new MySQLStore(config);
+var sessionStore = new MySQLStore(sessionConfig);
 
 // create routes here.
 var loginRouter = require("./routes/login");
@@ -30,13 +29,14 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+// use session info.
 app.use(
   session({
-    key: "secretKey",
-    secret: "secret",
+    key: sessionConfig.key,
+    secret: sessionConfig.secret,
     store: sessionStore,
-    resave: false,
-    saveUninitialized: false,
+    resave: sessionConfig.resave,
+    saveUninitialized: sessionConfig.saveUninitialized,
   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -44,11 +44,11 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "/public")));
 
 // connection to db.
-db.getConnection((err, connection) => {
+dbConfig.getConnection((err, connection) => {
   if (err) {
     console.log(err);
   } else {
-    console.log("Connected to: testdb");
+    console.log("DB Connection State: " + connection.state);
   }
 });
 
