@@ -43,29 +43,82 @@ router.post("/register", async (req, res) => {
       console.log(err);
     }
 
+    // the reason for breaking the sql queries down into 2 parts (each), is to add some extra security (prepared statement -> mysql.format).
     const sqlSearch = "SELECT * FROM users WHERE username = ?";
     const search_query = mysql.format(sqlSearch, [username]);
 
     const sqlInsert = "INSERT INTO users (username, password) VALUES (?, ?)";
     const insert_query = mysql.format(sqlInsert, [username, hashedPassword]);
 
-    await connection.query(search_query, async (err, result) => {
+    // attempt the search query.
+    await connection.query(search_query, async (err, results) => {
       if (err) {
         console.log(err);
       }
 
       // if user already exists.
-      if (result.length != 0) {
+      if (results.length != 0) {
+        // close the connection.
         connection.release();
+
+        // redirect to login page again.
         res.redirect("/login");
       } else {
-        await connection.query(insert_query, (err, result) => {
+        // assume the request was good, insert the query.
+        await connection.query(insert_query, (err, results) => {
           if (err) {
             console.log(err);
           }
+          // closes the connection to the db.
           connection.release();
+
+          // redirect to index page if successful.
           res.redirect("/");
         });
+      }
+    });
+  });
+});
+
+/* POST for login */
+router.post("/login", (req, res) => {
+  // get the values from the login form.
+  const user = req.body.username;
+  const password = req.body.password;
+
+  // create the connection the db.
+  db.getConnection(async (err, connection) => {
+    if (err) {
+      console.log(err);
+    }
+
+    // create the SQL query, and format.
+    const sqlSearch = "SELECT * FROM users WHERE username = ?";
+    const search_query = mysql.format(sqlSearch, [user]);
+
+    // attempt the search query.
+    await connection.query(search_query, async (err, results) => {
+      connection.release();
+
+      if (err) {
+        console.log(err);
+      }
+
+      // if the user doesn't exist when trying to login..
+      if (results.length == 0) {
+        res.redirect("/register");
+      } else {
+        // get the password from results
+        const hashedPassword = results[0].password;
+
+        // compare it using bcrypt and if successful..
+        if (await bcrypt.compare(password, hashedPassword)) {
+          // redirect user to index page.
+          res.redirect("/");
+        } else {
+          // password is incorrect, redirect to login again.
+          res.redirect("/login");
+        }
       }
     });
   });
