@@ -12,7 +12,6 @@ const sessionConfig = require("./config/sessionconfig");
 // session.
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
-
 var sessionStore = new MySQLStore(sessionConfig);
 
 // create routes here.
