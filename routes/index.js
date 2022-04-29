@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const passport = require("passport");
 // config files.
 var db = require("../config/dbconfig");
 const { genPassword, userExists } = require("../config/sessionConfig");
@@ -51,6 +52,16 @@ router.post("/register", [userExists], (req, res, next) => {
     }
   );
 });
+
+// POST for login.
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureMessage: "Invalid Login",
+  })
+);
 
 // Logout.
 router.get("/logout", (req, res, next) => {

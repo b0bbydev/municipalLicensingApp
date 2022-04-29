@@ -29,7 +29,7 @@ app.set("view engine", "hbs");
 
 /* Passport JS */
 const fields = {
-  usernameField: "email",
+  usernameField: "username",
   passwordField: "password",
 };
 
@@ -37,15 +37,10 @@ const verifyCallback = (username, password, done) => {
   dbConfig.query(
     "SELECT * FROM users WHERE username = ?",
     [username],
-    function (error, results, fields) {
-      if (error) {
-        return done(error);
+    function (err, results, fields) {
+      if (err) {
+        console.log(err);
       }
-
-      if (results.length == 0) {
-        return done(null, false);
-      }
-
       const isValid = validPassword(password, results[0].hash, results[0].salt);
       user = {
         id: results[0].id,
