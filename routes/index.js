@@ -3,7 +3,7 @@ var router = express.Router();
 // bcrypt for password encryption.
 const bcrypt = require("bcrypt");
 // config files.
-var db = require("../config/dbconfig");
+var db = require("../config/dbConfig");
 const mysql = require("mysql");
 
 /* GET home page. */

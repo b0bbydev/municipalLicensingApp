@@ -6,13 +6,13 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 // db config.
-const db = require("./config/dbconfig");
+const db = require("./config/dbConfig");
 // session config.
-const sessionConfig = require("./config/sessionconfig");
+const config = require("./config/config");
 // session.
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
-var sessionStore = new MySQLStore(sessionConfig);
+var sessionStore = new MySQLStore(config);
 
 // create routes here.
 var loginRouter = require("./routes/login");

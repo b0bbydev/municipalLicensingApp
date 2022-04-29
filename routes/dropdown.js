@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var db = require("../config/dbconfig");
+var db = require("../config/dbConfig");
 
 /* GET dropdown page. */
 router.get("/", function (req, res, next) {
