@@ -33,6 +33,7 @@ app.use(cookieParser());
 // use session info from sessionConfig file.
 app.use(
   session({
+    name: sessionConfig.name,
     key: sessionConfig.key,
     secret: sessionConfig.secret,
     store: sessionStore, // use the sessionStore we created

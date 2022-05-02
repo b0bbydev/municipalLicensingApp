@@ -1,10 +1,11 @@
 var express = require("express");
 var router = express.Router();
+const mysql = require("mysql");
 // bcrypt for password encryption.
 const bcrypt = require("bcrypt");
 // config files.
+const sessionConfig = require("../config/sessionConfig");
 var db = require("../config/dbConfig");
-const mysql = require("mysql");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -132,6 +133,7 @@ router.post("/login", (req, res) => {
 /* GET logout page */
 router.get("/logout", function (req, res, next) {
   req.session.destroy();
+  res.clearCookie(sessionConfig.name);
   res.redirect("/login");
 });
 
