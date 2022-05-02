@@ -7,7 +7,7 @@ var bodyParser = require("body-parser");
 var logger = require("morgan");
 // include config files.
 const sessionStoreConfig = require("./config/sessionStore");
-const db = require("./config/dbConfig");
+const db = require("./config/db");
 // session related.
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);

@@ -4,7 +4,7 @@ const mysql = require("mysql");
 // bcrypt for password encryption.
 const bcrypt = require("bcrypt");
 // config files.
-const db = require("../config/dbConfig");
+const db = require("../config/db");
 // authHelper middleware.
 const { redirectToLogin } = require("../config/authHelpers");
 

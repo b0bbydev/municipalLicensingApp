@@ -3,7 +3,7 @@ var router = express.Router();
 // authHelper.
 const { redirectToLogin } = require("../config/authHelpers");
 // db config.
-const db = require("../config/dbConfig");
+const db = require("../config/db");
 
 /* GET dropdown page. */
 router.get("/", function (req, res, next) {
