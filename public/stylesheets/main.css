@@ -45,6 +45,11 @@ a {
   border-top: 1px solid #dedede;
 }
 
+.menuitem:hover {
+  transition: 0.2s ease-in;
+  background-color: rgba(230, 230, 230, 1);
+}
+
 .menuitem.last {
   border-bottom: 1px solid #dedede;
 }
