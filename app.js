@@ -6,13 +6,13 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 // include config files.
-const config = require("./config/config");
+const credsConfig = require("./config/credsConfig");
 const dbConfig = require("./config/dbConfig");
 const sessionConfig = require("./config/sessionConfig");
 // session related.
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
-var sessionStore = new MySQLStore(config);
+var sessionStore = new MySQLStore(credsConfig);
 
 // create routes here.
 var loginRouter = require("./routes/login");
@@ -30,14 +30,20 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// use session info.
+// use session info from sessionConfig file.
 app.use(
   session({
     key: sessionConfig.key,
     secret: sessionConfig.secret,
-    store: sessionStore,
+    store: sessionStore, // use the sessionStore we created
     resave: sessionConfig.resave,
     saveUninitialized: sessionConfig.saveUninitialized,
+    cookie: {
+      httpOnly: sessionConfig.httpOnly,
+      maxAge: sessionConfig.maxAge,
+      sameSite: sessionConfig.sameSite,
+      // secure: sessionConfig.secure, comment this out for now - this is to only send the cookie over an HTTPS (secure) connection. secure: process.env.NODE_ENV === "production",
+    },
   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));

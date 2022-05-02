@@ -36,7 +36,7 @@ router.get("/dropdown/delete/:id", (req, res, next) => {
 
 /* POST for register */
 router.post("/register", async (req, res) => {
-  // get values from req.body - these are passed into req from the form.
+  // get values from req.body - these are passed into the request from the form.
   const username = req.body.username;
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -53,7 +53,7 @@ router.post("/register", async (req, res) => {
     const sqlInsert = "INSERT INTO users (username, password) VALUES (?, ?)";
     const insert_query = mysql.format(sqlInsert, [username, hashedPassword]);
 
-    // attempt the search query.
+    // attempt the search query - check if user already exists.
     await connection.query(search_query, async (err, results) => {
       if (err) {
         console.log(err);
@@ -67,7 +67,7 @@ router.post("/register", async (req, res) => {
         // redirect to login page again.
         res.redirect("/login");
       } else {
-        // assume the request was good, insert the query.
+        // request should be good by here, execute insert query.
         await connection.query(insert_query, (err, results) => {
           if (err) {
             console.log(err);
