@@ -4,7 +4,6 @@ const mysql = require("mysql");
 // bcrypt for password encryption.
 const bcrypt = require("bcrypt");
 // config files.
-const sessionConfig = require("../config/sessionConfig");
 const db = require("../config/dbConfig");
 // authHelper middleware.
 const { redirectToLogin } = require("../config/authHelpers");
@@ -67,7 +66,7 @@ router.post("/register", async (req, res) => {
         // close the connection.
         connection.release();
 
-        // redirect to login page again.
+        // redirect to login page again. - should add some indication, maybe req error messages?
         res.redirect("/login");
       } else {
         // request should be good by here, execute insert query.
@@ -78,8 +77,8 @@ router.post("/register", async (req, res) => {
           // closes the connection to the db.
           connection.release();
 
-          // redirect to index page if successful.
-          res.redirect("/");
+          // redirect to login page if successful.
+          res.redirect("/login");
         });
       }
     });
@@ -89,7 +88,7 @@ router.post("/register", async (req, res) => {
 /* POST for login */
 router.post("/login", (req, res) => {
   // get the values from the login form.
-  const user = req.body.username;
+  const username = req.body.username;
   const password = req.body.password;
 
   // create the connection the db.
@@ -100,7 +99,7 @@ router.post("/login", (req, res) => {
 
     // create the SQL query, and format.
     const sqlSearch = "SELECT * FROM users WHERE username = ?";
-    const search_query = mysql.format(sqlSearch, [user]);
+    const search_query = mysql.format(sqlSearch, [username]);
 
     // attempt the search query.
     await connection.query(search_query, async (err, results) => {
@@ -120,7 +119,7 @@ router.post("/login", (req, res) => {
         // compare it using bcrypt and if successful..
         if (await bcrypt.compare(password, hashedPassword)) {
           // set the username for the session.
-          req.session.username = user;
+          req.session.username = username;
           // redirect user to index page.
           res.redirect("/");
         } else {
@@ -137,7 +136,7 @@ router.get("/logout", function (req, res, next) {
   // destory the session.
   req.session.destroy();
   // clear cookies for session.
-  res.clearCookie(sessionConfig.name);
+  res.clearCookie(process.env.SESSION_NAME);
   // redirect back to login.
   res.redirect("/login");
 });
