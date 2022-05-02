@@ -63,3 +63,7 @@ a {
   display: inline-block;
   text-align: left;
 }
+
+#deleteButton {
+  color: #fff !important;
+}
