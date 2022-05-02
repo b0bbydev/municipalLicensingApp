@@ -132,8 +132,11 @@ router.post("/login", (req, res) => {
 
 /* GET logout page */
 router.get("/logout", function (req, res, next) {
+  // destory the session.
   req.session.destroy();
+  // clear cookies for session.
   res.clearCookie(sessionConfig.name);
+  // redirect back to login.
   res.redirect("/login");
 });
 
