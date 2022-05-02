@@ -1,3 +1,5 @@
+// dotenv.
+require('dotenv').config();
 // express related.
 var createError = require("http-errors");
 var express = require("express");
@@ -12,8 +14,6 @@ const db = require("./config/db");
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
-// dotenv.
-require('dotenv').config();
 
 // create routes here.
 var loginRouter = require("./routes/login");
@@ -34,7 +34,7 @@ app.use(cookieParser());
 // use session info from sessionConfig file.
 app.use(
   session({
-    name: process.env.NAME,
+    name: process.env.SESSION_NAME,
     key: process.env.KEY,
     secret: process.env.SECRET,
     store: sessionStore, // use the sessionStore we created, this overrides the default "MemoryStore" for session saving, which isn't secure.
