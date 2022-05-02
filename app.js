@@ -33,11 +33,11 @@ app.use(cookieParser());
 // use session info.
 app.use(
   session({
-    key: "superSecretKey",
-    secret: "superAwesomeSecret",
+    key: sessionConfig.key,
+    secret: sessionConfig.secret,
     store: sessionStore,
-    resave: false,
-    saveUninitialized: false,
+    resave: sessionConfig.resave,
+    saveUninitialized: sessionConfig.saveUninitialized,
   })
 );
 app.use(bodyParser.urlencoded({ extended: true }));
