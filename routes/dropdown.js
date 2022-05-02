@@ -6,7 +6,7 @@ const { redirectToLogin } = require("../config/authHelpers");
 const db = require("../config/dbConfig");
 
 /* GET dropdown page. */
-router.get("/", redirectToLogin, function (req, res, next) {
+router.get("/", function (req, res, next) {
   // create mySQL query.
   var query = "SELECT * FROM dropdown";
 
@@ -23,7 +23,7 @@ router.get("/", redirectToLogin, function (req, res, next) {
 });
 
 /* POST dropdown value */
-router.post("/", redirectToLogin, (req, res, next) => {
+router.post("/", (req, res, next) => {
   // get data from form
   var value = req.body.value;
 
