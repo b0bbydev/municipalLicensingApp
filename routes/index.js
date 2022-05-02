@@ -5,19 +5,21 @@ const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 // config files.
 const sessionConfig = require("../config/sessionConfig");
-var db = require("../config/dbConfig");
+const db = require("../config/dbConfig");
+// authHelper middleware.
+const { redirectToLogin } = require("../config/authHelpers");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
+router.get("/", redirectToLogin, function (req, res, next) {
   res.render("index", {
-    title: "BWG",
-    user: req.session.username,
+    title: "BWG | Home",
+    username: req.session.username,
   });
 });
 
 /* honestly not sure why this needs to be included in this route, rather than dropdown.js */
 /* DELETE dropdown value */
-router.get("/dropdown/delete/:id", (req, res, next) => {
+router.get("/dropdown/delete/:id", redirectToLogin, (req, res, next) => {
   /* *NEED TO VALIDATE THIS* */
   var dropdownID = req.params.id;
 
@@ -131,7 +133,7 @@ router.post("/login", (req, res) => {
 });
 
 /* GET logout page */
-router.get("/logout", function (req, res, next) {
+router.get("/logout", redirectToLogin, function (req, res, next) {
   // destory the session.
   req.session.destroy();
   // clear cookies for session.

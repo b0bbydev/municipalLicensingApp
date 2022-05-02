@@ -36,7 +36,7 @@ app.use(
     name: sessionConfig.name,
     key: sessionConfig.key,
     secret: sessionConfig.secret,
-    store: sessionStore, // use the sessionStore we created
+    store: sessionStore, // use the sessionStore we created, this overrides the default "MemoryStore" for session saving, which isn't secure.
     resave: sessionConfig.resave,
     saveUninitialized: sessionConfig.saveUninitialized,
     cookie: {

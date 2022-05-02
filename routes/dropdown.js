@@ -1,9 +1,12 @@
 var express = require("express");
 var router = express.Router();
-var db = require("../config/dbConfig");
+// authHelper.
+const { redirectToLogin } = require("../config/authHelpers");
+// db config.
+const db = require("../config/dbConfig");
 
 /* GET dropdown page. */
-router.get("/", function (req, res, next) {
+router.get("/", redirectToLogin, function (req, res, next) {
   // create mySQL query.
   var query = "SELECT * FROM dropdown";
 
@@ -11,12 +14,16 @@ router.get("/", function (req, res, next) {
     if (err) {
       console.log("Error: ", err);
     }
-    res.render("dropdown", { title: "BWG", data: data });
+    res.render("dropdown", {
+      title: "BWG | Dropdown",
+      username: req.session.username,
+      data: data,
+    });
   });
 });
 
 /* POST dropdown value */
-router.post("/", (req, res, next) => {
+router.post("/", redirectToLogin, (req, res, next) => {
   // get data from form
   var value = req.body.value;
 
