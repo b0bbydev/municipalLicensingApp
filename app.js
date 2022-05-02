@@ -49,7 +49,7 @@ dbConfig.getConnection((err, connection) => {
   if (err) {
     console.log(err);
   } else {
-    console.log("DB Connection State: " + connection.state);
+    console.log("testdb Connection State: " + connection.state);
   }
 });
 
