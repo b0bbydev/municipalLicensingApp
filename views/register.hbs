@@ -19,4 +19,10 @@
       <button id="registerButton" class="btn btn-success">Register</button>
     </div>
   </form>
+  <br>
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
 </div>

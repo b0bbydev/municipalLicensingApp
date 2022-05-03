@@ -8,8 +8,15 @@ const db = require("../config/db");
 
 /* GET register page. */
 router.get("/", function (req, res, next) {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+
+  // clear session messages
+  req.session.messages = [];
+
   res.render("register", {
     title: "BWG",
+    errorMessages: messages,
     // include hideLayout (just bootstrap/css) to hide nav on login view.
     layout: "hideLayout.hbs",
   });
@@ -46,10 +53,11 @@ router.post("/", async (req, res) => {
         connection.release();
 
         // redirect to login page again.
-        res.redirect("/login");
-        // res.render("register", {
-        //   message: "User already exists",
-        // });
+        //res.redirect("/login");
+        res.render("register", {
+          layout: "hideLayout.hbs",
+          message: "User already exists",
+        });
       } else {
         // request should be good by here, execute insert query.
         await connection.query(insert_query, (err, results) => {
