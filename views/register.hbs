@@ -16,10 +16,21 @@
         placeholder="*********"
         type="password"
       />
-      <button id="registerButton" class="btn btn-success">Register</button>
+      <div class="row align-items-center">
+        <div class="col">
+          <button id="registerButton" class="btn btn-success">Register</button>
+        </div>
+        <div class="col">
+          <p class="text-nowrap" id="accessHelper">Already have an account?
+            <a href="/login">Login here</a>
+          </p>
+        </div>
+      </div>
     </div>
   </form>
-  <br>
+  <br />
+
+  <!-- check for error messages in the session -->
   {{#if message}}
     <div class="alert alert-danger">
       {{message}}
