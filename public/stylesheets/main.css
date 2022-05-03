@@ -2,7 +2,7 @@
 body {
   background-color: #fff !important;
   margin-left: 260px;
-  padding: 50px;
+  padding: 15px;
 }
 
 a {
@@ -30,10 +30,8 @@ a {
 }
 
 .usernameDiv {
-  font-size: 1.2rem;
+  font-size: .85rem;
   text-align: center;
-  padding-top: 10px;
-  padding-bottom: 10px;
 }
 
 .menuitem {
@@ -43,6 +41,11 @@ a {
   cursor: pointer;
   width: 100%;
   border-top: 1px solid #dedede;
+}
+
+.menuitem:hover {
+  transition: 0.2s ease-in;
+  background-color: rgba(230, 230, 230, 1);
 }
 
 .menuitem.last {
@@ -57,4 +60,37 @@ a {
   width: 185px;
   display: inline-block;
   text-align: left;
+}
+
+.icon-blue {
+  color: #0096D6;
+}
+
+.icon-large {
+  font-size: 15px;
+}
+
+/* Index Page */
+.formTitle {
+  color: #fff;
+  background-color: #0096D6;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+.formTitle > p {
+  text-align: left;
+  font-size: 1.5em;
+}
+
+.panel {
+  border-radius: 2px;
+}
+
+.panel-heading {
+  padding: 10px 0px 5px 10px;
+}
+
+
+#deleteButton {
+  color: #fff !important;
 }

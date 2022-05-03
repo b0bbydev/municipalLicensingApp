@@ -1,3 +1,5 @@
+// dotenv.
+require('dotenv').config();
 // express related.
 var createError = require("http-errors");
 var express = require("express");
@@ -6,13 +8,12 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 // include config files.
-const credsConfig = require("./config/credsConfig");
-const dbConfig = require("./config/dbConfig");
-const sessionConfig = require("./config/sessionConfig");
+const sessionStoreConfig = require("./config/sessionStore");
+const db = require("./config/db");
 // session related.
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
-var sessionStore = new MySQLStore(credsConfig);
+var sessionStore = new MySQLStore(sessionStoreConfig);
 
 // create routes here.
 var loginRouter = require("./routes/login");
@@ -33,16 +34,16 @@ app.use(cookieParser());
 // use session info from sessionConfig file.
 app.use(
   session({
-    name: sessionConfig.name,
-    key: sessionConfig.key,
-    secret: sessionConfig.secret,
+    name: process.env.SESSION_NAME,
+    key: process.env.KEY,
+    secret: process.env.SECRET,
     store: sessionStore, // use the sessionStore we created, this overrides the default "MemoryStore" for session saving, which isn't secure.
-    resave: sessionConfig.resave,
-    saveUninitialized: sessionConfig.saveUninitialized,
+    resave: false, // set this to false so a new session isn't created every request. We can store it in the database instead, and update if we need to.
+    saveUninitialized: false, // don't store anything about the user until there's data to store.
     cookie: {
-      httpOnly: sessionConfig.httpOnly,
-      maxAge: sessionConfig.maxAge,
-      sameSite: sessionConfig.sameSite,
+      httpOnly: true, // setting this to true means JavaScript can't access the cookies - essential for security.
+      maxAge: parseInt(process.env.MAX_AGE),
+      sameSite: true,
       // secure: sessionConfig.secure, comment this out for now - this is to only send the cookie over an HTTPS (secure) connection. secure: process.env.NODE_ENV === "production",
     },
   })
@@ -52,7 +53,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "/public")));
 
 // connection to db.
-dbConfig.getConnection((err, connection) => {
+db.getConnection((err, connection) => {
   if (err) {
     console.log(err);
   } else {
