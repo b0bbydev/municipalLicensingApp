@@ -13,7 +13,6 @@ router.get("/", function (req, res, next) {
   });
 });
 
-/* honestly not sure why this needs to be included in this route, rather than dropdown.js */
 /* DELETE dropdown value */
 router.get("/dropdown/delete/:id", (req, res, next) => {
   /* *NEED TO VALIDATE THIS* */

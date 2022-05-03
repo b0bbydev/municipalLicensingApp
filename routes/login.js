@@ -15,7 +15,7 @@ router.get("/", function (req, res, next) {
   });
 });
 
-/* POST for login */
+/* POST for /login */
 router.post("/", (req, res) => {
   // get the values from the login form.
   const username = req.body.username;

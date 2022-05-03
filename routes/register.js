@@ -15,7 +15,7 @@ router.get("/", function (req, res, next) {
   });
 });
 
-/* POST for register */
+/* POST for /register */
 router.post("/", async (req, res) => {
   // get values from req.body - these are passed into the request from the form.
   const username = req.body.username;
