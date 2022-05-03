@@ -4,8 +4,8 @@ body {
   background-color: rgba(179, 179, 179, 0.16);
 }
 
-.loginForm,
-.registerForm {
+.loginBox,
+.registerBox {
   width: fit-content;
   padding: 10px;
   margin-top: 75px;
@@ -14,8 +14,8 @@ body {
   background-color: #fff;
 }
 
-.loginForm label,
-.registerForm label {
+.loginBox label,
+.registerBox label {
   font-weight: 600;
   font-size: 1.2em;
 }
