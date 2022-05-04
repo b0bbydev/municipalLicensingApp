@@ -24,7 +24,8 @@ router.get("/", function (req, res, next) {
 /* POST for /login */
 router.post("/", (req, res) => {
   // get the values from the login form.
-  const username = req.body.username;
+  // validate and sanitize here.
+  const email = req.body.email;
   const password = req.body.password;
 
   // create the connection the db.
@@ -34,8 +35,8 @@ router.post("/", (req, res) => {
     }
 
     // create the SQL query, and format.
-    const sqlSearch = "SELECT * FROM users WHERE username = ?";
-    const search_query = mysql.format(sqlSearch, [username]);
+    const sqlSearch = "SELECT * FROM users WHERE email = ?";
+    const search_query = mysql.format(sqlSearch, [email]);
 
     // attempt the search query.
     await connection.query(search_query, async (err, results) => {
@@ -59,14 +60,14 @@ router.post("/", (req, res) => {
         // compare it using bcrypt and if successful..
         if (await bcrypt.compare(password, hashedPassword)) {
           // set the username for the session.
-          req.session.username = username;
+          req.session.email = email;
           // redirect user to index page.
           res.redirect("/");
         } else {
           // password is incorrect, render login again with error message.
           res.render("login", {
             layout: "hideLayout.hbs",
-            message: "Invalid username/password combination!",
+            message: "Invalid email/password combination!",
           });
         }
       }

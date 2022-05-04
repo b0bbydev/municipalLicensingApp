@@ -25,7 +25,7 @@ router.get("/", function (req, res, next) {
 /* POST for /register */
 router.post("/", async (req, res) => {
   // get values from req.body - these are passed into the request from the form.
-  const username = req.body.username;
+  const email = req.body.email;
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
   // connect to db.
@@ -35,11 +35,11 @@ router.post("/", async (req, res) => {
     }
 
     // the reason for breaking the sql queries down into 2 parts (each), is to add some extra security (prepared statement -> mysql.format).
-    const sqlSearch = "SELECT * FROM users WHERE username = ?";
-    const search_query = mysql.format(sqlSearch, [username]);
+    const sqlSearch = "SELECT * FROM users WHERE email = ?";
+    const search_query = mysql.format(sqlSearch, [email]);
 
-    const sqlInsert = "INSERT INTO users (username, password) VALUES (?, ?)";
-    const insert_query = mysql.format(sqlInsert, [username, hashedPassword]);
+    const sqlInsert = "INSERT INTO users (email, password) VALUES (?, ?)";
+    const insert_query = mysql.format(sqlInsert, [email, hashedPassword]);
 
     // attempt the search query - check if user already exists.
     await connection.query(search_query, async (err, results) => {
@@ -53,7 +53,6 @@ router.post("/", async (req, res) => {
         connection.release();
 
         // redirect to login page again.
-        //res.redirect("/login");
         res.render("register", {
           layout: "hideLayout.hbs",
           message: "User already exists",

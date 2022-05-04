@@ -9,7 +9,7 @@ const { redirectToLogin } = require("../config/authHelpers");
 router.get("/", function (req, res, next) {
   res.render("index", {
     title: "BWG | Home",
-    username: req.session.username,
+    email: req.session.email,
   });
 });
 
