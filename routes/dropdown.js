@@ -3,7 +3,7 @@ var router = express.Router();
 // authHelper.
 const { redirectToLogin } = require("../config/authHelpers");
 // db config.
-const db = require("../config/db");
+var db = require("../config/db");
 
 /* GET dropdown page. */
 router.get("/", function (req, res, next) {
@@ -26,12 +26,13 @@ router.get("/", function (req, res, next) {
 router.post("/", (req, res, next) => {
   // get data from form
   var value = req.body.value;
+  var userID = 2;
 
   // create the SQL query.
-  var query = "INSERT INTO dropdown (value) VALUES (?)";
+  var query = "INSERT INTO dropdown (createdBy, value) VALUES (?, ?)";
 
   // call query on db.
-  db.query(query, [value], function (err, data) {
+  db.query(query, [userID, value], function (err, data) {
     if (err) {
       console.log(err);
     }

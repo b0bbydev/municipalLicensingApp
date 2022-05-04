@@ -30,7 +30,7 @@ a {
 }
 
 .usernameDiv {
-  font-size: .85rem;
+  font-size: 0.85rem;
   text-align: center;
 }
 
@@ -63,7 +63,7 @@ a {
 }
 
 .icon-blue {
-  color: #0096D6;
+  color: #0096d6;
 }
 
 .icon-large {
@@ -73,8 +73,8 @@ a {
 /* Index Page */
 .formTitle {
   color: #fff;
-  background-color: #0096D6;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+  background-color: #0096d6;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .formTitle > p {
@@ -90,6 +90,15 @@ a {
   padding: 10px 0px 5px 10px;
 }
 
+.infoPanel {
+  font-size: 1.3em;
+  background-color: #fafafa;
+  border: 1px solid rgb(190, 190, 190);
+  border-radius: 4px;
+  box-shadow: 0 1px 4px rgb(0 0 0 / 30%);
+  display: block;
+  margin: 10px;
+}
 
 /* Dropdown Manager Page */
 #deleteButton {
