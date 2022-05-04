@@ -28,9 +28,10 @@ router.get("/", function (req, res, next) {
 router.post(
   "/",
   body("email").isEmail().normalizeEmail(),
+  // "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character. e.g: Testpass1!"
   body("password").matches(
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-  ), // "Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character. e.g: Testpass1!"
+  ),
   async (req, res) => {
     // server side validation.
     const errors = validationResult(req);
@@ -51,6 +52,7 @@ router.post(
 
       // connect to db.
       db.getConnection(async (err, connection) => {
+        // do something on error.
         if (err) {
           console.log(err);
         }
@@ -59,8 +61,8 @@ router.post(
         const sqlSearch = "SELECT * FROM users WHERE email = ?";
         const search_query = mysql.format(sqlSearch, [email]);
 
-        const sqlInsert = "INSERT INTO users (email, password) VALUES (?, ?)";
-        const insert_query = mysql.format(sqlInsert, [email, hashedPassword]);
+        const sqlInsert = "INSERT INTO users (isAdmin, email, password) VALUES (?, ?, ?)";
+        const insert_query = mysql.format(sqlInsert, [0, email, hashedPassword]); // set isAdmin to 0 (false) by default.
 
         // attempt the search query - check if user already exists.
         await connection.query(search_query, async (err, results) => {
