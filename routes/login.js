@@ -17,7 +17,7 @@ router.get("/", function (req, res, next) {
   req.session.messages = [];
 
   res.render("login", {
-    title: "BWG",
+    title: "BWG | Login",
     errorMessages: messages,
     layout: "hideLayout.hbs",
   });
