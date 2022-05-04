@@ -1,21 +1,54 @@
 <div class="container d-flex align-items-center flex-column">
+  <h2>Register</h2>
   <form method="POST">
-    <div class="registerForm">
-      <label>Username</label>
+    <div class="registerBox">
+      <label for="username" class="form-label">Username*</label>
       <input
         class="form-control"
         name="username"
         placeholder="Username"
-        type="text"
+        type="email"
+        required
       />
-      <label>Password</label>
+      <label for="password" class="form-label">Password*</label>
       <input
         class="form-control"
         name="password"
+        id="password"
         placeholder="*********"
         type="password"
+        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+        title="Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character. e.g: Testpass1!"
+        required
       />
-      <button id="registerButton" class="btn btn-success">Register</button>
+      <label for="confirmPassword" class="form-label">Confirm Password*</label>
+      <input
+        class="form-control"
+        name="confirmPassword"
+        id="confirmPassword"
+        placeholder="*********"
+        type="password"
+        oninput="pwCheck(this)"
+        required
+      />
+      <div class="row align-items-center">
+        <div class="col">
+          <button id="registerButton" class="btn btn-success" type="submit">Register</button>
+        </div>
+        <div class="col">
+          <p class="text-nowrap" id="accessHelper">Already have an account?
+            <a href="/login">Login here</a>
+          </p>
+        </div>
+      </div>
     </div>
   </form>
+  <br />
+
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
 </div>
