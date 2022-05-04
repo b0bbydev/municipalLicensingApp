@@ -32,4 +32,12 @@
       </div>
     </div>
   </form>
+  <br />
+
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
 </div>
