@@ -29,7 +29,7 @@ router.post("/", (req, res, next) => {
   var userID = 2;
 
   // create the SQL query.
-  var query = "INSERT INTO dropdown (createdBy, value) VALUES (?, ?)";
+  var query = "INSERT INTO dropdown (userID, value) VALUES (?, ?)";
 
   // call query on db.
   db.query(query, [userID, value], function (err, data) {

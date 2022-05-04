@@ -23,7 +23,7 @@
       <table class="table table-striped table-hover">
          <thead>
             <tr>
-               <th>Created By (User ID)</th>
+               <th>Dropdown ID)</th>
                <th>Value</th>
                <th>Created At</th>
                <th>Actions</th>
@@ -31,7 +31,7 @@
          <tbody>
             {{#each data}}
             <tr>
-               <td>{{this.createdBy}}</td>
+               <td>{{this.dropdownID}}</td>
                <td>{{this.value}}</td>
                <td>{{this.createdAt}}</td>
                <td><a href="/dropdown/delete/{{this.dropdownID}}" class="btn btn-danger" id="deleteButton">Delete</a>
