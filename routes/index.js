@@ -15,21 +15,27 @@ router.get("/", function (req, res, next) {
 
 /* DELETE dropdown value */
 router.get("/dropdown/delete/:id", (req, res, next) => {
-  /* *NEED TO VALIDATE THIS* */
-  var dropdownID = req.params.id;
+  // validate to make sure only a number can be passed here.
+  if (!req.params.id.match(/^\d+$/)) {
+    // if something other than a number is passed, redirect again to dropdown.
+    res.redirect("/dropdown");
+  } else {
+    // save dropdownID.
+    var dropdownID = req.params.id;
 
-  // create the query.
-  var query = "DELETE FROM dropdown WHERE dropdownID = ?";
+    // create the query.
+    var query = "DELETE FROM dropdown WHERE dropdownID = ?";
 
-  // call query on db.
-  db.query(query, [dropdownID], function (err, data) {
-    if (err) {
-      console.log(err);
-    }
-  });
+    // call query on db.
+    db.query(query, [dropdownID], function (err, data) {
+      if (err) {
+        console.log(err);
+      }
+    });
 
-  // redirect to home after success.
-  res.redirect("/dropdown");
+    // redirect to home after success.
+    res.redirect("/dropdown");
+  }
 });
 
 /* GET logout page */
