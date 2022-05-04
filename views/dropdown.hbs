@@ -26,6 +26,7 @@
                <th>Dropdown ID)</th>
                <th>Value</th>
                <th>Created At</th>
+               <th>Created By (User ID)</th>
                <th>Actions</th>
             </tr>
          <tbody>
@@ -34,6 +35,7 @@
                <td>{{this.dropdownID}}</td>
                <td>{{this.value}}</td>
                <td>{{this.createdAt}}</td>
+               <td>{{this.userID}}</td>
                <td><a href="/dropdown/delete/{{this.dropdownID}}" class="btn btn-danger" id="deleteButton">Delete</a>
             </tr>
             {{/each}}
