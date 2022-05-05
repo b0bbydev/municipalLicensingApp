@@ -10,6 +10,7 @@ router.get("/", function (req, res, next) {
   res.render("index", {
     title: "BWG | Home",
     email: req.session.email,
+    isAdmin: req.session.isAdmin
   });
 });
 

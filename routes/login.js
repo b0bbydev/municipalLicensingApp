@@ -5,6 +5,8 @@ const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 // config files.
 const db = require("../config/db");
+// dbHelpers.
+var dbHelpers = require("../config/dbHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -79,6 +81,16 @@ router.post("/", body("email").isEmail().normalizeEmail(), (req, res) => {
             // login is successful at this point.
             // set the email for the session.
             req.session.email = email;
+
+            // check if user is an admin so we can set the session variable for that.
+            if(dbHelpers.isAdmin(req.session.email) == 1) {
+              req.session.isAdmin = false;
+            } else {
+              req.session.isAdmin = true;
+            }
+
+            console.log(req.session.isAdmin)
+
             // redirect user to index page upon successful login.
             res.redirect("/");
           } else {

@@ -37,8 +37,10 @@
       <div class="usernameDiv">
         <p>
           <i class="icon-blue icon-large bi bi-person-fill"></i>
-          Current User:
-          {{email}}
+          {{#if isAdmin}}
+            Current User:
+            {{email}}
+          {{/if}}
         </p>
       </div>
       <div class="menuitem">
