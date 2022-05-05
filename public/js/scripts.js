@@ -7,3 +7,15 @@ function pwCheck(confirmPassword) {
     confirmPassword.setCustomValidity("");
   }
 } // end of pwCheck().
+
+
+// create functions to fill in form fields for test buttons.
+function userLogin() {
+  document.getElementById("email").value = "test@test.com"
+  document.getElementById("password").value = "Testpass1!"
+}
+
+function adminLogin() {
+  document.getElementById("email").value = "test@admin.com"
+  document.getElementById("password").value = "Testpass1!"
+}
