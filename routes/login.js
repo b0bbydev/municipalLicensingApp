@@ -82,14 +82,15 @@ router.post("/", body("email").isEmail().normalizeEmail(), (req, res) => {
             // set the email for the session.
             req.session.email = email;
 
-            // check if user is an admin so we can set the session variable for that.
-            if(dbHelpers.isAdmin(req.session.email) == 1) {
-              req.session.isAdmin = false;
-            } else {
-              req.session.isAdmin = true;
-            }
+            // the async functions return a Promise which is nested by default. hence the use of "isAdmin.isAdmin". Maybe change naming here to make it more intuitive.
+            const isAdmin = await dbHelpers.isAdmin(req.session.email);
 
-            console.log(req.session.isAdmin)
+            // check if user is an admin so we can set the session variable for that.
+            if (isAdmin.isAdmin == 1) {
+              req.session.isAdmin = true;
+            } else {
+              req.session.isAdmin = false;
+            }
 
             // redirect user to index page upon successful login.
             res.redirect("/");
