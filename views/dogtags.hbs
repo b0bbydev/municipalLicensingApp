@@ -11,15 +11,33 @@
                <th>Owner ID</th>
                <th>Owner First Name</th>
                <th>Owner Last Name</th>
+               <th>Address</th>
+               <th>PO Box/Apt#/RR</th>
+               <th>Town</th>
+               <th>Postal Code</th>
+               <th>Home Phone</th>
+               <th>Cell Phone</th>
+               <th>Work Phone</th>
+               <th>Email</th>
                <th>Actions</th>
             </tr>
          <tbody>
+            {{#each data}}
             <tr>
-               <td>owner id</td>
-               <td>first name</td>
-               <td>last name</td>
+               <td>{{this.ownerID}}</td>
+               <td>{{this.firstName}}</td>
+               <td>{{this.lastName}}</td>
+               <td>{{this.address}}</td>
+               <td>{{this.poBoxAptRR}}</td>
+               <td>{{this.town}}</td>
+               <td>{{this.postalCode}}</td>
+               <td>{{this.homePhone}}</td>
+               <td>{{this.cellPhone}}</td>
+               <td>{{this.workPhone}}</td>
+               <td>{{this.email}}</td>
                <td><a href="#" class="btn btn-danger" id="deleteButton">Delete</a>
             </tr>
+            {{/each}}
          </tbody>
          </thead>
       </table>
