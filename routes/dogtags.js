@@ -5,6 +5,7 @@ var router = express.Router();
 router.get("/", function (req, res, next) {
   res.render("dogtags", {
     title: "BWG | Dog Tags",
+    email: req.session.email,
   });
 });
 
