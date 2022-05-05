@@ -20,6 +20,7 @@ var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var indexRouter = require("./routes/index");
 var dropdownRouter = require("./routes/dropdown");
+var dogTagRouter = require("./routes/dogtags");
 
 var app = express();
 
@@ -66,6 +67,7 @@ app.use("/login", loginRouter);
 app.use("/register", registerRouter);
 app.use("/", indexRouter);
 app.use("/dropdown", dropdownRouter);
+app.use("/dogtags", dogTagRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
