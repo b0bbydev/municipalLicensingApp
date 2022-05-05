@@ -2,13 +2,11 @@ var express = require("express");
 var router = express.Router();
 // db config.
 var db = require("../config/db");
-// dbHelpers.
-var dbHelpers = require("../config/dbHelpers");
 
 /* GET login page. */
 router.get("/", function (req, res, next) {
   // create mySQL query.
-  var query = "SELECT * FROM owners LIMIT 10";
+  var query = "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID";
 
   db.query(query, function (err, data) {
     if (err) {
