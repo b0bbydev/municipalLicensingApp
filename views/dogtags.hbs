@@ -61,7 +61,7 @@
          <p>Jump to page...</p>
          <ul class="pagination pagination-sm">
             {{#each pages}}
-            <li class="page-item"><a class="page-link" href="?offset={{inc @index}}">{{@index}}</a></li>
+            <li class="page-item"><a class="page-link" href="?offset={{inc @index}}?page={{@index}}">{{@index}}</a></li>
             {{/each}}
          </ul>
       </nav>
