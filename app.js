@@ -70,7 +70,7 @@ db.getConnection((err, connection) => {
 
 // helper functions.
 hbs.registerHelper("inc", function (value, options) {
-  return parseInt(value) * 10;
+  return parseInt(value) * 25;
 });
 
 // use routes here.

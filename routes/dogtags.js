@@ -10,10 +10,10 @@ const paginate = require("express-paginate");
 router.get("/", async (req, res, next) => {
   // create pagination query.
   var pagQuery =
-    "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID LIMIT 10 OFFSET ?";
+    "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID LIMIT 25 OFFSET ?";
 
   var count = await dbHelpers.countOwnersAndDogs();
-  const pageCount = Math.ceil(count.count / 10);
+  const pageCount = Math.ceil(count.count / 25);
 
   db.query(pagQuery, [parseInt(req.query.offset) || 0], function (err, data) {
     if (err) {
