@@ -8,6 +8,7 @@
       <table class="table table-sm table-bordered table-striped table-hover">
          <thead>
             <tr>
+               <th>Owner ID</th>
                <th>Owner First Name</th>
                <th>Owner Last Name</th>
                <th>Address</th>
@@ -27,11 +28,11 @@
                <th>Rabies Tag #</th>
                <th>Rabies Expiry</th>
                <th>Vet Office</th>
-               <th>Actions</th>
             </tr>
          <tbody>
             {{#each data}}
             <tr>
+               <td>{{this.ownerID}}</td>
                <td>{{this.firstName}}</td>
                <td>{{this.lastName}}</td>
                <td>{{this.address}}</td>
@@ -41,7 +42,7 @@
                <td class="text-nowrap">{{this.homePhone}}</td>
                <td class="text-nowrap">{{this.cellPhone}}</td>
                <td class="text-nowrap">{{this.workPhone}}</td>
-               <td>{{this.email}}</td>
+               <td class="tableEmail">{{this.email}}</td>
                <td>{{this.breed}}</td>
                <td>{{this.color}}</td>
                <td>{{this.gender}}</td>
@@ -51,7 +52,6 @@
                <td>{{this.rabiesTagNumber}}</td>
                <td>{{this.rabiesExpiry}}</td>
                <td>{{this.vetOffice}}</td>
-               <td><a href="#" class="btn btn-danger" id="deleteButton">Delete</a>
             </tr>
             {{/each}}
          </tbody>

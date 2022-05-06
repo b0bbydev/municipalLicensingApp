@@ -1,13 +1,17 @@
 /* general elements */
 body {
   background-color: #fff !important;
-  margin-left: 260px;
-  padding: 15px;
+  margin-left: 255px;
+  margin-right: 15px;
 }
 
 a {
   color: #333 !important;
   text-decoration: none;
+}
+
+h2 {
+  padding: 10px;
 }
 
 /* Nav */
@@ -72,17 +76,18 @@ a {
 
 /* Index Page */
 .formTitle {
-  color: #fff;
-  background-color: #0096d6;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+  padding: 10px;
 }
 
-.formTitle > p {
+.panel > p {
   text-align: left;
   font-size: 1.5em;
 }
 
 .panel {
+  color: #fff;
+  background-color: #0096d6;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
   border-radius: 2px;
 }
 
@@ -91,7 +96,6 @@ a {
 }
 
 .infoPanel {
-  font-size: 1.3em;
   background-color: #fafafa;
   border: 1px solid rgb(190, 190, 190);
   border-radius: 4px;
