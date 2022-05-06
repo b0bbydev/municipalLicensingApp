@@ -1,5 +1,5 @@
 // dotenv.
-require('dotenv').config();
+require("dotenv").config();
 // express related.
 var createError = require("http-errors");
 var express = require("express");
@@ -7,6 +7,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
+const hbs = require("hbs");
 // include config files.
 const sessionStoreConfig = require("./config/sessionStore");
 const db = require("./config/db");
@@ -15,7 +16,7 @@ var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
 
-const paginate = require('express-paginate');
+const paginate = require("express-paginate");
 
 // create routes here.
 var loginRouter = require("./routes/login");
@@ -65,6 +66,11 @@ db.getConnection((err, connection) => {
   } else {
     console.log("testdb Connection State: " + connection.state);
   }
+});
+
+// helper functions.
+hbs.registerHelper("inc", function (value, options) {
+  return parseInt(value) * 10;
 });
 
 // use routes here.
