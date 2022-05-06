@@ -15,6 +15,8 @@ var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
 
+const paginate = require('express-paginate');
+
 // create routes here.
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
@@ -23,6 +25,9 @@ var dropdownRouter = require("./routes/dropdown");
 var dogTagRouter = require("./routes/dogtags");
 
 var app = express();
+
+// keep this before all routes that will use pagination
+app.use(paginate.middleware(10, 50));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
