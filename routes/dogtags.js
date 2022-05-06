@@ -6,7 +6,7 @@ var db = require("../config/db");
 /* GET login page. */
 router.get("/", function (req, res, next) {
   // create mySQL query.
-  var query = "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID";
+  var query = "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID LIMIT 15";
 
   db.query(query, function (err, data) {
     if (err) {
