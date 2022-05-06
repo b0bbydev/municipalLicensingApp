@@ -6,12 +6,17 @@ var db = require("../config/db");
 /* GET login page. */
 router.get("/", function (req, res, next) {
   // create mySQL query.
-  var query = "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID LIMIT 15";
+  var query = "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID LIMIT 10";
+
+  // create pagination query.
+  var pagQuery = "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID LIMIT 10 OFFSET ?"
 
   db.query(query, function (err, data) {
     if (err) {
       console.log("Error: ", err);
     }
+
+
 
     res.render("dogtags", {
       title: "BWG | Dog Tags",
