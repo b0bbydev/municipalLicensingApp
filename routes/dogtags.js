@@ -4,12 +4,16 @@ var router = express.Router();
 var db = require("../config/db");
 // dbHelpers.
 var dbHelpers = require("../config/dbHelpers");
+const paginate = require("express-paginate");
 
 /* GET dogtag page. */
 router.get("/", async (req, res, next) => {
   // create pagination query.
   var pagQuery =
     "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID LIMIT 10 OFFSET ?";
+
+  var count = await dbHelpers.countOwnersAndDogs();
+  const pageCount = Math.ceil(count.count / 10);
 
   db.query(pagQuery, [parseInt(req.query.offset) || 0], function (err, data) {
     if (err) {
@@ -20,6 +24,7 @@ router.get("/", async (req, res, next) => {
       title: "BWG | Dog Tags",
       email: req.session.email,
       data: data,
+      pages: paginate.getArrayPages(req)(pageCount, pageCount, req.query.page),
     });
   });
 });
