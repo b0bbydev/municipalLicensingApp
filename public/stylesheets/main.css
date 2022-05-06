@@ -105,9 +105,19 @@ a {
   color: #fff !important;
 }
 
-
+/* pagination numbers for dog tag table. */
 .pagination {
+  /* font-size: .5rem; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+}
+
+.page-item {
+  padding: 1.5px;
+}
+
+/* this is so the table doesn't wrap the phone number text. */
+.phoneNum {
+  width: fit-content;
 }

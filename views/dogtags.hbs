@@ -5,10 +5,9 @@
 <!-- Table -->
 <section class="row">
    <div class="col-12">
-      <table class="table table-bordered table-striped table-hover">
+      <table class="table table-sm table-bordered table-striped table-hover">
          <thead>
             <tr>
-               <th>Owner ID</th>
                <th>Owner First Name</th>
                <th>Owner Last Name</th>
                <th>Address</th>
@@ -19,7 +18,6 @@
                <th>Cell Phone</th>
                <th>Work Phone</th>
                <th>Email</th>
-               <th>Dog ID</th>
                <th>Dog Breed</th>
                <th>Color</th>
                <th>Gender</th>
@@ -34,18 +32,16 @@
          <tbody>
             {{#each data}}
             <tr>
-               <td>{{this.ownerID}}</td>
                <td>{{this.firstName}}</td>
                <td>{{this.lastName}}</td>
                <td>{{this.address}}</td>
                <td>{{this.poBoxAptRR}}</td>
                <td>{{this.town}}</td>
                <td>{{this.postalCode}}</td>
-               <td>{{this.homePhone}}</td>
-               <td>{{this.cellPhone}}</td>
-               <td>{{this.workPhone}}</td>
+               <td class="text-nowrap">{{this.homePhone}}</td>
+               <td class="text-nowrap">{{this.cellPhone}}</td>
+               <td class="text-nowrap">{{this.workPhone}}</td>
                <td>{{this.email}}</td>
-               <td>{{this.dogID}}</td>
                <td>{{this.breed}}</td>
                <td>{{this.color}}</td>
                <td>{{this.gender}}</td>
@@ -62,7 +58,8 @@
          </thead>
       </table>
       <nav>
-         <ul class="pagination">
+         <p>Jump to page...</p>
+         <ul class="pagination pagination-sm">
             {{#each pages}}
             <li class="page-item"><a class="page-link" href="?offset={{inc @index}}">{{@index}}</a></li>
             {{/each}}
