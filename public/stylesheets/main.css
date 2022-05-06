@@ -104,3 +104,10 @@ a {
 #deleteButton {
   color: #fff !important;
 }
+
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
