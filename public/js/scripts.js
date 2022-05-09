@@ -18,3 +18,9 @@ function adminLogin() {
   document.getElementById("email").value = "test@admin.com";
   document.getElementById("password").value = "Testpass1!";
 }
+
+// create function to unhide the "jump to page" pagination.
+function togglePagination() {
+  var pag = document.getElementById("pagination");
+  pag.style.display = pag.style.display === "none" ? "" : "none";
+}

@@ -128,6 +128,17 @@ table {
   padding: 1.25px;
 }
 
+#pagination {
+  padding-top: 10px;
+}
+
+#pagJump {
+  margin-bottom: 5px;
+  color: #0096d6 !important;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 /* this is so the table doesn't wrap the phone number text. */
 .phoneNum {
   width: fit-content;

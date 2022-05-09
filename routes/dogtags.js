@@ -25,7 +25,8 @@ router.get("/", async (req, res, next) => {
       isAdmin: req.session.isAdmin,
       email: req.session.email,
       data: data,
-      pages: paginate.getArrayPages(req)(pageCount, pageCount, req.query.page),
+      hasNext: paginate.hasNextPages(req)(req.query.page),
+      pages: paginate.getArrayPages(req)(pageCount - 1, pageCount, req.query.page),
     });
   });
 });
