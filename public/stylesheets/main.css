@@ -15,6 +15,7 @@ h2 {
 }
 
 table {
+  display: inline-table;
   font-size: .9rem;
 }
 
@@ -126,6 +127,17 @@ table {
 
 .page-item {
   padding: 1.25px;
+}
+
+#pagination {
+  padding-top: 10px;
+}
+
+#pagJump {
+  padding-bottom: 10px;
+  color: #0096d6 !important;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* this is so the table doesn't wrap the phone number text. */
