@@ -65,7 +65,7 @@
          <select name="dropdown" id="dropdown">
             <option value="default" disabled selected>select a value...</option>
                {{#each data}}
-                <option value="dropdownValue">{{this.value}}</option>
+                <option value="{{this.dropdownID}}">{{this.value}}</option>
                {{/each}}
          </select>
       </div>
