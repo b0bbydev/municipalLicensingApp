@@ -1,7 +1,7 @@
 // dotenv.
 require("dotenv").config();
 // handlebars helpers package.
-var helpers = require('handlebars-helpers')();
+var helpers = require("handlebars-helpers")();
 // express related.
 var createError = require("http-errors");
 var express = require("express");
@@ -17,7 +17,7 @@ const db = require("./config/db");
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
-
+// include pagination library.
 const paginate = require("express-paginate");
 
 // create routes here.
@@ -73,6 +73,10 @@ db.getConnection((err, connection) => {
 // helper functions.
 hbs.registerHelper("inc", function (value, options) {
   return parseInt(value) * 25;
+});
+
+hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
 
 // use routes here.

@@ -18,6 +18,10 @@ table {
   font-size: .9rem;
 }
 
+.btn {
+  color: #fff !important;
+}
+
 /* Nav */
 #menu_panel {
   height: 100%;
@@ -110,11 +114,6 @@ table {
   box-shadow: 0 1px 4px rgb(0 0 0 / 30%);
   display: block;
   margin: 10px;
-}
-
-/* Dropdown Manager Page */
-#deleteButton {
-  color: #fff !important;
 }
 
 /* pagination numbers for dog tag table. */
