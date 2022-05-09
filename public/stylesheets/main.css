@@ -15,6 +15,7 @@ h2 {
 }
 
 table {
+  display: inline-table;
   font-size: .9rem;
 }
 
