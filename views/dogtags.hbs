@@ -2,8 +2,46 @@
   <h2>Dog Tag Licenses</h2>
 </div>
 
-<div>
+<div class="filterDiv">
   <h4>Filtering</h4>
+  <form method="POST">
+    <select id="filterCategory" name="filterCategory">
+      <option disabled selected>Filter By...</option>
+      <option>Dog ID/Tag Number</option>
+      <option>First Name</option>
+      <option>Last Name</option>
+      <option>Dog Name</option>
+      <option>Phone Number</option>
+      <option>Email</option>
+    </select>
+    <input name="filterValue" class="form-control-sm" placeholder="Search..." />
+    <select id="yearDropdown">
+      <option value="default" disabled selected>Issue Year...</option>
+      <option value="2015">2015</option>
+      <option value="2016">2016</option>
+      <option value="2017">2017</option>
+      <option value="2018">2018</option>
+      <option value="2019">2019</option>
+      <option value="2020">2020</option>
+      <option value="2021">2021</option>
+      <option value="2022">2022</option>
+    </select>
+    <select id="monthDropdown">
+      <option value="default" disabled selected>Issue Month...</option>
+      <option value="january">January</option>
+      <option value="february">February</option>
+      <option value="march">April</option>
+      <option value="may">May</option>
+      <option value="june">June</option>
+      <option value="july">July</option>
+      <option value="august">August</option>
+      <option value="september">September</option>
+      <option value="october">October</option>
+      <option value="november">November</option>
+      <option value="december">December</option>
+    </select>
+    <button class="btn btn-primary">Search</button>
+  </form>
 </div>
 
 <!-- Table -->
@@ -22,18 +60,12 @@
           <th>Town</th>
           <th>Postal Code</th>
           <th>Home Phone</th>
-          <th>Cell Phone</th>
-          <th>Work Phone</th>
           <th>Email</th>
           <th>Dog Breed</th>
-          <th>Color</th>
           <th>Gender</th>
           <th>Date of Birth</th>
-          <th>Designation</th>
-          <th>Spade</th>
           <th>Rabies Tag #</th>
           <th>Rabies Expiry</th>
-          <th>Vet Office</th>
         </tr>
         <tbody>
           {{#each data}}
@@ -46,18 +78,12 @@
               <td>{{this.town}}</td>
               <td>{{this.postalCode}}</td>
               <td class="text-nowrap">{{this.homePhone}}</td>
-              <td class="text-nowrap">{{this.cellPhone}}</td>
-              <td class="text-nowrap">{{this.workPhone}}</td>
-              <td class="tableEmail">{{this.email}}</td>
+              <td>{{this.email}}</td>
               <td>{{this.breed}}</td>
-              <td>{{this.color}}</td>
               <td>{{this.gender}}</td>
               <td>{{this.dateOfBirth}}</td>
-              <td>{{this.designation}}</td>
-              <td>{{this.spade}}</td>
               <td>{{this.rabiesTagNumber}}</td>
               <td>{{this.rabiesExpiry}}</td>
-              <td>{{this.vetOffice}}</td>
             </tr>
           {{/each}}
         </tbody>
@@ -70,7 +96,7 @@
         {{#each pages}}
           <li class="page-item"><a
               class="page-link"
-              href="?offset={{inc @index}}?page={{@index}}"
+              href="?offset={{inc @index}}&page={{@index}}"
             >{{@index}}</a></li>
         {{/each}}
       </ul>

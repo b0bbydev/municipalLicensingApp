@@ -144,3 +144,7 @@ table {
 .phoneNum {
   width: fit-content;
 }
+
+.filterDiv {
+  padding-bottom: 5px;
+}
