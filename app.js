@@ -1,5 +1,7 @@
 // dotenv.
-require('dotenv').config();
+require("dotenv").config();
+// handlebars helpers package.
+var helpers = require("handlebars-helpers")();
 // express related.
 var createError = require("http-errors");
 var express = require("express");
@@ -7,6 +9,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
+const hbs = require("hbs");
 // include config files.
 const sessionStoreConfig = require("./config/sessionStore");
 const db = require("./config/db");
@@ -14,14 +17,20 @@ const db = require("./config/db");
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
+// include pagination library.
+const paginate = require("express-paginate");
 
 // create routes here.
 var loginRouter = require("./routes/login");
 var registerRouter = require("./routes/register");
 var indexRouter = require("./routes/index");
 var dropdownRouter = require("./routes/dropdown");
+var dogTagRouter = require("./routes/dogtags");
 
 var app = express();
+
+// keep this before all routes that will use pagination
+app.use(paginate.middleware(10, 50));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -61,11 +70,21 @@ db.getConnection((err, connection) => {
   }
 });
 
+// helper functions.
+hbs.registerHelper("inc", function (value, options) {
+  return parseInt(value) * 25;
+});
+
+hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/register", registerRouter);
 app.use("/", indexRouter);
 app.use("/dropdown", dropdownRouter);
+app.use("/dogtags", dogTagRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

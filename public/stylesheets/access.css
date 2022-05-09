@@ -29,3 +29,8 @@ body {
   font-size: .95rem;
   margin-top: 25px;
 }
+
+/* test buttons */
+.testButtons {
+  padding: 20px;
+}

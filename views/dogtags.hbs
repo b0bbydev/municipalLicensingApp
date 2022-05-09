@@ -1,0 +1,78 @@
+<div class="container d-flex align-items-center flex-column">
+  <h2>Dog Tag Licenses</h2>
+</div>
+
+<div>
+  <h4>Filtering</h4>
+</div>
+
+<!-- Table -->
+<section class="row">
+  <div class="col-12">
+    <table
+      class="sortable table table-sm table-bordered table-striped table-hover"
+    >
+      <thead>
+        <tr>
+          <th>Owner ID</th>
+          <th>Owner First Name</th>
+          <th>Owner Last Name</th>
+          <th>Address</th>
+          <th>PO Box/Apt#/RR</th>
+          <th>Town</th>
+          <th>Postal Code</th>
+          <th>Home Phone</th>
+          <th>Cell Phone</th>
+          <th>Work Phone</th>
+          <th>Email</th>
+          <th>Dog Breed</th>
+          <th>Color</th>
+          <th>Gender</th>
+          <th>Date of Birth</th>
+          <th>Designation</th>
+          <th>Spade</th>
+          <th>Rabies Tag #</th>
+          <th>Rabies Expiry</th>
+          <th>Vet Office</th>
+        </tr>
+        <tbody>
+          {{#each data}}
+            <tr>
+              <td>{{this.ownerID}}</td>
+              <td>{{this.firstName}}</td>
+              <td>{{this.lastName}}</td>
+              <td>{{this.address}}</td>
+              <td>{{this.poBoxAptRR}}</td>
+              <td>{{this.town}}</td>
+              <td>{{this.postalCode}}</td>
+              <td class="text-nowrap">{{this.homePhone}}</td>
+              <td class="text-nowrap">{{this.cellPhone}}</td>
+              <td class="text-nowrap">{{this.workPhone}}</td>
+              <td class="tableEmail">{{this.email}}</td>
+              <td>{{this.breed}}</td>
+              <td>{{this.color}}</td>
+              <td>{{this.gender}}</td>
+              <td>{{this.dateOfBirth}}</td>
+              <td>{{this.designation}}</td>
+              <td>{{this.spade}}</td>
+              <td>{{this.rabiesTagNumber}}</td>
+              <td>{{this.rabiesExpiry}}</td>
+              <td>{{this.vetOffice}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </thead>
+    </table>
+    <nav>
+      <p>Jump to page...</p>
+      <ul class="pagination pagination-sm">
+        {{#each pages}}
+          <li class="page-item"><a
+              class="page-link"
+              href="?offset={{inc @index}}?page={{@index}}"
+            >{{@index}}</a></li>
+        {{/each}}
+      </ul>
+    </nav>
+  </div>
+</section>

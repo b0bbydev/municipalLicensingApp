@@ -18,6 +18,7 @@ router.get("/", function (req, res, next) {
     }
     res.render("dropdown", {
       title: "BWG | Dropdown",
+      isAdmin: req.session.isAdmin,
       email: req.session.email,
       data: data,
     });

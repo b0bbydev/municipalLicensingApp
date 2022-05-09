@@ -25,6 +25,7 @@
             <tr>
                <th>Dropdown ID</th>
                <th>Value</th>
+               <th>isDisabled</th>
                <th>Created At</th>
                <th>Created By (User ID)</th>
                <th>Actions</th>
@@ -34,9 +35,10 @@
             <tr>
                <td>{{this.dropdownID}}</td>
                <td>{{this.value}}</td>
+               <td>{{this.isDisabled}}</td>
                <td>{{this.createdAt}}</td>
                <td>{{this.userID}}</td>
-               <td><a href="/dropdown/delete/{{this.dropdownID}}" class="btn btn-danger" id="deleteButton">Delete</a>
+               <td><a href="/dropdown/enable/{{this.dropdownID}}" class="btn btn-success">Enable</a> <a href="/dropdown/disable/{{this.dropdownID}}" class="btn btn-secondary">Disable</a> | <a href="/dropdown/delete/{{this.dropdownID}}" class="btn btn-danger" id="deleteButton">Delete</a>
             </tr>
             {{/each}}
          </tbody>
@@ -65,7 +67,7 @@
          <select name="dropdown" id="dropdown">
             <option value="default" disabled selected>select a value...</option>
                {{#each data}}
-                <option value="dropdownValue">{{this.value}}</option>
+                <option value="{{this.dropdownID}}" {{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>
                {{/each}}
          </select>
       </div>
