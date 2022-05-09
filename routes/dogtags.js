@@ -22,6 +22,7 @@ router.get("/", async (req, res, next) => {
 
     res.render("dogtags", {
       title: "BWG | Dog Tags",
+      isAdmin: req.session.isAdmin,
       email: req.session.email,
       data: data,
       pages: paginate.getArrayPages(req)(pageCount, pageCount, req.query.page),
