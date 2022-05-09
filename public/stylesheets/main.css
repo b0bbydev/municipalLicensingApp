@@ -60,6 +60,10 @@ table {
   border-bottom: 1px solid #dedede;
 }
 
+.menuitem.admin {
+  border-top: none;
+}
+
 .menuitem.logout {
   margin-top: auto;
 }
