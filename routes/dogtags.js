@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+// authHelper.
+const { redirectToLogin } = require("../config/authHelpers");
 // db config.
 var db = require("../config/db");
 // dbHelpers.

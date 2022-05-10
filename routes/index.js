@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
-// config files.
-const db = require("../config/db");
 // authHelper middleware.
 const { redirectToLogin } = require("../config/authHelpers");
+// config files.
+const db = require("../config/db");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {

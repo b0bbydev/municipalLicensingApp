@@ -38,8 +38,8 @@ router.post("/", body("email").isEmail().normalizeEmail(), (req, res) => {
       message: "Invalid email/password combination!",
       layout: "hideLayout.hbs",
     });
-    // assuming the email is valid (will have passed client and server side validation at this point).
   } else {
+    // assuming the email is valid (will have passed client and server side validation at this point).
     // get the values from the login form.
     const email = req.body.email;
     const password = req.body.password;

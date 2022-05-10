@@ -16,7 +16,7 @@ h2 {
 
 table {
   display: inline-table;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
 .btn {
@@ -119,7 +119,6 @@ table {
 
 /* pagination numbers for dog tag table. */
 .pagination {
-  /* font-size: .5rem; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -145,6 +144,7 @@ table {
   width: fit-content;
 }
 
+/* filterDiv: div above dog license table for filtering results. */
 .filterDiv {
   padding-bottom: 5px;
 }
