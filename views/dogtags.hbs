@@ -5,16 +5,19 @@
 <div class="filterDiv">
   <h4>Filtering</h4>
   <form method="POST">
-    <select id="filterCategory" name="filterCategory">
-      <option disabled selected>Filter By...</option>
-      <option>Dog ID/Tag Number</option>
-      <option>First Name</option>
-      <option>Last Name</option>
-      <option>Dog Name</option>
-      <option>Phone Number</option>
-      <option>Email</option>
+    <select id="filterCategory" name="filterCategory" required>
+      <option value="" disabled selected>Filter By...</option>
+      <option value="dogID">Dog ID/Tag Number</option>
+      <option value="firstName">First Name</option>
+      <option value="lastName">Last Name</option>
+      <option value="name">Dog Name</option>
+      <option value="homePhone">Home Phone</option>
+      <option value="email">Email</option>
     </select>
+    <!-- filterValue input -->
     <input name="filterValue" class="form-control-sm" placeholder="Search..." />
+
+    <!-- optional data filter -->
     <select id="yearDropdown">
       <option value="default" disabled selected>Issue Year...</option>
       <option value="2015">2015</option>
@@ -40,8 +43,14 @@
       <option value="november">November</option>
       <option value="december">December</option>
     </select>
-    <button class="btn btn-primary">Search</button>
+    <button class="btn btn-primary" type="submit">Search</button>
   </form>
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
 </div>
 
 <!-- Table -->
@@ -61,6 +70,7 @@
           <th>Postal Code</th>
           <th>Home Phone</th>
           <th>Email</th>
+          <th>Dog Name</th>
           <th>Dog Breed</th>
           <th>Gender</th>
           <th>Date of Birth</th>
@@ -79,6 +89,7 @@
               <td>{{this.postalCode}}</td>
               <td class="text-nowrap">{{this.homePhone}}</td>
               <td>{{this.email}}</td>
+              <td>{{this.name}}</td>
               <td>{{this.breed}}</td>
               <td>{{this.gender}}</td>
               <td>{{this.dateOfBirth}}</td>
@@ -96,7 +107,7 @@
         {{#each pages}}
           <li class="page-item"><a
               class="page-link"
-              href="?offset={{inc @index}}&page={{@index}}"
+              href="?skip={{inc @index}}&page={{@index}}"
             >{{@index}}</a></li>
         {{/each}}
       </ul>
