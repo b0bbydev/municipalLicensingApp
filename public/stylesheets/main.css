@@ -15,7 +15,8 @@ h2 {
 }
 
 table {
-  font-size: .9rem;
+  display: inline-table;
+  font-size: 0.9rem;
 }
 
 .btn {
@@ -118,7 +119,6 @@ table {
 
 /* pagination numbers for dog tag table. */
 .pagination {
-  /* font-size: .5rem; */
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -128,7 +128,23 @@ table {
   padding: 1.25px;
 }
 
+#pagination {
+  padding-top: 10px;
+}
+
+#pagJump {
+  padding-bottom: 10px;
+  color: #0096d6 !important;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
 /* this is so the table doesn't wrap the phone number text. */
 .phoneNum {
   width: fit-content;
+}
+
+/* filterDiv: div above dog license table for filtering results. */
+.filterDiv {
+  padding-bottom: 5px;
 }

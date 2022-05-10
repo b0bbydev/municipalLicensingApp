@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+// mysql.
 const mysql = require("mysql");
 // bcrypt for password encryption.
 const bcrypt = require("bcrypt");
@@ -19,7 +20,6 @@ router.get("/", function (req, res, next) {
   res.render("register", {
     title: "BWG | Register",
     errorMessages: messages,
-    // include hideLayout (just bootstrap/css) to hide nav on login view.
     layout: "hideLayout.hbs",
   });
 });
@@ -44,8 +44,8 @@ router.post(
         message: "Invalid email or password!",
         layout: "hideLayout.hbs",
       });
-      // assuming the email is valid (will have passed client and server side validation at this point).
     } else {
+      // assuming the email is valid (will have passed client and server side validation at this point).
       // get values from req.body - these are passed into the request from the form.
       const email = req.body.email;
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -61,8 +61,13 @@ router.post(
         const sqlSearch = "SELECT * FROM users WHERE email = ?";
         const search_query = mysql.format(sqlSearch, [email]);
 
-        const sqlInsert = "INSERT INTO users (isAdmin, email, password) VALUES (?, ?, ?)";
-        const insert_query = mysql.format(sqlInsert, [0, email, hashedPassword]); // set isAdmin to 0 (false) by default.
+        const sqlInsert =
+          "INSERT INTO users (isAdmin, email, password) VALUES (?, ?, ?)";
+        const insert_query = mysql.format(sqlInsert, [
+          0,
+          email,
+          hashedPassword,
+        ]); // set isAdmin to 0 (false) by default.
 
         // attempt the search query - check if user already exists.
         await connection.query(search_query, async (err, results) => {

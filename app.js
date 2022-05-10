@@ -1,7 +1,5 @@
 // dotenv.
 require("dotenv").config();
-// handlebars helpers package.
-var helpers = require("handlebars-helpers")();
 // express related.
 var createError = require("http-errors");
 var express = require("express");
@@ -72,7 +70,7 @@ db.getConnection((err, connection) => {
 
 // helper functions.
 hbs.registerHelper("inc", function (value, options) {
-  return parseInt(value) * 25;
+  return parseInt(value) * 50;
 });
 
 hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
