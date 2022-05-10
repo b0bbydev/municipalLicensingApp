@@ -5,7 +5,12 @@
 <div class="filterDiv">
   <h4>Filtering</h4>
   <form method="POST">
-    <select class="form-select-sm" id="filterCategory" name="filterCategory" required>
+    <select
+      class="form-select-sm"
+      id="filterCategory"
+      name="filterCategory"
+      required
+    >
       <option value="" disabled selected>Filter By...</option>
       <option value="dogID">Dog ID/Tag Number</option>
       <option value="firstName">First Name</option>
@@ -50,7 +55,11 @@
       <option value="11">November</option>
       <option value="12">December</option>
     </select>
-    <button id="filterButton" class="btn btn-sm btn-primary" type="submit">Search</button>
+    <button
+      id="filterButton"
+      class="btn btn-sm btn-primary"
+      type="submit"
+    >Search</button>
   </form>
   <!-- check for error messages in the session -->
   {{#if message}}
