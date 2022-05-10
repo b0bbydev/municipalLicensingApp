@@ -17,6 +17,7 @@
     <!-- filterValue input -->
     <input
       name="filterValue"
+      id="filterValue"
       class="form-control-sm"
       placeholder="Search..."
       value="{{filterValue}}"
@@ -49,7 +50,7 @@
       <option value="11">November</option>
       <option value="12">December</option>
     </select>
-    <button class="btn btn-primary" type="submit">Search</button>
+    <button id="filterButton" class="btn btn-sm btn-primary" type="submit">Search</button>
   </form>
   <!-- check for error messages in the session -->
   {{#if message}}
