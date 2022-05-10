@@ -12,10 +12,6 @@ var filterHelpers = require("../config/filterHelpers");
 const paginate = require("express-paginate");
 // express-validate.
 const { body, validationResult } = require("express-validator");
-const {
-  filterCategoryAndValueWithYear,
-  filterCategoryAndValueWithMonthAndYear,
-} = require("../config/filterHelpers");
 
 /* GET dogtag page. */
 router.get("/", async (req, res, next) => {
