@@ -1,7 +1,5 @@
 // dotenv.
 require("dotenv").config();
-// handlebars helpers package.
-var helpers = require("handlebars-helpers")();
 // express related.
 var createError = require("http-errors");
 var express = require("express");

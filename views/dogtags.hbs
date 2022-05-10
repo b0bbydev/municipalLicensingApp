@@ -17,9 +17,9 @@
     <!-- filterValue input -->
     <input name="filterValue" class="form-control-sm" placeholder="Search..." />
 
-    <!-- optional data filter -->
-    <select id="yearDropdown">
-      <option value="default" disabled selected>Issue Year...</option>
+    <!-- optional date filter -->
+    <select id="yearDropdown" name="issueYear">
+      <option value="" disabled selected>Issue Year...</option>
       <option value="2015">2015</option>
       <option value="2016">2016</option>
       <option value="2017">2017</option>
@@ -29,19 +29,20 @@
       <option value="2021">2021</option>
       <option value="2022">2022</option>
     </select>
-    <select id="monthDropdown">
-      <option value="default" disabled selected>Issue Month...</option>
-      <option value="january">January</option>
-      <option value="february">February</option>
-      <option value="march">April</option>
-      <option value="may">May</option>
-      <option value="june">June</option>
-      <option value="july">July</option>
-      <option value="august">August</option>
-      <option value="september">September</option>
-      <option value="october">October</option>
-      <option value="november">November</option>
-      <option value="december">December</option>
+    <select id="monthDropdown" name="issueMonth">
+      <option value="" disabled selected>Issue Month...</option>
+      <option value="01">January</option>
+      <option value="02">February</option>
+      <option value="03">March</option>
+      <option value="04">April</option>
+      <option value="05">May</option>
+      <option value="06">June</option>
+      <option value="07">July</option>
+      <option value="08">August</option>
+      <option value="09">September</option>
+      <option value="10">October</option>
+      <option value="11">November</option>
+      <option value="12">December</option>
     </select>
     <button class="btn btn-primary" type="submit">Search</button>
   </form>
@@ -65,17 +66,14 @@
           <th>Owner First Name</th>
           <th>Owner Last Name</th>
           <th>Address</th>
-          <th>PO Box/Apt#/RR</th>
           <th>Town</th>
-          <th>Postal Code</th>
           <th>Home Phone</th>
           <th>Email</th>
           <th>Dog Name</th>
           <th>Dog Breed</th>
           <th>Gender</th>
-          <th>Date of Birth</th>
           <th>Rabies Tag #</th>
-          <th>Rabies Expiry</th>
+          <th>License Issue Date</th>
         </tr>
         <tbody>
           {{#each data}}
@@ -84,17 +82,14 @@
               <td>{{this.firstName}}</td>
               <td>{{this.lastName}}</td>
               <td>{{this.address}}</td>
-              <td>{{this.poBoxAptRR}}</td>
               <td>{{this.town}}</td>
-              <td>{{this.postalCode}}</td>
               <td class="text-nowrap">{{this.homePhone}}</td>
               <td>{{this.email}}</td>
               <td>{{this.name}}</td>
               <td>{{this.breed}}</td>
               <td>{{this.gender}}</td>
-              <td>{{this.dateOfBirth}}</td>
               <td>{{this.rabiesTagNumber}}</td>
-              <td>{{this.rabiesExpiry}}</td>
+              <td>{{this.issueDate}}</td>
             </tr>
           {{/each}}
         </tbody>
