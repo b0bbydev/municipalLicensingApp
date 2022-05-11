@@ -12,6 +12,7 @@ var filterHelpers = require("../config/filterHelpers");
 const paginate = require("express-paginate");
 // express-validate.
 const { body, validationResult } = require("express-validator");
+const { filterYear, filterMonth } = require("../config/filterHelpers");
 
 /* GET dogtag page. */
 router.get("/", async (req, res, next) => {
@@ -49,10 +50,7 @@ router.get("/", async (req, res, next) => {
 /* POST dogtag page */ /* note the middleware from express-validate. */
 router.post(
   "/",
-  body("filterCategory").exists().notEmpty(),
   body("filterValue")
-    .exists()
-    .notEmpty()
     // blacklist of characters that are NOT allowed.
     .matches(/^[^'";=_()*&%$#!<>\^]*$/),
   function (req, res, next) {
@@ -69,44 +67,77 @@ router.post(
       });
     } else {
       // filtering by filterCategory & filterValue.
-      if (!req.body.issueYear && !req.body.issueMonth) {
-        // call corresponding filter function.
+      if (
+        req.body.filterCategory &&
+        req.body.filterValue &&
+        !req.body.issueYear &&
+        !req.body.issueMonth
+      ) {
         filterHelpers.filterCategoryAndValue(
           req.body.filterCategory,
           req.body.filterValue,
           req,
           res
         );
-      } else {
+        // filtering query with filterCategory, filterValue, year.
+      } else if (
+        req.body.filterCategory &&
+        req.body.filterValue &&
+        req.body.issueYear &&
+        !req.body.issueMonth
+      ) {
+        filterHelpers.filterCategoryAndValueWithYear(
+          req.body.filterCategory,
+          req.body.filterValue,
+          req.body.issueYear,
+          req,
+          res
+        );
+        // filtering query with filterCategory, filterValue, month.
+      } else if (
+        req.body.filterCategory &&
+        req.body.filterValue &&
+        !req.body.issueYear &&
+        req.body.issueMonth
+      ) {
+        filterHelpers.filterCategoryAndValueWithMonth(
+          req.body.filterCategory,
+          req.body.filterValue,
+          req.body.issueMonth,
+          req,
+          res
+        );
+        // filtering query with filterCategory, filterValue, year, month.
+      } else if (
+        req.body.filterCategory &&
+        req.body.filterValue &&
+        req.body.issueYear &&
+        req.body.issueMonth
+      ) {
+        filterCategoryAndValueWithMonthAndYear(
+          req.body.filterCategory,
+          req.body.filterValue,
+          req.body.issueYear,
+          req.body.issueMonth,
+          req,
+          res
+        );
         // filtering query with only year.
-        if (req.body.issueYear && !req.body.issueMonth) {
-          filterHelpers.filterCategoryAndValueWithYear(
-            req.body.filterCategory,
-            req.body.filterValue,
-            req.body.issueYear,
-            req,
-            res
-          );
-          // for query with only month.
-        } else if (!req.body.issueYear && req.body.issueMonth) {
-          filterHelpers.filterCategoryAndValueWithMonth(
-            req.body.filterCategory,
-            req.body.filterValue,
-            req.body.issueMonth,
-            req,
-            res
-          );
-          // for query with year AND month.
-        } else if (req.body.issueYear && req.body.issueMonth) {
-          filterCategoryAndValueWithMonthAndYear(
-            req.body.filterCategory,
-            req.body.filterValue,
-            req.body.issueYear,
-            req.body.issueMonth,
-            req,
-            res
-          );
-        }
+      } else if (
+        !req.body.filterCategory &&
+        !req.body.filterValue &&
+        req.body.issueYear &&
+        !req.body.issueMonth
+      ) {
+        filterYear(req.body.issueYear, req, res);
+        // filtering query with only month.
+      } else if (
+        !req.body.filterCategory &&
+        !req.body.filterValue &&
+        !req.body.issueYear &&
+        req.body.issueMonth
+      ) {
+        filterMonth(req.body.issueMonth, req, res);
       }
     }
   }
