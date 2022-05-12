@@ -42,6 +42,7 @@ router.get("/", async (req, res, next) => {
       isAdmin: req.session.isAdmin,
       email: req.session.email,
       data: data,
+      queryCount: "Records returned: " + data.length,
       pages: paginate.getArrayPages(req)(pageCount, pageCount, req.query.page),
     });
   });
@@ -59,56 +60,15 @@ router.post(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      res.render("dogtags", {
+      return res.render("dogtags", {
         title: "BWG | Dog Tags",
         message: "Filtering Error!",
         isAdmin: req.session.isAdmin,
         email: req.session.email,
       });
     } else {
-      // filtering by filterCategory & filterValue.
+      // ALL supplied filters.
       if (
-        req.body.filterCategory &&
-        req.body.filterValue &&
-        !req.body.issueYear &&
-        !req.body.issueMonth
-      ) {
-        filterHelpers.filterCategoryAndValue(
-          req.body.filterCategory,
-          req.body.filterValue,
-          req,
-          res
-        );
-        // filtering query with filterCategory, filterValue, year.
-      } else if (
-        req.body.filterCategory &&
-        req.body.filterValue &&
-        req.body.issueYear &&
-        !req.body.issueMonth
-      ) {
-        filterHelpers.filterCategoryAndValueWithYear(
-          req.body.filterCategory,
-          req.body.filterValue,
-          req.body.issueYear,
-          req,
-          res
-        );
-        // filtering query with filterCategory, filterValue, month.
-      } else if (
-        req.body.filterCategory &&
-        req.body.filterValue &&
-        !req.body.issueYear &&
-        req.body.issueMonth
-      ) {
-        filterHelpers.filterCategoryAndValueWithMonth(
-          req.body.filterCategory,
-          req.body.filterValue,
-          req.body.issueMonth,
-          req,
-          res
-        );
-        // filtering query with filterCategory, filterValue, year, month.
-      } else if (
         req.body.filterCategory &&
         req.body.filterValue &&
         req.body.issueYear &&
@@ -122,15 +82,21 @@ router.post(
           req,
           res
         );
-        // filtering query with only year.
-      } else if (
+      }
+      // NO supplied filters.
+      else if (
         !req.body.filterCategory &&
         !req.body.filterValue &&
-        req.body.issueYear &&
+        !req.body.issueYear &&
         !req.body.issueMonth
       ) {
-        filterYear(req.body.issueYear, req, res);
-        // filtering query with only month.
+        return res.render("dogtags", {
+          title: "BWG | Dog Tags",
+          message: "Please provide values to filter by!",
+          isAdmin: req.session.isAdmin,
+          email: req.session.email,
+        });
+        // ONLY month filter.
       } else if (
         !req.body.filterCategory &&
         !req.body.filterValue &&
@@ -138,6 +104,64 @@ router.post(
         req.body.issueMonth
       ) {
         filterMonth(req.body.issueMonth, req, res);
+        // ONLY year filter.
+      } else if (
+        !req.body.filterCategory &&
+        !req.body.filterValue &&
+        req.body.issueYear &&
+        !req.body.issueMonth
+      ) {
+        filterYear(req.body.issueYear, req, res);
+      }
+      // filterCategory, filterValue.
+      if (
+        req.body.filterCategory &&
+        req.body.filterValue &&
+        !req.body.issueYear &&
+        !req.body.issueMonth
+      ) {
+        filterHelpers.filterCategoryAndValue(
+          req.body.filterCategory,
+          req.body.filterValue,
+          req,
+          res
+        );
+        // filterCategory, filterValue, issueYear
+      } else if (
+        req.body.filterCategory &&
+        req.body.filterValue &&
+        req.body.issueYear &&
+        !req.body.issueMonth
+      ) {
+        filterHelpers.filterCategoryAndValueWithYear(
+          req.body.filterCategory,
+          req.body.filterValue,
+          req.body.issueYear,
+          req,
+          res
+        );
+        // filterCategory, filterValue, issueMonth
+      } else if (
+        req.body.filterCategory &&
+        req.body.filterValue &&
+        !req.body.issueYear &&
+        req.body.issueMonth
+      ) {
+        filterHelpers.filterCategoryAndValueWithMonth(
+          req.body.filterCategory,
+          req.body.filterValue,
+          req.body.issueMonth,
+          req,
+          res
+        );
+        // this should catch all other invalid queries without filterCategory.
+      } else if (!req.body.filterCategory && req.body.filterValue) {
+        return res.render("dogtags", {
+          title: "BWG | Dog Tags",
+          message: "Invalid filtering!",
+          isAdmin: req.session.isAdmin,
+          email: req.session.email,
+        });
       }
     }
   }
