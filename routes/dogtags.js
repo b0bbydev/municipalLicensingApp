@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-// authHelper.
 const { redirectToLogin } = require("../config/authHelpers");
 // db config.
 var db = require("../config/db");
@@ -12,7 +11,6 @@ var filterHelpers = require("../config/filterHelpers");
 const paginate = require("express-paginate");
 // express-validate.
 const { body, validationResult } = require("express-validator");
-const { filterYear, filterMonth } = require("../config/filterHelpers");
 
 /* GET dogtag page. */
 router.get("/", async (req, res, next) => {
@@ -48,12 +46,22 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-/* POST dogtag page */ /* note the middleware from express-validate. */
+/* POST dogtag page */
 router.post(
   "/",
+  // validate all input fields.
+  body("filterCategory")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
   body("filterValue")
-    // blacklist of characters that are NOT allowed.
-    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/),
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  body("issueYear")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  body("issueMonth")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
   function (req, res, next) {
     // server side validation.
     const errors = validationResult(req);
@@ -67,14 +75,14 @@ router.post(
         email: req.session.email,
       });
     } else {
-      // ALL supplied filters.
       if (
+        // ALL supplied filters.
         req.body.filterCategory &&
         req.body.filterValue &&
         req.body.issueYear &&
         req.body.issueMonth
       ) {
-        filterCategoryAndValueWithMonthAndYear(
+        filterHelpers.filterCategoryAndValueAndYearAndMonth(
           req.body.filterCategory,
           req.body.filterValue,
           req.body.issueYear,
@@ -82,9 +90,8 @@ router.post(
           req,
           res
         );
-      }
-      // NO supplied filters.
-      else if (
+      } else if (
+        // NO supplied filters.
         !req.body.filterCategory &&
         !req.body.filterValue &&
         !req.body.issueYear &&
@@ -96,25 +103,25 @@ router.post(
           isAdmin: req.session.isAdmin,
           email: req.session.email,
         });
-        // ONLY month filter.
       } else if (
+        // ONLY month filter.
         !req.body.filterCategory &&
         !req.body.filterValue &&
         !req.body.issueYear &&
         req.body.issueMonth
       ) {
-        filterMonth(req.body.issueMonth, req, res);
-        // ONLY year filter.
+        filterHelpers.filterMonth(req.body.issueMonth, req, res);
       } else if (
+        // ONLY year filter.
         !req.body.filterCategory &&
         !req.body.filterValue &&
         req.body.issueYear &&
         !req.body.issueMonth
       ) {
-        filterYear(req.body.issueYear, req, res);
+        filterHelpers.filterYear(req.body.issueYear, req, res);
       }
-      // filterCategory, filterValue.
       if (
+        // filterCategory, filterValue.
         req.body.filterCategory &&
         req.body.filterValue &&
         !req.body.issueYear &&
@@ -126,36 +133,48 @@ router.post(
           req,
           res
         );
-        // filterCategory, filterValue, issueYear
       } else if (
+        // filterCategory, filterValue, issueYear
         req.body.filterCategory &&
         req.body.filterValue &&
         req.body.issueYear &&
         !req.body.issueMonth
       ) {
-        filterHelpers.filterCategoryAndValueWithYear(
+        filterHelpers.filterCategoryAndValueAndYear(
           req.body.filterCategory,
           req.body.filterValue,
           req.body.issueYear,
           req,
           res
         );
-        // filterCategory, filterValue, issueMonth
       } else if (
+        // filterCategory, filterValue, issueMonth
         req.body.filterCategory &&
         req.body.filterValue &&
         !req.body.issueYear &&
         req.body.issueMonth
       ) {
-        filterHelpers.filterCategoryAndValueWithMonth(
+        filterHelpers.filterCategoryAndValueAndMonth(
           req.body.filterCategory,
           req.body.filterValue,
           req.body.issueMonth,
           req,
           res
         );
-        // this should catch all other invalid queries without filterCategory.
+        // invalid filtering cases
       } else if (!req.body.filterCategory && req.body.filterValue) {
+        return res.render("dogtags", {
+          title: "BWG | Dog Tags",
+          message: "Invalid filtering!",
+          isAdmin: req.session.isAdmin,
+          email: req.session.email,
+        });
+      } else if (
+        req.body.filterCategory &&
+        !req.body.filterValue &&
+        !req.body.issueYear &&
+        !req.body.issueMonth
+      ) {
         return res.render("dogtags", {
           title: "BWG | Dog Tags",
           message: "Invalid filtering!",
