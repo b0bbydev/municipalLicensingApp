@@ -5,7 +5,11 @@
 <div class="filterDiv">
   <h4>Filtering</h4>
   <form method="POST">
-    <select id="filterCategory" name="filterCategory" required>
+    <select
+      class="form-select-sm"
+      id="filterCategory"
+      name="filterCategory"
+    >
       <option value="" disabled selected>Filter By...</option>
       <option value="dogID">Dog ID/Tag Number</option>
       <option value="firstName">First Name</option>
@@ -15,11 +19,19 @@
       <option value="email">Email</option>
     </select>
     <!-- filterValue input -->
-    <input name="filterValue" class="form-control-sm" placeholder="Search..." />
+    <input
+      name="filterValue"
+      id="filterValue"
+      class="form-control-sm"
+      pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+      title="No special characters!"
+      placeholder="Search..."
+      value="{{filterValue}}"
+    />
 
     <!-- optional date filter -->
-    <select id="yearDropdown" name="issueYear">
-      <option value="" disabled selected>Issue Year...</option>
+    <select class="form-select-sm" id="yearDropdown" name="issueYear">
+      <option value="" disabled selected>License Issue Year...</option>
       <option value="2015">2015</option>
       <option value="2016">2016</option>
       <option value="2017">2017</option>
@@ -29,8 +41,8 @@
       <option value="2021">2021</option>
       <option value="2022">2022</option>
     </select>
-    <select id="monthDropdown" name="issueMonth">
-      <option value="" disabled selected>Issue Month...</option>
+    <select class="form-select-sm" id="monthDropdown" name="issueMonth">
+      <option value="" disabled selected>License Issue Month...</option>
       <option value="01">January</option>
       <option value="02">February</option>
       <option value="03">March</option>
@@ -44,12 +56,30 @@
       <option value="11">November</option>
       <option value="12">December</option>
     </select>
-    <button class="btn btn-primary" type="submit">Search</button>
+    <button
+      id="filterButton"
+      class="btn btn-sm btn-primary"
+      type="submit"
+    >Search</button>
+    <a
+      id="filterButton"
+      href="/dogtags"
+      class="btn btn-sm btn-primary"
+      type="submit"
+    >Reset</a>
   </form>
   <!-- check for error messages in the session -->
   {{#if message}}
     <div class="alert alert-danger">
       {{message}}
+    </div>
+  {{/if}}
+</div>
+
+  <!-- check for queryCount in the session -->
+  {{#if queryCount}}
+    <div>
+      <strong>{{queryCount}}</strong>
     </div>
   {{/if}}
 </div>

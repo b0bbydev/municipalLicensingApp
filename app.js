@@ -24,6 +24,7 @@ var registerRouter = require("./routes/register");
 var indexRouter = require("./routes/index");
 var dropdownRouter = require("./routes/dropdown");
 var dogTagRouter = require("./routes/dogtags");
+var planningDivisionRouter = require("./routes/planningDivision");
 
 var app = express();
 
@@ -73,8 +74,8 @@ hbs.registerHelper("inc", function (value, options) {
   return parseInt(value) * 50;
 });
 
-hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
-  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
+  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
 });
 
 // use routes here.
@@ -83,6 +84,7 @@ app.use("/register", registerRouter);
 app.use("/", indexRouter);
 app.use("/dropdown", dropdownRouter);
 app.use("/dogtags", dogTagRouter);
+app.use("/planningDivision", planningDivisionRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

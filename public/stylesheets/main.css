@@ -148,3 +148,13 @@ table {
 .filterDiv {
   padding-bottom: 5px;
 }
+
+/* tedious positioning */
+#filterButton {
+  margin-bottom: 3.5px;
+  margin-left: 5px;
+}
+
+#filterValue {
+  border-width: thin;
+}
