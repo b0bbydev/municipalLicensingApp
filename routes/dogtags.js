@@ -53,7 +53,7 @@ router.post(
   "/",
   body("filterValue")
     // blacklist of characters that are NOT allowed.
-    .matches(/^[^'";=_()*&%$#!<>\^]*$/),
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/),
   function (req, res, next) {
     // server side validation.
     const errors = validationResult(req);

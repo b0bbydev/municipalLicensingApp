@@ -23,6 +23,8 @@
       name="filterValue"
       id="filterValue"
       class="form-control-sm"
+      pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+      title="No special characters!"
       placeholder="Search..."
       value="{{filterValue}}"
     />
@@ -59,6 +61,12 @@
       class="btn btn-sm btn-primary"
       type="submit"
     >Search</button>
+    <a
+      id="filterButton"
+      href="/dogtags"
+      class="btn btn-sm btn-primary"
+      type="submit"
+    >Reset</a>
   </form>
   <!-- check for error messages in the session -->
   {{#if message}}
