@@ -17,6 +17,13 @@
    </ul>
 </div>
 
+<!-- check for error messages in the session -->
+{{#if message}}
+   <div class="alert alert-danger">
+      {{message}}
+   </div>
+{{/if}}
+
 <!-- Table -->
 <section class="row">
    <div class="col-12">
@@ -51,7 +58,7 @@
       <div>
          <h2>Add new value</h2>
          <form method="POST">
-            <input name="value" class="form-control" placeholder="Dropdown Value" type="text">
+            <input name="value" class="form-control" placeholder="New Value..." type="text" required>
             <br>
             <button class="btn btn-primary">Submit</button>
          </form>

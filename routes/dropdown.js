@@ -3,9 +3,17 @@ var router = express.Router();
 const { redirectToLogin } = require("../config/authHelpers");
 // db config.
 var db = require("../config/db");
+// express-validate.
+const { body, validationResult } = require("express-validator");
 
 /* GET dropdown page. */
 router.get("/", function (req, res, next) {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+
+  // clear session messages
+  req.session.messages = [];
+
   // create mySQL query.
   var query = "SELECT * FROM dropdown";
 
@@ -15,6 +23,7 @@ router.get("/", function (req, res, next) {
     }
     res.render("dropdown", {
       title: "BWG | Dropdown",
+      errorMessages: messages,
       email: req.session.email,
       data: data,
     });
@@ -22,23 +31,41 @@ router.get("/", function (req, res, next) {
 });
 
 /* POST dropdown value */
-router.post("/", function (req, res, next) {
-  // get data from form
-  var value = req.body.value;
+router.post(
+  "/",
+  body("value")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  function (req, res, next) {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // create the SQL query.
-  var query = "INSERT INTO dropdown (value) VALUES (?)";
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      // render dropdown page with error message.
+      return res.render("dropdown", {
+        title: "BWG | Dropdown",
+        message: "Invalid entry!",
+      });
+    } else {
+      // get data from form
+      var value = req.body.value;
 
-  // call query on db.
-  db.query(query, [value], function (err, data) {
-    // do something on error.
-    if (err) {
-      console.log(err);
+      // create the SQL query.
+      var query = "INSERT INTO dropdown (value) VALUES (?)";
+
+      // call query on db.
+      db.query(query, [value], function (err, data) {
+        // do something on error.
+        if (err) {
+          console.log(err);
+        }
+      });
+
+      // redirect to /dropdown if successful. (reload page)
+      res.redirect("/dropdown");
     }
-  });
-
-  // redirect to /dropdown if successful. (reload page)
-  res.redirect("/dropdown");
-});
+  }
+);
 
 module.exports = router;
