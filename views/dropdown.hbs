@@ -17,13 +17,6 @@
    </ul>
 </div>
 
-<!-- check for error messages in the session -->
-{{#if message}}
-   <div class="alert alert-danger">
-      {{message}}
-   </div>
-{{/if}}
-
 <!-- Table -->
 <section class="row">
    <div class="col-12">
@@ -51,6 +44,13 @@
       </table>
    </div>
 </section>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+   <div class="alert alert-danger">
+      {{message}}
+   </div>
+{{/if}}
 
 <!-- Add new dropdown value -->
 <section class="row">
