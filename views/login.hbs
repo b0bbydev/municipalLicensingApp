@@ -16,6 +16,8 @@
         class="form-control"
         id="password"
         name="password"
+        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$"
+        title="12 characters; one uppercase letter, one lowercase letter, one special character (@$!%*?&)"
         placeholder="*********"
         type="password"
         required
@@ -23,11 +25,6 @@
       <div class="row align-items-center">
         <div class="col">
           <button id="loginButton" class="btn btn-success">Login</button>
-        </div>
-        <div class="col">
-          <p class="text-nowrap" id="accessHelper">Don't have an account?
-            <a href="/register">Register here</a>
-          </p>
         </div>
       </div>
     </div>
@@ -37,8 +34,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-auto">
-          <button class="btn btn-primary" onclick="adminLogin()">Admin</button>
-          <button class="btn btn-secondary" onclick="userLogin()">User</button>
+          <button class="btn btn-secondary" onclick="userLogin()">Test</button>
         </div>
       </div>
     </div>
