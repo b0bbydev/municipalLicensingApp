@@ -16,6 +16,8 @@
         class="form-control"
         id="password"
         name="password"
+        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,}$"
+        title="12 characters; one uppercase letter, one lowercase letter, one special character (@$!%*?&)"
         placeholder="*********"
         type="password"
         required

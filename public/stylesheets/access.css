@@ -6,7 +6,7 @@ body {
 
 .loginBox,
 .registerBox {
-  width: fit-content;
+  width: 400px;
   padding: 10px;
   margin-top: 75px;
   border: 1px solid rgb(150, 150, 150);
@@ -23,11 +23,6 @@ body {
 #loginButton,
 #registerButton {
   margin-top: 10px;
-}
-
-#accessHelper {
-  font-size: .95rem;
-  margin-top: 25px;
 }
 
 /* test buttons */
