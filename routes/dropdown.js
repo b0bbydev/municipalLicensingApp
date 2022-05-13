@@ -4,8 +4,6 @@ var router = express.Router();
 const { redirectToLogin } = require("../config/authHelpers");
 // db config.
 var db = require("../config/db");
-// dbHelpers.
-var dbHelpers = require("../config/dbHelpers");
 
 /* GET dropdown page. */
 router.get("/", function (req, res, next) {
@@ -18,7 +16,6 @@ router.get("/", function (req, res, next) {
     }
     res.render("dropdown", {
       title: "BWG | Dropdown",
-      isAdmin: req.session.isAdmin,
       email: req.session.email,
       data: data,
     });
@@ -29,13 +26,12 @@ router.get("/", function (req, res, next) {
 router.post("/", async (req, res, next) => {
   // get data from form
   var value = req.body.value;
-  var user = await dbHelpers.getUserIDByEmail(req.session.email);
 
   // create the SQL query.
-  var query = "INSERT INTO dropdown (value, userID) VALUES (?, ?)";
+  var query = "INSERT INTO dropdown (value) VALUES (?)";
 
-  // call query on db. /* note: helper function returns an object, hence user.userID vs. userID */
-  db.query(query, [value, user.userID], function (err, data) {
+  // call query on db.
+  db.query(query, [value], function (err, data) {
     // do something on error.
     if (err) {
       console.log(err);
