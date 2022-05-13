@@ -20,7 +20,6 @@ const paginate = require("express-paginate");
 
 // create routes here.
 var loginRouter = require("./routes/login");
-var registerRouter = require("./routes/register");
 var indexRouter = require("./routes/index");
 var dropdownRouter = require("./routes/dropdown");
 var dogTagRouter = require("./routes/dogtags");
@@ -80,7 +79,6 @@ hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
 
 // use routes here.
 app.use("/login", loginRouter);
-app.use("/register", registerRouter);
 app.use("/", indexRouter);
 app.use("/dropdown", dropdownRouter);
 app.use("/dogtags", dogTagRouter);
