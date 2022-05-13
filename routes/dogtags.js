@@ -37,7 +37,6 @@ router.get("/", async (req, res, next) => {
     res.render("dogtags", {
       title: "BWG | Dog Tags",
       errorMessages: messages,
-      isAdmin: req.session.isAdmin,
       email: req.session.email,
       data: data,
       queryCount: "Records returned: " + data.length,

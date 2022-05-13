@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-// authHelper.
 const { redirectToLogin } = require("../config/authHelpers");
 // db config.
 var db = require("../config/db");
@@ -23,7 +22,7 @@ router.get("/", function (req, res, next) {
 });
 
 /* POST dropdown value */
-router.post("/", async (req, res, next) => {
+router.post("/", function (req, res, next) {
   // get data from form
   var value = req.body.value;
 
