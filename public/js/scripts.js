@@ -10,13 +10,7 @@ function pwCheck(confirmPassword) {
 
 // create functions to fill in form fields for test buttons.
 function userLogin() {
-  document.getElementById("email").value = "test@test.com";
-  document.getElementById("password").value = "Testpass1!";
-}
-
-function adminLogin() {
-  document.getElementById("email").value = "test@admin.com";
-  document.getElementById("password").value = "Testpass1!";
+  document.getElementById("email").value = "bjonkman@townofbwg.com";
 }
 
 // create function to unhide the "jump to page" pagination.

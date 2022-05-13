@@ -1,14 +1,13 @@
 var express = require("express");
 var router = express.Router();
-const mysql = require("mysql");
-// bcrypt for password encryption.
-const bcrypt = require("bcrypt");
-// config files.
-const db = require("../config/db");
-// dbHelpers.
-var dbHelpers = require("../config/dbHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
+// AD.
+var ActiveDirectory = require("activedirectory");
+var config = {
+  url: process.env.URL,
+};
+var ad = new ActiveDirectory(config);
 
 /* GET login page. */
 router.get("/", function (req, res, next) {
@@ -33,7 +32,7 @@ router.post("/", body("email").isEmail().normalizeEmail(), (req, res) => {
   // if errors is NOT empty (if there are errors...)
   if (!errors.isEmpty()) {
     // render login page with error message.
-    res.render("login", {
+    return res.render("login", {
       title: "BWG",
       message: "Invalid email/password combination!",
       layout: "hideLayout.hbs",
@@ -44,65 +43,31 @@ router.post("/", body("email").isEmail().normalizeEmail(), (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    // create the connection the db.
-    db.getConnection(async (err, connection) => {
-      // if there are errors, log to console.
+    ad.authenticate(email, password, function (err, auth) {
+      // if there's an error with AD.
       if (err) {
-        console.log(err);
+        console.log("ERROR: " + JSON.stringify(err));
+
+        // render login page with error message.
+        return res.render("login", {
+          title: "BWG",
+          message: "Login Error!",
+          layout: "hideLayout.hbs",
+        });
       }
-
-      // create the SQL query, and format.
-      const sqlSearch = "SELECT * FROM users WHERE email = ?";
-      const search_query = mysql.format(sqlSearch, [email]);
-
-      // attempt the search query.
-      await connection.query(search_query, async (err, results) => {
-        // if there are errors, log to console.
-        if (err) {
-          console.log(err);
-        }
-
-        // close the connection.
-        connection.release();
-
-        // if the user doesn't exist when trying to login.
-        if (results.length == 0) {
-          // render the login page again, with error message.
-          res.render("login", {
-            layout: "hideLayout.hbs",
-            message: "User doesn't exist!",
-          });
-        } else {
-          // get the password from results
-          const hashedPassword = results[0].password;
-
-          // compare it using bcrypt.
-          if (await bcrypt.compare(password, hashedPassword)) {
-            // login is successful at this point.
-            // set the email for the session.
-            req.session.email = email;
-
-            // the async functions return a Promise which is nested by default. hence the use of "isAdmin.isAdmin". Maybe change naming here to make it more intuitive.
-            const isAdmin = await dbHelpers.isAdmin(req.session.email);
-
-            // check if user is an admin so we can set the session variable for that.
-            if (isAdmin.isAdmin == 1) {
-              req.session.isAdmin = true;
-            } else {
-              req.session.isAdmin = false;
-            }
-
-            // redirect user to index page upon successful login.
-            res.redirect("/");
-          } else {
-            // password is incorrect, render login again with error message.
-            res.render("login", {
-              layout: "hideLayout.hbs",
-              message: "Invalid email/password combination!",
-            });
-          }
-        }
-      });
+      // if login is successful.
+      if (auth) {
+        // set the email for the session.
+        req.session.email = email;
+        res.redirect("/");
+      } else {
+        // render login page with error message.
+        return res.render("login", {
+          title: "BWG",
+          message: "Login Error!",
+          layout: "hideLayout.hbs",
+        });
+      }
     });
   }
 });
