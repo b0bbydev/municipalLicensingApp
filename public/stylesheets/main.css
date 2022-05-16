@@ -168,3 +168,15 @@ table {
 #filterValue {
   border-width: thin;
 }
+
+/* add dog license */
+#addLicenseForm {
+  max-width: 400px;
+  margin: auto;
+}
+
+.form
+
+form h4 {
+  padding-top: 25px;
+}

@@ -22,8 +22,11 @@ const paginate = require("express-paginate");
 var loginRouter = require("./routes/login");
 var indexRouter = require("./routes/index");
 var dropdownRouter = require("./routes/dropdown");
-var dogTagRouter = require("./routes/dogtags/index");
 var planningDivisionRouter = require("./routes/planningDivision");
+
+/* dogtag routes. */
+var dogTagRouter = require("./routes/dogtags/index");
+var addDogTagRouter = require("./routes/dogtags/addLicense");
 
 var app = express();
 
@@ -82,6 +85,7 @@ app.use("/login", loginRouter);
 app.use("/", indexRouter);
 app.use("/dropdown", dropdownRouter);
 app.use("/dogtags", dogTagRouter);
+app.use("/dogtags/addLicense", addDogTagRouter);
 app.use("/planningDivision", planningDivisionRouter);
 
 // catch 404 and forward to error handler
