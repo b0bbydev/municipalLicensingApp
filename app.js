@@ -22,7 +22,7 @@ const paginate = require("express-paginate");
 var loginRouter = require("./routes/login");
 var indexRouter = require("./routes/index");
 var dropdownRouter = require("./routes/dropdown");
-var dogTagRouter = require("./routes/dogtags");
+var dogTagRouter = require("./routes/dogtags/index");
 var planningDivisionRouter = require("./routes/planningDivision");
 
 var app = express();
