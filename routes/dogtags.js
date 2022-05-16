@@ -32,12 +32,12 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      // get total count of records
-      var count = await dbHelpers.countDogLicenseTables();
-      const pageCount = Math.ceil(count.count / 50);
+      // get total count of owners.
+      var ownersCount = await dbHelpers.countOwners();
+      const pageCount = Math.ceil(ownersCount.count / 50);
 
       // || 0 prevents the validation from triggering on initial page load.
-      var data = await dbHelpers.getAllOwners();
+      var data = await dbHelpers.getAllOwners(parseInt(req.query.skip) || 0);
 
       return res.render("dogtags", {
         title: "BWG | Dog Tags",
