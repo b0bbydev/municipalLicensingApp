@@ -1,8 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const { redirectToLogin } = require("../config/authHelpers");
-// db config.
-var db = require("../config/db");
 // dbHelpers.
 var dbHelpers = require("../config/dbHelpers");
 // filterHelpers.
@@ -10,40 +8,54 @@ var filterHelpers = require("../config/filterHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, query, validationResult } = require("express-validator");
 
 /* GET dogtag page. */
-router.get("/", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
+router.get(
+  "/",
+  query("skip").if(query("skip").exists()).isNumeric(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // clear session messages
-  req.session.messages = [];
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      // render dropdown page with error message.
+      return res.render("dogtags", {
+        title: "BWG | Dogtags",
+        message: "Page Error!",
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
 
-  // create pagination query.
-  var pagQuery =
-    "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID LEFT JOIN addresses ON owners.ownerID = addresses.ownerID LEFT JOIN licenses ON owners.ownerID = licenses.ownerID LIMIT 50 OFFSET ?";
+      // clear session messages
+      req.session.messages = [];
 
-  // get total count of records
-  var count = await dbHelpers.countOwnersAndDogs();
-  const pageCount = Math.ceil(count.count / 50);
+      // get total count of records
+      var count = await dbHelpers.countDogLicenseTables();
+      const pageCount = Math.ceil(count.count / 50);
 
-  // call query on database, passing in the skip(offset) from req.query.skip.
-  db.query(pagQuery, [parseInt(req.query.skip) || 0], function (err, data) {
-    if (err) {
-      console.log("Error: ", err);
+      // || 0 prevents the validation from triggering on initial
+      var data = await dbHelpers.paginateDogLicenses(
+        parseInt(req.query.skip) || 0
+      );
+
+      return res.render("dogtags", {
+        title: "BWG | Dog Tags",
+        errorMessages: messages,
+        email: req.session.email,
+        data: data,
+        queryCount: "Records returned: " + data.length,
+        pages: paginate.getArrayPages(req)(
+          pageCount,
+          pageCount,
+          req.query.page
+        ),
+      });
     }
-
-    res.render("dogtags", {
-      title: "BWG | Dog Tags",
-      errorMessages: messages,
-      email: req.session.email,
-      data: data,
-      queryCount: "Records returned: " + data.length,
-      pages: paginate.getArrayPages(req)(pageCount, pageCount, req.query.page),
-    });
-  });
-});
+  }
+);
 
 /* POST dogtag page */
 router.post(
@@ -118,8 +130,20 @@ router.post(
         !req.body.issueMonth
       ) {
         filterHelpers.filterYear(req.body.issueYear, req, res);
-      }
-      if (
+      } else if (
+        // ONLY year & month filter.
+        !req.body.filterCategory &&
+        !req.body.filterValue &&
+        req.body.issueYear &&
+        req.body.issueMonth
+      ) {
+        filterHelpers.filterYearAndMonth(
+          req.body.issueYear,
+          req.body.issueMonth,
+          req,
+          res
+        );
+      } else if (
         // filterCategory, filterValue.
         req.body.filterCategory &&
         req.body.filterValue &&
