@@ -104,17 +104,26 @@ router.post(
 ); // end of post.
 
 /* GET owner page. */
-router.get("/owner/:id", function (req, res, next) {
+router.get("/owner/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
 
   // clear session messages
   req.session.messages = [];
 
+  // dogLicense data.
+  var data = await dbHelpers.getDogLicenseInfo(req.params.id);
+  // call custom query.
+  var ownerName = await dbHelpers.getNameFromOwnerID(req.params.id);
+  // form the name by concatenating the firstName & lastName columns.
+  ownerName = ownerName[0].firstName + " " + ownerName[0].lastName;
+
   res.render("dogtags/owner", {
     title: "BWG | Owner",
     errorMessages: messages,
     email: req.session.email,
+    ownerName: ownerName,
+    data: data,
   });
 });
 

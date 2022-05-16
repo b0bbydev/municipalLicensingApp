@@ -25,7 +25,7 @@ table {
 }
 
 /* this makes the entire table cell clickable for the anchor tag. */
-.table a {
+.table #ownerLink {
   display: block;
   width: 100%;
   color: #0096d6 !important;
