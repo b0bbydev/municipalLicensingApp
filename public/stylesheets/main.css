@@ -24,6 +24,14 @@ table {
   color: #fff !important;
 }
 
+/* this makes the entire table cell clickable for the anchor tag. */
+.table a {
+  display: block;
+  width: 100%;
+  color: #0096d6 !important;
+  text-decoration: underline;
+}
+
 /* Nav */
 #menu_panel {
   height: 100%;
@@ -134,7 +142,7 @@ table {
 }
 
 #pagJump {
-  font-size: .9rem;
+  font-size: 0.9rem;
   padding-bottom: 10px;
   color: #0096d6 !important;
   cursor: pointer;
