@@ -36,10 +36,8 @@ router.get(
       var count = await dbHelpers.countDogLicenseTables();
       const pageCount = Math.ceil(count.count / 50);
 
-      // || 0 prevents the validation from triggering on initial
-      var data = await dbHelpers.paginateDogLicenses(
-        parseInt(req.query.skip) || 0
-      );
+      // || 0 prevents the validation from triggering on initial page load.
+      var data = await dbHelpers.getAllOwners();
 
       return res.render("dogtags", {
         title: "BWG | Dog Tags",
