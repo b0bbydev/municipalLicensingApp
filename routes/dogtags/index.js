@@ -103,4 +103,19 @@ router.post(
   }
 ); // end of post.
 
+/* GET owner page. */
+router.get("/owner/:id", function (req, res, next) {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+
+  // clear session messages
+  req.session.messages = [];
+
+  res.render("dogtags/owner", {
+    title: "BWG | Owner",
+    errorMessages: messages,
+    email: req.session.email,
+  });
+});
+
 module.exports = router;
