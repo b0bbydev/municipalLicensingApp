@@ -2,79 +2,79 @@
   <h2>Dog Tag Licenses</h2>
 </div>
 
-<div class="filterDiv">
-  <h4>Filtering</h4>
-  <form method="POST">
-    <select
-      class="form-select-sm"
-      id="filterCategory"
-      name="filterCategory"
-    >
-      <option value="" disabled selected>Filter By...</option>
-      <option value="firstName">First Name</option>
-      <option value="lastName">Last Name</option>
-      <option value="email">Email</option>
-    </select>
-    <!-- filterValue input -->
-    <input
-      name="filterValue"
-      id="filterValue"
-      class="form-control-sm"
-      pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
-      title="No special characters!"
-      placeholder="Search..."
-      value="{{filterValue}}"
-    />
-    <button
-      id="filterButton"
-      class="btn btn-sm btn-primary"
-      type="submit"
-    >Search</button>
-    <a
-      id="filterButton"
-      href="/dogtags"
-      class="btn btn-sm btn-secondary"
-      type="submit"
-    >Reset</a>
-  </form>
-  <!-- check for error messages in the session -->
-  {{#if message}}
-    <div class="alert alert-danger">
-      {{message}}
-    </div>
-  {{/if}}
-  <a href="/dogtags/addLicense" class="btn btn-sm btn-primary">Add a new license</a>
-</div>
+<div class="content">
+  <div class="filterDiv">
+    <h4>Filtering</h4>
+    <form method="POST">
+      <select class="form-select-sm" id="filterCategory" name="filterCategory">
+        <option value="" disabled selected>Filter By...</option>
+        <option value="firstName">First Name</option>
+        <option value="lastName">Last Name</option>
+        <option value="email">Email</option>
+      </select>
+      <!-- filterValue input -->
+      <input
+        name="filterValue"
+        id="filterValue"
+        class="form-control-sm"
+        pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+        title="No special characters!"
+        placeholder="Search..."
+        value="{{filterValue}}"
+      />
+      <button
+        id="filterButton"
+        class="btn btn-sm btn-primary"
+        type="submit"
+      >Search</button>
+      <a
+        id="filterButton"
+        href="/dogtags"
+        class="btn btn-sm btn-secondary"
+        type="submit"
+      >Reset</a>
+    </form>
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <a href="/dogtags/addLicense" class="btn btn-sm btn-primary">Add a new
+      license</a>
 
-  <!-- check for queryCount in the session -->
-  {{#if queryCount}}
-    <div>
-      <strong>{{queryCount}}</strong>
-    </div>
-  {{/if}}
-</div>
+    <!-- check for queryCount in the session -->
+    {{#if queryCount}}
+      <div>
+        <strong>{{queryCount}}</strong>
+      </div>
+    {{/if}}
+  </div>
 
-<!-- Table -->
-<section class="row">
-  <div class="col-12">
-    <table
-      class="sortable table table-sm table-bordered table-striped table-hover"
-    >
-      <thead>
-        <tr>
-          <th>Owner ID</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Address</th>
-          <th>Town</th>
-          <th>Home Phone</th>
-          <th>Email</th>
-        </tr>
+  <!-- Table -->
+  <section class="row">
+    <div class="col-12">
+      <table
+        class="sortable table table-sm table-bordered table-striped table-hover"
+      >
+        <thead>
+          <tr>
+            <th>Owner ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Address</th>
+            <th>Town</th>
+            <th>Home Phone</th>
+            <th>Email</th>
+          </tr>
         </thead>
         <tbody>
           {{#each data}}
             <tr>
-              <td><a id="ownerLink" href="/dogtags/owner/{{this.ownerID}}">{{this.ownerID}}</a></td>
+              <td><a
+                  id="ownerLink"
+                  href="/dogtags/owner/{{this.ownerID}}"
+                >{{this.ownerID}}</a></td>
               <td>{{this.firstName}}</td>
               <td>{{this.lastName}}</td>
               <td>{{this.address}}</td>
@@ -84,18 +84,19 @@
             </tr>
           {{/each}}
         </tbody>
-    </table>
-    <a onclick="togglePagination()" href="#pagination" id="pagJump">Jump to
-      page...</a>
-    <nav id="pagination" style="display: none;">
-      <ul class="pagination pagination-sm">
-        {{#each pages}}
-          <li class="page-item"><a
-              class="page-link"
-              href="?skip={{inc @index}}&page={{@index}}"
-            >{{@index}}</a></li>
-        {{/each}}
-      </ul>
-    </nav>
-  </div>
-</section>
+      </table>
+      <a onclick="togglePagination()" href="#pagination" id="pagJump">Jump to
+        page...</a>
+      <nav id="pagination" style="display: none;">
+        <ul class="pagination pagination-sm">
+          {{#each pages}}
+            <li class="page-item"><a
+                class="page-link"
+                href="?skip={{inc @index}}&page={{@index}}"
+              >{{@index}}</a></li>
+          {{/each}}
+        </ul>
+      </nav>
+    </div>
+  </section>
+</div>

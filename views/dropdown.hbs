@@ -1,7 +1,6 @@
 <div class="container d-flex align-items-center flex-column">
    <h2>Forms</h2>
 </div>
-
 <div class="container">
    <ul>
       <a class="panel panel-heading infoPanel" href="#">
@@ -16,64 +15,58 @@
       </a>
    </ul>
 </div>
-
-<!-- Table -->
-<section class="row">
-   <div class="col-12">
-      <table class="table table-striped table-hover">
-         <thead>
-            <tr>
-               <th>Dropdown ID</th>
-               <th>Value</th>
-               <th>isDisabled</th>
-               <th>Created At</th>
-               <th>Actions</th>
-            </tr>
-         <tbody>
-            {{#each data}}
-            <tr>
-               <td>{{this.dropdownID}}</td>
-               <td>{{this.value}}</td>
-               <td>{{this.isDisabled}}</td>
-               <td>{{this.createdAt}}</td>
-               <td><a href="/dropdown/enable/{{this.dropdownID}}" class="btn btn-success">Enable</a> <a href="/dropdown/disable/{{this.dropdownID}}" class="btn btn-secondary">Disable</a>
-            </tr>
-            {{/each}}
-         </tbody>
-         </thead>
-      </table>
+<div class="content">
+   <!-- Table -->
+   <div class="row">
+      <div class="col-12">
+         <table class="table table-striped table-hover">
+            <thead>
+               <tr>
+                  <th>Dropdown ID</th>
+                  <th>Value</th>
+                  <th>isDisabled</th>
+                  <th>Created At</th>
+                  <th>Actions</th>
+               </tr>
+            </thead>
+            <tbody>
+               {{#each data}}
+               <tr>
+                  <td>{{this.dropdownID}}</td>
+                  <td>{{this.value}}</td>
+                  <td>{{this.isDisabled}}</td>
+                  <td>{{this.createdAt}}</td>
+                  <td><a href="/dropdown/enable/{{this.dropdownID}}" class="btn btn-success">Enable</a> <a href="/dropdown/disable/{{this.dropdownID}}" class="btn btn-secondary">Disable</a>
+               </tr>
+               {{/each}}
+            </tbody>
+         </table>
+      </div>
    </div>
-</section>
-
-<!-- check for error messages in the session -->
-{{#if message}}
+   <!-- check for error messages in the session -->
+   {{#if message}}
    <div class="alert alert-danger">
       {{message}}
    </div>
-{{/if}}
-
-<!-- Add new dropdown value -->
-<section class="row">
-   <div class="container">
-      <div>
-         <h2>Add new value</h2>
-         <form method="POST">
-            <input name="value" class="form-control" placeholder="New Value..." type="text" required>
-            <br>
-            <button class="btn btn-primary">Submit</button>
-         </form>
-      </div>
+   {{/if}}
+   <!-- Add new dropdown value -->
+   <div class="row">
+      <h4>Add new value</h4>
+      <form method="POST">
+         <input name="value" class="form-control" placeholder="New Value..." type="text" required>
+         <br>
+         <button class="btn btn-primary" type="submit">Submit</button>
+      </form>
    </div>
-</section>
-
-<section class="row">
-   <h4>Dropdown</h4>
-   <div class="container">
+   <div class="row">
+      <div class="col-12">
+         <h4>Dropdown</h4>
          <select name="dropdown" id="dropdown">
             <option value="default" disabled selected>select a value...</option>
-               {{#each data}}
-                <option value="{{this.dropdownID}}" {{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>
-               {{/each}}
+            {{#each data}}
+            <option value="{{this.dropdownID}}" {{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>
+            {{/each}}
          </select>
       </div>
-</section>
+   </div>
+</div>
