@@ -1,6 +1,7 @@
 <div class="container d-flex align-items-center flex-column">
    <h2>Forms</h2>
 </div>
+
 <div class="container">
    <ul>
       <a class="panel panel-heading infoPanel" href="#">
@@ -15,6 +16,7 @@
       </a>
    </ul>
 </div>
+
 <div class="content">
    <!-- Table -->
    <div class="row">
@@ -50,23 +52,26 @@
    </div>
    {{/if}}
    <!-- Add new dropdown value -->
+   <h4>Add A New Value</h4>
+   <form method="POST">
+      <div class="row">
+         <div class="col-sm-2">
+            <input name="value" class="form-control" placeholder="New Value..." type="text" required>
+         </div>
+      </div>
+      <button class="btn btn-primary" type="submit">Submit</button>
+   </form>
    <div class="row">
-      <h4>Add new value</h4>
-      <form method="POST">
-         <input name="value" class="form-control" placeholder="New Value..." type="text" required>
-         <br>
-         <button class="btn btn-primary" type="submit">Submit</button>
-      </form>
-   </div>
-   <div class="row">
-      <div class="col-12">
-         <h4>Dropdown</h4>
-         <select name="dropdown" id="dropdown">
-            <option value="default" disabled selected>select a value...</option>
-            {{#each data}}
-            <option value="{{this.dropdownID}}" {{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>
-            {{/each}}
-         </select>
+      <h4>Test Dropdown</h4>
+      <div class="row">
+         <div class="col-sm-2">
+            <select name="dropdown" class="form-select" id="dropdown">
+               <option value="default" disabled selected>select a value...</option>
+               {{#each data}}
+               <option value="{{this.dropdownID}}" {{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>
+               {{/each}}
+            </select>
+         </div>
       </div>
    </div>
 </div>
