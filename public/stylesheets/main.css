@@ -209,3 +209,7 @@ form h4 {
 .footer {
   margin-top: auto;
 }
+
+#licenseSubmit {
+  margin-bottom: 50px;
+}
