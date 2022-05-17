@@ -24,6 +24,14 @@ table {
   color: #fff !important;
 }
 
+/* this makes the entire table cell clickable for the anchor tag. */
+.table #ownerLink {
+  display: block;
+  width: 100%;
+  color: #0096d6 !important;
+  text-decoration: underline;
+}
+
 /* Nav */
 #menu_panel {
   height: 100%;
@@ -106,7 +114,7 @@ table {
 }
 
 .panel-heading {
-  padding: 10px 0px 5px 10px;
+  padding: 10px 20 5px 10px;
 }
 
 .infoPanel {
@@ -134,7 +142,7 @@ table {
 }
 
 #pagJump {
-  font-size: .9rem;
+  font-size: 0.9rem;
   padding-bottom: 10px;
   color: #0096d6 !important;
   cursor: pointer;
@@ -159,4 +167,22 @@ table {
 
 #filterValue {
   border-width: thin;
+}
+
+/* add dog license */
+#addLicenseForm {
+  max-width: 725px;
+  margin: auto;
+}
+
+#addLicenseForm .form-label {
+  font-weight: 525;
+}
+
+.row {
+  padding-bottom: 10px;
+}
+
+form h4 {
+  padding-top: 25px;
 }

@@ -1,0 +1,36 @@
+<div class="container d-flex align-items-center flex-column">
+  <h2>Owner Details</h2>
+</div>
+
+<div>
+  <strong>Owner: {{ownerName}}</strong>
+</div>
+
+<section class="row">
+  <div class="col-12">
+    <table
+      class="sortable table table-sm table-bordered table-striped table-hover"
+    >
+      <thead>
+        <tr>
+          <th>Dog Name</th>
+          <th>Dog Breed</th>
+          <th>Issue Date</th>
+          <th>Expiry Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+          <tr>
+            <td>{{this.name}}</td>
+            <td>{{this.breed}}</td>
+            <td>{{this.issueDate}}</td>
+            <td>{{this.expiryDate}}</td>
+            <td><a href="#" class="btn btn-primary">Renew</a>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</section>

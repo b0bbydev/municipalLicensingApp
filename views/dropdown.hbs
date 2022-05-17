@@ -45,13 +45,20 @@
    </div>
 </section>
 
+<!-- check for error messages in the session -->
+{{#if message}}
+   <div class="alert alert-danger">
+      {{message}}
+   </div>
+{{/if}}
+
 <!-- Add new dropdown value -->
 <section class="row">
    <div class="container">
       <div>
          <h2>Add new value</h2>
          <form method="POST">
-            <input name="value" class="form-control" placeholder="Dropdown Value" type="text">
+            <input name="value" class="form-control" placeholder="New Value..." type="text" required>
             <br>
             <button class="btn btn-primary">Submit</button>
          </form>
@@ -70,12 +77,3 @@
          </select>
       </div>
 </section>
-
-{{!-- 
-<section class="row">
-   <div>
-      <h3>Test Functions</h3>
-      <button class="btn btn-primary">Insert test record</button>
-   </div>
-</section>
---}}
