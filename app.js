@@ -8,6 +8,8 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 const hbs = require("hbs");
+// include pagination library.
+const paginate = require("express-paginate");
 // include config files.
 const sessionStoreConfig = require("./config/sessionStore");
 const db = require("./config/db");
@@ -15,8 +17,6 @@ const db = require("./config/db");
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
-// include pagination library.
-const paginate = require("express-paginate");
 
 // create routes here.
 var loginRouter = require("./routes/login");
@@ -24,9 +24,10 @@ var indexRouter = require("./routes/index");
 var dropdownRouter = require("./routes/dropdown");
 var planningDivisionRouter = require("./routes/planningDivision");
 
-/* dogtag routes. */
+/* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
 var addOwnerRouter = require("./routes/dogtags/addOwner");
+var addDogRouter = require("./routes/dogtags/addDog");
 
 var app = express();
 
@@ -80,9 +81,12 @@ hbs.registerHelper("inc", function (value, options) {
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
 app.use("/dropdown", dropdownRouter);
+app.use("/planningDivision", planningDivisionRouter);
+
+/* dogtag related routes. */
 app.use("/dogtags", dogTagRouter);
 app.use("/dogtags/addOwner", addOwnerRouter);
-app.use("/planningDivision", planningDivisionRouter);
+app.use("/dogtags/addDog", addDogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -1,10 +1,9 @@
 var express = require("express");
-const { insertOwner } = require("../../config/dbHelpers");
 var router = express.Router();
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 
-/* GET addLicense page. */
+/* GET addOwner page. */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
