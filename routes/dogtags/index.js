@@ -185,8 +185,13 @@ router.get("/renew/:id", async (req, res, next) => {
 });
 
 /* POST /dogtags/renew/:id */
-router.post("", async (req, res, next) => {
+router.post("/renew/:id", async (req, res, next) => {
   // db stuff.
+  dbHelpers.updateLicenses(
+    req.body.issueDate,
+    req.body.expiryDate,
+    req.params.id
+  );
 
   // redirect back to dogtags.
   res.redirect("/dogtags");
