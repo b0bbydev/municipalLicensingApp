@@ -1,4 +1,5 @@
 var express = require("express");
+const { insertOwner } = require("../../config/dbHelpers");
 var router = express.Router();
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
@@ -20,28 +21,18 @@ router.get("/", async (req, res, next) => {
 
 /* POST addLicense */
 router.post("/", async (req, res, next) => {
-  // insert owner, address and dog information.
-  dbHelpers.insertOwnerAndDogInfo(
+  // insert into db.
+  dbHelpers.insertOwner(
     req.body.firstName,
     req.body.lastName,
-    req.body.poBoxAptRR,
-    req.body.address,
-    req.body.town,
-    req.body.postalCode,
     req.body.homePhone,
     req.body.cellPhone,
     req.body.workPhone,
     req.body.email,
-    req.body.tagNumber,
-    req.body.dogName,
-    req.body.breed,
-    req.body.colour,
-    req.body.dateOfBirth,
-    req.body.gender,
-    req.body.spade,
-    req.body.designation,
-    req.body.rabiesTagNumber,
-    req.body.rabiesExpiry
+    req.body.address,
+    req.body.poBoxAptRR,
+    req.body.town,
+    req.body.postalCode
   );
 
   // redirect back to dogtag index after success.
