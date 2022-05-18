@@ -26,7 +26,7 @@ var planningDivisionRouter = require("./routes/planningDivision");
 
 /* dogtag routes. */
 var dogTagRouter = require("./routes/dogtags/index");
-var addDogTagRouter = require("./routes/dogtags/addLicense");
+var addOwnerRouter = require("./routes/dogtags/addOwner");
 
 var app = express();
 
@@ -76,16 +76,12 @@ hbs.registerHelper("inc", function (value, options) {
   return parseInt(value) * 50;
 });
 
-hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
-  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
-});
-
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
 app.use("/dropdown", dropdownRouter);
 app.use("/dogtags", dogTagRouter);
-app.use("/dogtags/addLicense", addDogTagRouter);
+app.use("/dogtags/addOwner", addOwnerRouter);
 app.use("/planningDivision", planningDivisionRouter);
 
 // catch 404 and forward to error handler

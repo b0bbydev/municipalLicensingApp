@@ -11,7 +11,7 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  res.render("dogtags/addLicense", {
+  res.render("dogtags/addOwner", {
     title: "BWG | Add Dogtag License",
     errorMessages: messages,
     email: req.session.email,
