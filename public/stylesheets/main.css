@@ -26,7 +26,7 @@ a {
 }
 
 h2 {
-  padding: 10px;
+  padding-top: 15px;
 }
 
 table {
@@ -45,6 +45,11 @@ table {
   width: 100%;
   color: #0096d6 !important;
   text-decoration: underline;
+}
+
+#title {
+  text-align: center;
+  display: block;
 }
 
 /* Nav */
@@ -166,6 +171,7 @@ table {
 
 /* this is so the table doesn't wrap the phone number text. */
 .phoneNum {
+  width: -moz-fit-content; /* firefox */
   width: fit-content;
 }
 
@@ -212,7 +218,7 @@ form h4 {
 }
 
 #licenseSubmit {
-  margin-bottom: 50px;
+  margin-top: 10px;
 }
 
 #addNewLicenseButton {
