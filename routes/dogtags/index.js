@@ -184,4 +184,12 @@ router.get("/renew/:id", async (req, res, next) => {
   });
 });
 
+/* POST /dogtags/renew/:id */
+router.post("", async (req, res, next) => {
+  // db stuff.
+
+  // redirect back to dogtags.
+  res.redirect("/dogtags");
+});
+
 module.exports = router;
