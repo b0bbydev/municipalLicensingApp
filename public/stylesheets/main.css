@@ -12,12 +12,8 @@ body {
 
 .content {
   background-color: #fff !important;
-  margin-left: 260px;
-  margin-right: 10px;
-}
-
-body {
-  padding-bottom: 10px;
+  margin-left: 255px;
+  margin-right: 5px;
 }
 
 a {
@@ -202,6 +198,7 @@ table {
 
 .row {
   padding-bottom: 10px;
+  margin: auto;
 }
 
 form h4 {
