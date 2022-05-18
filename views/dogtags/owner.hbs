@@ -1,5 +1,5 @@
 <div class="content">
-  <h2 id="title">Owner Details</h2>
+  <h2 id="title">Owner Profile</h2>
   <div class="row">
     <div class="col">
       <a
@@ -21,7 +21,7 @@
       >
         <thead>
           <tr>
-            <th>Actions</th>
+            <th>License</th>
             <th>Tag Number</th>
             <th>Dog Name</th>
             <th>Dog Breed</th>
@@ -30,7 +30,7 @@
             <th>Date Of Birth</th>
             <th>Designation</th>
             <th>Spade/Neutered</th>
-            <th id="test">Rabies Tag Number</th>
+            <th>Rabies Tag Number</th>
             <th>Rabies Expiry</th>
             <th>Vet Office</th>
           </tr>
@@ -38,7 +38,10 @@
         <tbody>
           {{#each data}}
             <tr>
-              <td><a href="#" class="btn btn-sm btn-secondary">Renew</a></td>
+              <td><a
+                  href="/dogtags/renew/{{this.dogID}}"
+                  class="btn btn-sm btn-secondary"
+                >Renew</a></td>
               <td>{{this.tagNumber}}</td>
               <td>{{this.dogName}}</td>
               <td>{{this.breed}}</td>
