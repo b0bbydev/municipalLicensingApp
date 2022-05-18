@@ -112,8 +112,7 @@ router.get("/owner/:id", async (req, res, next) => {
   req.session.messages = [];
 
   // send ownerID to session.
-  var ownerID = req.params.id;
-  req.session.ownerID = ownerID;
+  req.session.ownerID = req.params.id;
 
   // dogLicense data.
   var data = await dbHelpers.getDogLicenseInfo(req.params.id);
@@ -127,7 +126,7 @@ router.get("/owner/:id", async (req, res, next) => {
     errorMessages: messages,
     email: req.session.email,
     ownerName: ownerName,
-    ownerID: ownerID,
+    ownerID: req.session.ownerID,
     data: data,
   });
 });
@@ -161,6 +160,7 @@ router.post("/addDog/:id", async (req, res, next) => {
     req.body.designation,
     req.body.rabiesTagNumber,
     req.body.rabiesExpiry,
+    req.body.vetOffice,
     req.session.ownerID
   );
 
