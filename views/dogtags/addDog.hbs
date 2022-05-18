@@ -3,6 +3,7 @@
   <form class="row g-2" id="addLicenseForm" method="POST">
     <h4>Dog Information</h4>
     <hr />
+    <!-- Tag Number -->
     <div class="row">
       <div class="col-sm-6">
         <label for="Tag Number" class="form-label">Tag Number</label>
@@ -13,6 +14,7 @@
           name="tagNumber"
         />
       </div>
+      <!-- Dog Name -->
       <div class="col-sm-6">
         <label for="Dog Name" class="form-label">Dog Name</label>
         <input
@@ -23,6 +25,7 @@
         />
       </div>
     </div>
+    <!-- Breed -->
     <div class="row">
       <div class="col-sm-6">
         <label for="Breed" class="form-label">Breed</label>
@@ -33,6 +36,7 @@
           name="breed"
         />
       </div>
+      <!-- Colour -->
       <div class="col-sm-6">
         <label for="Colour" class="form-label">Colour</label>
         <input
@@ -43,6 +47,7 @@
         />
       </div>
     </div>
+    <!-- Date of Birth -->
     <div class="row">
       <div class="col-sm-12">
         <label for="Date Of Birth" class="form-label">Date Of Birth</label>
@@ -54,6 +59,7 @@
         />
       </div>
     </div>
+    <!-- Gender -->
     <div class="row">
       <label for="Gender" class="form-label">Gender</label>
       <div class="col-sm-6">
@@ -62,7 +68,7 @@
             class="form-check-input"
             type="radio"
             name="gender"
-            value="male"
+            value="M"
           />
           <label class="form-check-label" for="Male">
             Male
@@ -75,7 +81,7 @@
             class="form-check-input"
             type="radio"
             name="gender"
-            value="female"
+            value="F"
           />
           <label class="form-check-label" for="Female">
             Female
@@ -83,6 +89,7 @@
         </div>
       </div>
     </div>
+    <!-- Spade/Neutered -->
     <div class="row">
       <label for="Spade/Neutered" class="form-label">Spade/Neutered</label>
       <div class="col-sm-4">
@@ -93,7 +100,7 @@
             name="spade"
             value="Spade"
           />
-          <label class="form-check-label" for="Spade/Neutered">
+          <label class="form-check-label" for="Spade">
             Spade
           </label>
         </div>
@@ -106,7 +113,7 @@
             name="spade"
             value="Neutered"
           />
-          <label class="form-check-label" for="Spade/Neutered">
+          <label class="form-check-label" for="Neutered">
             Neutered
           </label>
         </div>
@@ -119,12 +126,13 @@
             name="spade"
             value="No"
           />
-          <label class="form-check-label" for="Spade/Neutered">
+          <label class="form-check-label" for="No">
             No
           </label>
         </div>
       </div>
     </div>
+    <!-- Designation -->
     <div class="row">
       <label for="Designation" class="form-label">Designation</label>
       <div class="col-sm-4">
@@ -133,10 +141,10 @@
             class="form-check-input"
             type="radio"
             name="designation"
-            value="Designation"
+            value="Service"
           />
-          <label class="form-check-label" for="None">
-            None
+          <label class="form-check-label" for="Service">
+            Service
           </label>
         </div>
       </div>
@@ -173,12 +181,18 @@
         <input
           type="text"
           class="form-control"
+          name="rabiesTagNumber"
           placeholder="Rabies Tag Number"
         />
       </div>
       <div class="col-sm-6">
         <label for="Rabies Expiry" class="form-label">Rabies Expiry</label>
-        <input type="date" class="form-control" placeholder="Rabies Expiry" />
+        <input
+          type="date"
+          class="form-control"
+          name="rabiesExpiry"
+          placeholder="Rabies Expiry"
+        />
       </div>
     </div>
     <div class="row">

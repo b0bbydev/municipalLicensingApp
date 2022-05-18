@@ -113,6 +113,7 @@ router.get("/owner/:id", async (req, res, next) => {
 
   // send ownerID to session.
   var ownerID = req.params.id;
+  req.session.ownerID = ownerID;
 
   // dogLicense data.
   var data = await dbHelpers.getDogLicenseInfo(req.params.id);
@@ -139,11 +140,32 @@ router.get("/addDog/:id", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  res.render("dogtags/addDog", {
+  return res.render("dogtags/addDog", {
     title: "BWG | Add Dog",
     errorMessages: messages,
     email: req.session.email,
   });
+});
+
+/* POST addDog page. */
+router.post("/addDog/:id", async (req, res, next) => {
+  // db stuff.
+  dbHelpers.insertDog(
+    req.body.tagNumber,
+    req.body.dogName,
+    req.body.breed,
+    req.body.colour,
+    req.body.dateOfBirth,
+    req.body.gender,
+    req.body.spade,
+    req.body.designation,
+    req.body.rabiesTagNumber,
+    req.body.rabiesExpiry,
+    req.session.ownerID
+  );
+
+  // redirect to /dogtags
+  res.redirect("/dogtags");
 });
 
 module.exports = router;
