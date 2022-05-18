@@ -27,7 +27,6 @@ var planningDivisionRouter = require("./routes/planningDivision");
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
 var addOwnerRouter = require("./routes/dogtags/addOwner");
-var addDogRouter = require("./routes/dogtags/addDog");
 
 var app = express();
 
@@ -86,7 +85,6 @@ app.use("/planningDivision", planningDivisionRouter);
 /* dogtag related routes. */
 app.use("/dogtags", dogTagRouter);
 app.use("/dogtags/addOwner", addOwnerRouter);
-app.use("/dogtags/addDog", addDogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
