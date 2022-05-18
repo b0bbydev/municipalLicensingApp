@@ -127,6 +127,7 @@ router.get("/owner/:id", async (req, res, next) => {
     email: req.session.email,
     ownerName: ownerName,
     ownerID: req.session.ownerID,
+    queryCount: "Records returned: " + data.length,
     data: data,
   });
 });

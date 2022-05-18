@@ -14,6 +14,13 @@
     </div>
   </div>
 
+  <!-- check for queryCount in the session -->
+  {{#if queryCount}}
+    <div>
+      <strong>{{queryCount}}</strong>
+    </div>
+  {{/if}}
+
   <section class="row">
     <div class="col-12">
       <table
@@ -21,7 +28,9 @@
       >
         <thead>
           <tr>
-            <th>License</th>
+            <th>Actions</th>
+            <th>License Issue Date</th>
+            <th>License Expiry Date</th>
             <th>Tag Number</th>
             <th>Dog Name</th>
             <th>Dog Breed</th>
@@ -42,6 +51,8 @@
                   href="/dogtags/renew/{{this.dogID}}"
                   class="btn btn-sm btn-secondary"
                 >Renew</a></td>
+              <td>{{this.issueDate}}</td>
+              <td>{{this.expiryDate}}</td>
               <td>{{this.tagNumber}}</td>
               <td>{{this.dogName}}</td>
               <td>{{this.breed}}</td>
