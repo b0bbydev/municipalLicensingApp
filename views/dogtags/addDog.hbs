@@ -1,0 +1,219 @@
+<div class="content">
+  <h2 id="title">Add Dog</h2>
+  <form class="row g-2" id="addLicenseForm" method="POST">
+    <h4>Dog Information</h4>
+    <hr />
+    <!-- Tag Number -->
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Tag Number" class="form-label">Tag Number</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Tag Number"
+          name="tagNumber"
+        />
+      </div>
+      <!-- Dog Name -->
+      <div class="col-sm-6">
+        <label for="Dog Name" class="form-label">Dog Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Dog Name"
+          name="dogName"
+        />
+      </div>
+    </div>
+    <!-- Breed -->
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Breed" class="form-label">Breed</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Breed"
+          name="breed"
+        />
+      </div>
+      <!-- Colour -->
+      <div class="col-sm-6">
+        <label for="Colour" class="form-label">Colour</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Colour"
+          name="colour"
+        />
+      </div>
+    </div>
+    <!-- Date of Birth -->
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="Date Of Birth" class="form-label">Date Of Birth</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Of Birth"
+          name="dateOfBirth"
+        />
+      </div>
+    </div>
+    <!-- Gender -->
+    <div class="row">
+      <label for="Gender" class="form-label">Gender</label>
+      <div class="col-sm-6">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            value="M"
+          />
+          <label class="form-check-label" for="Male">
+            Male
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            value="F"
+          />
+          <label class="form-check-label" for="Female">
+            Female
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- Spade/Neutered -->
+    <div class="row">
+      <label for="Spade/Neutered" class="form-label">Spade/Neutered</label>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="spade"
+            value="Spade"
+          />
+          <label class="form-check-label" for="Spade">
+            Spade
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="spade"
+            value="Neutered"
+          />
+          <label class="form-check-label" for="Neutered">
+            Neutered
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="spade"
+            value="No"
+          />
+          <label class="form-check-label" for="No">
+            No
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- Designation -->
+    <div class="row">
+      <label for="Designation" class="form-label">Designation</label>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="designation"
+            value="Service"
+          />
+          <label class="form-check-label" for="Service">
+            Service
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="designation"
+            value="Dangerous"
+          />
+          <label class="form-check-label" for="Dangerous">
+            Dangerous
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="designation"
+            value="None"
+          />
+          <label class="form-check-label" for="None">
+            None
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Rabies Tag Number" class="form-label">Rabies Tag Number</label>
+        <input
+          type="text"
+          class="form-control"
+          name="rabiesTagNumber"
+          placeholder="Rabies Tag Number"
+        />
+      </div>
+      <div class="col-sm-6">
+        <label for="Rabies Expiry" class="form-label">Rabies Expiry</label>
+        <input
+          type="date"
+          class="form-control"
+          name="rabiesExpiry"
+          placeholder="Rabies Expiry"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="Vet Office" class="form-label">Vet Office</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Vet Office"
+          name="vetOffice"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="licenseSubmit"
+          class="btn btn-primary"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -111,6 +111,9 @@ router.get("/owner/:id", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
+  // send ownerID to session.
+  req.session.ownerID = req.params.id;
+
   // dogLicense data.
   var data = await dbHelpers.getDogLicenseInfo(req.params.id);
   // call custom query.
@@ -123,8 +126,75 @@ router.get("/owner/:id", async (req, res, next) => {
     errorMessages: messages,
     email: req.session.email,
     ownerName: ownerName,
+    ownerID: req.session.ownerID,
+    queryCount: "Records returned: " + data.length,
     data: data,
   });
+});
+
+/* GET addDog page. */
+router.get("/addDog/:id", async (req, res, next) => {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+
+  // clear session messages
+  req.session.messages = [];
+
+  return res.render("dogtags/addDog", {
+    title: "BWG | Add Dog",
+    errorMessages: messages,
+    email: req.session.email,
+  });
+});
+
+/* POST addDog page. */
+router.post("/addDog/:id", async (req, res, next) => {
+  // db stuff.
+  dbHelpers.insertDog(
+    req.body.tagNumber,
+    req.body.dogName,
+    req.body.breed,
+    req.body.colour,
+    req.body.dateOfBirth,
+    req.body.gender,
+    req.body.spade,
+    req.body.designation,
+    req.body.rabiesTagNumber,
+    req.body.rabiesExpiry,
+    req.body.vetOffice,
+    req.session.ownerID
+  );
+
+  // redirect to /dogtags
+  res.redirect("/dogtags");
+});
+
+/* GET /dogtags/renew/:id page. */
+router.get("/renew/:id", async (req, res, next) => {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+
+  // clear session messages
+  req.session.messages = [];
+
+  res.render("dogtags/renew", {
+    title: "BWG | Owner",
+    errorMessages: messages,
+    email: req.session.email,
+  });
+});
+
+/* POST /dogtags/renew/:id */
+router.post("/renew/:id", async (req, res, next) => {
+  // db stuff.
+  dbHelpers.updateLicenses(
+    req.body.issueDate,
+    req.body.expiryDate,
+    req.params.id
+  );
+
+  // redirect back to dogtags.
+  res.redirect("/dogtags");
 });
 
 module.exports = router;
