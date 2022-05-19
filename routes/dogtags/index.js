@@ -178,7 +178,7 @@ router.get("/renew/:id", async (req, res, next) => {
   req.session.messages = [];
 
   res.render("dogtags/renew", {
-    title: "BWG | Owner",
+    title: "BWG | Renew",
     errorMessages: messages,
     email: req.session.email,
   });
@@ -195,6 +195,21 @@ router.post("/renew/:id", async (req, res, next) => {
 
   // redirect back to dogtags.
   res.redirect("/dogtags");
+});
+
+/* GET /dogtags/issue/:id page. */
+router.get("/issue/:id", async (req, res, next) => {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+
+  // clear session messages
+  req.session.messages = [];
+
+  res.render("dogtags/issue", {
+    title: "BWG | Issue",
+    errorMessages: messages,
+    email: req.session.email,
+  });
 });
 
 module.exports = router;
