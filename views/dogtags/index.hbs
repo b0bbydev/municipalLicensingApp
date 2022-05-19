@@ -4,10 +4,12 @@
     <h4>Filtering</h4>
     <form method="POST">
       <select class="form-select-sm" id="filterCategory" name="filterCategory">
-        <option value="" disabled selected>Filter By...</option>
-        <option value="firstName">First Name</option>
-        <option value="lastName">Last Name</option>
-        <option value="email">Email</option>
+        <option value="" disabled selected>{{#if filterCategory}}
+            {{filterCategory}}
+          {{else}} Filter By... {{/if}}</option>
+        <option value="First Name">First Name</option>
+        <option value="Last Name">Last Name</option>
+        <option value="Email">Email</option>
       </select>
       <!-- filterValue input -->
       <input

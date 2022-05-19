@@ -98,6 +98,13 @@ router.post(
           message: "Please provide a value to filter by!",
           email: req.session.email,
         });
+        // else something weird happens..
+      } else {
+        return res.render("dogtags", {
+          title: "BWG | Dog Tags",
+          message: "Error!",
+          email: req.session.email,
+        });
       }
     }
   }
