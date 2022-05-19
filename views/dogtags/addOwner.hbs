@@ -1,6 +1,12 @@
+<h2 class="text-center">Add Owner</h2>
 <div class="content">
-  <h2 id="title">Add Owner</h2>
   <form class="row g-2" id="addLicenseForm" method="POST">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
     <h4>Owner Information</h4>
     <hr />
     <div class="row">

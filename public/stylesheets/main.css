@@ -43,11 +43,6 @@ table {
   text-decoration: underline;
 }
 
-#title {
-  text-align: center;
-  display: block;
-}
-
 /* Nav */
 #menu_panel {
   height: 100%;
