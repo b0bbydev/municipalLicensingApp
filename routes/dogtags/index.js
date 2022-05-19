@@ -115,7 +115,7 @@ router.get("/owner/:id", async (req, res, next) => {
   req.session.ownerID = req.params.id;
 
   // dogLicense data.
-  var data = await dbHelpers.getDogLicenseInfo(req.params.id);
+  var data = await dbHelpers.getDogs(req.params.id);
   // call custom query.
   var ownerName = await dbHelpers.getNameFromOwnerID(req.params.id);
   // form the name by concatenating the firstName & lastName columns.
@@ -169,6 +169,35 @@ router.post("/addDog/:id", async (req, res, next) => {
   res.redirect("/dogtags");
 });
 
+/* GET /dogtags/issue/:id page. */
+router.get("/issue/:id", async (req, res, next) => {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+
+  // clear session messages
+  req.session.messages = [];
+
+  res.render("dogtags/issue", {
+    title: "BWG | Issue",
+    errorMessages: messages,
+    email: req.session.email,
+  });
+});
+
+/* POST /dogtags/issue/:id */
+router.post("/issue/:id", async (req, res, next) => {
+  // db stuff.
+  dbHelpers.issueLicense(
+    req.body.issueDate,
+    req.body.expiryDate,
+    req.session.ownerID,
+    req.params.id
+  );
+
+  // redirect back to dogtags.
+  res.redirect("/dogtags");
+});
+
 /* GET /dogtags/renew/:id page. */
 router.get("/renew/:id", async (req, res, next) => {
   // check if there's an error message in the session
@@ -195,21 +224,6 @@ router.post("/renew/:id", async (req, res, next) => {
 
   // redirect back to dogtags.
   res.redirect("/dogtags");
-});
-
-/* GET /dogtags/issue/:id page. */
-router.get("/issue/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-
-  // clear session messages
-  req.session.messages = [];
-
-  res.render("dogtags/issue", {
-    title: "BWG | Issue",
-    errorMessages: messages,
-    email: req.session.email,
-  });
 });
 
 module.exports = router;

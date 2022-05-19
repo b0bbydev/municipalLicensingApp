@@ -28,9 +28,6 @@
       >
         <thead>
           <tr>
-            <th>Actions</th>
-            <th>License Issue Date</th>
-            <th>License Expiry Date</th>
             <th>Tag Number</th>
             <th>Dog Name</th>
             <th>Dog Breed</th>
@@ -47,18 +44,6 @@
         <tbody>
           {{#each data}}
             <tr>
-              <td>
-                <a
-                  href="/dogtags/issue/{{this.dogID}}"
-                  class="btn btn-sm btn-primary"
-                >Issue</a>
-                |
-                <a
-                  href="/dogtags/renew/{{this.dogID}}"
-                  class="btn btn-sm btn-secondary"
-                >Renew</a></td>
-              <td>{{this.issueDate}}</td>
-              <td>{{this.expiryDate}}</td>
               <td>{{this.tagNumber}}</td>
               <td>{{this.dogName}}</td>
               <td>{{this.breed}}</td>
