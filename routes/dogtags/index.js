@@ -173,7 +173,9 @@ router.post(
   "/addDog/:id",
   body("tagNumber").isNumeric().trim(),
   body("dogName").isAlpha().trim(),
-  body("breed").isAlpha().trim(),
+  body("breed")
+    .matches(/^[a-zA-Z ]+$/)
+    .trim(),
   body("colour").isAlpha().trim(),
   body("dateOfBirth").isDate().trim(),
   body("gender").isAlpha().trim(),
