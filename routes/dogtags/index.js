@@ -98,6 +98,13 @@ router.post(
           message: "Please provide a value to filter by!",
           email: req.session.email,
         });
+        // else something weird happens..
+      } else {
+        return res.render("dogtags", {
+          title: "BWG | Dog Tags",
+          message: "Error!",
+          email: req.session.email,
+        });
       }
     }
   }
@@ -115,7 +122,7 @@ router.get("/owner/:id", async (req, res, next) => {
   req.session.ownerID = req.params.id;
 
   // dogLicense data.
-  var data = await dbHelpers.getDogLicenseInfo(req.params.id);
+  var data = await dbHelpers.getDogs(req.params.id);
   // call custom query.
   var ownerName = await dbHelpers.getNameFromOwnerID(req.params.id);
   // form the name by concatenating the firstName & lastName columns.
@@ -162,6 +169,10 @@ router.post("/addDog/:id", async (req, res, next) => {
     req.body.rabiesTagNumber,
     req.body.rabiesExpiry,
     req.body.vetOffice,
+    req.session.ownerID,
+    // license
+    req.body.issueDate,
+    req.body.expiryDate,
     req.session.ownerID
   );
 
@@ -178,7 +189,7 @@ router.get("/renew/:id", async (req, res, next) => {
   req.session.messages = [];
 
   res.render("dogtags/renew", {
-    title: "BWG | Owner",
+    title: "BWG | Renew",
     errorMessages: messages,
     email: req.session.email,
   });
