@@ -28,6 +28,7 @@
       >
         <thead>
           <tr>
+            <th>Actions</th>
             <th>License Issue Date</th>
             <th>License Expiry Date</th>
             <th>Tag Number</th>
@@ -46,6 +47,10 @@
         <tbody>
           {{#each data}}
             <tr>
+              <td><a
+                  href="/dogtags/renew/{{this.dogID}}"
+                  class="btn btn-sm btn-secondary"
+                >Renew</a></td>
               <td>{{this.issueDate}}</td>
               <td>{{this.expiryDate}}</td>
               <td>{{this.tagNumber}}</td>
