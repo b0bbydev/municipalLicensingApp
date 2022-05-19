@@ -8,7 +8,7 @@ var filterHelpers = require("../../config/filterHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
-const { body, query, validationResult } = require("express-validator");
+const { body, param, query, validationResult } = require("express-validator");
 
 /* GET dogtag page. */
 router.get(
@@ -20,7 +20,6 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      // render dropdown page with error message.
       return res.render("dogtags", {
         title: "BWG | Dogtags",
         message: "Page Error!",
@@ -102,7 +101,7 @@ router.post(
       } else {
         return res.render("dogtags", {
           title: "BWG | Dog Tags",
-          message: "Error!",
+          message: "Please ensure filtering conditions are valid!",
           email: req.session.email,
         });
       }
@@ -111,33 +110,48 @@ router.post(
 ); // end of post.
 
 /* GET owner page. */
-router.get("/owner/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
+router.get(
+  "/owner/:id",
+  param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // clear session messages
-  req.session.messages = [];
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags", {
+        title: "BWG | Owner",
+        message: "Error!",
+        email: req.session.email,
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
 
-  // send ownerID to session.
-  req.session.ownerID = req.params.id;
+      // clear session messages
+      req.session.messages = [];
 
-  // dogLicense data.
-  var data = await dbHelpers.getDogs(req.params.id);
-  // call custom query.
-  var ownerName = await dbHelpers.getNameFromOwnerID(req.params.id);
-  // form the name by concatenating the firstName & lastName columns.
-  ownerName = ownerName[0].firstName + " " + ownerName[0].lastName;
+      // send ownerID to session; should be safe to do so here after validation.
+      req.session.ownerID = req.params.id;
 
-  res.render("dogtags/owner", {
-    title: "BWG | Owner",
-    errorMessages: messages,
-    email: req.session.email,
-    ownerName: ownerName,
-    ownerID: req.session.ownerID,
-    queryCount: "Records returned: " + data.length,
-    data: data,
-  });
-});
+      // dogLicense data.
+      var data = await dbHelpers.getDogs(req.params.id);
+      // get ownerName from custom query.
+      var ownerName = await dbHelpers.getNameFromOwnerID(req.params.id);
+      ownerName = ownerName[0].firstName + " " + ownerName[0].lastName;
+
+      return res.render("dogtags/owner", {
+        title: "BWG | Owner",
+        errorMessages: messages,
+        email: req.session.email,
+        ownerName: ownerName,
+        ownerID: req.session.ownerID,
+        queryCount: "Dog(s) on record: " + data.length,
+        data: data,
+      });
+    }
+  }
+);
 
 /* GET addDog page. */
 router.get("/addDog/:id", async (req, res, next) => {
@@ -155,57 +169,116 @@ router.get("/addDog/:id", async (req, res, next) => {
 });
 
 /* POST addDog page. */
-router.post("/addDog/:id", async (req, res, next) => {
-  // db stuff.
-  dbHelpers.insertDog(
-    req.body.tagNumber,
-    req.body.dogName,
-    req.body.breed,
-    req.body.colour,
-    req.body.dateOfBirth,
-    req.body.gender,
-    req.body.spade,
-    req.body.designation,
-    req.body.rabiesTagNumber,
-    req.body.rabiesExpiry,
-    req.body.vetOffice,
-    req.session.ownerID,
-    // license
-    req.body.issueDate,
-    req.body.expiryDate,
-    req.session.ownerID
-  );
+router.post(
+  "/addDog/:id",
+  body("tagNumber").isNumeric().trim(),
+  body("dogName").isAlpha().trim(),
+  body("breed").isAlpha().trim(),
+  body("colour").isAlpha().trim(),
+  body("dateOfBirth").isDate().trim(),
+  body("gender").isAlpha().trim(),
+  body("spade").isAlpha().trim(),
+  body("designation").isAlpha().trim(),
+  body("rabiesTagNumber").isNumeric().trim(),
+  body("rabiesExpiry").isDate().trim(),
+  body("vetOffice").isAlpha().trim(),
+  body("issueDate").isDate().trim(),
+  body("expiryDate").isDate().trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // redirect to /dogtags
-  res.redirect("/dogtags");
-});
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags", {
+        title: "BWG | Owner",
+        message: "Form Error!",
+        email: req.session.email,
+      });
+    } else {
+      // insert dog & license into db.
+      dbHelpers.insertDog(
+        req.body.tagNumber,
+        req.body.dogName,
+        req.body.breed,
+        req.body.colour,
+        req.body.dateOfBirth,
+        req.body.gender,
+        req.body.spade,
+        req.body.designation,
+        req.body.rabiesTagNumber,
+        req.body.rabiesExpiry,
+        req.body.vetOffice,
+        req.session.ownerID,
+        // license
+        req.body.issueDate,
+        req.body.expiryDate,
+        req.session.ownerID
+      );
+
+      // redirect to /dogtags
+      res.redirect("/dogtags");
+    }
+  }
+);
 
 /* GET /dogtags/renew/:id page. */
-router.get("/renew/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
+router.get(
+  "/renew/:id",
+  param("id").isNumeric().trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // clear session messages
-  req.session.messages = [];
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags/renew", {
+        title: "BWG | Renew",
+        message: "Page Error!",
+        email: req.session.email,
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
 
-  res.render("dogtags/renew", {
-    title: "BWG | Renew",
-    errorMessages: messages,
-    email: req.session.email,
-  });
-});
+      // clear session messages
+      req.session.messages = [];
+
+      return res.render("dogtags/renew", {
+        title: "BWG | Renew",
+        errorMessages: messages,
+        email: req.session.email,
+      });
+    }
+  }
+);
 
 /* POST /dogtags/renew/:id */
-router.post("/renew/:id", async (req, res, next) => {
-  // db stuff.
-  dbHelpers.updateLicenses(
-    req.body.issueDate,
-    req.body.expiryDate,
-    req.params.id
-  );
+router.post(
+  "/renew/:id",
+  body("issueDate").isDate().trim(),
+  body("expiryDate").isDate().trim(),
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags/renew", {
+        title: "BWG | Renew",
+        message: "Form Error!",
+        email: req.session.email,
+      });
+    } else {
+      // update licenses.
+      dbHelpers.updateLicenses(
+        req.body.issueDate,
+        req.body.expiryDate,
+        req.params.id
+      );
 
-  // redirect back to dogtags.
-  res.redirect("/dogtags");
-});
+      // redirect back to dogtags.
+      res.redirect("/dogtags");
+    }
+  }
+);
 
 module.exports = router;
