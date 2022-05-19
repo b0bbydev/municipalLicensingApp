@@ -190,8 +190,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("dogtags", {
-        title: "BWG | Owner",
+      return res.render("dogtags/addDog", {
+        title: "BWG | Add Dog",
         message: "Form Error!",
         email: req.session.email,
       });
@@ -260,6 +260,9 @@ router.post(
   body("expiryDate").isDate().trim(),
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       return res.render("dogtags/renew", {

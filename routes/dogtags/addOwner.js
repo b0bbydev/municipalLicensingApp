@@ -14,13 +14,13 @@ router.get("/", async (req, res, next) => {
   req.session.messages = [];
 
   res.render("dogtags/addOwner", {
-    title: "BWG | Add Dogtag License",
+    title: "BWG | Add Owner",
     errorMessages: messages,
     email: req.session.email,
   });
 });
 
-/* POST addLicense */
+/* POST addOwner */
 router.post(
   "/",
   body("firstName").isAlpha().trim(),
@@ -39,9 +39,9 @@ router.post(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("dogtags/owner", {
+      return res.render("dogtags/addOwner", {
         title: "BWG | Owner",
-        message: "Page Error!",
+        message: "Form Error!",
       });
     } else {
       // insert into owner table.
