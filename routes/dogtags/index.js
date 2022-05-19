@@ -162,6 +162,10 @@ router.post("/addDog/:id", async (req, res, next) => {
     req.body.rabiesTagNumber,
     req.body.rabiesExpiry,
     req.body.vetOffice,
+    req.session.ownerID,
+    // license
+    req.body.issueDate,
+    req.body.expiryDate,
     req.session.ownerID
   );
 
