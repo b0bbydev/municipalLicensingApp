@@ -196,6 +196,18 @@ router.post(
         title: "BWG | Add Dog",
         message: "Form Error!",
         email: req.session.email,
+        formData: {
+          tagNumber: req.body.tagNumber,
+          dogName: req.body.dogName,
+          breed: req.body.breed,
+          colour: req.body.colour,
+          dateOfBirth: req.body.dateOfBirth,
+          rabiesTagNumber: req.body.rabiesTagNumber,
+          rabiesExpiry: req.body.rabiesExpiry,
+          vetOffice: req.body.vetOffice,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
+        },
       });
     } else {
       // insert dog & license into db.
