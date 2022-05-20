@@ -101,7 +101,7 @@ router.post(
       } else {
         return res.render("dogtags", {
           title: "BWG | Dog Tags",
-          message: "Please ensure filtering conditions are valid!",
+          message: "Please ensure both filtering conditions are valid!",
           email: req.session.email,
         });
       }
@@ -173,7 +173,9 @@ router.post(
   "/addDog/:id",
   body("tagNumber").isNumeric().trim(),
   body("dogName").isAlpha().trim(),
-  body("breed").isAlpha().trim(),
+  body("breed")
+    .matches(/^[a-zA-Z ]+$/)
+    .trim(),
   body("colour").isAlpha().trim(),
   body("dateOfBirth").isDate().trim(),
   body("gender").isAlpha().trim(),

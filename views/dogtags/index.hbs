@@ -3,8 +3,15 @@
   <div class="filterDiv">
     <h4>Filtering</h4>
     <form method="POST">
-      <select class="form-select-sm" id="filterCategory" name="filterCategory">
-        <option value="" disabled selected>{{#if filterCategory}}
+      <select
+        class="form-select-sm"
+        id="filterCategory"
+        title="filterSelect"
+        name="filterCategory"
+      >
+        <option value="{{filterCategory}}" disabled selected>{{#if
+            filterCategory
+          }}
             {{filterCategory}}
           {{else}} Filter By... {{/if}}</option>
         <option value="First Name">First Name</option>
