@@ -9,11 +9,7 @@
         title="filterSelect"
         name="filterCategory"
       >
-        <option value="{{filterCategory}}" disabled selected>{{#if
-            filterCategory
-          }}
-            {{filterCategory}}
-          {{else}} Filter By... {{/if}}</option>
+        <option disabled selected>Filter By...</option>
         <option value="First Name">First Name</option>
         <option value="Last Name">Last Name</option>
         <option value="Email">Email</option>
@@ -71,10 +67,12 @@
             <th>Owner ID</th>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>Address</th>
-            <th>Town</th>
             <th>Home Phone</th>
             <th>Email</th>
+            <th>Address</th>
+            <th>POBox/Apt/RR</th>
+            <th>Town</th>
+            <th>Postal Code</th>
           </tr>
         </thead>
         <tbody>
@@ -86,10 +84,12 @@
                 >{{this.ownerID}}</a></td>
               <td>{{this.firstName}}</td>
               <td>{{this.lastName}}</td>
-              <td>{{this.address}}</td>
-              <td>{{this.town}}</td>
               <td class="text-nowrap">{{this.homePhone}}</td>
               <td>{{this.email}}</td>
+              <td>{{this.address}}</td>
+              <td>{{this.poBoxAptRR}}</td>
+              <td>{{this.town}}</td>
+              <td>{{this.postalCode}}</td>
             </tr>
           {{/each}}
         </tbody>

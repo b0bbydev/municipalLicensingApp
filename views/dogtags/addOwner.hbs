@@ -18,6 +18,8 @@
           placeholder="First Name"
           class="form-control"
           name="firstName"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
       <!-- Last Name -->
@@ -28,6 +30,8 @@
           placeholder="Last Name"
           class="form-control"
           name="lastName"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
     </div>
@@ -40,6 +44,8 @@
           class="form-control"
           placeholder="PO Box/Apt/RR"
           name="poBoxAptRR"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
       <!-- Address -->
@@ -50,6 +56,8 @@
           class="form-control"
           placeholder="Address"
           name="address"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
     </div>
@@ -62,6 +70,8 @@
           class="form-control"
           placeholder="Town"
           name="town"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
       <!-- Postal Code -->
@@ -72,6 +82,8 @@
           class="form-control"
           placeholder="Postal Code"
           name="postalCode"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
     </div>
@@ -84,6 +96,8 @@
           class="form-control"
           placeholder="Home Phone"
           name="homePhone"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
       <!-- Cell Phone -->
@@ -94,6 +108,8 @@
           class="form-control"
           placeholder="Cell Phone"
           name="cellPhone"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
       <!-- Work Phone -->
@@ -104,6 +120,8 @@
           class="form-control"
           placeholder="Work Phone"
           name="workPhone"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
     </div>
@@ -112,10 +130,12 @@
       <div class="col-sm-12">
         <label for="Email" class="form-label">Email</label>
         <input
-          type="text"
+          type="email"
           class="form-control"
           placeholder="Email"
           name="email"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
     </div>
