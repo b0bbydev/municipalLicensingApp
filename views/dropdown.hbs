@@ -52,7 +52,8 @@
    <form method="POST">
       <div class="row">
          <div class="col-sm-2">
-            <input name="value" class="form-control" placeholder="New Value..." type="text" required>
+            <label for="Dropdown Value" class="form-label"></label>
+            <input name="value" class="form-control" placeholder="New Value..." type="text" pattern="[^()/><\][\\\x22,;|]+" title="No special characters!" required>
          </div>
       </div>
       <button class="btn btn-primary" type="submit">Submit</button>

@@ -14,7 +14,7 @@
       <div class="col-sm-6">
         <label for="Tag Number" class="form-label">Tag Number</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           placeholder="Tag Number"
           name="tagNumber"
@@ -28,6 +28,8 @@
           class="form-control"
           placeholder="Dog Name"
           name="dogName"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
     </div>
@@ -40,6 +42,8 @@
           class="form-control"
           placeholder="Breed"
           name="breed"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
       <!-- Colour -->
@@ -50,6 +54,8 @@
           class="form-control"
           placeholder="Colour"
           name="colour"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
     </div>
@@ -186,7 +192,7 @@
       <div class="col-sm-6">
         <label for="Rabies Tag Number" class="form-label">Rabies Tag Number</label>
         <input
-          type="text"
+          type="number"
           class="form-control"
           name="rabiesTagNumber"
           placeholder="Rabies Tag Number"
@@ -212,6 +218,8 @@
           class="form-control"
           placeholder="Vet Office"
           name="vetOffice"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
         />
       </div>
     </div>
