@@ -153,7 +153,113 @@ router.get(
   }
 );
 
-/* GET addDog page. */
+/* GET /editOwner page */
+router.get(
+  "/editOwner/:id",
+  param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags", {
+        title: "BWG | Owner",
+        message: "Error!",
+        email: req.session.email,
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+
+      // clear session messages
+      req.session.messages = [];
+
+      // send ownerID to session; should be safe to do so here after validation.
+      req.session.ownerID = req.params.id;
+
+      // get owner information by ID via custom query.
+      var ownerInfo = await dbHelpers.getGetOwnerInfo(req.session.ownerID);
+
+      return res.render("dogtags/editOwner", {
+        title: "BWG | Edit Owner",
+        errorMessages: messages,
+        email: req.session.email,
+        ownerID: req.session.ownerID,
+        ownerInfo: {
+          firstName: ownerInfo[0].firstName,
+          lastName: ownerInfo[0].lastName,
+          homePhone: ownerInfo[0].homePhone,
+          cellPhone: ownerInfo[0].cellPhone,
+          workPhone: ownerInfo[0].workPhone,
+          email: ownerInfo[0].email,
+          address: ownerInfo[0].address,
+          poBoxAptRR: ownerInfo[0].poBoxAptRR,
+          town: ownerInfo[0].town,
+          postalCode: ownerInfo[0].postalCode,
+        },
+      });
+    }
+  }
+);
+
+/* POST /editOwner */
+router.post(
+  "/editOwner/:id",
+  body("firstName").if(body("firstName").notEmpty()).isAlpha().trim(),
+  body("lastName").if(body("lastName").notEmpty()).isAlpha().trim(),
+  body("homePhone")
+    .if(body("homePhone").notEmpty())
+    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .trim(),
+  body("cellPhone")
+    .if(body("cellPhone").notEmpty())
+    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .trim(),
+  body("workPhone")
+    .if(body("workPhone").notEmpty())
+    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .trim(),
+  body("email").isEmail().trim(),
+  body("address")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  body("poBoxAptRR").if(body("poBoxAptRR").notEmpty()).isNumeric().trim(),
+  body("town").if(body("town").notEmpty()).isAlpha().trim(),
+  body("postalCode").if(body("postalCode").notEmpty()).isAlphanumeric().trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags/editOwner", {
+        title: "BWG | Edit Owner",
+        message: "Form Error!",
+      });
+    } else {
+      // insert into owner table.
+      dbHelpers.updateOwner(
+        req.body.firstName,
+        req.body.lastName,
+        req.body.homePhone,
+        req.body.cellPhone,
+        req.body.workPhone,
+        req.body.email,
+        req.body.address,
+        req.body.poBoxAptRR,
+        req.body.town,
+        req.body.postalCode,
+        req.session.ownerID
+      );
+
+      // redirect back to dogtag index after success.
+      res.redirect("/dogtags");
+    }
+  }
+);
+
+/* GET /addDog */
 router.get("/addDog/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -171,21 +277,25 @@ router.get("/addDog/:id", async (req, res, next) => {
 /* POST addDog page. */
 router.post(
   "/addDog/:id",
-  body("tagNumber").isNumeric().trim(),
-  body("dogName").isAlpha().trim(),
+  body("tagNumber").if(body("tagNumber").notEmpty()).isNumeric().trim(),
+  body("dogName").if(body("dogName").notEmpty()).isAlpha().trim(),
   body("breed")
+    .if(body("breed").notEmpty())
     .matches(/^[a-zA-Z ]+$/)
     .trim(),
-  body("colour").isAlpha().trim(),
-  body("dateOfBirth").isDate().trim(),
-  body("gender").isAlpha().trim(),
-  body("spade").isAlpha().trim(),
-  body("designation").isAlpha().trim(),
-  body("rabiesTagNumber").isNumeric().trim(),
-  body("rabiesExpiry").isDate().trim(),
-  body("vetOffice").isAlpha().trim(),
-  body("issueDate").isDate().trim(),
-  body("expiryDate").isDate().trim(),
+  body("colour").if(body("colour").notEmpty()).isAlpha().trim(),
+  body("dateOfBirth").if(body("dateOfBirth").notEmpty()).isDate().trim(),
+  body("gender").if(body("gender").notEmpty()).isAlpha().trim(),
+  body("spade").if(body("spade").notEmpty()).isAlpha().trim(),
+  body("designation").if(body("designation").notEmpty()).isAlpha().trim(),
+  body("rabiesTagNumber")
+    .if(body("rabiesTagNumber").notEmpty())
+    .isNumeric()
+    .trim(),
+  body("rabiesExpiry").if(body("rabiesExpiry").notEmpty()).isDate().trim(),
+  body("vetOffice").if(body("vetOffice").notEmpty()).isAlpha().trim(),
+  body("issueDate").if(body("issueDate").notEmpty()).isDate().trim(),
+  body("expiryDate").if(body("expiryDate").notEmpty()).isDate().trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);

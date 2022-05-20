@@ -73,6 +73,7 @@
             <th>POBox/Apt/RR</th>
             <th>Town</th>
             <th>Postal Code</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -90,6 +91,10 @@
               <td>{{this.poBoxAptRR}}</td>
               <td>{{this.town}}</td>
               <td>{{this.postalCode}}</td>
+              <td><a
+                  href="/dogtags/editOwner/{{this.ownerID}}"
+                  class="btn btn-sm btn-secondary"
+                >Edit</a></td>
             </tr>
           {{/each}}
         </tbody>

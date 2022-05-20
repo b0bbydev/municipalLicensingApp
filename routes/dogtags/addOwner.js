@@ -23,16 +23,25 @@ router.get("/", async (req, res, next) => {
 /* POST addOwner */
 router.post(
   "/",
-  body("firstName").isAlpha().trim(),
-  body("lastName").isAlpha().trim(),
-  body("homePhone").if(body("homePhone").notEmpty()).isMobilePhone().trim(),
-  body("cellPhone").if(body("cellPhone").notEmpty()).isMobilePhone().trim(),
-  body("workPhone").if(body("workPhone").notEmpty()).isMobilePhone().trim(),
-  body("email").isEmail().trim(),
-  body("address").isAlphanumeric().trim(),
-  body("poBoxAptRR").isNumeric().trim(),
-  body("town").isAlpha().trim(),
-  body("postalCode").isAlphanumeric().trim(),
+  body("firstName").if(body("firstName").notEmpty()).isAlpha().trim(),
+  body("lastName").if(body("lastName").notEmpty()).isAlpha().trim(),
+  body("homePhone")
+    .if(body("homePhone").notEmpty())
+    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .trim(),
+  body("cellPhone")
+    .if(body("cellPhone").notEmpty())
+    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .trim(),
+  body("workPhone")
+    .if(body("workPhone").notEmpty())
+    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .trim(),
+  body("email").if(body("email").notEmpty()).isEmail().trim(),
+  body("address").if(body("address").notEmpty()).isAlphanumeric().trim(),
+  body("poBoxAptRR").if(body("poBoxAptRR").notEmpty()).isNumeric().trim(),
+  body("town").if(body("town").notEmpty()).isAlpha().trim(),
+  body("postalCode").if(body("postalCode").notEmpty()).isAlphanumeric().trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
