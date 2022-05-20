@@ -14,9 +14,9 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  var data = await dbHelpers.getAllFromDropdown();
+  var data = await dbHelpers.getAllForms();
 
-  return res.render("dropdown", {
+  return res.render("dropdownManager/index", {
     title: "BWG | Dropdown Manager",
     errorMessages: messages,
     email: req.session.email,
@@ -24,31 +24,45 @@ router.get("/", async (req, res, next) => {
   });
 });
 
+router.get("/form/:id", async (req, res, next) => {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+
+  // clear session messages
+  req.session.messages = [];
+
+  return res.render("dropdownManager/form", {
+    title: "BWG | Add Dog",
+    errorMessages: messages,
+    email: req.session.email,
+  });
+});
+
 /* POST dropdown value */
-router.post(
-  "/",
-  body("value")
-    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
-    .trim(),
-  function (req, res, next) {
-    // server side validation.
-    const errors = validationResult(req);
+// router.post(
+//   "/",
+//   body("value")
+//     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+//     .trim(),
+//   function (req, res, next) {
+//     // server side validation.
+//     const errors = validationResult(req);
 
-    // if errors is NOT empty (if there are errors...)
-    if (!errors.isEmpty()) {
-      // render dropdown page with error message.
-      return res.render("dropdown", {
-        title: "BWG | Dropdown Manager",
-        message: "Invalid entry!",
-      });
-    } else {
-      // insert into db.
-      dbHelpers.insertIntoDropdown(req.body.value);
+//     // if errors is NOT empty (if there are errors...)
+//     if (!errors.isEmpty()) {
+//       // render dropdown page with error message.
+//       return res.render("dropdownManager/index", {
+//         title: "BWG | Dropdown Manager",
+//         message: "Invalid entry!",
+//       });
+//     } else {
+//       // insert into db.
+//       dbHelpers.insertIntoDropdown(req.body.value);
 
-      // redirect to /dropdown if successful. (reload page)
-      res.redirect("/dropdown");
-    }
-  }
-);
+//       // redirect to /dropdown if successful. (reload page)
+//       res.redirect("/dropdownManager");
+//     }
+//   }
+// );
 
 module.exports = router;
