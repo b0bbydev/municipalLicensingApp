@@ -31,10 +31,13 @@ router.get("/form/:id", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
+  var data = await dbHelpers.getAllFromDropdown(req.params.id);
+
   return res.render("dropdownManager/form", {
     title: "BWG | Add Dog",
     errorMessages: messages,
     email: req.session.email,
+    data: data,
   });
 });
 

@@ -1,4 +1,26 @@
 <h2 class="text-center">Form</h2>
 <div class="content">
-
+  <!-- Table -->
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Dropdown ID</th>
+            <th>Value</th>
+            <th>isDisabled</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each data}}
+            <tr>
+              <td>{{this.dropdownID}}</td>
+              <td>{{this.value}}</td>
+              <td>{{this.isDisabled}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
