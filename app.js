@@ -21,8 +21,10 @@ var sessionStore = new MySQLStore(sessionStoreConfig);
 // create routes here.
 var loginRouter = require("./routes/login");
 var indexRouter = require("./routes/index");
-var dropdownRouter = require("./routes/dropdown");
 var planningDivisionRouter = require("./routes/planningDivision");
+
+/* dropdown related routes. */
+var dropdownRouter = require("./routes/dropdownManager/index");
 
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
@@ -79,7 +81,7 @@ hbs.registerHelper("inc", function (value, options) {
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
-app.use("/dropdown", dropdownRouter);
+app.use("/dropdownManager", dropdownRouter);
 app.use("/planningDivision", planningDivisionRouter);
 
 /* dogtag related routes. */

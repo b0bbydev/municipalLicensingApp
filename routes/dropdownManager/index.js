@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
-const { redirectToLogin } = require("../config/authHelpers");
+const { redirectToLogin } = require("../../config/authHelpers");
 // dbHelpers.
-var dbHelpers = require("../config/dbHelpers");
+var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
   var data = await dbHelpers.getAllFromDropdown();
 
   return res.render("dropdown", {
-    title: "BWG | Dropdown",
+    title: "BWG | Dropdown Manager",
     errorMessages: messages,
     email: req.session.email,
     data: data,
@@ -38,12 +38,12 @@ router.post(
     if (!errors.isEmpty()) {
       // render dropdown page with error message.
       return res.render("dropdown", {
-        title: "BWG | Dropdown",
+        title: "BWG | Dropdown Manager",
         message: "Invalid entry!",
       });
     } else {
       // insert into db.
-      dbHelpers.insertToDropdown(req.body.value);
+      dbHelpers.insertIntoDropdown(req.body.value);
 
       // redirect to /dropdown if successful. (reload page)
       res.redirect("/dropdown");
