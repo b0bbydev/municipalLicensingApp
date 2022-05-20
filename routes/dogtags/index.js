@@ -101,7 +101,7 @@ router.post(
       } else {
         return res.render("dogtags", {
           title: "BWG | Dog Tags",
-          message: "Please ensure filtering conditions are valid!",
+          message: "Please ensure both filtering conditions are valid!",
           email: req.session.email,
         });
       }

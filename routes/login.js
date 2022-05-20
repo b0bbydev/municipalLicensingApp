@@ -24,7 +24,7 @@ router.get("/", function (req, res, next) {
   });
 });
 
-/* POST for /login */ /* note the middleware from express-validate. */
+/* POST for /login */
 router.post(
   "/",
   body("email").isEmail().normalizeEmail().trim(),
