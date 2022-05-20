@@ -4,7 +4,7 @@ const { redirectToLogin } = require("../../config/authHelpers");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { param, validationResult } = require("express-validator");
 
 /* GET dropdown page. */
 router.get("/", async (req, res, next) => {
@@ -24,22 +24,38 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-router.get("/form/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
+router.get(
+  "/form/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // clear session messages
-  req.session.messages = [];
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dropdownManager", {
+        title: "BWG | Dropdown Manager",
+        message: "Error!",
+        email: req.session.email,
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
 
-  var data = await dbHelpers.getAllFromDropdown(req.params.id);
+      // clear session messages
+      req.session.messages = [];
 
-  return res.render("dropdownManager/form", {
-    title: "BWG | Add Dog",
-    errorMessages: messages,
-    email: req.session.email,
-    data: data,
-  });
-});
+      var data = await dbHelpers.getAllFromDropdown(req.params.id);
+
+      return res.render("dropdownManager/form", {
+        title: "BWG | Add Dog",
+        errorMessages: messages,
+        email: req.session.email,
+        data: data,
+      });
+    }
+  }
+);
 
 /* POST dropdown value */
 // router.post(
