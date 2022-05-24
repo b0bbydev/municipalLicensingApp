@@ -21,6 +21,13 @@
     </div>
   {{/if}}
 
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
+
   <section class="row">
     <div class="col-12">
       <table

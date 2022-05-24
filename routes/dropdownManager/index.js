@@ -52,7 +52,7 @@ router.get(
       var formName = await dbHelpers.getFormNameFromFormID(req.session.formID);
 
       return res.render("dropdownManager/form", {
-        title: "BWG | Add Dog",
+        title: "BWG | " + formName[0].formName,
         errorMessages: messages,
         email: req.session.email,
         formName: formName[0].formName,

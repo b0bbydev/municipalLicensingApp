@@ -138,7 +138,17 @@ router.get(
       var data = await dbHelpers.getDogs(req.params.id);
       // get ownerName from custom query.
       var ownerName = await dbHelpers.getNameFromOwnerID(req.params.id);
-      ownerName = ownerName[0].firstName + " " + ownerName[0].lastName;
+
+      // error handle here, if supplied ownerID isn't in database.
+      if (ownerName[0]) {
+        ownerName = ownerName[0].firstName + " " + ownerName[0].lastName;
+      } else {
+        return res.render("dogtags/owner", {
+          title: "BWG | Owner",
+          message: "Owner Lookup Error!",
+          email: req.session.email,
+        });
+      }
 
       return res.render("dogtags/owner", {
         title: "BWG | Owner",
@@ -206,6 +216,7 @@ router.get(
 /* POST /editOwner */
 router.post(
   "/editOwner/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("firstName").if(body("firstName").notEmpty()).isAlpha().trim(),
   body("lastName").if(body("lastName").notEmpty()).isAlpha().trim(),
   body("homePhone")
@@ -260,19 +271,34 @@ router.post(
 );
 
 /* GET /addDog */
-router.get("/addDog/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
+router.get(
+  "/addDog/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // clear session messages
-  req.session.messages = [];
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags/addDog", {
+        title: "BWG | Add Dog",
+        message: "Page Error!",
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
 
-  return res.render("dogtags/addDog", {
-    title: "BWG | Add Dog",
-    errorMessages: messages,
-    email: req.session.email,
-  });
-});
+      // clear session messages
+      req.session.messages = [];
+
+      return res.render("dogtags/addDog", {
+        title: "BWG | Add Dog",
+        errorMessages: messages,
+        email: req.session.email,
+      });
+    }
+  }
+);
 
 /* POST addDog page. */
 router.post(
