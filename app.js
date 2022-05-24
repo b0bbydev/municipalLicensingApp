@@ -78,6 +78,10 @@ hbs.registerHelper("inc", function (value, options) {
   return parseInt(value) * 50;
 });
 
+hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
+  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+});
+
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);

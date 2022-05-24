@@ -1,0 +1,268 @@
+<h2 class="text-center">Edit Dog</h2>
+<div class="content">
+  <form class="row g-2" id="addLicenseForm" method="POST">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Dog Information</h4>
+    <hr />
+    <!-- Tag Number -->
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Tag Number" class="form-label">Tag Number</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Tag Number"
+          name="tagNumber"
+          value="{{dogInfo.tagNumber}}"
+        />
+      </div>
+      <!-- Dog Name -->
+      <div class="col-sm-6">
+        <label for="Dog Name" class="form-label">Dog Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Dog Name"
+          name="dogName"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{dogInfo.dogName}}"
+        />
+      </div>
+    </div>
+    <!-- Breed -->
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Breed" class="form-label">Breed</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Breed"
+          name="breed"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{dogInfo.breed}}"
+        />
+      </div>
+      <!-- Colour -->
+      <div class="col-sm-6">
+        <label for="Colour" class="form-label">Colour</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Colour"
+          name="colour"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{dogInfo.colour}}"
+        />
+      </div>
+    </div>
+    <!-- Date of Birth -->
+    <div class="row">
+      <div class="col-sm-12">
+        <label for="Date Of Birth" class="form-label">Date Of Birth</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Of Birth"
+          name="dateOfBirth"
+          value="{{dogInfo.dateOfBirth}}"
+        />
+      </div>
+    </div>
+    <!-- Gender -->
+    <div class="row">
+      <label for="Gender" class="form-label">Gender</label>
+      <div class="col-sm-6">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            value="M"
+            {{#ifEquals dogInfo.gender "M"}}
+            checked
+            {{/ifEquals}}
+          />
+          <label class="form-check-label" for="Male">
+            Male
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="gender"
+            value="F"
+            {{#ifEquals dogInfo.gender "F"}}
+            checked
+            {{/ifEquals}}
+          />
+          <label class="form-check-label" for="Female">
+            Female
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- Spade/Neutered -->
+    <div class="row">
+      <label for="Spade/Neutered" class="form-label">Spade/Neutered</label>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="spade"
+            value="Spade"
+            {{#ifEquals dogInfo.spade "Spade"}}
+            checked
+            {{/ifEquals}}
+          />
+          <label class="form-check-label" for="Spade">
+            Spade
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="spade"
+            value="Neutered"
+            {{#ifEquals dogInfo.spade "Neutered"}}
+            checked
+            {{/ifEquals}}
+          />
+          <label class="form-check-label" for="Neutered">
+            Neutered
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="spade"
+            value="No"
+            {{#ifEquals dogInfo.spade "No"}}
+            checked
+            {{/ifEquals}}
+          />
+          <label class="form-check-label" for="No">
+            No
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- Designation -->
+    <div class="row">
+      <label for="Designation" class="form-label">Designation</label>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="designation"
+            value="Service"
+            {{#ifEquals dogInfo.designation "Service"}}
+            checked
+            {{/ifEquals}}
+          />
+          <label class="form-check-label" for="Service">
+            Service
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="designation"
+            value="Dangerous"
+            {{#ifEquals dogInfo.designation "Dangerous"}}
+            checked
+            {{/ifEquals}}
+          />
+          <label class="form-check-label" for="Dangerous">
+            Dangerous
+          </label>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="form-check">
+          <input
+            class="form-check-input"
+            type="radio"
+            name="designation"
+            value="None"
+            {{#ifEquals dogInfo.designation "None"}}
+            checked
+            {{/ifEquals}}
+          />
+          <label class="form-check-label" for="None">
+            None
+          </label>
+        </div>
+      </div>
+    </div>
+    <!-- Rabies Tag Number -->
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Rabies Tag Number" class="form-label">Rabies Tag Number</label>
+        <input
+          type="number"
+          class="form-control"
+          name="rabiesTagNumber"
+          placeholder="Rabies Tag Number"
+          value="{{dogInfo.rabiesTagNumber}}"
+        />
+      </div>
+      <!-- Rabies Expiry -->
+      <div class="col-sm-6">
+        <label for="Rabies Expiry" class="form-label">Rabies Expiry</label>
+        <input
+          type="date"
+          class="form-control"
+          name="rabiesExpiry"
+          placeholder="Rabies Expiry"
+          value="{{dogInfo.rabiesExpiry}}"
+        />
+      </div>
+    </div>
+    <!-- Vet Office -->
+    <div class="row">
+      <div class="col">
+        <label for="Vet Office" class="form-label">Vet Office</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Vet Office"
+          name="vetOffice"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{dogInfo.vetOffice}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="licenseSubmit"
+          class="btn btn-primary"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </form>
+</div>

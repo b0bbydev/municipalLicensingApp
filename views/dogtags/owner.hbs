@@ -24,15 +24,6 @@
     </div>
   {{/if}}
 
-  {{!-- <div class="row">
-    <div class="col">
-      <a
-        href="/dogtags/addDog/{{ownerID}}"
-        class="btn btn-sm btn-primary"
-      >Register Dog to Owner</a>
-    </div>
-  </div> --}}
-
   <section class="row">
     <div class="col-12">
       <table
@@ -62,7 +53,12 @@
               <td><a
                   href="/dogtags/renew/{{this.dogID}}"
                   class="btn btn-sm btn-secondary"
-                >Renew</a></td>
+                >Renew</a>
+                |
+                <a
+                  href="/dogtags/editDog/{{this.dogID}}"
+                  class="btn btn-sm btn-secondary"
+                >Edit</a></td>
               <td>{{this.issueDate}}</td>
               <td>{{this.expiryDate}}</td>
               <td>{{this.tagNumber}}</td>
