@@ -4,7 +4,7 @@ const { redirectToLogin } = require("../../config/authHelpers");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
-const { param, validationResult } = require("express-validator");
+const { param, body, validationResult } = require("express-validator");
 
 /* GET dropdown page. */
 router.get("/", async (req, res, next) => {
@@ -58,6 +58,84 @@ router.get(
         formName: formName[0].formName,
         data: data,
       });
+    }
+  }
+);
+
+/* POST dropdownManager/form/:id */
+router.post(
+  "/form/:id",
+  body("value")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  param("id").matches(/^\d+$/).trim(),
+  function (req, res, next) {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      // render dropdown page with error message.
+      return res.render("dropdownManager/index", {
+        title: "BWG | Dropdown Manager",
+        message: "Invalid entry!",
+      });
+    } else {
+      // insert into db after validation middleware.
+      dbHelpers.insertIntoDropdown(req.body.value, req.session.formID);
+
+      // redirect to same page if successful.
+      res.redirect("/dropdownManager/form/" + req.session.formID);
+    }
+  }
+);
+
+/* DISABLE dropdownManager/disable/:id */
+router.get(
+  "/disable/:id",
+  param("id").matches(/^\d+$/).trim(),
+  (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      // render dropdown page with error message.
+      return res.render("dropdownManager/index", {
+        title: "BWG | Dropdown Manager",
+        message: "Invalid entry!",
+      });
+    } else {
+      // after validation, disable dropdown option.
+      dbHelpers.disableDropdownOption(req.params.id); // req.params.id == dropdownID.
+
+      // redirect to same page after success.
+      res.redirect("/dropdownManager/form/" + req.session.formID);
+    }
+  }
+);
+
+/* ENABLE dropdownManager/enable/:id */
+router.get(
+  "/enable/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      // render dropdown page with error message.
+      return res.render("dropdownManager/index", {
+        title: "BWG | Dropdown Manager",
+        message: "Invalid entry!",
+      });
+    } else {
+      // after validation, enable dropdown option.
+      dbHelpers.enableDropdownOption(req.params.id); // req.params.id == dropdownID.
+
+      // redirect to same page after success.
+      res.redirect("/dropdownManager/form/" + req.session.formID);
     }
   }
 );
