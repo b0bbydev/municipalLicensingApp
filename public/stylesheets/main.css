@@ -31,6 +31,10 @@ table {
   margin-bottom: 8px !important;
 }
 
+.title-text {
+  font-weight: bold;
+}
+
 .btn {
   color: #fff !important;
 }
