@@ -49,11 +49,13 @@ router.get(
       req.session.formID = req.params.id;
 
       var data = await dbHelpers.getAllFromDropdown(req.session.formID);
+      var formName = await dbHelpers.getFormNameFromFormID(req.session.formID);
 
       return res.render("dropdownManager/form", {
         title: "BWG | Add Dog",
         errorMessages: messages,
         email: req.session.email,
+        formName: formName[0].formName,
         data: data,
       });
     }
