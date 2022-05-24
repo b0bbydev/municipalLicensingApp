@@ -28,7 +28,9 @@ var dropdownRouter = require("./routes/dropdownManager/index");
 
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
+var dogTagOwnerRouter = require("./routes/dogtags/owner");
 var addOwnerRouter = require("./routes/dogtags/addOwner");
+var addDogRouter = require("./routes/dogtags/addDog");
 
 var app = express();
 
@@ -90,7 +92,9 @@ app.use("/planningDivision", planningDivisionRouter);
 
 /* dogtag related routes. */
 app.use("/dogtags", dogTagRouter);
+app.use("/dogtags/owner", dogTagOwnerRouter);
 app.use("/dogtags/addOwner", addOwnerRouter);
+app.use("/dogtags/addDog", addDogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
