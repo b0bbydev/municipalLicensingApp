@@ -35,13 +35,45 @@ router.post(
       });
     } else {
       // insert into db after validation middleware.
-      dbHelpers.insertIntoDropdown(req.body.value, req.params.id);
+      dbHelpers.insertIntoDropdown(req.body.value, req.session.formID);
 
       // redirect to same page if successful.
-      res.redirect("/dropdownManager/form/" + req.params.id);
+      res.redirect("/dropdownManager/form/" + req.session.formID);
     }
   }
 );
+
+/* DISABLE dropdown value */
+router.get("/dropdownManager/disable/:id", (req, res, next) => {
+  // validate to make sure only a number can be passed here.
+  if (!req.params.id.match(/^\d+$/)) {
+    // if something other than a number is passed, redirect again to dropdown.
+    res.redirect("/dropdown");
+  } else {
+    // db stuff.
+    dbHelpers.disableDropdownOption(req.params.id); // req.params.id == dropdownID.
+
+    console.log("");
+
+    // redirect to same page after success.
+    res.redirect("/dropdownManager/form/" + req.session.formID);
+  }
+});
+
+/* ENABLE dropdown value */
+router.get("/dropdownManager/enable/:id", async (req, res, next) => {
+  // validate to make sure only a number can be passed here.
+  if (!req.params.id.match(/^\d+$/)) {
+    // if something other than a number is passed, redirect again to dropdown.
+    res.redirect("/dropdown");
+  } else {
+    // db stuff.
+    dbHelpers.enableDropdownOption(req.params.id); // req.params.id == dropdownID.
+
+    // redirect to same page after success.
+    res.redirect("/dropdownManager/form/" + req.session.formID);
+  }
+});
 
 /* GET logout page */
 router.get("/logout", function (req, res, next) {

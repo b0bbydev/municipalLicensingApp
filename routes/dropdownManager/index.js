@@ -45,7 +45,10 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      var data = await dbHelpers.getAllFromDropdown(req.params.id);
+      // store formID in session to use in other endpoints.
+      req.session.formID = req.params.id;
+
+      var data = await dbHelpers.getAllFromDropdown(req.session.formID);
 
       return res.render("dropdownManager/form", {
         title: "BWG | Add Dog",
@@ -56,55 +59,5 @@ router.get(
     }
   }
 );
-
-/* DISABLE dropdown value */
-router.get("/dropdown/disable/:id", (req, res, next) => {
-  // validate to make sure only a number can be passed here.
-  if (!req.params.id.match(/^\d+$/)) {
-    // if something other than a number is passed, redirect again to dropdown.
-    res.redirect("/dropdown");
-  } else {
-    // save dropdownID.
-    var dropdownID = req.params.id;
-
-    // create the query.
-    var query = "UPDATE dropdown SET isDisabled = 1 WHERE dropdownID = ?";
-
-    // call query on db.
-    db.query(query, [dropdownID], function (err, data) {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-    // redirect to home after success.
-    res.redirect("/dropdown");
-  }
-});
-
-/* ENABLE dropdown value */
-router.get("/dropdown/enable/:id", (req, res, next) => {
-  // validate to make sure only a number can be passed here.
-  if (!req.params.id.match(/^\d+$/)) {
-    // if something other than a number is passed, redirect again to dropdown.
-    res.redirect("/dropdown");
-  } else {
-    // save dropdownID.
-    var dropdownID = req.params.id;
-
-    // create the query.
-    var query = "UPDATE dropdown SET isDisabled = 0 WHERE dropdownID = ?";
-
-    // call query on db.
-    db.query(query, [dropdownID], function (err, data) {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-    // redirect to home after success.
-    res.redirect("/dropdown");
-  }
-});
 
 module.exports = router;
