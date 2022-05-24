@@ -2,8 +2,10 @@ var express = require("express");
 var router = express.Router();
 // authHelper middleware.
 const { redirectToLogin } = require("../config/authHelpers");
-// config files.
-const db = require("../config/db");
+// dbHelpers.
+var dbHelpers = require("../config/dbHelpers");
+// express-validate.
+const { body, param, validationResult } = require("express-validator");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -13,55 +15,33 @@ router.get("/", function (req, res, next) {
   });
 });
 
-/* DISABLE dropdown value */
-router.get("/dropdown/disable/:id", (req, res, next) => {
-  // validate to make sure only a number can be passed here.
-  if (!req.params.id.match(/^\d+$/)) {
-    // if something other than a number is passed, redirect again to dropdown.
-    res.redirect("/dropdown");
-  } else {
-    // save dropdownID.
-    var dropdownID = req.params.id;
+/* POST dropdown value */
+router.post(
+  "/dropdownManager/form/:id",
+  body("value")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  param("id").matches(/^\d+$/).trim(),
+  function (req, res, next) {
+    // server side validation.
+    const errors = validationResult(req);
 
-    // create the query.
-    var query = "UPDATE dropdown SET isDisabled = 1 WHERE dropdownID = ?";
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      // render dropdown page with error message.
+      return res.render("dropdownManager/index", {
+        title: "BWG | Dropdown Manager",
+        message: "Invalid entry!",
+      });
+    } else {
+      // insert into db after validation middleware.
+      dbHelpers.insertIntoDropdown(req.body.value, req.params.id);
 
-    // call query on db.
-    db.query(query, [dropdownID], function (err, data) {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-    // redirect to home after success.
-    res.redirect("/dropdown");
+      // redirect to same page if successful.
+      res.redirect("/dropdownManager/form/" + req.params.id);
+    }
   }
-});
-
-/* ENABLE dropdown value */
-router.get("/dropdown/enable/:id", (req, res, next) => {
-  // validate to make sure only a number can be passed here.
-  if (!req.params.id.match(/^\d+$/)) {
-    // if something other than a number is passed, redirect again to dropdown.
-    res.redirect("/dropdown");
-  } else {
-    // save dropdownID.
-    var dropdownID = req.params.id;
-
-    // create the query.
-    var query = "UPDATE dropdown SET isDisabled = 0 WHERE dropdownID = ?";
-
-    // call query on db.
-    db.query(query, [dropdownID], function (err, data) {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-    // redirect to home after success.
-    res.redirect("/dropdown");
-  }
-});
+);
 
 /* GET logout page */
 router.get("/logout", function (req, res, next) {
