@@ -139,6 +139,11 @@ router.get(
       // get ownerName from custom query.
       var ownerName = await dbHelpers.getNameFromOwnerID(req.session.ownerID);
 
+      // get addressHistory data too.
+      var addressHistory = await dbHelpers.getAddressHistory(
+        req.session.ownerID
+      );
+
       // error handle here, if supplied ownerID isn't in database.
       if (ownerName[0]) {
         ownerName = ownerName[0].firstName + " " + ownerName[0].lastName;
@@ -158,6 +163,7 @@ router.get(
         ownerID: req.session.ownerID,
         queryCount: "Dog(s) on record: " + data.length,
         data: data,
+        addressHistory: addressHistory,
       });
     }
   }

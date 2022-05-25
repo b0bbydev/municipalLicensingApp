@@ -1,7 +1,7 @@
 <h2 class="text-center">Owner Profile</h2>
 <div class="content">
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-sm-4">
       <strong>Owner: {{ownerName}}</strong>
       {{#if queryCount}}
         <div>
@@ -9,7 +9,7 @@
         </div>
       {{/if}}
     </div>
-    <div id="registerDogButton" class="col-sm-6">
+    <div id="registerDogButton" class="col-sm-4">
       <a
         href="/dogtags/addDog/{{ownerID}}"
         class="btn btn-sm btn-primary"
@@ -72,6 +72,44 @@
               <td>{{this.rabiesTagNumber}}</td>
               <td>{{this.rabiesExpiry}}</td>
               <td>{{this.vetOffice}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <div class="row">
+    <div class="col-sm-4">
+      <a id="addressHistory" onclick="toggleAddressHistory()">See address
+        history...</a>
+    </div>
+  </div>
+
+  <section id="addressHistorySection" class="row" style="display: none;">
+    <div class="col-12">
+      <h4>Address History</h4>
+      <table class="sortable table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Address</th>
+            <th>PO Box/Apt/RR</th>
+            <th>Town</th>
+            <th>Postal Code</th>
+            <th>Action</th>
+            <th>Last Modified</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each addressHistory}}
+            <tr>
+              <td>{{this.addressHistoryID}}</td>
+              <td>{{this.address}}</td>
+              <td>{{this.poBoxAptRR}}</td>
+              <td>{{this.town}}</td>
+              <td>{{this.postalCode}}</td>
+              <td>{{this.action}}</td>
+              <td>{{this.lastModified}}</td>
             </tr>
           {{/each}}
         </tbody>

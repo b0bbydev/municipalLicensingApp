@@ -115,12 +115,26 @@ router.post(
         req.body.cellPhone,
         req.body.workPhone,
         req.body.email,
-        req.body.address,
-        req.body.poBoxAptRR,
-        req.body.town,
-        req.body.postalCode,
         req.session.ownerID
       );
+
+      // get owner information to compare with current request.
+      var ownerInfo = await dbHelpers.getGetOwnerInfo(req.session.ownerID);
+      // if address fields are not the same. (i.e: if an address field is changed from current value in database).
+      if (
+        ownerInfo[0].address != req.body.address ||
+        ownerInfo[0].poBoxAptRR != req.body.poBoxAptRR ||
+        ownerInfo[0].town != req.body.town ||
+        ownerInfo[0].postalCode != req.body.postalCode
+      ) {
+        dbHelpers.updateAddress(
+          req.body.address,
+          req.body.poBoxAptRR,
+          req.body.town,
+          req.body.postalCode,
+          req.session.ownerID
+        );
+      }
 
       // redirect back to dogtag index after success.
       res.redirect("/dogtags");
