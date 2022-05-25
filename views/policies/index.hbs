@@ -1,17 +1,47 @@
 <h2 class="text-center">Policies and Procedures</h2>
 <div class="content">
-  <table class="sortable table table-bordered table-striped table-hover">
+  <table
+    class="sortable table table-sm table-bordered table-striped table-hover"
+  >
     <thead>
       <tr>
         <th>Policy ID</th>
+        <th>Policy Number</th>
         <th>Policy Name</th>
+        <th>Proposed Number</th>
+        <th>Location</th>
+        <th>COW Resolve</th>
+        <th>COW Date</th>
+        <th>Council Resolution</th>
+        <th>Date Adopted</th>
+        <th>Amended</th>
+        <th>Status</th>
+        <th>Notes</th>
+        <th>Division ID</th>
+        <th>Category ID</th>
+        <th>Authority ID</th>
+        <th>By-Law ID</th>
       </tr>
     </thead>
     <tbody>
       {{#each data}}
         <tr>
           <td>{{this.policyID}}</td>
+          <td>{{this.policyNumber}}</td>
           <td>{{this.policyName}}</td>
+          <td>{{this.proposedNumber}}</td>
+          <td>{{this.location}}</td>
+          <td>{{this.cowResolve}}</td>
+          <td>{{this.cowDate}}</td>
+          <td>{{this.councilResolution}}</td>
+          <td>{{this.dateAdopted}}</td>
+          <td>{{this.amended}}</td>
+          <td>{{this.status}}</td>
+          <td>{{this.notes}}</td>
+          <td>{{this.divisionID}}</td>
+          <td>{{this.categoryID}}</td>
+          <td>{{this.authorityID}}</td>
+          <td>{{this.byLawID}}</td>
         </tr>
       {{/each}}
     </tbody>
