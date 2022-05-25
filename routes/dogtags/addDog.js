@@ -38,23 +38,35 @@ router.get(
 /* POST addDog page. */
 router.post(
   "/:id",
-  body("tagNumber").if(body("tagNumber").notEmpty()).isNumeric().trim(),
-  body("dogName").if(body("dogName").notEmpty()).isAlpha().trim(),
+  body("tagNumber")
+    .if(body("tagNumber").notEmpty())
+    .matches(/^[0-9-]*$/)
+    .trim(),
+  body("dogName")
+    .if(body("dogName").notEmpty())
+    .matches(/^[a-zA-Z\'-]*$/)
+    .trim(),
   body("breed")
     .if(body("breed").notEmpty())
-    .matches(/^[a-zA-Z ]+$/)
+    .matches(/^[a-zA-z\/\- ]*$/)
     .trim(),
-  body("colour").if(body("colour").notEmpty()).isAlpha().trim(),
+  body("colour")
+    .if(body("colour").notEmpty())
+    .matches(/^[a-zA-z\/\- ]*$/)
+    .trim(),
   body("dateOfBirth").if(body("dateOfBirth").notEmpty()).isDate().trim(),
   body("gender").if(body("gender").notEmpty()).isAlpha().trim(),
   body("spade").if(body("spade").notEmpty()).isAlpha().trim(),
   body("designation").if(body("designation").notEmpty()).isAlpha().trim(),
   body("rabiesTagNumber")
     .if(body("rabiesTagNumber").notEmpty())
-    .isNumeric()
+    .matches(/^[0-9-]*$/)
     .trim(),
   body("rabiesExpiry").if(body("rabiesExpiry").notEmpty()).isDate().trim(),
-  body("vetOffice").if(body("vetOffice").notEmpty()).isAlpha().trim(),
+  body("vetOffice")
+    .if(body("vetOffice").notEmpty())
+    .matches(/^[\.a-zA-Z0-9, ]*$/)
+    .trim(),
   body("issueDate").if(body("issueDate").notEmpty()).isDate().trim(),
   body("expiryDate").if(body("expiryDate").notEmpty()).isDate().trim(),
   async (req, res, next) => {

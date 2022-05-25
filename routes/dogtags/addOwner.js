@@ -23,8 +23,14 @@ router.get("/", async (req, res, next) => {
 /* POST addOwner */
 router.post(
   "/",
-  body("firstName").if(body("firstName").notEmpty()).isAlpha().trim(),
-  body("lastName").if(body("lastName").notEmpty()).isAlpha().trim(),
+  body("firstName")
+    .if(body("firstName").notEmpty())
+    .matches(/^[a-zA-Z\'-]*$/)
+    .trim(),
+  body("lastName")
+    .if(body("lastName").notEmpty())
+    .matches(/^[a-zA-Z\'-]*$/)
+    .trim(),
   body("homePhone")
     .if(body("homePhone").notEmpty())
     .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
@@ -38,10 +44,22 @@ router.post(
     .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
     .trim(),
   body("email").if(body("email").notEmpty()).isEmail().trim(),
-  body("address").if(body("address").notEmpty()).isAlphanumeric().trim(),
-  body("poBoxAptRR").if(body("poBoxAptRR").notEmpty()).isNumeric().trim(),
-  body("town").if(body("town").notEmpty()).isAlpha().trim(),
-  body("postalCode").if(body("postalCode").notEmpty()).isAlphanumeric().trim(),
+  body("address")
+    .if(body("address").notEmpty())
+    .matches(/^[a-zA-z0-9. ]*$/)
+    .trim(),
+  body("poBoxAptRR")
+    .if(body("poBoxAptRR").notEmpty())
+    .matches(/^[a-zA-z0-9. ]*$/)
+    .trim(),
+  body("town")
+    .if(body("town").notEmpty())
+    .matches(/^[a-zA-z, ]*$/)
+    .trim(),
+  body("postalCode")
+    .if(body("postalCode").notEmpty())
+    .matches(/^[a-zA-z0-9- ]*$/)
+    .trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
