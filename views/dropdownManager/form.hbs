@@ -51,7 +51,7 @@
       </form>
     </div>
     <div class="col-sm-6">
-      <label for="Dropdown Select" class="form-label title-text">Test Dropdown</label>
+      <label for="Dropdown Select" class="form-label title-text">Test Dropdown Menu</label>
       <select name="dropdown" class="form-select">
         <option disabled selected>Select A Value...</option>
         {{#each data}}<option value="{{this.dropdownID}}" {{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>{{/each}}
