@@ -31,6 +31,10 @@ table {
   margin-bottom: 8px !important;
 }
 
+.title-text {
+  font-weight: bold;
+}
+
 .btn {
   color: #fff !important;
 }
@@ -215,4 +219,10 @@ form h4 {
 
 #addNewLicenseButton {
   margin-bottom: 15px;
+}
+
+#registerDogButton {
+  margin-left: auto;
+  margin-top: auto;
+  width: 11%;
 }

@@ -1,0 +1,34 @@
+<h2 class="text-center">Dropdown Manager</h2>
+<div class="content">
+  <!-- Table -->
+  <div class="row">
+    <div class="col-12">
+      <table class="sortable table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Form ID</th>
+            <th>Form Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each data}}
+            <tr>
+              <td><a
+                  href="/dropdownManager/form/{{this.formID}}"
+                  id="ownerLink"
+                >{{this.formID}}</a></td>
+              <td>{{this.formName}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
+</div>

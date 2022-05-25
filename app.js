@@ -21,16 +21,23 @@ var sessionStore = new MySQLStore(sessionStoreConfig);
 // create routes here.
 var loginRouter = require("./routes/login");
 var indexRouter = require("./routes/index");
-var dropdownRouter = require("./routes/dropdown");
 var planningDivisionRouter = require("./routes/planningDivision");
+
+/* dropdown related routes. */
+var dropdownRouter = require("./routes/dropdownManager/index");
 
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
+// owners.
 var addOwnerRouter = require("./routes/dogtags/addOwner");
+var editOwnerRouter = require("./routes/dogtags/editOwner");
+// dogs.
+var addDogRouter = require("./routes/dogtags/addDog");
+var editDogRouter = require("./routes/dogtags/editDog");
 
 var app = express();
 
-// keep this before all routes that will use pagination
+// keep this before all routes that will use pagination.
 app.use(paginate.middleware(10, 50));
 
 // view engine setup
@@ -76,15 +83,24 @@ hbs.registerHelper("inc", function (value, options) {
   return parseInt(value) * 50;
 });
 
+hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
+  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+});
+
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
-app.use("/dropdown", dropdownRouter);
+app.use("/dropdownManager", dropdownRouter);
 app.use("/planningDivision", planningDivisionRouter);
 
 /* dogtag related routes. */
 app.use("/dogtags", dogTagRouter);
+// owner.
 app.use("/dogtags/addOwner", addOwnerRouter);
+app.use("/dogtags/editOwner", editOwnerRouter);
+// dog.
+app.use("/dogtags/addDog", addDogRouter);
+app.use("/dogtags/editDog", editDogRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

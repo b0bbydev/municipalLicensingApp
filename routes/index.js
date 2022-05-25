@@ -2,8 +2,6 @@ var express = require("express");
 var router = express.Router();
 // authHelper middleware.
 const { redirectToLogin } = require("../config/authHelpers");
-// config files.
-const db = require("../config/db");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -11,56 +9,6 @@ router.get("/", function (req, res, next) {
     title: "BWG | Home",
     email: req.session.email,
   });
-});
-
-/* DISABLE dropdown value */
-router.get("/dropdown/disable/:id", (req, res, next) => {
-  // validate to make sure only a number can be passed here.
-  if (!req.params.id.match(/^\d+$/)) {
-    // if something other than a number is passed, redirect again to dropdown.
-    res.redirect("/dropdown");
-  } else {
-    // save dropdownID.
-    var dropdownID = req.params.id;
-
-    // create the query.
-    var query = "UPDATE dropdown SET isDisabled = 1 WHERE dropdownID = ?";
-
-    // call query on db.
-    db.query(query, [dropdownID], function (err, data) {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-    // redirect to home after success.
-    res.redirect("/dropdown");
-  }
-});
-
-/* ENABLE dropdown value */
-router.get("/dropdown/enable/:id", (req, res, next) => {
-  // validate to make sure only a number can be passed here.
-  if (!req.params.id.match(/^\d+$/)) {
-    // if something other than a number is passed, redirect again to dropdown.
-    res.redirect("/dropdown");
-  } else {
-    // save dropdownID.
-    var dropdownID = req.params.id;
-
-    // create the query.
-    var query = "UPDATE dropdown SET isDisabled = 0 WHERE dropdownID = ?";
-
-    // call query on db.
-    db.query(query, [dropdownID], function (err, data) {
-      if (err) {
-        console.log(err);
-      }
-    });
-
-    // redirect to home after success.
-    res.redirect("/dropdown");
-  }
 });
 
 /* GET logout page */

@@ -1,23 +1,26 @@
 <h2 class="text-center">Owner Profile</h2>
 <div class="content">
   <div class="row">
-    <div class="col">
+    <div class="col-sm-6">
+      <strong>Owner: {{ownerName}}</strong>
+      {{#if queryCount}}
+        <div>
+          <strong>{{queryCount}}</strong>
+        </div>
+      {{/if}}
+    </div>
+    <div id="registerDogButton" class="col-sm-6">
       <a
         href="/dogtags/addDog/{{ownerID}}"
         class="btn btn-sm btn-primary"
       >Register Dog to Owner</a>
     </div>
   </div>
-  <div class="row">
-    <div class="col-sm-2">
-      <strong>Owner: {{ownerName}}</strong>
-    </div>
-  </div>
 
-  <!-- check for queryCount in the session -->
-  {{#if queryCount}}
-    <div>
-      <strong>{{queryCount}}</strong>
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
     </div>
   {{/if}}
 
@@ -50,7 +53,12 @@
               <td><a
                   href="/dogtags/renew/{{this.dogID}}"
                   class="btn btn-sm btn-secondary"
-                >Renew</a></td>
+                >Renew</a>
+                |
+                <a
+                  href="/dogtags/editDog/{{this.dogID}}"
+                  class="btn btn-sm btn-secondary"
+                >Edit</a></td>
               <td>{{this.issueDate}}</td>
               <td>{{this.expiryDate}}</td>
               <td>{{this.tagNumber}}</td>
