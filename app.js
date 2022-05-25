@@ -37,7 +37,7 @@ var editDogRouter = require("./routes/dogtags/editDog");
 
 var app = express();
 
-// keep this before all routes that will use pagination
+// keep this before all routes that will use pagination.
 app.use(paginate.middleware(10, 50));
 
 // view engine setup
