@@ -8,3 +8,10 @@ function togglePagination() {
   var pag = document.getElementById("pagination");
   pag.style.display = pag.style.display === "none" ? "" : "none";
 }
+
+// create function to unhide the address history table.
+function toggleAddressHistory() {
+  var addressHistorySection = document.getElementById("addressHistorySection");
+  addressHistorySection.style.display =
+    addressHistorySection.style.display === "none" ? "" : "none";
+}
