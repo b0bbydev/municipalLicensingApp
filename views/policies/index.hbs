@@ -1,5 +1,49 @@
 <h2 class="text-center">Policies and Procedures</h2>
 <div class="content">
+    <div class="row">
+    <div class="col-sm-4">
+      <h4>Filtering</h4>
+      <form method="POST">
+        <select
+          class="form-select-sm"
+          id="filterCategory"
+          title="filterSelect"
+          name="filterCategory"
+        >
+          <option disabled selected>Filter By...</option>
+          <option value="Policy ID">Policy ID</option>
+        </select>
+        <!-- filterValue input -->
+        <input
+          name="filterValue"
+          id="filterValue"
+          class="form-control-sm"
+          pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+          title="No special characters!"
+          placeholder="Search..."
+          value="{{filterValue}}"
+        />
+        <button
+          id="filterButton"
+          class="btn btn-sm btn-primary"
+          type="submit"
+        >Search</button>
+        <a
+          id="filterButton"
+          href="/policies"
+          class="btn btn-sm btn-secondary"
+          type="submit"
+        >Reset</a>
+      </form>
+      {{#if queryCount}}
+        <div>
+          <strong>{{queryCount}}</strong>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+
+  <!-- Table -->
   <table class="sortable table table-bordered table-striped table-hover">
     <thead>
       <tr>
