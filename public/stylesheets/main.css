@@ -196,7 +196,7 @@ table {
 }
 
 .row {
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
   margin-right: auto;
 }
 
@@ -224,7 +224,15 @@ form h4 {
 #registerDogButton {
   margin-left: auto;
   margin-top: auto;
+  margin-bottom: 5px;
   width: 11%;
+}
+
+#addOwnerButton {
+  margin-left: auto;
+  margin-top: auto;
+  margin-bottom: 5px;
+  width: 6.8%;
 }
 
 #addressHistory {
