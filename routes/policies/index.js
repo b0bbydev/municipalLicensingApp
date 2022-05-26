@@ -23,4 +23,19 @@ router.get("/", async (req, res, next) => {
   });
 });
 
+/* GET /policies/policy/:id */
+router.get("/policy/:id", async (req, res, next) => {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+
+  // clear session messages
+  req.session.messages = [];
+
+  return res.render("policies/policy", {
+    title: "BWG | Policy",
+    errorMessages: messages,
+    email: req.session.email,
+  });
+});
+
 module.exports = router;

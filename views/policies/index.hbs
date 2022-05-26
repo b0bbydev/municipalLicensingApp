@@ -3,6 +3,7 @@
   <table class="sortable table table-bordered table-striped table-hover">
     <thead>
       <tr>
+        <th>Policy ID</th>
         <th>Policy Number</th>
         <th>Policy Name</th>
         <th>Date Adopted</th>
@@ -12,7 +13,11 @@
     <tbody>
       {{#each data}}
         <tr>
-          <td><a id="ownerLink" href="#">{{this.policyNumber}}</a></td>
+          <td><a
+              id="ownerLink"
+              href="/policies/policy/{{this.policyID}}"
+            >{{this.policyID}}</td>
+          <td>{{this.policyNumber}}</a></td>
           <td>{{this.policyName}}</td>
           <td>{{this.dateAdopted}}</td>
           <td>{{this.status}}</td>
