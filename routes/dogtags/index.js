@@ -81,12 +81,17 @@ router.post(
         req.body.filterCategory &&
         req.body.filterValue
       ) {
-        filterHelpers.filterCategoryAndValue(
-          req.body.filterCategory,
-          req.body.filterValue,
-          req,
-          res
-        );
+        // if ALL supplied filters && filterCategory == Dog Tag Number.
+        if (req.body.filterCategory === "Dog Tag Number") {
+          filterHelpers.filterTagNumber(req.body.filterValue, req, res);
+        } else {
+          filterHelpers.filterCategoryAndValue(
+            req.body.filterCategory,
+            req.body.filterValue,
+            req,
+            res
+          );
+        }
       } else if (
         // NO supplied filters.
         !req.body.filterCategory &&
