@@ -85,7 +85,6 @@ router.post(
       return res.render("dogtags/addOwner", {
         title: "BWG | Owner",
         message: errorArray[0].msg,
-        //message: ,
         // if the form submission is unsuccessful, save their values.
         formData: {
           firstName: req.body.firstName,

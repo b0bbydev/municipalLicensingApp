@@ -113,11 +113,27 @@ router.post(
     // server side validation.
     const errors = validationResult(req);
 
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
+
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       return res.render("dogtags/editOwner", {
         title: "BWG | Edit Owner",
-        message: "Form Error!",
+        message: errorArray[0].msg,
+        // if the form submission is unsuccessful, save their values.
+        ownerInfo: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          homePhone: req.body.homePhone,
+          cellPhone: req.body.cellPhone,
+          workPhone: req.body.workPhone,
+          email: req.body.email,
+          address: req.body.address,
+          poBoxAptRR: req.body.poBoxAptRR,
+          town: req.body.town,
+          postalCode: req.body.postalCode,
+        },
       });
     } else {
       // insert into owner table.

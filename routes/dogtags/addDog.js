@@ -107,12 +107,16 @@ router.post(
     // server side validation.
     const errors = validationResult(req);
 
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
+
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       return res.render("dogtags/addDog", {
         title: "BWG | Add Dog",
-        message: "Form Error!",
+        message: errorArray[0].msg,
         email: req.session.email,
+        // if the form submission is unsuccessful, save their values.
         formData: {
           tagNumber: req.body.tagNumber,
           dogName: req.body.dogName,
