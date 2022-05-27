@@ -175,27 +175,34 @@ db.insertOwner = (
   homePhone,
   cellPhone,
   workPhone,
-  email,
-  address,
-  poBoxAptRR,
-  town,
-  postalCode
+  email
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "INSERT INTO owners (firstName, lastName, homePhone, cellPhone, workPhone, email) VALUES (?, ?, ?, ?, ?, ?); INSERT INTO addresses (address, poBoxAptRR, town, postalCode, ownerID) VALUES (?, ?, ?, ?, LAST_INSERT_ID());",
-      [
-        firstName,
-        lastName,
-        homePhone,
-        cellPhone,
-        workPhone,
-        email,
-        address,
-        poBoxAptRR,
-        town,
-        postalCode,
-      ],
+      "INSERT INTO owners (firstName, lastName, homePhone, cellPhone, workPhone, email) VALUES (?, ?, ?, ?, ?, ?)",
+      [firstName, lastName, homePhone, cellPhone, workPhone, email],
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(result);
+      }
+    );
+  });
+};
+
+db.insertAddress = (
+  address,
+  poBoxAptRR,
+  town,
+  postalCode,
+  firstName,
+  lastName
+) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "INSERT INTO addresses (address, poBoxAptRR, town, postalCode, ownerID) VALUES (?, ?, ?, ?, (SELECT ownerID FROM owners WHERE firstName = ? AND lastName = ?))",
+      [address, poBoxAptRR, town, postalCode, firstName, lastName],
       (error, result) => {
         if (error) {
           return reject(error);

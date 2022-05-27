@@ -13,7 +13,6 @@ let db = mysql.createPool({
   database: process.env.DATABASE,
   port: process.env.DB_PORT,
   dateStrings: process.env.DATE_STRINGS,
-  multipleStatements: process.env.MULTIPLE_STATEMENTS,
 });
 
 // credentials for db.

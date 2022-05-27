@@ -69,6 +69,7 @@ router.post(
       return res.render("dogtags/addOwner", {
         title: "BWG | Owner",
         message: "Form Error!",
+        // if the form submission is unsuccessful, save their values.
         formData: {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
@@ -84,18 +85,25 @@ router.post(
       });
     } else {
       // insert into owner table.
-      dbHelpers.insertOwner(
-        req.body.firstName,
-        req.body.lastName,
-        req.body.homePhone,
-        req.body.cellPhone,
-        req.body.workPhone,
-        req.body.email,
-        req.body.address,
-        req.body.poBoxAptRR,
-        req.body.town,
-        req.body.postalCode
-      );
+      dbHelpers
+        .insertOwner(
+          req.body.firstName,
+          req.body.lastName,
+          req.body.homePhone,
+          req.body.cellPhone,
+          req.body.workPhone,
+          req.body.email
+        )
+        .then(
+          dbHelpers.insertAddress(
+            req.body.address,
+            req.body.poBoxAptRR,
+            req.body.town,
+            req.body.postalCode,
+            req.body.firstName,
+            req.body.lastName
+          )
+        );
 
       // redirect back to dogtag index after success.
       res.redirect("/dogtags");
