@@ -13,7 +13,7 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  res.render("dogtags/addOwner", {
+  return res.render("dogtags/addOwner", {
     title: "BWG | Add Owner",
     errorMessages: messages,
     email: req.session.email,
@@ -100,7 +100,7 @@ router.post(
         },
       });
     } else {
-      // insert into owner table.
+      // insert owner, then address into db as address insert depends on a subquery to obtain ownerID (foreign key).
       dbHelpers
         .insertOwner(
           req.body.firstName,

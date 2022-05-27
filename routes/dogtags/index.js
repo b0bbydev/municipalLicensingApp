@@ -81,7 +81,7 @@ router.post(
         req.body.filterCategory &&
         req.body.filterValue
       ) {
-        // if ALL supplied filters && filterCategory == Dog Tag Number.
+        // use a different function (SQL query) if filtering by tagNumber.
         if (req.body.filterCategory === "Dog Tag Number") {
           filterHelpers.filterTagNumber(req.body.filterValue, req, res);
         } else {
@@ -93,20 +93,20 @@ router.post(
           );
         }
       } else if (
-        // NO supplied filters.
+        // NO supplied filters, render error message.
         !req.body.filterCategory &&
         !req.body.filterValue
       ) {
         return res.render("dogtags", {
           title: "BWG | Dog Tags",
-          message: "Please provide a value to filter by!",
+          message: "Please ensure BOTH filtering conditions are valid!",
           email: req.session.email,
         });
-        // else something weird happens..
+        // else something weird happens.. (most likely both)
       } else {
         return res.render("dogtags", {
           title: "BWG | Dog Tags",
-          message: "Please ensure both filtering conditions are valid!",
+          message: "Filtering Error!",
           email: req.session.email,
         });
       }
@@ -141,15 +141,15 @@ router.get(
 
       // dog data.
       var data = await dbHelpers.getOwnerDogs(req.session.ownerID);
-      // get ownerName from custom query.
+      // get ownerName.
       var ownerName = await dbHelpers.getNameFromOwnerID(req.session.ownerID);
-
-      // get addressHistory data too.
+      // get addressHistory data.
       var addressHistory = await dbHelpers.getAddressHistory(
         req.session.ownerID
       );
 
-      // error handle here, if supplied ownerID isn't in database.
+      // error handle here as user can pass an invalid one in URL bar.
+      // if ownerName exists, concatenate names together.
       if (ownerName[0]) {
         ownerName = ownerName[0].firstName + " " + ownerName[0].lastName;
       } else {
@@ -160,6 +160,7 @@ router.get(
         });
       }
 
+      // return endpoint after passing validation.
       return res.render("dogtags/owner", {
         title: "BWG | Owner",
         errorMessages: messages,
@@ -208,18 +209,21 @@ router.get(
 /* POST /dogtags/renew/:id */
 router.post(
   "/renew/:id",
-  body("issueDate").isDate().trim(),
-  body("expiryDate").isDate().trim(),
+  body("issueDate").isDate().withMessage("Invalid Issue Date Entry!").trim(),
+  body("expiryDate").isDate().withMessage("Invalid Expiry Date Entry!").trim(),
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
 
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
+
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       return res.render("dogtags/renew", {
         title: "BWG | Renew",
-        message: "Form Error!",
+        message: errorArray[0].msg,
         email: req.session.email,
       });
     } else {

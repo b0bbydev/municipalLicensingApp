@@ -13,7 +13,7 @@ router.get(
     // server side validation.
     const errors = validationResult(req);
 
-    // if errors is NOT empty (if there are errors...)
+    // if errors is NOT empty (if there are errors...),
     if (!errors.isEmpty()) {
       return res.render("dogtags", {
         title: "BWG | Owner",
@@ -21,16 +21,16 @@ router.get(
         email: req.session.email,
       });
     } else {
-      // check if there's an error message in the session
+      // check if there's an error message in the session,
       let messages = req.session.messages || [];
 
-      // clear session messages
+      // clear session messages,
       req.session.messages = [];
 
       // send ownerID to session; should be safe to do so here after validation.
       req.session.ownerID = req.params.id;
 
-      // get owner information by ID via custom query.
+      // get owner information.
       var ownerInfo = await dbHelpers.getGetOwnerInfo(req.session.ownerID);
 
       return res.render("dogtags/editOwner", {
