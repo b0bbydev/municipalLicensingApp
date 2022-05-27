@@ -44,7 +44,7 @@ router.post(
     .trim(),
   body("dogName")
     .if(body("dogName").notEmpty())
-    .matches(/^[a-zA-Z\'-]*$/)
+    .matches(/^[a-zA-z\/\- ]*$/)
     .trim(),
   body("breed")
     .if(body("breed").notEmpty())
@@ -94,24 +94,30 @@ router.post(
       });
     } else {
       // insert dog & license into db.
-      dbHelpers.insertDog(
-        req.body.tagNumber,
-        req.body.dogName,
-        req.body.breed,
-        req.body.colour,
-        req.body.dateOfBirth,
-        req.body.gender,
-        req.body.spade,
-        req.body.designation,
-        req.body.rabiesTagNumber,
-        req.body.rabiesExpiry,
-        req.body.vetOffice,
-        req.session.ownerID,
-        // license
-        req.body.issueDate,
-        req.body.expiryDate,
-        req.session.ownerID
-      );
+      dbHelpers
+        .insertDog(
+          req.body.tagNumber,
+          req.body.dogName,
+          req.body.breed,
+          req.body.colour,
+          req.body.dateOfBirth,
+          req.body.gender,
+          req.body.spade,
+          req.body.designation,
+          req.body.rabiesTagNumber,
+          req.body.rabiesExpiry,
+          req.body.vetOffice,
+          req.session.ownerID
+        )
+        .then(
+          dbHelpers.insertLicense(
+            req.body.issueDate,
+            req.body.expiryDate,
+            req.session.ownerID,
+            req.body.tagNumber,
+            req.body.dogName
+          )
+        );
 
       // redirect to /dogtags
       res.redirect("/dogtags");

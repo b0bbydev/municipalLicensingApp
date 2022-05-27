@@ -263,14 +263,11 @@ db.insertDog = (
   rabiesTagNumber,
   rabiesExpiry,
   vetOffice,
-  ownerID,
-  issueDate,
-  expiryDate,
-  licenseOwnerID
+  ownerID
 ) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "INSERT INTO dogs (tagNumber, dogName, breed, colour, dateOfBirth, gender, spade, designation, rabiesTagNumber, rabiesExpiry, vetOffice, ownerID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?); INSERT INTO licenses (issueDate, expiryDate, ownerID, dogID) VALUES (?, ?, ?, LAST_INSERT_ID()); ",
+      "INSERT INTO dogs (tagNumber, dogName, breed, colour, dateOfBirth, gender, spade, designation, rabiesTagNumber, rabiesExpiry, vetOffice, ownerID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
       [
         tagNumber,
         dogName,
@@ -284,10 +281,22 @@ db.insertDog = (
         rabiesExpiry,
         vetOffice,
         ownerID,
-        issueDate,
-        expiryDate,
-        licenseOwnerID,
       ],
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(result);
+      }
+    );
+  });
+};
+
+db.insertLicense = (issueDate, expiryDate, ownerID, tagNumber, dogName) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "INSERT INTO licenses (issueDate, expiryDate, ownerID, dogID) VALUES (?, ?, ?, (SELECT dogID FROM dogs WHERE tagNumber = ? AND dogName = ?))",
+      [issueDate, expiryDate, ownerID, tagNumber, dogName],
       (error, result) => {
         if (error) {
           return reject(error);
