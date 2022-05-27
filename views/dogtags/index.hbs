@@ -1,60 +1,60 @@
 <h2 class="text-center">Dog Tag Licenses</h2>
 <div class="content">
-  <div class="filterDiv">
-    <h4>Filtering</h4>
-    <form method="POST">
-      <select
-        class="form-select-sm"
-        id="filterCategory"
-        title="filterSelect"
-        name="filterCategory"
-      >
-        <option disabled selected>Filter By...</option>
-        <option value="First Name">First Name</option>
-        <option value="Last Name">Last Name</option>
-        <option value="Email">Email</option>
-      </select>
-      <!-- filterValue input -->
-      <input
-        name="filterValue"
-        id="filterValue"
-        class="form-control-sm"
-        pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
-        title="No special characters!"
-        placeholder="Search..."
-        value="{{filterValue}}"
-      />
-      <button
-        id="filterButton"
-        class="btn btn-sm btn-primary"
-        type="submit"
-      >Search</button>
-      <a
-        id="filterButton"
-        href="/dogtags"
-        class="btn btn-sm btn-secondary"
-        type="submit"
-      >Reset</a>
-    </form>
-    <!-- check for error messages in the session -->
-    {{#if message}}
-      <div class="alert alert-danger">
-        {{message}}
-      </div>
-    {{/if}}
-    <a
-      href="/dogtags/addOwner"
-      id="addNewLicenseButton"
-      class="btn btn-sm btn-primary"
-    >Add Owner</a>
-
-    <!-- check for queryCount in the session -->
-    {{#if queryCount}}
-      <div>
-        <strong>{{queryCount}}</strong>
-      </div>
-    {{/if}}
+  <div class="row">
+    <div class="col-sm-4">
+      <h4>Filtering</h4>
+      <form method="POST">
+        <select
+          class="form-select-sm"
+          id="filterCategory"
+          title="filterSelect"
+          name="filterCategory"
+        >
+          <option disabled selected>Filter By...</option>
+          <option value="First Name">First Name</option>
+          <option value="Last Name">Last Name</option>
+          <option value="Email">Email</option>
+          <option value="Dog Tag Number">Dog Tag Number</option>
+        </select>
+        <!-- filterValue input -->
+        <input
+          name="filterValue"
+          id="filterValue"
+          class="form-control-sm"
+          pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+          title="No special characters!"
+          placeholder="Search..."
+          value="{{filterValue}}"
+        />
+        <button
+          id="filterButton"
+          class="btn btn-sm btn-primary"
+          type="submit"
+        >Search</button>
+        <a
+          id="filterButton"
+          href="/dogtags"
+          class="btn btn-sm btn-secondary"
+          type="submit"
+        >Reset</a>
+      </form>
+      {{#if queryCount}}
+        <div>
+          <strong>{{queryCount}}</strong>
+        </div>
+      {{/if}}
+    </div>
+    <div id="addOwnerButton" class="col-sm-4 text-nowrap">
+      <a href="/dogtags/addOwner" class="btn btn-sm btn-primary">Add Owner</a>
+    </div>
   </div>
+
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
 
   <!-- Table -->
   <section class="row">
