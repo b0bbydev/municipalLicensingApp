@@ -158,7 +158,7 @@ router.post(
         );
 
       // redirect to /dogtags
-      res.redirect("/dogtags");
+      res.redirect("/dogtags/owner/" + req.session.ownerID);
     }
   }
 );
