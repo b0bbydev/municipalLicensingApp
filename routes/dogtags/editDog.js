@@ -62,7 +62,7 @@ router.post(
     .trim(),
   body("dogName")
     .if(body("dogName").notEmpty())
-    .matches(/^[a-zA-Z\'-]*$/)
+    .matches(/^[a-zA-z\/\- ]*$/)
     .trim(),
   body("breed")
     .if(body("breed").notEmpty())
@@ -83,7 +83,7 @@ router.post(
   body("rabiesExpiry").if(body("rabiesExpiry").notEmpty()).isDate().trim(),
   body("vetOffice")
     .if(body("vetOffice").notEmpty())
-    .matches(/^[\.a-zA-Z0-9, ]*$/)
+    .matches(/^[a-zA-z0-9, ]*$/)
     .trim(),
   async (req, res, next) => {
     // server side validation.

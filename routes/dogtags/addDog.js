@@ -65,7 +65,7 @@ router.post(
   body("rabiesExpiry").if(body("rabiesExpiry").notEmpty()).isDate().trim(),
   body("vetOffice")
     .if(body("vetOffice").notEmpty())
-    .matches(/^[\.a-zA-Z0-9, ]*$/)
+    .matches(/^[a-zA-z0-9, ]*$/)
     .trim(),
   body("issueDate").if(body("issueDate").notEmpty()).isDate().trim(),
   body("expiryDate").if(body("expiryDate").notEmpty()).isDate().trim(),
