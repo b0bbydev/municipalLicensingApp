@@ -41,34 +41,68 @@ router.post(
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
     .matches(/^[0-9-]*$/)
+    .withMessage("Invalid Tag Number Entry!")
     .trim(),
   body("dogName")
     .if(body("dogName").notEmpty())
     .matches(/^[a-zA-z\/\- ]*$/)
+    .withMessage("Invalid Dog Name Entry!")
     .trim(),
   body("breed")
     .if(body("breed").notEmpty())
     .matches(/^[a-zA-z\/\- ]*$/)
+    .withMessage("Invalid Breed Entry!")
     .trim(),
   body("colour")
     .if(body("colour").notEmpty())
     .matches(/^[a-zA-z\/\- ]*$/)
+    .withMessage("Invalid Colour Entry!")
     .trim(),
-  body("dateOfBirth").if(body("dateOfBirth").notEmpty()).isDate().trim(),
-  body("gender").if(body("gender").notEmpty()).isAlpha().trim(),
-  body("spade").if(body("spade").notEmpty()).isAlpha().trim(),
-  body("designation").if(body("designation").notEmpty()).isAlpha().trim(),
+  body("dateOfBirth")
+    .if(body("dateOfBirth").notEmpty())
+    .isDate()
+    .withMessage("Invalid Date Of Birth Entry!")
+    .trim(),
+  body("gender")
+    .if(body("gender").notEmpty())
+    .isAlpha()
+    .withMessage("Invalid Gender Entry!")
+    .trim(),
+  body("spade")
+    .if(body("spade").notEmpty())
+    .isAlpha()
+    .withMessage("Invalid Spade/Neutered Entry!")
+    .trim(),
+  body("designation")
+    .if(body("designation").notEmpty())
+    .isAlpha()
+    .withMessage("Invalid Designation Entry!")
+    .trim(),
   body("rabiesTagNumber")
     .if(body("rabiesTagNumber").notEmpty())
     .matches(/^[0-9-]*$/)
+    .withMessage("Invalid Rabies Tag Number Entry!")
     .trim(),
-  body("rabiesExpiry").if(body("rabiesExpiry").notEmpty()).isDate().trim(),
+  body("rabiesExpiry")
+    .if(body("rabiesExpiry").notEmpty())
+    .isDate()
+    .withMessage("Invalid Rabies Expiry Entry!")
+    .trim(),
   body("vetOffice")
     .if(body("vetOffice").notEmpty())
     .matches(/^[a-zA-z0-9, ]*$/)
+    .withMessage("Invalid Vet Office Entry!")
     .trim(),
-  body("issueDate").if(body("issueDate").notEmpty()).isDate().trim(),
-  body("expiryDate").if(body("expiryDate").notEmpty()).isDate().trim(),
+  body("issueDate")
+    .if(body("issueDate").notEmpty())
+    .isDate()
+    .withMessage("Invalid Issue Date Entry!")
+    .trim(),
+  body("expiryDate")
+    .if(body("expiryDate").notEmpty())
+    .isDate()
+    .withMessage("Invalid Expiry Entry!")
+    .trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
