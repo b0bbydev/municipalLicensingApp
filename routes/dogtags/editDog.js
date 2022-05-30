@@ -1,5 +1,8 @@
 var express = require("express");
 var router = express.Router();
+// models.
+const Dog = require("../../models/dog");
+const License = require("../../models/license");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
@@ -26,8 +29,11 @@ router.get(
       // clear session messages.
       req.session.messages = [];
 
-      // get dog info.
-      var dogInfo = await dbHelpers.getDogInfo(req.params.id);
+      // save dogID to session.
+      req.session.dogID = req.params.id;
+
+      // get dog info from custom query.
+      var dogInfo = await dbHelpers.getDogInfo(req.session.dogID);
 
       return res.render("dogtags/editDog", {
         title: "BWG | Edit Dog",
@@ -137,21 +143,35 @@ router.post(
         },
       });
     } else {
-      // update dog.
-      dbHelpers.updateDog(
-        req.body.tagNumber,
-        req.body.dogName,
-        req.body.breed,
-        req.body.colour,
-        req.body.dateOfBirth,
-        req.body.gender,
-        req.body.spade,
-        req.body.designation,
-        req.body.rabiesTagNumber,
-        req.body.rabiesExpiry,
-        req.body.vetOffice,
-        req.session.ownerID,
-        req.params.id // dogID
+      Dog.update(
+        {
+          tagNumber: req.body.tagNumber,
+          dogName: req.body.dogName,
+          breed: req.body.breed,
+          colour: req.body.colour,
+          gender: req.body.gender,
+          dateOfBirth: req.body.dateOfBirth,
+          designation: req.body.designation,
+          spade: req.body.spade,
+          rabiesTagNumber: req.body.rabiesTagNumber,
+          rabiesExpiry: req.body.rabiesExpiry,
+          vetOffice: req.body.vetOffice,
+          ownerID: req.session.ownerID,
+          licenses: [
+            {
+              issueDate: req.body.issueDate,
+              expiryDate: req.body.expiryDate,
+            },
+          ],
+        },
+        {
+          where: {
+            dogID: req.session.dogID,
+          },
+        },
+        {
+          include: [License],
+        }
       );
 
       // redirect to /dogtags

@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Owner = require("../../models/owner");
+const Address = require("../../models/address");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
@@ -138,15 +139,31 @@ router.post(
         },
       });
     } else {
-      // insert into owner table.
-      dbHelpers.updateOwner(
-        req.body.firstName,
-        req.body.lastName,
-        req.body.homePhone,
-        req.body.cellPhone,
-        req.body.workPhone,
-        req.body.email,
-        req.session.ownerID
+      Owner.update(
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          homePhone: req.body.homePhone,
+          cellPhone: req.body.cellPhone,
+          workPhone: req.body.workPhone,
+          email: req.body.email,
+          addresses: [
+            {
+              address: req.body.address,
+              poBoxAptRR: req.body.poBoxAptRR,
+              town: req.body.town,
+              postalCode: req.body.postalCode,
+            },
+          ],
+        },
+        {
+          where: {
+            ownerID: req.session.ownerID,
+          },
+        },
+        {
+          include: [Address],
+        }
       );
 
       // get owner information to compare with current request.
