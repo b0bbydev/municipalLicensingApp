@@ -422,7 +422,7 @@ db.filterCategoryAndValue = (filterCategory, filterValue) => {
 db.filterTagNumber = (tagNumber) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID WHERE tagNumber = ?",
+      "SELECT * FROM owners LEFT JOIN dogs ON owners.ownerID = dogs.ownerID LEFT JOIN addresses ON owners.ownerID = addresses.ownerID WHERE tagNumber = ?",
       [tagNumber],
       (error, result) => {
         if (error) {
