@@ -74,17 +74,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "/public")));
 
 // connection to db.
-// db.getConnection((err, connection) => {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log("DB Connection State: " + connection.state);
-//   }
-// });
-
-// connection to db.
 try {
-  sequelize.sync();
+  sequelize.sync({ force: true });
   console.log("Connection has been established successfully.");
 } catch (error) {
   console.error("Unable to connect to the database:", error);

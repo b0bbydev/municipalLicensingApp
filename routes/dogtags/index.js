@@ -4,6 +4,8 @@ const { redirectToLogin } = require("../../config/authHelpers");
 // models.
 const Owner = require("../../models/owner");
 const Address = require("../../models/address");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // filterHelpers.
@@ -94,12 +96,52 @@ router.post(
         if (req.body.filterCategory === "Dog Tag Number") {
           filterHelpers.filterTagNumber(req.body.filterValue, req, res);
         } else {
-          filterHelpers.filterCategoryAndValue(
-            req.body.filterCategory,
-            req.body.filterValue,
-            req,
-            res
-          );
+          // format filterCategory to match column name in db.
+          switch (req.body.filterCategory) {
+            case "First Name":
+              filterCategory = "firstName";
+              break;
+            case "Last Name":
+              filterCategory = "lastName";
+              break;
+            case "Email":
+              filterCategory = "email";
+          }
+
+          // make query.
+          Owner.findAndCountAll({
+            where: {
+              [filterCategory]: {
+                [Op.like]: req.body.filterValue + "%",
+              },
+            },
+            limit: req.query.limit,
+            offset: req.skip,
+            include: [
+              {
+                model: Address,
+              },
+            ],
+          })
+            .then((results) => {
+              const itemCount = results.count;
+              const pageCount = Math.ceil(results.count / req.query.limit);
+
+              return res.render("dogtags", {
+                title: "BWG | Dog Tags",
+                email: req.session.email,
+                data: results.rows,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + results.count,
+                pages: paginate.getArrayPages(req)(
+                  3,
+                  pageCount,
+                  req.query.page
+                ),
+              });
+            })
+            .catch((err) => next(err));
         }
       } else if (
         // NO supplied filters, render error message.
