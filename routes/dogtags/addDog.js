@@ -1,9 +1,13 @@
 var express = require("express");
 var router = express.Router();
+// models.
+const Owner = require("../../models/owner");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
+const Dog = require("../../models/dog");
+const License = require("../../models/license");
 
 /* GET /addDog/:id */
 router.get(
@@ -131,31 +135,32 @@ router.post(
         },
       });
     } else {
-      // insert dog, then license into db as license insert depends on a subquery to obtain dogID (foreign key).
-      dbHelpers
-        .insertDog(
-          req.body.tagNumber,
-          req.body.dogName,
-          req.body.breed,
-          req.body.colour,
-          req.body.dateOfBirth,
-          req.body.gender,
-          req.body.spade,
-          req.body.designation,
-          req.body.rabiesTagNumber,
-          req.body.rabiesExpiry,
-          req.body.vetOffice,
-          req.session.ownerID
-        )
-        .then(
-          dbHelpers.insertLicense(
-            req.body.issueDate,
-            req.body.expiryDate,
-            req.session.ownerID,
-            req.body.tagNumber,
-            req.body.dogName
-          )
-        );
+      // create dog with owner and license association.
+      Dog.create(
+        {
+          tagNumber: req.body.tagNumber,
+          dogName: req.body.dogName,
+          breed: req.body.breed,
+          colour: req.body.colour,
+          gender: req.body.gender,
+          dateOfBirth: req.body.dateOfBirth,
+          designation: req.body.designation,
+          spade: req.body.spade,
+          rabiesTagNumber: req.body.rabiesTagNumber,
+          rabiesExpiry: req.body.rabiesExpiry,
+          vetOffice: req.body.vetOffice,
+          ownerID: req.session.ownerID,
+          licenses: [
+            {
+              issueDate: req.body.issueDate,
+              expiryDate: req.body.expiryDate,
+            },
+          ],
+        },
+        {
+          include: [License],
+        }
+      );
 
       // redirect to /dogtags
       res.redirect("/dogtags/owner/" + req.session.ownerID);

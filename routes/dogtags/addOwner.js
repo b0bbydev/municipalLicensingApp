@@ -1,5 +1,8 @@
 var express = require("express");
 var router = express.Router();
+// models.
+const Owner = require("../../models/owner");
+const Address = require("../../models/address");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
@@ -100,26 +103,28 @@ router.post(
         },
       });
     } else {
-      // insert owner, then address into db as address insert depends on a subquery to obtain ownerID (foreign key).
-      dbHelpers
-        .insertOwner(
-          req.body.firstName,
-          req.body.lastName,
-          req.body.homePhone,
-          req.body.cellPhone,
-          req.body.workPhone,
-          req.body.email
-        )
-        .then(
-          dbHelpers.insertAddress(
-            req.body.address,
-            req.body.poBoxAptRR,
-            req.body.town,
-            req.body.postalCode,
-            req.body.firstName,
-            req.body.lastName
-          )
-        );
+      // create owner with address association.
+      Owner.create(
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          homePhone: req.body.homePhone,
+          cellPhone: req.body.cellPhone,
+          workPhone: req.body.workPhone,
+          email: req.body.email,
+          addresses: [
+            {
+              address: req.body.address,
+              poBoxAptRR: req.body.poBoxAptRR,
+              town: req.body.town,
+              postalCode: req.body.postalCode,
+            },
+          ],
+        },
+        {
+          include: [Address],
+        }
+      );
 
       // redirect back to dogtag index after success.
       res.redirect("/dogtags");
