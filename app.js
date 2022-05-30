@@ -17,6 +17,10 @@ const db = require("./config/db");
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
+// sequelize.
+const sequelize = require("./config/dbConfig");
+// models.
+const Owner = require("./models/owner");
 
 // create routes here.
 var loginRouter = require("./routes/login");
@@ -72,13 +76,21 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "/public")));
 
 // connection to db.
-db.getConnection((err, connection) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("DB Connection State: " + connection.state);
-  }
-});
+// db.getConnection((err, connection) => {
+//   if (err) {
+//     console.log(err);
+//   } else {
+//     console.log("DB Connection State: " + connection.state);
+//   }
+// });
+
+// connection to db.
+try {
+  sequelize.sync();
+  console.log("Connection has been established successfully.");
+} catch (error) {
+  console.error("Unable to connect to the database:", error);
+}
 
 // helper functions.
 hbs.registerHelper("inc", function (value, options) {

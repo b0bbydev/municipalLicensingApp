@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+// models.
+const Owner = require("../../models/owner");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
