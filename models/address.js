@@ -2,49 +2,41 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../config/dbConfig");
+const Owner = require("../models/owner");
 
-const Owner = sequelize.define("owner", {
-  ownerID: {
+const Address = sequelize.define("address", {
+  addressID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
 
-  firstName: {
+  address: {
     type: Sequelize.STRING,
     allowNull: true,
   },
 
-  lastName: {
+  poBoxAptRR: {
     type: Sequelize.STRING,
     allowNull: true,
   },
 
-  homePhone: {
+  town: {
     type: Sequelize.STRING,
     allowNull: true,
   },
 
-  homePhone: {
-    type: Sequelize.STRING,
-    allowNull: true,
-  },
-
-  cellPhone: {
-    type: Sequelize.STRING,
-    allowNull: true,
-  },
-
-  workPhone: {
-    type: Sequelize.STRING,
-    allowNull: true,
-  },
-
-  email: {
+  postalCode: {
     type: Sequelize.STRING,
     allowNull: true,
   },
 });
 
-module.exports = Owner;
+// create relationship with owners table.
+Owner.hasMany(Address, {
+  foreignKey: "ownerID",
+});
+Address.belongsTo(Owner);
+
+module.exports = Address;
