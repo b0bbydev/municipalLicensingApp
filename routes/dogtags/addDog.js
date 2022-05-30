@@ -1,13 +1,12 @@
 var express = require("express");
 var router = express.Router();
 // models.
-const Owner = require("../../models/owner");
+const Dog = require("../../models/dog");
+const License = require("../../models/license");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
-const Dog = require("../../models/dog");
-const License = require("../../models/license");
 
 /* GET /addDog/:id */
 router.get(

@@ -38,7 +38,7 @@ db.getGetOwnerInfo = (ownerID) => {
 db.getDogInfo = (dogID) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT * FROM dogs LEFT JOIN licenses ON dogs.ownerID = licenses.ownerID WHERE dogs.dogID = ? GROUP BY dogs.dogID",
+      "SELECT * FROM dogs LEFT JOIN licenses ON dogs.dogID = licenses.dogID WHERE dogs.dogID = ? GROUP BY dogs.dogID",
       [dogID],
       (error, result) => {
         if (error) {
