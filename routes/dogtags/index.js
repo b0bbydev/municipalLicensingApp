@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const { redirectToLogin } = require("../../config/authHelpers");
+// models.
+const Owner = require("../../models/owner");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // filterHelpers.
@@ -31,25 +33,26 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      // get total count of owners.
-      var ownersCount = await dbHelpers.countOwners();
-      const pageCount = Math.ceil(ownersCount.count / 50);
+      Owner.findAndCountAll({
+        limit: req.query.limit,
+        offset: req.skip,
+      })
+        .then((results) => {
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
 
-      // || 0 prevents the validation from triggering on initial page load.
-      var data = await dbHelpers.getAllOwners(parseInt(req.query.skip) || 0);
-
-      return res.render("dogtags", {
-        title: "BWG | Dog Tags",
-        errorMessages: messages,
-        email: req.session.email,
-        data: data,
-        queryCount: "Records returned: " + data.length,
-        pages: paginate.getArrayPages(req)(
-          pageCount,
-          pageCount,
-          req.query.page
-        ),
-      });
+          return res.render("dogtags", {
+            title: "BWG | Dog Tags",
+            errorMessages: messages,
+            email: req.session.email,
+            data: results.rows,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+          });
+        })
+        .catch((err) => next(err));
     }
   }
 );

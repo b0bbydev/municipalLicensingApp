@@ -19,8 +19,6 @@ var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
 // sequelize.
 const sequelize = require("./config/dbConfig");
-// models.
-const Owner = require("./models/owner");
 
 // create routes here.
 var loginRouter = require("./routes/login");
