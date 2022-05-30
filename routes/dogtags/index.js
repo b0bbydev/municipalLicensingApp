@@ -3,6 +3,7 @@ var router = express.Router();
 const { redirectToLogin } = require("../../config/authHelpers");
 // models.
 const Owner = require("../../models/owner");
+const Address = require("../../models/address");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // filterHelpers.
@@ -36,6 +37,11 @@ router.get(
       Owner.findAndCountAll({
         limit: req.query.limit,
         offset: req.skip,
+        include: [
+          {
+            model: Address,
+          },
+        ],
       })
         .then((results) => {
           const itemCount = results.count;

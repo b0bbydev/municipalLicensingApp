@@ -87,10 +87,12 @@
               <td>{{this.lastName}}</td>
               <td class="text-nowrap">{{this.homePhone}}</td>
               <td>{{this.email}}</td>
-              <td>{{this.address}}</td>
-              <td>{{this.poBoxAptRR}}</td>
-              <td>{{this.town}}</td>
-              <td>{{this.postalCode}}</td>
+              {{#each addresses}}
+                <td>{{this.address}}</td>
+                <td>{{this.poBoxAptRR}}</td>
+                <td>{{this.town}}</td>
+                <td>{{this.postalCode}}</td>
+              {{/each}}
               <td><a
                   href="/dogtags/editOwner/{{this.ownerID}}"
                   class="btn btn-sm btn-secondary"
