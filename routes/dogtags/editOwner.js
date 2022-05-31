@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
 // models.
-const Owner = require("../../models/owner");
-const Address = require("../../models/address");
+const Owner = require("../../models/dogtags/owner");
+const Address = require("../../models/dogtags/address");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.

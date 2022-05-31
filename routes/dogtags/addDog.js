@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
 // models.
-const Dog = require("../../models/dog");
-const License = require("../../models/license");
+const Dog = require("../../models/dogtags/dog");
+const License = require("../../models/dogtags/license");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 

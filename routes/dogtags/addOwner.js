@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
 // models.
-const Owner = require("../../models/owner");
-const Address = require("../../models/address");
+const Owner = require("../../models/dogtags/owner");
+const Address = require("../../models/dogtags/address");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
