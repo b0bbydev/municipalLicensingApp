@@ -1,7 +1,7 @@
 // sequelize.
 const Sequelize = require("sequelize");
 // db.
-const sequelize = require("../config/dbConfig");
+const sequelize = require("../config/sequelizeConfig");
 const Dog = require("../models/dog");
 
 const License = sequelize.define("license", {
@@ -27,6 +27,5 @@ const License = sequelize.define("license", {
 Dog.hasMany(License, {
   foreignKey: "dogID",
 });
-License.belongsTo(Dog);
 
 module.exports = License;

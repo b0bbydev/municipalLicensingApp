@@ -16,7 +16,7 @@ router.get(
     // server side validation.
     const errors = validationResult(req);
 
-    // if errors is NOT empty (if there are errors...)
+    // if errors is NOT empty (if there are errors...),
     if (!errors.isEmpty()) {
       return res.render("dogtags", {
         title: "BWG | Owner",
@@ -24,17 +24,17 @@ router.get(
         email: req.session.email,
       });
     } else {
-      // check if there's an error message in the session
+      // check if there's an error message in the session,
       let messages = req.session.messages || [];
 
-      // clear session messages
+      // clear session messages,
       req.session.messages = [];
 
       // send ownerID to session; should be safe to do so here after validation.
       req.session.ownerID = req.params.id;
 
-      // get owner information by ID via custom query.
-      var ownerInfo = await dbHelpers.getGetOwnerInfo(req.session.ownerID);
+      // get owner information.
+      var ownerInfo = await dbHelpers.getOwnerInfo(req.session.ownerID);
 
       return res.render("dogtags/editOwner", {
         title: "BWG | Edit Owner",
@@ -167,7 +167,7 @@ router.post(
       );
 
       // get owner information to compare with current request.
-      var ownerInfo = await dbHelpers.getGetOwnerInfo(req.session.ownerID);
+      var ownerInfo = await dbHelpers.getOwnerInfo(req.session.ownerID);
       // if address fields are not the same. (i.e: if an address field is changed from current value in database).
       if (
         ownerInfo[0].address != req.body.address ||
@@ -175,12 +175,19 @@ router.post(
         ownerInfo[0].town != req.body.town ||
         ownerInfo[0].postalCode != req.body.postalCode
       ) {
-        dbHelpers.updateAddress(
-          req.body.address,
-          req.body.poBoxAptRR,
-          req.body.town,
-          req.body.postalCode,
-          req.session.ownerID
+        Address.update(
+          {
+            address: req.body.address,
+            poBoxAptRR: req.body.poBoxAptRR,
+            town: req.body.town,
+            postalCode: req.body.postalCode,
+            ownerID: req.session.ownerID,
+          },
+          {
+            where: {
+              ownerID: req.session.ownerID,
+            },
+          }
         );
       }
 

@@ -12,15 +12,12 @@ const hbs = require("hbs");
 const paginate = require("express-paginate");
 // include config files.
 const sessionStoreConfig = require("./config/sessionStore");
-const db = require("./config/db");
 // session related.
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
 // sequelize.
-const sequelize = require("./config/dbConfig");
-// models.
-const Owner = require("./models/owner");
+const sequelize = require("./config/sequelizeConfig");
 
 // create routes here.
 var loginRouter = require("./routes/login");
@@ -76,16 +73,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "/public")));
 
 // connection to db.
-// db.getConnection((err, connection) => {
-//   if (err) {
-//     console.log(err);
-//   } else {
-//     console.log("DB Connection State: " + connection.state);
-//   }
-// });
-
-// connection to db.
 try {
+  //sequelize.sync({ force: true });
   sequelize.sync();
   console.log("Connection has been established successfully.");
 } catch (error) {

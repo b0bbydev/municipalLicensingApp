@@ -16,17 +16,17 @@ router.get(
     // server side validation.
     const errors = validationResult(req);
 
-    // if errors is NOT empty (if there are errors...)
+    // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("dogtags/editDog", {
         title: "BWG | Edit Dog",
         message: "Page Error!",
       });
     } else {
-      // check if there's an error message in the session
+      // check if there's an error message in the session.
       let messages = req.session.messages || [];
 
-      // clear session messages
+      // clear session messages.
       req.session.messages = [];
 
       // save dogID to session.
@@ -124,7 +124,7 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
-    // if errors is NOT empty (if there are errors...)
+    // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("dogtags/editDog", {
         title: "BWG | Edit Dog",

@@ -3,8 +3,6 @@ var router = express.Router();
 // models.
 const Owner = require("../../models/owner");
 const Address = require("../../models/address");
-// dbHelpers.
-var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -16,7 +14,7 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  res.render("dogtags/addOwner", {
+  return res.render("dogtags/addOwner", {
     title: "BWG | Add Owner",
     errorMessages: messages,
     email: req.session.email,

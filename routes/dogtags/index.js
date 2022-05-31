@@ -1,10 +1,16 @@
 var express = require("express");
 var router = express.Router();
 const { redirectToLogin } = require("../../config/authHelpers");
+// models.
+const Owner = require("../../models/owner");
+const Address = require("../../models/address");
+const Dog = require("../../models/dog");
+const License = require("../../models/license");
+// sequelize.
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
-// filterHelpers.
-var filterHelpers = require("../../config/filterHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
@@ -31,25 +37,31 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      // get total count of owners.
-      var ownersCount = await dbHelpers.countOwners();
-      const pageCount = Math.ceil(ownersCount.count / 50);
+      Owner.findAndCountAll({
+        limit: req.query.limit,
+        offset: req.skip,
+        include: [
+          {
+            model: Address,
+          },
+        ],
+      })
+        .then((results) => {
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
 
-      // || 0 prevents the validation from triggering on initial page load.
-      var data = await dbHelpers.getAllOwners(parseInt(req.query.skip) || 0);
-
-      return res.render("dogtags", {
-        title: "BWG | Dog Tags",
-        errorMessages: messages,
-        email: req.session.email,
-        data: data,
-        queryCount: "Records returned: " + data.length,
-        pages: paginate.getArrayPages(req)(
-          pageCount,
-          pageCount,
-          req.query.page
-        ),
-      });
+          return res.render("dogtags", {
+            title: "BWG | Dog Tags",
+            errorMessages: messages,
+            email: req.session.email,
+            data: results.rows,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+          });
+        })
+        .catch((err) => next(err));
     }
   }
 );
@@ -64,7 +76,7 @@ router.post(
   body("filterValue")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
-  function (req, res, next) {
+  async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
 
@@ -81,32 +93,104 @@ router.post(
         req.body.filterCategory &&
         req.body.filterValue
       ) {
-        // if ALL supplied filters && filterCategory == Dog Tag Number.
+        // use a different function (SQL query) if filtering by tagNumber.
         if (req.body.filterCategory === "Dog Tag Number") {
-          filterHelpers.filterTagNumber(req.body.filterValue, req, res);
+          Owner.findAndCountAll({
+            where: {
+              $tagNumber$: req.body.filterValue,
+            },
+            include: [
+              {
+                model: Dog,
+              },
+              {
+                model: Address,
+              },
+            ],
+          })
+            .then((results) => {
+              const itemCount = results.count;
+              const pageCount = Math.ceil(results.count / req.query.limit);
+
+              return res.render("dogtags", {
+                title: "BWG | Dog Tags",
+                email: req.session.email,
+                data: results.rows,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + results.count,
+                pages: paginate.getArrayPages(req)(
+                  3,
+                  pageCount,
+                  req.query.page
+                ),
+              });
+            })
+            .catch((err) => next(err));
         } else {
-          filterHelpers.filterCategoryAndValue(
-            req.body.filterCategory,
-            req.body.filterValue,
-            req,
-            res
-          );
+          // format filterCategory to match column name in db.
+          switch (req.body.filterCategory) {
+            case "First Name":
+              filterCategory = "firstName";
+              break;
+            case "Last Name":
+              filterCategory = "lastName";
+              break;
+            case "Email":
+              filterCategory = "email";
+              break;
+          }
+
+          // make query.
+          Owner.findAndCountAll({
+            where: {
+              [filterCategory]: {
+                [Op.like]: req.body.filterValue + "%",
+              },
+            },
+            limit: req.query.limit,
+            offset: req.skip,
+            include: [
+              {
+                model: Address,
+              },
+            ],
+          })
+            .then((results) => {
+              const itemCount = results.count;
+              const pageCount = Math.ceil(results.count / req.query.limit);
+
+              return res.render("dogtags", {
+                title: "BWG | Dog Tags",
+                email: req.session.email,
+                data: results.rows,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + results.count,
+                pages: paginate.getArrayPages(req)(
+                  3,
+                  pageCount,
+                  req.query.page
+                ),
+              });
+            })
+            .catch((err) => next(err));
         }
       } else if (
-        // NO supplied filters.
+        // NO supplied filters, render error message.
         !req.body.filterCategory &&
         !req.body.filterValue
       ) {
         return res.render("dogtags", {
           title: "BWG | Dog Tags",
-          message: "Please provide a value to filter by!",
+          message: "Please ensure BOTH filtering conditions are valid!",
           email: req.session.email,
         });
-        // else something weird happens..
+        // else something weird happens.. (most likely both)
       } else {
         return res.render("dogtags", {
           title: "BWG | Dog Tags",
-          message: "Please ensure both filtering conditions are valid!",
+          message: "Filtering Error!",
           email: req.session.email,
         });
       }
@@ -141,15 +225,15 @@ router.get(
 
       // dog data.
       var data = await dbHelpers.getOwnerDogs(req.session.ownerID);
-      // get ownerName from custom query.
+      // get ownerName.
       var ownerName = await dbHelpers.getNameFromOwnerID(req.session.ownerID);
-
-      // get addressHistory data too.
+      // get addressHistory data.
       var addressHistory = await dbHelpers.getAddressHistory(
         req.session.ownerID
       );
 
-      // error handle here, if supplied ownerID isn't in database.
+      // error handle here as user can pass an invalid one in URL bar.
+      // if ownerName exists, concatenate names together.
       if (ownerName[0]) {
         ownerName = ownerName[0].firstName + " " + ownerName[0].lastName;
       } else {
@@ -160,6 +244,7 @@ router.get(
         });
       }
 
+      // return endpoint after passing validation.
       return res.render("dogtags/owner", {
         title: "BWG | Owner",
         errorMessages: messages,
@@ -208,30 +293,40 @@ router.get(
 /* POST /dogtags/renew/:id */
 router.post(
   "/renew/:id",
-  body("issueDate").isDate().trim(),
-  body("expiryDate").isDate().trim(),
+  body("issueDate").isDate().withMessage("Invalid Issue Date Entry!").trim(),
+  body("expiryDate").isDate().withMessage("Invalid Expiry Date Entry!").trim(),
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
 
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
+
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       return res.render("dogtags/renew", {
         title: "BWG | Renew",
-        message: "Form Error!",
+        message: errorArray[0].msg,
         email: req.session.email,
       });
     } else {
-      // update licenses.
-      dbHelpers.updateLicenses(
-        req.body.issueDate,
-        req.body.expiryDate,
-        req.params.id
+      // no errors, update license.
+      License.update(
+        {
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
+          dogID: req.session.dogID,
+        },
+        {
+          where: {
+            dogID: req.session.dogID,
+          },
+        }
       );
 
-      // redirect back to dogtags.
-      res.redirect("/dogtags");
+      // redirect back to owner profile.
+      res.redirect("/dogtags/owner/" + req.session.ownerID);
     }
   }
 );

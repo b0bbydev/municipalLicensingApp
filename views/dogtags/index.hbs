@@ -87,10 +87,12 @@
               <td>{{this.lastName}}</td>
               <td class="text-nowrap">{{this.homePhone}}</td>
               <td>{{this.email}}</td>
-              <td>{{this.address}}</td>
-              <td>{{this.poBoxAptRR}}</td>
-              <td>{{this.town}}</td>
-              <td>{{this.postalCode}}</td>
+              {{#each addresses}}
+                <td>{{this.address}}</td>
+                <td>{{this.poBoxAptRR}}</td>
+                <td>{{this.town}}</td>
+                <td>{{this.postalCode}}</td>
+              {{/each}}
               <td><a
                   href="/dogtags/editOwner/{{this.ownerID}}"
                   class="btn btn-sm btn-secondary"
@@ -99,14 +101,14 @@
           {{/each}}
         </tbody>
       </table>
-      <a onclick="togglePagination()" id="pagJump">Jump to page...</a>
-      <nav id="pagination" style="display: none;">
+      <a id="pagJump">Jump to page...</a>
+      <nav id="pagination">
         <ul class="pagination pagination-sm">
           {{#each pages}}
             <li class="page-item"><a
                 class="page-link"
-                href="?skip={{inc @index}}&page={{@index}}"
-              >{{@index}}</a></li>
+                href="{{this.url}}"
+              >{{this.number}}</a></li>
           {{/each}}
         </ul>
       </nav>
