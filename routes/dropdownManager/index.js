@@ -92,11 +92,13 @@ router.post(
         message: "Invalid entry!",
       });
     } else {
-      // insert into db after validation middleware.
-      dbHelpers.insertIntoDropdown(req.body.value, req.session.formID);
-
-      // redirect to same page if successful.
-      res.redirect("/dropdownManager/form/" + req.session.formID);
+      Dropdown.create({
+        value: req.body.value,
+        isDisabled: 0, // *enable* by default.
+      }).then((results) => {
+        // redirect to same page if successful.
+        res.redirect("/dropdownManager/form/" + req.session.formID);
+      });
     }
   }
 );
@@ -117,11 +119,19 @@ router.get(
         message: "Invalid entry!",
       });
     } else {
-      // after validation, disable dropdown option.
-      dbHelpers.disableDropdownOption(req.params.id); // req.params.id == dropdownID.
-
-      // redirect to same page after success.
-      res.redirect("/dropdownManager/form/" + req.session.formID);
+      Dropdown.update(
+        {
+          isDisabled: 1,
+        },
+        {
+          where: {
+            dropdownID: req.params.id, // req.params.id == dropdownID
+          },
+        }
+      ).then((results) => {
+        // redirect to same page after success.
+        res.redirect("/dropdownManager/form/" + req.session.formID);
+      });
     }
   }
 );
@@ -142,11 +152,19 @@ router.get(
         message: "Invalid entry!",
       });
     } else {
-      // after validation, enable dropdown option.
-      dbHelpers.enableDropdownOption(req.params.id); // req.params.id == dropdownID.
-
-      // redirect to same page after success.
-      res.redirect("/dropdownManager/form/" + req.session.formID);
+      Dropdown.update(
+        {
+          isDisabled: 0,
+        },
+        {
+          where: {
+            dropdownID: req.params.id, // req.params.id == dropdownID
+          },
+        }
+      ).then((results) => {
+        // redirect to same page after success.
+        res.redirect("/dropdownManager/form/" + req.session.formID);
+      });
     }
   }
 );
