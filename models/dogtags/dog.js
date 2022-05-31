@@ -38,7 +38,7 @@ const Dog = sequelize.define("dog", {
   },
 
   dateOfBirth: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     allowNull: true,
   },
 
@@ -58,11 +58,16 @@ const Dog = sequelize.define("dog", {
   },
 
   rabiesExpiry: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     allowNull: true,
   },
 
   vetOffice: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
+
+  tagRequired: {
     type: Sequelize.STRING,
     allowNull: true,
   },

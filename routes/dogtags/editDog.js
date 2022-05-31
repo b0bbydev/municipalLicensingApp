@@ -156,6 +156,7 @@ router.post(
           rabiesTagNumber: req.body.rabiesTagNumber,
           rabiesExpiry: req.body.rabiesExpiry,
           vetOffice: req.body.vetOffice,
+          tagRequired: req.body.tagRequired,
           ownerID: req.session.ownerID,
           licenses: [
             {

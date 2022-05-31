@@ -13,12 +13,12 @@ const License = sequelize.define("license", {
   },
 
   issueDate: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     allowNull: true,
   },
 
   expiryDate: {
-    type: Sequelize.DATE,
+    type: Sequelize.DATEONLY,
     allowNull: true,
   },
 });

@@ -249,7 +249,7 @@
           class="form-control"
           placeholder="Vet Office"
           name="vetOffice"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           value="{{dogInfo.vetOffice}}"
         />
@@ -259,7 +259,7 @@
     <div class="row">
       <div class="col">
         <label for="Tag Required" class="form-label">Tag Required</label>
-        <select class="form-select" name="tagRequired" value="">
+        <select class="form-select" name="tagRequired">
           <option disabled selected>Tag Required...</option>
           <option value="Deceased">Deceased</option>
           <option value="Moved">Moved</option>
