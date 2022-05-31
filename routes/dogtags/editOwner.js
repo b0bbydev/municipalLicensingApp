@@ -34,7 +34,7 @@ router.get(
       req.session.ownerID = req.params.id;
 
       // get owner information.
-      var ownerInfo = await dbHelpers.getGetOwnerInfo(req.session.ownerID);
+      var ownerInfo = await dbHelpers.getOwnerInfo(req.session.ownerID);
 
       return res.render("dogtags/editOwner", {
         title: "BWG | Edit Owner",
@@ -167,7 +167,7 @@ router.post(
       );
 
       // get owner information to compare with current request.
-      var ownerInfo = await dbHelpers.getGetOwnerInfo(req.session.ownerID);
+      var ownerInfo = await dbHelpers.getOwnerInfo(req.session.ownerID);
       // if address fields are not the same. (i.e: if an address field is changed from current value in database).
       if (
         ownerInfo[0].address != req.body.address ||
@@ -175,12 +175,19 @@ router.post(
         ownerInfo[0].town != req.body.town ||
         ownerInfo[0].postalCode != req.body.postalCode
       ) {
-        dbHelpers.updateAddress(
-          req.body.address,
-          req.body.poBoxAptRR,
-          req.body.town,
-          req.body.postalCode,
-          req.session.ownerID
+        Address.update(
+          {
+            address: req.body.address,
+            poBoxAptRR: req.body.poBoxAptRR,
+            town: req.body.town,
+            postalCode: req.body.postalCode,
+            ownerID: req.session.ownerID,
+          },
+          {
+            where: {
+              ownerID: req.session.ownerID,
+            },
+          }
         );
       }
 

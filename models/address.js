@@ -1,7 +1,7 @@
 // sequelize.
 const Sequelize = require("sequelize");
 // db.
-const sequelize = require("../config/dbConfig");
+const sequelize = require("../config/sequelizeConfig");
 const Owner = require("../models/owner");
 
 const Address = sequelize.define("address", {

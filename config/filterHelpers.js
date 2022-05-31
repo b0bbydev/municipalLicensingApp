@@ -24,22 +24,6 @@ module.exports = {
     });
   },
 
-  filterTagNumber: async (tagNumber, req, res) => {
-    var data = await dbHelpers.filterTagNumber(tagNumber);
-
-    // pagination - doesn't really work
-    const pageCount = Math.ceil(data.length / 50);
-
-    return res.render("dogtags", {
-      title: "BWG | Dogtags",
-      email: req.session.email,
-      tagNumber: tagNumber,
-      data: data,
-      queryCount: "Records returned: " + data.length,
-      pages: paginate.getArrayPages(req)(pageCount, pageCount, req.query.page),
-    });
-  },
-
   policiesFilterCategoryAndValue: async (
     filterCategory,
     filterValue,

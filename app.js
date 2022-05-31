@@ -12,13 +12,12 @@ const hbs = require("hbs");
 const paginate = require("express-paginate");
 // include config files.
 const sessionStoreConfig = require("./config/sessionStore");
-const db = require("./config/db");
 // session related.
 var session = require("express-session");
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
 // sequelize.
-const sequelize = require("./config/dbConfig");
+const sequelize = require("./config/sequelizeConfig");
 
 // create routes here.
 var loginRouter = require("./routes/login");

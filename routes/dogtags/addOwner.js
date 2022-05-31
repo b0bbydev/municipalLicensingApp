@@ -3,8 +3,6 @@ var router = express.Router();
 // models.
 const Owner = require("../../models/owner");
 const Address = require("../../models/address");
-// dbHelpers.
-var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 

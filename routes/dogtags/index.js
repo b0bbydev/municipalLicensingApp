@@ -5,12 +5,12 @@ const { redirectToLogin } = require("../../config/authHelpers");
 const Owner = require("../../models/owner");
 const Address = require("../../models/address");
 const Dog = require("../../models/dog");
+const License = require("../../models/license");
+// sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
-// filterHelpers.
-var filterHelpers = require("../../config/filterHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
@@ -311,15 +311,22 @@ router.post(
         email: req.session.email,
       });
     } else {
-      // update licenses.
-      dbHelpers.updateLicenses(
-        req.body.issueDate,
-        req.body.expiryDate,
-        req.params.id
+      // no errors, update license.
+      License.update(
+        {
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
+          dogID: req.session.dogID,
+        },
+        {
+          where: {
+            dogID: req.session.dogID,
+          },
+        }
       );
 
-      // redirect back to dogtags.
-      res.redirect("/dogtags");
+      // redirect back to owner profile.
+      res.redirect("/dogtags/owner/" + req.session.ownerID);
     }
   }
 );

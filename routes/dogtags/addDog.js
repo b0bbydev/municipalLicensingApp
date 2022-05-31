@@ -3,8 +3,6 @@ var router = express.Router();
 // models.
 const Dog = require("../../models/dog");
 const License = require("../../models/license");
-// dbHelpers.
-var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
