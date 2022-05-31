@@ -37,6 +37,5 @@ const Address = sequelize.define("address", {
 Owner.hasMany(Address, {
   foreignKey: "ownerID",
 });
-Address.belongsTo(Owner);
 
 module.exports = Address;

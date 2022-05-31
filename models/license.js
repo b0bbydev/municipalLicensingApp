@@ -27,6 +27,5 @@ const License = sequelize.define("license", {
 Dog.hasMany(License, {
   foreignKey: "dogID",
 });
-License.belongsTo(Dog);
 
 module.exports = License;

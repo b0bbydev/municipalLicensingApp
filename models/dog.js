@@ -33,7 +33,7 @@ const Dog = sequelize.define("dog", {
   },
 
   gender: {
-    type: Sequelize.ENUM("M', F"),
+    type: Sequelize.ENUM("M", "F"),
     allowNull: true,
   },
 
@@ -72,6 +72,5 @@ const Dog = sequelize.define("dog", {
 Owner.hasMany(Dog, {
   foreignKey: "ownerID",
 });
-Dog.belongsTo(Owner);
 
 module.exports = Dog;

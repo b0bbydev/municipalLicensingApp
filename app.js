@@ -75,7 +75,8 @@ app.use(express.static(path.join(__dirname, "/public")));
 
 // connection to db.
 try {
-  sequelize.sync({ force: true });
+  //sequelize.sync({ force: true });
+  sequelize.sync();
   console.log("Connection has been established successfully.");
 } catch (error) {
   console.error("Unable to connect to the database:", error);
