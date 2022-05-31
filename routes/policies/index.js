@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const { redirectToLogin } = require("../../config/authHelpers");
+// models.
+const Policy = require("../../models/policies/policy");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -13,13 +15,14 @@ router.get("/", async (req, res, next) => {
   req.session.messages = [];
 
   // get all the policies.
-
-  return res.render("policies", {
-    title: "BWG | Policies & Procedures",
-    errorMessages: messages,
-    email: req.session.email,
-    //data: data,
-    //queryCount: "Records returned: " + data.length,
+  Policy.findAndCountAll({}).then((results) => {
+    return res.render("policies", {
+      title: "BWG | Policies & Procedures",
+      errorMessages: messages,
+      email: req.session.email,
+      data: results.rows,
+      queryCount: "Records returned: " + results.count,
+    });
   });
 });
 
