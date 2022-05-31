@@ -2,10 +2,10 @@ var express = require("express");
 var router = express.Router();
 const { redirectToLogin } = require("../../config/authHelpers");
 // models.
-const Owner = require("../../models/owner");
-const Address = require("../../models/address");
-const Dog = require("../../models/dog");
-const License = require("../../models/license");
+const Owner = require("../../models/dogtags/owner");
+const Address = require("../../models/dogtags/address");
+const Dog = require("../../models/dogtags/dog");
+const License = require("../../models/dogtags/license");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;

@@ -1,8 +1,8 @@
 // sequelize.
 const Sequelize = require("sequelize");
 // db.
-const sequelize = require("../config/sequelizeConfig");
-const Dog = require("../models/dog");
+const sequelize = require("../../config/sequelizeConfig");
+const Dog = require("../dogtags/dog");
 
 const License = sequelize.define("license", {
   licenseID: {

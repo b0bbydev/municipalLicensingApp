@@ -1,10 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const { redirectToLogin } = require("../../config/authHelpers");
-// dbHelpers.
-var dbHelpers = require("../../config/dbHelpers");
-// filterHelpers.
-var filterHelpers = require("../../config/filterHelpers");
+// models.
+const Policy = require("../../models/policies/policy");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -17,14 +15,14 @@ router.get("/", async (req, res, next) => {
   req.session.messages = [];
 
   // get all the policies.
-  var data = await dbHelpers.getAllPolicies();
-
-  return res.render("policies", {
-    title: "BWG | Policies & Procedures",
-    errorMessages: messages,
-    email: req.session.email,
-    data: data,
-    queryCount: "Records returned: " + data.length,
+  Policy.findAndCountAll({}).then((results) => {
+    return res.render("policies", {
+      title: "BWG | Policies & Procedures",
+      errorMessages: messages,
+      email: req.session.email,
+      data: results.rows,
+      queryCount: "Records returned: " + results.count,
+    });
   });
 });
 
@@ -55,12 +53,7 @@ router.post(
         req.body.filterCategory &&
         req.body.filterValue
       ) {
-        filterHelpers.policiesFilterCategoryAndValue(
-          req.body.filterCategory,
-          req.body.filterValue,
-          req,
-          res
-        );
+        // db stuff.
       } else if (
         // NO supplied filters.
         !req.body.filterCategory &&
