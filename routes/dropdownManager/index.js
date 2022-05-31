@@ -1,6 +1,9 @@
 var express = require("express");
 var router = express.Router();
 const { redirectToLogin } = require("../../config/authHelpers");
+// models.
+const Dropdown = require("../../models/dropdownManager/dropdown");
+const DropdownForm = require("../../models/dropdownManager/dropdownForm");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
@@ -14,13 +17,16 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  var data = await dbHelpers.getAllForms();
-
-  return res.render("dropdownManager/index", {
-    title: "BWG | Dropdown Manager",
-    errorMessages: messages,
-    email: req.session.email,
-    data: data,
+  DropdownForm.findAndCountAll({
+    limit: req.query.limit,
+    offset: req.skip,
+  }).then((results) => {
+    return res.render("dropdownManager/index", {
+      title: "BWG | Dropdown Manager",
+      errorMessages: messages,
+      email: req.session.email,
+      data: results.rows,
+    });
   });
 });
 
@@ -48,15 +54,20 @@ router.get(
       // store formID in session to use in other endpoints.
       req.session.formID = req.params.id;
 
-      var data = await dbHelpers.getAllFromDropdown(req.session.formID);
+      // get formName.
       var formName = await dbHelpers.getFormNameFromFormID(req.session.formID);
 
-      return res.render("dropdownManager/form", {
-        title: "BWG | " + formName[0].formName,
-        errorMessages: messages,
-        email: req.session.email,
-        formName: formName[0].formName,
-        data: data,
+      Dropdown.findAndCountAll({
+        limit: req.query.limit,
+        offset: req.skip,
+      }).then((results) => {
+        return res.render("dropdownManager/form", {
+          title: "BWG | " + formName[0].formName,
+          errorMessages: messages,
+          email: req.session.email,
+          formName: formName[0].formName,
+          data: results.rows,
+        });
       });
     }
   }

@@ -113,7 +113,7 @@ db.disableDropdownOption = (dropdownID) => {
 db.getFormNameFromFormID = (formID) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT formName FROM dropdownforms WHERE formID = ?",
+      "SELECT formName FROM dropdownforms WHERE dropdownFormID = ?",
       [formID],
       (error, result) => {
         if (error) {

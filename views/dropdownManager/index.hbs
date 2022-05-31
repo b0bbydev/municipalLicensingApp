@@ -6,7 +6,7 @@
       <table class="sortable table table-bordered table-striped table-hover">
         <thead>
           <tr>
-            <th>Form ID</th>
+            <th>Dropdown Form ID</th>
             <th>Form Name</th>
           </tr>
         </thead>
@@ -14,9 +14,9 @@
           {{#each data}}
             <tr>
               <td><a
-                  href="/dropdownManager/form/{{this.formID}}"
+                  href="/dropdownManager/form/{{this.dropdownFormID}}"
                   id="ownerLink"
-                >{{this.formID}}</a></td>
+                >{{this.dropdownFormID}}</a></td>
               <td>{{this.formName}}</td>
             </tr>
           {{/each}}
