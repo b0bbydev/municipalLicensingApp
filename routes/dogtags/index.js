@@ -4,6 +4,7 @@ const { redirectToLogin } = require("../../config/authHelpers");
 // models.
 const Owner = require("../../models/owner");
 const Address = require("../../models/address");
+const Dog = require("../../models/dog");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 // dbHelpers.
@@ -75,7 +76,7 @@ router.post(
   body("filterValue")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
-  function (req, res, next) {
+  async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
 
@@ -94,7 +95,38 @@ router.post(
       ) {
         // use a different function (SQL query) if filtering by tagNumber.
         if (req.body.filterCategory === "Dog Tag Number") {
-          filterHelpers.filterTagNumber(req.body.filterValue, req, res);
+          Owner.findAndCountAll({
+            where: {
+              $tagNumber$: req.body.filterValue,
+            },
+            include: [
+              {
+                model: Dog,
+              },
+              {
+                model: Address,
+              },
+            ],
+          })
+            .then((results) => {
+              const itemCount = results.count;
+              const pageCount = Math.ceil(results.count / req.query.limit);
+
+              return res.render("dogtags", {
+                title: "BWG | Dog Tags",
+                email: req.session.email,
+                data: results.rows,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + results.count,
+                pages: paginate.getArrayPages(req)(
+                  3,
+                  pageCount,
+                  req.query.page
+                ),
+              });
+            })
+            .catch((err) => next(err));
         } else {
           // format filterCategory to match column name in db.
           switch (req.body.filterCategory) {
@@ -106,6 +138,7 @@ router.post(
               break;
             case "Email":
               filterCategory = "email";
+              break;
           }
 
           // make query.
