@@ -12,7 +12,7 @@
     <div id="registerDogButton" class="col-sm-4">
       <a
         href="/dogtags/addDog/{{ownerID}}"
-        class="btn btn-sm btn-primary"
+        class="btn btn-sm btn-primary float-end"
       >Register Dog to Owner</a>
     </div>
   </div>
@@ -81,9 +81,15 @@
     </div>
   </section>
   <div class="row">
-    <div class="col-sm-4">
-      <a id="addressHistory" onclick="toggleAddressHistory()">See address
-        history...</a>
+    <div class="col">
+      <a id="dogHistory" onclick="toggleDogHistory()">See dog(s) history...</a>
+    </div>
+    <div class="col">
+      <a
+        class="float-end"
+        id="addressHistory"
+        onclick="toggleAddressHistory()"
+      >See address history...</a>
     </div>
   </div>
 
@@ -117,15 +123,14 @@
     </div>
   </section>
 
-  <section id="dogHistorySection" class="row">
+  <section id="dogHistorySection" class="row" style="display: none;">
     <div class="col-12">
       <h4>Dog History</h4>
       <table class="sortable table table-bordered table-striped table-hover">
         <thead>
           <tr>
             <th>Action</th>
-            <th>License Issue Date</th>
-            <th>License Expiry Date</th>
+            <th>Last Modified</th>
             <th>Tag Number</th>
             <th>Dog Name</th>
             <th>Dog Breed</th>
@@ -138,14 +143,15 @@
             <th>Rabies Expiry</th>
             <th>Vet Office</th>
             <th>Tag Required</th>
+            <th>License Issue Date</th>
+            <th>License Expiry Date</th>
           </tr>
         </thead>
         <tbody>
           {{#each dogHistory}}
             <tr>
               <td>{{this.action}}</td>
-              <td>{{this.issueDate}}</td>
-              <td>{{this.expiryDate}}</td>
+              <td>{{this.lastModified}}</td>
               <td>{{this.tagNumber}}</td>
               <td>{{this.dogName}}</td>
               <td>{{this.breed}}</td>
@@ -158,6 +164,8 @@
               <td>{{this.rabiesExpiry}}</td>
               <td>{{this.vetOffice}}</td>
               <td>{{this.tagRequired}}</td>
+              <td>{{this.issueDate}}</td>
+              <td>{{this.expiryDate}}</td>
             </tr>
           {{/each}}
         </tbody>

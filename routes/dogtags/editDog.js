@@ -74,7 +74,7 @@ router.post(
     .trim(),
   body("breed")
     .if(body("breed").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-z\/\-, ]*$/)
     .withMessage("Invalid Breed Entry!")
     .trim(),
   body("colour")
@@ -158,20 +158,13 @@ router.post(
           vetOffice: req.body.vetOffice,
           tagRequired: req.body.tagRequired,
           ownerID: req.session.ownerID,
-          licenses: [
-            {
-              issueDate: req.body.issueDate,
-              expiryDate: req.body.expiryDate,
-            },
-          ],
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
         },
         {
           where: {
             dogID: req.session.dogID,
           },
-        },
-        {
-          include: [License],
         }
       );
 

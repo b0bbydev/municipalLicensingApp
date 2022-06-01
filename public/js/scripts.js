@@ -10,6 +10,13 @@ function toggleAddressHistory() {
     addressHistorySection.style.display === "none" ? "" : "none";
 }
 
+// create function to unhide the address history table.
+function toggleDogHistory() {
+  var dogHistorySection = document.getElementById("dogHistorySection");
+  dogHistorySection.style.display =
+    dogHistorySection.style.display === "none" ? "" : "none";
+}
+
 // create function to fill out form.
 function fillForm() {
   document.getElementById("firstName").value = "Test";
