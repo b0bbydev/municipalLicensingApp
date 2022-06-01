@@ -81,6 +81,11 @@ const Dog = sequelize.define("dog", {
     type: Sequelize.DATEONLY,
     allowNull: true,
   },
+
+  vendor: {
+    type: Sequelize.STRING,
+    allowNull: true,
+  },
 });
 
 // create relationship with owners table.

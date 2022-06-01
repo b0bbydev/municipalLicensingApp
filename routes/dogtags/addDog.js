@@ -93,15 +93,10 @@ router.post(
     .matches(/^[a-zA-z0-9, ]*$/)
     .withMessage("Invalid Vet Office Entry!")
     .trim(),
-  body("issueDate")
-    .if(body("issueDate").notEmpty())
-    .isDate()
-    .withMessage("Invalid Issue Date Entry!")
-    .trim(),
-  body("expiryDate")
-    .if(body("expiryDate").notEmpty())
-    .isDate()
-    .withMessage("Invalid Expiry Entry!")
+  body("vendor")
+    .if(body("vendor").notEmpty())
+    .matches(/^[a-zA-z\/\- ]*$/)
+    .withMessage("Invalid Vendor Entry!")
     .trim(),
   async (req, res, next) => {
     // server side validation.
@@ -126,11 +121,15 @@ router.post(
           rabiesTagNumber: req.body.rabiesTagNumber,
           rabiesExpiry: req.body.rabiesExpiry,
           vetOffice: req.body.vetOffice,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
+          tagRequired: req.body.tagRequired,
+          vendor: req.body.vendor,
         },
       });
     } else {
+      // get current date for automatic population of license.
+      var issueDate = new Date();
+      var expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+
       // create dog with owner and license association.
       Dog.create({
         tagNumber: req.body.tagNumber,
@@ -144,8 +143,10 @@ router.post(
         rabiesTagNumber: req.body.rabiesTagNumber,
         rabiesExpiry: req.body.rabiesExpiry,
         vetOffice: req.body.vetOffice,
-        issueDate: req.body.issueDate,
-        expiryDate: req.body.expiryDate,
+        tagRequired: req.body.tagRequired,
+        vendor: req.body.vendor,
+        issueDate: issueDate,
+        expiryDate: expiryDate,
         ownerID: req.session.ownerID,
       });
 

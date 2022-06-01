@@ -32,6 +32,7 @@
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
           value="{{formData.dogName}}"
+          maxlength="20"
         />
       </div>
     </div>
@@ -44,9 +45,10 @@
           class="form-control"
           placeholder="Breed"
           name="breed"
-          pattern="[^()/><\][\\\x22;|]+"
+          pattern="[^()><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.breed}}"
+          maxlength="25"
         />
       </div>
       <!-- Colour -->
@@ -57,9 +59,10 @@
           class="form-control"
           placeholder="Colour"
           name="colour"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^()><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.colour}}"
+          maxlength="25"
         />
       </div>
     </div>
@@ -218,7 +221,7 @@
     </div>
     <!-- Vet Office -->
     <div class="row">
-      <div class="col">
+      <div class="col-sm-6">
         <label for="Vet Office" class="form-label">Vet Office</label>
         <input
           type="text"
@@ -228,30 +231,20 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.vetOffice}}"
+          maxlength="50"
         />
       </div>
-    </div>
-    <h4>License Information</h4>
-    <hr />
-    <div class="row">
-      <div class="col">
-        <label for="Issue Date" class="form-label">Issue Date</label>
+      <div class="col-sm-6">
+        <label for="Vendor" class="form-label">Vendor</label>
         <input
-          type="date"
+          type="text"
           class="form-control"
-          placeholder="Issue Date"
-          name="issueDate"
-          value="{{formData.issueDate}}"
-        />
-      </div>
-      <div class="col">
-        <label for="Expiry Date" class="form-label">Expiry Date</label>
-        <input
-          type="date"
-          class="form-control"
-          placeholder="Expiry Date"
-          name="expiryDate"
-          value="{{formData.expiryDate}}"
+          placeholder="Vendor"
+          name="vendor"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.vendor}}"
+          maxlength="50"
         />
       </div>
     </div>

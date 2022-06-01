@@ -50,9 +50,8 @@ router.get(
           rabiesTagNumber: dogInfo[0].rabiesTagNumber,
           rabiesExpiry: dogInfo[0].rabiesExpiry,
           vetOffice: dogInfo[0].vetOffice,
-          issueDate: dogInfo[0].issueDate,
-          expiryDate: dogInfo[0].expiryDate,
           tagRequired: dogInfo[0].tagRequired,
+          vendor: dogInfo[0].vendor,
         },
       });
     }
@@ -117,6 +116,11 @@ router.post(
     .matches(/^[a-zA-z0-9, ]*$/)
     .withMessage("Invalid Vet Office Entry!")
     .trim(),
+  body("vendor")
+    .if(body("vendor").notEmpty())
+    .matches(/^[a-zA-z\/\- ]*$/)
+    .withMessage("Invalid Vendor Entry!")
+    .trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -140,6 +144,8 @@ router.post(
           rabiesTagNumber: req.body.rabiesTagNumber,
           rabiesExpiry: req.body.rabiesExpiry,
           vetOffice: req.body.vetOffice,
+          tagRequired: req.body.tagRequired,
+          vendor: req.body.vendor,
         },
       });
     } else {
@@ -157,9 +163,8 @@ router.post(
           rabiesExpiry: req.body.rabiesExpiry,
           vetOffice: req.body.vetOffice,
           tagRequired: req.body.tagRequired,
+          vendor: req.body.vendor,
           ownerID: req.session.ownerID,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
         },
         {
           where: {

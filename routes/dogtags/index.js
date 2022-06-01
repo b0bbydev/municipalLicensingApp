@@ -281,57 +281,25 @@ router.get(
         email: req.session.email,
       });
     } else {
-      // check if there's an error message in the session
-      let messages = req.session.messages || [];
+      // get current date for automatic population of license.
+      var issueDate = new Date();
+      var expiryDate = new Date(issueDate.getFullYear() + 1, 0, 1); // year,month (jan = 0), day
 
-      // clear session messages
-      req.session.messages = [];
-
-      return res.render("dogtags/renew", {
-        title: "BWG | Renew",
-        errorMessages: messages,
-        email: req.session.email,
-      });
-    }
-  }
-);
-
-/* POST /dogtags/renew/:id */
-router.post(
-  "/renew/:id",
-  body("issueDate").isDate().withMessage("Invalid Issue Date Entry!").trim(),
-  body("expiryDate").isDate().withMessage("Invalid Expiry Date Entry!").trim(),
-  param("id").matches(/^\d+$/).trim(),
-  async (req, res, next) => {
-    // server side validation.
-    const errors = validationResult(req);
-
-    // use built-in array() to convert Result object to array for custom error messages.
-    var errorArray = errors.array();
-
-    // if errors is NOT empty (if there are errors...)
-    if (!errors.isEmpty()) {
-      return res.render("dogtags/renew", {
-        title: "BWG | Renew",
-        message: errorArray[0].msg,
-        email: req.session.email,
-      });
-    } else {
       // no errors, update license.
       Dog.update(
         {
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
+          issueDate: issueDate,
+          expiryDate: expiryDate,
         },
         {
           where: {
             dogID: req.session.dogID,
           },
         }
-      );
-
-      // redirect back to owner profile.
-      res.redirect("/dogtags/owner/" + req.session.ownerID);
+      ).then((result) => {
+        // redirect back to owner profile.
+        res.redirect("/dogtags/owner/" + req.session.ownerID);
+      });
     }
   }
 );
