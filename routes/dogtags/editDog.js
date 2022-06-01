@@ -53,6 +53,7 @@ router.get(
           vetOffice: dogInfo[0].vetOffice,
           issueDate: dogInfo[0].issueDate,
           expiryDate: dogInfo[0].expiryDate,
+          tagRequired: dogInfo[0].tagRequired,
         },
       });
     }

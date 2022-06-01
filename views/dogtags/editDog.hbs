@@ -260,7 +260,7 @@
       <div class="col">
         <label for="Tag Required" class="form-label">Tag Required</label>
         <select class="form-select" name="tagRequired">
-          <option disabled selected>Tag Required...</option>
+          <option disabled selected>{{#if dogInfo.tagRequired}}{{dogInfo.tagRequired}}{{else}}Tag Required...{{/if}}</option>
           <option value="Deceased">Deceased</option>
           <option value="Moved">Moved</option>
           <option value="Mail Returned">Mail Returned</option>
