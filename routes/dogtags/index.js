@@ -283,7 +283,7 @@ router.get(
     } else {
       // get current date for automatic population of license.
       var issueDate = new Date();
-      var expiryDate = new Date(issueDate.getFullYear() + 1, 0, 1); // year,month (jan = 0), day
+      var expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year,month (jan = 0), day
 
       // no errors, update license.
       Dog.update(
