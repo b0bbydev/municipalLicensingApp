@@ -71,6 +71,16 @@ const Dog = sequelize.define("dog", {
     type: Sequelize.STRING,
     allowNull: true,
   },
+
+  issueDate: {
+    type: Sequelize.DATEONLY,
+    allowNull: true,
+  },
+
+  expiryDate: {
+    type: Sequelize.DATEONLY,
+    allowNull: true,
+  },
 });
 
 // create relationship with owners table.

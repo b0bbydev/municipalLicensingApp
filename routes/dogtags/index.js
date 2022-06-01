@@ -224,13 +224,19 @@ router.get(
       req.session.ownerID = req.params.id;
 
       // dog data.
-      var data = await dbHelpers.getOwnerDogs(req.session.ownerID);
+      var data = await Dog.findAll({
+        where: {
+          ownerID: req.session.ownerID,
+        },
+      });
       // get ownerName.
       var ownerName = await dbHelpers.getNameFromOwnerID(req.session.ownerID);
       // get addressHistory data.
       var addressHistory = await dbHelpers.getAddressHistory(
         req.session.ownerID
       );
+      // get dogHistory data.
+      var dogHistory = await dbHelpers.getDogHistory(req.session.ownerID);
 
       // error handle here as user can pass an invalid one in URL bar.
       // if ownerName exists, concatenate names together.
@@ -254,6 +260,7 @@ router.get(
         queryCount: "Dog(s) on record: " + data.length,
         data: data,
         addressHistory: addressHistory,
+        dogHistory: dogHistory,
       });
     }
   }
@@ -312,11 +319,10 @@ router.post(
       });
     } else {
       // no errors, update license.
-      License.update(
+      Dog.update(
         {
           issueDate: req.body.issueDate,
           expiryDate: req.body.expiryDate,
-          dogID: req.session.dogID,
         },
         {
           where: {

@@ -242,6 +242,7 @@ form h4 {
   font-size: small;
 }
 
-#addressHistorySection {
+#addressHistorySection,
+#dogHistorySection {
   margin-top: 25px;
 }

@@ -116,4 +116,52 @@
       </table>
     </div>
   </section>
+
+  <section id="dogHistorySection" class="row">
+    <div class="col-12">
+      <h4>Dog History</h4>
+      <table class="sortable table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Action</th>
+            <th>License Issue Date</th>
+            <th>License Expiry Date</th>
+            <th>Tag Number</th>
+            <th>Dog Name</th>
+            <th>Dog Breed</th>
+            <th>Colour</th>
+            <th>Gender</th>
+            <th>Date Of Birth</th>
+            <th>Designation</th>
+            <th>Spade/Neutered</th>
+            <th>Rabies Tag Number</th>
+            <th>Rabies Expiry</th>
+            <th>Vet Office</th>
+            <th>Tag Required</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each dogHistory}}
+            <tr>
+              <td>{{this.action}}</td>
+              <td>{{this.issueDate}}</td>
+              <td>{{this.expiryDate}}</td>
+              <td>{{this.tagNumber}}</td>
+              <td>{{this.dogName}}</td>
+              <td>{{this.breed}}</td>
+              <td>{{this.colour}}</td>
+              <td>{{this.gender}}</td>
+              <td>{{this.dateOfBirth}}</td>
+              <td>{{this.designation}}</td>
+              <td>{{this.spade}}</td>
+              <td>{{this.rabiesTagNumber}}</td>
+              <td>{{this.rabiesExpiry}}</td>
+              <td>{{this.vetOffice}}</td>
+              <td>{{this.tagRequired}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>
