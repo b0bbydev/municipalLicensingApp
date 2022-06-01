@@ -5,7 +5,6 @@ const { redirectToLogin } = require("../../config/authHelpers");
 const Owner = require("../../models/dogtags/owner");
 const Address = require("../../models/dogtags/address");
 const Dog = require("../../models/dogtags/dog");
-const License = require("../../models/dogtags/license");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
