@@ -19,6 +19,8 @@ var sessionStore = new MySQLStore(sessionStoreConfig);
 // sequelize.
 const sequelize = require("./config/sequelizeConfig");
 
+var groupBy = require("handlebars-group-by");
+
 // create routes here.
 var loginRouter = require("./routes/login");
 var indexRouter = require("./routes/index");
@@ -88,6 +90,13 @@ hbs.registerHelper("inc", function (value, options) {
 
 hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
+});
+
+groupBy.register(hbs);
+
+hbs.registerHelper("trimString", function (passedString) {
+  var theString = passedString.substring(0, 4);
+  return new hbs.SafeString(theString);
 });
 
 // use routes here.

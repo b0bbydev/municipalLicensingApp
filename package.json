@@ -16,6 +16,7 @@
     "express-paginate": "^1.0.2",
     "express-session": "^1.17.2",
     "express-validator": "^6.14.0",
+    "handlebars-group-by": "^1.0.1",
     "hbs": "^4.2.0",
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
