@@ -261,7 +261,7 @@
     </div>
     <!-- Tag Required -->
     <div class="row">
-      <div class="col">
+      <div class="col-sm-6">
         <label for="Tag Required" class="form-label">Tag Required</label>
         <select class="form-select" name="tagRequired">
           <option disabled selected>{{#if dogInfo.tagRequired}}{{dogInfo.tagRequired}}{{else}}Tag Required...{{/if}}</option>
@@ -269,6 +269,19 @@
           <option value="Moved">Moved</option>
           <option value="Mail Returned">Mail Returned</option>
         </select>
+      </div>
+      <div class="col-sm-6">
+        <label for="Vendor" class="form-label">Vendor</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Vendor"
+          name="vendor"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{dogInfo.vendor}}"
+          maxlength="50"
+        />
       </div>
     </div>
     <div class="row">

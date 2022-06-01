@@ -221,7 +221,7 @@
     </div>
     <!-- Vet Office -->
     <div class="row">
-      <div class="col">
+      <div class="col-sm-6">
         <label for="Vet Office" class="form-label">Vet Office</label>
         <input
           type="text"
@@ -231,6 +231,19 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.vetOffice}}"
+          maxlength="50"
+        />
+      </div>
+      <div class="col-sm-6">
+        <label for="Vendor" class="form-label">Vendor</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Vendor"
+          name="vendor"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.vendor}}"
           maxlength="50"
         />
       </div>

@@ -93,6 +93,11 @@ router.post(
     .matches(/^[a-zA-z0-9, ]*$/)
     .withMessage("Invalid Vet Office Entry!")
     .trim(),
+  body("vendor")
+    .if(body("vendor").notEmpty())
+    .matches(/^[a-zA-z\/\- ]*$/)
+    .withMessage("Invalid Vendor Entry!")
+    .trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -116,6 +121,8 @@ router.post(
           rabiesTagNumber: req.body.rabiesTagNumber,
           rabiesExpiry: req.body.rabiesExpiry,
           vetOffice: req.body.vetOffice,
+          tagRequired: req.body.tagRequired,
+          vendor: req.body.vendor,
         },
       });
     } else {
@@ -136,6 +143,8 @@ router.post(
         rabiesTagNumber: req.body.rabiesTagNumber,
         rabiesExpiry: req.body.rabiesExpiry,
         vetOffice: req.body.vetOffice,
+        tagRequired: req.body.tagRequired,
+        vendor: req.body.vendor,
         issueDate: issueDate,
         expiryDate: expiryDate,
         ownerID: req.session.ownerID,
