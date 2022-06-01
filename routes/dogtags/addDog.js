@@ -98,6 +98,11 @@ router.post(
     .matches(/^[a-zA-z\/\- ]*$/)
     .withMessage("Invalid Vendor Entry!")
     .trim(),
+  body("notes")
+    .if(body("vendor").notEmpty())
+    .matches(/^[a-zA-z0-9\/\-, ]*$/)
+    .withMessage("Invalid Notes Entry!")
+    .trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -145,6 +150,7 @@ router.post(
         vetOffice: req.body.vetOffice,
         tagRequired: req.body.tagRequired,
         vendor: req.body.vendor,
+        notes: req.body.notes,
         issueDate: issueDate,
         expiryDate: expiryDate,
         ownerID: req.session.ownerID,

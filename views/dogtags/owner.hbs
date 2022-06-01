@@ -47,12 +47,13 @@
             <th>Vet Office</th>
             <th>Tag Required</th>
             <th>Vendor</th>
+            <th>Notes</th>
           </tr>
         </thead>
         <tbody>
           {{#each data}}
             <tr>
-              <td><a
+              <td class="text-nowrap"><a
                   href="/dogtags/renew/{{this.dogID}}"
                   class="btn btn-sm btn-secondary"
                   onclick="return confirm(`Are you sure you wish to renew this license?`)"
@@ -77,6 +78,7 @@
               <td>{{this.vetOffice}}</td>
               <td>{{this.tagRequired}}</td>
               <td>{{this.vendor}}</td>
+              <td>{{this.notes}}</td>
             </tr>
           {{/each}}
         </tbody>
