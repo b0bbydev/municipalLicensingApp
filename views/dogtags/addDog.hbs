@@ -44,7 +44,7 @@
           class="form-control"
           placeholder="Breed"
           name="breed"
-          pattern="[^()/><\][\\\x22;|]+"
+          pattern="[^()><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.breed}}"
         />
@@ -228,30 +228,6 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.vetOffice}}"
-        />
-      </div>
-    </div>
-    <h4>License Information</h4>
-    <hr />
-    <div class="row">
-      <div class="col">
-        <label for="Issue Date" class="form-label">Issue Date</label>
-        <input
-          type="date"
-          class="form-control"
-          placeholder="Issue Date"
-          name="issueDate"
-          value="{{formData.issueDate}}"
-        />
-      </div>
-      <div class="col">
-        <label for="Expiry Date" class="form-label">Expiry Date</label>
-        <input
-          type="date"
-          class="form-control"
-          placeholder="Expiry Date"
-          name="expiryDate"
-          value="{{formData.expiryDate}}"
         />
       </div>
     </div>

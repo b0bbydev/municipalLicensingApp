@@ -158,8 +158,6 @@ router.post(
           vetOffice: req.body.vetOffice,
           tagRequired: req.body.tagRequired,
           ownerID: req.session.ownerID,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
         },
         {
           where: {

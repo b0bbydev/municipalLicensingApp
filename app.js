@@ -18,7 +18,7 @@ var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionStoreConfig);
 // sequelize.
 const sequelize = require("./config/sequelizeConfig");
-
+// groupBy helper.
 var groupBy = require("handlebars-group-by");
 
 // create routes here.
