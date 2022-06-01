@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dog = require("../../models/dogtags/dog");
-const License = require("../../models/dogtags/license");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
@@ -53,6 +52,7 @@ router.get(
           vetOffice: dogInfo[0].vetOffice,
           issueDate: dogInfo[0].issueDate,
           expiryDate: dogInfo[0].expiryDate,
+          tagRequired: dogInfo[0].tagRequired,
         },
       });
     }
@@ -74,7 +74,7 @@ router.post(
     .trim(),
   body("breed")
     .if(body("breed").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-z\/\-, ]*$/)
     .withMessage("Invalid Breed Entry!")
     .trim(),
   body("colour")
@@ -158,20 +158,13 @@ router.post(
           vetOffice: req.body.vetOffice,
           tagRequired: req.body.tagRequired,
           ownerID: req.session.ownerID,
-          licenses: [
-            {
-              issueDate: req.body.issueDate,
-              expiryDate: req.body.expiryDate,
-            },
-          ],
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
         },
         {
           where: {
             dogID: req.session.dogID,
           },
-        },
-        {
-          include: [License],
         }
       );
 

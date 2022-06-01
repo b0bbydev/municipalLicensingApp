@@ -95,4 +95,19 @@ db.getAddressHistory = (ownerID) => {
   });
 };
 
+db.getDogHistory = (ownerID) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM doghistory WHERE ownerID = ? ORDER BY lastModified DESC",
+      [ownerID],
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(result);
+      }
+    );
+  });
+};
+
 module.exports = db;

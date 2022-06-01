@@ -225,23 +225,23 @@ form h4 {
   margin-left: auto;
   margin-top: auto;
   margin-bottom: 5px;
-  width: 11%;
 }
 
 #addOwnerButton {
   margin-left: auto;
   margin-top: auto;
   margin-bottom: 5px;
-  width: 6.8%;
 }
 
-#addressHistory {
+#addressHistory,
+#dogHistory {
   color: #0096d6 !important;
   cursor: pointer;
   text-decoration: underline;
   font-size: small;
 }
 
-#addressHistorySection {
+#addressHistorySection,
+#dogHistorySection {
   margin-top: 25px;
 }

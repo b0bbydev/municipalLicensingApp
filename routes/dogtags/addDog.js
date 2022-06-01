@@ -2,7 +2,6 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dog = require("../../models/dogtags/dog");
-const License = require("../../models/dogtags/license");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -51,7 +50,7 @@ router.post(
     .trim(),
   body("breed")
     .if(body("breed").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-z\/\-, ]*$/)
     .withMessage("Invalid Breed Entry!")
     .trim(),
   body("colour")
@@ -133,31 +132,22 @@ router.post(
       });
     } else {
       // create dog with owner and license association.
-      Dog.create(
-        {
-          tagNumber: req.body.tagNumber,
-          dogName: req.body.dogName,
-          breed: req.body.breed,
-          colour: req.body.colour,
-          gender: req.body.gender,
-          dateOfBirth: req.body.dateOfBirth,
-          designation: req.body.designation,
-          spade: req.body.spade,
-          rabiesTagNumber: req.body.rabiesTagNumber,
-          rabiesExpiry: req.body.rabiesExpiry,
-          vetOffice: req.body.vetOffice,
-          ownerID: req.session.ownerID,
-          licenses: [
-            {
-              issueDate: req.body.issueDate,
-              expiryDate: req.body.expiryDate,
-            },
-          ],
-        },
-        {
-          include: [License],
-        }
-      );
+      Dog.create({
+        tagNumber: req.body.tagNumber,
+        dogName: req.body.dogName,
+        breed: req.body.breed,
+        colour: req.body.colour,
+        gender: req.body.gender,
+        dateOfBirth: req.body.dateOfBirth,
+        designation: req.body.designation,
+        spade: req.body.spade,
+        rabiesTagNumber: req.body.rabiesTagNumber,
+        rabiesExpiry: req.body.rabiesExpiry,
+        vetOffice: req.body.vetOffice,
+        issueDate: req.body.issueDate,
+        expiryDate: req.body.expiryDate,
+        ownerID: req.session.ownerID,
+      });
 
       // redirect to /dogtags
       res.redirect("/dogtags/owner/" + req.session.ownerID);
