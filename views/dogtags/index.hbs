@@ -11,10 +11,9 @@
           name="filterCategory"
         >
           <option disabled selected>Filter By...</option>
-          <option value="First Name">First Name</option>
-          <option value="Last Name">Last Name</option>
-          <option value="Email">Email</option>
-          <option value="Dog Tag Number">Dog Tag Number</option>
+            {{#each dropdownValues}}
+              <option value="{{this.value}}"{{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>
+            {{/each}}
         </select>
         <!-- filterValue input -->
         <input

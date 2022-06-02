@@ -5,6 +5,8 @@ const { redirectToLogin } = require("../../config/authHelpers");
 const Owner = require("../../models/dogtags/owner");
 const Address = require("../../models/dogtags/address");
 const Dog = require("../../models/dogtags/dog");
+const Dropdown = require("../../models/dropdownManager/dropdown");
+const DropdownForm = require("../../models/dropdownManager/dropdownForm");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -36,6 +38,10 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
+      // get dropdown values.
+      var dropdownValues = await Dropdown.findAll();
+
+      // get owners.
       Owner.findAndCountAll({
         limit: req.query.limit,
         offset: req.skip,
@@ -54,6 +60,7 @@ router.get(
             errorMessages: messages,
             email: req.session.email,
             data: results.rows,
+            dropdownValues: dropdownValues,
             pageCount,
             itemCount,
             queryCount: "Records returned: " + results.count,
