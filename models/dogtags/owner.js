@@ -12,37 +12,32 @@ const Owner = sequelize.define("owner", {
   },
 
   firstName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(25),
     allowNull: true,
   },
 
   lastName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(25),
     allowNull: true,
   },
 
   homePhone: {
-    type: Sequelize.STRING,
-    allowNull: true,
-  },
-
-  homePhone: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(15),
     allowNull: true,
   },
 
   cellPhone: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(15),
     allowNull: true,
   },
 
   workPhone: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(15),
     allowNull: true,
   },
 
   email: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(50),
     allowNull: true,
   },
 });

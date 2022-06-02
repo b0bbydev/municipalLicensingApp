@@ -77,6 +77,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 // connection to db.
 try {
   //sequelize.sync({ force: true });
+  //sequelize.sync({ alter: true });
   sequelize.sync();
   console.log("Connection has been established successfully.");
 } catch (error) {
@@ -102,6 +103,8 @@ hbs.registerHelper("trimString", function (passedString) {
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
+
+/* dropdownManager related routes */
 app.use("/dropdownManager", dropdownRouter);
 
 /* policies related routes. */

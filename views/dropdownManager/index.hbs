@@ -1,5 +1,11 @@
-<h2 class="text-center">Dropdown Manager</h2>
+<h2 class="text-center" style="margin-bottom: 15px;">Dropdown Manager</h2>
 <div class="content">
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
   <!-- Table -->
   <div class="row">
     <div class="col-12">
@@ -7,7 +13,7 @@
         <thead>
           <tr>
             <th>Dropdown Form ID</th>
-            <th>Form Name</th>
+            <th>Form/Dropdown Name</th>
           </tr>
         </thead>
         <tbody>
@@ -24,11 +30,31 @@
       </table>
     </div>
   </div>
-
-  <!-- check for error messages in the session -->
-  {{#if message}}
-    <div class="alert alert-danger">
-      {{message}}
+  <!-- Add new dropdown form -->
+  <div class="row newDropdownForm">
+    <div class="col-sm-4">
+      <form method="POST">
+        <label for="Dropdown Form" class="form-label title-text">New Dropdown
+          Form</label>
+        <input
+          name="formName"
+          class="form-control"
+          placeholder="New Form Name..."
+          type="text"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          required
+        />
+        <div class="row">
+          <div class="col">
+            <button
+              id="submitButton"
+              class="btn btn-primary"
+              type="submit"
+            >Submit</button>
+          </div>
+        </div>
+      </form>
     </div>
-  {{/if}}
+  </div>
 </div>

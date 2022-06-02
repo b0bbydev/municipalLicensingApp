@@ -228,7 +228,8 @@ form h4 {
   margin-bottom: 5px;
 }
 
-#addOwnerButton {
+#addOwnerButton,
+#addFormButton {
   margin-left: auto;
   margin-top: auto;
   margin-bottom: 5px;
@@ -249,4 +250,8 @@ form h4 {
 
 .alert {
   margin-bottom: 0%;
+}
+
+.newDropdownForm {
+  margin-top: 15px;
 }

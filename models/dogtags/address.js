@@ -13,22 +13,22 @@ const Address = sequelize.define("address", {
   },
 
   address: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(50),
     allowNull: true,
   },
 
   poBoxAptRR: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(25),
     allowNull: true,
   },
 
   town: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 
   postalCode: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(15),
     allowNull: true,
   },
 });

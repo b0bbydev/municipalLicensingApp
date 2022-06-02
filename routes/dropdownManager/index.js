@@ -9,7 +9,7 @@ var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
 
-/* GET dropdown page. */
+/* GET /dropdownManger */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -29,6 +29,34 @@ router.get("/", async (req, res, next) => {
     });
   });
 });
+
+/* POST /dropdownManger */
+router.post(
+  "/",
+  body("formName")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dropdownManager", {
+        title: "BWG | Dropdown Manager",
+        message: "Error!",
+        email: req.session.email,
+      });
+    } else {
+      // create dropdown form.
+      DropdownForm.create({
+        formName: req.body.formName,
+      }).then((result) => {
+        res.redirect("/dropdownManager");
+      });
+    }
+  }
+);
 
 router.get(
   "/form/:id",
@@ -60,6 +88,9 @@ router.get(
       Dropdown.findAndCountAll({
         limit: req.query.limit,
         offset: req.skip,
+        where: {
+          dropdownFormID: req.params.id,
+        },
       }).then((results) => {
         return res.render("dropdownManager/form", {
           title: "BWG | " + formName[0].formName,
@@ -95,6 +126,7 @@ router.post(
       Dropdown.create({
         value: req.body.value,
         isDisabled: 0, // *enable* by default.
+        dropdownFormID: req.session.formID,
       }).then((results) => {
         // redirect to same page if successful.
         res.redirect("/dropdownManager/form/" + req.session.formID);
