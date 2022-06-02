@@ -39,7 +39,11 @@ router.get(
       req.session.messages = [];
 
       // get dropdown values.
-      var dropdownValues = await Dropdown.findAll();
+      var dropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 1, // the specfic ID for this dropdown menu. Maybe change to something dynamic? Not sure of the possiblities as of yet.
+        },
+      });
 
       // get owners.
       Owner.findAndCountAll({

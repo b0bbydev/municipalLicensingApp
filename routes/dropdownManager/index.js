@@ -126,6 +126,7 @@ router.post(
       Dropdown.create({
         value: req.body.value,
         isDisabled: 0, // *enable* by default.
+        dropdownFormID: req.session.formID,
       }).then((results) => {
         // redirect to same page if successful.
         res.redirect("/dropdownManager/form/" + req.session.formID);
