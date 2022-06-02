@@ -60,7 +60,7 @@ router.post(
     .trim(),
   body("dateOfBirth")
     .if(body("dateOfBirth").notEmpty())
-    .isDate()
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Date Of Birth Entry!")
     .trim(),
   body("gender")
@@ -85,7 +85,7 @@ router.post(
     .trim(),
   body("rabiesExpiry")
     .if(body("rabiesExpiry").notEmpty())
-    .isDate()
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Rabies Expiry Entry!")
     .trim(),
   body("vetOffice")
@@ -130,11 +130,29 @@ router.post(
           vendor: req.body.vendor,
         },
       });
+    } else if (!req.body.dateOfBirth || !req.body.rabiesExpiry) {
+      return res.render("dogtags/addDog", {
+        title: "BWG | Add Dog",
+        message: "Invalid Date Format!",
+        email: req.session.email,
+        // if the form submission is unsuccessful, save their values.
+        formData: {
+          tagNumber: req.body.tagNumber,
+          dogName: req.body.dogName,
+          breed: req.body.breed,
+          colour: req.body.colour,
+          dateOfBirth: req.body.dateOfBirth,
+          rabiesTagNumber: req.body.rabiesTagNumber,
+          rabiesExpiry: req.body.rabiesExpiry,
+          vetOffice: req.body.vetOffice,
+          tagRequired: req.body.tagRequired,
+          vendor: req.body.vendor,
+        },
+      });
     } else {
       // get current date for automatic population of license.
       var issueDate = new Date();
       var expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
-
       // create dog with owner and license association.
       Dog.create({
         tagNumber: req.body.tagNumber,

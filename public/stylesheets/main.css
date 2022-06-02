@@ -213,8 +213,9 @@ form h4 {
   padding: 10px;
 }
 
-#licenseSubmit {
+#submitButton {
   margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 #addNewLicenseButton {
@@ -244,4 +245,8 @@ form h4 {
 #addressHistorySection,
 #dogHistorySection {
   margin-top: 25px;
+}
+
+.alert {
+  margin-bottom: 0%;
 }
