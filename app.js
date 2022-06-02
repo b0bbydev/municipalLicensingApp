@@ -103,6 +103,8 @@ hbs.registerHelper("trimString", function (passedString) {
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
+
+/* dropdownManager related routes */
 app.use("/dropdownManager", dropdownRouter);
 
 /* policies related routes. */
