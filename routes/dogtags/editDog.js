@@ -84,7 +84,7 @@ router.post(
     .trim(),
   body("dateOfBirth")
     .if(body("dateOfBirth").notEmpty())
-    .isDate()
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Date Of Birth Entry!")
     .trim(),
   body("gender")
@@ -109,7 +109,7 @@ router.post(
     .trim(),
   body("rabiesExpiry")
     .if(body("rabiesExpiry").notEmpty())
-    .isDate()
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Rabies Expiry Entry!")
     .trim(),
   body("vetOffice")
