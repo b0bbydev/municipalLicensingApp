@@ -13,22 +13,22 @@ const Dog = sequelize.define("dog", {
   },
 
   tagNumber: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(25),
     allowNull: true,
   },
 
   dogName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 
   breed: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(25),
     allowNull: true,
   },
 
   colour: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(25),
     allowNull: true,
   },
 
@@ -43,17 +43,17 @@ const Dog = sequelize.define("dog", {
   },
 
   designation: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(20),
     allowNull: true,
   },
 
   spade: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(20),
     allowNull: true,
   },
 
   rabiesTagNumber: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(25),
     allowNull: true,
   },
 
@@ -63,12 +63,12 @@ const Dog = sequelize.define("dog", {
   },
 
   vetOffice: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(50),
     allowNull: true,
   },
 
   tagRequired: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 
@@ -83,7 +83,7 @@ const Dog = sequelize.define("dog", {
   },
 
   vendor: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 
