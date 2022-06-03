@@ -31,10 +31,9 @@
       >
         <thead>
           <tr>
-            <th>Actions</th>
+            <th>Tag Number</th>
             <th>License Issue Date</th>
             <th>License Expiry Date</th>
-            <th>Tag Number</th>
             <th>Dog Name</th>
             <th>Dog Breed</th>
             <th>Colour</th>
@@ -48,24 +47,15 @@
             <th>Tag Required</th>
             <th>Vendor</th>
             <th>Notes</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {{#each data}}
             <tr>
-              <td class="text-nowrap"><a
-                  href="/dogtags/renew/{{this.dogID}}"
-                  class="btn btn-sm btn-secondary"
-                  onclick="return confirm(`Are you sure you wish to renew this license?`)"
-                >Renew</a>
-                |
-                <a
-                  href="/dogtags/editDog/{{this.dogID}}"
-                  class="btn btn-sm btn-secondary"
-                >Edit</a></td>
+              <td>{{this.tagNumber}}</td>
               <td>{{this.issueDate}}</td>
               <td>{{this.expiryDate}}</td>
-              <td>{{this.tagNumber}}</td>
               <td>{{this.dogName}}</td>
               <td>{{this.breed}}</td>
               <td>{{this.colour}}</td>
@@ -79,6 +69,18 @@
               <td>{{this.tagRequired}}</td>
               <td>{{this.vendor}}</td>
               <td>{{this.notes}}</td>
+              <td class="text-nowrap">
+                <a
+                  href="/dogtags/editDog/{{this.dogID}}"
+                  class="btn btn-sm btn-secondary"
+                >Edit Dog</a>
+                |
+                <a
+                  href="/dogtags/renew/{{this.dogID}}"
+                  class="btn btn-sm btn-secondary"
+                  onclick="return confirm(`Are you sure you wish to renew this license?`)"
+                >Renew</a>
+              </td>
             </tr>
           {{/each}}
         </tbody>
