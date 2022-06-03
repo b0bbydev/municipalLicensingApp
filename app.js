@@ -89,11 +89,6 @@ hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
 });
 
-hbs.registerHelper("trimString", function (passedString) {
-  var theString = passedString.substring(0, 4);
-  return new hbs.SafeString(theString);
-});
-
 // group by helper.
 groupBy.register(hbs);
 

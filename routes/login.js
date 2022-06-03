@@ -64,7 +64,6 @@ router.post(
         }
         // if login is successful.
         if (auth) {
-          // set the email for the session.
           req.session.email = email;
           res.redirect("/");
         } else {
