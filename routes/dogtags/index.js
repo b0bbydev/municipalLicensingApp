@@ -68,7 +68,9 @@ router.get(
             pageCount,
             itemCount,
             queryCount: "Records returned: " + results.count,
-            pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
           });
         })
         .catch((err) => next(err));
@@ -131,10 +133,12 @@ router.post(
                 itemCount,
                 queryCount: "Records returned: " + results.count,
                 pages: paginate.getArrayPages(req)(
-                  3,
+                  5,
                   pageCount,
                   req.query.page
                 ),
+                prev: paginate.href(req)(true),
+                hasMorePages: paginate.hasNextPages(req)(pageCount),
               });
             })
             .catch((err) => next(err));
@@ -180,10 +184,12 @@ router.post(
                 itemCount,
                 queryCount: "Records returned: " + results.count,
                 pages: paginate.getArrayPages(req)(
-                  3,
+                  5,
                   pageCount,
                   req.query.page
                 ),
+                prev: paginate.href(req)(true),
+                hasMorePages: paginate.hasNextPages(req)(pageCount),
               });
             })
             .catch((err) => next(err));

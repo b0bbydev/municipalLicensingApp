@@ -34,7 +34,9 @@ router.get("/", async (req, res, next) => {
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+        prev: paginate.href(req)(true),
+        hasMorePages: paginate.hasNextPages(req)(pageCount),
       });
     }
   );
@@ -96,7 +98,9 @@ router.post(
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
-              pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
             });
           })
           .catch((err) => next(err));

@@ -85,20 +85,17 @@ try {
 }
 
 // helper functions.
-hbs.registerHelper("inc", function (value, options) {
-  return parseInt(value) * 50;
-});
-
 hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
   return arg1 == arg2 ? options.fn(this) : options.inverse(this);
 });
-
-groupBy.register(hbs);
 
 hbs.registerHelper("trimString", function (passedString) {
   var theString = passedString.substring(0, 4);
   return new hbs.SafeString(theString);
 });
+
+// group by helper.
+groupBy.register(hbs);
 
 // use routes here.
 app.use("/login", loginRouter);
