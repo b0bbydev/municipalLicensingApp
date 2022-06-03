@@ -90,6 +90,9 @@
             type="radio"
             name="gender"
             value="M"
+            {{#ifEquals formData.gender "M"}}
+            checked
+            {{/ifEquals}}
           />
           <label class="form-check-label" for="Male">
             Male
@@ -103,6 +106,9 @@
             type="radio"
             name="gender"
             value="F"
+            {{#ifEquals formData.gender "F"}}
+            checked
+            {{/ifEquals}}
           />
           <label class="form-check-label" for="Female">
             Female
@@ -120,6 +126,9 @@
             type="radio"
             name="spade"
             value="Spade"
+            {{#ifEquals formData.spade "Spade"}}
+            checked
+            {{/ifEquals}}
           />
           <label class="form-check-label" for="Spade">
             Spade
@@ -133,6 +142,9 @@
             type="radio"
             name="spade"
             value="Neutered"
+            {{#ifEquals formData.spade "Neutered"}}
+            checked
+            {{/ifEquals}}
           />
           <label class="form-check-label" for="Neutered">
             Neutered
@@ -146,6 +158,9 @@
             type="radio"
             name="spade"
             value="No"
+            {{#ifEquals formData.spade "No"}}
+            checked
+            {{/ifEquals}}
           />
           <label class="form-check-label" for="No">
             No
@@ -163,6 +178,9 @@
             type="radio"
             name="designation"
             value="Service"
+            {{#ifEquals formData.designation "Service"}}
+            checked
+            {{/ifEquals}}
           />
           <label class="form-check-label" for="Service">
             Service
@@ -176,6 +194,9 @@
             type="radio"
             name="designation"
             value="Dangerous"
+            {{#ifEquals formData.designation "Dangerous"}}
+            checked
+            {{/ifEquals}}
           />
           <label class="form-check-label" for="Dangerous">
             Dangerous
@@ -189,6 +210,9 @@
             type="radio"
             name="designation"
             value="None"
+            {{#ifEquals formData.designation "None"}}
+            checked
+            {{/ifEquals}}
           />
           <label class="form-check-label" for="None">
             None
@@ -236,6 +260,7 @@
           maxlength="50"
         />
       </div>
+      <!-- Vendor -->
       <div class="col-sm-6">
         <label for="Vendor" class="form-label">Vendor</label>
         <input
@@ -250,6 +275,7 @@
         />
       </div>
     </div>
+    <!-- Notes -->
     <div class="row">
       <div class="col">
         <label for="Notes" class="form-label">Notes</label>

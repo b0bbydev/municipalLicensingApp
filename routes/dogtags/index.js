@@ -6,7 +6,6 @@ const Owner = require("../../models/dogtags/owner");
 const Address = require("../../models/dogtags/address");
 const Dog = require("../../models/dogtags/dog");
 const Dropdown = require("../../models/dropdownManager/dropdown");
-const DropdownForm = require("../../models/dropdownManager/dropdownForm");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -41,7 +40,7 @@ router.get(
       // get dropdown values.
       var dropdownValues = await Dropdown.findAll({
         where: {
-          dropdownFormID: 1, // the specfic ID for this dropdown menu. Maybe change to something dynamic? Not sure of the possiblities as of yet.
+          dropdownFormID: 1, // the specific ID for this dropdown menu. Maybe change to something dynamic? Not sure of the possiblities as of yet.
         },
       });
 
@@ -56,6 +55,7 @@ router.get(
         ],
       })
         .then((results) => {
+          // for pagination.
           const itemCount = results.count;
           const pageCount = Math.ceil(results.count / req.query.limit);
 
@@ -119,6 +119,7 @@ router.post(
             ],
           })
             .then((results) => {
+              // for pagination.
               const itemCount = results.count;
               const pageCount = Math.ceil(results.count / req.query.limit);
 
@@ -151,7 +152,7 @@ router.post(
               break;
           }
 
-          // make query.
+          // create filter query.
           Owner.findAndCountAll({
             where: {
               [filterCategory]: {
@@ -167,6 +168,7 @@ router.post(
             ],
           })
             .then((results) => {
+              // for pagination.
               const itemCount = results.count;
               const pageCount = Math.ceil(results.count / req.query.limit);
 

@@ -123,7 +123,7 @@ router.post(
     .withMessage("Invalid Vendor Entry!")
     .trim(),
   body("notes")
-    .if(body("vendor").notEmpty())
+    .if(body("notes").notEmpty())
     .matches(/^[a-zA-z0-9\/\-, ]*$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
@@ -147,6 +147,9 @@ router.post(
           breed: req.body.breed,
           colour: req.body.colour,
           dateOfBirth: req.body.dateOfBirth,
+          gender: req.body.gender,
+          spade: req.body.spade,
+          designation: req.body.designation,
           rabiesTagNumber: req.body.rabiesTagNumber,
           rabiesExpiry: req.body.rabiesExpiry,
           vetOffice: req.body.vetOffice,

@@ -99,7 +99,7 @@ router.post(
     .withMessage("Invalid Vendor Entry!")
     .trim(),
   body("notes")
-    .if(body("vendor").notEmpty())
+    .if(body("notes").notEmpty())
     .matches(/^[a-zA-z0-9\/\-, ]*$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
@@ -123,13 +123,18 @@ router.post(
           breed: req.body.breed,
           colour: req.body.colour,
           dateOfBirth: req.body.dateOfBirth,
+          gender: req.body.gender,
+          spade: req.body.spade,
+          designation: req.body.designation,
           rabiesTagNumber: req.body.rabiesTagNumber,
           rabiesExpiry: req.body.rabiesExpiry,
           vetOffice: req.body.vetOffice,
           tagRequired: req.body.tagRequired,
           vendor: req.body.vendor,
+          notes: req.body.notes,
         },
       });
+      // handle date validation seperate because express-validate does bad job at dates.
     } else if (!req.body.dateOfBirth || !req.body.rabiesExpiry) {
       return res.render("dogtags/addDog", {
         title: "BWG | Add Dog",
@@ -142,11 +147,15 @@ router.post(
           breed: req.body.breed,
           colour: req.body.colour,
           dateOfBirth: req.body.dateOfBirth,
+          gender: req.body.gender,
+          spade: req.body.spade,
+          designation: req.body.designation,
           rabiesTagNumber: req.body.rabiesTagNumber,
           rabiesExpiry: req.body.rabiesExpiry,
           vetOffice: req.body.vetOffice,
           tagRequired: req.body.tagRequired,
           vendor: req.body.vendor,
+          notes: req.body.notes,
         },
       });
     } else {

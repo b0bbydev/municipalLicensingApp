@@ -38,7 +38,7 @@ db.getOwnerInfo = (ownerID) => {
 db.getDogInfo = (dogID) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT * FROM dogs LEFT JOIN licenses ON dogs.dogID = licenses.dogID WHERE dogs.dogID = ? GROUP BY dogs.dogID",
+      "SELECT * FROM dogs WHERE dogID = ?",
       [dogID],
       (error, result) => {
         if (error) {
@@ -68,7 +68,7 @@ db.getFormNameFromFormID = (formID) => {
 db.getOwnerDogs = (ownerID) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT * FROM dogs INNER JOIN licenses ON dogs.dogID = licenses.dogID WHERE dogs.ownerID = ?",
+      "SELECT * FROM dogs WHERE ownerID = ?",
       [ownerID],
       (error, result) => {
         if (error) {
