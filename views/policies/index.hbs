@@ -43,6 +43,13 @@
     </div>
   </div>
 
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
+
   <!-- Table -->
   <table class="sortable table table-bordered table-striped table-hover">
     <thead>
@@ -69,4 +76,14 @@
       {{/each}}
     </tbody>
   </table>
+  <a id="pagJump">Jump to page...</a>
+  <nav id="pagination">
+    <ul class="pagination pagination-sm">
+      {{#each pages}}
+      <li class="page-item">
+        <a class="page-link" href="{{this.url}}"
+          >{{this.number}}</a></li>
+      {{/each}}
+    </ul>
+  </nav>
 </div>

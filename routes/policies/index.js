@@ -3,6 +3,11 @@ var router = express.Router();
 const { redirectToLogin } = require("../../config/authHelpers");
 // models.
 const Policy = require("../../models/policies/policy");
+// sequelize.
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
+// pagination lib.
+const paginate = require("express-paginate");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -15,15 +20,24 @@ router.get("/", async (req, res, next) => {
   req.session.messages = [];
 
   // get all the policies.
-  Policy.findAndCountAll({}).then((results) => {
-    return res.render("policies", {
-      title: "BWG | Policies & Procedures",
-      errorMessages: messages,
-      email: req.session.email,
-      data: results.rows,
-      queryCount: "Records returned: " + results.count,
-    });
-  });
+  Policy.findAndCountAll({ limit: req.query.limit, offset: req.skip }).then(
+    (results) => {
+      // for pagination.
+      const itemCount = results.count;
+      const pageCount = Math.ceil(results.count / req.query.limit);
+
+      return res.render("policies", {
+        title: "BWG | Policies & Procedures",
+        errorMessages: messages,
+        email: req.session.email,
+        data: results.rows,
+        pageCount,
+        itemCount,
+        queryCount: "Records returned: " + results.count,
+        pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+      });
+    }
+  );
 });
 
 /* POST /policies */
@@ -53,7 +67,39 @@ router.post(
         req.body.filterCategory &&
         req.body.filterValue
       ) {
-        // db stuff.
+        // format filterCategory to match column name in db.
+        switch (req.body.filterCategory) {
+          case "Policy ID":
+            filterCategory = "policyID";
+            break;
+        }
+
+        // create filter query.
+        Policy.findAndCountAll({
+          where: {
+            [filterCategory]: {
+              [Op.like]: req.body.filterValue + "%",
+            },
+          },
+          limit: req.query.limit,
+          offset: req.skip,
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("policies", {
+              title: "BWG | Policies",
+              email: req.session.email,
+              data: results.rows,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+            });
+          })
+          .catch((err) => next(err));
       } else if (
         // NO supplied filters.
         !req.body.filterCategory &&
@@ -68,7 +114,7 @@ router.post(
       } else {
         return res.render("policies", {
           title: "BWG | Policies",
-          message: "Please ensure both filtering conditions are valid!",
+          message: "Please ensure BOTH filtering conditions are valid!",
           email: req.session.email,
         });
       }
