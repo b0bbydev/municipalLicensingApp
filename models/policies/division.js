@@ -13,7 +13,7 @@ const Division = sequelize.define("division", {
   },
 
   divisionName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(40),
     allowNull: true,
   },
 });

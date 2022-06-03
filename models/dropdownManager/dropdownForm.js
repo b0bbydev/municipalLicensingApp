@@ -12,7 +12,7 @@ const DropdownForm = sequelize.define("dropdownForms", {
   },
 
   formName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(50),
     allowNull: true,
   },
 });

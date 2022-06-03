@@ -13,7 +13,7 @@ const Category = sequelize.define("category", {
   },
 
   categoryName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 });

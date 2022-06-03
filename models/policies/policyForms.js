@@ -13,7 +13,7 @@ const PolicyForms = sequelize.define("policyForms", {
   },
 
   formName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(40),
     allowNull: true,
   },
 });

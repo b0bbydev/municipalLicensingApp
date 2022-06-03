@@ -14,7 +14,7 @@ const Procedure = sequelize.define("procedure", {
   },
 
   procedureName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 
@@ -39,7 +39,7 @@ const Procedure = sequelize.define("procedure", {
   },
 
   status: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(25),
     allowNull: true,
   },
 

@@ -17,7 +17,7 @@ const Policy = sequelize.define("policy", {
   },
 
   policyName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(40),
     allowNull: true,
   },
 
@@ -32,7 +32,7 @@ const Policy = sequelize.define("policy", {
   },
 
   councilResolution: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 

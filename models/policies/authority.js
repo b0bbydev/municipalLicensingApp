@@ -13,7 +13,7 @@ const Authority = sequelize.define("authority", {
   },
 
   authorityName: {
-    type: Sequelize.STRING,
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 });
