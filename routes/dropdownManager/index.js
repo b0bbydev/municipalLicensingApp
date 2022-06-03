@@ -85,6 +85,7 @@ router.get(
       // get formName.
       var formName = await dbHelpers.getFormNameFromFormID(req.session.formID);
 
+      // get dropdown values from specified dropdownForm.
       Dropdown.findAndCountAll({
         limit: req.query.limit,
         offset: req.skip,
