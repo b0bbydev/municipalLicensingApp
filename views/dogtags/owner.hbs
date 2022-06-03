@@ -131,8 +131,8 @@
   <section id="dogHistorySection" class="row" style="display: none;">
     <div class="col-12">
       <h4>Dog History</h4>
-      {{#group dogHistory by="lastModified"}}
-        <strong>{{{trimString value}}}</strong>
+      {{#group dogHistory by="year"}}
+        <strong>{{{value}}}</strong>
         <table class="sortable table table-bordered table-striped table-hover">
           <thead>
             <tr>
