@@ -54,6 +54,12 @@ form h4 {
   margin-right: auto;
 }
 
+#bwgBackground {
+  display: flex;
+  margin: auto;
+  margin-top: 30px;
+}
+
 /* this makes the entire table cell clickable for the anchor tag. */
 .table #ownerLink {
   display: block;
@@ -212,7 +218,6 @@ form h4 {
 }
 
 #addOwnerButton,
-#addFormButton,
 #registerDogButton,
 #addPolicyButton {
   margin-left: auto;
@@ -235,10 +240,4 @@ form h4 {
 
 .newDropdownForm {
   margin-top: 15px;
-}
-
-#bwgBackground {
-  display: flex;
-  margin: auto;
-  margin-top: 30px;
 }
