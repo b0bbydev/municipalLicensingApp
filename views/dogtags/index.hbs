@@ -11,9 +11,13 @@
           name="filterCategory"
         >
           <option disabled selected>Filter By...</option>
-            {{#each dropdownValues}}
-              <option value="{{this.value}}"{{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>
-            {{/each}}
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option value="{{this.value}}" disabled>{{this.value}}</option>
+            {{else}}
+              <option value="{{this.value}}">{{this.value}}</option>
+            {{/if}}
+          {{/each}}
         </select>
         <!-- filterValue input -->
         <input
@@ -105,7 +109,10 @@
       <nav id="pagination">
         <ul class="pagination pagination-sm">
           {{#if paginate.hasPreviousPages}}
-            <li class="page-item"><a class="page-link" href="{{prev}}">Prev</a></li>
+            <li class="page-item"><a
+                class="page-link"
+                href="{{prev}}"
+              >Prev</a></li>
           {{/if}}
           {{#each pages}}
             <li class="page-item"><a
@@ -114,7 +121,10 @@
               >{{this.number}}</a></li>
           {{/each}}
           {{#if hasMorePages}}
-            <li class="page-item"><a class="page-link" href="{{paginate.href}}">Next</a></li>
+            <li class="page-item"><a
+                class="page-link"
+                href="{{paginate.href}}"
+              >Next</a></li>
           {{/if}}
         </ul>
       </nav>

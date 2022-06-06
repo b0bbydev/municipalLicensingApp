@@ -1,53 +1,57 @@
 <h2>Policies and Procedures</h2>
 <div class="content">
-   <div class="row">
-     <div class="col-sm-4">
-       <h4>Filtering</h4>
-       <form method="POST">
-         <select
-           class="form-select-sm"
-           id="filterCategory"
-           title="filterSelect"
-           name="filterCategory"
-         >
-           <option disabled selected>Filter By...</option>
-             {{#each dropdownValues}}
-               <option value="{{this.value}}"{{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>
-             {{/each}}
-         </select>
-         <!-- filterValue input -->
-         <input
-           name="filterValue"
-           id="filterValue"
-           class="form-control-sm"
-           pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
-           title="No special characters!"
-           placeholder="Search..."
-           value="{{filterValue}}"
-         />
-         <button
-           id="filterButton"
-           class="btn btn-sm btn-primary"
-           type="submit"
-         >Search</button>
-         <a
-           id="filterButton"
-           href="/policies"
-           class="btn btn-sm btn-secondary"
-           type="submit"
-         >Reset</a>
-       </form>
-       {{#if queryCount}}
-         <div>
-           <strong>{{queryCount}}</strong>
-         </div>
-       {{/if}}
-     </div>
-    {{!-- <div id="addPolicyButton" style="padding-right: 0%;" class="col-sm-4 text-nowrap">
+  <div class="row">
+    <div class="col-sm-4">
+      <h4>Filtering</h4>
+      <form method="POST">
+        <select
+          class="form-select-sm"
+          id="filterCategory"
+          title="filterSelect"
+          name="filterCategory"
+        >
+          <option disabled selected>Filter By...</option>
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option value="{{this.value}}" disabled>{{this.value}}</option>
+            {{else}}
+              <option value="{{this.value}}">{{this.value}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+        <!-- filterValue input -->
+        <input
+          name="filterValue"
+          id="filterValue"
+          class="form-control-sm"
+          pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+          title="No special characters!"
+          placeholder="Search..."
+          value="{{filterValue}}"
+        />
+        <button
+          id="filterButton"
+          class="btn btn-sm btn-primary"
+          type="submit"
+        >Search</button>
+        <a
+          id="filterButton"
+          href="/policies"
+          class="btn btn-sm btn-secondary"
+          type="submit"
+        >Reset</a>
+      </form>
+      {{#if queryCount}}
+        <div>
+          <strong>{{queryCount}}</strong>
+        </div>
+      {{/if}}
+    </div>
+    {{! <div id="addPolicyButton" style="padding-right: 0%;" class="col-sm-4 text-nowrap">
       <a href="/policies/addPolicy" class="btn btn-sm btn-primary float-end">Add
         Policy</a>
-    </div> --}}
-   </div>
+    </div> }}
+  </div>
 
   <!-- check for error messages in the session -->
   {{#if message}}
@@ -63,8 +67,16 @@
         <th>Policy ID</th>
         <th>Policy Number</th>
         <th>Policy Name</th>
+        <th>COW Resolve</th>
+        <th>COW Date</th>
+        <th>Council Resolution</th>
         <th>Date Adopted</th>
+        <th>Amended</th>
+        <th>Last Review Date</th>
+        <th>Scheduled Review Date</th>
         <th>Status</th>
+        <th>Notes</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -73,11 +85,22 @@
           <td><a
               id="ownerLink"
               href="/policies/policy/{{this.policyID}}"
-            >{{this.policyID}}</td>
-          <td>{{this.policyNumber}}</a></td>
+            >{{this.policyID}}</a></td>
+          <td>{{this.policyNumber}}</td>
           <td>{{this.policyName}}</td>
+          <td>{{this.cowResolve}}</td>
+          <td>{{this.cowDate}}</td>
+          <td>{{this.councilResolution}}</td>
           <td>{{this.dateAdopted}}</td>
+          <td>{{this.amended}}</td>
+          <td>{{this.lastReviewDate}}</td>
+          <td>{{this.scheduledReviewDate}}</td>
           <td>{{this.status}}</td>
+          <td>{{this.notes}}</td>
+          <td><a
+              href="/policies/editPolicy/{{this.policyID}}"
+              class="btn btn-sm btn-secondary"
+            >Edit</a></td>
         </tr>
       {{/each}}
     </tbody>
@@ -89,12 +112,14 @@
         <li class="page-item"><a class="page-link" href="{{prev}}">Prev</a></li>
       {{/if}}
       {{#each pages}}
-      <li class="page-item">
-        <a class="page-link" href="{{this.url}}"
-          >{{this.number}}</a></li>
+        <li class="page-item">
+          <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
       {{/each}}
       {{#if hasMorePages}}
-        <li class="page-item"><a class="page-link" href="{{paginate.href}}">Next</a></li>  
+        <li class="page-item"><a
+            class="page-link"
+            href="{{paginate.href}}"
+          >Next</a></li>
       {{/if}}
     </ul>
   </nav>

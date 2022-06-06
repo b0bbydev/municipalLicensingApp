@@ -18,7 +18,14 @@
               <td>{{this.dropdownID}}</td>
               <td>{{this.value}}</td>
               <td>{{this.isDisabled}}</td>
-              <td><a href="/dropdownManager/enable/{{this.dropdownID}}" class="btn btn btn-success">Enable</a> <a href="/dropdownManager/disable/{{this.dropdownID}}" class="btn btn-secondary">Disable</a></td>
+              <td><a
+                  href="/dropdownManager/enable/{{this.dropdownID}}"
+                  class="btn btn btn-success"
+                >Enable</a>
+                <a
+                  href="/dropdownManager/disable/{{this.dropdownID}}"
+                  class="btn btn-secondary"
+                >Disable</a></td>
             </tr>
           {{/each}}
         </tbody>
@@ -29,7 +36,8 @@
   <div class="row">
     <div class="col-sm-6">
       <form method="POST">
-        <label for="Dropdown Value" class="form-label title-text">New Dropdown Value</label>
+        <label for="Dropdown Value" class="form-label title-text">New Dropdown
+          Value</label>
         <input
           name="value"
           class="form-control"
@@ -51,10 +59,17 @@
       </form>
     </div>
     <div class="col-sm-6">
-      <label for="Dropdown Select" class="form-label title-text">Test Dropdown Menu</label>
+      <label for="Dropdown Select" class="form-label title-text">Test Dropdown
+        Menu</label>
       <select name="dropdown" class="form-select">
         <option disabled selected>Select A Value...</option>
-        {{#each data}}<option value="{{this.dropdownID}}" {{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>{{/each}}
+        {{#each data}}
+          {{#if this.isDisabled}}
+            <option value="{{this.value}}" disabled>{{this.value}}</option>
+          {{else}}
+            <option value="{{this.value}}">{{this.value}}</option>
+          {{/if}}
+        {{/each}}
       </select>
     </div>
   </div>

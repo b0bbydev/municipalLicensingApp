@@ -1,5 +1,11 @@
 <h2>{{policyName}} - Policy</h2>
 <div class="content">
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
   <div class="row">
     <div class="col">
       <h4>Procedures</h4>
