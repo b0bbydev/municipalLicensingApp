@@ -28,6 +28,10 @@ table {
   margin-bottom: 8px !important;
 }
 
+form h4 {
+  padding-top: 25px;
+}
+
 .content {
   background-color: #fff !important;
   margin-left: 255px;
@@ -44,6 +48,10 @@ table {
 
 .alert {
   margin-bottom: 0%;
+}
+
+.row {
+  margin-right: auto;
 }
 
 /* this makes the entire table cell clickable for the anchor tag. */
@@ -173,7 +181,7 @@ table {
   border-width: thin;
 }
 
-/* add dog license */
+/* all forms */
 #form {
   max-width: 850px;
   margin: auto;
@@ -183,14 +191,7 @@ table {
   font-weight: 525;
 }
 
-.row {
-  margin-right: auto;
-}
-
-form h4 {
-  padding-top: 25px;
-}
-
+/* footer */
 .footer-color {
   background-color: #78a22f;
 }
@@ -204,23 +205,15 @@ form h4 {
   margin-left: 125px;
 }
 
+/* misc buttons */
 #submitButton {
   margin-top: 10px;
   margin-bottom: 15px;
 }
 
-#addNewLicenseButton {
-  margin-bottom: 15px;
-}
-
-#registerDogButton {
-  margin-left: auto;
-  margin-top: auto;
-  margin-bottom: 5px;
-}
-
 #addOwnerButton,
 #addFormButton,
+#registerDogButton,
 #addPolicyButton {
   margin-left: auto;
   margin-top: auto;
