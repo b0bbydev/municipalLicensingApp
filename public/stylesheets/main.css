@@ -23,6 +23,9 @@ a {
 
 h2 {
   padding-top: 15px;
+  text-align: center;
+  margin-left: 75px;
+  margin-bottom: 10px;
 }
 
 table {
@@ -196,7 +199,6 @@ table {
 }
 
 .row {
-  /* padding-bottom: 10px; */
   margin-right: auto;
 }
 
@@ -211,6 +213,10 @@ form h4 {
 .footer {
   margin-top: auto;
   padding: 10px;
+}
+
+.footer-center {
+  margin-left: 125px;
 }
 
 #submitButton {
@@ -254,4 +260,10 @@ form h4 {
 
 .newDropdownForm {
   margin-top: 15px;
+}
+
+#bwgBackground {
+  display: flex;
+  margin: auto;
+  margin-top: 30px;
 }
