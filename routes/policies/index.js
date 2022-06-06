@@ -2,8 +2,10 @@ var express = require("express");
 var router = express.Router();
 const { redirectToLogin } = require("../../config/authHelpers");
 // models.
-const Policy = require("../../models/policies/policy");
 const Dropdown = require("../../models/dropdownManager/dropdown");
+const Policy = require("../../models/policies/policy");
+const Procedure = require("../../models/policies/procedure");
+const Guideline = require("../../models/policies/guideline");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -149,10 +151,34 @@ router.get("/policy/:id", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
+  // get related procedures.
+  let procedures = await Procedure.findAll({
+    where: {
+      policyID: req.params.id, // policyID is in URL bar.
+    },
+  });
+
+  // get related guidelines.
+  let guidelines = await Guideline.findAll({
+    where: {
+      policyID: req.params.id, // policyID is in URL bar.
+    },
+  });
+
+  // get current policyName.
+  let policyName = await Policy.findOne({
+    where: {
+      policyID: req.params.id,
+    },
+  });
+
   return res.render("policies/policy", {
     title: "BWG | Policy",
     errorMessages: messages,
     email: req.session.email,
+    procedures: procedures,
+    guidelines: guidelines,
+    policyName: policyName.policyName,
   });
 });
 

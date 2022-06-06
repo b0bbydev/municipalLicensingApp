@@ -1,4 +1,91 @@
-<h2 class="text-center">Policy Page</h2>
+<h2>{{policyName}} - Policy</h2>
 <div class="content">
-
+  <div class="row">
+    <div class="col">
+      <h4>Procedures</h4>
+      <!-- Procedures Table -->
+      <section class="row">
+        <div class="col-12">
+          <table
+            class="sortable table table-sm table-bordered table-striped table-hover"
+          >
+            <thead>
+              <tr>
+                <th>Procedure ID</th>
+                <th>Procedure Name</th>
+                <th>Approval Date</th>
+                <th>Last Review Date</th>
+                <th>Scheduled Review Date</th>
+                <th>Amended</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Policy ID (change?)</th>
+                <th>Policy Form ID (change?)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each procedures}}
+                <tr>
+                  <td>{{this.procedureID}}</td>
+                  <td>{{this.procedureName}}</td>
+                  <td>{{this.approvalDate}}</td>
+                  <td>{{this.lastReviewDate}}</td>
+                  <td>{{this.scheduledReviewDate}}</td>
+                  <td>{{this.amended}}</td>
+                  <td>{{this.status}}</td>
+                  <td>{{this.notes}}</td>
+                  <td>{{this.policyID}}</td>
+                  <td>{{this.policyFormID}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h4>Guidelines</h4>
+      <!-- Guidelines Table -->
+      <section class="row">
+        <div class="col-12">
+          <table
+            class="sortable table table-sm table-bordered table-striped table-hover"
+          >
+            <thead>
+              <tr>
+                <th>Guideline ID</th>
+                <th>Guideline Name</th>
+                <th>Approval Date</th>
+                <th>Last Review Date</th>
+                <th>Scheduled Review Date</th>
+                <th>Amended</th>
+                <th>Status</th>
+                <th>Notes</th>
+                <th>Policy ID (change?)</th>
+                <th>Policy Form ID (change?)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each guidelines}}
+                <tr>
+                  <td>{{this.guidelineID}}</td>
+                  <td>{{this.guidelineName}}</td>
+                  <td>{{this.approvalDate}}</td>
+                  <td>{{this.lastReviewDate}}</td>
+                  <td>{{this.scheduledReviewDate}}</td>
+                  <td>{{this.amended}}</td>
+                  <td>{{this.status}}</td>
+                  <td>{{this.notes}}</td>
+                  <td>{{this.policyID}}</td>
+                  <td>{{this.policyFormID}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </div>
 </div>
