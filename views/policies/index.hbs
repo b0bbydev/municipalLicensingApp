@@ -1,49 +1,53 @@
 <h2>Policies and Procedures</h2>
 <div class="content">
-    <div class="row">
-    <div class="col-sm-4">
-      <h4>Filtering</h4>
-      <form method="POST">
-        <select
-          class="form-select-sm"
-          id="filterCategory"
-          title="filterSelect"
-          name="filterCategory"
-        >
-          <option disabled selected>Filter By...</option>
-            {{#each dropdownValues}}
-              <option value="{{this.value}}"{{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>
-            {{/each}}
-        </select>
-        <!-- filterValue input -->
-        <input
-          name="filterValue"
-          id="filterValue"
-          class="form-control-sm"
-          pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
-          title="No special characters!"
-          placeholder="Search..."
-          value="{{filterValue}}"
-        />
-        <button
-          id="filterButton"
-          class="btn btn-sm btn-primary"
-          type="submit"
-        >Search</button>
-        <a
-          id="filterButton"
-          href="/policies"
-          class="btn btn-sm btn-secondary"
-          type="submit"
-        >Reset</a>
-      </form>
-      {{#if queryCount}}
-        <div>
-          <strong>{{queryCount}}</strong>
-        </div>
-      {{/if}}
-    </div>
-  </div>
+   <div class="row">
+     <div class="col-sm-4">
+       <h4>Filtering</h4>
+       <form method="POST">
+         <select
+           class="form-select-sm"
+           id="filterCategory"
+           title="filterSelect"
+           name="filterCategory"
+         >
+           <option disabled selected>Filter By...</option>
+             {{#each dropdownValues}}
+               <option value="{{this.value}}"{{#if this.isDisabled}} disabled {{/if}}>{{this.value}}</option>
+             {{/each}}
+         </select>
+         <!-- filterValue input -->
+         <input
+           name="filterValue"
+           id="filterValue"
+           class="form-control-sm"
+           pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+           title="No special characters!"
+           placeholder="Search..."
+           value="{{filterValue}}"
+         />
+         <button
+           id="filterButton"
+           class="btn btn-sm btn-primary"
+           type="submit"
+         >Search</button>
+         <a
+           id="filterButton"
+           href="/policies"
+           class="btn btn-sm btn-secondary"
+           type="submit"
+         >Reset</a>
+       </form>
+       {{#if queryCount}}
+         <div>
+           <strong>{{queryCount}}</strong>
+         </div>
+       {{/if}}
+     </div>
+    {{!-- <div id="addPolicyButton" style="padding-right: 0%;" class="col-sm-4 text-nowrap">
+      <a href="/policies/addPolicy" class="btn btn-sm btn-primary float-end">Add
+        Policy</a>
+    </div> --}}
+   </div>
 
   <!-- check for error messages in the session -->
   {{#if message}}

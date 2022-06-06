@@ -83,6 +83,12 @@ router.post(
           case "Policy ID":
             filterCategory = "policyID";
             break;
+          case "Policy Name":
+            filterCategory = "policyName";
+            break;
+          case "Policy Number":
+            filterCategory = "policyNumber";
+            break;
         }
 
         // create filter query.

@@ -235,7 +235,8 @@ form h4 {
 }
 
 #addOwnerButton,
-#addFormButton {
+#addFormButton,
+#addPolicyButton {
   margin-left: auto;
   margin-top: auto;
   margin-bottom: 5px;
