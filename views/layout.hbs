@@ -25,59 +25,55 @@
     <!-- sorttable -->
     <script src="/js/sorttable.js"></script>
   </head>
-  <nav id="side-nav">
-    <div id="menu_panel">
-      <div class="menu-img text-center">
-        <a href="/">
-          <img
-            src="/images/bwg-logo.png"
-            class="global-toolbar-item-logo-nav"
-            alt="bwg-logo"
-          />
-        </a>
-      </div>
-      <div class="usernameDiv">
-        <p>
+  <div class="side-nav">
+    <div class="nav-img">
+      <a href="/">
+        <img src="/images/bwg-logo.png" alt="bwg-logo" />
+      </a>
+    </div>
+    <div class="usernameDiv">
+      {{#if email}}
+        <p class="text-center">
           <i class="icon-blue icon-large bi bi-person-fill"></i>
           Current User:
           {{email}}
         </p>
-      </div>
-      <div class="menuitem">
-        <a href="/dogtags">
-          <div class="menu-text">
-            <i class="icon-large icon-blue bi bi-stack"></i>
-            Dog Tag Licenses
-          </div>
-        </a>
-      </div>
-      <div class="menuitem">
-        <a href="/dropdownManager">
-          <div class="menu-text">
-            <i class="icon-blue icon-large bi bi-menu-button-fill"></i>
-            Dropdown Manager
-          </div>
-        </a>
-      </div>
-      <div class="menuitem last">
-        <a href="/policies">
-          <div class="menu-text">
-            <i class="icon-large icon-blue bi bi-stack"></i>
-            Policies & Procedures
-          </div>
-        </a>
-      </div>
-      <!-- added logout id to anchor to bottom of page -->
-      <div class="menuitem logout">
-        <a href="/logout">
-          <div class="menu-text">
-            <i class="icon-large icon-blue bi bi-box-arrow-in-left"></i>
-            Logout
-          </div>
-        </a>
-      </div>
+      {{/if}}
     </div>
-  </nav>
+    <div class="menu-item">
+      <a href="/dogtags">
+        <div class="menu-text">
+          <i class="icon-large icon-blue bi bi-stack"></i>
+          Dog Tag Licenses
+        </div>
+      </a>
+    </div>
+    <div class="menu-item">
+      <a href="/dropdownManager">
+        <div class="menu-text">
+          <i class="icon-blue icon-large bi bi-menu-button-fill"></i>
+          Dropdown Manager
+        </div>
+      </a>
+    </div>
+    <div class="menu-item last">
+      <a href="/policies">
+        <div class="menu-text">
+          <i class="icon-large icon-blue bi bi-stack"></i>
+          Policies & Procedures
+        </div>
+      </a>
+    </div>
+    <!-- added logout id to anchor to bottom of page -->
+    <div class="menu-item logout">
+      <a href="/logout">
+        <div class="menu-text">
+          <i class="icon-large icon-blue bi bi-box-arrow-in-left"></i>
+          Logout
+        </div>
+      </a>
+    </div>
+  </div>
 
   {{{body}}}
 

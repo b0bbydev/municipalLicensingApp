@@ -10,12 +10,6 @@ body {
   padding: 0% !important;
 }
 
-.content {
-  background-color: #fff !important;
-  margin-left: 255px;
-  margin-right: 5px;
-}
-
 a {
   color: #333 !important;
   text-decoration: none;
@@ -34,12 +28,22 @@ table {
   margin-bottom: 8px !important;
 }
 
+.content {
+  background-color: #fff !important;
+  margin-left: 255px;
+  margin-right: 5px;
+}
+
 .title-text {
   font-weight: bold;
 }
 
 .btn {
   color: #fff !important;
+}
+
+.alert {
+  margin-bottom: 0%;
 }
 
 /* this makes the entire table cell clickable for the anchor tag. */
@@ -51,7 +55,7 @@ table {
 }
 
 /* Nav */
-#menu_panel {
+.side-nav {
   height: 100%;
   position: fixed;
   z-index: 1;
@@ -65,8 +69,9 @@ table {
   background-color: #fff;
 }
 
-.menu-img {
+.nav-img {
   padding: 20px;
+  text-align: center;
 }
 
 .usernameDiv {
@@ -74,7 +79,7 @@ table {
   text-align: center;
 }
 
-.menuitem {
+.menu-item {
   line-height: 40px;
   text-align: right;
   font-size: small;
@@ -83,20 +88,16 @@ table {
   border-top: 1px solid #dedede;
 }
 
-.menuitem:hover {
+.menu-item:hover {
   transition: 0.2s ease-in;
   background-color: rgba(230, 230, 230, 1);
 }
 
-.menuitem.last {
+.menu-item.last {
   border-bottom: 1px solid #dedede;
 }
 
-.menuitem.admin {
-  border-top: none;
-}
-
-.menuitem.logout {
+.menu-item.logout {
   margin-top: auto;
 }
 
@@ -106,6 +107,7 @@ table {
   text-align: left;
 }
 
+/* nav icons */
 .icon-blue {
   color: #0096d6;
 }
@@ -119,11 +121,6 @@ table {
   padding: 10px;
 }
 
-.panel > p {
-  text-align: left;
-  font-size: 1.5em;
-}
-
 .panel {
   color: #fff;
   background-color: #0096d6;
@@ -135,28 +132,16 @@ table {
   padding: 10px 20 5px 10px;
 }
 
-.infoPanel {
-  background-color: #fafafa;
-  border: 1px solid rgb(190, 190, 190);
-  border-radius: 4px;
-  box-shadow: 0 1px 4px rgb(0 0 0 / 30%);
-  display: block;
-  margin: 10px;
-}
-
 /* pagination numbers for dog tag table. */
 .pagination {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding-top: 10px;
 }
 
 .page-item {
   padding: 1.25px;
-}
-
-#pagination {
-  padding-top: 10px;
 }
 
 #pagJump {
@@ -189,12 +174,12 @@ table {
 }
 
 /* add dog license */
-#addLicenseForm {
-  max-width: 725px;
+#form {
+  max-width: 850px;
   margin: auto;
 }
 
-#addLicenseForm .form-label {
+#form .form-label {
   font-weight: 525;
 }
 
@@ -253,10 +238,6 @@ form h4 {
 #addressHistorySection,
 #dogHistorySection {
   margin-top: 25px;
-}
-
-.alert {
-  margin-bottom: 0%;
 }
 
 .newDropdownForm {
