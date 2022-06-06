@@ -3,6 +3,7 @@ var router = express.Router();
 const { redirectToLogin } = require("../../config/authHelpers");
 // models.
 const Policy = require("../../models/policies/policy");
+const Dropdown = require("../../models/dropdownManager/dropdown");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -19,6 +20,13 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
+  // get dropdown values.
+  var dropdownValues = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 2, // the specific ID for this dropdown menu. Maybe change to something dynamic? Not sure of the possiblities as of yet.
+    },
+  });
+
   // get all the policies.
   Policy.findAndCountAll({ limit: req.query.limit, offset: req.skip }).then(
     (results) => {
@@ -31,6 +39,7 @@ router.get("/", async (req, res, next) => {
         errorMessages: messages,
         email: req.session.email,
         data: results.rows,
+        dropdownValues: dropdownValues,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
