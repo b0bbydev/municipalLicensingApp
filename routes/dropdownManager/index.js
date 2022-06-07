@@ -112,7 +112,7 @@ router.post(
   "/form/:id",
   body("value")
     .notEmpty()
-    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .matches(/^[^'";=_()*&%$#!<>\^\\]*$/)
     .withMessage("Invalid Dropdown Value Entry!")
     .trim(),
   param("id").matches(/^\d+$/).trim(),
