@@ -3,7 +3,7 @@ var router = express.Router();
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // AD.
-var ActiveDirectory = require("activedirectory");
+var ActiveDirectory = require("activedirectory2");
 var config = {
   url: process.env.URL,
 };
@@ -17,7 +17,7 @@ router.get("/", function (req, res, next) {
   // clear session messages
   req.session.messages = [];
 
-  res.render("login", {
+  return res.render("login", {
     title: "BWG | Login",
     errorMessages: messages,
     layout: "hideLayout.hbs",
