@@ -34,7 +34,9 @@ router.get("/", async (req, res, next) => {
 router.post(
   "/",
   body("formName")
-    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .notEmpty()
+    .matches(/^[a-zA-z0-9\/\- ]*$/)
+    .withMessage("Invalid Form/Dropdown Name Entry!")
     .trim(),
   async (req, res, next) => {
     // server side validation.
@@ -109,7 +111,9 @@ router.get(
 router.post(
   "/form/:id",
   body("value")
+    .notEmpty()
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .withMessage("Invalid Dropdown Value Entry!")
     .trim(),
   param("id").matches(/^\d+$/).trim(),
   function (req, res, next) {
