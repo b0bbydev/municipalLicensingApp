@@ -27,6 +27,7 @@ var indexRouter = require("./routes/index");
 
 /* policies related routes. */
 var policiesRouter = require("./routes/policies/index");
+var editPolicyRouter = require("./routes/policies/editPolicy");
 
 /* dropdown related routes. */
 var dropdownRouter = require("./routes/dropdownManager/index");
@@ -101,6 +102,7 @@ app.use("/dropdownManager", dropdownRouter);
 
 /* policies related routes. */
 app.use("/policies", policiesRouter);
+app.use("/policies/editPolicy", editPolicyRouter);
 
 /* dogtag related routes. */
 app.use("/dogtags", dogTagRouter);

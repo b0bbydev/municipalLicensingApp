@@ -73,7 +73,12 @@ router.get(
             hasMorePages: paginate.hasNextPages(req)(pageCount),
           });
         })
-        .catch((err) => next(err));
+        .catch((err) =>
+          res.render("dogtags", {
+            title: "BWG | Dogtags",
+            message: "Page Error!" + err,
+          })
+        );
     }
   }
 );
@@ -192,7 +197,12 @@ router.post(
                 hasMorePages: paginate.hasNextPages(req)(pageCount),
               });
             })
-            .catch((err) => next(err));
+            .catch((err) =>
+              res.render("dogtags", {
+                title: "BWG | Dogtags",
+                message: "Page Error!" + err,
+              })
+            );
         }
       } else if (
         // NO supplied filters, render error message.
