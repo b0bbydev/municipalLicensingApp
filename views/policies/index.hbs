@@ -47,10 +47,6 @@
         </div>
       {{/if}}
     </div>
-    {{! <div id="addPolicyButton" style="padding-right: 0%;" class="col-sm-4 text-nowrap">
-      <a href="/policies/addPolicy" class="btn btn-sm btn-primary float-end">Add
-        Policy</a>
-    </div> }}
   </div>
 
   <!-- check for error messages in the session -->
@@ -72,8 +68,10 @@
         <th>Council Resolution</th>
         <th>Date Adopted</th>
         <th>Date Amended</th>
+        <th>Category</th>
         <th>Last Review Date</th>
         <th>Scheduled Review Date</th>
+        <th>Authority</th>
         <th>Status</th>
         <th>Notes</th>
         <th>Actions</th>
@@ -93,8 +91,10 @@
           <td>{{this.councilResolution}}</td>
           <td>{{this.dateAdopted}}</td>
           <td>{{this.dateAmended}}</td>
+          <td>{{this.category}}</td>
           <td>{{this.lastReviewDate}}</td>
           <td>{{this.scheduledReviewDate}}</td>
+          <td>{{this.authority}}</td>
           <td>{{this.status}}</td>
           <td>{{this.notes}}</td>
           <td><a

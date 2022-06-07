@@ -137,6 +137,36 @@
         />
       </div>
     </div>
+    <!-- Category -->
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Category" class="form-label">Category</label>
+        <select class="form-select" name="category">
+          <option disabled selected>Category...</option>
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option value="{{this.value}}" disabled>{{this.value}}</option>
+            {{else}}
+              <option value="{{this.value}}">{{this.value}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+      <!-- Authority -->
+      <div class="col-sm-6">
+        <label for="Authority" class="form-label">Authority</label>
+        <select class="form-select" name="authority">
+          <option disabled selected>Authority...</option>
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option value="{{this.value}}" disabled>{{this.value}}</option>
+            {{else}}
+              <option value="{{this.value}}">{{this.value}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
     <!-- Notes -->
     <div class="row">
       <div class="col">

@@ -46,6 +46,11 @@ const Policy = sequelize.define("policy", {
     allowNull: true,
   },
 
+  category: {
+    type: Sequelize.STRING(30),
+    allowNull: true,
+  },
+
   lastReviewDate: {
     type: Sequelize.DATEONLY,
     allowNull: true,
@@ -53,6 +58,11 @@ const Policy = sequelize.define("policy", {
 
   scheduledReviewDate: {
     type: Sequelize.DATEONLY,
+    allowNull: true,
+  },
+
+  authority: {
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 
