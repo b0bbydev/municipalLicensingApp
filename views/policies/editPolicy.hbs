@@ -18,7 +18,7 @@
           class="form-control"
           placeholder="Policy Number"
           name="policyNumber"
-          value=""
+          value="{{policyInfo.policyNumber}}"
         />
       </div>
       <!-- Policy Name -->
@@ -31,7 +31,7 @@
           name="policyName"
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
-          value=""
+          value="{{policyInfo.policyName}}"
           maxlength="40"
         />
       </div>
@@ -45,7 +45,7 @@
           class="form-control"
           placeholder="COW Resolve"
           name="cowResolve"
-          value=""
+          value="{{policyInfo.cowResolve}}"
         />
       </div>
       <!-- COW Date -->
@@ -56,7 +56,7 @@
           class="form-control"
           placeholder="COW Date"
           name="cowDate"
-          value=""
+          value="{{policyInfo.cowDate}}"
         />
       </div>
     </div>
@@ -83,7 +83,7 @@
           class="form-control"
           placeholder="Date Adopted"
           name="dateAdopted"
-          value=""
+          value="{{policyInfo.dateAdopted}}"
         />
       </div>
       <!-- Date Amended -->
@@ -94,7 +94,7 @@
           class="form-control"
           placeholder="Date Amended"
           name="dateAmended"
-          value=""
+          value="{{policyInfo.dateAmended}}"
         />
       </div>
     </div>
@@ -113,6 +113,7 @@
           {{/each}}
         </select>
       </div>
+      <!-- Last Review Date -->
       <div class="col-sm-4">
         <label for="Last Review Date" class="form-label">Last Review Date</label>
         <input
@@ -120,9 +121,10 @@
           class="form-control"
           placeholder="Last Review Date"
           name="lastReviewDate"
-          value=""
+          value="{{policyInfo.lastReviewDate}}"
         />
       </div>
+      <!-- Scheduled Review Date -->
       <div class="col-sm-4">
         <label for="Scheduled Review Date" class="form-label">Scheduled Review
           Date</label>
@@ -131,7 +133,7 @@
           class="form-control"
           placeholder="Scheduled Review Date"
           name="scheduledReviewDate"
-          value=""
+          value="{{policyInfo.scheduledReviewDate}}"
         />
       </div>
     </div>
@@ -146,7 +148,7 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
-        ></textarea>
+        >{{policyInfo.notes}}</textarea>
       </div>
     </div>
     <div class="row">

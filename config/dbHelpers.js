@@ -50,6 +50,21 @@ db.getDogInfo = (dogID) => {
   });
 };
 
+db.getPolicyInfo = (policyID) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM policies WHERE policyID = ?",
+      [policyID],
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(result);
+      }
+    );
+  });
+};
+
 db.getFormNameFromFormID = (formID) => {
   return new Promise((resolve, reject) => {
     pool.query(
