@@ -13,6 +13,7 @@ const sequelize = new Sequelize(
     define: {
       timestamps: false,
     },
+    timezone: process.env.TIMEZONE,
   }
 );
 
