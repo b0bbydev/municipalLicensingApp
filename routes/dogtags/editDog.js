@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dog = require("../../models/dogtags/dog");
+const Dropdown = require("../../models/dropdownManager/dropdown");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
@@ -28,6 +29,13 @@ router.get(
       // clear session messages.
       req.session.messages = [];
 
+      // get dropdown values.
+      var dropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 11, // the specific ID for this dropdown menu. Maybe change to something dynamic? Not sure of the possiblities as of yet.
+        },
+      });
+
       // save dogID to session.
       req.session.dogID = req.params.id;
 
@@ -38,6 +46,7 @@ router.get(
         title: "BWG | Edit Dog",
         errorMessages: messages,
         email: req.session.email,
+        dropdownValues: dropdownValues,
         dogInfo: {
           tagNumber: dogInfo[0].tagNumber,
           dogName: dogInfo[0].dogName,

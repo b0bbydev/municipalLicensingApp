@@ -240,8 +240,3 @@ form h4 {
 .newDropdownForm {
   margin-top: 15px;
 }
-
-/* change input borders to red if their invalid */
-input:invalid {
-  border-color: #db340f;
-}

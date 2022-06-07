@@ -265,9 +265,13 @@
         <label for="Tag Required" class="form-label">Tag Required</label>
         <select class="form-select" name="tagRequired">
           <option disabled selected>{{#if dogInfo.tagRequired}}{{dogInfo.tagRequired}}{{else}}Tag Required...{{/if}}</option>
-          <option value="Deceased">Deceased</option>
-          <option value="Moved">Moved</option>
-          <option value="Mail Returned">Mail Returned</option>
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option value="{{this.value}}" disabled>{{this.value}}</option>
+            {{else}}
+              <option value="{{this.value}}">{{this.value}}</option>
+            {{/if}}
+          {{/each}}
         </select>
       </div>
       <div class="col-sm-6">
