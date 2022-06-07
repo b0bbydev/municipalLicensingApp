@@ -41,7 +41,7 @@ const Policy = sequelize.define("policy", {
     allowNull: true,
   },
 
-  amended: {
+  dateAmended: {
     type: Sequelize.DATEONLY,
     allowNull: true,
   },

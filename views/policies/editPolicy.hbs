@@ -1,3 +1,162 @@
 <h2>Edit Policy</h2>
 <div class="content">
+  <form class="row g-2" id="form" method="POST">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Policy Information</h4>
+    <hr />
+    <!-- Policy Number -->
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Policy Number" class="form-label">Policy Number</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Policy Number"
+          name="policyNumber"
+          value=""
+        />
+      </div>
+      <!-- Policy Name -->
+      <div class="col-sm-6">
+        <label for="Policy Name" class="form-label">Policy Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Policy Name"
+          name="policyName"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value=""
+          maxlength="40"
+        />
+      </div>
+    </div>
+    <!-- COW Resolve -->
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="COW Resolve" class="form-label">COW Resolve</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="COW Resolve"
+          name="cowResolve"
+          value=""
+        />
+      </div>
+      <!-- COW Date -->
+      <div class="col-sm-6">
+        <label for="COW Date" class="form-label">COW Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="COW Date"
+          name="cowDate"
+          value=""
+        />
+      </div>
+    </div>
+    <!-- Council Resolution -->
+    <div class="row">
+      <div class="col-sm-4">
+        <label for="Council Resolution" class="form-label">Council Resolution</label>
+        <select class="form-select" name="councilResolution">
+          <option disabled selected>Council Resolution...</option>
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option value="{{this.value}}" disabled>{{this.value}}</option>
+            {{else}}
+              <option value="{{this.value}}">{{this.value}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+      <!-- Date Adopted -->
+      <div class="col-sm-4">
+        <label for="Date Adopted" class="form-label">Date Adopted</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Adopted"
+          name="dateAdopted"
+          value=""
+        />
+      </div>
+      <!-- Date Amended -->
+      <div class="col-sm-4">
+        <label for="Date Amended" class="form-label">Date Amended</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Amended"
+          name="dateAmended"
+          value=""
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Status -->
+      <div class="col-sm-4">
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="councilResolution">
+          <option disabled selected>Status...</option>
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option value="{{this.value}}" disabled>{{this.value}}</option>
+            {{else}}
+              <option value="{{this.value}}">{{this.value}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+      <div class="col-sm-4">
+        <label for="Last Review Date" class="form-label">Last Review Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Last Review Date"
+          name="lastReviewDate"
+          value=""
+        />
+      </div>
+      <div class="col-sm-4">
+        <label for="Scheduled Review Date" class="form-label">Scheduled Review
+          Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Scheduled Review Date"
+          name="scheduledReviewDate"
+          value=""
+        />
+      </div>
+    </div>
+    <!-- Notes -->
+    <div class="row">
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        ></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </form>
 </div>
