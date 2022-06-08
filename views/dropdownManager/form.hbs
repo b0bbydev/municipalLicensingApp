@@ -1,10 +1,14 @@
-<h2 class="text-center">{{formName}}</h2>
+<h2 class="text-center">Dropdown Manager - {{formName}}</h2>
 <div class="content">
-  {{#if queryCount}}
-    <div>
-      <strong>{{queryCount}}</strong>
+  <div class="row">
+    <div class="col-sm-4">
+      {{#if queryCount}}
+        <div>
+          <strong>{{queryCount}}</strong>
+        </div>
+      {{/if}}
     </div>
-  {{/if}}
+  </div>
   <!-- Table -->
   <div class="row">
     <div class="col-12">
@@ -21,7 +25,7 @@
           {{#each data}}
             <tr>
               <td>{{this.dropdownTitle}}</td>
-              <td>{{this.value}}</td>
+              <td>{{this.dropdownValue}}</td>
               <td>{{this.isDisabled}}</td>
               <td><a
                   href="/dropdownManager/enable/{{this.dropdownID}}"

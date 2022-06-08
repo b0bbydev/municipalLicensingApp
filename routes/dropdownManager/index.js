@@ -62,6 +62,7 @@ router.post(
   }
 );
 
+/* GET /dropdownManager/form/:id */
 router.get(
   "/form/:id",
   param("id").matches(/^\d+$/).trim(),
@@ -102,7 +103,7 @@ router.get(
         const pageCount = Math.ceil(results.count / req.query.limit);
 
         return res.render("dropdownManager/form", {
-          title: "BWG | " + formName[0].formName,
+          title: "BWG | Dropdown Manager - " + formName[0].formName,
           errorMessages: messages,
           email: req.session.email,
           formName: formName[0].formName,

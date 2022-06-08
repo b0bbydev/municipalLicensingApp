@@ -17,7 +17,7 @@ const Dropdown = sequelize.define("dropdown", {
     allowNull: true,
   },
 
-  value: {
+  dropdownValue: {
     type: Sequelize.STRING(50),
     allowNull: true,
   },
