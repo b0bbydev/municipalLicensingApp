@@ -106,9 +106,14 @@
           <option disabled selected>Status...</option>
           {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
-              <option value="{{this.value}}" disabled>{{this.value}}</option>
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
             {{else}}
-              <option value="{{this.value}}">{{this.value}}</option>
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
             {{/if}}
           {{/each}}
         </select>
@@ -145,9 +150,14 @@
           <option disabled selected>Category...</option>
           {{#each categoryDropdownValues}}
             {{#if this.isDisabled}}
-              <option value="{{this.value}}" disabled>{{this.value}}</option>
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
             {{else}}
-              <option value="{{this.value}}">{{this.value}}</option>
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
             {{/if}}
           {{/each}}
         </select>
@@ -159,9 +169,14 @@
           <option disabled selected>Authority...</option>
           {{#each authorityDropdownValues}}
             {{#if this.isDisabled}}
-              <option value="{{this.value}}" disabled>{{this.value}}</option>
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
             {{else}}
-              <option value="{{this.value}}">{{this.value}}</option>
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
             {{/if}}
           {{/each}}
         </select>
