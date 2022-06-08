@@ -64,16 +64,16 @@
     <div class="row">
       <div class="col-sm-4">
         <label for="Council Resolution" class="form-label">Council Resolution</label>
-        <select class="form-select" name="councilResolution">
-          <option disabled selected>Council Resolution...</option>
-          {{#each dropdownValues}}
-            {{#if this.isDisabled}}
-              <option value="{{this.value}}" disabled>{{this.value}}</option>
-            {{else}}
-              <option value="{{this.value}}">{{this.value}}</option>
-            {{/if}}
-          {{/each}}
-        </select>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Council Resolution"
+          name="councilResolution"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{policyInfo.councilResolution}}"
+          maxlength="40"
+        />
       </div>
       <!-- Date Adopted -->
       <div class="col-sm-4">

@@ -12,6 +12,11 @@ const Dropdown = sequelize.define("dropdown", {
     primaryKey: true,
   },
 
+  dropdownTitle: {
+    type: Sequelize.STRING(40),
+    allowNull: true,
+  },
+
   value: {
     type: Sequelize.STRING(50),
     allowNull: true,

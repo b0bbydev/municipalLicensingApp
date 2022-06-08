@@ -1,13 +1,19 @@
 <h2 class="text-center">{{formName}}</h2>
 <div class="content">
+  {{#if queryCount}}
+    <div>
+      <strong>{{queryCount}}</strong>
+    </div>
+  {{/if}}
   <!-- Table -->
   <div class="row">
     <div class="col-12">
-      <table class="table table-striped table-hover">
+      <table class="sortable table table-bordered table-striped table-hover">
         <thead>
           <tr>
             <th>Dropdown ID</th>
-            <th>Value</th>
+            <th>Dropdown Title</th>
+            <th>Dropdown Value</th>
             <th>isDisabled</th>
             <th>Actions</th>
           </tr>
@@ -16,6 +22,7 @@
           {{#each data}}
             <tr>
               <td>{{this.dropdownID}}</td>
+              <td>{{this.dropdownTitle}}</td>
               <td>{{this.value}}</td>
               <td>{{this.isDisabled}}</td>
               <td><a
@@ -30,23 +37,62 @@
           {{/each}}
         </tbody>
       </table>
+      <nav id="pagination">
+        <ul class="pagination pagination-sm">
+          {{#if paginate.hasPreviousPages}}
+            <li class="page-item"><a
+                class="page-link"
+                href="{{prev}}"
+              >Prev</a></li>
+          {{/if}}
+          {{#each pages}}
+            <li class="page-item"><a
+                class="page-link"
+                href="{{this.url}}"
+              >{{this.number}}</a></li>
+          {{/each}}
+          {{#if hasMorePages}}
+            <li class="page-item"><a
+                class="page-link"
+                href="{{paginate.href}}"
+              >Next</a></li>
+          {{/if}}
+        </ul>
+      </nav>
     </div>
   </div>
   <!-- Add new dropdown value -->
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col">
       <form method="POST">
-        <label for="Dropdown Value" class="form-label title-text">New Dropdown
-          Value</label>
-        <input
-          name="value"
-          class="form-control"
-          placeholder="New Value..."
-          type="text"
-          pattern="[^()/><\][\\\x22,;|]+"
-          title="No special characters!"
-          required
-        />
+        <div class="row">
+          <div class="col-sm-6">
+            <label for="Dropdown Title" class="form-label title-text">Dropdown
+              Title</label>
+            <input
+              name="dropdownTitle"
+              class="form-control"
+              placeholder="Title of dropdown menu..."
+              type="text"
+              pattern="[^()/><\][\\\x22,;|]+"
+              title="No special characters!"
+              required
+            />
+          </div>
+          <div class="col-sm-6">
+            <label for="Dropdown Value" class="form-label title-text">Dropdown
+              Value</label>
+            <input
+              name="value"
+              class="form-control"
+              placeholder="Value/option in dropdown menu..."
+              type="text"
+              pattern="[^()/><\][\\\x22,;|]+"
+              title="No special characters!"
+              required
+            />
+          </div>
+        </div>
         <div class="row">
           <div class="col">
             <button
@@ -57,20 +103,6 @@
           </div>
         </div>
       </form>
-    </div>
-    <div class="col-sm-6">
-      <label for="Dropdown Select" class="form-label title-text">Test Dropdown
-        Menu</label>
-      <select name="dropdown" class="form-select">
-        <option disabled selected>Select A Value...</option>
-        {{#each data}}
-          {{#if this.isDisabled}}
-            <option value="{{this.value}}" disabled>{{this.value}}</option>
-          {{else}}
-            <option value="{{this.value}}">{{this.value}}</option>
-          {{/if}}
-        {{/each}}
-      </select>
     </div>
   </div>
 </div>

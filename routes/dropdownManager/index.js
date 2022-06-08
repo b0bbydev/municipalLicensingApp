@@ -6,6 +6,8 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const DropdownForm = require("../../models/dropdownManager/dropdownForm");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
+// pagination lib.
+const paginate = require("express-paginate");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
 
@@ -95,12 +97,22 @@ router.get(
           dropdownFormID: req.params.id,
         },
       }).then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
         return res.render("dropdownManager/form", {
           title: "BWG | " + formName[0].formName,
           errorMessages: messages,
           email: req.session.email,
           formName: formName[0].formName,
           data: results.rows,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
         });
       });
     }
@@ -129,6 +141,7 @@ router.post(
       });
     } else {
       Dropdown.create({
+        dropdownTitle: req.body.dropdownTitle,
         value: req.body.value,
         isDisabled: 0, // *enable* by default.
         dropdownFormID: req.session.formID,
