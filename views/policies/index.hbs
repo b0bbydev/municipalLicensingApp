@@ -47,6 +47,11 @@
         </div>
       {{/if}}
     </div>
+    <!-- Add policy button -->
+    <div id="addPolicyButton" class="col-sm-4 text-nowrap">
+      <a href="/policies/addPolicy" class="btn btn-sm btn-primary float-end">Add
+        Policy</a>
+    </div>
   </div>
 
   <!-- check for error messages in the session -->
@@ -57,69 +62,76 @@
   {{/if}}
 
   <!-- Table -->
-  <table class="sortable table table-bordered table-striped table-hover">
-    <thead>
-      <tr>
-        <th>Policy ID</th>
-        <th>Policy Number</th>
-        <th>Policy Name</th>
-        <th>COW Resolve</th>
-        <th>COW Date</th>
-        <th>Council Resolution</th>
-        <th>Date Adopted</th>
-        <th>Date Amended</th>
-        <th>Category</th>
-        <th>Last Review Date</th>
-        <th>Scheduled Review Date</th>
-        <th>Authority</th>
-        <th>Status</th>
-        <th>Notes</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each data}}
-        <tr>
-          <td><a
-              id="ownerLink"
-              href="/policies/policy/{{this.policyID}}"
-            >{{this.policyID}}</a></td>
-          <td>{{this.policyNumber}}</td>
-          <td>{{this.policyName}}</td>
-          <td>{{this.cowResolve}}</td>
-          <td>{{this.cowDate}}</td>
-          <td>{{this.councilResolution}}</td>
-          <td>{{this.dateAdopted}}</td>
-          <td>{{this.dateAmended}}</td>
-          <td>{{this.category}}</td>
-          <td>{{this.lastReviewDate}}</td>
-          <td>{{this.scheduledReviewDate}}</td>
-          <td>{{this.authority}}</td>
-          <td>{{this.status}}</td>
-          <td>{{this.notes}}</td>
-          <td><a
-              href="/policies/editPolicy/{{this.policyID}}"
-              class="btn btn-sm btn-secondary"
-            >Edit</a></td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  <nav id="pagination">
-    <ul class="pagination pagination-sm">
-      {{#if paginate.hasPreviousPages}}
-        <li class="page-item"><a class="page-link" href="{{prev}}">Prev</a></li>
-      {{/if}}
-      {{#each pages}}
-        <li class="page-item">
-          <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
-      {{/each}}
-      {{#if hasMorePages}}
-        <li class="page-item"><a
-            class="page-link"
-            href="{{paginate.href}}"
-          >Next</a></li>
-      {{/if}}
-    </ul>
-  </nav>
+  <section class="row">
+    <div class="col-12">
+      <table class="sortable table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Policy ID</th>
+            <th>Policy Number</th>
+            <th>Policy Name</th>
+            <th>COW Resolve</th>
+            <th>COW Date</th>
+            <th>Council Resolution</th>
+            <th>Date Adopted</th>
+            <th>Date Amended</th>
+            <th>Category</th>
+            <th>Last Review Date</th>
+            <th>Scheduled Review Date</th>
+            <th>Authority</th>
+            <th>Status</th>
+            <th>Notes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each data}}
+            <tr>
+              <td><a
+                  id="ownerLink"
+                  href="/policies/policy/{{this.policyID}}"
+                >{{this.policyID}}</a></td>
+              <td>{{this.policyNumber}}</td>
+              <td>{{this.policyName}}</td>
+              <td>{{this.cowResolve}}</td>
+              <td>{{this.cowDate}}</td>
+              <td>{{this.councilResolution}}</td>
+              <td>{{this.dateAdopted}}</td>
+              <td>{{this.dateAmended}}</td>
+              <td>{{this.category}}</td>
+              <td>{{this.lastReviewDate}}</td>
+              <td>{{this.scheduledReviewDate}}</td>
+              <td>{{this.authority}}</td>
+              <td>{{this.status}}</td>
+              <td>{{this.notes}}</td>
+              <td><a
+                  href="/policies/editPolicy/{{this.policyID}}"
+                  class="btn btn-sm btn-secondary"
+                >Edit</a></td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <nav id="pagination">
+        <ul class="pagination pagination-sm">
+          {{#if paginate.hasPreviousPages}}
+            <li class="page-item"><a
+                class="page-link"
+                href="{{prev}}"
+              >Prev</a></li>
+          {{/if}}
+          {{#each pages}}
+            <li class="page-item">
+              <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
+          {{/each}}
+          {{#if hasMorePages}}
+            <li class="page-item"><a
+                class="page-link"
+                href="{{paginate.href}}"
+              >Next</a></li>
+          {{/if}}
+        </ul>
+      </nav>
+    </div>
+  </section>
 </div>
