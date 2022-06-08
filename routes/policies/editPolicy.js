@@ -1,5 +1,7 @@
 var express = require("express");
 var router = express.Router();
+// models.
+const Dropdown = require("../../models/dropdownManager/dropdown");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
@@ -26,6 +28,29 @@ router.get(
       // clear session messages.
       req.session.messages = [];
 
+      // dropdown values.
+      // status options.
+      var statusDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 12,
+          dropdownTitle: "Status Options",
+        },
+      });
+      // category options.
+      var categoryDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 12,
+          dropdownTitle: "Category Options",
+        },
+      });
+      // authority options.
+      var authorityDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 12,
+          dropdownTitle: "Authority Options",
+        },
+      });
+
       // get dog info from custom query.
       var policyInfo = await dbHelpers.getPolicyInfo(req.params.id);
 
@@ -33,6 +58,9 @@ router.get(
         title: "BWG | Edit Policy",
         errorMessages: messages,
         email: req.session.email,
+        statusDropdownValues: statusDropdownValues,
+        categoryDropdownValues: categoryDropdownValues,
+        authorityDropdownValues: authorityDropdownValues,
         policyInfo: {
           policyNumber: policyInfo[0].policyNumber,
           policyName: policyInfo[0].policyName,

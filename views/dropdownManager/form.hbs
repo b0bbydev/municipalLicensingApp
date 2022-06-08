@@ -11,7 +11,6 @@
       <table class="sortable table table-bordered table-striped table-hover">
         <thead>
           <tr>
-            <th>Dropdown ID</th>
             <th>Dropdown Title</th>
             <th>Dropdown Value</th>
             <th>isDisabled</th>
@@ -21,17 +20,16 @@
         <tbody>
           {{#each data}}
             <tr>
-              <td>{{this.dropdownID}}</td>
               <td>{{this.dropdownTitle}}</td>
               <td>{{this.value}}</td>
               <td>{{this.isDisabled}}</td>
               <td><a
                   href="/dropdownManager/enable/{{this.dropdownID}}"
-                  class="btn btn btn-success"
+                  class="btn btn-sm btn-success"
                 >Enable</a>
                 <a
                   href="/dropdownManager/disable/{{this.dropdownID}}"
-                  class="btn btn-secondary"
+                  class="btn btn-sm btn-secondary"
                 >Disable</a></td>
             </tr>
           {{/each}}
