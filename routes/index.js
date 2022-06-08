@@ -5,8 +5,16 @@ const { redirectToLogin } = require("../config/authHelpers");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+  // clear session messages
+  req.session.messages = [];
+  // delete session lastEnteredDropdownTitle.
+  delete req.session.lastEnteredDropdownTitle;
+
   return res.render("index", {
     title: "BWG | Home",
+    errorMessages: messages,
     email: req.session.email,
   });
 });

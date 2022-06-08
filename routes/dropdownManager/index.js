@@ -15,7 +15,6 @@ const { param, body, validationResult } = require("express-validator");
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
-
   // clear session messages
   req.session.messages = [];
 
@@ -78,10 +77,9 @@ router.get(
         email: req.session.email,
       });
     } else {
-      // check if there's an error message in the session
+      // check if there's an error message in the session.
       let messages = req.session.messages || [];
-
-      // clear session messages
+      // clear session messages.
       req.session.messages = [];
 
       // store formID in session to use in other endpoints.

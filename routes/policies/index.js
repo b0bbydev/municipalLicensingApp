@@ -18,9 +18,10 @@ const { body, validationResult } = require("express-validator");
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
-
   // clear session messages
   req.session.messages = [];
+  // delete session lastEnteredDropdownTitle.
+  delete req.session.lastEnteredDropdownTitle;
 
   // get dropdown values.
   var dropdownValues = await Dropdown.findAll({
