@@ -78,6 +78,7 @@
               type="text"
               pattern="[^()/><\][\\\x22,;|]+"
               title="No special characters!"
+              value="{{lastEnteredDropdownTitle}}"
               required
             />
           </div>
@@ -85,7 +86,7 @@
             <label for="Dropdown Value" class="form-label title-text">Dropdown
               Value</label>
             <input
-              name="value"
+              name="dropdownValue"
               class="form-control"
               placeholder="Value/option in dropdown menu..."
               type="text"

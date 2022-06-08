@@ -11,7 +11,7 @@ const paginate = require("express-paginate");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
 
-/* GET /dropdownManger */
+/* GET /dropdownManager */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -107,6 +107,7 @@ router.get(
           errorMessages: messages,
           email: req.session.email,
           formName: formName[0].formName,
+          lastEnteredDropdownTitle: req.session.lastEnteredDropdownTitle,
           data: results.rows,
           pageCount,
           itemCount,
@@ -120,13 +121,18 @@ router.get(
   }
 );
 
-/* POST dropdownManager/form/:id */
+/* POST /dropdownManager/form/:id */
 router.post(
   "/form/:id",
-  body("value")
+  body("dropdownValue")
     .notEmpty()
     .matches(/^[^'";=_()*&%$#!<>\^\\]*$/)
     .withMessage("Invalid Dropdown Value Entry!")
+    .trim(),
+  body("dropdownTitle")
+    .notEmpty()
+    .matches(/^[^'";=_()*&%$#!<>\^\\]*$/)
+    .withMessage("Invalid Dropdown Title Entry!")
     .trim(),
   param("id").matches(/^\d+$/).trim(),
   function (req, res, next) {
@@ -143,10 +149,12 @@ router.post(
     } else {
       Dropdown.create({
         dropdownTitle: req.body.dropdownTitle,
-        value: req.body.value,
+        dropdownValue: req.body.dropdownValue,
         isDisabled: 0, // *enable* by default.
         dropdownFormID: req.session.formID,
       }).then((results) => {
+        // save last entered dropdownTitle in the session.
+        req.session.lastEnteredDropdownTitle = req.body.dropdownTitle;
         // redirect to same page if successful.
         res.redirect("/dropdownManager/form/" + req.session.formID);
       });

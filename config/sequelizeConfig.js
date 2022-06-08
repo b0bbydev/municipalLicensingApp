@@ -10,10 +10,10 @@ const sequelize = new Sequelize(
   {
     host: process.env.HOST,
     dialect: process.env.DIALECT,
+    timezone: process.env.TIMEZONE,
     define: {
       timestamps: false,
     },
-    timezone: process.env.TIMEZONE,
   }
 );
 
