@@ -74,6 +74,7 @@ app.use(
 );
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+// static() used for serving static files like images, css etc..
 app.use(express.static(path.join(__dirname, "/public")));
 
 // connection to db.
