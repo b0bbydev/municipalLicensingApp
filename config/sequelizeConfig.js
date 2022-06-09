@@ -14,7 +14,7 @@ const sequelize = new Sequelize(
     define: {
       timestamps: false,
     },
-    logging: process.env.NODE_ENV === "production" ? false : console.log,
+    logging: true,
   }
 );
 
