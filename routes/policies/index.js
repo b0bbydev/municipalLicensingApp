@@ -15,74 +15,72 @@ const paginate = require("express-paginate");
 const { body, validationResult } = require("express-validator");
 
 /* GET /policies */
-router.get("/", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
-  // delete session lastEnteredDropdownTitle.
-  delete req.session.lastEnteredDropdownTitle;
-
-  // get dropdown values.
-  var dropdownValues = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 2, // the specific ID for this dropdown menu. Maybe change to something dynamic? Not sure of the possiblities as of yet.
-    },
-  });
-
-  // get all the policies.
-  Policy.findAndCountAll({ limit: req.query.limit, offset: req.skip }).then(
-    (results) => {
-      // for pagination.
-      const itemCount = results.count;
-      const pageCount = Math.ceil(results.count / req.query.limit);
-
-      return res.render("policies", {
-        title: "BWG | Policies & Procedures",
-        errorMessages: messages,
-        email: req.session.email,
-        data: results.rows,
-        dropdownValues: dropdownValues,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
-      });
-    }
-  );
-});
-
-/* POST /policies */
-router.post(
+router.get(
   "/",
-  // validate all input fields.
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
   body("filterValue")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
-  function (req, res, next) {
+  async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("policies", {
-        title: "BWG | Policies",
-        message: "Filtering Error!",
-        email: req.session.email,
+      return res.render("dogtags", {
+        title: "BWG | Dogtags",
+        message: "Page Error!",
       });
     } else {
-      if (
-        // ALL supplied filters.
-        req.body.filterCategory &&
-        req.body.filterValue
-      ) {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+      // delete session lastEnteredDropdownTitle.
+      delete req.session.lastEnteredDropdownTitle;
+
+      // get dropdown values.
+      var dropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 2,
+        },
+      });
+
+      // if there are no filter parameters.
+      if (!req.query.filterCategory || !req.query.filterValue) {
+        // get all the policies.
+        Policy.findAndCountAll({ limit: req.query.limit, offset: req.skip })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("policies", {
+              title: "BWG | Policies & Procedures",
+              errorMessages: messages,
+              email: req.session.email,
+              data: results.rows,
+              dropdownValues: dropdownValues,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("policies", {
+              title: "BWG | Policies",
+              message: "Page Error! ",
+            })
+          );
+      } else {
         // format filterCategory to match column name in db.
-        switch (req.body.filterCategory) {
+        switch (req.query.filterCategory) {
           case "Policy ID":
             filterCategory = "policyID";
             break;
@@ -98,7 +96,7 @@ router.post(
         Policy.findAndCountAll({
           where: {
             [filterCategory]: {
-              [Op.like]: req.body.filterValue + "%",
+              [Op.like]: req.query.filterValue + "%",
             },
           },
           limit: req.query.limit,
@@ -121,34 +119,22 @@ router.post(
               hasMorePages: paginate.hasNextPages(req)(pageCount),
             });
           })
-          .catch((err) => next(err));
-      } else if (
-        // NO supplied filters.
-        !req.body.filterCategory &&
-        !req.body.filterValue
-      ) {
-        return res.render("policies", {
-          title: "BWG | Policies",
-          message: "Please provide a value to filter by!",
-          email: req.session.email,
-        });
-        // else something weird happens..
-      } else {
-        return res.render("policies", {
-          title: "BWG | Policies",
-          message: "Please ensure BOTH filtering conditions are valid!",
-          email: req.session.email,
-        });
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("policies", {
+              title: "BWG | Policies",
+              message: "Page Error! ",
+            })
+          );
       }
     }
   }
-); // end of post.
+);
 
 /* GET /policies/policy/:id */
 router.get("/policy/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
-
   // clear session messages
   req.session.messages = [];
 
