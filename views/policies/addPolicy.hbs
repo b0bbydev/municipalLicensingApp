@@ -18,6 +18,7 @@
           class="form-control"
           placeholder="Policy Number"
           name="policyNumber"
+          value="{{formData.policyNumber}}"
         />
       </div>
       <!-- Policy Name -->
@@ -31,6 +32,7 @@
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
           maxlength="40"
+          value="{{formData.policyName}}"
         />
       </div>
     </div>
@@ -43,6 +45,8 @@
           class="form-control"
           placeholder="COW Resolve"
           name="cowResolve"
+          value="{{formData.cowResolve}}"
+          required
         />
       </div>
       <!-- COW Date -->
@@ -53,6 +57,8 @@
           class="form-control"
           placeholder="COW Date"
           name="cowDate"
+          value="{{formData.cowDate}}"
+          required
         />
       </div>
     </div>
@@ -68,6 +74,7 @@
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
           maxlength="40"
+          value="{{formData.councilResolution}}"
         />
       </div>
       <!-- Date Adopted -->
@@ -78,6 +85,8 @@
           class="form-control"
           placeholder="Date Adopted"
           name="dateAdopted"
+          value="{{formData.dateAdopted}}"
+          required
         />
       </div>
       <!-- Date Amended -->
@@ -88,6 +97,8 @@
           class="form-control"
           placeholder="Date Amended"
           name="dateAmended"
+          value="{{formData.dateAmended}}"
+          required
         />
       </div>
     </div>
@@ -95,7 +106,7 @@
       <!-- Status -->
       <div class="col-sm-4">
         <label for="Status" class="form-label">Status</label>
-        <select class="form-select" name="councilResolution">
+        <select class="form-select" name="status">
           <option disabled selected>Status...</option>
           {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
@@ -119,6 +130,8 @@
           class="form-control"
           placeholder="Last Review Date"
           name="lastReviewDate"
+          value="{{formData.lastReviewDate}}"
+          required
         />
       </div>
       <!-- Scheduled Review Date -->
@@ -130,6 +143,8 @@
           class="form-control"
           placeholder="Scheduled Review Date"
           name="scheduledReviewDate"
+          value="{{formData.scheduledReviewDate}}"
+          required
         />
       </div>
     </div>
@@ -184,7 +199,7 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
-        ></textarea>
+        >{{formData.notes}}</textarea>
       </div>
     </div>
     <div class="row">
