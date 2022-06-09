@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-sm-4">
       <h4>Filtering</h4>
-      <form method="POST">
+      <form method="GET">
         <select
           class="form-select-sm"
           id="filterCategory"
@@ -13,9 +13,14 @@
           <option disabled selected>Filter By...</option>
           {{#each dropdownValues}}
             {{#if this.isDisabled}}
-              <option value="{{this.value}}" disabled>{{this.value}}</option>
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
             {{else}}
-              <option value="{{this.value}}">{{this.value}}</option>
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
             {{/if}}
           {{/each}}
         </select>

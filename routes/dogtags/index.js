@@ -15,11 +15,17 @@ var dbHelpers = require("../../config/dbHelpers");
 const paginate = require("express-paginate");
 // express-validate.
 const { body, param, query, validationResult } = require("express-validator");
+const e = require("express");
 
 /* GET /dogtags */
 router.get(
   "/",
-  query("skip").if(query("skip").exists()).isNumeric(),
+  body("filterCategory")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  body("filterValue")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -41,191 +47,146 @@ router.get(
       // get dropdown values.
       var dropdownValues = await Dropdown.findAll({
         where: {
-          dropdownFormID: 1, // the specific ID for this dropdown menu. Maybe change to something dynamic? Not sure of the possiblities as of yet.
+          dropdownFormID: 1,
         },
       });
 
-      // get owners.
-      Owner.findAndCountAll({
-        limit: req.query.limit,
-        offset: req.skip,
-        include: [
-          {
-            model: Address,
-          },
-        ],
-      })
-        .then((results) => {
-          // for pagination.
-          const itemCount = results.count;
-          const pageCount = Math.ceil(results.count / req.query.limit);
-
-          return res.render("dogtags", {
-            title: "BWG | Dog Tags",
-            errorMessages: messages,
-            email: req.session.email,
-            data: results.rows,
-            dropdownValues: dropdownValues,
-            pageCount,
-            itemCount,
-            queryCount: "Records returned: " + results.count,
-            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-            prev: paginate.href(req)(true),
-            hasMorePages: paginate.hasNextPages(req)(pageCount),
-          });
+      // if there are no filter parameters.
+      if (!req.query.filterCategory || !req.query.filterValue) {
+        // get all owners & addresses.
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: Address,
+            },
+          ],
         })
-        .catch((err) =>
-          res.render("dogtags", {
-            title: "BWG | Dogtags",
-            message: "Page Error!" + err,
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogtags", {
+              title: "BWG | Dog Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              data: results.rows,
+              dropdownValues: dropdownValues,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
           })
-        );
-    }
-  }
-);
-
-/* POST /dogtags */
-router.post(
-  "/",
-  // validate all input fields.
-  body("filterCategory")
-    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
-    .trim(),
-  body("filterValue")
-    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
-    .trim(),
-  async (req, res, next) => {
-    // server side validation.
-    const errors = validationResult(req);
-
-    // if errors is NOT empty (if there are errors...)
-    if (!errors.isEmpty()) {
-      return res.render("dogtags", {
-        title: "BWG | Dog Tags",
-        message: "Filtering Error!",
-        email: req.session.email,
-      });
-    } else {
-      if (
-        // ALL supplied filters.
-        req.body.filterCategory &&
-        req.body.filterValue
-      ) {
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dogtags", {
+              title: "BWG | Dogtags",
+              message: "Page Error! ",
+            })
+          );
         // use a different function (SQL query) if filtering by tagNumber.
-        if (req.body.filterCategory === "Dog Tag Number") {
-          Owner.findAndCountAll({
-            where: {
-              $tagNumber$: req.body.filterValue,
+      } else if (req.query.filterCategory === "Dog Tag Number") {
+        Owner.findAndCountAll({
+          where: {
+            $tagNumber$: req.query.filterValue,
+          },
+          include: [
+            {
+              model: Dog,
             },
-            include: [
-              {
-                model: Dog,
-              },
-              {
-                model: Address,
-              },
-            ],
-          })
-            .then((results) => {
-              // for pagination.
-              const itemCount = results.count;
-              const pageCount = Math.ceil(results.count / req.query.limit);
-
-              return res.render("dogtags", {
-                title: "BWG | Dog Tags",
-                email: req.session.email,
-                data: results.rows,
-                pageCount,
-                itemCount,
-                queryCount: "Records returned: " + results.count,
-                pages: paginate.getArrayPages(req)(
-                  5,
-                  pageCount,
-                  req.query.page
-                ),
-                prev: paginate.href(req)(true),
-                hasMorePages: paginate.hasNextPages(req)(pageCount),
-              });
-            })
-            .catch((err) => next(err));
-        } else {
-          // format filterCategory to match column name in db.
-          switch (req.body.filterCategory) {
-            case "First Name":
-              filterCategory = "firstName";
-              break;
-            case "Last Name":
-              filterCategory = "lastName";
-              break;
-            case "Email":
-              filterCategory = "email";
-              break;
-          }
-
-          // create filter query.
-          Owner.findAndCountAll({
-            where: {
-              [filterCategory]: {
-                [Op.like]: req.body.filterValue + "%",
-              },
+            {
+              model: Address,
             },
-            limit: req.query.limit,
-            offset: req.skip,
-            include: [
-              {
-                model: Address,
-              },
-            ],
-          })
-            .then((results) => {
-              // for pagination.
-              const itemCount = results.count;
-              const pageCount = Math.ceil(results.count / req.query.limit);
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
 
-              return res.render("dogtags", {
-                title: "BWG | Dog Tags",
-                email: req.session.email,
-                data: results.rows,
-                pageCount,
-                itemCount,
-                queryCount: "Records returned: " + results.count,
-                pages: paginate.getArrayPages(req)(
-                  5,
-                  pageCount,
-                  req.query.page
-                ),
-                prev: paginate.href(req)(true),
-                hasMorePages: paginate.hasNextPages(req)(pageCount),
-              });
+            return res.render("dogtags", {
+              title: "BWG | Dog Tags",
+              email: req.session.email,
+              data: results.rows,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dogtags", {
+              title: "BWG | Dogtags",
+              message: "Page Error! ",
             })
-            .catch((err) =>
-              res.render("dogtags", {
-                title: "BWG | Dogtags",
-                message: "Page Error!" + err,
-              })
-            );
-        }
-      } else if (
-        // NO supplied filters, render error message.
-        !req.body.filterCategory &&
-        !req.body.filterValue
-      ) {
-        return res.render("dogtags", {
-          title: "BWG | Dog Tags",
-          message: "Please ensure BOTH filtering conditions are valid!",
-          email: req.session.email,
-        });
-        // else something weird happens.. (most likely both)
+          );
       } else {
-        return res.render("dogtags", {
-          title: "BWG | Dog Tags",
-          message: "Filtering Error!",
-          email: req.session.email,
-        });
+        // format filterCategory in URL to match column name in db.
+        switch (req.query.filterCategory) {
+          case "First Name":
+            filterCategory = "firstName";
+            break;
+          case "Last Name":
+            filterCategory = "lastName";
+            break;
+          case "Email":
+            filterCategory = "email";
+            break;
+        }
+
+        // create filter query.
+        Owner.findAndCountAll({
+          where: {
+            [filterCategory]: {
+              [Op.like]: req.query.filterValue + "%",
+            },
+          },
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: Address,
+            },
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogtags", {
+              title: "BWG | Dog Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              data: results.rows,
+              dropdownValues: dropdownValues,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dogtags", {
+              title: "BWG | Dogtags",
+              message: "Page Error! ",
+            })
+          );
       }
     }
   }
-); // end of post.
+);
 
 /* GET owner page. */
 router.get(
@@ -245,7 +206,6 @@ router.get(
     } else {
       // check if there's an error message in the session
       let messages = req.session.messages || [];
-
       // clear session messages
       req.session.messages = [];
 
@@ -260,6 +220,7 @@ router.get(
       });
       // get ownerName.
       var ownerName = await dbHelpers.getNameFromOwnerID(req.session.ownerID);
+
       // get addressHistory data.
       var addressHistory = await dbHelpers.getAddressHistory(
         req.session.ownerID
