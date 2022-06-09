@@ -111,6 +111,7 @@ router.get(
               title: "BWG | Policies",
               email: req.session.email,
               data: results.rows,
+              dropdownValues: dropdownValues,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,

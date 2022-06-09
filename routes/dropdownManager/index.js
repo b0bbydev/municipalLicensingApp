@@ -6,6 +6,9 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const DropdownForm = require("../../models/dropdownManager/dropdownForm");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
+// sequelize.
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
@@ -84,37 +87,84 @@ router.get(
 
       // store formID in session to use in other endpoints.
       req.session.formID = req.params.id;
-
       // get formName.
       var formName = await dbHelpers.getFormNameFromFormID(req.session.formID);
 
-      // get dropdown values from specified dropdownForm.
-      Dropdown.findAndCountAll({
-        limit: req.query.limit,
-        offset: req.skip,
-        where: {
-          dropdownFormID: req.params.id,
-        },
-      }).then((results) => {
-        // for pagination.
-        const itemCount = results.count;
-        const pageCount = Math.ceil(results.count / req.query.limit);
+      // if there are no filter parameters.
+      if (!req.query.filterCategory || !req.query.filterValue) {
+        // get all dropdown values from specified dropdownForm.
+        Dropdown.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          where: {
+            dropdownFormID: req.params.id,
+          },
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
 
-        return res.render("dropdownManager/form", {
-          title: "BWG | Dropdown Manager - " + formName[0].formName,
-          errorMessages: messages,
-          email: req.session.email,
-          formName: formName[0].formName,
-          lastEnteredDropdownTitle: req.session.lastEnteredDropdownTitle,
-          data: results.rows,
-          pageCount,
-          itemCount,
-          queryCount: "Records returned: " + results.count,
-          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-          prev: paginate.href(req)(true),
-          hasMorePages: paginate.hasNextPages(req)(pageCount),
-        });
-      });
+            return res.render("dropdownManager/form", {
+              title: "BWG | Dropdown Manager - " + formName[0].formName,
+              errorMessages: messages,
+              email: req.session.email,
+              formName: formName[0].formName,
+              lastEnteredDropdownTitle: req.session.lastEnteredDropdownTitle,
+              data: results.rows,
+              dropdownFormID: req.params.id,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dropdownManager", {
+              title: "BWG | Dropdown Manager",
+              message: "Page Error! ",
+            })
+          );
+      } else {
+        // create filter query.
+        Dropdown.findAndCountAll({
+          where: {
+            [req.query.filterCategory]: {
+              [Op.like]: req.query.filterValue + "%",
+            },
+          },
+          limit: req.query.limit,
+          offset: req.skip,
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dropdownManager/form", {
+              title: "BWG | Dropdown Manager",
+              email: req.session.email,
+              data: results.rows,
+              dropdownFormID: req.params.id,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dropdownManager/form", {
+              title: "BWG | Dropdown Manager",
+              message: "Page Error! ",
+            })
+          );
+      }
     }
   }
 );
