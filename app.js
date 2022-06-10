@@ -37,6 +37,7 @@ var dropdownRouter = require("./routes/dropdownManager/index");
 var dogTagRouter = require("./routes/dogtags/index");
 // owners.
 var addOwnerRouter = require("./routes/dogtags/addOwner");
+var addAdditionalOwnerRouter = require("./routes/dogtags/addAdditionalOwner");
 var editOwnerRouter = require("./routes/dogtags/editOwner");
 // dogs.
 var addDogRouter = require("./routes/dogtags/addDog");
@@ -111,6 +112,7 @@ app.use("/policies/editPolicy", editPolicyRouter);
 app.use("/dogtags", dogTagRouter);
 // owner.
 app.use("/dogtags/addOwner", addOwnerRouter);
+app.use("/dogtags/addAdditionalOwner", addAdditionalOwnerRouter);
 app.use("/dogtags/editOwner", editOwnerRouter);
 // dog.
 app.use("/dogtags/addDog", addDogRouter);

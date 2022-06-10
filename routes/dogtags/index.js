@@ -212,21 +212,8 @@ router.get(
       // send ownerID to session; should be safe to do so here after validation.
       req.session.ownerID = req.params.id;
 
-      // dog data.
-      var data = await Dog.findAll({
-        where: {
-          ownerID: req.session.ownerID,
-        },
-      });
       // get ownerName.
       var ownerName = await dbHelpers.getNameFromOwnerID(req.session.ownerID);
-
-      // get addressHistory data.
-      var addressHistory = await dbHelpers.getAddressHistory(
-        req.session.ownerID
-      );
-      // get dogHistory data.
-      var dogHistory = await dbHelpers.getDogHistory(req.session.ownerID);
 
       // error handle here as user can pass an invalid one in URL bar.
       // if ownerName exists, concatenate names together.
@@ -240,18 +227,50 @@ router.get(
         });
       }
 
-      // return endpoint after passing validation.
-      return res.render("dogtags/owner", {
-        title: "BWG | Owner",
-        errorMessages: messages,
-        email: req.session.email,
-        ownerName: ownerName,
-        ownerID: req.session.ownerID,
-        queryCount: "Dog(s) on record: " + data.length,
-        data: data,
-        addressHistory: addressHistory,
-        dogHistory: dogHistory,
-      });
+      // get addressHistory data.
+      var addressHistory = await dbHelpers.getAddressHistory(
+        req.session.ownerID
+      );
+      // get dogHistory data.
+      var dogHistory = await dbHelpers.getDogHistory(req.session.ownerID);
+
+      Dog.findAndCountAll({
+        limit: req.query.limit,
+        offset: req.skip,
+        where: {
+          ownerID: req.session.ownerID,
+        },
+      })
+        .then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
+
+          // return endpoint after passing validation.
+          return res.render("dogtags/owner", {
+            title: "BWG | Owner",
+            errorMessages: messages,
+            email: req.session.email,
+            ownerName: ownerName,
+            ownerID: req.session.ownerID,
+            queryCount: "Dog(s) on record: " + results.count,
+            data: results.rows,
+            addressHistory: addressHistory,
+            dogHistory: dogHistory,
+            pageCount,
+            itemCount,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        })
+        // catch any scary errors and render page error.
+        .catch((err) =>
+          res.render("owner", {
+            title: "BWG | Owner",
+            message: "Page Error! ",
+          })
+        );
     }
   }
 );

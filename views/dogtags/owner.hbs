@@ -1,13 +1,21 @@
-<h2 class="text-center">Owner Profile</h2>
+<h2 class="text-center">{{ownerName}} - Owner Profile</h2>
 <div class="content">
   <div class="row">
     <div class="col-sm-4">
-      <strong>Owner: {{ownerName}}</strong>
       {{#if queryCount}}
         <div>
           <strong>{{queryCount}}</strong>
         </div>
       {{/if}}
+      <strong>Additional owners: </strong>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <a
+        href="/dogtags/addAdditionalOwner"
+        class="btn btn-sm btn-primary"
+      >Register Additional Owner</a>
     </div>
     <div id="registerDogButton" class="col-sm-4">
       <a
@@ -85,6 +93,28 @@
           {{/each}}
         </tbody>
       </table>
+      <nav id="pagination">
+        <ul class="pagination pagination-sm">
+          {{#if paginate.hasPreviousPages}}
+            <li class="page-item"><a
+                class="page-link"
+                href="{{prev}}"
+              >Prev</a></li>
+          {{/if}}
+          {{#each pages}}
+            <li class="page-item"><a
+                class="page-link"
+                href="{{this.url}}"
+              >{{this.number}}</a></li>
+          {{/each}}
+          {{#if hasMorePages}}
+            <li class="page-item"><a
+                class="page-link"
+                href="{{paginate.href}}"
+              >Next</a></li>
+          {{/if}}
+        </ul>
+      </nav>
     </div>
   </section>
   <div class="row">
@@ -119,7 +149,7 @@
           <tbody>
             {{#each items}}
               <tr>
-                <td>{{this.address}}</td>
+                <td>{{this.streetNumber}} {{this.streetName}}</td>
                 <td>{{this.poBoxAptRR}}</td>
                 <td>{{this.town}}</td>
                 <td>{{this.postalCode}}</td>
