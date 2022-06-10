@@ -11,7 +11,7 @@
         {{#each additionalOwners}}
           <a
             id="additionalOwnerLinks"
-            href="/owner/{{../ownerID}}/additionalOwner/{{this.additionalOwnerID}}"
+            href="/dogtags/owner/{{this.ownerID}}/additionalOwner/{{this.additionalOwnerID}}"
           >
             {{this.firstName}}
             {{this.lastName}}{{#unless @last}}, {{/unless}}

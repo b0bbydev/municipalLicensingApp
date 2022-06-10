@@ -362,4 +362,18 @@ router.get(
   }
 );
 
+/* GET /owner/:id/additionalOwner/:id  */
+router.get("/owner/:id/additionalOwner/:id", async (req, res, next) => {
+  // check if there's an error message in the session
+  let messages = req.session.messages || [];
+  // clear session messages
+  req.session.messages = [];
+
+  return res.render("dogtags/additionalOwner", {
+    title: "BWG | Additional Owner",
+    errorMessages: messages,
+    email: req.session.email,
+  });
+});
+
 module.exports = router;
