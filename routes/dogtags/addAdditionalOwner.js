@@ -75,7 +75,7 @@ router.post(
         },
       });
     } else {
-      // create owner with address association.
+      // create additionalOwner.
       AdditionalOwner.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,

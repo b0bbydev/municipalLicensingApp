@@ -16,7 +16,6 @@ var dbHelpers = require("../../config/dbHelpers");
 const paginate = require("express-paginate");
 // express-validate.
 const { body, param, query, validationResult } = require("express-validator");
-const e = require("express");
 
 /* GET /dogtags */
 router.get(

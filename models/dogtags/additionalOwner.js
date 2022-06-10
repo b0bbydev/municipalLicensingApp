@@ -4,7 +4,7 @@ const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelizeConfig");
 const Owner = require("../dogtags/owner");
 
-const AdditionalOwner = sequelize.define("additionalowners", {
+const AdditionalOwner = sequelize.define("additionalowner", {
   additionalOwnerID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
@@ -44,7 +44,7 @@ const AdditionalOwner = sequelize.define("additionalowners", {
 });
 
 // create relationship with owners table.
-AdditionalOwner.hasMany(Owner, {
+Owner.hasMany(AdditionalOwner, {
   foreignKey: "ownerID",
 });
 

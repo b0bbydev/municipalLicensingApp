@@ -9,7 +9,10 @@
       {{/if}}
       <strong>Additional owners:
         {{#each additionalOwners}}
-          <a id="dogHistory" href="/additionalOwner/{{this.additionalOwnerID}}">
+          <a
+            id="dogHistory"
+            href="/owner/{{../ownerID}}/additionalOwner/{{this.additionalOwnerID}}"
+          >
             {{this.firstName}}
             {{this.lastName}}
           </a>
