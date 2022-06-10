@@ -10,13 +10,12 @@
       <strong>Additional owners:
         {{#each additionalOwners}}
           <a
-            id="dogHistory"
+            id="additionalOwnerLinks"
             href="/owner/{{../ownerID}}/additionalOwner/{{this.additionalOwnerID}}"
           >
             {{this.firstName}}
-            {{this.lastName}}
+            {{this.lastName}}{{#unless @last}}, {{/unless}}
           </a>
-          |
         {{/each}}
       </strong>
     </div>

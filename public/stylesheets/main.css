@@ -233,13 +233,6 @@ form h4 {
   font-size: small;
 }
 
-#additionalOwners {
-  color: #0096d6 !important;
-  cursor: pointer;
-  text-decoration: underline;
-  font-size: 0.9rem;
-}
-
 #addressHistorySection,
 #dogHistorySection {
   margin-top: 25px;
@@ -247,4 +240,11 @@ form h4 {
 
 .newDropdownForm {
   margin-top: 15px;
+}
+
+#additionalOwnerLinks {
+  color: #0096d6 !important;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: 0.905rem;
 }
