@@ -68,9 +68,7 @@
   <!-- Table -->
   <section class="row">
     <div class="col-12">
-      <table
-        class="sortable table table-sm table-bordered table-striped table-hover"
-      >
+      <table class="sortable table table-bordered table-striped table-hover">
         <thead>
           <tr>
             <th>Owner ID</th>
@@ -78,7 +76,6 @@
             <th>Last Name</th>
             <th>Home Phone</th>
             <th>Email</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -92,10 +89,6 @@
               <td>{{this.lastName}}</td>
               <td class="text-nowrap">{{this.homePhone}}</td>
               <td>{{this.email}}</td>
-              <td><a
-                  href="/dogtags/editOwner/{{this.ownerID}}"
-                  class="btn btn-sm btn-secondary"
-                >Edit</a></td>
             </tr>
           {{/each}}
         </tbody>

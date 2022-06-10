@@ -109,7 +109,7 @@ router.get(
             const itemCount = results.count;
             const pageCount = Math.ceil(results.count / req.query.limit);
 
-            return res.render("dogtags", {
+            return res.render("dogtags/search/dogTagNumberSearch", {
               title: "BWG | Dog Tags",
               email: req.session.email,
               data: results.rows,
@@ -147,7 +147,7 @@ router.get(
             const itemCount = results.count;
             const pageCount = Math.ceil(results.count / req.query.limit);
 
-            return res.render("dogtags/additionalOwnerSearch", {
+            return res.render("dogtags/search/additionalOwnerSearch", {
               title: "BWG | Dog Tags",
               email: req.session.email,
               data: results.rows,
