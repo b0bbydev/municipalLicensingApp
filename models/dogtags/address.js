@@ -12,8 +12,13 @@ const Address = sequelize.define("address", {
     primaryKey: true,
   },
 
-  address: {
-    type: Sequelize.STRING(50),
+  streetNumber: {
+    type: Sequelize.INTEGER(10),
+    allowNull: true,
+  },
+
+  streetName: {
+    type: Sequelize.STRING(40),
     allowNull: true,
   },
 
