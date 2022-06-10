@@ -40,10 +40,36 @@
       </div>
     </div>
     <div class="row">
+      <!-- Street Number -->
+      <div class="col-sm-4">
+        <label for="Street Number" class="form-label">Street Number</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Street Number"
+          name="streetNumber"
+          value="{{ownerInfo.streetNumber}}"
+        />
+      </div>
+      <!-- Street Name -->
+      <div class="col-sm-4">
+        <label for="Street Name" class="form-label">Street Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Street Name"
+          name="streetName"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{ownerInfo.streetName}}"
+          maxlength="50"
+        />
+      </div>
       <!-- PO Box/Apt/RR -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="PO Box/Apt/RR " class="form-label">PO Box/Apt/RR</label>
         <input
+          id="poBoxAptRR"
           type="text"
           class="form-control"
           placeholder="PO Box/Apt/RR"
@@ -52,20 +78,6 @@
           title="No special characters!"
           value="{{ownerInfo.poBoxAptRR}}"
           maxlength="25"
-        />
-      </div>
-      <!-- Address -->
-      <div class="col-sm-6">
-        <label for="Address" class="form-label">Address</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Address"
-          name="address"
-          pattern="[^()/><\][\\\x22,;|]+"
-          title="No special characters!"
-          value="{{ownerInfo.address}}"
-          maxlength="50"
         />
       </div>
     </div>

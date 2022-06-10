@@ -54,10 +54,15 @@ router.post(
     .isEmail()
     .withMessage("Invalid Email Entry!")
     .trim(),
-  body("address")
+  body("streetNumber")
     .if(body("address").notEmpty())
-    .matches(/^[a-zA-z0-9. ]*$/)
-    .withMessage("Invalid Address Entry!")
+    .matches(/^[0-9. ]*$/)
+    .withMessage("Invalid Street Number Entry!")
+    .trim(),
+  body("streetName")
+    .if(body("address").notEmpty())
+    .matches(/^[a-zA-z. ]*$/)
+    .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("poBoxAptRR")
     .if(body("poBoxAptRR").notEmpty())
@@ -94,7 +99,8 @@ router.post(
           cellPhone: req.body.cellPhone,
           workPhone: req.body.workPhone,
           email: req.body.email,
-          address: req.body.address,
+          streetNumber: req.body.streetNumber,
+          streetName: req.body.streetName,
           poBoxAptRR: req.body.poBoxAptRR,
           town: req.body.town,
           postalCode: req.body.postalCode,
@@ -112,7 +118,8 @@ router.post(
           email: req.body.email,
           addresses: [
             {
-              address: req.body.address,
+              streetNumber: req.body.streetNumber,
+              streetName: req.body.streetName,
               poBoxAptRR: req.body.poBoxAptRR,
               town: req.body.town,
               postalCode: req.body.postalCode,

@@ -48,7 +48,8 @@ router.get(
           cellPhone: ownerInfo[0].cellPhone,
           workPhone: ownerInfo[0].workPhone,
           email: ownerInfo[0].email,
-          address: ownerInfo[0].address,
+          streetNumber: ownerInfo[0].streetNumber,
+          streetName: ownerInfo[0].streetName,
           poBoxAptRR: ownerInfo[0].poBoxAptRR,
           town: ownerInfo[0].town,
           postalCode: ownerInfo[0].postalCode,
@@ -92,10 +93,15 @@ router.post(
     .isEmail()
     .withMessage("Invalid Email Entry!")
     .trim(),
-  body("address")
+  body("streetNumber")
     .if(body("address").notEmpty())
-    .matches(/^[a-zA-z0-9. ]*$/)
-    .withMessage("Invalid Address Entry!")
+    .matches(/^[0-9. ]*$/)
+    .withMessage("Invalid Street Number Entry!")
+    .trim(),
+  body("streetName")
+    .if(body("address").notEmpty())
+    .matches(/^[a-zA-z. ]*$/)
+    .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("poBoxAptRR")
     .if(body("poBoxAptRR").notEmpty())
@@ -132,7 +138,8 @@ router.post(
           cellPhone: req.body.cellPhone,
           workPhone: req.body.workPhone,
           email: req.body.email,
-          address: req.body.address,
+          streetNumber: req.body.streetNumber,
+          streetName: req.body.streetName,
           poBoxAptRR: req.body.poBoxAptRR,
           town: req.body.town,
           postalCode: req.body.postalCode,
@@ -149,7 +156,8 @@ router.post(
           email: req.body.email,
           addresses: [
             {
-              address: req.body.address,
+              streetNumber: req.body.streetNumber,
+              streetName: req.body.streetName,
               poBoxAptRR: req.body.poBoxAptRR,
               town: req.body.town,
               postalCode: req.body.postalCode,
@@ -170,14 +178,16 @@ router.post(
       var ownerInfo = await dbHelpers.getOwnerInfo(req.session.ownerID);
       // if address fields are not the same. (i.e: if an address field is changed from current value in database).
       if (
-        ownerInfo[0].address != req.body.address ||
+        ownerInfo[0].streetNumber != req.body.streetNumber ||
+        ownerInfo[0].streetName != req.body.streetName ||
         ownerInfo[0].poBoxAptRR != req.body.poBoxAptRR ||
         ownerInfo[0].town != req.body.town ||
         ownerInfo[0].postalCode != req.body.postalCode
       ) {
         Address.update(
           {
-            address: req.body.address,
+            streetNumber: req.body.streetNumber,
+            streetName: req.body.streetName,
             poBoxAptRR: req.body.poBoxAptRR,
             town: req.body.town,
             postalCode: req.body.postalCode,
