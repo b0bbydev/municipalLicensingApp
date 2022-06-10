@@ -35,6 +35,21 @@ db.getOwnerInfo = (ownerID) => {
   });
 };
 
+db.getAdditionalOwnerInfo = (additionalOwnerID) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT * FROM additionalowners WHERE additionalOwnerID = ?",
+      [additionalOwnerID],
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(result);
+      }
+    );
+  });
+};
+
 db.getDogInfo = (dogID) => {
   return new Promise((resolve, reject) => {
     pool.query(

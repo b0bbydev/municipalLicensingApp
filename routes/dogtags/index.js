@@ -363,17 +363,46 @@ router.get(
 );
 
 /* GET /owner/:id/additionalOwner/:id  */
-router.get("/owner/:id/additionalOwner/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/owner/:id/additionalOwner/:additionalOwnerID",
+  param("id").isNumeric().trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  return res.render("dogtags/additionalOwner", {
-    title: "BWG | Additional Owner",
-    errorMessages: messages,
-    email: req.session.email,
-  });
-});
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags/additionalOwner", {
+        title: "BWG | Additional Owner",
+        message: "Page Error!",
+        email: req.session.email,
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      var additionalOwnerInfo = await dbHelpers.getAdditionalOwnerInfo(
+        req.params.additionalOwnerID
+      );
+
+      return res.render("dogtags/additionalOwner", {
+        title: "BWG | Additional Owner",
+        errorMessages: messages,
+        email: req.session.email,
+        additionalOwnerInfo: {
+          firstName: additionalOwnerInfo[0].firstName,
+          lastName: additionalOwnerInfo[0].lastName,
+          town: additionalOwnerInfo[0].town,
+          homePhone: additionalOwnerInfo[0].homePhone,
+          cellPhone: additionalOwnerInfo[0].cellPhone,
+          workPhone: additionalOwnerInfo[0].workPhone,
+          email: additionalOwnerInfo[0].email,
+        },
+      });
+    }
+  }
+);
 
 module.exports = router;

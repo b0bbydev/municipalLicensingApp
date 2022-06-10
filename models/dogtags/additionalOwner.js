@@ -22,6 +22,11 @@ const AdditionalOwner = sequelize.define("additionalowner", {
     allowNull: true,
   },
 
+  town: {
+    type: Sequelize.STRING(40),
+    allowNull: true,
+  },
+
   homePhone: {
     type: Sequelize.STRING(15),
     allowNull: true,

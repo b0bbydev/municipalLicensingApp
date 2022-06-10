@@ -68,6 +68,7 @@ router.post(
         formData: {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
+          town: req.body.town,
           homePhone: req.body.homePhone,
           cellPhone: req.body.cellPhone,
           workPhone: req.body.workPhone,
@@ -79,6 +80,7 @@ router.post(
       AdditionalOwner.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
+        town: req.body.town,
         homePhone: req.body.homePhone,
         cellPhone: req.body.cellPhone,
         workPhone: req.body.workPhone,
