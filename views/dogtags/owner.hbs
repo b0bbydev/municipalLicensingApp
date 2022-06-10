@@ -7,7 +7,15 @@
           <strong>{{queryCount}}</strong>
         </div>
       {{/if}}
-      <strong>Additional owners: </strong>
+      <strong>Additional owners:
+        {{#each additionalOwners}}
+          <a id="dogHistory" href="/additionalOwner/{{this.additionalOwnerID}}">
+            {{this.firstName}}
+            {{this.lastName}}
+          </a>
+          |
+        {{/each}}
+      </strong>
     </div>
   </div>
   <div class="row">

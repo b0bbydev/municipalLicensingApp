@@ -48,4 +48,4 @@ AdditionalOwner.hasMany(Owner, {
   foreignKey: "ownerID",
 });
 
-module.exports = Owner;
+module.exports = AdditionalOwner;
