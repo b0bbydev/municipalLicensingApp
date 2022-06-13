@@ -129,10 +129,17 @@ router.post(
         {
           include: [Address],
         }
-      );
-
-      // redirect back to dogtag index after success.
-      res.redirect("/dogtags");
+      )
+        .then((results) => {
+          // redirect back to dogtag index after success.
+          res.redirect("/dogtags");
+        })
+        .catch((err) => {
+          return res.render("dogtags/addOwner", {
+            title: "BWG | Add Owner",
+            message: "Page Error! ",
+          });
+        });
     }
   }
 );

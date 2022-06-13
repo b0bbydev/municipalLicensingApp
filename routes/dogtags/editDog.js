@@ -191,10 +191,17 @@ router.post(
             dogID: req.session.dogID,
           },
         }
-      );
-
-      // redirect to /dogtags
-      res.redirect("/dogtags/owner/" + req.session.ownerID);
+      )
+        .then((results) => {
+          // redirect to /dogtags
+          res.redirect("/dogtags/owner/" + req.session.ownerID);
+        })
+        .catch((err) => {
+          return res.render("dogtags/editDog", {
+            title: "BWG | Edit Dog",
+            message: "Page Error! ",
+          });
+        });
     }
   }
 );

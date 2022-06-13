@@ -171,10 +171,16 @@ router.post(
         {
           include: [Address],
         }
-      );
+      ).catch((err) => {
+        return res.render("dogtags/editOwner", {
+          title: "BWG | Edit Owner",
+          message: "Page Error! ",
+        });
+      });
 
-      // get owner information to compare with current request.
+      /* get owner information to compare with current request. */
       var ownerInfo = await dbHelpers.getOwnerInfo(req.session.ownerID);
+
       // if address fields are not the same. (i.e: if an address field is changed from current value in database).
       if (
         ownerInfo[0].streetNumber != req.body.streetNumber ||
@@ -197,11 +203,18 @@ router.post(
               ownerID: req.session.ownerID,
             },
           }
-        );
+        )
+          .then((results) => {
+            // redirect back to dogtag index after success.
+            res.redirect("/dogtags");
+          })
+          .catch((err) => {
+            return res.render("dogtags/editOwner", {
+              title: "BWG | Edit Owner",
+              message: "Page Error! ",
+            });
+          });
       }
-
-      // redirect back to dogtag index after success.
-      res.redirect("/dogtags");
     }
   }
 );

@@ -15,7 +15,7 @@ var dbHelpers = require("../../config/dbHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
-const { body, param, query, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /dogtags */
 router.get(
@@ -354,10 +354,17 @@ router.get(
             dogID: req.params.id,
           },
         }
-      ).then((result) => {
-        // redirect back to owner profile.
-        res.redirect("/dogtags/owner/" + req.session.ownerID);
-      });
+      )
+        .then((result) => {
+          // redirect back to owner profile.
+          res.redirect("/dogtags/owner/" + req.session.ownerID);
+        })
+        .catch((err) =>
+          res.render("owner", {
+            title: "BWG | Owner",
+            message: "Page Error! ",
+          })
+        );
     }
   }
 );
@@ -439,10 +446,17 @@ router.post(
             additionalOwnerID: req.params.additionalOwnerID,
           },
         }
-      ).then((results) => {
-        // redirect back to owner page.
-        res.redirect("/dogtags/owner/" + req.session.ownerID);
-      });
+      )
+        .then((results) => {
+          // redirect back to owner page.
+          res.redirect("/dogtags/owner/" + req.session.ownerID);
+        })
+        .catch((err) =>
+          res.render("dogtags/additionalOwner", {
+            title: "BWG | Additional Owner",
+            message: "Page Error! ",
+          })
+        );
     }
   }
 );

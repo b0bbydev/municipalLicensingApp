@@ -181,10 +181,17 @@ router.post(
         issueDate: issueDate,
         expiryDate: expiryDate,
         ownerID: req.session.ownerID,
-      });
-
-      // redirect to /dogtags
-      res.redirect("/dogtags/owner/" + req.session.ownerID);
+      })
+        .then((results) => {
+          // redirect to /dogtags
+          res.redirect("/dogtags/owner/" + req.session.ownerID);
+        })
+        .catch((err) => {
+          return res.render("dogtags/addDog", {
+            title: "BWG | Add Dog",
+            message: "Page Error! ",
+          });
+        });
     }
   }
 );

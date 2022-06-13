@@ -86,10 +86,17 @@ router.post(
         workPhone: req.body.workPhone,
         email: req.body.email,
         ownerID: req.session.ownerID,
-      });
-
-      // redirect back to owner page after success.
-      res.redirect("/dogtags/owner/" + req.session.ownerID);
+      })
+        .then((results) => {
+          // redirect back to owner page after success.
+          return res.redirect("/dogtags/owner/" + req.session.ownerID);
+        })
+        .catch((err) => {
+          return res.render("dogtags/addAdditionalOwner", {
+            title: "BWG | Add Additional Owner",
+            message: "Page Error! ",
+          });
+        });
     }
   }
 );
