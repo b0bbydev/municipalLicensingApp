@@ -366,6 +366,7 @@ router.get(
 router.get(
   "/owner/:id/additionalOwner/:additionalOwnerID",
   param("id").isNumeric().trim(),
+  param("additionalOwnerID").isNumeric().trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -400,6 +401,47 @@ router.get(
           workPhone: additionalOwnerInfo[0].workPhone,
           email: additionalOwnerInfo[0].email,
         },
+      });
+    }
+  }
+);
+
+/* POST /owner/:id/additionalOwner/:id  */
+router.post(
+  "/owner/:id/additionalOwner/:additionalOwnerID",
+  param("id").isNumeric().trim(),
+  param("additionalOwnerID").isNumeric().trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags/additionalOwner", {
+        title: "BWG | Additional Owner",
+        message: "Page Error!",
+        email: req.session.email,
+      });
+    } else {
+      // update additionalOwner.
+      AdditionalOwner.update(
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          town: req.body.town,
+          homePhone: req.body.homePhone,
+          cellPhone: req.body.cellPhone,
+          workPhone: req.body.workPhone,
+          email: req.body.email,
+        },
+        {
+          where: {
+            additionalOwnerID: req.params.additionalOwnerID,
+          },
+        }
+      ).then((results) => {
+        // redirect back to owner page.
+        res.redirect("/dogtags/owner/" + req.session.ownerID);
       });
     }
   }
