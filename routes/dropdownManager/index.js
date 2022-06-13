@@ -24,14 +24,21 @@ router.get("/", async (req, res, next) => {
   DropdownForm.findAndCountAll({
     limit: req.query.limit,
     offset: req.skip,
-  }).then((results) => {
-    return res.render("dropdownManager/index", {
-      title: "BWG | Dropdown Manager",
-      errorMessages: messages,
-      email: req.session.email,
-      data: results.rows,
+  })
+    .then((results) => {
+      return res.render("dropdownManager/index", {
+        title: "BWG | Dropdown Manager",
+        errorMessages: messages,
+        email: req.session.email,
+        data: results.rows,
+      });
+    })
+    .catch((err) => {
+      return res.render("dropdownManager/index", {
+        title: "BWG | Dropdown Manager",
+        message: "Page Error! ",
+      });
     });
-  });
 });
 
 /* POST /dropdownManger */
@@ -57,9 +64,16 @@ router.post(
       // create dropdown form.
       DropdownForm.create({
         formName: req.body.formName,
-      }).then((result) => {
-        res.redirect("/dropdownManager");
-      });
+      })
+        .then((result) => {
+          res.redirect("/dropdownManager");
+        })
+        .catch((err) => {
+          return res.render("dropdownManager/index", {
+            title: "BWG | Dropdown Manager",
+            message: "Page Error! ",
+          });
+        });
     }
   }
 );
@@ -200,12 +214,19 @@ router.post(
         dropdownValue: req.body.dropdownValue,
         isDisabled: 0, // *enable* by default.
         dropdownFormID: req.session.formID,
-      }).then((results) => {
-        // save last entered dropdownTitle in the session.
-        req.session.lastEnteredDropdownTitle = req.body.dropdownTitle;
-        // redirect to same page if successful.
-        res.redirect("/dropdownManager/form/" + req.session.formID);
-      });
+      })
+        .then((results) => {
+          // save last entered dropdownTitle in the session.
+          req.session.lastEnteredDropdownTitle = req.body.dropdownTitle;
+          // redirect to same page if successful.
+          res.redirect("/dropdownManager/form/" + req.session.formID);
+        })
+        .catch((err) => {
+          return res.render("dropdownManager/index", {
+            title: "BWG | Dropdown Manager",
+            message: "Page Error! ",
+          });
+        });
     }
   }
 );
@@ -235,10 +256,17 @@ router.get(
             dropdownID: req.params.id, // req.params.id == dropdownID
           },
         }
-      ).then((results) => {
-        // redirect to same page after success.
-        res.redirect("/dropdownManager/form/" + req.session.formID);
-      });
+      )
+        .then((results) => {
+          // redirect to same page after success.
+          res.redirect("/dropdownManager/form/" + req.session.formID);
+        })
+        .catch((err) => {
+          return res.render("dropdownManager/index", {
+            title: "BWG | Dropdown Manager",
+            message: "Page Error! ",
+          });
+        });
     }
   }
 );
@@ -268,10 +296,17 @@ router.get(
             dropdownID: req.params.id, // req.params.id == dropdownID
           },
         }
-      ).then((results) => {
-        // redirect to same page after success.
-        res.redirect("/dropdownManager/form/" + req.session.formID);
-      });
+      )
+        .then((results) => {
+          // redirect to same page after success.
+          res.redirect("/dropdownManager/form/" + req.session.formID);
+        })
+        .catch((err) => {
+          return res.render("dropdownManager/index", {
+            title: "BWG | Dropdown Manager",
+            message: "Page Error! ",
+          });
+        });
     }
   }
 );
