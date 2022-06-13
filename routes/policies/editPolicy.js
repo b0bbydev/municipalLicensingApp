@@ -188,10 +188,17 @@ router.post(
             policyID: req.session.policyID,
           },
         }
-      );
-
-      // redirect to /policies
-      res.redirect("/policies");
+      )
+        .then((results) => {
+          // redirect to /policies
+          res.redirect("/policies");
+        })
+        .catch((err) => {
+          return res.render("policies/editPolicy", {
+            title: "BWG | Edit Policy",
+            message: "Page Error! ",
+          });
+        });
     }
   }
 );

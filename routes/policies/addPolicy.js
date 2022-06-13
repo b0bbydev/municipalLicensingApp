@@ -4,7 +4,7 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");
 // express-validate.
-const { body, param, validationResult } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 
 /* GET /addDog/:id */
 router.get("/", async (req, res, next) => {
@@ -20,7 +20,6 @@ router.get("/", async (req, res, next) => {
   } else {
     // check if there's an error message in the session.
     let messages = req.session.messages || [];
-
     // clear session messages.
     req.session.messages = [];
 
@@ -156,10 +155,17 @@ router.post(
         category: req.body.category,
         authority: req.body.authority,
         notes: req.body.notes,
-      });
-
-      // redirect to /policies
-      res.redirect("/policies");
+      })
+        .then((results) => {
+          // redirect to /policies
+          res.redirect("/policies");
+        })
+        .catch((err) => {
+          return res.render("policies/addPolicy", {
+            title: "BWG | Add Policy",
+            message: "Page Error! ",
+          });
+        });
     }
   }
 );
