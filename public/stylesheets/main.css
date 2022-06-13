@@ -147,7 +147,7 @@ form h4 {
   padding: 10px 20 5px 10px;
 }
 
-/* pagination numbers for dog tag table. */
+/* pagination */
 .pagination {
   display: flex;
   flex-direction: row;

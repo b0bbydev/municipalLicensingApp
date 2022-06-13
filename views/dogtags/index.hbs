@@ -29,7 +29,9 @@
           name="filterValue"
           id="filterValue"
           class="form-control-sm"
-          pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+          pattern="^[^\x27\x22;=_()*&%$#!
+					
+					<>\/\^\\]*$"
           title="No special characters!"
           placeholder="Search..."
           value="{{filterValue}}"
@@ -57,14 +59,12 @@
         Owner</a>
     </div>
   </div>
-
   <!-- check for error messages in the session -->
   {{#if message}}
     <div class="alert alert-danger">
       {{message}}
     </div>
   {{/if}}
-
   <!-- Table -->
   <section class="row">
     <div class="col-12">
@@ -88,10 +88,12 @@
         <tbody>
           {{#each data}}
             <tr>
-              <td><a
+              <td>
+                <a
                   id="ownerLink"
                   href="/dogtags/owner/{{this.ownerID}}"
-                >{{this.ownerID}}</a></td>
+                >{{this.ownerID}}</a>
+              </td>
               <td>{{this.firstName}}</td>
               <td>{{this.lastName}}</td>
               <td class="text-nowrap">{{this.homePhone}}</td>
@@ -102,10 +104,12 @@
                 <td>{{this.town}}</td>
                 <td>{{this.postalCode}}</td>
               {{/each}}
-              <td><a
+              <td>
+                <a
                   href="/dogtags/editOwner/{{this.ownerID}}"
                   class="btn btn-sm btn-secondary"
-                >Edit</a></td>
+                >Edit</a>
+              </td>
             </tr>
           {{/each}}
         </tbody>
@@ -113,22 +117,19 @@
       <nav id="pagination">
         <ul class="pagination pagination-sm">
           {{#if paginate.hasPreviousPages}}
-            <li class="page-item"><a
-                class="page-link"
-                href="{{prev}}"
-              >Prev</a></li>
+            <li class="page-item">
+              <a class="page-link" href="{{prev}}">Prev</a>
+            </li>
           {{/if}}
           {{#each pages}}
-            <li class="page-item"><a
-                class="page-link"
-                href="{{this.url}}"
-              >{{this.number}}</a></li>
+            <li class="page-item">
+              <a class="page-link" href="{{this.url}}">{{this.number}}</a>
+            </li>
           {{/each}}
           {{#if hasMorePages}}
-            <li class="page-item"><a
-                class="page-link"
-                href="{{paginate.href}}"
-              >Next</a></li>
+            <li class="page-item">
+              <a class="page-link" href="{{paginate.href}}">Next</a>
+            </li>
           {{/if}}
         </ul>
       </nav>
