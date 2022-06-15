@@ -20,6 +20,16 @@ var sessionStore = new MySQLStore(sessionStoreConfig);
 const sequelize = require("./config/sequelizeConfig");
 // groupBy helper.
 var groupBy = require("handlebars-group-by");
+// express-rate-limit.
+const rateLimit = require("express-rate-limit");
+// create limiter.
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  message: "Too many requests! Slow down!",
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 // create routes here.
 var loginRouter = require("./routes/login");
@@ -47,6 +57,12 @@ var app = express();
 
 // keep this before all routes that will use pagination.
 app.use(paginate.middleware(15, 50));
+
+// reduce 'finger printing'.
+app.disable("x-powered-by");
+
+// apply limiter to all endpoints.
+app.use(limiter);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
