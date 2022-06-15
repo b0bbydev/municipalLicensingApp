@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const { limiter } = require("../config/authHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // AD.
@@ -27,6 +28,7 @@ router.get("/", function (req, res, next) {
 /* POST for /login */
 router.post(
   "/",
+  limiter,
   body("email").isEmail().normalizeEmail().trim(),
   body("password")
     // Minimum 12 characters; at least one uppercase letter, one lowercase letter, one special character
