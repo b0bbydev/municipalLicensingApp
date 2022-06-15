@@ -20,6 +20,7 @@ const limiter = rateLimit({
 /* GET /addDog/:id */
 router.get(
   "/:id",
+  redirectToLogin,
   limiter,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
@@ -50,6 +51,7 @@ router.get(
 /* POST addDog page. */
 router.post(
   "/:id",
+  redirectToLogin,
   limiter,
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
