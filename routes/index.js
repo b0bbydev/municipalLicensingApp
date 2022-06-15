@@ -14,7 +14,7 @@ const limiter = rateLimit({
 });
 
 /* GET home page. */
-router.get("/", redirectToLogin, limiter, function (req, res, next) {
+router.get("/", limiter, function (req, res, next) {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
