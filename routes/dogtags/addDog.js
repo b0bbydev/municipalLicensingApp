@@ -5,12 +5,11 @@ const Dog = require("../../models/dogtags/dog");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 // authHelper middleware.
-const { redirectToLogin, limiter } = require("../../config/authHelpers");
+const { redirectToLogin } = require("../../config/authHelpers");
 
 /* GET /addDog/:id */
 router.get(
   "/:id",
-  limiter,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -41,7 +40,6 @@ router.get(
 /* POST addDog page. */
 router.post(
   "/:id",
-  limiter,
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
     .matches(/^[0-9-]*$/)

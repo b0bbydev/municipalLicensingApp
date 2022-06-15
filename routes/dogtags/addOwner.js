@@ -6,10 +6,10 @@ const Address = require("../../models/dogtags/address");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // authHelper middleware.
-const { redirectToLogin, limiter } = require("../../config/authHelpers");
+const { redirectToLogin } = require("../../config/authHelpers");
 
 /* GET addOwner page. */
-router.get("/", limiter, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
 
@@ -26,7 +26,6 @@ router.get("/", limiter, async (req, res, next) => {
 /* POST addOwner */
 router.post(
   "/",
-  limiter,
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\'-]*$/)
