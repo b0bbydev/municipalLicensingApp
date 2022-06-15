@@ -6,8 +6,10 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
-var logger = require("morgan");
 const hbs = require("hbs");
+// logging.
+var morgan = require("morgan");
+var logger = require("./config/logger");
 // include pagination library.
 const paginate = require("express-paginate");
 // include config files.
@@ -64,7 +66,9 @@ app.disable("x-powered-by");
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
-app.use(logger("dev"));
+// use logger with morgan.
+app.use(morgan("dev", { stream: logger.stream.write }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -131,8 +135,15 @@ app.use("/dogtags/addDog", addDogRouter);
 app.use("/dogtags/editDog", editDogRouter);
 
 // catch 404 and forward to error handler
-app.use(limiter, function (req, res, next) {
-  next(createError(404));
+// app.use(limiter, function (req, res, next) {
+//   next(createError(404));
+// });
+app.use(limiter, function (err, req, res, next) {
+  // format the log message.
+  logger.error(
+    `'HTTP Method: ${req.method} - ${err.message} | Site URL: '${req.originalUrl}' - ${req.ip} | User: ${req.session.email}`
+  );
+  next(err);
 });
 
 // error handler

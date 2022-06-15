@@ -4,6 +4,7 @@ var router = express.Router();
 const { redirectToLogin } = require("../config/authHelpers");
 // express-rate-limit.
 const rateLimit = require("express-rate-limit");
+var logger = require("../config/logger");
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
@@ -21,7 +22,6 @@ router.get("/", limiter, function (req, res, next) {
   req.session.messages = [];
   // delete session lastEnteredDropdownTitle.
   delete req.session.lastEnteredDropdownTitle;
-
   return res.render("index", {
     title: "BWG | Home",
     errorMessages: messages,
