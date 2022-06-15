@@ -81,7 +81,7 @@ app.use(
       httpOnly: true, // setting this to true means JavaScript can't access the cookies - essential for security.
       maxAge: parseInt(process.env.MAX_AGE),
       sameSite: true,
-      secure: process.env.SECURE, //comment this out for now - this is to only send the cookie over an HTTPS (secure) connection. secure: process.env.NODE_ENV === "production",
+      //secure: process.env.SECURE, //comment this out for now - this is to only send the cookie over an HTTPS (secure) connection. secure: process.env.NODE_ENV === "production", was also creating multple sessions upon login which would screw up auth process?
     },
   })
 );
