@@ -19,6 +19,7 @@
     "express-validator": "^6.14.1",
     "handlebars-group-by": "^1.0.1",
     "hbs": "^4.2.0",
+    "helmet": "^5.1.0",
     "http-errors": "~2.0.0",
     "morgan": "~1.10.0",
     "mysql": "^2.18.1",
