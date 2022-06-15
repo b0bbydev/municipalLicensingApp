@@ -13,9 +13,19 @@ const Op = Sequelize.Op;
 const paginate = require("express-paginate");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
+// express-rate-limit.
+const rateLimit = require("express-rate-limit");
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  message: "Too many requests! Slow down!",
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 /* GET /dropdownManager */
-router.get("/", async (req, res, next) => {
+router.get("/", limiter, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -44,6 +54,7 @@ router.get("/", async (req, res, next) => {
 /* POST /dropdownManger */
 router.post(
   "/",
+  limiter,
   body("formName")
     .notEmpty()
     .matches(/^[a-zA-z0-9\/\- ]*$/)
@@ -81,6 +92,7 @@ router.post(
 /* GET /dropdownManager/form/:id */
 router.get(
   "/form/:id",
+  limiter,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -186,6 +198,7 @@ router.get(
 /* POST /dropdownManager/form/:id */
 router.post(
   "/form/:id",
+  limiter,
   body("dropdownValue")
     .notEmpty()
     .matches(/^[^'";=_()*&%$#!<>\^\\]*$/)
@@ -234,6 +247,7 @@ router.post(
 /* DISABLE dropdownManager/disable/:id */
 router.get(
   "/disable/:id",
+  limiter,
   param("id").matches(/^\d+$/).trim(),
   (req, res, next) => {
     // server side validation.
@@ -274,6 +288,7 @@ router.get(
 /* ENABLE dropdownManager/enable/:id */
 router.get(
   "/enable/:id",
+  limiter,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.

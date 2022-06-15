@@ -8,9 +8,19 @@ var config = {
   url: process.env.URL,
 };
 var ad = new ActiveDirectory(config);
+// express-rate-limit.
+const rateLimit = require("express-rate-limit");
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  message: "Too many requests! Slow down!",
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 /* GET login page. */
-router.get("/", function (req, res, next) {
+router.get("/", limiter, function (req, res, next) {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
 
@@ -27,6 +37,7 @@ router.get("/", function (req, res, next) {
 /* POST for /login */
 router.post(
   "/",
+  limiter,
   body("email").isEmail().normalizeEmail().trim(),
   body("password")
     // Minimum 12 characters; at least one uppercase letter, one lowercase letter, one special character

@@ -5,9 +5,19 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");
 // express-validate.
 const { body, validationResult } = require("express-validator");
+// express-rate-limit.
+const rateLimit = require("express-rate-limit");
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  message: "Too many requests! Slow down!",
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 /* GET /addDog/:id */
-router.get("/", async (req, res, next) => {
+router.get("/", limiter, async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);
 
@@ -59,6 +69,7 @@ router.get("/", async (req, res, next) => {
 
 router.post(
   "/",
+  limiter,
   body("policyNumber")
     .if(body("policyNumber").notEmpty())
     .matches(/^[0-9-]*$/)
