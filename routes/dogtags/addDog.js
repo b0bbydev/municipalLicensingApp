@@ -35,7 +35,6 @@ router.get(
     } else {
       // check if there's an error message in the session.
       let messages = req.session.messages || [];
-
       // clear session messages.
       req.session.messages = [];
 
