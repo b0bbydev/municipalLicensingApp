@@ -6,9 +6,11 @@ const AdditionalOwner = require("../../models/dogtags/additionalOwner");
 const { body, validationResult } = require("express-validator");
 // authHelper middleware.
 const { redirectToLogin } = require("../../config/authHelpers");
+// limiter.
+const limiter = require("../../config/limiter");
 
 /* GET addAdditionalOwner page. */
-router.get("/", async (req, res, next) => {
+router.get("/", limiter, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -24,6 +26,7 @@ router.get("/", async (req, res, next) => {
 /* POST addAdditionalOwner */
 router.post(
   "/",
+  limiter,
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\'-]*$/)
