@@ -23,7 +23,6 @@ const limiter = rateLimit({
 /* GET /editOwner page */
 router.get(
   "/:id",
-  redirectToLogin,
   limiter,
   param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
   async (req, res, next) => {
@@ -75,7 +74,6 @@ router.get(
 /* POST /editOwner */
 router.post(
   "/:id",
-  redirectToLogin,
   limiter,
   param("id").matches(/^\d+$/).trim(),
   body("firstName")

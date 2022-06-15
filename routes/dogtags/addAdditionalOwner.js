@@ -18,7 +18,7 @@ const limiter = rateLimit({
 });
 
 /* GET addAdditionalOwner page. */
-router.get("/", redirectToLogin, limiter, async (req, res, next) => {
+router.get("/", limiter, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -34,7 +34,6 @@ router.get("/", redirectToLogin, limiter, async (req, res, next) => {
 /* POST addAdditionalOwner */
 router.post(
   "/",
-  redirectToLogin,
   limiter,
   body("firstName")
     .if(body("firstName").notEmpty())

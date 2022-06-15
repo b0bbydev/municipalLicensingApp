@@ -30,7 +30,6 @@ const limiter = rateLimit({
 /* GET /dogtags */
 router.get(
   "/",
-  redirectToLogin,
   limiter,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
@@ -242,7 +241,6 @@ router.get(
 /* GET owner page. */
 router.get(
   "/owner/:id",
-  redirectToLogin,
   limiter,
   param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
   async (req, res, next) => {
@@ -340,7 +338,6 @@ router.get(
 /* GET /dogtags/renew/:id page. */
 router.get(
   "/renew/:id",
-  redirectToLogin,
   limiter,
   param("id").isNumeric().trim(),
   async (req, res, next) => {
@@ -388,7 +385,6 @@ router.get(
 /* GET /owner/:id/additionalOwner/:id  */
 router.get(
   "/owner/:id/additionalOwner/:additionalOwnerID",
-  redirectToLogin,
   limiter,
   param("id").isNumeric().trim(),
   param("additionalOwnerID").isNumeric().trim(),
@@ -434,7 +430,6 @@ router.get(
 /* POST /owner/:id/additionalOwner/:id  */
 router.post(
   "/owner/:id/additionalOwner/:additionalOwnerID",
-  redirectToLogin,
   limiter,
   param("id").isNumeric().trim(),
   param("additionalOwnerID").isNumeric().trim(),
