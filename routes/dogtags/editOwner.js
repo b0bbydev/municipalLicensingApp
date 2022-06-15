@@ -7,10 +7,13 @@ const Address = require("../../models/dogtags/address");
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
+// authHelper middleware.
+const { redirectToLogin, limiter } = require("../../config/authHelpers");
 
 /* GET /editOwner page */
 router.get(
   "/:id",
+  limiter,
   param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
   async (req, res, next) => {
     // server side validation.
@@ -61,6 +64,7 @@ router.get(
 /* POST /editOwner */
 router.post(
   "/:id",
+  limiter,
   param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())

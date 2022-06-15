@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { redirectToLogin } = require("../../config/authHelpers");
+const { redirectToLogin, limiter } = require("../../config/authHelpers");
 // models.
 const Owner = require("../../models/dogtags/owner");
 const Address = require("../../models/dogtags/address");
@@ -20,6 +20,7 @@ const { body, param, validationResult } = require("express-validator");
 /* GET /dogtags */
 router.get(
   "/",
+  limiter,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
@@ -230,6 +231,7 @@ router.get(
 /* GET owner page. */
 router.get(
   "/owner/:id",
+  limiter,
   param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
   async (req, res, next) => {
     // server side validation.
@@ -326,6 +328,7 @@ router.get(
 /* GET /dogtags/renew/:id page. */
 router.get(
   "/renew/:id",
+  limiter,
   param("id").isNumeric().trim(),
   async (req, res, next) => {
     // server side validation.
@@ -372,6 +375,7 @@ router.get(
 /* GET /owner/:id/additionalOwner/:id  */
 router.get(
   "/owner/:id/additionalOwner/:additionalOwnerID",
+  limiter,
   param("id").isNumeric().trim(),
   param("additionalOwnerID").isNumeric().trim(),
   async (req, res, next) => {
@@ -416,6 +420,7 @@ router.get(
 /* POST /owner/:id/additionalOwner/:id  */
 router.post(
   "/owner/:id/additionalOwner/:additionalOwnerID",
+  limiter,
   param("id").isNumeric().trim(),
   param("additionalOwnerID").isNumeric().trim(),
   async (req, res, next) => {
