@@ -7,6 +7,7 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 const hbs = require("hbs");
+const helmet = require("helmet");
 // logging.
 var morgan = require("morgan");
 var logger = require("./config/logger");
@@ -68,6 +69,9 @@ app.set("view engine", "hbs");
 
 // use logger with morgan.
 app.use(morgan("dev", { stream: logger.stream.write }));
+
+// helmet - protecting against common HTTP vulnerabilities.
+app.use(helmet());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
