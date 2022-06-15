@@ -23,6 +23,16 @@ var groupBy = require("handlebars-group-by");
 // create routes here.
 var loginRouter = require("./routes/login");
 var indexRouter = require("./routes/index");
+// express-rate-limit.
+const rateLimit = require("express-rate-limit");
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  message: "Too many requests! Slow down!",
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+});
 
 /* policies related routes. */
 var policiesRouter = require("./routes/policies/index");
@@ -121,7 +131,7 @@ app.use("/dogtags/addDog", addDogRouter);
 app.use("/dogtags/editDog", editDogRouter);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(limiter, function (req, res, next) {
   next(createError(404));
 });
 
