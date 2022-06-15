@@ -1,10 +1,10 @@
 var express = require("express");
 var router = express.Router();
 // authHelper middleware.
-const { redirectToLogin } = require("../config/authHelpers");
+const { redirectToLogin, limiter } = require("../config/authHelpers");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
+router.get("/", limiter, function (req, res, next) {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
