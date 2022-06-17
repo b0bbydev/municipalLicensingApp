@@ -32,12 +32,13 @@
       </a>
     </div>
     <div class="usernameDiv">
-      <p class="text-center">
-        <i class="icon-blue icon-large bi bi-person-fill"></i>
-        Current User:
-
-      </p>
-
+      {{#if email}}
+        <p class="text-center">
+          <i class="icon-blue icon-large bi bi-person-fill"></i>
+          Current User:
+          {{email}}
+        </p>
+      {{/if}}
     </div>
     {{#ifCond admin "||" auth}}
       <div class="menu-item">
