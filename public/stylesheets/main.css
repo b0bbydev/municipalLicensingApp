@@ -92,6 +92,7 @@ form h4 {
 .usernameDiv {
   font-size: 0.85rem;
   text-align: center;
+  border-bottom: 1px solid #dedede;
 }
 
 .menu-item {
@@ -100,7 +101,7 @@ form h4 {
   font-size: small;
   cursor: pointer;
   width: 100%;
-  border-top: 1px solid #dedede;
+  border-bottom: 1px solid #dedede;
 }
 
 .menu-item:hover {
@@ -108,11 +109,8 @@ form h4 {
   background-color: rgba(230, 230, 230, 1);
 }
 
-.menu-item.last {
-  border-bottom: 1px solid #dedede;
-}
-
 .menu-item.logout {
+  border-top: 1px solid #dedede;
   margin-top: auto;
 }
 

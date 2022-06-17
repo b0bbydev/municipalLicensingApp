@@ -1,7 +1,11 @@
 var express = require("express");
 var router = express.Router();
 // authHelper middleware.
-const { redirectToLogin } = require("../config/authHelpers");
+const {
+  redirectToLogin,
+  dogLicenseAuth,
+  adminAuth,
+} = require("../config/authHelpers");
 // express-rate-limit.
 const rateLimit = require("express-rate-limit");
 var logger = require("../config/logger");
@@ -15,7 +19,7 @@ const limiter = rateLimit({
 });
 
 /* GET home page. */
-router.get("/", limiter, function (req, res, next) {
+router.get("/", limiter, dogLicenseAuth, adminAuth, function (req, res, next) {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -26,6 +30,8 @@ router.get("/", limiter, function (req, res, next) {
     title: "BWG | Home",
     errorMessages: messages,
     email: req.session.email,
+    auth: req.session.auth,
+    admin: req.session.admin,
   });
 });
 
