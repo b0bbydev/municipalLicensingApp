@@ -97,51 +97,53 @@
       </nav>
     </div>
   </div>
-  <!-- Add new dropdown value -->
-  <div class="row">
-    <div class="col">
-      <form method="POST">
-        <div class="row">
-          <h4>Add a new dropdown menu</h4>
-          <hr />
-          <div class="col-sm-6">
-            <label for="Dropdown Title" class="form-label title-text">Dropdown
-              Title</label>
-            <input
-              name="dropdownTitle"
-              class="form-control"
-              placeholder="Title of dropdown menu..."
-              type="text"
-              pattern="[^()/><\][\\\x22,;|]+"
-              title="No special characters!"
-              value="{{lastEnteredDropdownTitle}}"
-              required
-            />
+  {{#if admin}}
+    <!-- Add new dropdown value -->
+    <div class="row">
+      <div class="col">
+        <form method="POST">
+          <div class="row">
+            <h4>Add a new dropdown menu</h4>
+            <hr />
+            <div class="col-sm-6">
+              <label for="Dropdown Title" class="form-label title-text">Dropdown
+                Title</label>
+              <input
+                name="dropdownTitle"
+                class="form-control"
+                placeholder="Title of dropdown menu..."
+                type="text"
+                pattern="[^()/><\][\\\x22,;|]+"
+                title="No special characters!"
+                value="{{lastEnteredDropdownTitle}}"
+                required
+              />
+            </div>
+            <div class="col-sm-6">
+              <label for="Dropdown Value" class="form-label title-text">Dropdown
+                Value</label>
+              <input
+                name="dropdownValue"
+                class="form-control"
+                placeholder="Value/option in dropdown menu..."
+                type="text"
+                pattern="[^()/><\][\\\x22,;|]+"
+                title="No special characters!"
+                required
+              />
+            </div>
           </div>
-          <div class="col-sm-6">
-            <label for="Dropdown Value" class="form-label title-text">Dropdown
-              Value</label>
-            <input
-              name="dropdownValue"
-              class="form-control"
-              placeholder="Value/option in dropdown menu..."
-              type="text"
-              pattern="[^()/><\][\\\x22,;|]+"
-              title="No special characters!"
-              required
-            />
+          <div class="row">
+            <div class="col">
+              <button
+                id="submitButton"
+                class="btn btn-primary"
+                type="submit"
+              >Submit</button>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="col">
-            <button
-              id="submitButton"
-              class="btn btn-primary"
-              type="submit"
-            >Submit</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
+  {{/if}}
 </div>
