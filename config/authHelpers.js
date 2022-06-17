@@ -13,7 +13,7 @@ module.exports = {
 
     // if the session email is in "whitelist", set session 'admin' == true.
     if (emails.includes(req.session.email)) {
-      req.session.admin = false;
+      req.session.admin = true;
       next();
     } else {
       // if not admin, don't create admin session variable, just forward them to next middleware.

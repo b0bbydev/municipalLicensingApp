@@ -8,7 +8,11 @@ var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 // authHelper middleware.
-const { redirectToLogin } = require("../../config/authHelpers");
+const {
+  redirectToLogin,
+  dogLicenseAuth,
+  adminAuth,
+} = require("../../config/authHelpers");
 // express-rate-limit.
 const rateLimit = require("express-rate-limit");
 
@@ -34,11 +38,13 @@ router.get(
       return res.render("dogtags/editDog", {
         title: "BWG | Edit Dog",
         message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
       });
     } else {
       // check if there's an error message in the session.
       let messages = req.session.messages || [];
-
       // clear session messages.
       req.session.messages = [];
 
@@ -59,6 +65,8 @@ router.get(
         title: "BWG | Edit Dog",
         errorMessages: messages,
         email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
         dropdownValues: dropdownValues,
         dogInfo: {
           tagNumber: dogInfo[0].tagNumber,
@@ -163,6 +171,8 @@ router.post(
         title: "BWG | Edit Dog",
         message: errorArray[0].msg,
         email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         dogInfo: {
           tagNumber: req.body.tagNumber,

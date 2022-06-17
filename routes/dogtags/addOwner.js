@@ -6,7 +6,11 @@ const Address = require("../../models/dogtags/address");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // authHelper middleware.
-const { redirectToLogin } = require("../../config/authHelpers");
+const {
+  redirectToLogin,
+  dogLicenseAuth,
+  adminAuth,
+} = require("../../config/authHelpers");
 // express-rate-limit.
 const rateLimit = require("express-rate-limit");
 
@@ -22,7 +26,6 @@ const limiter = rateLimit({
 router.get("/", limiter, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
-
   // clear session messages
   req.session.messages = [];
 
@@ -30,6 +33,8 @@ router.get("/", limiter, async (req, res, next) => {
     title: "BWG | Add Owner",
     errorMessages: messages,
     email: req.session.email,
+    auth: req.session.auth,
+    admin: req.session.admin,
   });
 });
 
@@ -104,6 +109,9 @@ router.post(
       return res.render("dogtags/addOwner", {
         title: "BWG | Owner",
         message: errorArray[0].msg,
+        email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {
           firstName: req.body.firstName,

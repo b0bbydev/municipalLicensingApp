@@ -8,7 +8,11 @@ var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 // authHelper middleware.
-const { redirectToLogin } = require("../../config/authHelpers");
+const {
+  redirectToLogin,
+  dogLicenseAuth,
+  adminAuth,
+} = require("../../config/authHelpers");
 // express-rate-limit.
 const rateLimit = require("express-rate-limit");
 
@@ -35,6 +39,8 @@ router.get(
         title: "BWG | Owner",
         message: "Error!",
         email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
       });
     } else {
       // check if there's an error message in the session,
@@ -52,6 +58,8 @@ router.get(
         title: "BWG | Edit Owner",
         errorMessages: messages,
         email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
         ownerID: req.session.ownerID,
         ownerInfo: {
           firstName: ownerInfo[0].firstName,
@@ -143,6 +151,9 @@ router.post(
       return res.render("dogtags/editOwner", {
         title: "BWG | Edit Owner",
         message: errorArray[0].msg,
+        email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         ownerInfo: {
           firstName: req.body.firstName,

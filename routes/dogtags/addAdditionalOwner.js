@@ -5,7 +5,11 @@ const AdditionalOwner = require("../../models/dogtags/additionalOwner");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // authHelper middleware.
-const { redirectToLogin } = require("../../config/authHelpers");
+const {
+  redirectToLogin,
+  dogLicenseAuth,
+  adminAuth,
+} = require("../../config/authHelpers");
 // express-rate-limit.
 const rateLimit = require("express-rate-limit");
 
@@ -28,6 +32,8 @@ router.get("/", limiter, async (req, res, next) => {
     title: "BWG | Add Additional Owner",
     errorMessages: messages,
     email: req.session.email,
+    auth: req.session.auth,
+    admin: req.session.admin,
   });
 });
 
@@ -77,6 +83,9 @@ router.post(
       return res.render("dogtags/addAdditionalOwner", {
         title: "BWG | Additional Owner",
         message: errorArray[0].msg,
+        email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {
           firstName: req.body.firstName,
@@ -107,7 +116,7 @@ router.post(
         .catch((err) => {
           return res.render("dogtags/addAdditionalOwner", {
             title: "BWG | Add Additional Owner",
-            message: "Page Error! ",
+            message: "Page Error!",
           });
         });
     }

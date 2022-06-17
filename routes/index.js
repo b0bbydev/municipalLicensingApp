@@ -8,7 +8,6 @@ const {
 } = require("../config/authHelpers");
 // express-rate-limit.
 const rateLimit = require("express-rate-limit");
-var logger = require("../config/logger");
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes

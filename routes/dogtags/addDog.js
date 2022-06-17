@@ -5,7 +5,11 @@ const Dog = require("../../models/dogtags/dog");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 // authHelper middleware.
-const { redirectToLogin } = require("../../config/authHelpers");
+const {
+  redirectToLogin,
+  dogLicenseAuth,
+  adminAuth,
+} = require("../../config/authHelpers");
 // express-rate-limit.
 const rateLimit = require("express-rate-limit");
 
@@ -31,6 +35,9 @@ router.get(
       return res.render("dogtags/addDog", {
         title: "BWG | Add Dog",
         message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
       });
     } else {
       // check if there's an error message in the session.
@@ -42,6 +49,8 @@ router.get(
         title: "BWG | Add Dog",
         errorMessages: messages,
         email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
       });
     }
   }
@@ -129,6 +138,8 @@ router.post(
         title: "BWG | Add Dog",
         message: errorArray[0].msg,
         email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {
           tagNumber: req.body.tagNumber,
@@ -153,6 +164,8 @@ router.post(
         title: "BWG | Add Dog",
         message: "Invalid Date Format!",
         email: req.session.email,
+        auth: req.session.auth,
+        admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {
           tagNumber: req.body.tagNumber,
