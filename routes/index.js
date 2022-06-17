@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 // authHelper middleware.
 const {
-  redirectToLogin,
+  isLoggedIn,
   dogLicenseAuth,
   adminAuth,
 } = require("../config/authHelpers");

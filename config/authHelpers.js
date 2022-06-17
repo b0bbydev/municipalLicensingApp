@@ -1,12 +1,12 @@
 module.exports = {
   // this method will redirect the user back to login page, if the session doesn't contain an email.
-  redirectToLogin: function (req, res, next) {
+  isLoggedIn: function (req, res, next) {
     if (!req.session.email) {
       res.redirect("/login");
     } else {
       next();
     } // end of if-else.
-  }, // end of redirectToLogin().
+  }, // end of isLoggedIn().
 
   adminAuth: function (req, res, next) {
     const emails = ["bjonkman@townofbwg.com", "charbour@townofbwg.com"];

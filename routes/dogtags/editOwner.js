@@ -9,7 +9,7 @@ var dbHelpers = require("../../config/dbHelpers");
 const { body, param, validationResult } = require("express-validator");
 // authHelper middleware.
 const {
-  redirectToLogin,
+  isLoggedIn,
   dogLicenseAuth,
   adminAuth,
 } = require("../../config/authHelpers");

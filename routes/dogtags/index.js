@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { redirectToLogin } = require("../../config/authHelpers");
+const { isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Owner = require("../../models/dogtags/owner");
 const Address = require("../../models/dogtags/address");

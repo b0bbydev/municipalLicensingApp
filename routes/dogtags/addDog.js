@@ -6,7 +6,7 @@ const Dog = require("../../models/dogtags/dog");
 const { body, param, validationResult } = require("express-validator");
 // authHelper middleware.
 const {
-  redirectToLogin,
+  isLoggedIn,
   dogLicenseAuth,
   adminAuth,
 } = require("../../config/authHelpers");
