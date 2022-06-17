@@ -57,6 +57,9 @@ var editDogRouter = require("./routes/dogtags/editDog");
 
 var app = express();
 
+// static() used for serving static files like images, css etc..
+app.use(express.static(path.join(__dirname, "/public")));
+
 // keep this before all routes that will use pagination.
 app.use(paginate.middleware(15, 50));
 
@@ -95,8 +98,6 @@ app.use(
 );
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-// static() used for serving static files like images, css etc..
-app.use(express.static(path.join(__dirname, "/public")));
 
 // connection to db.
 try {
