@@ -28,6 +28,7 @@ const limiter = rateLimit({
 router.get(
   "/:id",
   limiter,
+  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -39,7 +40,7 @@ router.get(
         title: "BWG | Edit Dog",
         message: "Page Error!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -65,7 +66,7 @@ router.get(
         title: "BWG | Edit Dog",
         errorMessages: messages,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         dropdownValues: dropdownValues,
         dogInfo: {
@@ -93,6 +94,7 @@ router.get(
 router.post(
   "/:id",
   limiter,
+  isLoggedIn,
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
     .matches(/^[0-9-]*$/)
@@ -171,7 +173,7 @@ router.post(
         title: "BWG | Edit Dog",
         message: errorArray[0].msg,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         dogInfo: {

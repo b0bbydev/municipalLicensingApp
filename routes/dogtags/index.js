@@ -1,6 +1,11 @@
 var express = require("express");
 var router = express.Router();
-const { isLoggedIn } = require("../../config/authHelpers");
+// authHelper middleware.
+const {
+  isLoggedIn,
+  dogLicenseAuth,
+  adminAuth,
+} = require("../../config/authHelpers");
 // models.
 const Owner = require("../../models/dogtags/owner");
 const Address = require("../../models/dogtags/address");
@@ -31,6 +36,7 @@ const limiter = rateLimit({
 router.get(
   "/",
   limiter,
+  isLoggedIn,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
@@ -83,7 +89,7 @@ router.get(
               title: "BWG | Dog Tags",
               errorMessages: messages,
               email: req.session.email,
-              auth: req.session.auth,
+              dogAuth: req.session.dogAuth,
               admin: req.session.admin,
               data: results.rows,
               dropdownValues: dropdownValues,
@@ -125,7 +131,7 @@ router.get(
             return res.render("dogtags/search/dogTagNumberSearch", {
               title: "BWG | Dog Tags",
               email: req.session.email,
-              auth: req.session.auth,
+              dogAuth: req.session.dogAuth,
               admin: req.session.admin,
               data: results.rows,
               dropdownValues: dropdownValues,
@@ -165,7 +171,7 @@ router.get(
             return res.render("dogtags/search/additionalOwnerSearch", {
               title: "BWG | Dog Tags",
               email: req.session.email,
-              auth: req.session.auth,
+              dogAuth: req.session.dogAuth,
               admin: req.session.admin,
               data: results.rows,
               dropdownValues: dropdownValues,
@@ -222,7 +228,7 @@ router.get(
               title: "BWG | Dog Tags",
               errorMessages: messages,
               email: req.session.email,
-              auth: req.session.auth,
+              dogAuth: req.session.dogAuth,
               admin: req.session.admin,
               data: results.rows,
               dropdownValues: dropdownValues,
@@ -250,6 +256,7 @@ router.get(
 router.get(
   "/owner/:id",
   limiter,
+  isLoggedIn,
   param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
   async (req, res, next) => {
     // server side validation.
@@ -317,7 +324,7 @@ router.get(
               title: "BWG | Owner",
               errorMessages: messages,
               email: req.session.email,
-              auth: req.session.auth,
+              dogAuth: req.session.dogAuth,
               admin: req.session.admin,
               ownerName: ownerName,
               ownerID: req.session.ownerID,
@@ -349,6 +356,7 @@ router.get(
 router.get(
   "/renew/:id",
   limiter,
+  isLoggedIn,
   param("id").isNumeric().trim(),
   async (req, res, next) => {
     // server side validation.
@@ -396,6 +404,7 @@ router.get(
 router.get(
   "/owner/:id/additionalOwner/:additionalOwnerID",
   limiter,
+  isLoggedIn,
   param("id").isNumeric().trim(),
   param("additionalOwnerID").isNumeric().trim(),
   async (req, res, next) => {
@@ -423,7 +432,7 @@ router.get(
         title: "BWG | Additional Owner",
         errorMessages: messages,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         additionalOwnerInfo: {
           firstName: additionalOwnerInfo[0].firstName,
@@ -443,6 +452,7 @@ router.get(
 router.post(
   "/owner/:id/additionalOwner/:additionalOwnerID",
   limiter,
+  isLoggedIn,
   param("id").isNumeric().trim(),
   param("additionalOwnerID").isNumeric().trim(),
   async (req, res, next) => {

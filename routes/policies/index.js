@@ -28,6 +28,7 @@ const limiter = rateLimit({
 router.get(
   "/",
   limiter,
+  isLoggedIn,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
@@ -72,6 +73,8 @@ router.get(
               title: "BWG | Policies & Procedures",
               errorMessages: messages,
               email: req.session.email,
+              dogAuth: req.session.dogAuth,
+              admin: req.session.admin,
               data: results.rows,
               dropdownValues: dropdownValues,
               pageCount,
@@ -121,6 +124,8 @@ router.get(
             return res.render("policies", {
               title: "BWG | Policies",
               email: req.session.email,
+              dogAuth: req.session.dogAuth,
+              admin: req.session.admin,
               data: results.rows,
               dropdownValues: dropdownValues,
               pageCount,
@@ -144,7 +149,7 @@ router.get(
 );
 
 /* GET /policies/policy/:id */
-router.get("/policy/:id", limiter, async (req, res, next) => {
+router.get("/policy/:id", limiter, isLoggedIn, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -175,6 +180,8 @@ router.get("/policy/:id", limiter, async (req, res, next) => {
     title: "BWG | Policy",
     errorMessages: messages,
     email: req.session.email,
+    dogAuth: req.session.dogAuth,
+    admin: req.session.admin,
     procedures: procedures,
     guidelines: guidelines,
     policyName: policyName.policyName,

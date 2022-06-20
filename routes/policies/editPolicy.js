@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const { isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");
@@ -22,6 +23,7 @@ const limiter = rateLimit({
 router.get(
   "/:id",
   limiter,
+  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -72,6 +74,8 @@ router.get(
         title: "BWG | Edit Policy",
         errorMessages: messages,
         email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
         statusDropdownValues: statusDropdownValues,
         categoryDropdownValues: categoryDropdownValues,
         authorityDropdownValues: authorityDropdownValues,
@@ -97,6 +101,7 @@ router.get(
 router.post(
   "/:id",
   limiter,
+  isLoggedIn,
   body("policyNumber")
     .if(body("policyNumber").notEmpty())
     .matches(/^[0-9-]*$/)
@@ -160,6 +165,8 @@ router.post(
         title: "BWG | Add Policy",
         message: errorArray[0].msg,
         email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {
           policyNumber: req.body.policyNumber,

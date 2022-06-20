@@ -65,6 +65,8 @@
           </div>
         </a>
       </div>
+    {{/ifCond}}
+    {{#ifCond admin "||" policyAuth}}
       <div class="menu-item">
         <a href="/policies">
           <div class="menu-text">

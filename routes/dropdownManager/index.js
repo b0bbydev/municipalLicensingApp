@@ -25,7 +25,7 @@ const limiter = rateLimit({
 });
 
 /* GET /dropdownManager */
-router.get("/", limiter, async (req, res, next) => {
+router.get("/", limiter, isLoggedIn, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -40,7 +40,7 @@ router.get("/", limiter, async (req, res, next) => {
         title: "BWG | Dropdown Manager",
         errorMessages: messages,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         data: results.rows,
       });
@@ -57,6 +57,7 @@ router.get("/", limiter, async (req, res, next) => {
 router.post(
   "/",
   limiter,
+  isLoggedIn,
   body("formName")
     .notEmpty()
     .matches(/^[a-zA-z0-9\/\- ]*$/)
@@ -72,7 +73,7 @@ router.post(
         title: "BWG | Dropdown Manager",
         message: "Error!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -97,6 +98,7 @@ router.post(
 router.get(
   "/form/:id",
   limiter,
+  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -108,7 +110,7 @@ router.get(
         title: "BWG | Dropdown Manager",
         message: "Error!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -141,7 +143,7 @@ router.get(
               title: "BWG | Dropdown Manager - " + formName[0].formName,
               errorMessages: messages,
               email: req.session.email,
-              auth: req.session.auth,
+              dogAuth: req.session.dogAuth,
               admin: req.session.admin,
               formName: formName[0].formName,
               lastEnteredDropdownTitle: req.session.lastEnteredDropdownTitle,
@@ -181,7 +183,7 @@ router.get(
             return res.render("dropdownManager/form", {
               title: "BWG | Dropdown Manager",
               email: req.session.email,
-              auth: req.session.auth,
+              dogAuth: req.session.dogAuth,
               admin: req.session.admin,
               data: results.rows,
               dropdownFormID: req.params.id,
@@ -209,6 +211,7 @@ router.get(
 router.post(
   "/form/:id",
   limiter,
+  isLoggedIn,
   body("dropdownValue")
     .notEmpty()
     .matches(/^[^'";=_()*&%$#!<>\^\\]*$/)
@@ -231,7 +234,7 @@ router.post(
         title: "BWG | Dropdown Manager",
         message: "Invalid entry!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -261,6 +264,7 @@ router.post(
 router.get(
   "/disable/:id",
   limiter,
+  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   (req, res, next) => {
     // server side validation.
@@ -273,7 +277,7 @@ router.get(
         title: "BWG | Dropdown Manager",
         message: "Invalid entry!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -305,6 +309,7 @@ router.get(
 router.get(
   "/enable/:id",
   limiter,
+  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -317,7 +322,7 @@ router.get(
         title: "BWG | Dropdown Manager",
         message: "Invalid entry!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {

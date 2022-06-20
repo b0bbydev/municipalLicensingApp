@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const { isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");
@@ -16,8 +17,8 @@ const limiter = rateLimit({
   legacyHeaders: false, // Disable the `X-RateLimit-*` headers
 });
 
-/* GET /addDog/:id */
-router.get("/", limiter, async (req, res, next) => {
+/* GET /addPolicy */
+router.get("/", limiter, isLoggedIn, async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);
 
@@ -60,6 +61,8 @@ router.get("/", limiter, async (req, res, next) => {
       title: "BWG | Add Policy",
       errorMessages: messages,
       email: req.session.email,
+      dogAuth: req.session.dogAuth,
+      admin: req.session.admin,
       statusDropdownValues: statusDropdownValues,
       categoryDropdownValues: categoryDropdownValues,
       authorityDropdownValues: authorityDropdownValues,
@@ -67,9 +70,11 @@ router.get("/", limiter, async (req, res, next) => {
   }
 });
 
+/* POST /addPolicy */
 router.post(
   "/",
   limiter,
+  isLoggedIn,
   body("policyNumber")
     .if(body("policyNumber").notEmpty())
     .matches(/^[0-9-]*$/)
@@ -133,6 +138,8 @@ router.post(
         title: "BWG | Add Policy",
         message: errorArray[0].msg,
         email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {
           policyNumber: req.body.policyNumber,

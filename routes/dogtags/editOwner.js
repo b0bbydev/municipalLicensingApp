@@ -28,6 +28,7 @@ const limiter = rateLimit({
 router.get(
   "/:id",
   limiter,
+  isLoggedIn,
   param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
   async (req, res, next) => {
     // server side validation.
@@ -39,7 +40,7 @@ router.get(
         title: "BWG | Owner",
         message: "Error!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -58,7 +59,7 @@ router.get(
         title: "BWG | Edit Owner",
         errorMessages: messages,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         ownerID: req.session.ownerID,
         ownerInfo: {
@@ -83,6 +84,7 @@ router.get(
 router.post(
   "/:id",
   limiter,
+  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())
@@ -152,7 +154,7 @@ router.post(
         title: "BWG | Edit Owner",
         message: errorArray[0].msg,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         ownerInfo: {
