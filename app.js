@@ -67,11 +67,11 @@ app.disable("x-powered-by");
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
+// causing static files to not load on server?
 // use logger with morgan.
-app.use(morgan("dev", { stream: logger.stream.write }));
-
+//app.use(morgan("dev", { stream: logger.stream.write }));
 // helmet - protecting against common HTTP vulnerabilities.
-app.use(helmet());
+//app.use(helmet());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -167,16 +167,18 @@ app.use("/dogtags/addDog", addDogRouter);
 app.use("/dogtags/editDog", editDogRouter);
 
 // catch 404 and forward to error handler
-// app.use(limiter, function (req, res, next) {
-//   next(createError(404));
-// });
-app.use(limiter, function (err, req, res, next) {
-  // format the log message.
-  logger.error(
-    `'HTTP Method: ${req.method} - ${err.message} | Site URL: '${req.originalUrl}' - ${req.ip} | User: ${req.session.email}`
-  );
-  next(err);
+app.use(limiter, function (req, res, next) {
+  next(createError(404));
 });
+
+// for morgan logging.
+// app.use(limiter, function (err, req, res, next) {
+//   // format the log message.
+//   logger.error(
+//     `'HTTP Method: ${req.method} - ${err.message} | Site URL: '${req.originalUrl}' - ${req.ip} | User: ${req.session.email}`
+//   );
+//   next(err);
+// });
 
 // error handler
 app.use(function (err, req, res, next) {
