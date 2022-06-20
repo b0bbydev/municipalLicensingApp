@@ -46,6 +46,8 @@ router.get(
     // server side validation.
     const errors = validationResult(req);
 
+    var test = "testVar";
+
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       return res.render("dogtags", {
