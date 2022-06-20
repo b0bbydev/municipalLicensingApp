@@ -21,9 +21,9 @@ const limiter = rateLimit({
 router.get(
   "/",
   limiter,
-  isLoggedIn,
-  dogLicenseAuth,
   adminAuth,
+  dogLicenseAuth,
+  isLoggedIn,
   function (req, res, next) {
     // check if there's an error message in the session
     let messages = req.session.messages || [];
@@ -32,12 +32,15 @@ router.get(
     // delete session lastEnteredDropdownTitle.
     delete req.session.lastEnteredDropdownTitle;
 
+    console.log(req.headers.referer);
+
     return res.render("index", {
       title: "BWG | Home",
       errorMessages: messages,
       email: req.session.email,
       dogAuth: req.session.dogAuth,
       admin: req.session.admin,
+      back: req.headers.referer,
     });
   }
 );

@@ -55,6 +55,11 @@ form h4 {
   margin-bottom: 5px;
 }
 
+.back:hover {
+  transition: 0.2s ease-in;
+  background-color: rgba(0, 150, 214, .75) !important;
+}
+
 #bwgBackground {
   display: flex;
   margin: auto;
@@ -166,7 +171,8 @@ form h4 {
 
 /* this is so the table doesn't wrap the phone number text. */
 .phoneNum {
-  width: -moz-fit-content; /* firefox */
+  width: -moz-fit-content;
+  /* firefox */
   width: fit-content;
 }
 

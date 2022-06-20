@@ -107,7 +107,7 @@ router.post(
     .trim(),
   body("breed")
     .if(body("breed").notEmpty())
-    .matches(/^[a-zA-z\/\-, ]*$/)
+    .matches(/^[a-zA-z\/\-,. ]*$/)
     .withMessage("Invalid Breed Entry!")
     .trim(),
   body("colour")

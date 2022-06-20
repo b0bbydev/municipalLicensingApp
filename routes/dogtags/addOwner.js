@@ -74,12 +74,12 @@ router.post(
     .withMessage("Invalid Email Entry!")
     .trim(),
   body("streetNumber")
-    .if(body("address").notEmpty())
+    .if(body("streetNumber").notEmpty())
     .matches(/^[0-9. ]*$/)
     .withMessage("Invalid Street Number Entry!")
     .trim(),
   body("streetName")
-    .if(body("address").notEmpty())
+    .if(body("streetName").notEmpty())
     .matches(/^[a-zA-z. ]*$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),

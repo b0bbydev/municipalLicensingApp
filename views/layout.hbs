@@ -40,15 +40,16 @@
         </p>
       {{/if}}
     </div>
-    <div class="menu-item">
-      <a href="#">
+    <!-- Back navigation -->
+    <div class="menu-item back">
+      <a href="{{back}}">
         <div class="menu-text">
           <i class="icon-large icon-blue bi bi-arrow-return-left"></i>
           Back
         </div>
       </a>
     </div>
-    {{#ifCond admin "||" auth}}
+    {{#ifCond admin "||" dogAuth}}
       <div class="menu-item">
         <a href="/dogtags">
           <div class="menu-text">

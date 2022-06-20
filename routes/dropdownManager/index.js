@@ -43,6 +43,7 @@ router.get("/", limiter, isLoggedIn, async (req, res, next) => {
         dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         data: results.rows,
+        back: req.headers.referer,
       });
     })
     .catch((err) => {
