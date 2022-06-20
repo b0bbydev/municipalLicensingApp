@@ -58,6 +58,12 @@ form h4 {
 .back:hover {
   transition: 0.2s ease-in;
   background-color: rgba(0, 150, 214, .75) !important;
+  color: white;
+}
+
+.back:hover .menu-text .icon {
+  transition: 0.2s ease-in;
+  color: white;
 }
 
 #bwgBackground {
