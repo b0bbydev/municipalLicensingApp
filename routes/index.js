@@ -18,13 +18,14 @@ const limiter = rateLimit({
 });
 
 /* GET home page. */
-router.get("/", limiter, dogLicenseAuth, adminAuth, function (req, res, next) {
+router.get("/", limiter, function (req, res, next) {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
   req.session.messages = [];
   // delete session lastEnteredDropdownTitle.
   delete req.session.lastEnteredDropdownTitle;
+
   return res.render("index", {
     title: "BWG | Home",
     errorMessages: messages,
