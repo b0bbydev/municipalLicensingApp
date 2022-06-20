@@ -33,7 +33,7 @@ router.get("/", limiter, isLoggedIn, async (req, res, next) => {
     title: "BWG | Add Owner",
     errorMessages: messages,
     email: req.session.email,
-    auth: req.session.auth,
+    dogAuth: req.session.dogAuth,
     admin: req.session.admin,
   });
 });
@@ -111,7 +111,7 @@ router.post(
         title: "BWG | Owner",
         message: errorArray[0].msg,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {

@@ -40,7 +40,7 @@ router.get(
         title: "BWG | Edit Dog",
         message: "Page Error!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -66,7 +66,7 @@ router.get(
         title: "BWG | Edit Dog",
         errorMessages: messages,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         dropdownValues: dropdownValues,
         dogInfo: {
@@ -173,7 +173,7 @@ router.post(
         title: "BWG | Edit Dog",
         message: errorArray[0].msg,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         dogInfo: {

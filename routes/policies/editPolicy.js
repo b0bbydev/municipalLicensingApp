@@ -74,6 +74,8 @@ router.get(
         title: "BWG | Edit Policy",
         errorMessages: messages,
         email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
         statusDropdownValues: statusDropdownValues,
         categoryDropdownValues: categoryDropdownValues,
         authorityDropdownValues: authorityDropdownValues,
@@ -163,6 +165,8 @@ router.post(
         title: "BWG | Add Policy",
         message: errorArray[0].msg,
         email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {
           policyNumber: req.body.policyNumber,

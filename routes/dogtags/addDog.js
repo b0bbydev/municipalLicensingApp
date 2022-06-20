@@ -140,7 +140,7 @@ router.post(
         title: "BWG | Add Dog",
         message: errorArray[0].msg,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {
@@ -166,7 +166,7 @@ router.post(
         title: "BWG | Add Dog",
         message: "Invalid Date Format!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {

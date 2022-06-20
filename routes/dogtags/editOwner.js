@@ -40,7 +40,7 @@ router.get(
         title: "BWG | Owner",
         message: "Error!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -59,7 +59,7 @@ router.get(
         title: "BWG | Edit Owner",
         errorMessages: messages,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         ownerID: req.session.ownerID,
         ownerInfo: {
@@ -154,7 +154,7 @@ router.post(
         title: "BWG | Edit Owner",
         message: errorArray[0].msg,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         ownerInfo: {

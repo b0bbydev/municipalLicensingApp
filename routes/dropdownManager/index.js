@@ -40,7 +40,7 @@ router.get("/", limiter, isLoggedIn, async (req, res, next) => {
         title: "BWG | Dropdown Manager",
         errorMessages: messages,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         data: results.rows,
       });
@@ -73,7 +73,7 @@ router.post(
         title: "BWG | Dropdown Manager",
         message: "Error!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -110,7 +110,7 @@ router.get(
         title: "BWG | Dropdown Manager",
         message: "Error!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -143,7 +143,7 @@ router.get(
               title: "BWG | Dropdown Manager - " + formName[0].formName,
               errorMessages: messages,
               email: req.session.email,
-              auth: req.session.auth,
+              dogAuth: req.session.dogAuth,
               admin: req.session.admin,
               formName: formName[0].formName,
               lastEnteredDropdownTitle: req.session.lastEnteredDropdownTitle,
@@ -183,7 +183,7 @@ router.get(
             return res.render("dropdownManager/form", {
               title: "BWG | Dropdown Manager",
               email: req.session.email,
-              auth: req.session.auth,
+              dogAuth: req.session.dogAuth,
               admin: req.session.admin,
               data: results.rows,
               dropdownFormID: req.params.id,
@@ -234,7 +234,7 @@ router.post(
         title: "BWG | Dropdown Manager",
         message: "Invalid entry!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -277,7 +277,7 @@ router.get(
         title: "BWG | Dropdown Manager",
         message: "Invalid entry!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
@@ -322,7 +322,7 @@ router.get(
         title: "BWG | Dropdown Manager",
         message: "Invalid entry!",
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
       });
     } else {
