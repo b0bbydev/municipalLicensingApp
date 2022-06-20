@@ -40,7 +40,7 @@
         </p>
       {{/if}}
     </div>
-    {{#ifCond admin "||" auth}}
+    {{#ifCond admin "||" dogAuth}}
       <div class="menu-item">
         <a href="/dogtags">
           <div class="menu-text">
@@ -57,6 +57,8 @@
           </div>
         </a>
       </div>
+    {{/ifCond}}
+    {{#ifCond admin "||" policyAuth}}
       <div class="menu-item">
         <a href="/policies">
           <div class="menu-text">

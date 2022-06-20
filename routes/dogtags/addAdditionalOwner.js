@@ -22,7 +22,7 @@ const limiter = rateLimit({
 });
 
 /* GET addAdditionalOwner page. */
-router.get("/", limiter, async (req, res, next) => {
+router.get("/", limiter, isLoggedIn, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -32,7 +32,7 @@ router.get("/", limiter, async (req, res, next) => {
     title: "BWG | Add Additional Owner",
     errorMessages: messages,
     email: req.session.email,
-    auth: req.session.auth,
+    dogAuth: req.session.dogAuth,
     admin: req.session.admin,
   });
 });
@@ -41,6 +41,7 @@ router.get("/", limiter, async (req, res, next) => {
 router.post(
   "/",
   limiter,
+  isLoggedIn,
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\'-]*$/)
@@ -84,7 +85,7 @@ router.post(
         title: "BWG | Additional Owner",
         message: errorArray[0].msg,
         email: req.session.email,
-        auth: req.session.auth,
+        dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         // if the form submission is unsuccessful, save their values.
         formData: {

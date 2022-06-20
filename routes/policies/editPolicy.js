@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+const { isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");
@@ -22,6 +23,7 @@ const limiter = rateLimit({
 router.get(
   "/:id",
   limiter,
+  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -97,6 +99,7 @@ router.get(
 router.post(
   "/:id",
   limiter,
+  isLoggedIn,
   body("policyNumber")
     .if(body("policyNumber").notEmpty())
     .matches(/^[0-9-]*$/)

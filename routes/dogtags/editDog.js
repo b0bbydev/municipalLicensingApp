@@ -28,6 +28,7 @@ const limiter = rateLimit({
 router.get(
   "/:id",
   limiter,
+  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -93,6 +94,7 @@ router.get(
 router.post(
   "/:id",
   limiter,
+  isLoggedIn,
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
     .matches(/^[0-9-]*$/)

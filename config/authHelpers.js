@@ -26,7 +26,7 @@ module.exports = {
 
     // if the session email is in "whitelist", set session 'auth' == true.
     if (emails.includes(req.session.email)) {
-      req.session.auth = true;
+      req.session.dogAuth = true;
       next();
     } else {
       next();
@@ -38,7 +38,7 @@ module.exports = {
 
     // if the session email is in "whitelist", set session 'auth' == true.
     if (emails.includes(req.session.email)) {
-      req.session.auth = true;
+      req.session.policyAuth = true;
       next();
     } else {
       next();

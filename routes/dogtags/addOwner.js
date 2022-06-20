@@ -23,7 +23,7 @@ const limiter = rateLimit({
 });
 
 /* GET addOwner page. */
-router.get("/", limiter, async (req, res, next) => {
+router.get("/", limiter, isLoggedIn, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -42,6 +42,7 @@ router.get("/", limiter, async (req, res, next) => {
 router.post(
   "/",
   limiter,
+  isLoggedIn,
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\'-]*$/)

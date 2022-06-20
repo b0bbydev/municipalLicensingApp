@@ -2,9 +2,9 @@ var express = require("express");
 var router = express.Router();
 // authHelper middleware.
 const {
-  isLoggedIn,
   dogLicenseAuth,
   adminAuth,
+  isLoggedIn,
 } = require("../config/authHelpers");
 // express-rate-limit.
 const rateLimit = require("express-rate-limit");
@@ -18,21 +18,29 @@ const limiter = rateLimit({
 });
 
 /* GET home page. */
-router.get("/", limiter, dogLicenseAuth, adminAuth, function (req, res, next) {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
-  // delete session lastEnteredDropdownTitle.
-  delete req.session.lastEnteredDropdownTitle;
-  return res.render("index", {
-    title: "BWG | Home",
-    errorMessages: messages,
-    email: req.session.email,
-    auth: req.session.auth,
-    admin: req.session.admin,
-  });
-});
+router.get(
+  "/",
+  limiter,
+  isLoggedIn,
+  dogLicenseAuth,
+  adminAuth,
+  function (req, res, next) {
+    // check if there's an error message in the session
+    let messages = req.session.messages || [];
+    // clear session messages
+    req.session.messages = [];
+    // delete session lastEnteredDropdownTitle.
+    delete req.session.lastEnteredDropdownTitle;
+
+    return res.render("index", {
+      title: "BWG | Home",
+      errorMessages: messages,
+      email: req.session.email,
+      dogAuth: req.session.dogAuth,
+      admin: req.session.admin,
+    });
+  }
+);
 
 /* GET logout page */
 router.get("/logout", function (req, res, next) {

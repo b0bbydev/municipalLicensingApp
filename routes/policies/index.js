@@ -28,6 +28,7 @@ const limiter = rateLimit({
 router.get(
   "/",
   limiter,
+  isLoggedIn,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
@@ -144,7 +145,7 @@ router.get(
 );
 
 /* GET /policies/policy/:id */
-router.get("/policy/:id", limiter, async (req, res, next) => {
+router.get("/policy/:id", limiter, isLoggedIn, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
