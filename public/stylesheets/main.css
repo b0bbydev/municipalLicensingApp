@@ -55,15 +55,21 @@ form h4 {
   margin-bottom: 5px;
 }
 
+/* have to do all 3 elements separate */
 .back:hover {
   transition: 0.2s ease-in;
   background-color: rgba(0, 150, 214, .75) !important;
   color: white;
 }
 
-.back:hover .menu-text .icon {
+.back:hover .menu-text {
   transition: 0.2s ease-in;
   color: white;
+}
+
+.back:hover .menu-text .icon-large {
+  transition: 0.2s ease-in;
+  color: white !important;
 }
 
 #bwgBackground {
