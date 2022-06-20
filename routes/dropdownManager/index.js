@@ -25,7 +25,7 @@ const limiter = rateLimit({
 });
 
 /* GET /dropdownManager */
-router.get("/", limiter, isLoggedIn, async (req, res, next) => {
+router.get("/", limiter, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -57,7 +57,6 @@ router.get("/", limiter, isLoggedIn, async (req, res, next) => {
 router.post(
   "/",
   limiter,
-  isLoggedIn,
   body("formName")
     .notEmpty()
     .matches(/^[a-zA-z0-9\/\- ]*$/)
@@ -98,7 +97,6 @@ router.post(
 router.get(
   "/form/:id",
   limiter,
-  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -211,7 +209,6 @@ router.get(
 router.post(
   "/form/:id",
   limiter,
-  isLoggedIn,
   body("dropdownValue")
     .notEmpty()
     .matches(/^[^'";=_()*&%$#!<>\^\\]*$/)
@@ -264,7 +261,6 @@ router.post(
 router.get(
   "/disable/:id",
   limiter,
-  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   (req, res, next) => {
     // server side validation.
@@ -309,7 +305,6 @@ router.get(
 router.get(
   "/enable/:id",
   limiter,
-  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.

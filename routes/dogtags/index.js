@@ -36,7 +36,6 @@ const limiter = rateLimit({
 router.get(
   "/",
   limiter,
-  isLoggedIn,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
@@ -256,7 +255,6 @@ router.get(
 router.get(
   "/owner/:id",
   limiter,
-  isLoggedIn,
   param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
   async (req, res, next) => {
     // server side validation.
@@ -356,7 +354,6 @@ router.get(
 router.get(
   "/renew/:id",
   limiter,
-  isLoggedIn,
   param("id").isNumeric().trim(),
   async (req, res, next) => {
     // server side validation.
@@ -404,7 +401,6 @@ router.get(
 router.get(
   "/owner/:id/additionalOwner/:additionalOwnerID",
   limiter,
-  isLoggedIn,
   param("id").isNumeric().trim(),
   param("additionalOwnerID").isNumeric().trim(),
   async (req, res, next) => {
@@ -452,7 +448,6 @@ router.get(
 router.post(
   "/owner/:id/additionalOwner/:additionalOwnerID",
   limiter,
-  isLoggedIn,
   param("id").isNumeric().trim(),
   param("additionalOwnerID").isNumeric().trim(),
   async (req, res, next) => {

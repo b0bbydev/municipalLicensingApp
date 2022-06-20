@@ -18,7 +18,7 @@ const limiter = rateLimit({
 });
 
 /* GET /addPolicy */
-router.get("/", limiter, isLoggedIn, async (req, res, next) => {
+router.get("/", limiter, async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);
 
@@ -74,7 +74,6 @@ router.get("/", limiter, isLoggedIn, async (req, res, next) => {
 router.post(
   "/",
   limiter,
-  isLoggedIn,
   body("policyNumber")
     .if(body("policyNumber").notEmpty())
     .matches(/^[0-9-]*$/)

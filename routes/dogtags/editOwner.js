@@ -28,7 +28,6 @@ const limiter = rateLimit({
 router.get(
   "/:id",
   limiter,
-  isLoggedIn,
   param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
   async (req, res, next) => {
     // server side validation.
@@ -84,7 +83,6 @@ router.get(
 router.post(
   "/:id",
   limiter,
-  isLoggedIn,
   param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())
