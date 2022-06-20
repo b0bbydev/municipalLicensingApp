@@ -32,15 +32,14 @@ router.get(
     // delete session lastEnteredDropdownTitle.
     delete req.session.lastEnteredDropdownTitle;
 
-    console.log(req.headers.referer);
-
     return res.render("index", {
       title: "BWG | Home",
       errorMessages: messages,
       email: req.session.email,
-      dogAuth: req.session.dogAuth,
-      admin: req.session.admin,
-      back: req.headers.referer,
+      dogAuth: req.session.dogAuth, // authorization.
+      admin: req.session.admin, // authorization.
+      baseUrl: req.baseUrl, // back button logic.
+      indexUrl: "/", // back button logic.
     });
   }
 );

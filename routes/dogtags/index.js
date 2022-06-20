@@ -89,8 +89,8 @@ router.get(
               title: "BWG | Dog Tags",
               errorMessages: messages,
               email: req.session.email,
-              dogAuth: req.session.dogAuth,
-              admin: req.session.admin,
+              dogAuth: req.session.dogAuth, // authorization.
+              admin: req.session.admin, // authorization.
               data: results.rows,
               dropdownValues: dropdownValues,
               pageCount,
