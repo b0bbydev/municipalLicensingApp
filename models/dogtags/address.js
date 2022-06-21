@@ -17,6 +17,11 @@ const Address = sequelize.define("address", {
     allowNull: true,
   },
 
+  streetName: {
+    type: Sequelize.STRING(50),
+    allowNull: true,
+  },
+
   poBoxAptRR: {
     type: Sequelize.STRING(25),
     allowNull: true,
