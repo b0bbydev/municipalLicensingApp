@@ -1,4 +1,29 @@
 <h2 class="text-center">{{dogName}} - Tag History</h2>
 <div class="content">
-
+  <section id="tagNumberHistorySection" class="row">
+    <div class="col-12">
+      <h4>Tag Number History</h4>
+      {{#group tagNumberHistory by="year"}}
+        <strong>{{{value}}}</strong>
+        <table class="sortable table table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Tag Number</th>
+              <th>Last Modified</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+              <tr>
+                <td>{{this.tagNumber}}</td>
+                <td>{{this.lastModified}}</td>
+                <td>{{this.action}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/group}}
+    </div>
+  </section>
 </div>

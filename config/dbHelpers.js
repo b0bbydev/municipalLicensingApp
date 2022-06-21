@@ -155,11 +155,11 @@ db.getDogHistory = (ownerID) => {
   });
 };
 
-db.getTagNumberHistory = (ownerID) => {
+db.getTagNumberHistory = (dogID) => {
   return new Promise((resolve, reject) => {
     pool.query(
-      "SELECT *, YEAR(lastModified) as year FROM tagNumberHistory WHERE ownerID = ? ORDER BY lastModified DESC",
-      [ownerID],
+      "SELECT *, YEAR(lastModified) as year FROM tagNumberHistory WHERE dogID = ? ORDER BY lastModified DESC",
+      [dogID],
       (error, result) => {
         if (error) {
           return reject(error);

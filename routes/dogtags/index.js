@@ -299,10 +299,6 @@ router.get(
       );
       // get dogHistory data.
       var dogHistory = await dbHelpers.getDogHistory(req.session.ownerID);
-      // get tagNumberHistory data.
-      var tagNumberHistory = await dbHelpers.getTagNumberHistory(
-        req.session.ownerID
-      );
 
       AdditionalOwner.findAndCountAll({
         limit: req.query.limit,
@@ -337,7 +333,6 @@ router.get(
               additionalOwners: additionalOwners.rows,
               addressHistory: addressHistory,
               dogHistory: dogHistory,
-              tagNumberHistory: tagNumberHistory,
               pageCount,
               itemCount,
               pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
@@ -528,6 +523,11 @@ router.get(
       // get dogName from dogID.
       var dogName = await dbHelpers.getDogNameFromDogID(req.session.dogID);
 
+      // get tagNumberHistory data.
+      var tagNumberHistory = await dbHelpers.getTagNumberHistory(
+        req.session.dogID
+      );
+
       // error handle here as user can pass an invalid one in URL bar.
       // if ownerName exists, concatenate names together.
       if (!dogName) {
@@ -546,6 +546,7 @@ router.get(
           admin: req.session.admin,
           ownerID: req.session.ownerID,
           dogName: dogName[0].dogName,
+          tagNumberHistory: tagNumberHistory,
         });
       }
     }
