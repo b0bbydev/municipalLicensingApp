@@ -20,6 +20,21 @@ db.getNameFromOwnerID = (ownerID) => {
   });
 };
 
+db.getDogNameFromDogID = (dogID) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT dogName FROM dogs WHERE dogID = ?",
+      [dogID],
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(result);
+      }
+    );
+  });
+};
+
 db.getOwnerInfo = (ownerID) => {
   return new Promise((resolve, reject) => {
     pool.query(

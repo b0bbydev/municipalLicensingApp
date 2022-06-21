@@ -523,15 +523,31 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      // return endpoint after passing validation.
-      return res.render("dogtags/tagHistory", {
-        title: "BWG | Tag History",
-        errorMessages: messages,
-        email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
-        ownerID: req.session.ownerID,
-      });
+      // set dogID to session.
+      req.session.dogID = req.params.dogID;
+      // get dogName from dogID.
+      var dogName = await dbHelpers.getDogNameFromDogID(req.session.dogID);
+
+      // error handle here as user can pass an invalid one in URL bar.
+      // if ownerName exists, concatenate names together.
+      if (!dogName) {
+        return res.render("dogtags/owner", {
+          title: "BWG | Owner",
+          message: "Owner Lookup Error!",
+          email: req.session.email,
+        });
+      } else {
+        // return endpoint after passing validation.
+        return res.render("dogtags/tagHistory", {
+          title: "BWG | Tag History",
+          errorMessages: messages,
+          email: req.session.email,
+          dogAuth: req.session.dogAuth,
+          admin: req.session.admin,
+          ownerID: req.session.ownerID,
+          dogName: dogName[0].dogName,
+        });
+      }
     }
   }
 );
