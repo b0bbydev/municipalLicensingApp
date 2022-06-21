@@ -289,7 +289,7 @@ router.get(
       )
         .then((results) => {
           // redirect to same page after success.
-          res.redirect("/dropdownManager/form/" + req.session.formID);
+          res.redirect(req.headers.referer);
         })
         .catch((err) => {
           return res.render("dropdownManager/index", {
@@ -333,7 +333,7 @@ router.get(
       )
         .then((results) => {
           // redirect to same page after success.
-          res.redirect("/dropdownManager/form/" + req.session.formID);
+          res.redirect(req.headers.referer);
         })
         .catch((err) => {
           return res.render("dropdownManager/index", {

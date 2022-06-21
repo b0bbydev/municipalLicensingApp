@@ -3,6 +3,7 @@ var router = express.Router();
 // models.
 const Owner = require("../../models/dogtags/owner");
 const Address = require("../../models/dogtags/address");
+const Dropdown = require("../../models/dropdownManager/dropdown");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // authHelper middleware.
@@ -29,12 +30,20 @@ router.get("/", limiter, async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
+  // get dropdown values.
+  var dropdownValues = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 13,
+    },
+  });
+
   return res.render("dogtags/addOwner", {
     title: "BWG | Add Owner",
     errorMessages: messages,
     email: req.session.email,
     dogAuth: req.session.dogAuth,
     admin: req.session.admin,
+    dropdownValues: dropdownValues,
   });
 });
 
@@ -104,6 +113,13 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
+    // get dropdown values.
+    var dropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 13,
+      },
+    });
+
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       return res.render("dogtags/addOwner", {
@@ -112,6 +128,7 @@ router.post(
         email: req.session.email,
         dogAuth: req.session.dogAuth,
         admin: req.session.admin,
+        dropdownValues: dropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {
           firstName: req.body.firstName,

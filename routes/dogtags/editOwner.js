@@ -155,6 +155,13 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
+    // get dropdown values.
+    var dropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 13,
+      },
+    });
+
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       return res.render("dogtags/editOwner", {
@@ -163,6 +170,7 @@ router.post(
         email: req.session.email,
         dogAuth: req.session.dogAuth,
         admin: req.session.admin,
+        dropdownValues: dropdownValues,
         // if the form submission is unsuccessful, save their values.
         ownerInfo: {
           firstName: req.body.firstName,
