@@ -299,6 +299,10 @@ router.get(
       );
       // get dogHistory data.
       var dogHistory = await dbHelpers.getDogHistory(req.session.ownerID);
+      // get tagNumberHistory data.
+      var tagNumberHistory = await dbHelpers.getTagNumberHistory(
+        req.session.ownerID
+      );
 
       AdditionalOwner.findAndCountAll({
         limit: req.query.limit,
@@ -333,6 +337,7 @@ router.get(
               additionalOwners: additionalOwners.rows,
               addressHistory: addressHistory,
               dogHistory: dogHistory,
+              tagNumberHistory: tagNumberHistory,
               pageCount,
               itemCount,
               pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),

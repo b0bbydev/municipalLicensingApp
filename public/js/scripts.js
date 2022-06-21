@@ -10,11 +10,20 @@ function toggleAddressHistory() {
     addressHistorySection.style.display === "none" ? "" : "none";
 }
 
-// create function to unhide the address history table.
+// create function to unhide the dog history table.
 function toggleDogHistory() {
   var dogHistorySection = document.getElementById("dogHistorySection");
   dogHistorySection.style.display =
     dogHistorySection.style.display === "none" ? "" : "none";
+}
+
+// create function to unhide the dog history table.
+function toggleTagNumberHistory() {
+  var tagNumberHistorySection = document.getElementById(
+    "tagNumberHistorySection"
+  );
+  tagNumberHistorySection.style.display =
+    tagNumberHistorySection.style.display === "none" ? "" : "none";
 }
 
 // create function to fill out form.

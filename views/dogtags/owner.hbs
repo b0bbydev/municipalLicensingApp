@@ -71,7 +71,11 @@
         <tbody>
           {{#each data}}
             <tr>
-              <td>{{this.tagNumber}}</td>
+              <td>
+                <a
+                  id="ownerLink"
+                  onclick="toggleTagNumberHistory();"
+                >{{this.tagNumber}}</a></td>
               <td>{{this.dogName}}</td>
               <td>{{this.breed}}</td>
               <td>{{this.colour}}</td>
@@ -220,6 +224,35 @@
                 <td>{{this.expiryDate}}</td>
                 <td>{{this.vendor}}</td>
                 <td>{{this.notes}}</td>
+                <td>{{this.lastModified}}</td>
+                <td>{{this.action}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/group}}
+    </div>
+  </section>
+
+  <section id="tagNumberHistorySection" class="row" style="display: none;">
+    <div class="col-12">
+      <h4>Tag Number History</h4>
+      {{#group tagNumberHistory by="year"}}
+        <strong>{{{value}}}</strong>
+        <table class="sortable table table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Tag Number</th>
+              <th>Dog Name</th>
+              <th>Last Modified</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+              <tr>
+                <td>{{this.tagNumber}}</td>
+                <td>{{this.dogName}}</td>
                 <td>{{this.lastModified}}</td>
                 <td>{{this.action}}</td>
               </tr>
