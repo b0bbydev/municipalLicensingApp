@@ -3,6 +3,7 @@ var router = express.Router();
 // models.
 const Owner = require("../../models/dogtags/owner");
 const Address = require("../../models/dogtags/address");
+const Dropdown = require("../../models/dropdownManager/dropdown");
 // dbHelpers.
 var dbHelpers = require("../../config/dbHelpers");
 // express-validate.
@@ -54,6 +55,13 @@ router.get(
       // get owner information.
       var ownerInfo = await dbHelpers.getOwnerInfo(req.session.ownerID);
 
+      // get dropdown values.
+      var dropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13,
+        },
+      });
+
       return res.render("dogtags/editOwner", {
         title: "BWG | Edit Owner",
         errorMessages: messages,
@@ -61,6 +69,7 @@ router.get(
         dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         ownerID: req.session.ownerID,
+        dropdownValues: dropdownValues,
         ownerInfo: {
           firstName: ownerInfo[0].firstName,
           lastName: ownerInfo[0].lastName,

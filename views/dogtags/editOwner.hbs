@@ -54,16 +54,26 @@
       <!-- Street Name -->
       <div class="col-sm-4">
         <label for="Street Name" class="form-label">Street Name</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Street Name"
+        <select
+          class="form-select"
+          id="streetName"
+          title="streetName"
           name="streetName"
-          pattern="[^()/><\][\\\x22;|]+"
-          title="No special characters!"
-          value="{{ownerInfo.streetName}}"
-          maxlength="50"
-        />
+        >
+          <option disabled selected>Street Name...</option>
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
       </div>
       <!-- PO Box/Apt/RR -->
       <div class="col-sm-4">
