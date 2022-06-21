@@ -84,6 +84,7 @@ form h4 {
   width: 100%;
   color: #0096d6 !important;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 /* Nav */

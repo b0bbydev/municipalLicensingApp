@@ -500,4 +500,40 @@ router.post(
   }
 );
 
+/* GET /owner/:id/tagHistory/:dogID page. */
+router.get(
+  "/owner/:id/tagHistory/:dogID",
+  limiter,
+  param("id").matches(/^\d+$/).trim(),
+  param("dogID").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags/tagHistory", {
+        title: "BWG | Tag History",
+        message: "Error!",
+        email: req.session.email,
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // return endpoint after passing validation.
+      return res.render("dogtags/tagHistory", {
+        title: "BWG | Tag History",
+        errorMessages: messages,
+        email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
+        ownerID: req.session.ownerID,
+      });
+    }
+  }
+);
+
 module.exports = router;
