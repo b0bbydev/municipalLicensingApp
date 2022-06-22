@@ -353,8 +353,8 @@ router.get(
 );
 
 /* GET /dogtags/renew/:id page. */
-router.get(
-  "/renew/:id",
+router.post(
+  "/owner/:id",
   limiter,
   param("id").isNumeric().trim(),
   async (req, res, next) => {
@@ -363,8 +363,8 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("dogtags/renew", {
-        title: "BWG | Renew",
+      return res.render("dogtags/owner", {
+        title: "BWG | Owner",
         message: "Page Error!",
         email: req.session.email,
       });
@@ -376,6 +376,7 @@ router.get(
       // no errors, update license.
       Dog.update(
         {
+          tagNumber: req.body.tagNumber,
           issueDate: issueDate,
           expiryDate: expiryDate,
         },

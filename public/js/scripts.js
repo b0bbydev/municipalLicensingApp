@@ -1,7 +1,6 @@
-// create functions to fill in form fields for test buttons.
-function userLogin() {
-  document.getElementById("email").value = "bjonkman@townofbwg.com";
-}
+/*
+ * Public js.
+ */
 
 // create function to unhide the address history table.
 function toggleAddressHistory() {
@@ -15,15 +14,6 @@ function toggleDogHistory() {
   var dogHistorySection = document.getElementById("dogHistorySection");
   dogHistorySection.style.display =
     dogHistorySection.style.display === "none" ? "" : "none";
-}
-
-// create function to unhide the dog history table.
-function toggleTagNumberHistory() {
-  var tagNumberHistorySection = document.getElementById(
-    "tagNumberHistorySection"
-  );
-  tagNumberHistorySection.style.display =
-    tagNumberHistorySection.style.display === "none" ? "" : "none";
 }
 
 // create function to fill out form.
