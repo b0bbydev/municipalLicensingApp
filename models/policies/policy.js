@@ -21,11 +21,6 @@ const Policy = sequelize.define("policy", {
     allowNull: true,
   },
 
-  cowResolve: {
-    type: Sequelize.DATEONLY,
-    allowNull: true,
-  },
-
   cowDate: {
     type: Sequelize.DATEONLY,
     allowNull: true,
@@ -36,7 +31,7 @@ const Policy = sequelize.define("policy", {
     allowNull: true,
   },
 
-  dateAdopted: {
+  dateApproved: {
     type: Sequelize.DATEONLY,
     allowNull: true,
   },
