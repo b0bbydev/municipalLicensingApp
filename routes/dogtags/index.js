@@ -46,8 +46,6 @@ router.get(
     // server side validation.
     const errors = validationResult(req);
 
-    var test = "testVar";
-
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       return res.render("dogtags", {
@@ -109,6 +107,55 @@ router.get(
               message: "Page Error! ",
             })
           );
+      } else if (req.query.filterCategory === "Address") {
+        Owner.findAndCountAll({
+          // functions in where clause, fancy.
+          where: Sequelize.where(
+            Sequelize.fn(
+              "concat",
+              Sequelize.col("streetNumber"),
+              " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+              Sequelize.col("streetName")
+            ),
+            {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            }
+          ),
+          include: [
+            {
+              model: Address,
+            },
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogtags", {
+              title: "BWG | Dog Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              dogAuth: req.session.dogAuth, // authorization.
+              admin: req.session.admin, // authorization.
+              data: results.rows,
+              dropdownValues: dropdownValues,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dogtags", {
+              title: "BWG | Dogtags",
+              message: "Page Error! ",
+            })
+          );
+
         // use a different function (SQL query) if filtering by tagNumber.
       } else if (req.query.filterCategory === "Dog Tag Number") {
         Owner.findAndCountAll({
@@ -352,7 +399,7 @@ router.get(
   }
 );
 
-/* GET /dogtags/renew/:id page. */
+/* POST /dogtags/owner/:id page. (renews dogtag) */
 router.post(
   "/owner/:id",
   limiter,
