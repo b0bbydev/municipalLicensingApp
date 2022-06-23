@@ -66,7 +66,7 @@ router.get(
         },
       });
 
-      // get dog info from custom query.
+      // this helps populate the fields when page loads.
       var policyInfo = await dbHelpers.getPolicyInfo(req.params.id);
 
       return res.render("policies/editPolicy", {
@@ -198,16 +198,18 @@ router.post(
         formData: {
           policyNumber: req.body.policyNumber,
           policyName: req.body.policyName,
-          cowResolve: req.body.cowResolve,
           cowDate: req.body.cowDate,
           councilResolution: req.body.councilResolution,
-          dateAdopted: req.body.dateAdopted,
+          dateApproved: req.body.dateApproved,
           dateAmended: req.body.dateAmended,
-          status: req.body.status,
+          dateEffective: req.body.dateEffective,
+          category: req.body.category,
           lastReviewDate: req.body.lastReviewDate,
           scheduledReviewDate: req.body.scheduledReviewDate,
-          category: req.body.category,
+          division: req.body.division,
           authority: req.body.authority,
+          administrator: req.body.administrator,
+          status: req.body.status,
           notes: req.body.notes,
         },
       });
@@ -217,16 +219,18 @@ router.post(
         {
           policyNumber: req.body.policyNumber,
           policyName: req.body.policyName,
-          cowResolve: req.body.cowResolve,
           cowDate: req.body.cowDate,
           councilResolution: req.body.councilResolution,
-          dateAdopted: req.body.dateAdopted,
+          dateApproved: req.body.dateApproved,
           dateAmended: req.body.dateAmended,
-          status: req.body.status,
+          dateEffective: req.body.dateEffective,
+          category: req.body.category,
           lastReviewDate: req.body.lastReviewDate,
           scheduledReviewDate: req.body.scheduledReviewDate,
-          category: req.body.category,
+          division: req.body.division,
           authority: req.body.authority,
+          administrator: req.body.administrator,
+          status: req.body.status,
           notes: req.body.notes,
         },
         {
