@@ -6,6 +6,8 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");
 const Procedure = require("../../models/policies/procedure");
 const Guideline = require("../../models/policies/guideline");
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -92,18 +94,8 @@ router.get(
             })
           );
       } else {
-        // format filterCategory to match column name in db.
-        switch (req.query.filterCategory) {
-          case "Policy Name":
-            filterCategory = "policyName";
-            break;
-          case "Policy Number":
-            filterCategory = "policyNumber";
-            break;
-          case "Administrator":
-            filterCategory = "administrator";
-            break;
-        }
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
 
         // create filter query.
         Policy.findAndCountAll({

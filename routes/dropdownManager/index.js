@@ -167,7 +167,7 @@ router.get(
         Dropdown.findAndCountAll({
           where: {
             [req.query.filterCategory]: {
-              [Op.like]: req.query.filterValue + "%",
+              [Op.like]: "%" + req.query.filterValue + "%",
             },
           },
           limit: req.query.limit,

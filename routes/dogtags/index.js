@@ -15,7 +15,8 @@ const AdditionalOwner = require("../../models/dogtags/additionalOwner");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-// dbHelpers.
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 var dbHelpers = require("../../config/dbHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
@@ -239,18 +240,8 @@ router.get(
             })
           );
       } else {
-        // format filterCategory in URL to match column name in db.
-        switch (req.query.filterCategory) {
-          case "First Name":
-            filterCategory = "firstName";
-            break;
-          case "Last Name":
-            filterCategory = "lastName";
-            break;
-          case "Email":
-            filterCategory = "email";
-            break;
-        }
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
 
         // create filter query.
         Owner.findAndCountAll({
