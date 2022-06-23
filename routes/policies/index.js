@@ -94,14 +94,14 @@ router.get(
       } else {
         // format filterCategory to match column name in db.
         switch (req.query.filterCategory) {
-          case "Policy ID":
-            filterCategory = "policyID";
-            break;
           case "Policy Name":
             filterCategory = "policyName";
             break;
           case "Policy Number":
             filterCategory = "policyNumber";
+            break;
+          case "Administrator":
+            filterCategory = "administrator";
             break;
         }
 
@@ -109,7 +109,7 @@ router.get(
         Policy.findAndCountAll({
           where: {
             [filterCategory]: {
-              [Op.like]: req.query.filterValue + "%",
+              [Op.like]: "%" + req.query.filterValue + "%",
             },
           },
           limit: req.query.limit,
