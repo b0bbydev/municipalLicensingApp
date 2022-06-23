@@ -81,13 +81,17 @@ router.get(
         policyInfo: {
           policyNumber: policyInfo[0].policyNumber,
           policyName: policyInfo[0].policyName,
-          cowResolve: policyInfo[0].cowResolve,
           cowDate: policyInfo[0].cowDate,
           councilResolution: policyInfo[0].councilResolution,
-          dateAdopted: policyInfo[0].dateAdopted,
+          dateApproved: policyInfo[0].dateApproved,
           dateAmended: policyInfo[0].dateAmended,
+          dateEffective: policyInfo[0].dateEffective,
+          category: policyInfo[0].category,
           lastReviewDate: policyInfo[0].lastReviewDate,
           scheduledReviewDate: policyInfo[0].scheduledReviewDate,
+          division: policyInfo[0].division,
+          authority: policyInfo[0].authority,
+          administrator: policyInfo[0].administrator,
           status: policyInfo[0].status,
           notes: policyInfo[0].notes,
         },
@@ -107,23 +111,38 @@ router.post(
     .trim(),
   body("policyName")
     .if(body("policyName").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Policy Name Entry!")
-    .trim(),
-  body("cowResolve")
-    .if(body("cowResolve").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid COW Resolve Entry!")
     .trim(),
   body("cowDate")
     .if(body("cowDate").notEmpty())
     .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid COW Date Entry!")
     .trim(),
-  body("status")
-    .if(body("status").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
-    .withMessage("Invalid Status Entry!")
+  body("councilResolution")
+    .if(body("councilResolution").notEmpty())
+    .matches(/^[a-zA-Z0-9\/\- ]*$/)
+    .withMessage("Invalid Council Resolution Entry!")
+    .trim(),
+  body("dateApproved")
+    .if(body("dateApproved").notEmpty())
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage("Invalid Date Approved Entry!")
+    .trim(),
+  body("dateAmended")
+    .if(body("dateAmended").notEmpty())
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage("Invalid Date Amended Entry!")
+    .trim(),
+  body("dateEffective")
+    .if(body("dateEffective").notEmpty())
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage("Invalid Date Effective Entry!")
+    .trim(),
+  body("category")
+    .if(body("category").notEmpty())
+    .matches(/^[a-zA-Z\/\- ]*$/)
+    .withMessage("Invalid Category Entry!")
     .trim(),
   body("lastReviewDate")
     .if(body("lastReviewDate").notEmpty())
@@ -135,19 +154,29 @@ router.post(
     .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Scheduled Review Date Entry!")
     .trim(),
-  body("category")
-    .if(body("category").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
-    .withMessage("Invalid Category Entry!")
+  body("division")
+    .if(body("division").notEmpty())
+    .matches(/^[a-zA-Z\/\- ]*$/)
+    .withMessage("Invalid Division Entry!")
     .trim(),
   body("authority")
     .if(body("authority").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Authority Entry!")
+    .trim(),
+  body("administrator")
+    .if(body("administrator").notEmpty())
+    .matches(/^[a-zA-Z\/\- ]*$/)
+    .withMessage("Invalid Administrator Entry!")
+    .trim(),
+  body("status")
+    .if(body("status").notEmpty())
+    .matches(/^[a-zA-Z\/\- ]*$/)
+    .withMessage("Invalid Status Entry!")
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[a-zA-z0-9\/\-, ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-, ]*$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {

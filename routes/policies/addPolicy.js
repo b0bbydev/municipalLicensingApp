@@ -114,11 +114,6 @@ router.post(
     .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Category Entry!")
     .trim(),
-  body("status")
-    .if(body("status").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
-    .withMessage("Invalid Status Entry!")
-    .trim(),
   body("lastReviewDate")
     .if(body("lastReviewDate").notEmpty())
     .matches(/^\d{4}-\d{2}-\d{2}$/)
@@ -129,10 +124,25 @@ router.post(
     .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Scheduled Review Date Entry!")
     .trim(),
+  body("division")
+    .if(body("division").notEmpty())
+    .matches(/^[a-zA-Z\/\- ]*$/)
+    .withMessage("Invalid Division Entry!")
+    .trim(),
   body("authority")
     .if(body("authority").notEmpty())
     .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Authority Entry!")
+    .trim(),
+  body("administrator")
+    .if(body("administrator").notEmpty())
+    .matches(/^[a-zA-Z\/\- ]*$/)
+    .withMessage("Invalid Administrator Entry!")
+    .trim(),
+  body("status")
+    .if(body("status").notEmpty())
+    .matches(/^[a-zA-Z\/\- ]*$/)
+    .withMessage("Invalid Status Entry!")
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
@@ -158,16 +168,18 @@ router.post(
         formData: {
           policyNumber: req.body.policyNumber,
           policyName: req.body.policyName,
-          cowResolve: req.body.cowResolve,
           cowDate: req.body.cowDate,
           councilResolution: req.body.councilResolution,
-          dateAdopted: req.body.dateAdopted,
+          dateApproved: req.body.dateApproved,
           dateAmended: req.body.dateAmended,
-          status: req.body.status,
+          dateEffective: req.body.dateEffective,
+          category: req.body.category,
           lastReviewDate: req.body.lastReviewDate,
           scheduledReviewDate: req.body.scheduledReviewDate,
-          category: req.body.category,
+          division: req.body.division,
           authority: req.body.authority,
+          administrator: req.body.administrator,
+          status: req.body.status,
           notes: req.body.notes,
         },
       });
@@ -176,16 +188,18 @@ router.post(
       Policy.create({
         policyNumber: req.body.policyNumber,
         policyName: req.body.policyName,
-        cowResolve: req.body.cowResolve,
         cowDate: req.body.cowDate,
         councilResolution: req.body.councilResolution,
-        dateAdopted: req.body.dateAdopted,
+        dateApproved: req.body.dateApproved,
         dateAmended: req.body.dateAmended,
-        status: req.body.status,
+        dateEffective: req.body.dateEffective,
+        category: req.body.category,
         lastReviewDate: req.body.lastReviewDate,
         scheduledReviewDate: req.body.scheduledReviewDate,
-        category: req.body.category,
+        division: req.body.division,
         authority: req.body.authority,
+        administrator: req.body.administrator,
+        status: req.body.status,
         notes: req.body.notes,
       })
         .then((results) => {
