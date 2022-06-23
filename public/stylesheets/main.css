@@ -265,3 +265,14 @@ form h4 {
   text-decoration: underline;
   font-size: 0.905rem;
 }
+
+#getExpiredTags {
+  color: #0096d6 !important;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: .85rem;
+}
+
+#filterForm {
+  margin-bottom: 5px;
+}

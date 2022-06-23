@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var moment = require("moment");
 // authHelper middleware.
 const {
   isLoggedIn,
@@ -600,5 +601,38 @@ router.get(
     }
   }
 );
+
+router.get("/expiredTags", limiter, async (req, res, next) => {
+  // server side validation.
+  const errors = validationResult(req);
+
+  // if errors is NOT empty (if there are errors...)
+  if (!errors.isEmpty()) {
+    return res.render("dogtags/expiredTags", {
+      title: "BWG | Expired Tags",
+      message: "Error!",
+      email: req.session.email,
+    });
+  } else {
+    // check if there's an error message in the session
+    let messages = req.session.messages || [];
+    // clear session messages
+    req.session.messages = [];
+
+    // db stuff.
+    dbHelpers.getExpiredTags().then((result) => {
+      // return endpoint after passing validation.
+      return res.render("dogtags/expiredTags", {
+        title: "BWG | Expired Tags",
+        errorMessages: messages,
+        email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
+        ownerID: req.session.ownerID,
+        data: result.rows,
+      });
+    });
+  }
+});
 
 module.exports = router;

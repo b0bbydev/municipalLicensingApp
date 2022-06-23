@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-sm-4">
       <h4>Filtering</h4>
-      <form method="GET">
+      <form method="GET" id="filterForm">
         <select
           class="form-select-sm"
           id="filterCategory"
@@ -48,6 +48,12 @@
           type="submit"
         >Reset</a>
       </form>
+      <div class="row">
+        <div class="col">
+          <a id="getExpiredTags" href="/dogtags/expiredTags">Get all expired
+            tags</a>
+        </div>
+      </div>
       {{#if queryCount}}
         <div>
           <strong>{{queryCount}}</strong>
