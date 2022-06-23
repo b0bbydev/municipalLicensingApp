@@ -429,7 +429,7 @@ router.post(
         },
         {
           where: {
-            dogID: req.params.id,
+            dogID: req.body.dogID,
           },
         }
       )
@@ -628,10 +628,6 @@ router.get("/expiredTags", limiter, async (req, res, next) => {
     // data from getExpiredTag query.
     var data = await dbHelpers.getExpiredTags();
 
-    // for pagination.
-    const itemCount = data.length;
-    const pageCount = Math.ceil(data.length / req.query.limit);
-
     // return endpoint after passing validation.
     return res.render("dogtags/expiredTags", {
       title: "BWG | Expired Tags",
@@ -643,11 +639,6 @@ router.get("/expiredTags", limiter, async (req, res, next) => {
       queryCount: "Records Returned: " + data.length,
       data: data,
       dropdownValues: dropdownValues,
-      pageCount,
-      itemCount,
-      pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-      prev: paginate.href(req)(true),
-      hasMorePages: paginate.hasNextPages(req)(pageCount),
     });
   }
 });

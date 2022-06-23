@@ -101,11 +101,64 @@
                   type="button"
                   class="btn btn-sm btn-secondary"
                   data-bs-toggle="modal"
-                  data-bs-target="#tagNumberModal"
-                  {{! onclick="return confirm(`Are you sure you wish to renew this license?`)" }}
+                  data-bs-target="#tagNumberModal-{{this.dogID}}"
                 >Renew</button>
               </td>
             </tr>
+            <!-- Modal -->
+            <div
+              class="modal fade"
+              id="tagNumberModal-{{this.dogID}}"
+              tabindex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <form method="POST">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Renew Dog
+                        License</h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <label for="Dog ID" class="form-label">Dog ID</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        name="dogID"
+                        value="{{this.dogID}}"
+                        readonly
+                      />
+                      <label for="Tag Number" class="form-label">Enter the new
+                        tag number</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        placeholder="Tag Number"
+                        name="tagNumber"
+                        value="{{dogInfo.tagNumber}}"
+                        required
+                      />
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >Close</button>
+                      <button type="submit" class="btn btn-primary">Submit
+                        Renewal</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
           {{/each}}
         </tbody>
       </table>
@@ -237,48 +290,4 @@
       {{/group}}
     </div>
   </section>
-
-  <!-- Modal -->
-  <div
-    class="modal fade"
-    id="tagNumberModal"
-    tabindex="-1"
-    aria-labelledby="exampleModalLabel"
-    aria-hidden="true"
-  >
-    <form method="POST">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Renew Dog License</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <label for="Tag Number" class="form-label">Enter the new tag number</label>
-            <input
-              type="number"
-              class="form-control"
-              placeholder="Tag Number"
-              name="tagNumber"
-              value="{{dogInfo.tagNumber}}"
-              required
-            />
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >Close</button>
-            <button type="submit" class="btn btn-primary">Submit Renewal</button>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
 </div>
