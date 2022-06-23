@@ -66,6 +66,11 @@ const Policy = sequelize.define("policy", {
     allowNull: true,
   },
 
+  authority: {
+    type: Sequelize.STRING(30),
+    allowNull: true,
+  },
+
   administrator: {
     type: Sequelize.STRING(30),
     allowNull: true,

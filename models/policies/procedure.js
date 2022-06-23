@@ -32,7 +32,7 @@ const Procedure = sequelize.define("procedure", {
     allowNull: true,
   },
 
-  amended: {
+  dateAmended: {
     type: Sequelize.DATEONLY,
     allowNull: true,
   },

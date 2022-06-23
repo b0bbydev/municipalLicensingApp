@@ -32,7 +32,7 @@ const Guideline = sequelize.define("guideline", {
     allowNull: true,
   },
 
-  amended: {
+  dateAmended: {
     type: Sequelize.DATEONLY,
     allowNull: true,
   },
