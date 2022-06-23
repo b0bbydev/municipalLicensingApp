@@ -3,7 +3,6 @@ const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
 const Policy = require("./policy");
-const PolicyForms = require("./policyForms");
 
 const Procedure = sequelize.define("procedure", {
   procedureID: {
@@ -51,10 +50,6 @@ const Procedure = sequelize.define("procedure", {
 
 Policy.hasMany(Procedure, {
   foreignKey: "policyID",
-});
-
-PolicyForms.hasMany(Procedure, {
-  foreignKey: "policyFormID",
 });
 
 module.exports = Procedure;

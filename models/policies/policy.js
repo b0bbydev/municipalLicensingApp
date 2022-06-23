@@ -61,6 +61,16 @@ const Policy = sequelize.define("policy", {
     allowNull: true,
   },
 
+  division: {
+    type: Sequelize.STRING(30),
+    allowNull: true,
+  },
+
+  administrator: {
+    type: Sequelize.STRING(30),
+    allowNull: true,
+  },
+
   status: {
     type: Sequelize.ENUM("Archive", "Active", "Draft"),
     allowNull: true,
