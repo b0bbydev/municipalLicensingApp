@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-var moment = require("moment");
 // authHelper middleware.
 const {
   isLoggedIn,
@@ -619,18 +618,26 @@ router.get("/expiredTags", limiter, async (req, res, next) => {
     // clear session messages
     req.session.messages = [];
 
-    // db stuff.
-    dbHelpers.getExpiredTags().then((result) => {
-      // return endpoint after passing validation.
-      return res.render("dogtags/expiredTags", {
-        title: "BWG | Expired Tags",
-        errorMessages: messages,
-        email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
-        ownerID: req.session.ownerID,
-        data: result.rows,
-      });
+    // get dropdown values.
+    var dropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 1,
+      },
+    });
+
+    // data from getExpiredTag query.
+    var data = await dbHelpers.getExpiredTags();
+
+    // return endpoint after passing validation.
+    return res.render("dogtags/expiredTags", {
+      title: "BWG | Expired Tags",
+      errorMessages: messages,
+      email: req.session.email,
+      dogAuth: req.session.dogAuth,
+      admin: req.session.admin,
+      ownerID: req.session.ownerID,
+      data: data,
+      dropdownValues: dropdownValues,
     });
   }
 });
