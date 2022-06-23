@@ -59,7 +59,7 @@ router.post(
   limiter,
   body("formName")
     .notEmpty()
-    .matches(/^[a-zA-z0-9\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\- ]*$/)
     .withMessage("Invalid Form/Dropdown Name Entry!")
     .trim(),
   async (req, res, next) => {

@@ -81,22 +81,42 @@ router.post(
     .trim(),
   body("policyName")
     .if(body("policyName").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Policy Name Entry!")
-    .trim(),
-  body("cowResolve")
-    .if(body("cowResolve").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid COW Resolve Entry!")
     .trim(),
   body("cowDate")
     .if(body("cowDate").notEmpty())
     .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid COW Date Entry!")
     .trim(),
+  body("councilResolution")
+    .if(body("councilResolution").notEmpty())
+    .matches(/^[a-zA-Z0-9\/\- ]*$/)
+    .withMessage("Invalid Council Resolution Entry!")
+    .trim(),
+  body("dateApproved")
+    .if(body("dateApproved").notEmpty())
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage("Invalid Date Approved Entry!")
+    .trim(),
+  body("dateAmended")
+    .if(body("dateAmended").notEmpty())
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage("Invalid Date Amended Entry!")
+    .trim(),
+  body("dateEffective")
+    .if(body("dateEffective").notEmpty())
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage("Invalid Date Effective Entry!")
+    .trim(),
+  body("category")
+    .if(body("category").notEmpty())
+    .matches(/^[a-zA-Z\/\- ]*$/)
+    .withMessage("Invalid Category Entry!")
+    .trim(),
   body("status")
     .if(body("status").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
   body("lastReviewDate")
@@ -109,19 +129,14 @@ router.post(
     .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Scheduled Review Date Entry!")
     .trim(),
-  body("category")
-    .if(body("category").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
-    .withMessage("Invalid Category Entry!")
-    .trim(),
   body("authority")
     .if(body("authority").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Authority Entry!")
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[a-zA-z0-9\/\-, ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-, ]*$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {

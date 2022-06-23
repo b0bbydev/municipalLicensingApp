@@ -130,22 +130,22 @@ router.post(
     .trim(),
   body("streetName")
     .if(body("address").notEmpty())
-    .matches(/^[a-zA-z. ]*$/)
+    .matches(/^[a-zA-Z. ]*$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("poBoxAptRR")
     .if(body("poBoxAptRR").notEmpty())
-    .matches(/^[a-zA-z0-9. ]*$/)
+    .matches(/^[a-zA-Z0-9. ]*$/)
     .withMessage("Invalid PO Box/Apt/RR Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[a-zA-z, ]*$/)
+    .matches(/^[a-zA-Z, ]*$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[a-zA-z0-9- ]*$/)
+    .matches(/^[a-zA-Z0-9- ]*$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   async (req, res, next) => {

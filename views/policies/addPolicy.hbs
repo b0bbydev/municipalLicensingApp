@@ -36,10 +36,9 @@
         />
       </div>
     </div>
-    <!-- COW Resolve -->
     <div class="row">
       <!-- COW Date -->
-      <div class="col-sm-12">
+      <div class="col-sm-6">
         <label for="COW Date" class="form-label">COW Date</label>
         <input
           type="date"
@@ -50,10 +49,7 @@
           required
         />
       </div>
-    </div>
-    <!-- Council Resolution -->
-    <div class="row">
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <label for="Council Resolution" class="form-label">Council Resolution</label>
         <input
           type="text"
@@ -66,15 +62,17 @@
           value="{{formData.councilResolution}}"
         />
       </div>
-      <!-- Date Adopted -->
+    </div>
+    <div class="row">
+      <!-- Date Approved -->
       <div class="col-sm-4">
-        <label for="Date Adopted" class="form-label">Date Adopted</label>
+        <label for="Date Approved" class="form-label">Date Approved</label>
         <input
           type="date"
           class="form-control"
-          placeholder="Date Adopted"
-          name="dateAdopted"
-          value="{{formData.dateAdopted}}"
+          placeholder="Date Approved"
+          name="dateApproved"
+          value="{{formData.dateApproved}}"
           required
         />
       </div>
@@ -90,14 +88,25 @@
           required
         />
       </div>
+      <!-- Date Effective -->
+      <div class="col-sm-4">
+        <label for="Date Effective" class="form-label">Date Effective</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Effective"
+          name="dateEffective"
+          value="{{formData.dateEffective}}"
+          required
+        />
+      </div>
     </div>
     <div class="row">
-      <!-- Status -->
       <div class="col-sm-4">
-        <label for="Status" class="form-label">Status</label>
-        <select class="form-select" name="status">
-          <option disabled selected>Status...</option>
-          {{#each statusDropdownValues}}
+        <label for="Category" class="form-label">Category</label>
+        <select class="form-select" name="category">
+          <option disabled selected>Category...</option>
+          {{#each categoryDropdownValues}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"
@@ -137,13 +146,27 @@
         />
       </div>
     </div>
-    <!-- Category -->
     <div class="row">
+      <!-- Division -->
       <div class="col-sm-6">
-        <label for="Category" class="form-label">Category</label>
-        <select class="form-select" name="category">
-          <option disabled selected>Category...</option>
-          {{#each categoryDropdownValues}}
+        <label for="Division" class="form-label">Division</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Division"
+          name="division"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          maxlength="40"
+          value="{{formData.division}}"
+        />
+      </div>
+      <!-- Authority -->
+      <div class="col-sm-6">
+        <label for="Authority" class="form-label">Authority</label>
+        <select class="form-select" name="authority">
+          <option disabled selected>Authority...</option>
+          {{#each authorityDropdownValues}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"
@@ -157,12 +180,28 @@
           {{/each}}
         </select>
       </div>
-      <!-- Authority -->
+    </div>
+    <div class="row">
+      <!-- Administrator -->
       <div class="col-sm-6">
-        <label for="Authority" class="form-label">Authority</label>
-        <select class="form-select" name="authority">
-          <option disabled selected>Authority...</option>
-          {{#each authorityDropdownValues}}
+        <label for="Administrator" class="form-label">Administrator</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Administrator"
+          name="administrator"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          maxlength="40"
+          value="{{formData.administrator}}"
+        />
+      </div>
+      <!-- Status -->
+      <div class="col-sm-6">
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          <option disabled selected>Status...</option>
+          {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"

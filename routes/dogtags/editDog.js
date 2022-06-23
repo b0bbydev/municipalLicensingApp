@@ -100,17 +100,17 @@ router.post(
     .trim(),
   body("dogName")
     .if(body("dogName").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Dog Name Entry!")
     .trim(),
   body("breed")
     .if(body("breed").notEmpty())
-    .matches(/^[a-zA-z\/\-,. ]*$/)
+    .matches(/^[a-zA-Z\/\-,. ]*$/)
     .withMessage("Invalid Breed Entry!")
     .trim(),
   body("colour")
     .if(body("colour").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Colour Entry!")
     .trim(),
   body("dateOfBirth")
@@ -145,17 +145,17 @@ router.post(
     .trim(),
   body("vetOffice")
     .if(body("vetOffice").notEmpty())
-    .matches(/^[a-zA-z0-9, ]*$/)
+    .matches(/^[a-zA-Z0-9, ]*$/)
     .withMessage("Invalid Vet Office Entry!")
     .trim(),
   body("vendor")
     .if(body("vendor").notEmpty())
-    .matches(/^[a-zA-z\/\- ]*$/)
+    .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Vendor Entry!")
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[\r\na-zA-z0-9\/\-, ]+/)
+    .matches(/^[\r\na-zA-Z0-9\/\-, ]+/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {
