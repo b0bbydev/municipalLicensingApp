@@ -469,25 +469,27 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      var additionalOwnerInfo = await dbHelpers.getAdditionalOwnerInfo(
-        req.params.additionalOwnerID
-      );
-
-      return res.render("dogtags/additionalOwner", {
-        title: "BWG | Additional Owner",
-        errorMessages: messages,
-        email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
-        additionalOwnerInfo: {
-          firstName: additionalOwnerInfo[0].firstName,
-          lastName: additionalOwnerInfo[0].lastName,
-          town: additionalOwnerInfo[0].town,
-          homePhone: additionalOwnerInfo[0].homePhone,
-          cellPhone: additionalOwnerInfo[0].cellPhone,
-          workPhone: additionalOwnerInfo[0].workPhone,
-          email: additionalOwnerInfo[0].email,
+      AdditionalOwner.findOne({
+        where: {
+          additionalOwnerID: req.params.additionalOwnerID,
         },
+      }).then((results) => {
+        return res.render("dogtags/additionalOwner", {
+          title: "BWG | Additional Owner",
+          errorMessages: messages,
+          email: req.session.email,
+          dogAuth: req.session.dogAuth,
+          admin: req.session.admin,
+          additionalOwnerInfo: {
+            firstName: results.firstName,
+            lastName: results.lastName,
+            town: results.town,
+            homePhone: results.homePhone,
+            cellPhone: results.cellPhone,
+            workPhone: results.workPhone,
+            email: results.email,
+          },
+        });
       });
     }
   }

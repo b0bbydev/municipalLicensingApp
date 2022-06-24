@@ -2,22 +2,14 @@ var express = require("express");
 var router = express.Router();
 // express-validate.
 const { body, validationResult } = require("express-validator");
+// request limiter.
+const limiter = require("../config/limiter");
 // AD.
 var ActiveDirectory = require("activedirectory2");
 var config = {
   url: process.env.URL,
 };
 var ad = new ActiveDirectory(config);
-// express-rate-limit.
-const rateLimit = require("express-rate-limit");
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  message: "Too many requests! Slow down!",
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
 
 /* GET login page. */
 router.get("/", limiter, function (req, res, next) {

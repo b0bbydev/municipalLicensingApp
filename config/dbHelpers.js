@@ -35,41 +35,11 @@ db.getDogNameFromDogID = (dogID) => {
   });
 };
 
-db.getAdditionalOwnerInfo = (additionalOwnerID) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "SELECT * FROM additionalowners WHERE additionalOwnerID = ?",
-      [additionalOwnerID],
-      (error, result) => {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(result);
-      }
-    );
-  });
-};
-
 db.getFormNameFromFormID = (formID) => {
   return new Promise((resolve, reject) => {
     pool.query(
       "SELECT formName FROM dropdownforms WHERE dropdownFormID = ?",
       [formID],
-      (error, result) => {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(result);
-      }
-    );
-  });
-};
-
-db.getOwnerDogs = (ownerID) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "SELECT * FROM dogs WHERE ownerID = ?",
-      [ownerID],
       (error, result) => {
         if (error) {
           return reject(error);
