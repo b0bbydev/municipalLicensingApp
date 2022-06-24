@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const { isLoggedIn } = require("../../config/authHelpers");
+// helpers.
+var funcHelpers = require("../../config/funcHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");
@@ -188,14 +190,14 @@ router.post(
       Policy.create({
         policyNumber: req.body.policyNumber,
         policyName: req.body.policyName,
-        cowDate: req.body.cowDate,
+        cowDate: funcHelpers.fixDate(req.body.cowDate),
         councilResolution: req.body.councilResolution,
-        dateApproved: req.body.dateApproved,
-        dateAmended: req.body.dateAmended,
-        dateEffective: req.body.dateEffective,
+        dateApproved: funcHelpers.fixDate(req.body.dateApproved),
+        dateAmended: funcHelpers.fixDate(req.body.dateAmended),
+        dateEffective: funcHelpers.fixDate(req.body.dateEffective),
         category: req.body.category,
-        lastReviewDate: req.body.lastReviewDate,
-        scheduledReviewDate: req.body.scheduledReviewDate,
+        lastReviewDate: funcHelpers.fixDate(req.body.lastReviewDate),
+        scheduledReviewDate: funcHelpers.fixDate(req.body.scheduledReviewDate),
         division: req.body.division,
         authority: req.body.authority,
         administrator: req.body.administrator,
@@ -209,7 +211,7 @@ router.post(
         .catch((err) => {
           return res.render("policies/addPolicy", {
             title: "BWG | Add Policy",
-            message: "Page Error! ",
+            message: "Page Error!" + err,
           });
         });
     }

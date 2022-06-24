@@ -5,4 +5,11 @@ module.exports = {
       return index === 0 ? match.toLowerCase() : match.toUpperCase();
     });
   },
+
+  fixDate: function (str) {
+    if (str === null || str === "") {
+      str = "0000-01-01";
+    }
+    return str;
+  },
 };

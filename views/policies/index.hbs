@@ -119,10 +119,12 @@
               <td>{{this.administrator}}</td>
               <td>{{this.status}}</td>
               <td>{{this.notes}}</td>
-              <td><a
+              <td class="text-nowrap"><a
                   href="/policies/editPolicy/{{this.policyID}}"
                   class="btn btn-sm btn-secondary"
-                >Edit</a></td>
+                >Edit</a>
+                |
+                <a href="#" class="btn btn-sm btn-secondary">Filehold</a></td>
             </tr>
           {{/each}}
         </tbody>
