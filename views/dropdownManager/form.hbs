@@ -11,8 +11,14 @@
           name="filterCategory"
         >
           <option disabled selected>Filter By...</option>
-          <option value="dropdownTitle">Dropdown Title</option>
-          <option value="dropdownValue">Dropdown Value</option>
+          {{#if filterCategory}}
+            <option
+              value="{{filterCategory}}"
+              selected
+            >{{filterCategory}}</option>
+          {{/if}}
+          <option value="Dropdown Title">Dropdown Title</option>
+          <option value="Dropdown Value">Dropdown Value</option>
         </select>
         <!-- filterValue input -->
         <input

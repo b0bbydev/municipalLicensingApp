@@ -4,7 +4,8 @@ const { isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const DropdownForm = require("../../models/dropdownManager/dropdownForm");
-// dbHelpers.
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 var dbHelpers = require("../../config/dbHelpers");
 // sequelize.
 const Sequelize = require("sequelize");
@@ -163,12 +164,16 @@ router.get(
             })
           );
       } else {
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
         // create filter query.
         Dropdown.findAndCountAll({
           where: {
-            [req.query.filterCategory]: {
+            [filterCategory]: {
               [Op.like]: "%" + req.query.filterValue + "%",
             },
+            dropdownFormID: req.params.id,
           },
           limit: req.query.limit,
           offset: req.skip,
@@ -185,6 +190,8 @@ router.get(
               admin: req.session.admin,
               data: results.rows,
               dropdownFormID: req.params.id,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
