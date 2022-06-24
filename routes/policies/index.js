@@ -118,6 +118,8 @@ router.get(
               dogAuth: req.session.dogAuth,
               admin: req.session.admin,
               data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
               dropdownValues: dropdownValues,
               pageCount,
               itemCount,
