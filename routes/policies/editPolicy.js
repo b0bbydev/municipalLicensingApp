@@ -66,35 +66,38 @@ router.get(
         },
       });
 
-      // populates the fields when page loads.
-      var policyInfo = await dbHelpers.getPolicyInfo(req.params.id);
-
-      return res.render("policies/editPolicy", {
-        title: "BWG | Edit Policy",
-        errorMessages: messages,
-        email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
-        statusDropdownValues: statusDropdownValues,
-        categoryDropdownValues: categoryDropdownValues,
-        authorityDropdownValues: authorityDropdownValues,
-        policyInfo: {
-          policyNumber: policyInfo[0].policyNumber,
-          policyName: policyInfo[0].policyName,
-          cowDate: policyInfo[0].cowDate,
-          councilResolution: policyInfo[0].councilResolution,
-          dateApproved: policyInfo[0].dateApproved,
-          dateAmended: policyInfo[0].dateAmended,
-          dateEffective: policyInfo[0].dateEffective,
-          category: policyInfo[0].category,
-          lastReviewDate: policyInfo[0].lastReviewDate,
-          scheduledReviewDate: policyInfo[0].scheduledReviewDate,
-          division: policyInfo[0].division,
-          authority: policyInfo[0].authority,
-          administrator: policyInfo[0].administrator,
-          status: policyInfo[0].status,
-          notes: policyInfo[0].notes,
+      Policy.findOne({
+        where: {
+          policyID: req.params.id,
         },
+      }).then((results) => {
+        return res.render("policies/editPolicy", {
+          title: "BWG | Edit Policy",
+          errorMessages: messages,
+          email: req.session.email,
+          dogAuth: req.session.dogAuth,
+          admin: req.session.admin,
+          statusDropdownValues: statusDropdownValues,
+          categoryDropdownValues: categoryDropdownValues,
+          authorityDropdownValues: authorityDropdownValues,
+          policyInfo: {
+            policyNumber: results.policyNumber,
+            policyName: results.policyName,
+            cowDate: results.cowDate,
+            councilResolution: results.councilResolution,
+            dateApproved: results.dateApproved,
+            dateAmended: results.dateAmended,
+            dateEffective: results.dateEffective,
+            category: results.category,
+            lastReviewDate: results.lastReviewDate,
+            scheduledReviewDate: results.scheduledReviewDate,
+            division: results.division,
+            authority: results.authority,
+            administrator: results.administrator,
+            status: results.status,
+            notes: results.notes,
+          },
+        });
       });
     }
   }

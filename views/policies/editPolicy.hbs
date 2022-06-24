@@ -102,6 +102,12 @@
         <label for="Category" class="form-label">Category</label>
         <select class="form-select" name="category">
           <option disabled selected>Category...</option>
+          {{#if policyInfo.category}}
+            <option
+              value="{{policyInfo.category}}"
+              selected
+            >{{policyInfo.category}}</option>
+          {{/if}}
           {{#each categoryDropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -160,6 +166,12 @@
         <label for="Authority" class="form-label">Authority</label>
         <select class="form-select" name="authority">
           <option disabled selected>Authority...</option>
+          {{#if policyInfo.authority}}
+            <option
+              value="{{policyInfo.authority}}"
+              selected
+            >{{policyInfo.authority}}</option>
+          {{/if}}
           {{#each authorityDropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -195,6 +207,12 @@
         <label for="Status" class="form-label">Status</label>
         <select class="form-select" name="status">
           <option disabled selected>Status...</option>
+          {{#if policyInfo.status}}
+            <option
+              value="{{policyInfo.status}}"
+              selected
+            >{{policyInfo.status}}</option>
+          {{/if}}
           {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
               <option

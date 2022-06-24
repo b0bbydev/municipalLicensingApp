@@ -35,56 +35,11 @@ db.getDogNameFromDogID = (dogID) => {
   });
 };
 
-db.getOwnerInfo = (ownerID) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "SELECT * FROM owners LEFT JOIN addresses on owners.ownerID = addresses.ownerID WHERE owners.ownerID = ?",
-      [ownerID],
-      (error, result) => {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(result);
-      }
-    );
-  });
-};
-
 db.getAdditionalOwnerInfo = (additionalOwnerID) => {
   return new Promise((resolve, reject) => {
     pool.query(
       "SELECT * FROM additionalowners WHERE additionalOwnerID = ?",
       [additionalOwnerID],
-      (error, result) => {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(result);
-      }
-    );
-  });
-};
-
-db.getDogInfo = (dogID) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "SELECT * FROM dogs WHERE dogID = ?",
-      [dogID],
-      (error, result) => {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(result);
-      }
-    );
-  });
-};
-
-db.getPolicyInfo = (policyID) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "SELECT * FROM policies WHERE policyID = ?",
-      [policyID],
       (error, result) => {
         if (error) {
           return reject(error);

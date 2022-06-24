@@ -61,6 +61,12 @@
           name="streetName"
         >
           <option disabled selected>Street Name...</option>
+          {{#if ownerInfo.streetName}}
+            <option
+              value="{{ownerInfo.streetName}}"
+              selected
+            >{{ownerInfo.streetName}}</option>
+          {{/if}}
           {{#each dropdownValues}}
             {{#if this.isDisabled}}
               <option

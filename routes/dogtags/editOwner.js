@@ -52,9 +52,6 @@ router.get(
       // send ownerID to session; should be safe to do so here after validation.
       req.session.ownerID = req.params.id;
 
-      // get owner information.
-      var ownerInfo = await dbHelpers.getOwnerInfo(req.session.ownerID);
-
       // get dropdown values.
       var dropdownValues = await Dropdown.findAll({
         where: {
@@ -62,27 +59,38 @@ router.get(
         },
       });
 
-      return res.render("dogtags/editOwner", {
-        title: "BWG | Edit Owner",
-        errorMessages: messages,
-        email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
-        ownerID: req.session.ownerID,
-        dropdownValues: dropdownValues,
-        ownerInfo: {
-          firstName: ownerInfo[0].firstName,
-          lastName: ownerInfo[0].lastName,
-          homePhone: ownerInfo[0].homePhone,
-          cellPhone: ownerInfo[0].cellPhone,
-          workPhone: ownerInfo[0].workPhone,
-          email: ownerInfo[0].email,
-          streetNumber: ownerInfo[0].streetNumber,
-          streetName: ownerInfo[0].streetName,
-          poBoxAptRR: ownerInfo[0].poBoxAptRR,
-          town: ownerInfo[0].town,
-          postalCode: ownerInfo[0].postalCode,
+      Owner.findOne({
+        where: {
+          ownerID: req.session.ownerID,
         },
+        include: [
+          {
+            model: Address,
+          },
+        ],
+      }).then((results) => {
+        return res.render("dogtags/editOwner", {
+          title: "BWG | Edit Owner",
+          errorMessages: messages,
+          email: req.session.email,
+          dogAuth: req.session.dogAuth,
+          admin: req.session.admin,
+          ownerID: req.session.ownerID,
+          dropdownValues: dropdownValues,
+          ownerInfo: {
+            firstName: results.firstName,
+            lastName: results.lastName,
+            homePhone: results.homePhone,
+            cellPhone: results.cellPhone,
+            workPhone: results.workPhone,
+            email: results.email,
+            streetNumber: results.addresses[0].streetNumber,
+            streetName: results.addresses[0].streetName,
+            poBoxAptRR: results.addresses[0].poBoxAptRR,
+            town: results.addresses[0].town,
+            postalCode: results.addresses[0].postalCode,
+          },
+        });
       });
     }
   }
@@ -187,6 +195,7 @@ router.post(
         },
       });
     } else {
+      // update owner.
       Owner.update(
         {
           firstName: req.body.firstName,
@@ -195,68 +204,35 @@ router.post(
           cellPhone: req.body.cellPhone,
           workPhone: req.body.workPhone,
           email: req.body.email,
-          addresses: [
-            {
-              streetNumber: req.body.streetNumber,
-              streetName: req.body.streetName,
-              poBoxAptRR: req.body.poBoxAptRR,
-              town: req.body.town,
-              postalCode: req.body.postalCode,
-            },
-          ],
         },
         {
           where: {
             ownerID: req.session.ownerID,
           },
-        },
-        {
-          include: [Address],
         }
-      ).catch((err) => {
-        return res.render("dogtags/editOwner", {
-          title: "BWG | Edit Owner",
-          message: "Page Error! ",
-        });
-      });
-
-      /* get owner information to compare with current request. */
-      var ownerInfo = await dbHelpers.getOwnerInfo(req.session.ownerID);
-
-      // if address fields are not the same. (i.e: if an address field is changed from current value in database).
-      if (
-        ownerInfo[0].streetNumber != req.body.streetNumber ||
-        ownerInfo[0].streetName != req.body.streetName ||
-        ownerInfo[0].poBoxAptRR != req.body.poBoxAptRR ||
-        ownerInfo[0].town != req.body.town ||
-        ownerInfo[0].postalCode != req.body.postalCode
-      ) {
-        Address.update(
-          {
-            streetNumber: req.body.streetNumber,
-            streetName: req.body.streetName,
-            poBoxAptRR: req.body.poBoxAptRR,
-            town: req.body.town,
-            postalCode: req.body.postalCode,
-            ownerID: req.session.ownerID,
-          },
-          {
-            where: {
-              ownerID: req.session.ownerID,
+      )
+        .then((result) => {
+          // update Address.
+          Address.update(
+            {
+              streetNumber: req.body.streetNumber,
+              streetName: req.body.streetName,
             },
-          }
-        )
-          .then((results) => {
-            // redirect back to dogtag index after success.
-            res.redirect("/dogtags");
-          })
-          .catch((err) => {
-            return res.render("dogtags/editOwner", {
-              title: "BWG | Edit Owner",
-              message: "Page Error! ",
-            });
+            {
+              where: {
+                ownerID: req.session.ownerID,
+              },
+            }
+          );
+        })
+        .catch((err) => {
+          return res.render("dogtags/editOwner", {
+            title: "BWG | Edit Owner",
+            message: "Page Error!",
           });
-      }
+        })
+        // redirect back to dogtags.
+        .then(res.redirect("/dogtags"));
     }
   }
 );

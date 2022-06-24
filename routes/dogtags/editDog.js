@@ -58,32 +58,35 @@ router.get(
       // save dogID to session.
       req.session.dogID = req.params.id;
 
-      // get dog info from custom query.
-      var dogInfo = await dbHelpers.getDogInfo(req.session.dogID);
-
-      return res.render("dogtags/editDog", {
-        title: "BWG | Edit Dog",
-        errorMessages: messages,
-        email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
-        dropdownValues: dropdownValues,
-        dogInfo: {
-          tagNumber: dogInfo[0].tagNumber,
-          dogName: dogInfo[0].dogName,
-          breed: dogInfo[0].breed,
-          colour: dogInfo[0].colour,
-          dateOfBirth: dogInfo[0].dateOfBirth,
-          gender: dogInfo[0].gender,
-          spade: dogInfo[0].spade,
-          designation: dogInfo[0].designation,
-          rabiesTagNumber: dogInfo[0].rabiesTagNumber,
-          rabiesExpiry: dogInfo[0].rabiesExpiry,
-          vetOffice: dogInfo[0].vetOffice,
-          tagRequired: dogInfo[0].tagRequired,
-          vendor: dogInfo[0].vendor,
-          notes: dogInfo[0].notes,
+      Dog.findOne({
+        where: {
+          dogID: req.session.dogID,
         },
+      }).then((results) => {
+        return res.render("dogtags/editDog", {
+          title: "BWG | Edit Dog",
+          errorMessages: messages,
+          email: req.session.email,
+          dogAuth: req.session.dogAuth,
+          admin: req.session.admin,
+          dropdownValues: dropdownValues,
+          dogInfo: {
+            tagNumber: results.tagNumber,
+            dogName: results.dogName,
+            breed: results.breed,
+            colour: results.colour,
+            dateOfBirth: results.dateOfBirth,
+            gender: results.gender,
+            spade: results.spade,
+            designation: results.designation,
+            rabiesTagNumber: results.rabiesTagNumber,
+            rabiesExpiry: results.rabiesExpiry,
+            vetOffice: results.vetOffice,
+            tagRequired: results.tagRequired,
+            vendor: results.vendor,
+            notes: results.notes,
+          },
+        });
       });
     }
   }

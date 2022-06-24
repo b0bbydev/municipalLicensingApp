@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 const { isLoggedIn } = require("../../config/authHelpers");
+// models.
+const Dropdown = require("../../models/dropdownManager/dropdown");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
 // express-rate-limit.
@@ -35,12 +37,21 @@ router.get(
       // clear session messages.
       req.session.messages = [];
 
+      // status options.
+      var statusDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 12,
+          dropdownTitle: "Status Options",
+        },
+      });
+
       return res.render("policies/editProcedure", {
         title: "BWG | Edit Procedure",
         errorMessages: messages,
         email: req.session.email,
         dogAuth: req.session.dogAuth,
         admin: req.session.admin,
+        statusDropdownValues: statusDropdownValues,
       });
     }
   }
