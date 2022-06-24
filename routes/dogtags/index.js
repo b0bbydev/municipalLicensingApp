@@ -17,7 +17,7 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 // helper.
 const funcHelpers = require("../../config/funcHelpers");
-var dbHelpers = require("../../config/dbHelpers");
+const dbHelpers = require("../../config/dbHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.

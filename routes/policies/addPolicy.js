@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const { isLoggedIn } = require("../../config/authHelpers");
 // helpers.
-var funcHelpers = require("../../config/funcHelpers");
+const funcHelpers = require("../../config/funcHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");

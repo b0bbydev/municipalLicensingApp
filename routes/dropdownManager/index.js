@@ -6,7 +6,7 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const DropdownForm = require("../../models/dropdownManager/dropdownForm");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
-var dbHelpers = require("../../config/dbHelpers");
+const dbHelpers = require("../../config/dbHelpers");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;

@@ -5,8 +5,8 @@ const { body, validationResult } = require("express-validator");
 // request limiter.
 const limiter = require("../config/limiter");
 // AD.
-var ActiveDirectory = require("activedirectory2");
-var config = {
+const ActiveDirectory = require("activedirectory2");
+const config = {
   url: process.env.URL,
 };
 var ad = new ActiveDirectory(config);
@@ -15,7 +15,6 @@ var ad = new ActiveDirectory(config);
 router.get("/", limiter, function (req, res, next) {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
-
   // clear session messages
   req.session.messages = [];
 
