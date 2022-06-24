@@ -110,11 +110,6 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
-// helper functions.
-hbs.registerHelper("ifEquals", function (arg1, arg2, options) {
-  return arg1 == arg2 ? options.fn(this) : options.inverse(this);
-});
-
 // group by helper.
 groupBy.register(hbs);
 

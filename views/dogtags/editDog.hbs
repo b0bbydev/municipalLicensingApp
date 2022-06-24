@@ -82,146 +82,208 @@
     </div>
     <!-- Gender -->
     <div class="row">
-      <label for="Gender" class="form-label">Gender</label>
+      <!-- Male -->
       <div class="col-sm-6">
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="gender"
-            value="M"
-            {{#ifEquals dogInfo.gender "M"}}
-            checked
-            {{/ifEquals}}
-          />
           <label class="form-check-label" for="Male">
             Male
           </label>
+          {{#ifCond dogInfo.gender "===" "M"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              value="M"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              value="M"
+            />
+          {{/ifCond}}
         </div>
       </div>
+      <!-- Female -->
       <div class="col-sm-6">
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="gender"
-            value="F"
-            {{#ifEquals dogInfo.gender "F"}}
-            checked
-            {{/ifEquals}}
-          />
           <label class="form-check-label" for="Female">
             Female
           </label>
+          {{#ifCond dogInfo.gender "===" "F"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              value="F"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              value="F"
+            />
+          {{/ifCond}}
         </div>
       </div>
     </div>
     <!-- Spade/Neutered -->
     <div class="row">
       <label for="Spade/Neutered" class="form-label">Spade/Neutered</label>
+      <!-- Spade -->
       <div class="col-sm-4">
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="spade"
-            value="Spade"
-            {{#ifEquals dogInfo.spade "Spade"}}
-            checked
-            {{/ifEquals}}
-          />
           <label class="form-check-label" for="Spade">
             Spade
           </label>
+          {{#ifCond dogInfo.spade "===" "Spade"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="spade"
+              value="Spade"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="spade"
+              value="Spade"
+            />
+          {{/ifCond}}
         </div>
       </div>
+      <!-- Neutered -->
       <div class="col-sm-4">
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="spade"
-            value="Neutered"
-            {{#ifEquals dogInfo.spade "Neutered"}}
-            checked
-            {{/ifEquals}}
-          />
           <label class="form-check-label" for="Neutered">
             Neutered
           </label>
+          {{#ifCond dogInfo.spade "===" "Neutered"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="spade"
+              value="Neutered"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="spade"
+              value="Neutered"
+            />
+          {{/ifCond}}
         </div>
       </div>
+      <!-- No -->
       <div class="col-sm-4">
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="spade"
-            value="No"
-            {{#ifEquals dogInfo.spade "No"}}
-            checked
-            {{/ifEquals}}
-          />
           <label class="form-check-label" for="No">
             No
           </label>
+          {{#ifCond dogInfo.spade "===" "No"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="spade"
+              value="No"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="spade"
+              value="No"
+            />
+          {{/ifCond}}
         </div>
       </div>
     </div>
     <!-- Designation -->
     <div class="row">
       <label for="Designation" class="form-label">Designation</label>
+      <!-- Service -->
       <div class="col-sm-4">
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="designation"
-            value="Service"
-            {{#ifEquals dogInfo.designation "Service"}}
-            checked
-            {{/ifEquals}}
-          />
           <label class="form-check-label" for="Service">
             Service
           </label>
+          {{#ifCond dogInfo.designation "===" "Service"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="designation"
+              value="Service"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="designation"
+              value="Service"
+            />
+          {{/ifCond}}
         </div>
       </div>
+      <!-- Dangerous -->
       <div class="col-sm-4">
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="designation"
-            value="Dangerous"
-            {{#ifEquals dogInfo.designation "Dangerous"}}
-            checked
-            {{/ifEquals}}
-          />
           <label class="form-check-label" for="Dangerous">
             Dangerous
           </label>
+          {{#ifCond dogInfo.designation "===" "Dangerous"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="designation"
+              value="Dangerous"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="designation"
+              value="Dangerous"
+            />
+          {{/ifCond}}
         </div>
       </div>
       <div class="col-sm-4">
         <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="designation"
-            value="None"
-            {{#ifEquals dogInfo.designation "None"}}
-            checked
-            {{/ifEquals}}
-          />
           <label class="form-check-label" for="None">
             None
           </label>
+          {{#ifCond dogInfo.designation "===" "None"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="designation"
+              value="None"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="designation"
+              value="None"
+            />
+          {{/ifCond}}
         </div>
       </div>
     </div>
-    <!-- Rabies Tag Number -->
     <div class="row">
+      <!-- Rabies Tag Number -->
       <div class="col-sm-6">
         <label for="Rabies Tag Number" class="form-label">Rabies Tag Number</label>
         <input
@@ -244,8 +306,8 @@
         />
       </div>
     </div>
-    <!-- Vet Office -->
     <div class="row">
+      <!-- Vet Office -->
       <div class="col">
         <label for="Vet Office" class="form-label">Vet Office</label>
         <input
@@ -260,12 +322,18 @@
         />
       </div>
     </div>
-    <!-- Tag Required -->
     <div class="row">
+      <!-- Tag Required -->
       <div class="col-sm-6">
         <label for="Tag Required" class="form-label">Tag Required</label>
         <select class="form-select" name="tagRequired">
           <option disabled selected>Tag Required...</option>
+          {{#if dogInfo.tagRequired}}
+            <option
+              value="{{dogInfo.tagRequired}}"
+              selected
+            >{{dogInfo.tagRequired}}</option>
+          {{/if}}
           {{#each dropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -280,6 +348,7 @@
           {{/each}}
         </select>
       </div>
+      <!-- Vendor -->
       <div class="col-sm-6">
         <label for="Vendor" class="form-label">Vendor</label>
         <input
@@ -294,8 +363,8 @@
         />
       </div>
     </div>
-    <!-- Notes -->
     <div class="row">
+      <!-- Notes -->
       <div class="col">
         <label for="Notes" class="form-label">Notes</label>
         <textarea

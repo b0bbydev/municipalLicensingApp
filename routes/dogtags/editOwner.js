@@ -217,6 +217,9 @@ router.post(
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
+              poBoxAptRR: req.body.poBoxAptRR,
+              town: req.body.town,
+              postalCode: req.body.postalCode,
             },
             {
               where: {
