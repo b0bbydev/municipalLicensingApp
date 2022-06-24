@@ -66,7 +66,7 @@ router.get(
         },
       });
 
-      // this helps populate the fields when page loads.
+      // populates the fields when page loads.
       var policyInfo = await dbHelpers.getPolicyInfo(req.params.id);
 
       return res.render("policies/editPolicy", {
