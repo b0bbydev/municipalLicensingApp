@@ -128,7 +128,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.render("dogtags/addDog", {
         title: "BWG | Add Dog",
-        message: errorArray[0].msg,
+        message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
         dogAuth: req.session.dogAuth,
         admin: req.session.admin,
@@ -179,7 +179,9 @@ router.post(
     } else {
       // get current date for automatic population of license.
       var issueDate = new Date();
+      // expiryDate should always be the following year, jan.31.
       var expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+
       // create dog with owner and license association.
       Dog.create({
         tagNumber: req.body.tagNumber,
@@ -200,10 +202,7 @@ router.post(
         expiryDate: expiryDate,
         ownerID: req.session.ownerID,
       })
-        .then((results) => {
-          // redirect to /dogtags
-          res.redirect("/dogtags/owner/" + req.session.ownerID);
-        })
+        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
         .catch((err) => {
           return res.render("dogtags/addDog", {
             title: "BWG | Add Dog",

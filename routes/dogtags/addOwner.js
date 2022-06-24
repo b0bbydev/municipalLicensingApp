@@ -116,7 +116,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.render("dogtags/addOwner", {
         title: "BWG | Owner",
-        message: errorArray[0].msg,
+        message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
         dogAuth: req.session.dogAuth,
         admin: req.session.admin,
@@ -137,7 +137,7 @@ router.post(
         },
       });
     } else {
-      // create owner with address association.
+      // create Owner with Address - able to as they are 'associated'/related to one another.
       Owner.create(
         {
           firstName: req.body.firstName,
@@ -160,10 +160,7 @@ router.post(
           include: [Address],
         }
       )
-        .then((results) => {
-          // redirect back to dogtag index after success.
-          res.redirect("/dogtags");
-        })
+        .then(res.redirect("/dogtags"))
         .catch((err) => {
           return res.render("dogtags/addOwner", {
             title: "BWG | Add Owner",

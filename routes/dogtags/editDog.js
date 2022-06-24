@@ -158,6 +158,13 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
+    // get dropdown values.
+    var dropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 11,
+      },
+    });
+
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("dogtags/editDog", {
@@ -166,6 +173,7 @@ router.post(
         email: req.session.email,
         dogAuth: req.session.dogAuth,
         admin: req.session.admin,
+        dropdownValues: dropdownValues,
         // if the form submission is unsuccessful, save their values.
         dogInfo: {
           tagNumber: req.body.tagNumber,
@@ -209,10 +217,7 @@ router.post(
           },
         }
       )
-        .then((results) => {
-          // redirect to /dogtags
-          res.redirect("/dogtags/owner/" + req.session.ownerID);
-        })
+        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
         .catch((err) => {
           return res.render("dogtags/editDog", {
             title: "BWG | Edit Dog",

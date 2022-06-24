@@ -218,14 +218,14 @@ router.post(
             }
           );
         })
+        // redirect back to dogtags.
+        .then(res.redirect("/dogtags"))
         .catch((err) => {
           return res.render("dogtags/editOwner", {
             title: "BWG | Edit Owner",
             message: "Page Error!",
           });
-        })
-        // redirect back to dogtags.
-        .then(res.redirect("/dogtags"));
+        });
     }
   }
 );

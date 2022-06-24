@@ -101,10 +101,7 @@ router.post(
         email: req.body.email,
         ownerID: req.session.ownerID,
       })
-        .then((results) => {
-          // redirect back to owner page after success.
-          return res.redirect("/dogtags/owner/" + req.session.ownerID);
-        })
+        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
         .catch((err) => {
           return res.render("dogtags/addAdditionalOwner", {
             title: "BWG | Add Additional Owner",

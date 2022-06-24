@@ -22,16 +22,8 @@ var dbHelpers = require("../../config/dbHelpers");
 const paginate = require("express-paginate");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
-// express-rate-limit.
-const rateLimit = require("express-rate-limit");
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  message: "Too many requests! Slow down!",
-  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
-  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
-});
+// request limiter.
+const limiter = require("../../config/limiter");
 
 /* GET /dogtags */
 router.get(
@@ -324,27 +316,23 @@ router.get(
       // send ownerID to session; should be safe to do so here after validation.
       req.session.ownerID = req.params.id;
 
-      // get ownerName.
-      var ownerName = await dbHelpers.getNameFromOwnerID(req.session.ownerID);
-
-      // error handle here as user can pass an invalid one in URL bar.
-      // if ownerName exists, concatenate names together.
-      if (ownerName[0]) {
-        ownerName = ownerName[0].firstName + " " + ownerName[0].lastName;
-      } else {
-        return res.render("dogtags/owner", {
-          title: "BWG | Owner",
-          message: "Owner Lookup Error!",
-          email: req.session.email,
-        });
-      }
-
       // get addressHistory data.
       var addressHistory = await dbHelpers.getAddressHistory(
         req.session.ownerID
       );
       // get dogHistory data.
       var dogHistory = await dbHelpers.getDogHistory(req.session.ownerID);
+
+      // get ownerName.
+      Owner.findOne({
+        attributes: ["firstName", "lastName"],
+        where: {
+          ownerID: req.session.ownerID,
+        },
+      }).then((results) => {
+        // create ownerName from results.
+        ownerName = results.firstName + " " + results.lastName;
+      });
 
       AdditionalOwner.findAndCountAll({
         limit: req.query.limit,
@@ -432,10 +420,7 @@ router.post(
           },
         }
       )
-        .then((result) => {
-          // redirect back to owner profile.
-          res.redirect("/dogtags/owner/" + req.session.ownerID);
-        })
+        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
         .catch((err) =>
           res.render("owner", {
             title: "BWG | Owner",
@@ -530,10 +515,7 @@ router.post(
           },
         }
       )
-        .then((results) => {
-          // redirect back to owner page.
-          res.redirect("/dogtags/owner/" + req.session.ownerID);
-        })
+        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
         .catch((err) =>
           res.render("dogtags/additionalOwner", {
             title: "BWG | Additional Owner",

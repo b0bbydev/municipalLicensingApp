@@ -73,13 +73,11 @@ router.post(
       DropdownForm.create({
         formName: req.body.formName,
       })
-        .then((result) => {
-          res.redirect("/dropdownManager");
-        })
+        .then(res.redirect("/dropdownManager"))
         .catch((err) => {
           return res.render("dropdownManager/index", {
             title: "BWG | Dropdown Manager",
-            message: "Page Error! ",
+            message: "Page Error!",
           });
         });
     }
