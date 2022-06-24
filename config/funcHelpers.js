@@ -7,8 +7,8 @@ module.exports = {
   },
 
   fixDate: function (str) {
-    if (str === null || str === "") {
-      str = "0000-01-01";
+    if (str === " " || str === "") {
+      str = null;
     }
     return str;
   },
