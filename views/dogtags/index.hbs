@@ -11,6 +11,12 @@
           name="filterCategory"
         >
           <option disabled selected>Filter By...</option>
+          {{#if filterCategory}}
+            <option
+              value="{{filterCategory}}"
+              selected
+            >{{filterCategory}}</option>
+          {{/if}}
           {{#each dropdownValues}}
             {{#if this.isDisabled}}
               <option
