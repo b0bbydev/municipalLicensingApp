@@ -41,6 +41,7 @@ const limiter = rateLimit({
 var policiesRouter = require("./routes/policies/index");
 var addPoliciesRouter = require("./routes/policies/addPolicy");
 var editPolicyRouter = require("./routes/policies/editPolicy");
+var editProcedureRouter = require("./routes/policies/editProcedure");
 
 /* dropdown related routes. */
 var dropdownRouter = require("./routes/dropdownManager/index");
@@ -155,6 +156,7 @@ app.use("/dropdownManager", dropdownRouter);
 app.use("/policies", policiesRouter);
 app.use("/policies/addPolicy", addPoliciesRouter);
 app.use("/policies/editPolicy", editPolicyRouter);
+app.use("/policies/editProcedure", editProcedureRouter);
 
 /* dogtag related routes. */
 app.use("/dogtags", dogTagRouter);
