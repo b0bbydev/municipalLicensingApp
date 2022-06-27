@@ -9,8 +9,8 @@
     {{/if}}
     <h4>Guideline Information</h4>
     <hr />
-    <!-- Guideline Name -->
     <div class="row">
+      <!-- Guideline Name -->
       <div class="col-sm-6">
         <label for="Guideline Name" class="form-label">Guideline Name</label>
         <input
@@ -18,6 +18,8 @@
           class="form-control"
           placeholder="Guideline Name"
           name="guidelineName"
+          value="{{guidelineInfo.guidelineName}}"
+          required
         />
       </div>
       <!-- Approval Date -->
@@ -28,7 +30,85 @@
           class="form-control"
           placeholder="Approval Date"
           name="approvalDate"
+          value="{{guidelineInfo.approvalDate}}"
         />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Last Review Date -->
+      <div class="col-sm-6">
+        <label for="Last Review Date" class="form-label">Last Review Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Last Review Date"
+          name="lastReviewDate"
+          value="{{guidelineInfo.lastReviewDate}}"
+        />
+      </div>
+      <!-- Scheduled Review Date -->
+      <div class="col-sm-6">
+        <label for="Scheduled Review Date" class="form-label">Scheduled Review
+          Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Scheduled Review Date"
+          name="scheduledReviewDate"
+          value="{{guidelineInfo.scheduledReviewDate}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Date Amended -->
+      <div class="col-sm-6">
+        <label for="Date Amended" class="form-label">Date Amended</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Amended"
+          name="dateAmended"
+          value="{{guidelineInfo.dateAmended}}"
+        />
+      </div>
+      <!-- Status -->
+      <div class="col-sm-6">
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          <option disabled selected>Status...</option>
+          {{#if guidelineInfo.status}}
+            <option
+              value="{{guidelineInfo.status}}"
+              selected
+            >{{guidelineInfo.status}}</option>
+          {{/if}}
+          {{#each statusDropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Notes -->
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{guidelineInfo.notes}}</textarea>
       </div>
     </div>
     <div class="row">

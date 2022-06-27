@@ -18,6 +18,7 @@
           class="form-control"
           placeholder="Procedure Name"
           name="procedureName"
+          value="{{procedureInfo.procedureName}}"
           required
         />
       </div>
@@ -29,6 +30,7 @@
           class="form-control"
           placeholder="Approval Date"
           name="approvalDate"
+          value="{{procedureInfo.approvalDate}}"
         />
       </div>
     </div>
@@ -41,6 +43,7 @@
           class="form-control"
           placeholder="Last Review Date"
           name="lastReviewDate"
+          value="{{procedureInfo.lastReviewDate}}"
         />
       </div>
       <!-- Scheduled Review Date -->
@@ -52,6 +55,7 @@
           class="form-control"
           placeholder="Scheduled Review Date"
           name="scheduledReviewDate"
+          value="{{procedureInfo.scheduledReviewDate}}"
         />
       </div>
     </div>
@@ -64,6 +68,7 @@
           class="form-control"
           placeholder="Date Amended"
           name="dateAmended"
+          value="{{procedureInfo.dateAmended}}"
         />
       </div>
       <!-- Status -->
@@ -71,6 +76,12 @@
         <label for="Status" class="form-label">Status</label>
         <select class="form-select" name="status">
           <option disabled selected>Status...</option>
+          {{#if procedureInfo.status}}
+            <option
+              value="{{procedureInfo.status}}"
+              selected
+            >{{procedureInfo.status}}</option>
+          {{/if}}
           {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -97,7 +108,7 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
-        >{{formData.notes}}</textarea>
+        >{{procedureInfo.notes}}</textarea>
       </div>
     </div>
     <div class="row">

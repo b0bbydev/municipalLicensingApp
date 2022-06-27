@@ -3,6 +3,7 @@ var router = express.Router();
 const { isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
+const Procedure = require("../../models/policies/procedure");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
 // request limiter.
@@ -37,13 +38,28 @@ router.get(
         },
       });
 
-      return res.render("policies/editProcedure", {
-        title: "BWG | Edit Procedure",
-        errorMessages: messages,
-        email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
-        statusDropdownValues: statusDropdownValues,
+      Procedure.findOne({
+        where: {
+          procedureID: req.params.id, // procedureID is passed into URL.
+        },
+      }).then((results) => {
+        return res.render("policies/editProcedure", {
+          title: "BWG | Edit Procedure",
+          errorMessages: messages,
+          email: req.session.email,
+          dogAuth: req.session.dogAuth,
+          admin: req.session.admin,
+          statusDropdownValues: statusDropdownValues,
+          procedureInfo: {
+            procedureName: results.procedureName,
+            approvalDate: results.approvalDate,
+            lastReviewDate: results.lastReviewDate,
+            scheduledReviewDate: results.scheduledReviewDate,
+            dateAmended: results.dateAmended,
+            status: results.status,
+            notes: results.notes,
+          },
+        });
       });
     }
   }

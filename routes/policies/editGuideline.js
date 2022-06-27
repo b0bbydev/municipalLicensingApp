@@ -1,6 +1,9 @@
 var express = require("express");
 var router = express.Router();
 const { isLoggedIn } = require("../../config/authHelpers");
+// models.
+const Dropdown = require("../../models/dropdownManager/dropdown");
+const Guideline = require("../../models/policies/guideline");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
 // request limiter.
@@ -27,12 +30,36 @@ router.get(
       // clear session messages.
       req.session.messages = [];
 
-      return res.render("policies/editGuideline", {
-        title: "BWG | Edit Guideline",
-        errorMessages: messages,
-        email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+      // status options.
+      var statusDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 12,
+          dropdownTitle: "Status Options",
+        },
+      });
+
+      Guideline.findOne({
+        where: {
+          guidelineID: req.params.id, // guidelineID is passed into URL.
+        },
+      }).then((results) => {
+        return res.render("policies/editGuideline", {
+          title: "BWG | Edit Guideline",
+          errorMessages: messages,
+          email: req.session.email,
+          dogAuth: req.session.dogAuth,
+          admin: req.session.admin,
+          statusDropdownValues: statusDropdownValues,
+          guidelineInfo: {
+            guidelineName: results.guidelineName,
+            approvalDate: results.approvalDate,
+            lastReviewDate: results.lastReviewDate,
+            scheduledReviewDate: results.scheduledReviewDate,
+            dateAmended: results.dateAmended,
+            status: results.status,
+            notes: results.notes,
+          },
+        });
       });
     }
   }
