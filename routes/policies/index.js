@@ -7,6 +7,7 @@ const Policy = require("../../models/policies/policy");
 const Procedure = require("../../models/policies/procedure");
 const Guideline = require("../../models/policies/guideline");
 // helper.
+const dbHelpers = require("../../config/dbHelpers");
 const funcHelpers = require("../../config/funcHelpers");
 // sequelize.
 const Sequelize = require("sequelize");
@@ -14,7 +15,7 @@ const Op = Sequelize.Op;
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 // request limiter.
 const limiter = require("../../config/limiter");
 
@@ -133,44 +134,117 @@ router.get(
   }
 );
 
+/* POST /policies */
+router.post(
+  "/",
+  limiter,
+  body("policyName")
+    .if(body("policyName").notEmpty())
+    .matches(/^[a-zA-Z0-9\/\-. ]*$/)
+    .withMessage("Invalid Policy Name Entry!")
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("policies", {
+        title: "BWG | Policies",
+        message: "Page Error!",
+        email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
+      });
+    } else {
+      // get the specified policy based on name.
+      Policy.findOne({
+        where: {
+          policyName: req.body.policyName,
+        },
+      }).then((results) => {
+        // redirect to unique policyHistory page.
+        return res.redirect("/policies/policyHistory/" + results.policyID);
+      });
+    }
+  }
+);
+
 /* GET /policies/policy/:id */
-router.get("/policy/:id", limiter, async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/policy/:id",
+  param("id").matches(/^\d+$/).trim(),
+  limiter,
+  async (req, res, next) => {
+    // check if there's an error message in the session
+    let messages = req.session.messages || [];
+    // clear session messages
+    req.session.messages = [];
 
-  // get related procedures.
-  let procedures = await Procedure.findAll({
-    where: {
-      policyID: req.params.id, // policyID is in URL bar.
-    },
-  });
+    // get related procedures.
+    let procedures = await Procedure.findAll({
+      where: {
+        policyID: req.params.id, // policyID is in URL bar.
+      },
+    });
 
-  // get related guidelines.
-  let guidelines = await Guideline.findAll({
-    where: {
-      policyID: req.params.id, // policyID is in URL bar.
-    },
-  });
+    // get related guidelines.
+    let guidelines = await Guideline.findAll({
+      where: {
+        policyID: req.params.id, // policyID is in URL bar.
+      },
+    });
 
-  // get current policyName.
-  let policyName = await Policy.findOne({
-    where: {
-      policyID: req.params.id,
-    },
-  });
+    // get current policyName.
+    let policyName = await Policy.findOne({
+      where: {
+        policyID: req.params.id,
+      },
+    });
 
-  return res.render("policies/policy", {
-    title: "BWG | Policy",
-    errorMessages: messages,
-    email: req.session.email,
-    dogAuth: req.session.dogAuth,
-    admin: req.session.admin,
-    procedures: procedures,
-    guidelines: guidelines,
-    policyName: policyName.policyName,
-  });
-});
+    return res.render("policies/policy", {
+      title: "BWG | Policy",
+      errorMessages: messages,
+      email: req.session.email,
+      dogAuth: req.session.dogAuth,
+      admin: req.session.admin,
+      procedures: procedures,
+      guidelines: guidelines,
+      policyName: policyName.policyName,
+    });
+  }
+);
+
+/* GET /policies/policyHistory/:id */
+router.get(
+  "/policyHistory/:id",
+  param("id").matches(/^\d+$/).trim(),
+  limiter,
+  async (req, res, next) => {
+    // check if there's an error message in the session
+    let messages = req.session.messages || [];
+    // clear session messages
+    req.session.messages = [];
+
+    // data from getPolicyHistory query.
+    var policyHistory = await dbHelpers.getPolicyHistory(req.params.id);
+
+    Policy.findOne({
+      where: {
+        policyID: req.params.id,
+      },
+    }).then((results) => {
+      return res.render("policies/policyHistory", {
+        title: "BWG | Policy History",
+        errorMessages: messages,
+        email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
+        policyName: results.policyName,
+        policyHistory: policyHistory,
+      });
+    });
+  }
+);
 
 module.exports = router;
