@@ -4,6 +4,7 @@ const { isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");
+const PolicyHistory = require("../../models/policies/policyHistory");
 const Procedure = require("../../models/policies/procedure");
 const Guideline = require("../../models/policies/guideline");
 // helper.
@@ -243,26 +244,57 @@ router.get(
     });
 
     // data from getPolicyHistory query.
-    var data = await dbHelpers.getPolicyHistory(req.params.id);
+    var policyHistory = await dbHelpers.getPolicyHistory(req.params.id);
 
-    Policy.findOne({
-      where: {
-        policyID: req.params.id,
-      },
-    }).then((results) => {
-      return res.render("policies/policyHistory", {
-        title: "BWG | Policy History",
-        errorMessages: messages,
-        email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
-        policyName: results.policyName,
-        policyID: req.params.id,
-        data: data,
-        monthDropdownValues: monthDropdownValues,
-        yearDropdownValues: yearDropdownValues,
+    // no filter params provided.
+    if (!req.query.filterMonth || !req.query.filterYear) {
+      Policy.findOne({
+        where: {
+          policyID: req.params.id,
+        },
+      }).then((results) => {
+        return res.render("policies/policyHistory", {
+          title: "BWG | Policy History",
+          errorMessages: messages,
+          email: req.session.email,
+          dogAuth: req.session.dogAuth,
+          admin: req.session.admin,
+          policyName: results.policyName,
+          policyID: req.params.id,
+          policyHistory: policyHistory,
+          monthDropdownValues: monthDropdownValues,
+          yearDropdownValues: yearDropdownValues,
+        });
       });
-    });
+    } else if (req.query.filterYear || req.query.filterMonth) {
+      // format filter options to match column name in db - via handy dandy camelize() function.
+      var filterMonth = funcHelpers.camelize(req.query.filterMonth);
+      var filterYear = funcHelpers.camelize(req.query.filterYear);
+
+      PolicyHistory.findOne({
+        where: {
+          month: {
+            [Op.like]: "%" + filterMonth + "%",
+          },
+          year: {
+            [Op.like]: "%" + filterYear + "%",
+          },
+        },
+      }).then((results) => {
+        return res.render("policies/policyHistory", {
+          title: "BWG | Policy History",
+          errorMessages: messages,
+          email: req.session.email,
+          dogAuth: req.session.dogAuth,
+          admin: req.session.admin,
+          policyName: results.policyName,
+          policyID: req.params.id,
+          policyHistory: policyHistory,
+          monthDropdownValues: monthDropdownValues,
+          yearDropdownValues: yearDropdownValues,
+        });
+      });
+    }
   }
 );
 

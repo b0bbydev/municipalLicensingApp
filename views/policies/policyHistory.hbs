@@ -1,7 +1,7 @@
 <h2>{{policyName}}</h2>
 <div class="content">
   <h4>Filtering</h4>
-  <form method="GET" id="policyHistoryForm">
+  <form method="GET" id="filterForm">
     <div class="row g-0">
       <div class="col-sm-4">
         <select
@@ -82,7 +82,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each data}}
+          {{#each policyHistory}}
             <tr>
               <td>{{this.policyNumber}}</td>
               <td>{{this.policyName}}</td>
