@@ -1,4 +1,4 @@
-<h2>Policies and Procedures</h2>
+<h2>Policies</h2>
 <div class="content">
   <div class="row">
     <div class="col-sm-4">
@@ -52,6 +52,15 @@
           type="submit"
         >Reset</a>
       </form>
+      <div class="row">
+        <div class="col">
+          <a
+            id="policyHistoryButton"
+            data-bs-toggle="modal"
+            data-bs-target="#policyHistoryModal"
+          >View History</a>
+        </div>
+      </div>
       {{#if queryCount}}
         <div>
           <strong>{{queryCount}}</strong>
@@ -151,4 +160,51 @@
       </nav>
     </div>
   </section>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="policyHistoryModal"
+    tabindex="-1"
+    aria-labelledby="policyHistoryModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Policy History Search</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <label for="Policy Name" class="form-label">Enter the name of the
+            policy</label>
+          <input
+            list="policies"
+            class="form-control"
+            placeholder="Policy Name"
+            name="policyName"
+            required
+          />
+          <datalist id="policies">
+            {{#each data}}
+              <option value="{{this.policyName}}">{{this.policyName}}</option>
+            {{/each}}
+          </datalist>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >Close</button>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

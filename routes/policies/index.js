@@ -63,7 +63,7 @@ router.get(
             const pageCount = Math.ceil(results.count / req.query.limit);
 
             return res.render("policies", {
-              title: "BWG | Policies & Procedures",
+              title: "BWG | Policies",
               errorMessages: messages,
               email: req.session.email,
               dogAuth: req.session.dogAuth,

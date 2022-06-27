@@ -259,14 +259,9 @@ form h4 {
   margin-top: 15px;
 }
 
-#additionalOwnerLinks {
-  color: #0096d6 !important;
-  cursor: pointer;
-  text-decoration: underline;
-  font-size: 0.905rem;
-}
-
-#getExpiredTags {
+#getExpiredTags,
+#additionalOwnerLinks,
+#policyHistoryButton {
   color: #0096d6 !important;
   cursor: pointer;
   text-decoration: underline;
