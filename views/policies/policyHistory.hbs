@@ -1,29 +1,110 @@
-<h2>{{policyName}} - History</h2>
+<h2>{{policyName}}</h2>
 <div class="content">
+  <h4>Filtering</h4>
+  <form method="GET" id="policyHistoryForm">
+    <div class="row g-0">
+      <div class="col-sm-4">
+        <select
+          class="form-select-sm"
+          id="filterMonth"
+          title="Month Filter"
+          name="filterMonth"
+        >
+          <option disabled selected>Month...</option>
+          {{#if filterCategory}}
+            <option
+              value="{{filterCategory}}"
+              selected
+            >{{filterCategory}}</option>
+          {{/if}}
+          {{#each monthDropdownValues}}
+            <option
+              value="{{this.dropdownValue}}"
+            >{{this.dropdownValue}}</option>
+          {{/each}}
+        </select>
+        <select
+          class="form-select-sm"
+          id="filterYear"
+          title="Year Filter"
+          name="filterYear"
+        >
+          <option disabled selected>Year...</option>
+          {{#if filterCategory}}
+            <option
+              value="{{filterCategory}}"
+              selected
+            >{{filterCategory}}</option>
+          {{/if}}
+          {{#each yearDropdownValues}}
+            <option
+              value="{{this.dropdownValue}}"
+            >{{this.dropdownValue}}</option>
+          {{/each}}
+        </select>
+        <button
+          id="filterButton"
+          class="btn btn-sm btn-primary"
+          type="submit"
+        >Search</button>
+        <a
+          id="filterButton"
+          href="/policies/policyHistory/{{policyID}}"
+          class="btn btn-sm btn-secondary"
+          type="submit"
+        >Reset</a>
+      </div>
+    </div>
+  </form>
   <section class="row">
     <div class="col-12">
       <h4>Policy History</h4>
-      {{#group policyHistory by="year"}}
-        <strong>{{{value}}}</strong>
-        <table class="sortable table table-bordered table-striped table-hover">
-          <thead>
+      <table class="sortable table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Policy Number</th>
+            <th>Policy Name</th>
+            <th>COW Date</th>
+            <th>Council Resolution</th>
+            <th>Date Approved</th>
+            <th>Date Amended</th>
+            <th>Date Effective</th>
+            <th>Category</th>
+            <th>Last Review Date</th>
+            <th>Scheduled Review Date</th>
+            <th>Division</th>
+            <th>Authority</th>
+            <th>Administrator</th>
+            <th>Status</th>
+            <th>Notes</th>
+            <th>Last Modified</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each data}}
             <tr>
-              <th>Policy ID</th>
-              <th>Last Modified</th>
-              <th>Action</th>
+              <td>{{this.policyNumber}}</td>
+              <td>{{this.policyName}}</td>
+              <td class="text-nowrap">{{this.cowDate}}</td>
+              <td>{{this.councilResolution}}</td>
+              <td>{{this.dateApproved}}</td>
+              <td>{{this.dateAmended}}</td>
+              <td>{{this.dateEffective}}</td>
+              <td>{{this.category}}</td>
+              <td>{{this.lastReviewDate}}</td>
+              <td>{{this.scheduledReviewDate}}</td>
+              <td>{{this.division}}</td>
+              <td>{{this.authority}}</td>
+              <td>{{this.administrator}}</td>
+              <td>{{this.status}}</td>
+              <td>{{this.notes}}</td>
+              <td>{{this.lastModified}}</td>
+              <td>{{this.action}}</td>
             </tr>
-          </thead>
-          <tbody>
-            {{#each items}}
-              <tr>
-                <td>{{this.policyID}}</td>
-                <td>{{this.lastModified}}</td>
-                <td>{{this.action}}</td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      {{/group}}
+          {{/each}}
+        </tbody>
+      </table>
     </div>
   </section>
 </div>

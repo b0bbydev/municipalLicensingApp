@@ -226,8 +226,24 @@ router.get(
     // clear session messages
     req.session.messages = [];
 
+    // get month dropdown values.
+    var monthDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 14,
+        dropdownTitle: "Months",
+      },
+    });
+
+    // get month dropdown values.
+    var yearDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 14,
+        dropdownTitle: "Years",
+      },
+    });
+
     // data from getPolicyHistory query.
-    var policyHistory = await dbHelpers.getPolicyHistory(req.params.id);
+    var data = await dbHelpers.getPolicyHistory(req.params.id);
 
     Policy.findOne({
       where: {
@@ -241,7 +257,10 @@ router.get(
         dogAuth: req.session.dogAuth,
         admin: req.session.admin,
         policyName: results.policyName,
-        policyHistory: policyHistory,
+        policyID: req.params.id,
+        data: data,
+        monthDropdownValues: monthDropdownValues,
+        yearDropdownValues: yearDropdownValues,
       });
     });
   }

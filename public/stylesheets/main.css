@@ -32,6 +32,10 @@ form h4 {
   padding-top: 25px;
 }
 
+input {
+  border-width: thin;
+}
+
 .content {
   background-color: #fff !important;
   margin-left: 255px;
@@ -53,6 +57,10 @@ form h4 {
 .row {
   margin-right: auto;
   margin-bottom: 5px;
+}
+
+.col-sm-1 {
+  width: 6.5% !important;
 }
 
 /* have to do all 3 elements separate */
@@ -198,10 +206,6 @@ form h4 {
 #filterButton {
   margin-bottom: 3.5px;
   margin-left: 5px;
-}
-
-#filterValue {
-  border-width: thin;
 }
 
 /* all forms */
