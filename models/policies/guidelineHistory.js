@@ -3,11 +3,13 @@ const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
 const Policy = require("./policy");
+const PolicyHistory = require("./policyHistory");
+const Guideline = require("./guideline");
 
-const PolicyHistory = sequelize.define(
-  "policyhistory",
+const GuidelineHistory = sequelize.define(
+  "guidelinehistory",
   {
-    policyHistoryID: {
+    guidelineHistoryID: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
@@ -19,43 +21,13 @@ const PolicyHistory = sequelize.define(
       allowNull: false,
     },
 
-    policyNumber: {
-      type: Sequelize.INTEGER,
-      allowNull: true,
-    },
-
-    policyName: {
+    guidelineName: {
       type: Sequelize.STRING(40),
       allowNull: true,
     },
 
-    cowDate: {
+    approvalDate: {
       type: Sequelize.DATEONLY,
-      allowNull: true,
-    },
-
-    councilResolution: {
-      type: Sequelize.STRING(30),
-      allowNull: true,
-    },
-
-    dateApproved: {
-      type: Sequelize.DATEONLY,
-      allowNull: true,
-    },
-
-    dateAmended: {
-      type: Sequelize.DATEONLY,
-      allowNull: true,
-    },
-
-    dateEffective: {
-      type: Sequelize.DATEONLY,
-      allowNull: true,
-    },
-
-    category: {
-      type: Sequelize.STRING(30),
       allowNull: true,
     },
 
@@ -69,18 +41,8 @@ const PolicyHistory = sequelize.define(
       allowNull: true,
     },
 
-    division: {
-      type: Sequelize.STRING(30),
-      allowNull: true,
-    },
-
-    authority: {
-      type: Sequelize.STRING(30),
-      allowNull: true,
-    },
-
-    administrator: {
-      type: Sequelize.STRING(30),
+    dateAmended: {
+      type: Sequelize.DATEONLY,
       allowNull: true,
     },
 
@@ -104,8 +66,16 @@ const PolicyHistory = sequelize.define(
   }
 );
 
-Policy.hasMany(PolicyHistory, {
+Policy.hasMany(GuidelineHistory, {
   foreignKey: "policyID",
 });
 
-module.exports = PolicyHistory;
+PolicyHistory.hasMany(GuidelineHistory, {
+  foreignKey: "policyHistoryID",
+});
+
+Guideline.hasMany(GuidelineHistory, {
+  foreignKey: "guidelineID",
+});
+
+module.exports = GuidelineHistory;

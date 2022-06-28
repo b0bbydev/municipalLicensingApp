@@ -65,4 +65,101 @@ router.get(
   }
 );
 
+/* POST /policies/editProcedure/:id */
+router.post(
+  "/:id",
+  limiter,
+  body("procedureName")
+    .if(body("procedureName").notEmpty())
+    .matches(/^[a-zA-Z\/\- ]*$/)
+    .withMessage("Invalid Procedure Name Entry!")
+    .trim(),
+  body("dateApproved")
+    .if(body("dateApproved").notEmpty())
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage("Invalid Date Approved Entry!")
+    .trim(),
+  body("lastReviewDate")
+    .if(body("lastReviewDate").notEmpty())
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage("Invalid Last Review Date Entry!")
+    .trim(),
+  body("scheduledReviewDate")
+    .if(body("scheduledReviewDate").notEmpty())
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage("Invalid Scheduled Review Date Entry!")
+    .trim(),
+  body("dateAmended")
+    .if(body("dateAmended").notEmpty())
+    .matches(/^\d{4}-\d{2}-\d{2}$/)
+    .withMessage("Invalid Date Amended Entry!")
+    .trim(),
+  body("status")
+    .if(body("status").notEmpty())
+    .matches(/^[a-zA-Z\/\- ]*$/)
+    .withMessage("Invalid Status Entry!")
+    .trim(),
+  body("notes")
+    .if(body("notes").notEmpty())
+    .matches(/^[a-zA-Z0-9\/\-, ]*$/)
+    .withMessage("Invalid Notes Entry!")
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
+
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("policies/editProcedure", {
+        title: "BWG | Edit Procedure",
+        message: errorArray[0].msg,
+        email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
+        // if the form submission is unsuccessful, save their values.
+        formData: {
+          procedureName: req.body.procedureName,
+          dateApproved: req.body.dateApproved,
+          lastReviewDate: req.body.lastReviewDate,
+          scheduledReviewDate: req.body.scheduledReviewDate,
+          dateAmended: req.body.dateAmended,
+          status: req.body.status,
+          notes: req.body.notes,
+        },
+      });
+    } else {
+      // db stuff.
+      Procedure.update(
+        {
+          procedureName: req.body.procedureName,
+          dateApproved: req.body.dateApproved,
+          lastReviewDate: req.body.lastReviewDate,
+          scheduledReviewDate: req.body.scheduledReviewDate,
+          dateAmended: req.body.dateAmended,
+          status: req.body.status,
+          notes: req.body.notes,
+        },
+        {
+          where: {
+            procedureID: req.params.id,
+          },
+        }
+      )
+        .then((results) => {
+          // redirect to /policies/policy/:id
+          res.redirect("/policies/policy/" + req.session.policyID);
+        })
+        .catch((err) => {
+          return res.render("policies/editProcedure", {
+            title: "BWG | Edit Procedure",
+            message: "Page Error! ",
+          });
+        });
+    }
+  }
+);
+
 module.exports = router;

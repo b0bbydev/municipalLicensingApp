@@ -3,11 +3,13 @@ const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
 const Policy = require("./policy");
+const PolicyHistory = require("./policyHistory");
+const Procedure = require("./procedure");
 
-const PolicyHistory = sequelize.define(
-  "policyhistory",
+const ProcedureHistory = sequelize.define(
+  "procedurehistory",
   {
-    policyHistoryID: {
+    procedureHistoryID: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
@@ -19,43 +21,13 @@ const PolicyHistory = sequelize.define(
       allowNull: false,
     },
 
-    policyNumber: {
-      type: Sequelize.INTEGER,
-      allowNull: true,
-    },
-
-    policyName: {
+    procedureName: {
       type: Sequelize.STRING(40),
       allowNull: true,
     },
 
-    cowDate: {
+    approvalDate: {
       type: Sequelize.DATEONLY,
-      allowNull: true,
-    },
-
-    councilResolution: {
-      type: Sequelize.STRING(30),
-      allowNull: true,
-    },
-
-    dateApproved: {
-      type: Sequelize.DATEONLY,
-      allowNull: true,
-    },
-
-    dateAmended: {
-      type: Sequelize.DATEONLY,
-      allowNull: true,
-    },
-
-    dateEffective: {
-      type: Sequelize.DATEONLY,
-      allowNull: true,
-    },
-
-    category: {
-      type: Sequelize.STRING(30),
       allowNull: true,
     },
 
@@ -69,18 +41,8 @@ const PolicyHistory = sequelize.define(
       allowNull: true,
     },
 
-    division: {
-      type: Sequelize.STRING(30),
-      allowNull: true,
-    },
-
-    authority: {
-      type: Sequelize.STRING(30),
-      allowNull: true,
-    },
-
-    administrator: {
-      type: Sequelize.STRING(30),
+    dateAmended: {
+      type: Sequelize.DATEONLY,
       allowNull: true,
     },
 
@@ -104,8 +66,16 @@ const PolicyHistory = sequelize.define(
   }
 );
 
-Policy.hasMany(PolicyHistory, {
+Policy.hasMany(ProcedureHistory, {
   foreignKey: "policyID",
 });
 
-module.exports = PolicyHistory;
+PolicyHistory.hasMany(ProcedureHistory, {
+  foreignKey: "policyHistoryID",
+});
+
+Procedure.hasMany(ProcedureHistory, {
+  foreignKey: "procedureID",
+});
+
+module.exports = ProcedureHistory;
