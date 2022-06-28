@@ -245,7 +245,6 @@ router.get(
           dropdownTitle: "Months",
         },
       });
-
       // get month dropdown values.
       var yearDropdownValues = await Dropdown.findAll({
         where: {
@@ -254,124 +253,192 @@ router.get(
         },
       });
 
-      // data from getPolicyHistory query.
-      var procedureHistory = await dbHelpers.getProcedureHistory(req.params.id);
-      var guidelineHistory = await dbHelpers.getGuidelineHistory(req.params.id);
+      //var procedureHistory = await dbHelpers.getProcedureHistory(req.params.id);
+      //var guidelineHistory = await dbHelpers.getGuidelineHistory(req.params.id);
 
-      // if filtering by year.
-      if (req.query.filterYear) {
+      // if there are no filter parameters.
+      if (!req.query.filterCategory || !req.query.filterValue) {
+        // get all owners & addresses.
         PolicyHistory.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
-          where: Sequelize.where(
-            Sequelize.fn("year", Sequelize.col("lastModified")),
-            [req.query.filterYear]
-          ),
-        }).then((results) => {
-          return res.render("policies/policyHistory", {
-            title: "BWG | Policy History",
-            errorMessages: messages,
-            email: req.session.email,
-            dogAuth: req.session.dogAuth,
-            admin: req.session.admin,
-            policyName: results.rows[0].policyName,
-            policyID: req.params.id,
-            policyHistory: results.rows,
-            procedureHistory: procedureHistory,
-            guidelineHistory: guidelineHistory,
-            monthDropdownValues: monthDropdownValues,
-            yearDropdownValues: yearDropdownValues,
-          });
-        });
-        // if filtering by month.
-      } else if (req.query.filterMonth) {
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogtags", {
+              title: "BWG | Dog Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              dogAuth: req.session.dogAuth, // authorization.
+              admin: req.session.admin, // authorization.
+              data: results.rows,
+              dropdownValues: dropdownValues,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dogtags", {
+              title: "BWG | Dogtags",
+              message: "Page Error! ",
+            })
+          );
+      } else if (req.query.filterCategory === "Address") {
         PolicyHistory.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
+          // functions in where clause, fancy.
           where: Sequelize.where(
-            Sequelize.fn("month", Sequelize.col("lastModified")),
-            [funcHelpers.monthToNumber(req.query.filterMonth)]
-          ),
-        }).then((results) => {
-          return res.render("policies/policyHistory", {
-            title: "BWG | Policy History",
-            errorMessages: messages,
-            email: req.session.email,
-            dogAuth: req.session.dogAuth,
-            admin: req.session.admin,
-            //policyName: results.rows[0].policyName,
-            policyID: req.params.id,
-            policyHistory: results.rows,
-            procedureHistory: procedureHistory,
-            guidelineHistory: guidelineHistory,
-            monthDropdownValues: monthDropdownValues,
-            yearDropdownValues: yearDropdownValues,
-          });
-        });
-      } else if (req.query.filterMonth && req.query.filterYear) {
-        PolicyHistory.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
-          // super fancy work here. - using month & year function in sequelize query.
-          where: Sequelize.where(
-            Sequelize.fn("month", Sequelize.col("lastModified")),
-            [funcHelpers.monthToNumber(req.query.filterMonth)],
+            Sequelize.fn(
+              "concat",
+              Sequelize.col("streetNumber"),
+              " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+              Sequelize.col("streetName")
+            ),
             {
-              [Op.and]: Sequelize.where(
-                Sequelize.fn("year", Sequelize.col("lastModified")),
-                [req.query.filterYear]
-              ),
+              [Op.like]: "%" + req.query.filterValue + "%",
             }
           ),
-        }).then((results) => {
-          return res.render("policies/policyHistory", {
-            title: "BWG | Policy History",
-            errorMessages: messages,
-            email: req.session.email,
-            dogAuth: req.session.dogAuth,
-            admin: req.session.admin,
-            //policyName: results.rows[0].policyName,
-            policyID: req.params.id,
-            policyHistory: results.rows,
-            procedureHistory: procedureHistory,
-            guidelineHistory: guidelineHistory,
-            monthDropdownValues: monthDropdownValues,
-            yearDropdownValues: yearDropdownValues,
-          });
-        });
-      } else if (!req.query.filterMonth || !req.query.filterYear) {
+          include: [
+            {
+              model: Address,
+            },
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogtags", {
+              title: "BWG | Dog Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              dogAuth: req.session.dogAuth, // authorization.
+              admin: req.session.admin, // authorization.
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              dropdownValues: dropdownValues,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dogtags", {
+              title: "BWG | Dogtags",
+              message: "Page Error! ",
+            })
+          );
+
+        // use a different function (SQL query) if filtering by tagNumber.
+      } else if (req.query.filterCategory === "Dog Tag Number") {
         PolicyHistory.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
           where: {
-            policyID: req.params.id,
+            $tagNumber$: req.query.filterValue,
           },
-        }).then((results) => {
-          // for pagination.
-          const itemCount = results.count;
-          const pageCount = Math.ceil(results.count / req.query.limit);
+          include: [
+            {
+              model: Dog,
+            },
+            {
+              model: Address,
+            },
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
 
-          return res.render("policies/policyHistory", {
-            title: "BWG | Policy History",
-            errorMessages: messages,
-            email: req.session.email,
-            dogAuth: req.session.dogAuth,
-            admin: req.session.admin,
-            policyName: results.rows[0].policyName,
-            policyID: req.params.id,
-            policyHistory: results.rows,
-            procedureHistory: procedureHistory,
-            guidelineHistory: guidelineHistory,
-            monthDropdownValues: monthDropdownValues,
-            yearDropdownValues: yearDropdownValues,
-            pageCount,
-            itemCount,
-            queryCount: "Records returned: " + results.count,
-            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-            prev: paginate.href(req)(true),
-            hasMorePages: paginate.hasNextPages(req)(pageCount),
-          });
-        });
+            return res.render("dogtags/search/dogTagNumberSearch", {
+              title: "BWG | Dog Tags",
+              email: req.session.email,
+              dogAuth: req.session.dogAuth,
+              admin: req.session.admin,
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              dropdownValues: dropdownValues,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dogtags", {
+              title: "BWG | Dogtags",
+              message: "Page Error! ",
+            })
+          );
+      } else {
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+        // create filter query.
+        PolicyHistory.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          where: {
+            [filterCategory]: {
+              [Op.like]: req.query.filterValue + "%",
+            },
+          },
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: Address,
+            },
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogtags", {
+              title: "BWG | Dog Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              dogAuth: req.session.dogAuth,
+              admin: req.session.admin,
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              dropdownValues: dropdownValues,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dogtags", {
+              title: "BWG | Dogtags",
+              message: "Page Error! ",
+            })
+          );
       }
     }
   }

@@ -11,11 +11,8 @@
           name="filterMonth"
         >
           <option disabled selected>Month...</option>
-          {{#if filterCategory}}
-            <option
-              value="{{filterCategory}}"
-              selected
-            >{{filterCategory}}</option>
+          {{#if filterMonth}}
+            <option value="{{filterMonth}}" selected>{{filterMonth}}</option>
           {{/if}}
           {{#each monthDropdownValues}}
             <option
@@ -30,11 +27,8 @@
           name="filterYear"
         >
           <option disabled selected>Year...</option>
-          {{#if filterCategory}}
-            <option
-              value="{{filterCategory}}"
-              selected
-            >{{filterCategory}}</option>
+          {{#if filterYear}}
+            <option value="{{filterYear}}" selected>{{filterYear}}</option>
           {{/if}}
           {{#each yearDropdownValues}}
             <option
