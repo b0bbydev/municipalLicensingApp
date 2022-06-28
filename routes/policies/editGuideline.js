@@ -155,7 +155,7 @@ router.post(
         .catch((err) => {
           return res.render("policies/editGuideline", {
             title: "BWG | Edit Guideline",
-            message: "Page Error!" + err,
+            message: "Page Error!",
           });
         });
     }

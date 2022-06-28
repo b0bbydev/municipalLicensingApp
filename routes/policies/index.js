@@ -223,84 +223,156 @@ router.get(
   param("id").matches(/^\d+$/).trim(),
   limiter,
   async (req, res, next) => {
-    // check if there's an error message in the session
-    let messages = req.session.messages || [];
-    // clear session messages
-    req.session.messages = [];
+    // server side validation.
+    const errors = validationResult(req);
 
-    // get month dropdown values.
-    var monthDropdownValues = await Dropdown.findAll({
-      where: {
-        dropdownFormID: 14,
-        dropdownTitle: "Months",
-      },
-    });
-
-    // get month dropdown values.
-    var yearDropdownValues = await Dropdown.findAll({
-      where: {
-        dropdownFormID: 14,
-        dropdownTitle: "Years",
-      },
-    });
-
-    // data from getPolicyHistory query.
-    var policyHistory = await dbHelpers.getPolicyHistory(req.params.id);
-    var procedureHistory = await dbHelpers.getProcedureHistory(req.params.id);
-    var guidelineHistory = await dbHelpers.getGuidelineHistory(req.params.id);
-
-    // no filter params provided.
-    if (!req.query.filterMonth || !req.query.filterYear) {
-      Policy.findOne({
-        where: {
-          policyID: req.params.id,
-        },
-      }).then((results) => {
-        return res.render("policies/policyHistory", {
-          title: "BWG | Policy History",
-          errorMessages: messages,
-          email: req.session.email,
-          dogAuth: req.session.dogAuth,
-          admin: req.session.admin,
-          policyName: results.policyName,
-          policyID: req.params.id,
-          policyHistory: policyHistory,
-          procedureHistory: procedureHistory,
-          guidelineHistory: guidelineHistory,
-          monthDropdownValues: monthDropdownValues,
-          yearDropdownValues: yearDropdownValues,
-        });
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags", {
+        title: "BWG | Dogtags",
+        message: "Page Error!",
       });
-    } else if (req.query.filterYear || req.query.filterMonth) {
-      // format filter options to match column name in db - via handy dandy camelize() function.
-      var filterMonth = funcHelpers.camelize(req.query.filterMonth);
-      var filterYear = funcHelpers.camelize(req.query.filterYear);
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-      PolicyHistory.findOne({
+      // get month dropdown values.
+      var monthDropdownValues = await Dropdown.findAll({
         where: {
-          month: {
-            [Op.like]: "%" + filterMonth + "%",
-          },
-          year: {
-            [Op.like]: "%" + filterYear + "%",
-          },
+          dropdownFormID: 14,
+          dropdownTitle: "Months",
         },
-      }).then((results) => {
-        return res.render("policies/policyHistory", {
-          title: "BWG | Policy History",
-          errorMessages: messages,
-          email: req.session.email,
-          dogAuth: req.session.dogAuth,
-          admin: req.session.admin,
-          policyName: results.policyName,
-          policyID: req.params.id,
-          policyHistory: policyHistory,
-          procedureHistory: procedureHistory,
-          guidelineHistory: guidelineHistory,
-          monthDropdownValues: monthDropdownValues,
-          yearDropdownValues: yearDropdownValues,
-        });
       });
+
+      // get month dropdown values.
+      var yearDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 14,
+          dropdownTitle: "Years",
+        },
+      });
+
+      // data from getPolicyHistory query.
+      var procedureHistory = await dbHelpers.getProcedureHistory(req.params.id);
+      var guidelineHistory = await dbHelpers.getGuidelineHistory(req.params.id);
+
+      // if filtering by year.
+      if (req.query.filterYear) {
+        PolicyHistory.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          where: Sequelize.where(
+            Sequelize.fn("year", Sequelize.col("lastModified")),
+            [req.query.filterYear]
+          ),
+        }).then((results) => {
+          return res.render("policies/policyHistory", {
+            title: "BWG | Policy History",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            policyName: results.rows[0].policyName,
+            policyID: req.params.id,
+            policyHistory: results.rows,
+            procedureHistory: procedureHistory,
+            guidelineHistory: guidelineHistory,
+            monthDropdownValues: monthDropdownValues,
+            yearDropdownValues: yearDropdownValues,
+          });
+        });
+        // if filtering by month.
+      } else if (req.query.filterMonth) {
+        PolicyHistory.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          where: Sequelize.where(
+            Sequelize.fn("month", Sequelize.col("lastModified")),
+            [funcHelpers.monthToNumber(req.query.filterMonth)]
+          ),
+        }).then((results) => {
+          return res.render("policies/policyHistory", {
+            title: "BWG | Policy History",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            //policyName: results.rows[0].policyName,
+            policyID: req.params.id,
+            policyHistory: results.rows,
+            procedureHistory: procedureHistory,
+            guidelineHistory: guidelineHistory,
+            monthDropdownValues: monthDropdownValues,
+            yearDropdownValues: yearDropdownValues,
+          });
+        });
+      } else if (req.query.filterMonth && req.query.filterYear) {
+        PolicyHistory.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          // super fancy work here. - using month & year function in sequelize query.
+          where: Sequelize.where(
+            Sequelize.fn("month", Sequelize.col("lastModified")),
+            [funcHelpers.monthToNumber(req.query.filterMonth)],
+            {
+              [Op.and]: Sequelize.where(
+                Sequelize.fn("year", Sequelize.col("lastModified")),
+                [req.query.filterYear]
+              ),
+            }
+          ),
+        }).then((results) => {
+          return res.render("policies/policyHistory", {
+            title: "BWG | Policy History",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            //policyName: results.rows[0].policyName,
+            policyID: req.params.id,
+            policyHistory: results.rows,
+            procedureHistory: procedureHistory,
+            guidelineHistory: guidelineHistory,
+            monthDropdownValues: monthDropdownValues,
+            yearDropdownValues: yearDropdownValues,
+          });
+        });
+      } else if (!req.query.filterMonth || !req.query.filterYear) {
+        PolicyHistory.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          where: {
+            policyID: req.params.id,
+          },
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
+
+          return res.render("policies/policyHistory", {
+            title: "BWG | Policy History",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            policyName: results.rows[0].policyName,
+            policyID: req.params.id,
+            policyHistory: results.rows,
+            procedureHistory: procedureHistory,
+            guidelineHistory: guidelineHistory,
+            monthDropdownValues: monthDropdownValues,
+            yearDropdownValues: yearDropdownValues,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        });
+      }
     }
   }
 );
