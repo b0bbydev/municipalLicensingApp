@@ -247,7 +247,9 @@ input {
 }
 
 #addressHistory,
-#dogHistory {
+#dogHistory,
+#procedureHistory,
+#guidelineHistory {
   color: #0096d6 !important;
   cursor: pointer;
   text-decoration: underline;
@@ -255,7 +257,9 @@ input {
 }
 
 #addressHistorySection,
-#dogHistorySection {
+#dogHistorySection,
+#procedureHistorySection,
+#guidelineHistorySection {
   margin-top: 25px;
 }
 

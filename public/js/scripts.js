@@ -16,6 +16,24 @@ function toggleDogHistory() {
     dogHistorySection.style.display === "none" ? "" : "none";
 }
 
+// create function to unhide the address history table.
+function toggleProcedureHistory() {
+  var procedureHistorySection = document.getElementById(
+    "procedureHistorySection"
+  );
+  procedureHistorySection.style.display =
+    procedureHistorySection.style.display === "none" ? "" : "none";
+}
+
+// create function to unhide the dog history table.
+function toggleGuidelineHistory() {
+  var guidelineHistorySection = document.getElementById(
+    "guidelineHistorySection"
+  );
+  guidelineHistorySection.style.display =
+    guidelineHistorySection.style.display === "none" ? "" : "none";
+}
+
 // create function to fill out form.
 function fillForm() {
   document.getElementById("firstName").value = "Test";

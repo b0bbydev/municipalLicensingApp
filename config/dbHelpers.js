@@ -95,6 +95,36 @@ db.getPolicyHistory = (policyID) => {
   });
 };
 
+db.getProcedureHistory = (policyID) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT *, YEAR(lastModified) as year FROM procedureHistory WHERE policyID = ? ORDER BY lastModified DESC",
+      [policyID],
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(result);
+      }
+    );
+  });
+};
+
+db.getGuidelineHistory = (policyID) => {
+  return new Promise((resolve, reject) => {
+    pool.query(
+      "SELECT *, YEAR(lastModified) as year FROM guidelineHistory WHERE policyID = ? ORDER BY lastModified DESC",
+      [policyID],
+      (error, result) => {
+        if (error) {
+          return reject(error);
+        }
+        return resolve(result);
+      }
+    );
+  });
+};
+
 db.getTagNumberHistory = (dogID) => {
   return new Promise((resolve, reject) => {
     pool.query(

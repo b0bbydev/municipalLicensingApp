@@ -79,7 +79,6 @@
             <th>Notes</th>
             <th>Last Modified</th>
             <th>Action</th>
-            <th>Procedure/Guideline History</th>
           </tr>
         </thead>
         <tbody>
@@ -102,11 +101,101 @@
               <td>{{this.notes}}</td>
               <td>{{this.lastModified}}</td>
               <td>{{this.action}}</td>
-              <td><a href="#" class="btn btn-sm btn-secondary">View</a></td>
             </tr>
           {{/each}}
         </tbody>
       </table>
+    </div>
+  </section>
+  <div class="row">
+    <div class="col">
+      <a id="procedureHistory" onclick="toggleProcedureHistory();">See procedure
+        history...</a>
+    </div>
+    <div class="col">
+      <a
+        class="float-end"
+        id="guidelineHistory"
+        onclick="toggleGuidelineHistory();"
+      >See guideline history...</a>
+    </div>
+  </div>
+
+  <section id="procedureHistorySection" class="row" style="display: none;">
+    <div class="col-12">
+      <h4>Procedure History</h4>
+      {{#group procedureHistory by="year"}}
+        <strong>{{{value}}}</strong>
+        <table class="sortable table table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Procedure Name</th>
+              <th>Approval Date</th>
+              <th>Last Review Date</th>
+              <th>Scheduled Review Date</th>
+              <th>Date Amended</th>
+              <th>Status</th>
+              <th>Notes</th>
+              <th>Action</th>
+              <th>Last Modified</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+              <tr>
+                <td>{{this.procedureName}}</td>
+                <td>{{this.approvalDate}}</td>
+                <td>{{this.lastReviewDate}}</td>
+                <td>{{this.scheduledReviewDate}}</td>
+                <td>{{this.dateAmended}}</td>
+                <td>{{this.status}}</td>
+                <td>{{this.notes}}</td>
+                <td>{{this.action}}</td>
+                <td>{{this.lastModified}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/group}}
+    </div>
+  </section>
+
+  <section id="guidelineHistorySection" class="row" style="display: none;">
+    <div class="col-12">
+      <h4>Guideline History</h4>
+      {{#group guidelineHistory by="year"}}
+        <strong>{{{value}}}</strong>
+        <table class="sortable table table-bordered table-striped table-hover">
+          <thead>
+            <tr>
+              <th>Guideline Name</th>
+              <th>Approval Date</th>
+              <th>Last Review Date</th>
+              <th>Scheduled Review Date</th>
+              <th>Date Amended</th>
+              <th>Status</th>
+              <th>Notes</th>
+              <th>Action</th>
+              <th>Last Modified</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each items}}
+              <tr>
+                <td>{{this.guidelineName}}</td>
+                <td>{{this.approvalDate}}</td>
+                <td>{{this.lastReviewDate}}</td>
+                <td>{{this.scheduledReviewDate}}</td>
+                <td>{{this.dateAmended}}</td>
+                <td>{{this.status}}</td>
+                <td>{{this.notes}}</td>
+                <td>{{this.action}}</td>
+                <td>{{this.lastModified}}</td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      {{/group}}
     </div>
   </section>
 </div>

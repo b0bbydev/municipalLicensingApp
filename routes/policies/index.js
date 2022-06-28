@@ -24,6 +24,7 @@ const limiter = require("../../config/limiter");
 router.get(
   "/",
   limiter,
+  isLoggedIn,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
@@ -245,6 +246,8 @@ router.get(
 
     // data from getPolicyHistory query.
     var policyHistory = await dbHelpers.getPolicyHistory(req.params.id);
+    var procedureHistory = await dbHelpers.getProcedureHistory(req.params.id);
+    var guidelineHistory = await dbHelpers.getGuidelineHistory(req.params.id);
 
     // no filter params provided.
     if (!req.query.filterMonth || !req.query.filterYear) {
@@ -262,6 +265,8 @@ router.get(
           policyName: results.policyName,
           policyID: req.params.id,
           policyHistory: policyHistory,
+          procedureHistory: procedureHistory,
+          guidelineHistory: guidelineHistory,
           monthDropdownValues: monthDropdownValues,
           yearDropdownValues: yearDropdownValues,
         });
@@ -290,6 +295,8 @@ router.get(
           policyName: results.policyName,
           policyID: req.params.id,
           policyHistory: policyHistory,
+          procedureHistory: procedureHistory,
+          guidelineHistory: guidelineHistory,
           monthDropdownValues: monthDropdownValues,
           yearDropdownValues: yearDropdownValues,
         });
