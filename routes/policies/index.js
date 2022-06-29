@@ -228,8 +228,8 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("dogtags", {
-        title: "BWG | Dogtags",
+      return res.render("policies/policyHistory", {
+        title: "BWG | Policy History",
         message: "Page Error!",
       });
     } else {
@@ -257,7 +257,7 @@ router.get(
       //var guidelineHistory = await dbHelpers.getGuidelineHistory(req.params.id);
 
       // if there are no filter parameters.
-      if (!req.query.filterCategory || !req.query.filterValue) {
+      if (!req.query.filterMonth || !req.query.filterYear) {
         // get all owners & addresses.
         PolicyHistory.findAndCountAll({
           limit: req.query.limit,
@@ -268,14 +268,17 @@ router.get(
             const itemCount = results.count;
             const pageCount = Math.ceil(results.count / req.query.limit);
 
-            return res.render("dogtags", {
-              title: "BWG | Dog Tags",
+            return res.render("policies/policyHistory", {
+              title: "BWG | Policy History",
               errorMessages: messages,
               email: req.session.email,
               dogAuth: req.session.dogAuth, // authorization.
               admin: req.session.admin, // authorization.
-              data: results.rows,
-              dropdownValues: dropdownValues,
+              policyHistory: results.rows,
+              policyName: results.rows[0].policyName,
+              policyID: req.session.policyID,
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -286,8 +289,8 @@ router.get(
           })
           // catch any scary errors and render page error.
           .catch((err) =>
-            res.render("dogtags", {
-              title: "BWG | Dogtags",
+            res.render("policies/policyHistory", {
+              title: "BWG | Policy History",
               message: "Page Error! ",
             })
           );
