@@ -7,8 +7,7 @@ const Policy = require("../../models/policies/policy");
 const PolicyHistory = require("../../models/policies/policyHistory");
 const Procedure = require("../../models/policies/procedure");
 const Guideline = require("../../models/policies/guideline");
-// helper.
-const dbHelpers = require("../../config/dbHelpers");
+// helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // sequelize.
 const Sequelize = require("sequelize");
@@ -19,6 +18,7 @@ const paginate = require("express-paginate");
 const { body, param, validationResult } = require("express-validator");
 // request limiter.
 const limiter = require("../../config/limiter");
+const sequelize = require("sequelize");
 
 /* GET /policies */
 router.get(
@@ -189,14 +189,12 @@ router.get(
         policyID: req.params.id, // policyID is in URL bar.
       },
     });
-
     // get related guidelines.
     let guidelines = await Guideline.findAll({
       where: {
         policyID: req.params.id, // policyID is in URL bar.
       },
     });
-
     // get current policyName.
     let policyName = await Policy.findOne({
       where: {
@@ -252,7 +250,6 @@ router.get(
           dropdownTitle: "Years",
         },
       });
-
       // get policy name.
       PolicyHistory.findOne({
         attributes: ["policyName"],
@@ -263,9 +260,6 @@ router.get(
         // create policyName from results.
         policyName = results.policyName;
       });
-
-      //var procedureHistory = await dbHelpers.getProcedureHistory(req.params.id);
-      //var guidelineHistory = await dbHelpers.getGuidelineHistory(req.params.id);
 
       // if there are no filter parameters.
       if (!req.query.filterMonth && !req.query.filterYear) {
@@ -304,8 +298,9 @@ router.get(
               message: "Page Error! ",
             })
           );
+        // if at least one exists.
       } else if (req.query.filterMonth || req.query.filterYear) {
-        /* IF ONLY FILTERING BY YEAR. */
+        /* IF ONLY YEAR. */
         if (!req.query.filterMonth) {
           PolicyHistory.findAndCountAll({
             where: Sequelize.where(
@@ -340,9 +335,8 @@ router.get(
               hasMorePages: paginate.hasNextPages(req)(pageCount),
             });
           });
-        }
-        /* IF ONLY FILTERING BY MONTH. */
-        if (!req.query.filterYear) {
+          /* IF ONLY MONTH. */
+        } else if (!req.query.filterYear) {
           PolicyHistory.findAndCountAll({
             where: Sequelize.where(
               Sequelize.fn("month", Sequelize.col("lastModified")),
@@ -350,6 +344,47 @@ router.get(
             ),
             limit: req.query.limit,
             offset: req.skip,
+          }).then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("policies/policyHistory", {
+              title: "BWG | Policy History",
+              errorMessages: messages,
+              email: req.session.email,
+              dogAuth: req.session.dogAuth,
+              admin: req.session.admin,
+              policyHistory: results.rows,
+              policyName: policyName,
+              policyID: req.session.policyID,
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
+              filterMonth: req.query.filterMonth,
+              filterYear: req.query.filterYear,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          });
+          // if both month and year filter provided.
+        } else if (req.query.filterMonth && req.query.filterYear) {
+          PolicyHistory.findAndCountAll({
+            where: {
+              [Op.and]: [
+                Sequelize.where(
+                  Sequelize.fn("year", Sequelize.col("lastModified")),
+                  [req.query.filterYear]
+                ),
+                Sequelize.where(
+                  Sequelize.fn("month", Sequelize.col("lastModified")),
+                  [funcHelpers.monthToNumber(req.query.filterMonth)]
+                ),
+              ],
+            },
           }).then((results) => {
             // for pagination.
             const itemCount = results.count;
