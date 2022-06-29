@@ -608,20 +608,46 @@ router.get("/expiredTags", limiter, async (req, res, next) => {
       },
     });
 
-    // data from getExpiredTag query.
-    var data = await dbHelpers.getExpiredTags();
+    Owner.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      include: [
+        {
+          model: Address,
+        },
+        {
+          model: Dog,
+          where: {
+            expiryDate: {
+              [Op.lte]: Date.now(),
+            },
+          },
+        },
+      ],
+      group: "firstName",
+      order: [["ownerID", "ASC"]],
+    }).then((results) => {
+      // for pagination.
+      const itemCount = results.count.length;
+      const pageCount = Math.ceil(results.count.length / req.query.limit);
 
-    // return endpoint after passing validation.
-    return res.render("dogtags/expiredTags", {
-      title: "BWG | Expired Tags",
-      errorMessages: messages,
-      email: req.session.email,
-      dogAuth: req.session.dogAuth,
-      admin: req.session.admin,
-      ownerID: req.session.ownerID,
-      queryCount: "Records Returned: " + data.length,
-      data: data,
-      dropdownValues: dropdownValues,
+      // return endpoint after passing validation.
+      return res.render("dogtags/expiredTags", {
+        title: "BWG | Expired Tags",
+        errorMessages: messages,
+        email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
+        ownerID: req.session.ownerID,
+        data: results.rows,
+        dropdownValues: dropdownValues,
+        pageCount,
+        itemCount,
+        queryCount: "Records returned: " + results.count.length,
+        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+        prev: paginate.href(req)(true),
+        hasMorePages: paginate.hasNextPages(req)(pageCount),
+      });
     });
   }
 });

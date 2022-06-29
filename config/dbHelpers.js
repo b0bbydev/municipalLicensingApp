@@ -140,18 +140,4 @@ db.getTagNumberHistory = (dogID) => {
   });
 };
 
-db.getExpiredTags = () => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "SELECT * FROM owners LEFT JOIN addresses ON owners.ownerID = addresses.ownerID LEFT JOIN dogs ON owners.ownerID = dogs.ownerID WHERE dogs.expiryDate < NOW() GROUP BY owners.firstName ORDER BY owners.ownerID",
-      (error, result) => {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(result);
-      }
-    );
-  });
-};
-
 module.exports = db;

@@ -70,10 +70,6 @@ Policy.hasMany(GuidelineHistory, {
   foreignKey: "policyID",
 });
 
-PolicyHistory.hasMany(GuidelineHistory, {
-  foreignKey: "policyHistoryID",
-});
-
 Guideline.hasMany(GuidelineHistory, {
   foreignKey: "guidelineID",
 });

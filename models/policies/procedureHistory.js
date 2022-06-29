@@ -70,10 +70,6 @@ Policy.hasMany(ProcedureHistory, {
   foreignKey: "policyID",
 });
 
-PolicyHistory.hasMany(ProcedureHistory, {
-  foreignKey: "policyHistoryID",
-});
-
 Procedure.hasMany(ProcedureHistory, {
   foreignKey: "procedureID",
 });
