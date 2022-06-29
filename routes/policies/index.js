@@ -6,7 +6,9 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");
 const PolicyHistory = require("../../models/policies/policyHistory");
 const Procedure = require("../../models/policies/procedure");
+const ProcedureHistory = require("../../models/policies/procedureHistory");
 const Guideline = require("../../models/policies/guideline");
+const GuidelineHistory = require("../../models/policies/guidelineHistory");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // sequelize.
@@ -263,116 +265,187 @@ router.get(
 
       // if there are no filter parameters.
       if (!req.query.filterMonth && !req.query.filterYear) {
-        PolicyHistory.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
-        })
-          .then((results) => {
-            // for pagination.
-            const itemCount = results.count;
-            const pageCount = Math.ceil(results.count / req.query.limit);
-
-            return res.render("policies/policyHistory", {
-              title: "BWG | Policy History",
-              errorMessages: messages,
-              email: req.session.email,
-              dogAuth: req.session.dogAuth, // authorization.
-              admin: req.session.admin, // authorization.
-              policyHistory: results.rows,
-              policyName: policyName,
-              policyID: req.session.policyID,
-              monthDropdownValues: monthDropdownValues,
-              yearDropdownValues: yearDropdownValues,
-              pageCount,
-              itemCount,
-              queryCount: "Records returned: " + results.count,
-              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-              prev: paginate.href(req)(true),
-              hasMorePages: paginate.hasNextPages(req)(pageCount),
-            });
-          })
-          // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("policies/policyHistory", {
-              title: "BWG | Policy History",
-              message: "Page Error! ",
+        ProcedureHistory.findAndCountAll({}).then((procedureHistory) => {
+          GuidelineHistory.findAndCountAll({}).then((guidelineHistory) => {
+            PolicyHistory.findAndCountAll({
+              limit: req.query.limit,
+              offset: req.skip,
             })
-          );
+              .then((policyHistory) => {
+                // for pagination.
+                const itemCount = policyHistory.count;
+                const pageCount = Math.ceil(
+                  policyHistory.count / req.query.limit
+                );
+
+                return res.render("policies/policyHistory", {
+                  title: "BWG | Policy History",
+                  errorMessages: messages,
+                  email: req.session.email,
+                  dogAuth: req.session.dogAuth, // authorization.
+                  admin: req.session.admin, // authorization.
+                  policyHistory: policyHistory.rows,
+                  procedureHistory: procedureHistory.rows,
+                  guidelineHistory: guidelineHistory.rows,
+                  policyName: policyName,
+                  policyID: req.session.policyID,
+                  monthDropdownValues: monthDropdownValues,
+                  yearDropdownValues: yearDropdownValues,
+                  pageCount,
+                  itemCount,
+                  queryCount: "Records returned: " + policyHistory.count,
+                  pages: paginate.getArrayPages(req)(
+                    5,
+                    pageCount,
+                    req.query.page
+                  ),
+                  prev: paginate.href(req)(true),
+                  hasMorePages: paginate.hasNextPages(req)(pageCount),
+                });
+              })
+              // catch any scary errors and render page error.
+              .catch((err) =>
+                res.render("policies/policyHistory", {
+                  title: "BWG | Policy History",
+                  message: "Page Error! ",
+                })
+              );
+          });
+        });
         // if at least one exists.
       } else if (req.query.filterMonth || req.query.filterYear) {
         /* IF ONLY YEAR. */
         if (!req.query.filterMonth) {
-          PolicyHistory.findAndCountAll({
+          // get procedure history.
+          ProcedureHistory.findAndCountAll({
             where: Sequelize.where(
               Sequelize.fn("year", Sequelize.col("lastModified")),
               [req.query.filterYear]
             ),
             limit: req.query.limit,
             offset: req.skip,
-          }).then((results) => {
-            // for pagination.
-            const itemCount = results.count;
-            const pageCount = Math.ceil(results.count / req.query.limit);
+          }).then((procedureHistory) => {
+            // get guideline history.
+            GuidelineHistory.findAndCountAll({
+              where: Sequelize.where(
+                Sequelize.fn("year", Sequelize.col("lastModified")),
+                [req.query.filterYear]
+              ),
+              limit: req.query.limit,
+              offset: req.skip,
+            }).then((guidelineHistory) => {
+              // get policy history.
+              PolicyHistory.findAndCountAll({
+                where: Sequelize.where(
+                  Sequelize.fn("year", Sequelize.col("lastModified")),
+                  [req.query.filterYear]
+                ),
+                limit: req.query.limit,
+                offset: req.skip,
+              }).then((policyHistory) => {
+                // for pagination.
+                const itemCount = policyHistory.count;
+                const pageCount = Math.ceil(
+                  policyHistory.count / req.query.limit
+                );
 
-            return res.render("policies/policyHistory", {
-              title: "BWG | Policy History",
-              errorMessages: messages,
-              email: req.session.email,
-              dogAuth: req.session.dogAuth,
-              admin: req.session.admin,
-              policyHistory: results.rows,
-              policyName: policyName,
-              policyID: req.session.policyID,
-              monthDropdownValues: monthDropdownValues,
-              yearDropdownValues: yearDropdownValues,
-              filterMonth: req.query.filterMonth,
-              filterYear: req.query.filterYear,
-              pageCount,
-              itemCount,
-              queryCount: "Records returned: " + results.count,
-              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-              prev: paginate.href(req)(true),
-              hasMorePages: paginate.hasNextPages(req)(pageCount),
+                return res.render("policies/policyHistory", {
+                  title: "BWG | Policy History",
+                  errorMessages: messages,
+                  email: req.session.email,
+                  dogAuth: req.session.dogAuth,
+                  admin: req.session.admin,
+                  policyHistory: policyHistory.rows,
+                  procedureHistory: procedureHistory.rows,
+                  guidelineHistory: guidelineHistory.rows,
+                  policyName: policyName,
+                  policyID: req.session.policyID,
+                  monthDropdownValues: monthDropdownValues,
+                  yearDropdownValues: yearDropdownValues,
+                  filterMonth: req.query.filterMonth,
+                  filterYear: req.query.filterYear,
+                  pageCount,
+                  itemCount,
+                  queryCount: "Records returned: " + policyHistory.count,
+                  pages: paginate.getArrayPages(req)(
+                    5,
+                    pageCount,
+                    req.query.page
+                  ),
+                  prev: paginate.href(req)(true),
+                  hasMorePages: paginate.hasNextPages(req)(pageCount),
+                });
+              });
             });
           });
           /* IF ONLY MONTH. */
         } else if (!req.query.filterYear) {
-          PolicyHistory.findAndCountAll({
+          // get procedure history.
+          ProcedureHistory.findAndCountAll({
             where: Sequelize.where(
               Sequelize.fn("month", Sequelize.col("lastModified")),
               [funcHelpers.monthToNumber(req.query.filterMonth)]
             ),
             limit: req.query.limit,
             offset: req.skip,
-          }).then((results) => {
-            // for pagination.
-            const itemCount = results.count;
-            const pageCount = Math.ceil(results.count / req.query.limit);
+          }).then((procedureHistory) => {
+            // get guideline history.
+            GuidelineHistory.findAndCountAll({
+              where: Sequelize.where(
+                Sequelize.fn("month", Sequelize.col("lastModified")),
+                [funcHelpers.monthToNumber(req.query.filterMonth)]
+              ),
+              limit: req.query.limit,
+              offset: req.skip,
+            }).then((guidelineHistory) => {
+              // get policy history.
+              PolicyHistory.findAndCountAll({
+                where: Sequelize.where(
+                  Sequelize.fn("month", Sequelize.col("lastModified")),
+                  [funcHelpers.monthToNumber(req.query.filterMonth)]
+                ),
+                limit: req.query.limit,
+                offset: req.skip,
+              }).then((policyHistory) => {
+                // for pagination.
+                const itemCount = policyHistory.count;
+                const pageCount = Math.ceil(
+                  policyHistory.count / req.query.limit
+                );
 
-            return res.render("policies/policyHistory", {
-              title: "BWG | Policy History",
-              errorMessages: messages,
-              email: req.session.email,
-              dogAuth: req.session.dogAuth,
-              admin: req.session.admin,
-              policyHistory: results.rows,
-              policyName: policyName,
-              policyID: req.session.policyID,
-              monthDropdownValues: monthDropdownValues,
-              yearDropdownValues: yearDropdownValues,
-              filterMonth: req.query.filterMonth,
-              filterYear: req.query.filterYear,
-              pageCount,
-              itemCount,
-              queryCount: "Records returned: " + results.count,
-              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-              prev: paginate.href(req)(true),
-              hasMorePages: paginate.hasNextPages(req)(pageCount),
+                return res.render("policies/policyHistory", {
+                  title: "BWG | Policy History",
+                  errorMessages: messages,
+                  email: req.session.email,
+                  dogAuth: req.session.dogAuth,
+                  admin: req.session.admin,
+                  policyHistory: policyHistory.rows,
+                  procedureHistory: procedureHistory.rows,
+                  guidelineHistory: guidelineHistory.rows,
+                  policyName: policyName,
+                  policyID: req.session.policyID,
+                  monthDropdownValues: monthDropdownValues,
+                  yearDropdownValues: yearDropdownValues,
+                  filterMonth: req.query.filterMonth,
+                  filterYear: req.query.filterYear,
+                  pageCount,
+                  itemCount,
+                  queryCount: "Records returned: " + policyHistory.count,
+                  pages: paginate.getArrayPages(req)(
+                    5,
+                    pageCount,
+                    req.query.page
+                  ),
+                  prev: paginate.href(req)(true),
+                  hasMorePages: paginate.hasNextPages(req)(pageCount),
+                });
+              });
             });
           });
           // if both month and year filter provided.
         } else if (req.query.filterMonth && req.query.filterYear) {
-          PolicyHistory.findAndCountAll({
+          // get procedure history.
+          ProcedureHistory.findAndCountAll({
             where: {
               [Op.and]: [
                 Sequelize.where(
@@ -385,30 +458,76 @@ router.get(
                 ),
               ],
             },
-          }).then((results) => {
-            // for pagination.
-            const itemCount = results.count;
-            const pageCount = Math.ceil(results.count / req.query.limit);
+            limit: req.query.limit,
+            offset: req.skip,
+          }).then((procedureHistory) => {
+            // get guideline history.
+            GuidelineHistory.findAndCountAll({
+              where: {
+                [Op.and]: [
+                  Sequelize.where(
+                    Sequelize.fn("year", Sequelize.col("lastModified")),
+                    [req.query.filterYear]
+                  ),
+                  Sequelize.where(
+                    Sequelize.fn("month", Sequelize.col("lastModified")),
+                    [funcHelpers.monthToNumber(req.query.filterMonth)]
+                  ),
+                ],
+              },
+              limit: req.query.limit,
+              offset: req.skip,
+            }).then((guidelineHistory) => {
+              // get policy history.
+              PolicyHistory.findAndCountAll({
+                where: {
+                  [Op.and]: [
+                    Sequelize.where(
+                      Sequelize.fn("year", Sequelize.col("lastModified")),
+                      [req.query.filterYear]
+                    ),
+                    Sequelize.where(
+                      Sequelize.fn("month", Sequelize.col("lastModified")),
+                      [funcHelpers.monthToNumber(req.query.filterMonth)]
+                    ),
+                  ],
+                },
+                limit: req.query.limit,
+                offset: req.skip,
+              }).then((policyHistory) => {
+                // for pagination.
+                const itemCount = policyHistory.count;
+                const pageCount = Math.ceil(
+                  policyHistory.count / req.query.limit
+                );
 
-            return res.render("policies/policyHistory", {
-              title: "BWG | Policy History",
-              errorMessages: messages,
-              email: req.session.email,
-              dogAuth: req.session.dogAuth,
-              admin: req.session.admin,
-              policyHistory: results.rows,
-              policyName: policyName,
-              policyID: req.session.policyID,
-              monthDropdownValues: monthDropdownValues,
-              yearDropdownValues: yearDropdownValues,
-              filterMonth: req.query.filterMonth,
-              filterYear: req.query.filterYear,
-              pageCount,
-              itemCount,
-              queryCount: "Records returned: " + results.count,
-              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-              prev: paginate.href(req)(true),
-              hasMorePages: paginate.hasNextPages(req)(pageCount),
+                return res.render("policies/policyHistory", {
+                  title: "BWG | Policy History",
+                  errorMessages: messages,
+                  email: req.session.email,
+                  dogAuth: req.session.dogAuth,
+                  admin: req.session.admin,
+                  policyHistory: policyHistory.rows,
+                  procedureHistory: procedureHistory.rows,
+                  guidelineHistory: guidelineHistory.rows,
+                  policyName: policyName,
+                  policyID: req.session.policyID,
+                  monthDropdownValues: monthDropdownValues,
+                  yearDropdownValues: yearDropdownValues,
+                  filterMonth: req.query.filterMonth,
+                  filterYear: req.query.filterYear,
+                  pageCount,
+                  itemCount,
+                  queryCount: "Records returned: " + policyHistory.count,
+                  pages: paginate.getArrayPages(req)(
+                    5,
+                    pageCount,
+                    req.query.page
+                  ),
+                  prev: paginate.href(req)(true),
+                  hasMorePages: paginate.hasNextPages(req)(pageCount),
+                });
+              });
             });
           });
         }
