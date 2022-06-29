@@ -1,4 +1,4 @@
-<h2>Expired Tags</h2>
+<h2>Owners With Expired Tags</h2>
 <div class="content">
   <div class="row">
     <div class="col-sm-4">
@@ -43,7 +43,7 @@
         >Search</button>
         <a
           id="filterButton"
-          href="/dogtags"
+          href="/dogtags/expiredTags"
           class="btn btn-sm btn-secondary"
           type="submit"
         >Reset</a>
@@ -92,11 +92,13 @@
               <td>{{this.lastName}}</td>
               <td class="text-nowrap">{{this.homePhone}}</td>
               <td>{{this.email}}</td>
-              <td>{{this.streetNumber}}</td>
-              <td>{{this.streetName}}</td>
-              <td>{{this.poBoxAptRR}}</td>
-              <td>{{this.town}}</td>
-              <td>{{this.postalCode}}</td>
+              {{#each addresses}}
+                <td>{{this.streetNumber}}</td>
+                <td>{{this.streetName}}</td>
+                <td>{{this.poBoxAptRR}}</td>
+                <td>{{this.town}}</td>
+                <td>{{this.postalCode}}</td>
+              {{/each}}
             </tr>
           {{/each}}
         </tbody>

@@ -584,72 +584,283 @@ router.get(
   }
 );
 
-router.get("/expiredTags", limiter, async (req, res, next) => {
-  // server side validation.
-  const errors = validationResult(req);
+/* GET /dogtags/expiredTags */
+router.get(
+  "/expiredTags",
+  limiter,
+  body("filterCategory")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  body("filterValue")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // if errors is NOT empty (if there are errors...)
-  if (!errors.isEmpty()) {
-    return res.render("dogtags/expiredTags", {
-      title: "BWG | Expired Tags",
-      message: "Error!",
-      email: req.session.email,
-    });
-  } else {
-    // check if there's an error message in the session
-    let messages = req.session.messages || [];
-    // clear session messages
-    req.session.messages = [];
-
-    // get dropdown values.
-    var dropdownValues = await Dropdown.findAll({
-      where: {
-        dropdownFormID: 1,
-      },
-    });
-
-    Owner.findAndCountAll({
-      limit: req.query.limit,
-      offset: req.skip,
-      include: [
-        {
-          model: Address,
-        },
-        {
-          model: Dog,
-          where: {
-            expiryDate: {
-              [Op.lte]: Date.now(),
-            },
-          },
-        },
-      ],
-      group: "firstName",
-      order: [["ownerID", "ASC"]],
-    }).then((results) => {
-      // for pagination.
-      const itemCount = results.count.length;
-      const pageCount = Math.ceil(results.count.length / req.query.limit);
-
-      // return endpoint after passing validation.
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
       return res.render("dogtags/expiredTags", {
         title: "BWG | Expired Tags",
-        errorMessages: messages,
+        message: "Error!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
-        ownerID: req.session.ownerID,
-        data: results.rows,
-        dropdownValues: dropdownValues,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count.length,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
       });
-    });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // get dropdown values.
+      var dropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 1,
+        },
+      });
+
+      // if there are no filter parameters.
+      if (!req.query.filterCategory || !req.query.filterValue) {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: Address,
+            },
+            {
+              model: Dog,
+              where: {
+                expiryDate: {
+                  [Op.lte]: Date.now(),
+                },
+              },
+            },
+          ],
+          group: "firstName",
+          order: [["ownerID", "ASC"]],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count.length;
+          const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+          // return endpoint after passing validation.
+          return res.render("dogtags/expiredTags", {
+            title: "BWG | Expired Tags",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            ownerID: req.session.ownerID,
+            data: results.rows,
+            dropdownValues: dropdownValues,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count.length,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        });
+      } else if (req.query.filterCategory === "Address") {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: Address,
+              where: Sequelize.where(
+                Sequelize.fn(
+                  "concat",
+                  Sequelize.col("streetNumber"),
+                  " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+                  Sequelize.col("streetName")
+                ),
+                {
+                  [Op.like]: "%" + req.query.filterValue + "%",
+                }
+              ),
+            },
+            {
+              model: Dog,
+              where: {
+                expiryDate: {
+                  [Op.lte]: Date.now(),
+                },
+              },
+            },
+          ],
+          group: "firstName",
+          order: [["ownerID", "ASC"]],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count.length;
+          const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+          // return endpoint after passing validation.
+          return res.render("dogtags/expiredTags", {
+            title: "BWG | Expired Tags",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            ownerID: req.session.ownerID,
+            data: results.rows,
+            dropdownValues: dropdownValues,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count.length,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        });
+      } else if (req.query.filterCategory === "Dog Tag Number") {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: Address,
+            },
+            {
+              model: Dog,
+              where: {
+                expiryDate: {
+                  [Op.lte]: Date.now(),
+                },
+                [Op.and]: {
+                  tagNumber: req.query.filterValue,
+                },
+              },
+            },
+          ],
+          group: "firstName",
+          order: [["ownerID", "ASC"]],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count.length;
+          const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+          // return endpoint after passing validation.
+          return res.render("dogtags/expiredTags", {
+            title: "BWG | Expired Tags",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            ownerID: req.session.ownerID,
+            data: results.rows,
+            dropdownValues: dropdownValues,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count.length,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        });
+      } else if (req.query.filterCategory === "Additional Owner Name") {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: Address,
+            },
+            {
+              model: AdditionalOwner,
+              where: {
+                [Op.or]: {
+                  firstName: {
+                    [Op.like]: "%" + req.query.filterValue + "%",
+                  },
+                  lastName: {
+                    [Op.like]: "%" + req.query.filterValue + "%",
+                  },
+                },
+              },
+            },
+            {
+              model: Dog,
+            },
+          ],
+          order: [["ownerID", "ASC"]],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
+
+          // return endpoint after passing validation.
+          return res.render("dogtags/expiredTags", {
+            title: "BWG | Expired Tags",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            ownerID: req.session.ownerID,
+            data: results.rows,
+            dropdownValues: dropdownValues,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        });
+      } else {
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          where: {
+            [filterCategory]: {
+              [Op.like]: req.query.filterValue + "%",
+            },
+          },
+          include: [
+            {
+              model: Address,
+            },
+            {
+              model: Dog,
+              where: {
+                expiryDate: {
+                  [Op.lte]: Date.now(),
+                },
+              },
+            },
+          ],
+          group: "firstName",
+          order: [["ownerID", "ASC"]],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count.length;
+          const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+          // return endpoint after passing validation.
+          return res.render("dogtags/expiredTags", {
+            title: "BWG | Expired Tags",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            ownerID: req.session.ownerID,
+            data: results.rows,
+            dropdownValues: dropdownValues,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count.length,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        });
+      }
+    }
   }
-});
+);
 
 module.exports = router;
