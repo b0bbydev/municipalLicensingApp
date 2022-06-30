@@ -166,10 +166,17 @@ router.post(
         where: {
           policyName: req.body.policyName,
         },
-      }).then((results) => {
-        // redirect to unique policyHistory page.
-        return res.redirect("/policies/policyHistory/" + results.policyID);
-      });
+      })
+        .then((results) => {
+          // redirect to unique policyHistory page.
+          return res.redirect("/policies/policyHistory/" + results.policyID);
+        }) // catch any scary errors and render page error.
+        .catch((err) =>
+          res.render("policies/policyHistory", {
+            title: "BWG | Policy History",
+            message: "Page Error!",
+          })
+        );
     }
   }
 );
@@ -253,93 +260,124 @@ router.get(
         },
       });
       // get policy name.
-      PolicyHistory.findOne({
+      Policy.findOne({
         attributes: ["policyName"],
         where: {
-          policyID: req.session.policyID,
+          policyID: req.params.id,
         },
-      }).then((results) => {
-        // create policyName from results.
-        policyName = results.policyName;
-      });
+      })
+        .then((results) => {
+          policyName = results.policyName;
+        })
+        .catch((err) => {
+          return res.render("policies/policyHistory", {
+            title: "BWG | Policy History",
+            message: "Page Error!",
+          });
+        });
 
       // if there are no filter parameters.
       if (!req.query.filterMonth && !req.query.filterYear) {
-        ProcedureHistory.findAndCountAll({}).then((procedureHistory) => {
-          GuidelineHistory.findAndCountAll({}).then((guidelineHistory) => {
-            PolicyHistory.findAndCountAll({
+        PolicyHistory.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          where: {
+            policyID: req.params.id,
+          },
+        }).then((policyHistory) => {
+          GuidelineHistory.findAndCountAll({
+            limit: req.query.limit,
+            offset: req.skip,
+            where: {
+              policyID: req.params.id,
+            },
+          }).then((guidelineHistory) => {
+            ProcedureHistory.findAndCountAll({
               limit: req.query.limit,
               offset: req.skip,
-            })
-              .then((policyHistory) => {
-                // for pagination.
-                const itemCount = policyHistory.count;
-                const pageCount = Math.ceil(
-                  policyHistory.count / req.query.limit
-                );
-
-                return res.render("policies/policyHistory", {
-                  title: "BWG | Policy History",
-                  errorMessages: messages,
-                  email: req.session.email,
-                  dogAuth: req.session.dogAuth, // authorization.
-                  admin: req.session.admin, // authorization.
-                  policyHistory: policyHistory.rows,
-                  procedureHistory: procedureHistory.rows,
-                  guidelineHistory: guidelineHistory.rows,
-                  policyName: policyName,
-                  policyID: req.session.policyID,
-                  monthDropdownValues: monthDropdownValues,
-                  yearDropdownValues: yearDropdownValues,
-                  pageCount,
-                  itemCount,
-                  queryCount: "Records returned: " + policyHistory.count,
-                  pages: paginate.getArrayPages(req)(
-                    5,
-                    pageCount,
-                    req.query.page
-                  ),
-                  prev: paginate.href(req)(true),
-                  hasMorePages: paginate.hasNextPages(req)(pageCount),
-                });
-              })
-              // catch any scary errors and render page error.
-              .catch((err) =>
-                res.render("policies/policyHistory", {
-                  title: "BWG | Policy History",
-                  message: "Page Error! ",
-                })
+              where: {
+                policyID: req.params.id,
+              },
+            }).then((procedureHistory) => {
+              // for pagination.
+              const itemCount = policyHistory.count;
+              const pageCount = Math.ceil(
+                policyHistory.count / req.query.limit
               );
+
+              return res.render("policies/policyHistory", {
+                title: "BWG | Policy History",
+                errorMessages: messages,
+                email: req.session.email,
+                dogAuth: req.session.dogAuth, // authorization.
+                admin: req.session.admin, // authorization.
+                policyHistory: policyHistory.rows,
+                policyName: policyName,
+                procedureHistory: procedureHistory.rows,
+                guidelineHistory: guidelineHistory.rows,
+                policyID: req.params.id,
+                monthDropdownValues: monthDropdownValues,
+                yearDropdownValues: yearDropdownValues,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + policyHistory.count,
+                pages: paginate.getArrayPages(req)(
+                  5,
+                  pageCount,
+                  req.query.page
+                ),
+                prev: paginate.href(req)(true),
+                hasMorePages: paginate.hasNextPages(req)(pageCount),
+              });
+            });
           });
         });
-        // if at least one exists.
+        // if at least one filter exists.
       } else if (req.query.filterMonth || req.query.filterYear) {
         /* IF ONLY YEAR. */
         if (!req.query.filterMonth) {
           // get procedure history.
           ProcedureHistory.findAndCountAll({
-            where: Sequelize.where(
-              Sequelize.fn("year", Sequelize.col("lastModified")),
-              [req.query.filterYear]
-            ),
+            where: {
+              // where policyID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              [Op.and]: [
+                { policyID: req.params.id },
+                Sequelize.where(
+                  Sequelize.fn("year", Sequelize.col("lastModified")),
+                  [req.query.filterYear]
+                ),
+              ],
+            },
             limit: req.query.limit,
             offset: req.skip,
           }).then((procedureHistory) => {
             // get guideline history.
             GuidelineHistory.findAndCountAll({
-              where: Sequelize.where(
-                Sequelize.fn("year", Sequelize.col("lastModified")),
-                [req.query.filterYear]
-              ),
+              where: {
+                // where policyID = req.params.id AND year(lastModifed) = req.query.filterYear.
+                [Op.and]: [
+                  { policyID: req.params.id },
+                  Sequelize.where(
+                    Sequelize.fn("year", Sequelize.col("lastModified")),
+                    [req.query.filterYear]
+                  ),
+                ],
+              },
               limit: req.query.limit,
               offset: req.skip,
             }).then((guidelineHistory) => {
               // get policy history.
               PolicyHistory.findAndCountAll({
-                where: Sequelize.where(
-                  Sequelize.fn("year", Sequelize.col("lastModified")),
-                  [req.query.filterYear]
-                ),
+                where: {
+                  // where policyID = req.params.id AND year(lastModifed) = req.query.filterYear.
+                  [Op.and]: [
+                    { policyID: req.params.id },
+                    Sequelize.where(
+                      Sequelize.fn("year", Sequelize.col("lastModified")),
+                      [req.query.filterYear]
+                    ),
+                  ],
+                },
                 limit: req.query.limit,
                 offset: req.skip,
               }).then((policyHistory) => {
@@ -356,10 +394,10 @@ router.get(
                   dogAuth: req.session.dogAuth,
                   admin: req.session.admin,
                   policyHistory: policyHistory.rows,
+                  policyName: policyName,
                   procedureHistory: procedureHistory.rows,
                   guidelineHistory: guidelineHistory.rows,
-                  policyName: policyName,
-                  policyID: req.session.policyID,
+                  policyID: req.params.id,
                   monthDropdownValues: monthDropdownValues,
                   yearDropdownValues: yearDropdownValues,
                   filterMonth: req.query.filterMonth,
@@ -382,28 +420,46 @@ router.get(
         } else if (!req.query.filterYear) {
           // get procedure history.
           ProcedureHistory.findAndCountAll({
-            where: Sequelize.where(
-              Sequelize.fn("month", Sequelize.col("lastModified")),
-              [funcHelpers.monthToNumber(req.query.filterMonth)]
-            ),
+            where: {
+              // where policyID = req.params.id AND month(lastModifed) = req.query.filterMonth.
+              [Op.and]: [
+                { policyID: req.params.id },
+                Sequelize.where(
+                  Sequelize.fn("month", Sequelize.col("lastModified")),
+                  [funcHelpers.monthToNumber(req.query.filterMonth)]
+                ),
+              ],
+            },
             limit: req.query.limit,
             offset: req.skip,
           }).then((procedureHistory) => {
             // get guideline history.
             GuidelineHistory.findAndCountAll({
-              where: Sequelize.where(
-                Sequelize.fn("month", Sequelize.col("lastModified")),
-                [funcHelpers.monthToNumber(req.query.filterMonth)]
-              ),
+              where: {
+                // where policyID = req.params.id AND month(lastModifed) = req.query.filterMonth.
+                [Op.and]: [
+                  { policyID: req.params.id },
+                  Sequelize.where(
+                    Sequelize.fn("month", Sequelize.col("lastModified")),
+                    [funcHelpers.monthToNumber(req.query.filterMonth)]
+                  ),
+                ],
+              },
               limit: req.query.limit,
               offset: req.skip,
             }).then((guidelineHistory) => {
               // get policy history.
               PolicyHistory.findAndCountAll({
-                where: Sequelize.where(
-                  Sequelize.fn("month", Sequelize.col("lastModified")),
-                  [funcHelpers.monthToNumber(req.query.filterMonth)]
-                ),
+                where: {
+                  // where policyID = req.params.id AND month(lastModifed) = req.query.filterMonth.
+                  [Op.and]: [
+                    { policyID: req.params.id },
+                    Sequelize.where(
+                      Sequelize.fn("month", Sequelize.col("lastModified")),
+                      [funcHelpers.monthToNumber(req.query.filterMonth)]
+                    ),
+                  ],
+                },
                 limit: req.query.limit,
                 offset: req.skip,
               }).then((policyHistory) => {
@@ -420,10 +476,10 @@ router.get(
                   dogAuth: req.session.dogAuth,
                   admin: req.session.admin,
                   policyHistory: policyHistory.rows,
+                  policyName: policyName,
                   procedureHistory: procedureHistory.rows,
                   guidelineHistory: guidelineHistory.rows,
-                  policyName: policyName,
-                  policyID: req.session.policyID,
+                  policyID: req.params.id,
                   monthDropdownValues: monthDropdownValues,
                   yearDropdownValues: yearDropdownValues,
                   filterMonth: req.query.filterMonth,
@@ -448,6 +504,7 @@ router.get(
           ProcedureHistory.findAndCountAll({
             where: {
               [Op.and]: [
+                { policyID: req.params.id },
                 Sequelize.where(
                   Sequelize.fn("year", Sequelize.col("lastModified")),
                   [req.query.filterYear]
@@ -465,6 +522,7 @@ router.get(
             GuidelineHistory.findAndCountAll({
               where: {
                 [Op.and]: [
+                  { policyID: req.params.id },
                   Sequelize.where(
                     Sequelize.fn("year", Sequelize.col("lastModified")),
                     [req.query.filterYear]
@@ -482,6 +540,7 @@ router.get(
               PolicyHistory.findAndCountAll({
                 where: {
                   [Op.and]: [
+                    { policyID: req.params.id },
                     Sequelize.where(
                       Sequelize.fn("year", Sequelize.col("lastModified")),
                       [req.query.filterYear]
@@ -508,10 +567,10 @@ router.get(
                   dogAuth: req.session.dogAuth,
                   admin: req.session.admin,
                   policyHistory: policyHistory.rows,
+                  policyName: policyName,
                   procedureHistory: procedureHistory.rows,
                   guidelineHistory: guidelineHistory.rows,
-                  policyName: policyName,
-                  policyID: req.session.policyID,
+                  policyID: req.params.id,
                   monthDropdownValues: monthDropdownValues,
                   yearDropdownValues: yearDropdownValues,
                   filterMonth: req.query.filterMonth,
