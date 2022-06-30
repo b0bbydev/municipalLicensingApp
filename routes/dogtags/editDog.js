@@ -107,7 +107,7 @@ router.post(
     .withMessage("Invalid Colour Entry!")
     .trim(),
   body("dateOfBirth")
-    .if(body("dateOfBirth").notEmpty())
+    .if(body("dateOfBirth").exists())
     .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Date Of Birth Entry!")
     .trim(),
@@ -132,7 +132,7 @@ router.post(
     .withMessage("Invalid Rabies Tag Number Entry!")
     .trim(),
   body("rabiesExpiry")
-    .if(body("rabiesExpiry").notEmpty())
+    .if(body("rabiesExpiry").exists())
     .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Rabies Expiry Entry!")
     .trim(),
@@ -217,11 +217,13 @@ router.post(
           },
         }
       )
-        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
+        .then((result) => {
+          res.redirect("/dogtags/owner/" + req.session.ownerID);
+        })
         .catch((err) => {
           return res.render("dogtags/editDog", {
             title: "BWG | Edit Dog",
-            message: "Page Error! ",
+            message: "Page Error!" + err,
           });
         });
     }

@@ -73,7 +73,7 @@ router.post(
     .withMessage("Invalid Colour Entry!")
     .trim(),
   body("dateOfBirth")
-    .if(body("dateOfBirth").notEmpty())
+    .if(body("dateOfBirth").exists())
     .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Date Of Birth Entry!")
     .trim(),
