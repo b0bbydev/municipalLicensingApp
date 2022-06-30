@@ -22,7 +22,14 @@ module.exports = {
   },
 
   dogLicenseAuth: function (req, res, next) {
-    const emails = ["echisholm@townofbwg.com", "momarques@townofbwg.com"];
+    const emails = [
+      "echisholm@townofbwg.com",
+      "momarques@townofbwg.com",
+      "blee@townofbwg.com",
+      "treynolds@townofbwg.com",
+      "lfortune@townofbwg.com",
+      "rmurphy@townofbwg.com",
+    ];
 
     // if the session email is in "whitelist", set session 'auth' == true.
     if (emails.includes(req.session.email)) {
