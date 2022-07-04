@@ -35,7 +35,7 @@ router.post("/", limiter, (req, res) => {
     // render login page with error message.
     return res.render("login", {
       title: "BWG",
-      message: "Invalid email and/or password!" + errors[0],
+      message: "Invalid email and/or password!",
       layout: "hideLayout.hbs",
     });
   } else {
@@ -52,7 +52,7 @@ router.post("/", limiter, (req, res) => {
         // render login page with error message.
         return res.render("login", {
           title: "BWG",
-          message: "Login Error!" + err,
+          message: "Login Error!",
           layout: "hideLayout.hbs",
         });
       }
@@ -64,7 +64,7 @@ router.post("/", limiter, (req, res) => {
         // render login page with error message.
         return res.render("login", {
           title: "BWG",
-          message: "Login Error!" + err,
+          message: "Login Error!",
           layout: "hideLayout.hbs",
         });
       }

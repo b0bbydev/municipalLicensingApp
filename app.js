@@ -139,6 +139,11 @@ hbs.registerHelper("formatDate", function (str) {
   return moment(str).format("YYYY-MM-DD h:mm:ss A");
 });
 
+// return lowercase string.
+hbs.registerHelper("lowercase", function (str) {
+  return str.toLowerCase();
+});
+
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);

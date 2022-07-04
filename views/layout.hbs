@@ -43,7 +43,7 @@
         <p class="text-center">
           <i class="icon-blue icon-large bi bi-person-fill"></i>
           Current User:
-          {{email}}
+          {{lowercase email}}
         </p>
       {{/if}}
     </div>
@@ -58,7 +58,6 @@
         </a>
       </div>
     {{/ifCond}}
-    {{#ifCond admin "||" dogAuth}}
       <div class="menu-item">
         <a href="/dogtags">
           <div class="menu-text">
@@ -75,8 +74,6 @@
           </div>
         </a>
       </div>
-    {{/ifCond}}
-    {{#ifCond admin "||" policyAuth}}
       <div class="menu-item">
         <a href="/policies">
           <div class="menu-text">
@@ -85,7 +82,6 @@
           </div>
         </a>
       </div>
-    {{/ifCond}}
     <!-- added logout class to anchor to bottom of page -->
     <div class="menu-item logout">
       <a href="/logout">
