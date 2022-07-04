@@ -99,7 +99,7 @@
               <td>{{this.administrator}}</td>
               <td>{{this.status}}</td>
               <td>{{this.notes}}</td>
-              <td>{{this.lastModified}}</td>
+              <td>{{formatDate this.lastModified}}</td>
               <td>{{this.action}}</td>
             </tr>
           {{/each}}
@@ -151,7 +151,7 @@
                 <td>{{this.status}}</td>
                 <td>{{this.notes}}</td>
                 <td>{{this.action}}</td>
-                <td>{{this.lastModified}}</td>
+                <td>{{formatDate this.lastModified}}</td>
               </tr>
             {{/each}}
           </tbody>
@@ -190,7 +190,7 @@
                 <td>{{this.status}}</td>
                 <td>{{this.notes}}</td>
                 <td>{{this.action}}</td>
-                <td>{{this.lastModified}}</td>
+                <td>{{formatDate this.lastModified}}</td>
               </tr>
             {{/each}}
           </tbody>

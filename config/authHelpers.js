@@ -12,7 +12,7 @@ module.exports = {
     const emails = ["bjonkman@townofbwg.com", "charbour@townofbwg.com"];
 
     // if the session email is in "whitelist", set session 'admin' == true.
-    if (emails.includes(req.session.email)) {
+    if (emails.includes(req.session.email.toLowerCase())) {
       req.session.admin = true;
       next();
     } else {
@@ -32,7 +32,7 @@ module.exports = {
     ];
 
     // if the session email is in "whitelist", set session 'auth' == true.
-    if (emails.includes(req.session.email)) {
+    if (emails.includes(req.session.email.toLowerCase())) {
       req.session.dogAuth = true;
       next();
     } else {

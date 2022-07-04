@@ -284,7 +284,7 @@ router.get(
           where: {
             policyID: req.params.id,
           },
-          order: ["lastModified"],
+          order: [["lastModified", "DESC"]],
         }).then((policyHistory) => {
           GuidelineHistory.findAndCountAll({
             limit: req.query.limit,

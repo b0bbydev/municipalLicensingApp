@@ -28,6 +28,7 @@ var loginRouter = require("./routes/login");
 var indexRouter = require("./routes/index");
 // request limiter.
 const limiter = require("./config/limiter");
+var moment = require("moment");
 
 /* policies related routes. */
 var policiesRouter = require("./routes/policies/index");
@@ -131,6 +132,11 @@ hbs.registerHelper("ifCond", function (v1, operator, v2, options) {
     default:
       return options.inverse(this);
   }
+});
+
+// formats dates, mostly used for lastModifed columns.
+hbs.registerHelper("formatDate", function (str) {
+  return moment(str).format("YYYY-MM-DD h:mm:ss A");
 });
 
 // use routes here.
