@@ -10,7 +10,7 @@ const {
 const limiter = require("../config/limiter");
 
 /* GET home page. */
-router.get("/", limiter, adminAuth, dogLicenseAuth, function (req, res, next) {
+router.get("/", limiter, function (req, res, next) {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages

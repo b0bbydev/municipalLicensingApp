@@ -25,7 +25,6 @@ const limiter = require("../../config/limiter");
 router.get(
   "/",
   limiter,
-  isLoggedIn,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
