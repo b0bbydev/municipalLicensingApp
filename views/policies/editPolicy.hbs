@@ -98,15 +98,18 @@
       </div>
     </div>
     <div class="row">
+      <!-- Category -->
       <div class="col-sm-4">
         <label for="Category" class="form-label">Category</label>
         <select class="form-select" name="category">
-          <option disabled selected>Category...</option>
           {{#if policyInfo.category}}
             <option
               value="{{policyInfo.category}}"
+              disabled
               selected
             >{{policyInfo.category}}</option>
+          {{else}}
+            <option disabled selected>Category...</option>
           {{/if}}
           {{#each categoryDropdownValues}}
             {{#if this.isDisabled}}
@@ -165,12 +168,14 @@
       <div class="col-sm-6">
         <label for="Authority" class="form-label">Authority</label>
         <select class="form-select" name="authority">
-          <option disabled selected>Authority...</option>
           {{#if policyInfo.authority}}
             <option
               value="{{policyInfo.authority}}"
+              disabled
               selected
             >{{policyInfo.authority}}</option>
+          {{else}}
+            <option disabled selected>Authority...</option>
           {{/if}}
           {{#each authorityDropdownValues}}
             {{#if this.isDisabled}}
@@ -206,12 +211,14 @@
       <div class="col-sm-6">
         <label for="Status" class="form-label">Status</label>
         <select class="form-select" name="status">
-          <option disabled selected>Status...</option>
           {{#if policyInfo.status}}
             <option
               value="{{policyInfo.status}}"
+              disabled
               selected
             >{{policyInfo.status}}</option>
+          {{else}}
+            <option disabled selected>Status...</option>
           {{/if}}
           {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
