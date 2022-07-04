@@ -234,7 +234,7 @@ router.get(
           .catch((err) =>
             res.render("dogtags", {
               title: "BWG | Dogtags",
-              message: "Page Error! ",
+              message: "Page Error!",
             })
           );
       } else {
