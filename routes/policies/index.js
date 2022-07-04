@@ -20,7 +20,6 @@ const paginate = require("express-paginate");
 const { body, param, validationResult } = require("express-validator");
 // request limiter.
 const limiter = require("../../config/limiter");
-const sequelize = require("sequelize");
 
 /* GET /policies */
 router.get(
@@ -220,6 +219,7 @@ router.get(
       procedures: procedures,
       guidelines: guidelines,
       policyName: policyName.policyName,
+      policyID: req.params.id,
     });
   }
 );
@@ -284,6 +284,7 @@ router.get(
           where: {
             policyID: req.params.id,
           },
+          order: ["lastModified"],
         }).then((policyHistory) => {
           GuidelineHistory.findAndCountAll({
             limit: req.query.limit,
