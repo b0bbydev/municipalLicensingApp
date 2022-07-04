@@ -12,7 +12,7 @@
     <!-- Tag Number -->
     <div class="row">
       <div class="col-sm-6">
-        <label for="Tag Number" class="form-label">Tag Number</label>
+        <label for="Tag Number" class="form-label">Tag Number*</label>
         <input
           type="number"
           class="form-control"
@@ -70,13 +70,14 @@
     <!-- Date of Birth -->
     <div class="row">
       <div class="col-sm-12">
-        <label for="Date Of Birth" class="form-label">Date Of Birth</label>
+        <label for="Date Of Birth" class="form-label">Date Of Birth*</label>
         <input
           type="date"
           class="form-control"
           placeholder="Date Of Birth"
           name="dateOfBirth"
           value="{{dogInfo.dateOfBirth}}"
+          required
         />
       </div>
     </div>
@@ -296,13 +297,14 @@
       </div>
       <!-- Rabies Expiry -->
       <div class="col-sm-6">
-        <label for="Rabies Expiry" class="form-label">Rabies Expiry</label>
+        <label for="Rabies Expiry" class="form-label">Rabies Expiry*</label>
         <input
           type="date"
           class="form-control"
           name="rabiesExpiry"
           placeholder="Rabies Expiry"
           value="{{dogInfo.rabiesExpiry}}"
+          required
         />
       </div>
     </div>
