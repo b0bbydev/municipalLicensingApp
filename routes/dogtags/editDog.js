@@ -52,32 +52,39 @@ router.get(
         where: {
           dogID: req.session.dogID,
         },
-      }).then((results) => {
-        return res.render("dogtags/editDog", {
-          title: "BWG | Edit Dog",
-          errorMessages: messages,
-          email: req.session.email,
-          dogAuth: req.session.dogAuth,
-          admin: req.session.admin,
-          dropdownValues: dropdownValues,
-          dogInfo: {
-            tagNumber: results.tagNumber,
-            dogName: results.dogName,
-            breed: results.breed,
-            colour: results.colour,
-            dateOfBirth: results.dateOfBirth,
-            gender: results.gender,
-            spade: results.spade,
-            designation: results.designation,
-            rabiesTagNumber: results.rabiesTagNumber,
-            rabiesExpiry: results.rabiesExpiry,
-            vetOffice: results.vetOffice,
-            tagRequired: results.tagRequired,
-            vendor: results.vendor,
-            notes: results.notes,
-          },
+      })
+        .then((results) => {
+          return res.render("dogtags/editDog", {
+            title: "BWG | Edit Dog",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            dropdownValues: dropdownValues,
+            dogInfo: {
+              tagNumber: results.tagNumber,
+              dogName: results.dogName,
+              breed: results.breed,
+              colour: results.colour,
+              dateOfBirth: results.dateOfBirth,
+              gender: results.gender,
+              spade: results.spade,
+              designation: results.designation,
+              rabiesTagNumber: results.rabiesTagNumber,
+              rabiesExpiry: results.rabiesExpiry,
+              vetOffice: results.vetOffice,
+              tagRequired: results.tagRequired,
+              vendor: results.vendor,
+              notes: results.notes,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("dogtags/editDog", {
+            title: "BWG | Edit Dog",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

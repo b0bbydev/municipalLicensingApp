@@ -58,30 +58,37 @@ router.get(
             model: Address,
           },
         ],
-      }).then((results) => {
-        return res.render("dogtags/editOwner", {
-          title: "BWG | Edit Owner",
-          errorMessages: messages,
-          email: req.session.email,
-          dogAuth: req.session.dogAuth,
-          admin: req.session.admin,
-          ownerID: req.session.ownerID,
-          dropdownValues: dropdownValues,
-          ownerInfo: {
-            firstName: results.firstName,
-            lastName: results.lastName,
-            homePhone: results.homePhone,
-            cellPhone: results.cellPhone,
-            workPhone: results.workPhone,
-            email: results.email,
-            streetNumber: results.addresses[0].streetNumber,
-            streetName: results.addresses[0].streetName,
-            poBoxAptRR: results.addresses[0].poBoxAptRR,
-            town: results.addresses[0].town,
-            postalCode: results.addresses[0].postalCode,
-          },
+      })
+        .then((results) => {
+          return res.render("dogtags/editOwner", {
+            title: "BWG | Edit Owner",
+            errorMessages: messages,
+            email: req.session.email,
+            dogAuth: req.session.dogAuth,
+            admin: req.session.admin,
+            ownerID: req.session.ownerID,
+            dropdownValues: dropdownValues,
+            ownerInfo: {
+              firstName: results.firstName,
+              lastName: results.lastName,
+              homePhone: results.homePhone,
+              cellPhone: results.cellPhone,
+              workPhone: results.workPhone,
+              email: results.email,
+              streetNumber: results.addresses[0].streetNumber,
+              streetName: results.addresses[0].streetName,
+              poBoxAptRR: results.addresses[0].poBoxAptRR,
+              town: results.addresses[0].town,
+              postalCode: results.addresses[0].postalCode,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("dogtags/editOwner", {
+            title: "BWG | Edit Owner",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );
