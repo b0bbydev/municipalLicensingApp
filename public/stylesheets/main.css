@@ -4,7 +4,7 @@ a {
 }
 
 table {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
 input {
@@ -16,7 +16,9 @@ td {
   word-break: break-all;
 }
 
-.nav-item:hover {
+.nav-item:hover,
+.nav-item-home:hover,
+.nav-item-logout:hover {
   transition: 0.2s ease-in;
   background-color: rgba(230, 230, 230, 1);
 }
@@ -28,19 +30,43 @@ td {
   border-bottom: 1px solid #dedede;
 }
 
+.nav-item-home {
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-top: 1px solid #dedede;
+  border-bottom: 1px solid #dedede;
+}
+
+.nav-item-logout {
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-top: 1px solid #dedede;
+}
+
+.nav-item-back {
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-top: 1px solid #dedede;
+  border-bottom: none;
+}
+
+
 /* have to do all 3 elements separate */
-.back:hover {
+.nav-item-back:hover {
   transition: 0.2s ease-in;
   background-color: rgba(0, 150, 214, .75) !important;
   color: white;
 }
 
-.back:hover {
+.nav-item-back:hover {
   transition: 0.2s ease-in;
   color: white;
 }
 
-.back:hover .icon-large {
+.nav-item-back:hover .icon-large {
   transition: 0.2s ease-in;
   color: white !important;
 }
@@ -70,11 +96,6 @@ td {
   color: white !important;
 }
 
-#bwgBackground {
-  display: flex;
-  margin: auto;
-}
-
 /* this makes the entire table cell clickable for the anchor tag. */
 .table #ownerLink {
   display: block;
@@ -87,7 +108,6 @@ td {
 .usernameDiv {
   font-size: 0.85rem;
   text-align: center;
-  border-bottom: 1px solid #dedede;
 }
 
 /* nav icons */
@@ -97,11 +117,6 @@ td {
 
 .icon-large {
   font-size: 15px;
-}
-
-/* Index Page */
-.formTitle {
-  padding: 10px;
 }
 
 .panel {
@@ -124,22 +139,11 @@ td {
   text-decoration: underline;
 }
 
-/* all forms */
-#form {
-  max-width: 850px;
-  margin: auto;
-}
-
-#form .form-label {
-  font-weight: 525;
-}
-
 /* footer */
 .footer-color {
   background-color: #78a22f;
 }
 
-#addOwnerButton,
 #registerDogButton,
 #addPolicyButton {
   margin-left: auto;

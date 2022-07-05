@@ -31,91 +31,33 @@
     <!-- sorttable -->
     <script src="/js/sorttable.js"></script>
   </head>
-  {{!-- <div class="side-nav">
-    <div class="nav-img">
-      <a href="/">
-        <img src="/images/bwg-logo.png" alt="bwg-logo" />
-      </a>
-    </div>
-    <div class="usernameDiv">
-      {{#if email}}
-        <p class="text-center">
-          <i class="icon-blue icon-large bi bi-person-fill"></i>
-          Current User:
-          {{lowercase email}}
-        </p>
-      {{/if}}
-    </div>
-    {{#ifCond baseUrl "===" indexUrl}}
-      <!-- Back navigation -->
-      <div class="menu-item back">
-        <a onclick="window.history.back()">
-          <div class="menu-text">
-            <i class="icon-large icon-blue bi bi-arrow-return-left"></i>
-            Back
-          </div>
-        </a>
-      </div>
-    {{/ifCond}}
-      <div class="menu-item">
-        <a href="/dogtags">
-          <div class="menu-text">
-            <i class="icon-large icon-blue bi bi-stack"></i>
-            Dog Tag Licenses
-          </div>
-        </a>
-      </div>
-      <div class="menu-item">
-        <a href="/dropdownManager">
-          <div class="menu-text">
-            <i class="icon-blue icon-large bi bi-menu-button-fill"></i>
-            Dropdown Manager
-          </div>
-        </a>
-      </div>
-      <div class="menu-item">
-        <a href="/policies">
-          <div class="menu-text">
-            <i class="icon-large icon-blue bi bi-stack"></i>
-            Policies Management
-          </div>
-        </a>
-      </div>
-    <!-- added logout class to anchor to bottom of page -->
-    <div class="menu-item logout">
-      <a href="/logout">
-        <div class="menu-text">
-          <i class="icon-large icon-blue bi bi-box-arrow-in-left"></i>
-          Logout
-        </div>
-      </a>
-    </div>
-  </div> --}}
   <div class="container-fluid">
-    <div class="side-nav row flex-nowrap">
-      <div
-        class="col-auto col-md-2 col-md-2 px-0"
-        style="border-right: 1px solid #dedede;"
-      >
-        <div class="nav-img text-center pt-3 pb-3 w-100">
-          <a href="/">
-            <img src="/images/bwg-logo.png" alt="bwg-logo" />
-          </a>
-        </div>
-        <div class="usernameDiv">
-          {{#if email}}
-            <p class="text-center">
-              <i class="icon-blue icon-large bi bi-person-fill"></i>
-              Current User:
-              {{lowercase email}}
-            </p>
-          {{/if}}
-        </div>
-        <div class="d-flex align-items-start flex-column">
-          <ul class="nav nav-pills flex-column w-100 mb-auto">
+    <div class="row flex-nowrap">
+      <div class="col-auto col-md-3 col-xl-2 px-0">
+        <div
+          class="d-flex flex-column align-items-center align-items-sm-start px-2 pt-2 min-vh-100"
+          style="border-right: 1px solid #dedede;"
+        >
+          <div class="nav-img text-center pt-3 pb-3 w-100">
+            <a href="/">
+              <img src="/images/bwg-logo.png" alt="bwg-logo" />
+            </a>
+          </div>
+          <div class="usernameDiv">
+            {{#if email}}
+              <p class="text-center">
+                <i class="icon-blue icon-large bi bi-person-fill"></i>
+                Current User:
+                {{lowercase email}}
+              </p>
+            {{/if}}
+          </div>
+          <ul
+            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
+          >
             <!-- Back navigation -->
             {{#ifCond baseUrl "===" indexUrl}}
-              <li class="nav-item back w-100 p-1">
+              <li class="nav-item-back w-100 p-1">
                 <a
                   onclick="window.history.back()"
                   class="nav-link align-middle ps-3"
@@ -125,7 +67,7 @@
                 </a>
               </li>
             {{/ifCond}}
-            <li class="nav-item w-100 p-1">
+            <li class="nav-item-home w-100 p-1">
               <a href="/" class="nav-link align-middle ps-3">
                 <i class="fs-4 icon-blue bi bi-house"></i>
                 <span class="ms-1 d-none d-sm-inline">Home</span>
@@ -150,12 +92,12 @@
               </a>
             </li>
           </ul>
-        </div>
-        <div class="nav-item w-100 p-1 mt-auto align-items-end">
-          <a href="/logout" class="nav-link align-middle mt-auto ps-3">
-            <i class="fs-4 icon-blue bi bi-box-arrow-in-left"></i>
-            <span class="ms-1 d-none d-sm-inline">Logout</span>
-          </a>
+          <div class="nav-item-logout w-100 p-1">
+            <a href="/logout" class="nav-link align-middle ps-3">
+              <i class="fs-4 icon-blue bi bi-box-arrow-in-left"></i>
+              <span class="ms-1 d-none d-sm-inline">Logout</span>
+            </a>
+          </div>
         </div>
       </div>
       <div class="col py-3">

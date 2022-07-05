@@ -1,6 +1,6 @@
 <h2 class="text-center">Dog Tag Licenses</h2>
 <h4>Filtering</h4>
-<form method="GET">
+<form class="mb-0" method="GET">
   <select
     class="form-select-sm"
     id="filterCategory"
@@ -51,14 +51,12 @@
   </div>
 </div>
 <div class="row">
-  {{#if queryCount}}
-    <div class="col">
-      <strong>{{queryCount}}</strong>
-    </div>
-  {{/if}}
   <div class="col pb-1">
     <a href="/dogtags/addOwner" class="btn btn-sm btn-primary float-end">Add
       Owner</a>
+    {{#if queryCount}}
+      <strong>{{queryCount}}</strong>
+    {{/if}}
   </div>
 </div>
 
@@ -70,7 +68,6 @@
 {{/if}}
 
 <!-- Table -->
-
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
