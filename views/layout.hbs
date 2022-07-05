@@ -73,24 +73,30 @@
                 <span class="ms-1 d-none d-sm-inline">Home</span>
               </a>
             </li>
-            <li class="nav-item w-100 p-1">
-              <a href="/dogtags" class="nav-link align-middle ps-3">
-                <i class="fs-4 icon-blue bi bi-stack"></i>
-                <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
-              </a>
-            </li>
-            <li class="nav-item w-100 p-1">
-              <a href="/dropdownManager" class="nav-link align-middle ps-3">
-                <i class="fs-4 icon-blue bi bi-menu-button-fill"></i>
-                <span class="ms-1 d-none d-sm-inline">Dropdown Manager</span>
-              </a>
-            </li>
-            <li class="nav-item w-100 p-1">
-              <a href="/policies" class="nav-link align-middle ps-3">
-                <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
-                <span class="ms-1 d-none d-sm-inline">Policies</span>
-              </a>
-            </li>
+            {{#ifCond admin "||" dogAuth}}
+              <li class="nav-item w-100 p-1">
+                <a href="/dogtags" class="nav-link align-middle ps-3">
+                  <i class="fs-4 icon-blue bi bi-stack"></i>
+                  <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
+                </a>
+              </li>
+            {{/ifCond}}
+            {{#if admin}}
+              <li class="nav-item w-100 p-1">
+                <a href="/dropdownManager" class="nav-link align-middle ps-3">
+                  <i class="fs-4 icon-blue bi bi-menu-button-fill"></i>
+                  <span class="ms-1 d-none d-sm-inline">Dropdown Manager</span>
+                </a>
+              </li>
+            {{/if}}
+            {{#ifCond admin "||" policyAuth}}
+              <li class="nav-item w-100 p-1">
+                <a href="/policies" class="nav-link align-middle ps-3">
+                  <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
+                  <span class="ms-1 d-none d-sm-inline">Policies</span>
+                </a>
+              </li>
+            {{/ifCond}}
           </ul>
           <div class="nav-item-logout w-100 p-1">
             <a href="/logout" class="nav-link align-middle ps-3">
