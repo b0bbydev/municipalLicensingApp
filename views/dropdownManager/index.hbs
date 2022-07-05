@@ -1,60 +1,59 @@
-<h2>Dropdown Manager</h2>
-<div class="content">
-  <!-- check for error messages in the session -->
-  {{#if message}}
-    <div class="alert alert-danger">
-      {{message}}
-    </div>
-  {{/if}}
-  <!-- Table -->
-  <div class="row">
-    <div class="col-12">
-      <table class="sortable table table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Dropdown Form ID</th>
-            <th>Form/Dropdown Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each data}}
-            <tr>
-              <td class="col-sm-4"><a
-                  href="/dropdownManager/form/{{this.dropdownFormID}}"
-                  id="ownerLink"
-                >{{this.dropdownFormID}}</a></td>
-              <td>{{this.formName}}</td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+<h2 class="text-center">Dropdown Manager</h2>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
   </div>
-  <!-- Add new dropdown form -->
-  <div class="row newDropdownForm">
-    <div class="col-sm-4">
-      <form method="POST">
-        <label for="Dropdown Form" class="form-label title-text">Add Dropdown
-          Form</label>
-        <input
-          name="formName"
-          class="form-control"
-          placeholder="New Form/Dropdown Name..."
-          type="text"
-          pattern="[^()/><\][\\\x22;|]+"
-          title="No special characters!"
-          required
-        />
-        <div class="row">
-          <div class="col">
-            <button
-              id="submitButton"
-              class="btn btn-primary"
-              type="submit"
-            >Submit</button>
-          </div>
+{{/if}}
+
+<!-- Table -->
+<div class="row">
+  <div class="col-12">
+    <table class="table table-bordered table-striped table-hover sortable">
+      <thead>
+        <tr>
+          <th>Dropdown Form ID</th>
+          <th>Form/Dropdown Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+          <tr>
+            <td class="col-sm-4"><a
+                href="/dropdownManager/form/{{this.dropdownFormID}}"
+                id="ownerLink"
+              >{{this.dropdownFormID}}</a></td>
+            <td>{{this.formName}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Add new dropdown form -->
+<div class="row newDropdownForm">
+  <div class="col-sm-4">
+    <form method="POST">
+      <label for="Dropdown Form" class="form-label title-text">Add Dropdown Form</label>
+      <input
+        name="formName"
+        class="form-control"
+        placeholder="New Form/Dropdown Name..."
+        type="text"
+        pattern="[^()/><\][\\\x22;|]+"
+        title="No special characters!"
+        required
+      />
+      <div class="row pt-1">
+        <div class="col">
+          <button
+            id="submitButton"
+            class="btn btn-primary"
+            type="submit"
+          >Submit</button>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </div>
