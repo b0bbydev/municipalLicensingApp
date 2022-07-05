@@ -1,212 +1,187 @@
 <h2 class="text-center">Policies</h2>
-<div class="content">
+<h4>Filtering</h4>
+<form class="mb-0" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterCategory"
+    title="filterSelect"
+    name="filterCategory"
+  >
+    <option disabled selected>Filter By...</option>
+    {{#if filterCategory}}
+      <option value="{{filterCategory}}" selected>{{filterCategory}}</option>
+    {{/if}}
+    {{#each dropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <!-- filterValue input -->
+  <input
+    name="filterValue"
+    id="filterValue"
+    class="form-control-sm"
+    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+    title="No special characters!"
+    placeholder="Search..."
+    value="{{filterValue}}"
+  />
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/policies"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+<div class="row">
+  <div class="col">
+    <a
+      id="policyHistoryButton"
+      data-bs-toggle="modal"
+      data-bs-target="#policyHistoryModal"
+    >View History</a>
+  </div>
   <div class="row">
-    <div class="col-sm-4">
-      <h4>Filtering</h4>
-      <form method="GET">
-        <select
-          class="form-select-sm"
-          id="filterCategory"
-          title="filterSelect"
-          name="filterCategory"
-        >
-          <option disabled selected>Filter By...</option>
-          {{#if filterCategory}}
-            <option
-              value="{{filterCategory}}"
-              selected
-            >{{filterCategory}}</option>
-          {{/if}}
-          {{#each dropdownValues}}
-            {{#if this.isDisabled}}
-              <option
-                value="{{this.dropdownValue}}"
-                disabled
-              >{{this.dropdownValue}}</option>
-            {{else}}
-              <option
-                value="{{this.dropdownValue}}"
-              >{{this.dropdownValue}}</option>
-            {{/if}}
-          {{/each}}
-        </select>
-        <!-- filterValue input -->
-        <input
-          name="filterValue"
-          id="filterValue"
-          class="form-control-sm"
-          pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
-          title="No special characters!"
-          placeholder="Search..."
-          value="{{filterValue}}"
-        />
-        <button
-          id="filterButton"
-          class="btn btn-sm btn-primary"
-          type="submit"
-        >Search</button>
-        <a
-          id="filterButton"
-          href="/policies"
-          class="btn btn-sm btn-secondary"
-          type="submit"
-        >Reset</a>
-      </form>
-      <div class="row">
-        <div class="col">
-          <a
-            id="policyHistoryButton"
-            data-bs-toggle="modal"
-            data-bs-target="#policyHistoryModal"
-          >View History</a>
-        </div>
-      </div>
+    <div class="col mb-1">
       {{#if queryCount}}
-        <div>
-          <strong>{{queryCount}}</strong>
-        </div>
+        <strong>{{queryCount}}</strong>
       {{/if}}
     </div>
-    <!-- Add policy button -->
-    <div id="addPolicyButton" class="col-sm-4 text-nowrap">
-      <a href="/policies/addPolicy" class="btn btn-sm btn-primary float-end">Add
-        Policy</a>
-    </div>
   </div>
+</div>
 
-  <!-- check for error messages in the session -->
-  {{#if message}}
-    <div class="alert alert-danger">
-      {{message}}
-    </div>
-  {{/if}}
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
 
-  <!-- Table -->
-  <section class="row">
-    <div class="col-12">
-      <table class="sortable table table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th>Policy ID</th>
-            <th>Policy Number</th>
-            <th>Policy Name</th>
-            <th>COW Date</th>
-            <th>Council Resolution</th>
-            <th>Date Approved</th>
-            <th>Date Amended</th>
-            <th>Date Effective</th>
-            <th>Category</th>
-            <th>Last Review Date</th>
-            <th>Scheduled Review Date</th>
-            <th>Division</th>
-            <th>Authority</th>
-            <th>Administrator</th>
-            <th>Status</th>
-            <th>Notes</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each data}}
-            <tr>
-              <td><a
-                  id="ownerLink"
-                  href="/policies/policy/{{this.policyID}}"
-                >{{this.policyID}}</a></td>
-              <td>{{this.policyNumber}}</td>
-              <td class="text-nowrap">{{this.policyName}}</td>
-              <td class="text-nowrap">{{this.cowDate}}</td>
-              <td class="text-nowrap">{{this.councilResolution}}</td>
-              <td class="text-nowrap">{{this.dateApproved}}</td>
-              <td class="text-nowrap">{{this.dateAmended}}</td>
-              <td class="text-nowrap">{{this.dateEffective}}</td>
-              <td>{{this.category}}</td>
-              <td class="text-nowrap">{{this.lastReviewDate}}</td>
-              <td>{{this.scheduledReviewDate}}</td>
-              <td>{{this.division}}</td>
-              <td>{{this.authority}}</td>
-              <td>{{this.administrator}}</td>
-              <td>{{this.status}}</td>
-              <td>{{this.notes}}</td>
-              <td class="text-nowrap"><a
-                  href="/policies/editPolicy/{{this.policyID}}"
-                  class="btn btn-sm btn-secondary"
-                >Edit</a>
-                |
-                <a href="#" class="btn btn-sm btn-secondary">Filehold</a></td>
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
-      <nav id="pagination">
-        <ul class="pagination pagination-sm">
-          {{#if paginate.hasPreviousPages}}
-            <li class="page-item"><a
-                class="page-link"
-                href="{{prev}}"
-              >Prev</a></li>
-          {{/if}}
-          {{#each pages}}
-            <li class="page-item">
-              <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
-          {{/each}}
-          {{#if hasMorePages}}
-            <li class="page-item"><a
-                class="page-link"
-                href="{{paginate.href}}"
-              >Next</a></li>
-          {{/if}}
-        </ul>
-      </nav>
-    </div>
-  </section>
+<!-- Table -->
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Policy Number</th>
+      <th>Policy Name</th>
+      <th>COW Date</th>
+      <th>Council Resolution</th>
+      <th>Date Approved</th>
+      <th>Date Amended</th>
+      <th>Date Effective</th>
+      <th>Category</th>
+      <th>Last Review Date</th>
+      <th>Scheduled Review Date</th>
+      <th>Division</th>
+      <th>Authority</th>
+      <th>Administrator</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td><a
+            id="ownerLink"
+            href="/policies/policy/{{this.policyID}}"
+          >{{this.policyNumber}}</a></td>
+        <td>{{this.policyName}}</td>
+        <td>{{this.cowDate}}</td>
+        <td>{{this.councilResolution}}</td>
+        <td>{{this.dateApproved}}</td>
+        <td>{{this.dateAmended}}</td>
+        <td>{{this.dateEffective}}</td>
+        <td class="text-nowrap">{{this.category}}</td>
+        <td>{{this.lastReviewDate}}</td>
+        <td>{{this.scheduledReviewDate}}</td>
+        <td>{{this.division}}</td>
+        <td>{{this.authority}}</td>
+        <td>{{this.administrator}}</td>
+        <td>{{this.status}}</td>
+        <td class="text-nowrap"><a
+            href="/policies/editPolicy/{{this.policyID}}"
+            class="btn btn-sm btn-secondary"
+          >Edit</a>
+          |
+          <a href="#" class="btn btn-sm btn-secondary">Filehold</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<nav id="pagination">
+  <ul class="pagination pagination-sm">
+    {{#if paginate.hasPreviousPages}}
+      <li class="page-item"><a class="page-link" href="{{prev}}">Prev</a></li>
+    {{/if}}
+    {{#each pages}}
+      <li class="page-item">
+        <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
+    {{/each}}
+    {{#if hasMorePages}}
+      <li class="page-item"><a
+          class="page-link"
+          href="{{paginate.href}}"
+        >Next</a></li>
+    {{/if}}
+  </ul>
+</nav>
 
-  <!-- Modal -->
-  <div
-    class="modal fade"
-    id="policyHistoryModal"
-    tabindex="-1"
-    aria-labelledby="policyHistoryModal"
-    aria-hidden="true"
-  >
-    <form method="POST">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Policy History Search</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <label for="Policy Name" class="form-label">Enter the name of the
-              policy</label>
-            <input
-              list="policies"
-              class="form-control"
-              placeholder="Policy Name"
-              name="policyName"
-              required
-            />
-            <datalist id="policies">
-              {{#each data}}
-                <option value="{{this.policyName}}">{{this.policyName}}</option>
-              {{/each}}
-            </datalist>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >Close</button>
-            <button type="submit" class="btn btn-primary">Search</button>
-          </div>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="policyHistoryModal"
+  tabindex="-1"
+  aria-labelledby="policyHistoryModal"
+  aria-hidden="true"
+>
+  <form method="POST">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Policy History Search</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <label for="Policy Name" class="form-label">Enter the name of the
+            policy</label>
+          <input
+            list="policies"
+            class="form-control"
+            placeholder="Policy Name"
+            name="policyName"
+            required
+          />
+          <datalist id="policies">
+            {{#each data}}
+              <option value="{{this.policyName}}">{{this.policyName}}</option>
+            {{/each}}
+          </datalist>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >Close</button>
+          <button type="submit" class="btn btn-primary">Search</button>
         </div>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>

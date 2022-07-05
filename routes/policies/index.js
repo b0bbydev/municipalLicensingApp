@@ -202,8 +202,9 @@ router.get(
         policyID: req.params.id, // policyID is in URL bar.
       },
     });
-    // get current policyName.
-    let policyName = await Policy.findOne({
+    // get current policyName and notes.
+    let policyInfo = await Policy.findOne({
+      attributes: ["policyName", "notes"],
       where: {
         policyID: req.params.id,
       },
@@ -217,7 +218,7 @@ router.get(
       admin: req.session.admin,
       procedures: procedures,
       guidelines: guidelines,
-      policyName: policyName.policyName,
+      policyInfo: policyInfo,
       policyID: req.params.id,
     });
   }

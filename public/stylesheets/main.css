@@ -11,7 +11,7 @@ input {
   border-width: thin;
 }
 
-/* this folds/breaks words in the table, so that it can fit on the screen */
+/* this folds/breaks words in a table, so that it can fit on the screen */
 td {
   word-break: break-all;
 }

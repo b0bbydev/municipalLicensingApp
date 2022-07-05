@@ -1,109 +1,107 @@
-<h2>{{policyName}} - Policy</h2>
-<div class="content">
-  <!-- check for error messages in the session -->
-  {{#if message}}
-    <div class="alert alert-danger">
-      {{message}}
-    </div>
-  {{/if}}
-  <div class="row">
-    <div class="col">
-      <h4>Procedures</h4>
-      <!-- Procedures Table -->
-      <section class="row">
-        <div class="col-12">
-          <table
-            class="sortable table table-sm table-bordered table-striped table-hover"
-          >
-            <thead>
-              <tr>
-                <th>Procedure ID</th>
-                <th>Procedure Name</th>
-                <th>Approval Date</th>
-                <th>Last Review Date</th>
-                <th>Scheduled Review Date</th>
-                <th>Date Amended</th>
-                <th>Status</th>
-                <th>Notes</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each procedures}}
-                <tr>
-                  <td>{{this.procedureID}}</td>
-                  <td>{{this.procedureName}}</td>
-                  <td>{{this.approvalDate}}</td>
-                  <td>{{this.lastReviewDate}}</td>
-                  <td>{{this.scheduledReviewDate}}</td>
-                  <td>{{this.dateAmended}}</td>
-                  <td>{{this.status}}</td>
-                  <td>{{this.notes}}</td>
-                  <td>
-                    <a
-                      href="/policies/editProcedure/{{this.procedureID}}"
-                      class="btn btn-sm btn-secondary"
-                    >Edit</a></td>
-                </tr>
-              {{/each}}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
+<h2 class="text-center">{{policyInfo.policyName}} - Policy</h2>
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
   </div>
-  <div class="row">
-    <div class="col">
-      <h4>Guidelines</h4>
-      <!-- Guidelines Table -->
-      <section class="row">
-        <div class="col-12">
-          <table
-            class="sortable table table-sm table-bordered table-striped table-hover"
-          >
-            <thead>
-              <tr>
-                <th>Guideline ID</th>
-                <th>Guideline Name</th>
-                <th>Approval Date</th>
-                <th>Last Review Date</th>
-                <th>Scheduled Review Date</th>
-                <th>Date Amended</th>
-                <th>Status</th>
-                <th>Notes</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {{#each guidelines}}
-                <tr>
-                  <td>{{this.guidelineID}}</td>
-                  <td>{{this.guidelineName}}</td>
-                  <td>{{this.approvalDate}}</td>
-                  <td>{{this.lastReviewDate}}</td>
-                  <td>{{this.scheduledReviewDate}}</td>
-                  <td>{{this.dateAmended}}</td>
-                  <td>{{this.status}}</td>
-                  <td>{{this.notes}}</td>
-                  <td>
-                    <a
-                      href="/policies/editGuideline/{{this.guidelineID}}"
-                      class="btn btn-sm btn-secondary"
-                    >Edit</a></td>
-                </tr>
-              {{/each}}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    </div>
+{{/if}}
+
+{{#if policyInfo.notes}}
+  <p><strong>Notes: </strong> {{policyInfo.notes}}</p>
+{{/if}}
+
+<!-- Procedures Table -->
+<h4>Procedures</h4>
+<section class="row">
+  <div class="col-12">
+    <table
+      class="table table-sm table-bordered table-striped table-hover sortable"
+    >
+      <thead>
+        <tr>
+          <th>Procedure ID</th>
+          <th>Procedure Name</th>
+          <th>Approval Date</th>
+          <th>Last Review Date</th>
+          <th>Scheduled Review Date</th>
+          <th>Date Amended</th>
+          <th>Status</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each procedures}}
+          <tr>
+            <td>{{this.procedureID}}</td>
+            <td>{{this.procedureName}}</td>
+            <td>{{this.approvalDate}}</td>
+            <td>{{this.lastReviewDate}}</td>
+            <td>{{this.scheduledReviewDate}}</td>
+            <td>{{this.dateAmended}}</td>
+            <td>{{this.status}}</td>
+            <td>{{this.notes}}</td>
+            <td>
+              <a
+                href="/policies/editProcedure/{{this.procedureID}}"
+                class="btn btn-sm btn-secondary"
+              >Edit</a></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
-  <div class="row">
-    <div class="col">
-      <a
-        id="policyHistoryButton"
-        href="/policies/policyHistory/{{policyID}}"
-      >View History</a>
-    </div>
+</section>
+
+<div class="row">
+  <div class="col">
+    <h4>Guidelines</h4>
+    <!-- Guidelines Table -->
+    <section class="row">
+      <div class="col-12">
+        <table
+          class="sortable table table-sm table-bordered table-striped table-hover"
+        >
+          <thead>
+            <tr>
+              <th>Guideline ID</th>
+              <th>Guideline Name</th>
+              <th>Approval Date</th>
+              <th>Last Review Date</th>
+              <th>Scheduled Review Date</th>
+              <th>Date Amended</th>
+              <th>Status</th>
+              <th>Notes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each guidelines}}
+              <tr>
+                <td>{{this.guidelineID}}</td>
+                <td>{{this.guidelineName}}</td>
+                <td>{{this.approvalDate}}</td>
+                <td>{{this.lastReviewDate}}</td>
+                <td>{{this.scheduledReviewDate}}</td>
+                <td>{{this.dateAmended}}</td>
+                <td>{{this.status}}</td>
+                <td>{{this.notes}}</td>
+                <td>
+                  <a
+                    href="/policies/editGuideline/{{this.guidelineID}}"
+                    class="btn btn-sm btn-secondary"
+                  >Edit</a></td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <a id="policyHistoryButton" href="/policies/policyHistory/{{policyID}}">View
+      History</a>
   </div>
 </div>
