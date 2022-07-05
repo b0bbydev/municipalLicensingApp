@@ -45,15 +45,13 @@
               <img src="/images/bwg-logo.png" alt="bwg-logo" />
             </a>
           </div>
-          <div class="usernameDiv">
-            {{#if email}}
-              <p class="text-center">
-                <i class="icon-blue icon-large bi bi-person-fill"></i>
-                Current User:
-                {{lowercase email}}
-              </p>
-            {{/if}}
-          </div>
+          {{#if email}}
+            <p class="text-center fs-6">
+              <i class="icon-blue icon-large bi bi-person-fill"></i>
+              Current User:
+              {{lowercase email}}
+            </p>
+          {{/if}}
           <ul
             class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
           >

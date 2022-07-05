@@ -1,52 +1,230 @@
-<h2>{{ownerName}} - Owner Profile</h2>
-<div class="content">
-  <div class="row">
-    <div class="col-sm-4">
-      {{#if queryCount}}
-        <div>
-          <strong>{{queryCount}}</strong>
-        </div>
-      {{/if}}
-      <strong>Additional owners:
-        {{#each additionalOwners}}
+<h2 class="text-center">{{ownerName}} - Owner Profile</h2>
+<div class="row">
+  <div class="col-sm-4">
+    {{#if queryCount}}
+      <div>
+        <strong>{{queryCount}}</strong>
+      </div>
+    {{/if}}
+    <strong>Additional owners:
+      {{#each additionalOwners}}
+        <a
+          id="additionalOwnerLinks"
+          href="/dogtags/owner/{{this.ownerID}}/additionalOwner/{{this.additionalOwnerID}}"
+        >
+          {{this.firstName}}
+          {{this.lastName}}{{#unless @last}}, {{/unless}}
+        </a>
+      {{/each}}
+    </strong>
+  </div>
+</div>
+<div class="row mb-2">
+  <div class="col-sm-4">
+    <a
+      href="/dogtags/addAdditionalOwner"
+      class="btn btn-sm btn-primary"
+    >Register Additional Owner</a>
+  </div>
+  <div id="registerDogButton" class="col-sm-4">
+    <a
+      href="/dogtags/addDog/{{ownerID}}"
+      class="btn btn-sm btn-primary float-end"
+    >Register Dog to Owner</a>
+  </div>
+</div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Tag Number</th>
+      <th>Dog Name</th>
+      <th>Dog Breed</th>
+      <th>Colour</th>
+      <th>Gender</th>
+      <th>Date Of Birth</th>
+      <th>Designation</th>
+      <th>Spade</th>
+      <th>Rabies Tag Number</th>
+      <th>Rabies Expiry</th>
+      <th>Vet Office</th>
+      <th>Tag Required</th>
+      <th>License Issue Date</th>
+      <th>License Expiry Date</th>
+      <th>Vendor</th>
+      <th>Notes</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td>
           <a
-            id="additionalOwnerLinks"
-            href="/dogtags/owner/{{this.ownerID}}/additionalOwner/{{this.additionalOwnerID}}"
-          >
-            {{this.firstName}}
-            {{this.lastName}}{{#unless @last}}, {{/unless}}
-          </a>
-        {{/each}}
-      </strong>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-4">
-      <a
-        href="/dogtags/addAdditionalOwner"
-        class="btn btn-sm btn-primary"
-      >Register Additional Owner</a>
-    </div>
-    <div id="registerDogButton" class="col-sm-4">
-      <a
-        href="/dogtags/addDog/{{ownerID}}"
-        class="btn btn-sm btn-primary float-end"
-      >Register Dog to Owner</a>
-    </div>
-  </div>
-
-  <!-- check for error messages in the session -->
-  {{#if message}}
-    <div class="alert alert-danger">
-      {{message}}
-    </div>
-  {{/if}}
-
-  <section class="row">
-    <div class="col-12">
-      <table
-        class="sortable table table-sm table-bordered table-striped table-hover"
+            id="ownerLink"
+            href="/dogtags/owner/{{ownerID}}/tagHistory/{{this.dogID}}"
+          >{{this.tagNumber}}</a></td>
+        <td>{{this.dogName}}</td>
+        <td>{{this.breed}}</td>
+        <td>{{this.colour}}</td>
+        <td>{{this.gender}}</td>
+        <td>{{this.dateOfBirth}}</td>
+        <td>{{this.designation}}</td>
+        <td>{{this.spade}}</td>
+        <td>{{this.rabiesTagNumber}}</td>
+        <td>{{this.rabiesExpiry}}</td>
+        <td>{{this.vetOffice}}</td>
+        <td>{{this.tagRequired}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td class="text-nowrap">{{this.vendor}}</td>
+        <td>{{this.notes}}</td>
+        <td class="text-nowrap">
+          <a
+            href="/dogtags/editDog/{{this.dogID}}"
+            class="btn btn-sm btn-secondary"
+          >Edit Dog</a>
+          |
+          <button
+            type="button"
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#tagNumberModal-{{this.dogID}}"
+          >Renew</button>
+        </td>
+      </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="tagNumberModal-{{this.dogID}}"
+        tabindex="-1"
+        aria-labelledby="renewDogLicenseModal"
+        aria-hidden="true"
       >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Renew Dog License</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <label for="Dog ID" class="form-label">Dog ID</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="dogID"
+                  value="{{this.dogID}}"
+                  readonly
+                />
+                <label for="Tag Number" class="form-label">Enter the new tag
+                  number</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  placeholder="Tag Number"
+                  name="tagNumber"
+                  required
+                />
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit Renewal</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    {{/each}}
+  </tbody>
+</table>
+<nav id="pagination">
+  <ul class="pagination pagination-sm">
+    {{#if paginate.hasPreviousPages}}
+      <li class="page-item"><a class="page-link" href="{{prev}}">Prev</a></li>
+    {{/if}}
+    {{#each pages}}
+      <li class="page-item"><a
+          class="page-link"
+          href="{{this.url}}"
+        >{{this.number}}</a></li>
+    {{/each}}
+    {{#if hasMorePages}}
+      <li class="page-item"><a
+          class="page-link"
+          href="{{paginate.href}}"
+        >Next</a></li>
+    {{/if}}
+  </ul>
+</nav>
+
+<div class="row">
+  <div class="col-12">
+    <a id="dogHistory" onclick="toggleDogHistory()">See dog(s) history...</a>
+  </div>
+  <div class="col-12">
+    <a id="addressHistory" onclick="toggleAddressHistory()">See address
+      history...</a>
+  </div>
+</div>
+
+<section id="addressHistorySection" class="row" style="display: none;">
+  <div class="col-12">
+    <h4>Address History</h4>
+    {{#group addressHistory by="year"}}
+      <strong>{{{value}}}</strong>
+      <table class="sortable table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Street Number</th>
+            <th>Street Name</th>
+            <th>PO Box/Apt/RR</th>
+            <th>Town</th>
+            <th>Postal Code</th>
+            <th>Action</th>
+            <th>Last Modified</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each items}}
+            <tr>
+              <td>{{this.streetNumber}}</td>
+              <td>{{this.streetName}}</td>
+              <td>{{this.poBoxAptRR}}</td>
+              <td>{{this.town}}</td>
+              <td>{{this.postalCode}}</td>
+              <td>{{this.action}}</td>
+              <td>{{formatDate this.lastModified}}</td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{/group}}
+  </div>
+</section>
+
+<section id="dogHistorySection" class="row" style="display: none;">
+  <div class="col-12">
+    <h4>Dog History</h4>
+    {{#group dogHistory by="year"}}
+      <strong>{{{value}}}</strong>
+      <table class="sortable table table-bordered table-striped table-hover">
         <thead>
           <tr>
             <th>Tag Number</th>
@@ -65,17 +243,14 @@
             <th>License Expiry Date</th>
             <th>Vendor</th>
             <th>Notes</th>
-            <th>Actions</th>
+            <th>Last Modified</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {{#each data}}
+          {{#each items}}
             <tr>
-              <td>
-                <a
-                  id="ownerLink"
-                  href="/dogtags/owner/{{ownerID}}/tagHistory/{{this.dogID}}"
-                >{{this.tagNumber}}</a></td>
+              <td>{{this.tagNumber}}</td>
               <td>{{this.dogName}}</td>
               <td>{{this.breed}}</td>
               <td>{{this.colour}}</td>
@@ -91,198 +266,12 @@
               <td>{{this.expiryDate}}</td>
               <td>{{this.vendor}}</td>
               <td>{{this.notes}}</td>
-              <td class="text-nowrap">
-                <a
-                  href="/dogtags/editDog/{{this.dogID}}"
-                  class="btn btn-sm btn-secondary"
-                >Edit Dog</a>
-                |
-                <button
-                  type="button"
-                  class="btn btn-sm btn-secondary"
-                  data-bs-toggle="modal"
-                  data-bs-target="#tagNumberModal-{{this.dogID}}"
-                >Renew</button>
-              </td>
+              <td>{{formatDate this.lastModified}}</td>
+              <td>{{this.action}}</td>
             </tr>
-            <!-- Modal -->
-            <div
-              class="modal fade"
-              id="tagNumberModal-{{this.dogID}}"
-              tabindex="-1"
-              aria-labelledby="renewDogLicenseModal"
-              aria-hidden="true"
-            >
-              <form method="POST">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Renew Dog License</h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div class="modal-body">
-                      <label for="Dog ID" class="form-label">Dog ID</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        name="dogID"
-                        value="{{this.dogID}}"
-                        readonly
-                      />
-                      <label for="Tag Number" class="form-label">Enter the new
-                        tag number</label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        placeholder="Tag Number"
-                        name="tagNumber"
-                        required
-                      />
-                    </div>
-                    <div class="modal-footer">
-                      <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal"
-                      >Close</button>
-                      <button type="submit" class="btn btn-primary">Submit
-                        Renewal</button>
-                    </div>
-                  </div>
-                </div>
-              </form>
-            </div>
           {{/each}}
         </tbody>
       </table>
-      <nav id="pagination">
-        <ul class="pagination pagination-sm">
-          {{#if paginate.hasPreviousPages}}
-            <li class="page-item"><a
-                class="page-link"
-                href="{{prev}}"
-              >Prev</a></li>
-          {{/if}}
-          {{#each pages}}
-            <li class="page-item"><a
-                class="page-link"
-                href="{{this.url}}"
-              >{{this.number}}</a></li>
-          {{/each}}
-          {{#if hasMorePages}}
-            <li class="page-item"><a
-                class="page-link"
-                href="{{paginate.href}}"
-              >Next</a></li>
-          {{/if}}
-        </ul>
-      </nav>
-    </div>
-  </section>
-  <div class="row">
-    <div class="col-12">
-      <a id="dogHistory" onclick="toggleDogHistory()">See dog(s) history...</a>
-    </div>
-    <div class="col-12">
-      <a id="addressHistory" onclick="toggleAddressHistory()">See address
-        history...</a>
-    </div>
+    {{/group}}
   </div>
-
-  <section id="addressHistorySection" class="row" style="display: none;">
-    <div class="col-12">
-      <h4>Address History</h4>
-      {{#group addressHistory by="year"}}
-        <strong>{{{value}}}</strong>
-        <table class="sortable table table-bordered table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Street Number</th>
-              <th>Street Name</th>
-              <th>PO Box/Apt/RR</th>
-              <th>Town</th>
-              <th>Postal Code</th>
-              <th>Action</th>
-              <th>Last Modified</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each items}}
-              <tr>
-                <td>{{this.streetNumber}}</td>
-                <td>{{this.streetName}}</td>
-                <td>{{this.poBoxAptRR}}</td>
-                <td>{{this.town}}</td>
-                <td>{{this.postalCode}}</td>
-                <td>{{this.action}}</td>
-                <td>{{formatDate this.lastModified}}</td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      {{/group}}
-    </div>
-  </section>
-
-  <section id="dogHistorySection" class="row" style="display: none;">
-    <div class="col-12">
-      <h4>Dog History</h4>
-      {{#group dogHistory by="year"}}
-        <strong>{{{value}}}</strong>
-        <table class="sortable table table-bordered table-striped table-hover">
-          <thead>
-            <tr>
-              <th>Tag Number</th>
-              <th>Dog Name</th>
-              <th>Dog Breed</th>
-              <th>Colour</th>
-              <th>Gender</th>
-              <th>Date Of Birth</th>
-              <th>Designation</th>
-              <th>Spade/Neutered</th>
-              <th>Rabies Tag Number</th>
-              <th>Rabies Expiry</th>
-              <th>Vet Office</th>
-              <th>Tag Required</th>
-              <th>License Issue Date</th>
-              <th>License Expiry Date</th>
-              <th>Vendor</th>
-              <th>Notes</th>
-              <th>Last Modified</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each items}}
-              <tr>
-                <td>{{this.tagNumber}}</td>
-                <td>{{this.dogName}}</td>
-                <td>{{this.breed}}</td>
-                <td>{{this.colour}}</td>
-                <td>{{this.gender}}</td>
-                <td>{{this.dateOfBirth}}</td>
-                <td>{{this.designation}}</td>
-                <td>{{this.spade}}</td>
-                <td>{{this.rabiesTagNumber}}</td>
-                <td>{{this.rabiesExpiry}}</td>
-                <td>{{this.vetOffice}}</td>
-                <td>{{this.tagRequired}}</td>
-                <td>{{this.issueDate}}</td>
-                <td>{{this.expiryDate}}</td>
-                <td>{{this.vendor}}</td>
-                <td>{{this.notes}}</td>
-                <td>{{formatDate this.lastModified}}</td>
-                <td>{{this.action}}</td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      {{/group}}
-    </div>
-  </section>
-</div>
+</section>
