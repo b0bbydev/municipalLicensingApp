@@ -1,146 +1,142 @@
-<div class="col py-3">
-  <h2>Dog Tag Licenses</h2>
-  <h4>Filtering</h4>
-  <form method="GET" id="filterForm">
-    <select
-      class="form-select-sm"
-      id="filterCategory"
-      title="filterSelect"
-      name="filterCategory"
-    >
-      <option disabled selected>Filter By...</option>
-      {{#if filterCategory}}
-        <option value="{{filterCategory}}" selected>{{filterCategory}}</option>
+<h2 class="text-center">Dog Tag Licenses</h2>
+<h4>Filtering</h4>
+<form method="GET">
+  <select
+    class="form-select-sm"
+    id="filterCategory"
+    title="filterSelect"
+    name="filterCategory"
+  >
+    <option disabled selected>Filter By...</option>
+    {{#if filterCategory}}
+      <option value="{{filterCategory}}" selected>{{filterCategory}}</option>
+    {{/if}}
+    {{#each dropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
       {{/if}}
-      {{#each dropdownValues}}
-        {{#if this.isDisabled}}
-          <option
-            value="{{this.dropdownValue}}"
-            disabled
-          >{{this.dropdownValue}}</option>
-        {{else}}
-          <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
-        {{/if}}
-      {{/each}}
-    </select>
-    <!-- filterValue input -->
-    <input
-      name="filterValue"
-      id="filterValue"
-      class="form-control-sm"
-      pattern="^[^\x27\x22;=_()*&%$#!
-					
-					<>\/\^\\]*$"
-      title="No special characters!"
-      placeholder="Search..."
-      value="{{filterValue}}"
-    />
-    <button
-      id="filterButton"
-      class="btn btn-sm btn-primary"
-      type="submit"
-    >Search</button>
-    <a
-      id="filterButton"
-      href="/dogtags"
-      class="btn btn-sm btn-secondary"
-      type="submit"
-    >Reset</a>
-  </form>
-  <div class="row">
-    <div class="col">
-      <a id="getExpiredTags" href="/dogtags/expiredTags">Get owners with expired
-        tags</a>
-    </div>
+    {{/each}}
+  </select>
+  <!-- filterValue input -->
+  <input
+    name="filterValue"
+    id="filterValue"
+    class="form-control-sm"
+    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+    title="No special characters!"
+    placeholder="Search..."
+    value="{{filterValue}}"
+  />
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/dogtags"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+<div class="row">
+  <div class="col">
+    <a id="getExpiredTags" href="/dogtags/expiredTags">Get owners with expired
+      tags</a>
   </div>
+</div>
+<div class="row">
   {{#if queryCount}}
-    <div>
+    <div class="col">
       <strong>{{queryCount}}</strong>
     </div>
   {{/if}}
-  <div id="addOwnerButton" class="col-sm-4 text-nowrap">
+  <div class="col pb-1">
     <a href="/dogtags/addOwner" class="btn btn-sm btn-primary float-end">Add
       Owner</a>
   </div>
-
-  <!-- check for error messages in the session -->
-  {{#if message}}
-    <div class="alert alert-danger">
-      {{message}}
-    </div>
-  {{/if}}
-
-  <!-- Table -->
-
-  <table
-    class="sortable table table-sm table-bordered table-striped table-hover"
-  >
-    <thead>
-      <tr>
-        <th>Owner ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Home Phone</th>
-        <th>Work Phone</th>
-        <th>Cell Phone</th>
-        <th>Email</th>
-        <th>Street Number</th>
-        <th>Street Name</th>
-        <th>POBox/Apt/RR</th>
-        <th>Town</th>
-        <th>Postal Code</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each data}}
-        <tr>
-          <td>
-            <a
-              id="ownerLink"
-              href="/dogtags/owner/{{this.ownerID}}"
-            >{{this.ownerID}}</a>
-          </td>
-          <td>{{this.firstName}}</td>
-          <td>{{this.lastName}}</td>
-          <td class="text-nowrap">{{this.homePhone}}</td>
-          <td class="text-nowrap">{{this.workPhone}}</td>
-          <td class="text-nowrap">{{this.cellPhone}}</td>
-          <td>{{this.email}}</td>
-          {{#each addresses}}
-            <td>{{this.streetNumber}}</td>
-            <td>{{this.streetName}}</td>
-            <td>{{this.poBoxAptRR}}</td>
-            <td>{{this.town}}</td>
-            <td>{{this.postalCode}}</td>
-          {{/each}}
-          <td>
-            <a
-              href="/dogtags/editOwner/{{this.ownerID}}"
-              class="btn btn-sm btn-secondary"
-            >Edit</a>
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  <nav id="pagination">
-    <ul class="pagination pagination-sm">
-      {{#if paginate.hasPreviousPages}}
-        <li class="page-item">
-          <a class="page-link" href="{{prev}}">Prev</a>
-        </li>
-      {{/if}}
-      {{#each pages}}
-        <li class="page-item">
-          <a class="page-link" href="{{this.url}}">{{this.number}}</a>
-        </li>
-      {{/each}}
-      {{#if hasMorePages}}
-        <li class="page-item">
-          <a class="page-link" href="{{paginate.href}}">Next</a>
-        </li>
-      {{/if}}
-    </ul>
-  </nav>
 </div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<!-- Table -->
+
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Owner ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Home Phone</th>
+      <th>Work Phone</th>
+      <th>Cell Phone</th>
+      <th>Email</th>
+      <th>Street Number</th>
+      <th>Street Name</th>
+      <th>POBox/Apt/RR</th>
+      <th>Town</th>
+      <th>Postal Code</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td>
+          <a
+            id="ownerLink"
+            href="/dogtags/owner/{{this.ownerID}}"
+          >{{this.ownerID}}</a>
+        </td>
+        <td>{{this.firstName}}</td>
+        <td>{{this.lastName}}</td>
+        <td class="text-nowrap">{{this.homePhone}}</td>
+        <td class="text-nowrap">{{this.workPhone}}</td>
+        <td class="text-nowrap">{{this.cellPhone}}</td>
+        <td>{{this.email}}</td>
+        {{#each addresses}}
+          <td>{{this.streetNumber}}</td>
+          <td>{{this.streetName}}</td>
+          <td>{{this.poBoxAptRR}}</td>
+          <td>{{this.town}}</td>
+          <td>{{this.postalCode}}</td>
+        {{/each}}
+        <td>
+          <a
+            href="/dogtags/editOwner/{{this.ownerID}}"
+            class="btn btn-sm btn-secondary"
+          >Edit</a>
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<nav id="pagination">
+  <ul class="pagination pagination-sm">
+    {{#if paginate.hasPreviousPages}}
+      <li class="page-item">
+        <a class="page-link" href="{{prev}}">Prev</a>
+      </li>
+    {{/if}}
+    {{#each pages}}
+      <li class="page-item">
+        <a class="page-link" href="{{this.url}}">{{this.number}}</a>
+      </li>
+    {{/each}}
+    {{#if hasMorePages}}
+      <li class="page-item">
+        <a class="page-link" href="{{paginate.href}}">Next</a>
+      </li>
+    {{/if}}
+  </ul>
+</nav>

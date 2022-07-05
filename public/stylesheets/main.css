@@ -11,6 +11,11 @@ input {
   border-width: thin;
 }
 
+/* this folds/breaks words in the table, so that it can fit on the screen */
+td {
+  word-break: break-all;
+}
+
 .nav-item:hover {
   transition: 0.2s ease-in;
   background-color: rgba(230, 230, 230, 1);
