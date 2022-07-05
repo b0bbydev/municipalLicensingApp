@@ -18,7 +18,7 @@ const { param, body, validationResult } = require("express-validator");
 const limiter = require("../../config/limiter");
 
 /* GET /dropdownManager */
-router.get("/", limiter, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -49,7 +49,6 @@ router.get("/", limiter, async (req, res, next) => {
 /* POST /dropdownManger */
 router.post(
   "/",
-  limiter,
   body("formName")
     .notEmpty()
     .matches(/^[a-zA-Z0-9\/\- ]*$/)
@@ -87,7 +86,6 @@ router.post(
 /* GET /dropdownManager/form/:id */
 router.get(
   "/form/:id",
-  limiter,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.

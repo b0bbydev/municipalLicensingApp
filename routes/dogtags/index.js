@@ -28,7 +28,6 @@ const limiter = require("../../config/limiter");
 /* GET /dogtags */
 router.get(
   "/",
-  limiter,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
@@ -294,7 +293,6 @@ router.get(
 /* GET owner page. */
 router.get(
   "/owner/:id",
-  limiter,
   param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
   async (req, res, next) => {
     // server side validation.
@@ -389,7 +387,6 @@ router.get(
 /* POST /dogtags/owner/:id page. (renews dogtag) */
 router.post(
   "/owner/:id",
-  limiter,
   param("id").isNumeric().trim(),
   async (req, res, next) => {
     // server side validation.
@@ -434,7 +431,6 @@ router.post(
 /* GET /owner/:id/additionalOwner/:id  */
 router.get(
   "/owner/:id/additionalOwner/:additionalOwnerID",
-  limiter,
   param("id").isNumeric().trim(),
   param("additionalOwnerID").isNumeric().trim(),
   async (req, res, next) => {
@@ -483,7 +479,6 @@ router.get(
 /* POST /owner/:id/additionalOwner/:id  */
 router.post(
   "/owner/:id/additionalOwner/:additionalOwnerID",
-  limiter,
   param("id").isNumeric().trim(),
   param("additionalOwnerID").isNumeric().trim(),
   async (req, res, next) => {
@@ -529,7 +524,6 @@ router.post(
 /* GET /owner/:id/tagHistory/:dogID page. */
 router.get(
   "/owner/:id/tagHistory/:dogID",
-  limiter,
   param("id").matches(/^\d+$/).trim(),
   param("dogID").matches(/^\d+$/).trim(),
   async (req, res, next) => {
@@ -587,7 +581,6 @@ router.get(
 /* GET /dogtags/expiredTags */
 router.get(
   "/expiredTags",
-  limiter,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),

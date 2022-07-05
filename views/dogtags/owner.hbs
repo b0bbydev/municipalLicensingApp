@@ -189,7 +189,9 @@
     <h4>Address History</h4>
     {{#group addressHistory by="year"}}
       <strong>{{{value}}}</strong>
-      <table class="sortable table table-bordered table-striped table-hover">
+      <table
+        class="table table-sm table-bordered table-striped table-hover sortable"
+      >
         <thead>
           <tr>
             <th>Street Number</th>
@@ -224,7 +226,9 @@
     <h4>Dog History</h4>
     {{#group dogHistory by="year"}}
       <strong>{{{value}}}</strong>
-      <table class="sortable table table-bordered table-striped table-hover">
+      <table
+        class="table table-sm table-bordered table-striped table-hover sortable"
+      >
         <thead>
           <tr>
             <th>Tag Number</th>

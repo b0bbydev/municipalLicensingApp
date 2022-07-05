@@ -1,12 +1,12 @@
-<h2>{{ownerInfo.firstName}} {{ownerInfo.lastName}}</h2>
-<div class="content">
-  <form class="row g-2" id="form" method="POST">
-    <!-- check for error messages in the session -->
-    {{#if message}}
-      <div class="alert alert-danger">
-        {{message}}
-      </div>
-    {{/if}}
+<h2 class="text-center mt-1">{{ownerInfo.firstName}} {{ownerInfo.lastName}}</h2>
+<form class="row g-5 m-auto" method="POST">
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
+  <div class="col-md-7 m-auto mt-5">
     <h4>Edit Owner Information</h4>
     <hr />
     <div class="row">
@@ -188,10 +188,10 @@
       <div class="col">
         <button
           id="submitButton"
-          class="btn btn-primary"
+          class="btn btn-primary mt-2"
           type="submit"
         >Submit</button>
       </div>
     </div>
-  </form>
-</div>
+  </div>
+</form>

@@ -1,12 +1,12 @@
-<h2>Edit Dog</h2>
-<div class="content">
-  <form class="row g-2" id="form" method="POST">
-    <!-- check for error messages in the session -->
-    {{#if message}}
-      <div class="alert alert-danger">
-        {{message}}
-      </div>
-    {{/if}}
+<h2 class="text-center mt-1">Edit Dog</h2>
+<form class="row g-5 m-auto" method="POST">
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
+  <div class="col-md-8 m-auto mt-5">
     <h4>Dog Information</h4>
     <hr />
     <!-- Tag Number -->
@@ -385,10 +385,10 @@
       <div class="col">
         <button
           id="submitButton"
-          class="btn btn-primary"
+          class="btn btn-primary mt-2"
           type="submit"
         >Submit</button>
       </div>
     </div>
-  </form>
-</div>
+  </div>
+</form>
