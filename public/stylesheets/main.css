@@ -11,16 +11,37 @@ input {
   border-width: thin;
 }
 
+.nav-item:hover {
+  transition: 0.2s ease-in;
+  background-color: rgba(230, 230, 230, 1);
+}
+
+.nav-item {
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-bottom: 1px solid #dedede;
+}
+
+/* have to do all 3 elements separate */
+.back:hover {
+  transition: 0.2s ease-in;
+  background-color: rgba(0, 150, 214, .75) !important;
+  color: white;
+}
+
+.back:hover {
+  transition: 0.2s ease-in;
+  color: white;
+}
+
+.back:hover .icon-large {
+  transition: 0.2s ease-in;
+  color: white !important;
+}
+
 .side-nav {
-  border-right: 1px solid #dedede;
-}
-
-.content {
-  background-color: #fff !important;
-}
-
-.title-text {
-  font-weight: bold;
+  height: 100%;
 }
 
 .btn {
@@ -58,38 +79,10 @@ input {
   cursor: pointer;
 }
 
-.nav-img {
-  padding: 20px;
-  text-align: center;
-}
-
 .usernameDiv {
   font-size: 0.85rem;
   text-align: center;
   border-bottom: 1px solid #dedede;
-}
-
-.menu-item {
-  line-height: 40px;
-  text-align: right;
-  font-size: small;
-  cursor: pointer;
-  width: 100%;
-  border-bottom: 1px solid #dedede;
-}
-
-.menu-item:hover {
-  transition: 0.2s ease-in;
-  background-color: rgba(230, 230, 230, 1);
-}
-
-.menu-item.logout {
-  border-top: 1px solid #dedede;
-}
-
-.menu-text {
-  display: inline-block;
-  text-align: left;
 }
 
 /* nav icons */

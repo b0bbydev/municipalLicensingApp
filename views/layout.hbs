@@ -92,83 +92,75 @@
     </div>
   </div> --}}
   <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
-        <div
-          class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
-        >
-          <a
-            href="/"
-            class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-          >
-            <span class="fs-5 d-none d-sm-inline">Menu</span>
+    <div class="side-nav row flex-nowrap">
+      <div
+        class="col-auto col-md-2 col-md-2 px-0"
+        style="border-right: 1px solid #dedede;"
+      >
+        <div class="nav-img text-center pt-3 pb-3 w-100">
+          <a href="/">
+            <img src="/images/bwg-logo.png" alt="bwg-logo" />
           </a>
-          <ul
-            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
-            id="menu"
-          >
-            <li class="nav-item">
-              <a href="#" class="nav-link align-middle px-0">
-                <i class="fs-4 bi-house"></i>
+        </div>
+        <div class="usernameDiv">
+          {{#if email}}
+            <p class="text-center">
+              <i class="icon-blue icon-large bi bi-person-fill"></i>
+              Current User:
+              {{lowercase email}}
+            </p>
+          {{/if}}
+        </div>
+        <div class="d-flex align-items-start flex-column">
+          <ul class="nav nav-pills flex-column w-100 mb-auto">
+            <!-- Back navigation -->
+            {{#ifCond baseUrl "===" indexUrl}}
+              <li class="nav-item back w-100 p-1">
+                <a
+                  onclick="window.history.back()"
+                  class="nav-link align-middle px-0"
+                >
+                  <i class="fs-4 icon-blue bi bi-arrow-return-left"></i>
+                  <span class="ms-1 d-none d-sm-inline">Back</span>
+                </a>
+              </li>
+            {{/ifCond}}
+            <li class="nav-item w-100 p-1">
+              <a href="/" class="nav-link align-middle px-0">
+                <i class="fs-4 icon-blue bi bi-house"></i>
                 <span class="ms-1 d-none d-sm-inline">Home</span>
               </a>
             </li>
-            <li>
-              <a
-                href="#submenu1"
-                data-bs-toggle="collapse"
-                class="nav-link px-0 align-middle"
-              >
-                <i class="fs-4 bi-speedometer2"></i>
-                <span class="ms-1 d-none d-sm-inline">Dashboard</span>
+            <li class="nav-item w-100 p-1">
+              <a href="/dogtags" class="nav-link align-middle px-0">
+                <i class="fs-4 icon-blue bi bi-stack"></i>
+                <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
               </a>
-              <ul
-                class="collapse show nav flex-column ms-1"
-                id="submenu1"
-                data-bs-parent="#menu"
-              >
-                <li class="w-100">
-                  <a href="#" class="nav-link px-0">
-                    <span class="d-none d-sm-inline">Item</span>
-                    1
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="nav-link px-0">
-                    <span class="d-none d-sm-inline">Item</span>
-                    2
-                  </a>
-                </li>
-              </ul>
+            </li>
+            <li class="nav-item w-100 p-1">
+              <a href="/dropdownManager" class="nav-link align-middle px-0">
+                <i class="fs-4 icon-blue bi bi-menu-button-fill"></i>
+                <span class="ms-1 d-none d-sm-inline">Dropdown Manager</span>
+              </a>
+            </li>
+            <li class="nav-item w-100 p-1">
+              <a href="/policies" class="nav-link align-middle px-0">
+                <i class="fs-4 icon-blue bi bi-stack"></i>
+                <span class="ms-1 d-none d-sm-inline">Policies</span>
+              </a>
             </li>
           </ul>
-          <hr />
-          <div class="dropdown pb-4">
-            <a
-              href="#"
-              class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-              id="dropdownUser1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <span class="d-none d-sm-inline mx-1">Dropdown</span>
-            </a>
-            <ul
-              class="dropdown-menu dropdown-menu-dark text-small shadow"
-              aria-labelledby="dropdownUser1"
-            >
-              <li><a class="dropdown-item" href="#">New project...</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
-            </ul>
-          </div>
+        </div>
+        <div class="nav-item w-100 p-1 mt-auto align-items-end">
+          <a href="/logout" class="nav-link align-middle px-0 mt-auto">
+            <i class="fs-4 icon-blue bi bi-box-arrow-in-left"></i>
+            <span class="ms-1 d-none d-sm-inline">Logout</span>
+          </a>
         </div>
       </div>
-      {{{body}}}
+      <div class="col py-3">
+        {{{body}}}
+      </div>
     </div>
   </div>
   {{! <!-- Copyright Section-->
