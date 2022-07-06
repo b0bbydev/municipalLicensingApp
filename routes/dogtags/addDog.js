@@ -16,7 +16,6 @@ const limiter = require("../../config/limiter");
 /* GET /addDog/:id */
 router.get(
   "/:id",
-  limiter,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -51,7 +50,6 @@ router.get(
 /* POST addDog page. */
 router.post(
   "/:id",
-  limiter,
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
     .matches(/^[0-9-]*$/)

@@ -12,7 +12,6 @@ const limiter = require("../../config/limiter");
 /* GET /policies/editGuideline/:id */
 router.get(
   "/:id",
-  limiter,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -68,7 +67,6 @@ router.get(
 /* POST /policies/editGuideline/:id */
 router.post(
   "/:id",
-  limiter,
   body("guidelineName")
     .if(body("guidelineName").notEmpty())
     .matches(/^[a-zA-Z\/\- ]*$/)

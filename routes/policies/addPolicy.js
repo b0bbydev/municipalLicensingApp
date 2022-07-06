@@ -12,7 +12,7 @@ const { body, validationResult } = require("express-validator");
 const limiter = require("../../config/limiter");
 
 /* GET /addPolicy */
-router.get("/", limiter, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);
 
@@ -67,7 +67,6 @@ router.get("/", limiter, async (req, res, next) => {
 /* POST /addPolicy */
 router.post(
   "/",
-  limiter,
   body("policyNumber")
     .if(body("policyNumber").notEmpty())
     .matches(/^[0-9-]*$/)

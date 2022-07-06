@@ -18,7 +18,6 @@ const limiter = require("../../config/limiter");
 /* GET /editOwner page */
 router.get(
   "/:id",
-  limiter,
   param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
   async (req, res, next) => {
     // server side validation.
@@ -96,7 +95,6 @@ router.get(
 /* POST /editOwner */
 router.post(
   "/:id",
-  limiter,
   param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())

@@ -26,50 +26,54 @@ router.get("/", function (req, res, next) {
 });
 
 /* POST for /login */
-router.post("/", (req, res) => {
-  // server side validation.
-  const errors = validationResult(req);
+router.post(
+  "/",
+  body("password").matches(/^[a-zA-Z0-9!@#$%^&* ]*$/),
+  (req, res) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // if errors is NOT empty (if there are errors...)
-  if (!errors.isEmpty()) {
-    // render login page with error message.
-    return res.render("login", {
-      title: "BWG",
-      message: "Invalid email and/or password!",
-      layout: "hideLayout.hbs",
-    });
-  } else {
-    // assuming the email is valid (will have passed client and server side validation at this point).
-    // get the values from the login form.
-    const email = req.body.email;
-    const password = req.body.password;
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      // render login page with error message.
+      return res.render("login", {
+        title: "BWG",
+        message: "Error! Invalid email and/or password!",
+        layout: "hideLayout.hbs",
+      });
+    } else {
+      // assuming the email is valid (will have passed client and server side validation at this point).
+      // get the values from the login form.
+      const email = req.body.email;
+      const password = req.body.password;
 
-    ad.authenticate(email, password, function (err, auth) {
-      // if there's an error with AD.
-      if (err) {
-        console.log("ERROR: " + JSON.stringify(err));
+      ad.authenticate(email, password, function (err, auth) {
+        // if there's an error with AD.
+        if (err) {
+          //console.log("ERROR: " + JSON.stringify(err));
 
-        // render login page with error message.
-        return res.render("login", {
-          title: "BWG",
-          message: "Login Error!",
-          layout: "hideLayout.hbs",
-        });
-      }
-      // if login is successful.
-      if (auth) {
-        req.session.email = email;
-        res.redirect("/");
-      } else {
-        // render login page with error message.
-        return res.render("login", {
-          title: "BWG",
-          message: "Login Error!",
-          layout: "hideLayout.hbs",
-        });
-      }
-    });
+          // render login page with error message.
+          return res.render("login", {
+            title: "BWG",
+            message: "Credential Error!",
+            layout: "hideLayout.hbs",
+          });
+        }
+        // if login is successful.
+        if (auth) {
+          req.session.email = email;
+          res.redirect("/");
+        } else {
+          // render login page with error message.
+          return res.render("login", {
+            title: "BWG",
+            message: "Credential Error!",
+            layout: "hideLayout.hbs",
+          });
+        }
+      });
+    }
   }
-});
+);
 
 module.exports = router;

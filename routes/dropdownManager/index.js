@@ -204,7 +204,6 @@ router.get(
 /* POST /dropdownManager/form/:id */
 router.post(
   "/form/:id",
-  limiter,
   body("dropdownValue")
     .notEmpty()
     .matches(/^[^'";=_()*&%$#!<>\^\\]*$/)
@@ -256,7 +255,6 @@ router.post(
 /* DISABLE dropdownManager/disable/:id */
 router.get(
   "/disable/:id",
-  limiter,
   param("id").matches(/^\d+$/).trim(),
   (req, res, next) => {
     // server side validation.
@@ -300,7 +298,6 @@ router.get(
 /* ENABLE dropdownManager/enable/:id */
 router.get(
   "/enable/:id",
-  limiter,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
