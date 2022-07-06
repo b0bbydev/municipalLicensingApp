@@ -28,18 +28,21 @@ router.get("/", function (req, res, next) {
 /* POST for /login */
 router.post(
   "/",
-  //body("email").isEmail(),
+  body("email").isEmail().withMessage("Make sure email is in valid format!"),
   //body("password").matches(/^[a-zA-Z0-9!@#$%^&*]*$/),
   (req, res) => {
     // server side validation.
     const errors = validationResult(req);
+
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       // render login page with error message.
       return res.render("login", {
         title: "BWG",
-        message: "Error! Invalid email and/or password!",
+        message: errorArray[0].msg,
         layout: "hideLayout.hbs",
       });
     } else {
