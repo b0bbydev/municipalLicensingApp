@@ -28,6 +28,9 @@ const limiter = require("../../config/limiter");
 /* GET /dogtags */
 router.get(
   "/",
+  isLoggedIn,
+  adminAuth,
+  dogLicenseAuth,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
