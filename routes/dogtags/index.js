@@ -402,7 +402,15 @@ router.post(
     } else {
       // get current date for automatic population of license.
       var issueDate = new Date();
-      var expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+      // init expiryDate.
+      var expiryDate = new Date();
+
+      // if issueDate is in November or December.
+      if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+        expiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+      } else {
+        expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+      }
 
       // no errors, update license.
       Dog.update(
@@ -421,7 +429,7 @@ router.post(
         .catch((err) =>
           res.render("owner", {
             title: "BWG | Owner",
-            message: "Page Error! ",
+            message: "Page Error!",
           })
         );
     }
