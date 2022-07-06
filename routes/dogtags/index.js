@@ -878,4 +878,38 @@ router.get(
   }
 );
 
+/* GET /dogtags/printDog/:id */
+router.get(
+  "/printDog/:id",
+  param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags/printDog", {
+        title: "BWG | Print Dog",
+        message: "Error!",
+        email: req.session.email,
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // return endpoint after passing validation.
+      return res.render("dogtags/printDog", {
+        title: "BWG | Print Dog",
+        errorMessages: messages,
+        email: req.session.email,
+        dogAuth: req.session.dogAuth,
+        admin: req.session.admin,
+        ownerID: req.session.ownerID,
+      });
+    }
+  }
+);
+
 module.exports = router;
