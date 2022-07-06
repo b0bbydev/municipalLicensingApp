@@ -1,5 +1,4 @@
 <h2 class="text-center mt-1">Additional Owner</h2>
-
 <form class="row g-2" id="form" method="POST">
   <!-- check for error messages in the session -->
   {{#if message}}
@@ -12,7 +11,7 @@
     <hr />
     <div class="row">
       <!-- First Name -->
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <label for="First Name" class="form-label">First Name</label>
         <input
           id="firstName"
@@ -27,7 +26,7 @@
         />
       </div>
       <!-- Last Name -->
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <label for="Last Name" class="form-label">Last Name</label>
         <input
           id="lastName"
@@ -39,21 +38,6 @@
           title="No special characters!"
           value="{{additionalOwnerInfo.lastName}}"
           maxlength="25"
-        />
-      </div>
-      <!-- Town -->
-      <div class="col-sm-4">
-        <label for="Town" class="form-label">Town</label>
-        <input
-          id="town"
-          type="text"
-          class="form-control"
-          placeholder="Town"
-          name="town"
-          pattern="[^()/><\][\\\x22;|]+"
-          title="No special characters!"
-          value="{{additionalOwnerInfo.town}}"
-          maxlength="30"
         />
       </div>
     </div>

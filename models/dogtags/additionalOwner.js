@@ -22,11 +22,6 @@ const AdditionalOwner = sequelize.define("additionalowner", {
     allowNull: true,
   },
 
-  town: {
-    type: Sequelize.STRING(40),
-    allowNull: true,
-  },
-
   homePhone: {
     type: Sequelize.STRING(15),
     allowNull: true,
@@ -50,6 +45,7 @@ const AdditionalOwner = sequelize.define("additionalowner", {
 
 // create relationship with owners table.
 Owner.hasMany(AdditionalOwner, {
+  as: "AdditionalOwner",
   foreignKey: "ownerID",
 });
 

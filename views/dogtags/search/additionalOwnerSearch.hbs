@@ -55,7 +55,7 @@
 <table class="sortable table table-bordered table-striped table-hover">
   <thead>
     <tr>
-      <th>Owner ID</th>
+      <th>Primary Owner Name</th>
       <th>First Name</th>
       <th>Last Name</th>
       <th>Home Phone</th>
@@ -68,11 +68,13 @@
         <td><a
             id="ownerLink"
             href="/dogtags/owner/{{this.ownerID}}"
-          >{{this.ownerID}}</a></td>
-        <td>{{this.firstName}}</td>
-        <td>{{this.lastName}}</td>
-        <td class="text-nowrap">{{this.homePhone}}</td>
-        <td>{{this.email}}</td>
+          >{{this.firstName}} {{this.lastName}}</a></td>
+        {{#each AdditionalOwner}}
+          <td>{{this.firstName}}</td>
+          <td>{{this.lastName}}</td>
+          <td class="text-nowrap">{{this.homePhone}}</td>
+          <td>{{this.email}}</td>
+        {{/each}}
       </tr>
     {{/each}}
   </tbody>

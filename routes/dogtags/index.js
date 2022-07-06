@@ -195,17 +195,23 @@ router.get(
             })
           );
       } else if (req.query.filterCategory === "Additional Owner Name") {
-        AdditionalOwner.findAndCountAll({
+        Owner.findAndCountAll({
           where: {
             [Op.or]: {
-              firstName: {
+              "$AdditionalOwner.firstName$": {
                 [Op.like]: "%" + req.query.filterValue + "%",
               },
-              lastName: {
+              "$AdditionalOwner.lastName$": {
                 [Op.like]: "%" + req.query.filterValue + "%",
               },
             },
           },
+          include: [
+            {
+              model: AdditionalOwner,
+              as: "AdditionalOwner",
+            },
+          ],
         })
           .then((results) => {
             // for pagination.
@@ -233,7 +239,7 @@ router.get(
           .catch((err) =>
             res.render("dogtags", {
               title: "BWG | Dogtags",
-              message: "Page Error!",
+              message: "Page Error!" + err,
             })
           );
       } else {
