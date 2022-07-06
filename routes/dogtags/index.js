@@ -899,15 +899,55 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      // return endpoint after passing validation.
-      return res.render("dogtags/printDog", {
-        title: "BWG | Print Dog",
-        layout: "",
-        errorMessages: messages,
-        email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
-        ownerID: req.session.ownerID,
+      // get owner and dog info.
+      Owner.findOne({
+        include: [
+          {
+            model: Dog,
+            where: {
+              dogID: req.params.id,
+            },
+          },
+          {
+            model: Address,
+          },
+        ],
+      }).then((results) => {
+        // return endpoint after passing validation.
+        return res.render("dogtags/printDog", {
+          title: "BWG | Print Dog",
+          layout: "",
+          errorMessages: messages,
+          email: req.session.email,
+          dogAuth: req.session.dogAuth,
+          admin: req.session.admin,
+          ownerID: req.session.ownerID,
+          // data to populate form with.
+          data: {
+            tagNumber: results.dogs[0].tagNumber,
+            issueDate: results.dogs[0].issueDate,
+            designation: results.dogs[0].designation,
+            dogName: results.dogs[0].dogName,
+            breed: results.dogs[0].breed,
+            colour: results.dogs[0].colour,
+            gender: results.dogs[0].gender,
+            spade: results.dogs[0].spade,
+            rabiesTagNumber: results.dogs[0].rabiesTagNumber,
+            rabiesExpiry: results.dogs[0].rabiesExpiry,
+            vetOffice: results.dogs[0].vetOffice,
+            firstName: results.firstName,
+            lastName: results.lastName,
+            email: results.email,
+            streetNumber: results.addresses[0].streetNumber,
+            streetName: results.addresses[0].streetName,
+            town: results.addresses[0].town,
+            poBoxAptRR: results.addresses[0].poBoxAptRR,
+            postalCode: results.addresses[0].postalCode,
+            homePhone: results.homePhone,
+            cellPhone: results.cellPhone,
+            workPhone: results.workPhone,
+          },
+        });
       });
     }
   }

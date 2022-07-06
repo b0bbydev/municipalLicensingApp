@@ -54,15 +54,11 @@
       <table class="table table-sm table-bordered">
         <tr>
           <td><strong>Tag Number</strong></td>
-          <td></td>
-        </tr>
-        <tr>
-          <td><strong>Issued By</strong></td>
-          <td></td>
+          <td>{{data.tagNumber}}</td>
         </tr>
         <tr>
           <td><strong>Date Issued</strong></td>
-          <td></td>
+          <td>{{data.issueDate}}</td>
         </tr>
       </table>
     </div>
@@ -78,24 +74,27 @@
     <div class="col">
       <table class="table table-sm table-bordered">
         <tr>
-          <td><strong>First Name:<br /></strong> Kostas</td>
-          <td><strong>Last Name:<br /></strong> Kostopoulos</td>
-          <td><strong>Email Address:<br /></strong> stevekoste@rogers.com</td>
+          <td><strong>First Name:<br /></strong> {{data.firstName}}</td>
+          <td><strong>Last Name:<br /></strong> {{data.lastName}}</td>
+          <td><strong>Email Address:<br /></strong> {{data.email}}</td>
         </tr>
       </table>
       <table class="table table-sm table-bordered">
         <tr>
-          <td><strong>Address:<br /></strong> 55 Nottingham Forest Rd</td>
-          <td><strong>Town:<br /></strong> Bradford, ON</td>
-          <td><strong>Unit/Apartment/PO Box:<br /></strong> </td>
+          <td><strong>Address:<br /></strong>
+            {{data.streetNumber}}
+            {{data.streetName}}</td>
+          <td><strong>Town:<br /></strong> {{data.town}}</td>
+          <td><strong>Unit/Apartment/PO Box:<br /></strong>
+            {{data.poBoxAptRR}}</td>
         </tr>
       </table>
       <table class="table table-sm table-bordered">
         <tr>
-          <td><strong>Postal Code:<br /></strong> L3Z 0H1</td>
-          <td><strong>Home Telephone:<br /></strong> 905-775-1283</td>
-          <td><strong>Cell Telephone:<br /></strong> </td>
-          <td><strong>Work Telephone:<br /></strong> </td>
+          <td><strong>Postal Code:<br /></strong> {{data.postalCode}}</td>
+          <td><strong>Home Telephone:<br /></strong> {{data.homePhone}}</td>
+          <td><strong>Cell Telephone:<br /></strong> {{data.cellPhone}}</td>
+          <td><strong>Work Telephone:<br /></strong> {{data.workPhone}}</td>
         </tr>
       </table>
     </div>
@@ -111,20 +110,29 @@
     <div class="col">
       <table class="table table-sm table-bordered">
         <tr>
-          <td><strong>Designation:<br /></strong> </td>
-          <td><strong>Dog's Name:<br /></strong> Zeus</td>
-          <td><strong>Breed:<br /></strong> Beagle</td>
-          <td><strong>Animal Colour:<br /></strong> White Black</td>
-          <td><strong>Gender:<br /></strong><input
-              type="radio"
-              name="sex"
-              id="sex"
-              value="Male"
-              checked="checked"
-            />
-            Male
-            <input type="radio" name="sex" id="sex" value="Female" />
-            Female</td>
+          <td><strong>Designation:<br /></strong> {{data.designation}}</td>
+          <td><strong>Dog's Name:<br /></strong> {{data.dogName}}</td>
+          <td><strong>Breed:<br /></strong> {{data.breed}}</td>
+          <td><strong>Animal Colour:<br /></strong> {{data.colour}}</td>
+          <td><strong>Gender:<br /></strong>
+              <input
+                type="radio"
+                name="gender"
+                value="Male"
+                {{#ifCond data.gender "===" "M"}}
+                  checked="checked"
+                {{/ifCond}}
+              />
+              Male
+              <input type="radio"
+              name="gender"
+              value="Female"
+              {{#ifCond data.gender "===" "F"}}
+                  checked="checked"
+                {{/ifCond}}
+              />
+              Female
+          </td>
         </tr>
       </table>
       <table class="table table-sm table-bordered">
@@ -134,30 +142,36 @@
               name="spadeNeutered"
               id="spadeNeutered"
               value="Spade"
+              {{#ifCond data.spade "==" "Spade"}}
+                checked="checked"
+              {{/ifCond}}
             />
             Spade
             <input
               type="radio"
-              name="spadeNeutered"
-              id="spadeNeutered"
+              name="spade"
               value="Neutered"
+              {{#ifCond data.spade "==" "Neutered"}}
+                checked="checked"
+              {{/ifCond}}
             />
             Neutered
             <input
               type="radio"
-              name="spadeNeutered"
-              id="spadeNeutered"
+              name="spade"
               value="No"
-              checked="checked"
+              {{#ifCond data.spade "==" "No"}}
+                checked="checked"
+              {{/ifCond}}
             />
             No</td>
-          <td><strong>Rabies Vac. #:<br /></strong> </td>
-          <td><strong>Rabies Expiry:<br /></strong> </td>
+          <td><strong>Rabies Tag #:<br /></strong> {{data.rabiesTagNumber}}</td>
+          <td><strong>Rabies Expiry:<br /></strong> {{data.rabiesExpiry}}</td>
         </tr>
       </table>
       <table class="table table-sm table-bordered">
         <tr>
-          <td><strong>Veterinary Clinic:<br /></strong>Ripley Animal Hospital</td>
+          <td><strong>Veterinary Clinic:<br /></strong> {{data.vetOffice}}</td>
         </tr>
       </table>
     </div>
