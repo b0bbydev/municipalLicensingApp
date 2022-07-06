@@ -1,22 +1,24 @@
 <h2 class="text-center">{{ownerName}} - Owner Profile</h2>
 <div class="row">
   <div class="col-sm-4">
+    {{#if additionalOwners}}
+      <strong>Additional owners:
+        {{#each additionalOwners}}
+          <a
+            id="additionalOwnerLinks"
+            href="/dogtags/owner/{{this.ownerID}}/additionalOwner/{{this.additionalOwnerID}}"
+          >
+            {{this.firstName}}
+            {{this.lastName}}{{#unless @last}}, {{/unless}}
+          </a>
+        {{/each}}
+      </strong>
+    {{/if}}
     {{#if queryCount}}
-      <div>
+      <div class="mb-1">
         <strong>{{queryCount}}</strong>
       </div>
     {{/if}}
-    <strong>Additional owners:
-      {{#each additionalOwners}}
-        <a
-          id="additionalOwnerLinks"
-          href="/dogtags/owner/{{this.ownerID}}/additionalOwner/{{this.additionalOwnerID}}"
-        >
-          {{this.firstName}}
-          {{this.lastName}}{{#unless @last}}, {{/unless}}
-        </a>
-      {{/each}}
-    </strong>
   </div>
 </div>
 <div class="row mb-2">

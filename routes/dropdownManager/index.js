@@ -172,10 +172,11 @@ router.get(
             const pageCount = Math.ceil(results.count / req.query.limit);
 
             return res.render("dropdownManager/form", {
-              title: "BWG | Dropdown Manager",
+              title: "BWG | Dropdown Manager - " + formName[0].formName,
               email: req.session.email,
               dogAuth: req.session.dogAuth,
               admin: req.session.admin,
+              formName: formName[0].formName,
               data: results.rows,
               dropdownFormID: req.params.id,
               filterCategory: req.query.filterCategory,
