@@ -14,7 +14,7 @@ const {
 const limiter = require("../../config/limiter");
 
 /* GET addAdditionalOwner page. */
-router.get("/", limiter, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -32,7 +32,6 @@ router.get("/", limiter, async (req, res, next) => {
 /* POST addAdditionalOwner */
 router.post(
   "/",
-  limiter,
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\'-]*$/)
@@ -82,7 +81,6 @@ router.post(
         formData: {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
-          town: req.body.town,
           homePhone: req.body.homePhone,
           cellPhone: req.body.cellPhone,
           workPhone: req.body.workPhone,
@@ -94,7 +92,6 @@ router.post(
       AdditionalOwner.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        town: req.body.town,
         homePhone: req.body.homePhone,
         cellPhone: req.body.cellPhone,
         workPhone: req.body.workPhone,
