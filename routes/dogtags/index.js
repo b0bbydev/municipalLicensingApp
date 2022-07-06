@@ -902,6 +902,7 @@ router.get(
       // return endpoint after passing validation.
       return res.render("dogtags/printDog", {
         title: "BWG | Print Dog",
+        layout: "",
         errorMessages: messages,
         email: req.session.email,
         dogAuth: req.session.dogAuth,
