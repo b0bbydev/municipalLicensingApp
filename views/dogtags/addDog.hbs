@@ -22,6 +22,50 @@
           required
         />
       </div>
+      <!-- Tag Required -->
+      <div class="col-sm-6">
+        <label for="Tag Required" class="form-label">Reason Tag No Longer
+          Required</label>
+        <select class="form-select" name="tagRequired">
+          {{#if formData.tagRequired}}
+            <option
+              value="{{formData.tagRequired}}"
+              disabled
+              selected
+            >{{formData.tagRequired}}</option>
+          {{else}}
+            <option disabled selected>Tag Required...</option>
+          {{/if}}
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Vendor -->
+      <div class="col-sm-6">
+        <label for="Vendor" class="form-label">Vendor</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Vendor"
+          name="vendor"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.vendor}}"
+          maxlength="50"
+        />
+      </div>
       <!-- Dog Name -->
       <div class="col-sm-6">
         <label for="Dog Name" class="form-label">Dog Name</label>
@@ -60,7 +104,7 @@
           class="form-control"
           placeholder="Colour"
           name="colour"
-          pattern="[^()><\][\\\x22;|]+"
+          pattern="[^()><\][\\\x22,;|]+"
           title="No special characters!"
           value="{{formData.colour}}"
           maxlength="25"
@@ -83,6 +127,7 @@
     </div>
     <!-- Gender -->
     <div class="row">
+      <label for="Gender" class="form-label">Gender</label>
       <!-- Male -->
       <div class="col-sm-6">
         <div class="form-check">
@@ -283,12 +328,12 @@
         </div>
       </div>
     </div>
-    <!-- Rabies Tag Number -->
     <div class="row">
+      <!-- Rabies Tag Number -->
       <div class="col-sm-6">
         <label for="Rabies Tag Number" class="form-label">Rabies Tag Number</label>
         <input
-          type="number"
+          type="text"
           class="form-control"
           name="rabiesTagNumber"
           placeholder="Rabies Tag Number"
@@ -308,9 +353,9 @@
         />
       </div>
     </div>
-    <!-- Vet Office -->
     <div class="row">
-      <div class="col-sm-6">
+      <!-- Vet Office -->
+      <div class="col">
         <label for="Vet Office" class="form-label">Vet Office</label>
         <input
           type="text"
@@ -323,23 +368,9 @@
           maxlength="50"
         />
       </div>
-      <!-- Vendor -->
-      <div class="col-sm-6">
-        <label for="Vendor" class="form-label">Vendor</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Vendor"
-          name="vendor"
-          pattern="[^()/><\][\\\x22;|]+"
-          title="No special characters!"
-          value="{{formData.vendor}}"
-          maxlength="50"
-        />
-      </div>
     </div>
-    <!-- Notes -->
     <div class="row">
+      <!-- Notes -->
       <div class="col">
         <label for="Notes" class="form-label">Notes</label>
         <textarea
@@ -348,9 +379,8 @@
           class="form-control"
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{formData.notes}}"
           maxlength="255"
-        ></textarea>
+        >{{formData.notes}}</textarea>
       </div>
     </div>
     <div class="row">

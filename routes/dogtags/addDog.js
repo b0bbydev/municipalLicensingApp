@@ -94,7 +94,7 @@ router.post(
     .trim(),
   body("rabiesTagNumber")
     .if(body("rabiesTagNumber").notEmpty())
-    .matches(/^[0-9-]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Rabies Tag Number Entry!")
     .trim(),
   body("rabiesExpiry")

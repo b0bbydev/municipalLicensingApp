@@ -17,7 +17,6 @@ const limiter = require("../../config/limiter");
 /* GET /dogtags/editDog/:id */
 router.get(
   "/:id",
-  limiter,
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
@@ -92,7 +91,6 @@ router.get(
 /* POST /editDog/:id */
 router.post(
   "/:id",
-  limiter,
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
     .matches(/^[0-9-]*$/)
@@ -135,7 +133,7 @@ router.post(
     .trim(),
   body("rabiesTagNumber")
     .if(body("rabiesTagNumber").notEmpty())
-    .matches(/^[0-9-]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Rabies Tag Number Entry!")
     .trim(),
   body("rabiesExpiry")
