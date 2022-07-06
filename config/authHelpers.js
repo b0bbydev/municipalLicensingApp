@@ -29,6 +29,7 @@ module.exports = {
       "treynolds@townofbwg.com",
       "lfortune@townofbwg.com",
       "rmurphy@townofbwg.com",
+      "ipogacevski@townofbwg.com",
     ];
 
     // if the session email is in "whitelist", set session 'auth' == true.
