@@ -12,7 +12,7 @@ const config = {
 var ad = new ActiveDirectory(config);
 
 /* GET login page. */
-router.get("/", limiter, function (req, res, next) {
+router.get("/", function (req, res, next) {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -26,7 +26,7 @@ router.get("/", limiter, function (req, res, next) {
 });
 
 /* POST for /login */
-router.post("/", limiter, (req, res) => {
+router.post("/", (req, res) => {
   // server side validation.
   const errors = validationResult(req);
 

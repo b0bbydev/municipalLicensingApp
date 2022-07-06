@@ -75,6 +75,10 @@ td {
   height: 100%;
 }
 
+.form-label {
+  font-weight: 500;
+}
+
 .btn {
   color: #fff !important;
 }

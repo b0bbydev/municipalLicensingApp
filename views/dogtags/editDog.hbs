@@ -22,6 +22,50 @@
           required
         />
       </div>
+      <!-- Tag Required -->
+      <div class="col-sm-6">
+        <label for="Tag Required" class="form-label">Reason Tag No Longer
+          Required</label>
+        <select class="form-select" name="tagRequired">
+          {{#if dogInfo.tagRequired}}
+            <option
+              value="{{dogInfo.tagRequired}}"
+              disabled
+              selected
+            >{{dogInfo.tagRequired}}</option>
+          {{else}}
+            <option disabled selected>Tag Required...</option>
+          {{/if}}
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Vendor -->
+      <div class="col-sm-6">
+        <label for="Vendor" class="form-label">Vendor</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Vendor"
+          name="vendor"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{dogInfo.vendor}}"
+          maxlength="50"
+        />
+      </div>
       <!-- Dog Name -->
       <div class="col-sm-6">
         <label for="Dog Name" class="form-label">Dog Name</label>
@@ -83,6 +127,7 @@
     </div>
     <!-- Gender -->
     <div class="row">
+      <label for="Gender" class="form-label">Gender</label>
       <!-- Male -->
       <div class="col-sm-6">
         <div class="form-check">
@@ -320,49 +365,6 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           value="{{dogInfo.vetOffice}}"
-          maxlength="50"
-        />
-      </div>
-    </div>
-    <div class="row">
-      <!-- Tag Required -->
-      <div class="col-sm-6">
-        <label for="Tag Required" class="form-label">Tag Required</label>
-        <select class="form-select" name="tagRequired">
-          {{#if dogInfo.tagRequired}}
-            <option
-              value="{{dogInfo.tagRequired}}"
-              disabled
-              selected
-            >{{dogInfo.tagRequired}}</option>
-          {{else}}
-            <option disabled selected>Tag Required...</option>
-          {{/if}}
-          {{#each dropdownValues}}
-            {{#if this.isDisabled}}
-              <option
-                value="{{this.dropdownValue}}"
-                disabled
-              >{{this.dropdownValue}}</option>
-            {{else}}
-              <option
-                value="{{this.dropdownValue}}"
-              >{{this.dropdownValue}}</option>
-            {{/if}}
-          {{/each}}
-        </select>
-      </div>
-      <!-- Vendor -->
-      <div class="col-sm-6">
-        <label for="Vendor" class="form-label">Vendor</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Vendor"
-          name="vendor"
-          pattern="[^()/><\][\\\x22;|]+"
-          title="No special characters!"
-          value="{{dogInfo.vendor}}"
           maxlength="50"
         />
       </div>
