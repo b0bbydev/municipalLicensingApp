@@ -28,7 +28,8 @@ router.get("/", function (req, res, next) {
 /* POST for /login */
 router.post(
   "/",
-  body("password").matches(/^[a-zA-Z0-9!@#$%^&* ]*$/),
+  //body("email").isEmail(),
+  //body("password").matches(/^[a-zA-Z0-9!@#$%^&*]*$/),
   (req, res) => {
     // server side validation.
     const errors = validationResult(req);
