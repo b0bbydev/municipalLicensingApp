@@ -30,6 +30,9 @@ var indexRouter = require("./routes/index");
 const limiter = require("./config/limiter");
 var moment = require("moment");
 
+/* admin related routes */
+var adminRouter = require("./routes/admin/index");
+
 /* policies related routes. */
 var policiesRouter = require("./routes/policies/index");
 var addPoliciesRouter = require("./routes/policies/addPolicy");
@@ -153,6 +156,9 @@ hbs.registerHelper("lowercase", function (str) {
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
+
+/* admin related routes */
+app.use("/admin", adminRouter);
 
 /* dropdownManager related routes */
 app.use("/dropdownManager", dropdownRouter);

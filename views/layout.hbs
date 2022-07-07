@@ -67,6 +67,14 @@
                 </a>
               </li>
             {{/ifCond}}
+            {{#if admin}}
+              <li class="nav-item-admin w-100 p-1">
+                <a href="/admin" class="nav-link align-middle ps-3">
+                  <i class="fs-4 icon-blue bi bi-person-check"></i>
+                  <span class="ms-1 d-none d-sm-inline">Admin Panel</span>
+                </a>
+              </li>
+            {{/if}}
             <li class="nav-item-home w-100 p-1">
               <a href="/" class="nav-link align-middle ps-3">
                 <i class="fs-4 icon-blue bi bi-house"></i>

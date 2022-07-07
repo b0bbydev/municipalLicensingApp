@@ -18,6 +18,7 @@ td {
 
 .nav-item:hover,
 .nav-item-home:hover,
+.nav-item-admin:hover,
 .nav-item-logout:hover {
   transition: 0.2s ease-in;
   background-color: rgba(230, 230, 230, 1);
@@ -36,6 +37,13 @@ td {
   cursor: pointer;
   border-top: 1px solid #dedede;
   border-bottom: 1px solid #dedede;
+}
+
+.nav-item-admin {
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-top: 1px solid #dedede;
 }
 
 .nav-item-logout {
