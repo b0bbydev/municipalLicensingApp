@@ -45,7 +45,7 @@ module.exports = {
     const emails = ["jkinsella@townofbwg.com"];
 
     // if the session email is in "whitelist", set session 'auth' == true.
-    if (emails.includes(req.session.email)) {
+    if (emails.includes(req.session.email.toLowerCase())) {
       req.session.policyAuth = true;
       next();
     } else {
