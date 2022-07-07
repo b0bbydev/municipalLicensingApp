@@ -2,6 +2,8 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
+const Policy = require("./policy");
+const PolicyHistory = require("./policyHistory");
 const Guideline = require("./guideline");
 
 const GuidelineHistory = sequelize.define(
@@ -63,6 +65,10 @@ const GuidelineHistory = sequelize.define(
     freezeTableName: true,
   }
 );
+
+Policy.hasMany(GuidelineHistory, {
+  foreignKey: "policyID",
+});
 
 Guideline.hasMany(GuidelineHistory, {
   foreignKey: "guidelineID",
