@@ -17,7 +17,11 @@
           class="form-control"
           placeholder="Procedure Name"
           name="procedureName"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
           value="{{formData.procedureName}}"
+          maxlength="30"
+          required
         />
       </div>
       <!-- Status -->

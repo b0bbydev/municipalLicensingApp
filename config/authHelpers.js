@@ -9,7 +9,7 @@ module.exports = {
   }, // end of isLoggedIn().
 
   adminAuth: function (req, res, next) {
-    const emails = ["charbour@townofbwg.com"];
+    const emails = ["bjonkman@townofbwg.com", "charbour@townofbwg.com"];
 
     // if the session email is in "whitelist", set session 'admin' == true.
     if (emails.includes(req.session.email.toLowerCase())) {
@@ -42,7 +42,7 @@ module.exports = {
   },
 
   policiesAuth: function (req, res, next) {
-    const emails = ["bjonkman@townofbwg.com", "jkinsella@townofbwg.com"];
+    const emails = ["jkinsella@townofbwg.com"];
 
     // if the session email is in "whitelist", set session 'auth' == true.
     if (emails.includes(req.session.email)) {

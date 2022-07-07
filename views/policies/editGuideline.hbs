@@ -18,7 +18,10 @@
           class="form-control"
           placeholder="Guideline Name"
           name="guidelineName"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
           value="{{guidelineInfo.guidelineName}}"
+          maxlength="30"
           required
         />
       </div>

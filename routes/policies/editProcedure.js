@@ -69,7 +69,7 @@ router.post(
   "/:id",
   body("procedureName")
     .if(body("procedureName").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Procedure Name Entry!")
     .trim(),
   body("dateApproved")

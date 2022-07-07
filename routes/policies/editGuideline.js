@@ -69,7 +69,7 @@ router.post(
   "/:id",
   body("guidelineName")
     .if(body("guidelineName").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Guideline Name Entry!")
     .trim(),
   body("dateApproved")
