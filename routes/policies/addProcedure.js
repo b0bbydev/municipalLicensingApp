@@ -128,11 +128,11 @@ router.post(
         notes: req.body.notes,
         policyID: req.params.id,
       })
-        // redirect to /policies.
-        .then(res.redirect("/policies"))
+        // redirect back to the policy they were viewing.
+        .then(res.redirect("/policies/policy/" + req.session.policyID))
         .catch((err) => {
-          return res.render("policies/addPolicy", {
-            title: "BWG | Add Policy",
+          return res.render("policies/addProcedure", {
+            title: "BWG | Add Procedure",
             message: "Page Error!",
           });
         });
