@@ -3,6 +3,7 @@ var router = express.Router();
 // authHelper middleware.
 const {
   dogLicenseAuth,
+  policiesAuth,
   adminAuth,
   isLoggedIn,
 } = require("../config/authHelpers");
@@ -15,6 +16,7 @@ router.get(
   isLoggedIn,
   adminAuth,
   dogLicenseAuth,
+  policiesAuth,
   function (req, res, next) {
     // check if there's an error message in the session
     let messages = req.session.messages || [];
@@ -28,6 +30,7 @@ router.get(
       errorMessages: messages,
       email: req.session.email,
       dogAuth: req.session.dogAuth, // authorization.
+      policyAuth: req.session.policyAuth, // authorization.
       admin: req.session.admin, // authorization.
       baseUrl: req.baseUrl, // back button logic.
       indexUrl: "/", // back button logic.

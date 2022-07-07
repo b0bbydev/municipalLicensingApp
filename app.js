@@ -32,6 +32,7 @@ var moment = require("moment");
 
 /* admin related routes */
 var adminRouter = require("./routes/admin/index");
+var adminAddUserRouter = require("./routes/admin/addUser");
 
 /* policies related routes. */
 var policiesRouter = require("./routes/policies/index");
@@ -159,6 +160,7 @@ app.use("/", indexRouter);
 
 /* admin related routes */
 app.use("/admin", adminRouter);
+app.use("/admin/addUser", adminAddUserRouter);
 
 /* dropdownManager related routes */
 app.use("/dropdownManager", dropdownRouter);

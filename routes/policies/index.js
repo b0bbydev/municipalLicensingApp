@@ -24,7 +24,6 @@ const limiter = require("../../config/limiter");
 /* GET /policies */
 router.get(
   "/",
-  limiter,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
@@ -69,8 +68,9 @@ router.get(
               title: "BWG | Policies",
               errorMessages: messages,
               email: req.session.email,
-              dogAuth: req.session.dogAuth,
-              admin: req.session.admin,
+              dogAuth: req.session.dogAuth, // authorization.
+              policyAuth: req.session.policyAuth, // authorization.
+              admin: req.session.admin, // authorization.
               data: results.rows,
               dropdownValues: dropdownValues,
               pageCount,
@@ -110,8 +110,9 @@ router.get(
             return res.render("policies", {
               title: "BWG | Policies",
               email: req.session.email,
-              dogAuth: req.session.dogAuth,
-              admin: req.session.admin,
+              dogAuth: req.session.dogAuth, // authorization.
+              policyAuth: req.session.policyAuth, // authorization.
+              admin: req.session.admin, // authorization.
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
@@ -139,7 +140,6 @@ router.get(
 /* POST /policies */
 router.post(
   "/",
-  limiter,
   body("policyName")
     .if(body("policyName").notEmpty())
     .matches(/^[a-zA-Z0-9\/\-. ]*$/)
@@ -155,8 +155,9 @@ router.post(
         title: "BWG | Policies",
         message: "Page Error!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        dogAuth: req.session.dogAuth, // authorization.
+        policyAuth: req.session.policyAuth, // authorization.
+        admin: req.session.admin, // authorization.
       });
     } else {
       // get the specified policy based on name.
@@ -183,7 +184,6 @@ router.post(
 router.get(
   "/policy/:id",
   param("id").matches(/^\d+$/).trim(),
-  limiter,
   async (req, res, next) => {
     // check if there's an error message in the session
     let messages = req.session.messages || [];
@@ -217,8 +217,9 @@ router.get(
       title: "BWG | Policy",
       errorMessages: messages,
       email: req.session.email,
-      dogAuth: req.session.dogAuth,
-      admin: req.session.admin,
+      dogAuth: req.session.dogAuth, // authorization.
+      policyAuth: req.session.policyAuth, // authorization.
+      admin: req.session.admin, // authorization.
       procedures: procedures,
       guidelines: guidelines,
       policyInfo: policyInfo,
@@ -231,7 +232,6 @@ router.get(
 router.get(
   "/policyHistory/:id",
   param("id").matches(/^\d+$/).trim(),
-  limiter,
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -314,6 +314,7 @@ router.get(
                 errorMessages: messages,
                 email: req.session.email,
                 dogAuth: req.session.dogAuth, // authorization.
+                policyAuth: req.session.policyAuth, // authorization.
                 admin: req.session.admin, // authorization.
                 policyHistory: policyHistory.rows,
                 policyName: policyName,
@@ -395,8 +396,9 @@ router.get(
                   title: "BWG | Policy History",
                   errorMessages: messages,
                   email: req.session.email,
-                  dogAuth: req.session.dogAuth,
-                  admin: req.session.admin,
+                  dogAuth: req.session.dogAuth, // authorization.
+                  policyAuth: req.session.policyAuth, // authorization.
+                  admin: req.session.admin, // authorization.
                   policyHistory: policyHistory.rows,
                   policyName: policyName,
                   procedureHistory: procedureHistory.rows,
@@ -477,8 +479,9 @@ router.get(
                   title: "BWG | Policy History",
                   errorMessages: messages,
                   email: req.session.email,
-                  dogAuth: req.session.dogAuth,
-                  admin: req.session.admin,
+                  dogAuth: req.session.dogAuth, // authorization.
+                  policyAuth: req.session.policyAuth, // authorization.
+                  admin: req.session.admin, // authorization.
                   policyHistory: policyHistory.rows,
                   policyName: policyName,
                   procedureHistory: procedureHistory.rows,
@@ -568,8 +571,9 @@ router.get(
                   title: "BWG | Policy History",
                   errorMessages: messages,
                   email: req.session.email,
-                  dogAuth: req.session.dogAuth,
-                  admin: req.session.admin,
+                  dogAuth: req.session.dogAuth, // authorization.
+                  policyAuth: req.session.policyAuth, // authorization.
+                  admin: req.session.admin, // authorization.
                   policyHistory: policyHistory.rows,
                   policyName: policyName,
                   procedureHistory: procedureHistory.rows,
