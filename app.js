@@ -34,7 +34,11 @@ var moment = require("moment");
 var policiesRouter = require("./routes/policies/index");
 var addPoliciesRouter = require("./routes/policies/addPolicy");
 var editPolicyRouter = require("./routes/policies/editPolicy");
+
+var addProcedureRouter = require("./routes/policies/addProcedure");
 var editProcedureRouter = require("./routes/policies/editProcedure");
+
+var addGuidelineRouter = require("./routes/policies/addGuideline");
 var editGuidelineRouter = require("./routes/policies/editGuideline");
 
 /* dropdown related routes. */
@@ -157,7 +161,11 @@ app.use("/dropdownManager", dropdownRouter);
 app.use("/policies", policiesRouter);
 app.use("/policies/addPolicy", addPoliciesRouter);
 app.use("/policies/editPolicy", editPolicyRouter);
+
+app.use("/policies/addProcedure", addProcedureRouter);
 app.use("/policies/editProcedure", editProcedureRouter);
+
+app.use("/policies/addGuideline", addGuidelineRouter);
 app.use("/policies/editGuideline", editGuidelineRouter);
 
 /* dogtag related routes. */
