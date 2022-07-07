@@ -1,12 +1,12 @@
-<h2>Add Policy</h2>
-<div class="content">
-  <form class="row g-2" id="form" method="POST">
-    <!-- check for error messages in the session -->
-    {{#if message}}
-      <div class="alert alert-danger">
-        {{message}}
-      </div>
-    {{/if}}
+<h2 class="text-center mt-1">Add Policy</h2>
+<form class="row g-5 m-auto" method="POST">
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
+  <div class="col-md-8 m-auto mt-5">
     <h4>Policy Information</h4>
     <hr />
     <div class="row">
@@ -103,7 +103,15 @@
       <div class="col-sm-4">
         <label for="Category" class="form-label">Category</label>
         <select class="form-select" name="category">
-          <option disabled selected>Category...</option>
+          {{#if formData.category}}
+            <option
+              value="{{formData.category}}"
+              disabled
+              selected
+            >{{formData.category}}</option>
+          {{else}}
+            <option disabled selected>Category...</option>
+          {{/if}}
           {{#each categoryDropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -161,7 +169,15 @@
       <div class="col-sm-6">
         <label for="Authority" class="form-label">Authority</label>
         <select class="form-select" name="authority">
-          <option disabled selected>Authority...</option>
+          {{#if formData.authority}}
+            <option
+              value="{{formData.authority}}"
+              disabled
+              selected
+            >{{formData.authority}}</option>
+          {{else}}
+            <option disabled selected>Authority...</option>
+          {{/if}}
           {{#each authorityDropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -196,7 +212,15 @@
       <div class="col-sm-6">
         <label for="Status" class="form-label">Status</label>
         <select class="form-select" name="status">
-          <option disabled selected>Status...</option>
+          {{#if formData.status}}
+            <option
+              value="{{formData.status}}"
+              disabled
+              selected
+            >{{formData.status}}</option>
+          {{else}}
+            <option disabled selected>Status...</option>
+          {{/if}}
           {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -210,6 +234,58 @@
             {{/if}}
           {{/each}}
         </select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Legislation Required -->
+      <label for="Legislation Required" class="form-label">Legislation Required</label>
+      <!-- Yes -->
+      <div class="col-sm-6">
+        <div class="form-check">
+          <label class="form-check-label" for="legislationRequired">
+            Yes
+          </label>
+          {{#ifCond formData.legislationRequired "===" "Yes"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="Yes"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="Yes"
+            />
+          {{/ifCond}}
+        </div>
+      </div>
+      <!-- No -->
+      <div class="col-sm-6">
+        <div class="form-check">
+          <label class="form-check-label" for="legislationRequired">
+            No
+          </label>
+          {{#ifCond formData.legislationRequired "===" "No"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="No"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="No"
+            />
+          {{/ifCond}}
+        </div>
       </div>
     </div>
     <!-- Notes -->
@@ -230,10 +306,10 @@
       <div class="col">
         <button
           id="submitButton"
-          class="btn btn-primary"
+          class="btn btn-primary mt-2"
           type="submit"
         >Submit</button>
       </div>
     </div>
-  </form>
-</div>
+  </div>
+</form>

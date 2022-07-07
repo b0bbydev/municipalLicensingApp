@@ -235,6 +235,58 @@
         </select>
       </div>
     </div>
+    <div class="row">
+      <!-- Legislation Required -->
+      <label for="Legislation Required" class="form-label">Legislation Required</label>
+      <!-- Yes -->
+      <div class="col-sm-6">
+        <div class="form-check">
+          <label class="form-check-label" for="legislationRequired">
+            Yes
+          </label>
+          {{#ifCond policyInfo.legislationRequired "===" "Yes"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="Yes"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="Yes"
+            />
+          {{/ifCond}}
+        </div>
+      </div>
+      <!-- No -->
+      <div class="col-sm-6">
+        <div class="form-check">
+          <label class="form-check-label" for="legislationRequired">
+            No
+          </label>
+          {{#ifCond policyInfo.legislationRequired "===" "No"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="No"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="No"
+            />
+          {{/ifCond}}
+        </div>
+      </div>
+    </div>
     <!-- Notes -->
     <div class="row">
       <div class="col">

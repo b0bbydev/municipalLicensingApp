@@ -83,6 +83,7 @@ router.get(
             division: results.division,
             authority: results.authority,
             administrator: results.administrator,
+            legislationRequired: results.legislationRequired,
             status: results.status,
             notes: results.notes,
           },
@@ -200,6 +201,7 @@ router.post(
           division: req.body.division,
           authority: req.body.authority,
           administrator: req.body.administrator,
+          legislationRequired: req.body.legislationRequired,
           status: req.body.status,
           notes: req.body.notes,
         },
@@ -221,6 +223,7 @@ router.post(
           division: req.body.division,
           authority: req.body.authority,
           administrator: req.body.administrator,
+          legislationRequired: req.body.legislationRequired,
           status: req.body.status,
           notes: req.body.notes,
         },
@@ -230,10 +233,8 @@ router.post(
           },
         }
       )
-        .then((results) => {
-          // redirect to /policies
-          res.redirect("/policies");
-        })
+        // redirect back to policies.
+        .then(res.redirect("/policies"))
         .catch((err) => {
           return res.render("policies/editPolicy", {
             title: "BWG | Edit Policy",

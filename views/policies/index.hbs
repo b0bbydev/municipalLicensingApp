@@ -52,12 +52,14 @@
       data-bs-target="#policyHistoryModal"
     >View History</a>
   </div>
-  <div class="row">
-    <div class="col mb-1">
-      {{#if queryCount}}
-        <strong>{{queryCount}}</strong>
-      {{/if}}
-    </div>
+</div>
+<div class="row">
+  <div class="col mb-1">
+    <a href="/policies/addPolicy" class="btn btn-sm btn-primary float-end">Add
+      Policy</a>
+    {{#if queryCount}}
+      <strong>{{queryCount}}</strong>
+    {{/if}}
   </div>
 </div>
 
@@ -85,6 +87,7 @@
       <th>Division</th>
       <th>Authority</th>
       <th>Administrator</th>
+      <th>Legislation Required</th>
       <th>Status</th>
       <th>Actions</th>
     </tr>
@@ -108,6 +111,10 @@
         <td>{{this.division}}</td>
         <td>{{this.authority}}</td>
         <td>{{this.administrator}}</td>
+        <td>{{#ifCond this.legislationRequired "===" "Yes"}}
+            <input type="checkbox" onclick="return false;" checked />
+          {{else}}
+            <input type="checkbox" onclick="return false;" />{{/ifCond}}</td>
         <td>{{this.status}}</td>
         <td class="text-nowrap"><a
             href="/policies/editPolicy/{{this.policyID}}"

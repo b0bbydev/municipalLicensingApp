@@ -76,6 +76,11 @@ const Policy = sequelize.define("policy", {
     allowNull: true,
   },
 
+  legislationRequired: {
+    type: Sequelize.STRING(5),
+    allowNull: true,
+  },
+
   status: {
     type: Sequelize.ENUM("Archive", "Active", "Draft"),
     allowNull: true,

@@ -149,6 +149,29 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
+    // dropdown values.
+    // status options.
+    var statusDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 12,
+        dropdownTitle: "Status Options",
+      },
+    });
+    // category options.
+    var categoryDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 12,
+        dropdownTitle: "Category Options",
+      },
+    });
+    // authority options.
+    var authorityDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 12,
+        dropdownTitle: "Authority Options",
+      },
+    });
+
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("policies/addPolicy", {
@@ -157,6 +180,9 @@ router.post(
         email: req.session.email,
         dogAuth: req.session.dogAuth,
         admin: req.session.admin,
+        statusDropdownValues: statusDropdownValues,
+        categoryDropdownValues: categoryDropdownValues,
+        authorityDropdownValues: authorityDropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {
           policyNumber: req.body.policyNumber,
@@ -172,6 +198,7 @@ router.post(
           division: req.body.division,
           authority: req.body.authority,
           administrator: req.body.administrator,
+          legislationRequired: req.body.legislationRequired,
           status: req.body.status,
           notes: req.body.notes,
         },
@@ -192,17 +219,16 @@ router.post(
         division: req.body.division,
         authority: req.body.authority,
         administrator: req.body.administrator,
+        legislationRequired: req.body.legislationRequired,
         status: req.body.status,
         notes: req.body.notes,
       })
-        .then((results) => {
-          // redirect to /policies
-          res.redirect("/policies");
-        })
+        // redirect to /policies.
+        .then(res.redirect("/policies"))
         .catch((err) => {
           return res.render("policies/addPolicy", {
             title: "BWG | Add Policy",
-            message: "Page Error!" + err,
+            message: "Page Error!",
           });
         });
     }
