@@ -39,7 +39,7 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-/* POST addOwner */
+/* POST /addOwner */
 router.post(
   "/",
   body("firstName")
