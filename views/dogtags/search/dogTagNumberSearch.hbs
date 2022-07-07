@@ -57,29 +57,29 @@
     <tr>
       <th>Owner ID</th>
       <th>Tag Number</th>
-      <th>Issue Date</th>
-      <th>Expiry Date</th>
       <th>Dog Name</th>
       <th>Breed</th>
       <th>Colour</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
-      {{#each dogs}}
-        <tr>
-          <td><a
-              id="ownerLink"
-              href="/dogtags/owner/{{this.ownerID}}"
-            >{{this.ownerID}}</a></td>
+      <tr>
+        <td><a
+            id="ownerLink"
+            href="/dogtags/owner/{{this.ownerID}}"
+          >{{this.firstName}} {{this.lastName}}</a></td>
+        {{#each dogs}}
           <td>{{this.tagNumber}}</td>
-          <td>{{this.issueDate}}</td>
-          <td>{{this.expiryDate}}</td>
           <td>{{this.dogName}}</td>
           <td>{{this.breed}}</td>
           <td>{{this.colour}}</td>
-        </tr>
-      {{/each}}
+          <td>{{this.issueDate}}</td>
+          <td>{{this.expiryDate}}</td>
+        {{/each}}
+      </tr>
     {{/each}}
   </tbody>
 </table>
