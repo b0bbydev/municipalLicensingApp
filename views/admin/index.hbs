@@ -1,1 +1,53 @@
 <h2 class="text-center">Admin Panel</h2>
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+<div class="row">
+  <div class="col">
+    <h4>User List</h4>
+    <!-- Table -->
+    <table
+      class="table table-sm table-bordered table-striped table-hover sortable"
+    >
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>ID</td>
+          <td>FName</td>
+          <td>LName</td>
+          <td>Email</td>
+        </tr>
+      </tbody>
+    </table>
+    <nav id="pagination">
+      <ul class="pagination pagination-sm">
+        {{#if paginate.hasPreviousPages}}
+          <li class="page-item"><a
+              class="page-link"
+              href="{{prev}}"
+            >Prev</a></li>
+        {{/if}}
+        {{#each pages}}
+          <li class="page-item">
+            <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
+        {{/each}}
+        {{#if hasMorePages}}
+          <li class="page-item"><a
+              class="page-link"
+              href="{{paginate.href}}"
+            >Next</a></li>
+        {{/if}}
+      </ul>
+    </nav>
+  </div>
+</div>
