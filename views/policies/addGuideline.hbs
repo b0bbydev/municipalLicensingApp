@@ -1,1 +1,124 @@
 <h2 class="text-center mt-1">Add Guideline</h2>
+<form class="row g-5 m-auto" method="POST">
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
+  <div class="col-md-8 m-auto mt-5">
+    <h4>Guideline Information</h4>
+    <hr />
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Guideline Name" class="form-label">Guideline Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Guideline Name"
+          name="guidelineName"
+          value="{{formData.guidelineName}}"
+        />
+      </div>
+      <!-- Status -->
+      <div class="col-sm-6">
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          {{#if formData.status}}
+            <option
+              value="{{formData.status}}"
+              disabled
+              selected
+            >{{formData.status}}</option>
+          {{else}}
+            <option disabled selected>Status...</option>
+          {{/if}}
+          {{#each statusDropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Date Approved -->
+      <div class="col-sm-6">
+        <label for="Date Approved" class="form-label">Date Approved</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Approved"
+          name="dateApproved"
+          value="{{formData.dateApproved}}"
+        />
+      </div>
+      <!-- Date Amended -->
+      <div class="col-sm-6">
+        <label for="Date Amended" class="form-label">Date Amended</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Amended"
+          name="dateAmended"
+          value="{{formData.dateAmended}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Last Review Date -->
+      <div class="col-sm-6">
+        <label for="Last Review Date" class="form-label">Last Review Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Last Review Date"
+          name="lastReviewDate"
+          value="{{formData.lastReviewDate}}"
+        />
+      </div>
+      <!-- Scheduled Review Date -->
+      <div class="col-sm-6">
+        <label for="Scheduled Review Date" class="form-label">Scheduled Review
+          Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Scheduled Review Date"
+          name="scheduledReviewDate"
+          value="{{formData.scheduledReviewDate}}"
+        />
+      </div>
+    </div>
+    <!-- Notes -->
+    <div class="row">
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.notes}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

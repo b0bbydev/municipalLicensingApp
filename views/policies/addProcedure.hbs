@@ -16,7 +16,7 @@
           type="text"
           class="form-control"
           placeholder="Procedure Name"
-          name="procedureNumber"
+          name="procedureName"
           value="{{formData.procedureName}}"
         />
       </div>
@@ -49,8 +49,75 @@
       </div>
     </div>
     <div class="row">
+      <!-- Date Approved -->
       <div class="col-sm-6">
-
+        <label for="Date Approved" class="form-label">Date Approved</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Approved"
+          name="dateApproved"
+          value="{{formData.dateApproved}}"
+        />
+      </div>
+      <!-- Date Amended -->
+      <div class="col-sm-6">
+        <label for="Date Amended" class="form-label">Date Amended</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Amended"
+          name="dateAmended"
+          value="{{formData.dateAmended}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Last Review Date -->
+      <div class="col-sm-6">
+        <label for="Last Review Date" class="form-label">Last Review Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Last Review Date"
+          name="lastReviewDate"
+          value="{{formData.lastReviewDate}}"
+        />
+      </div>
+      <!-- Scheduled Review Date -->
+      <div class="col-sm-6">
+        <label for="Scheduled Review Date" class="form-label">Scheduled Review
+          Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Scheduled Review Date"
+          name="scheduledReviewDate"
+          value="{{formData.scheduledReviewDate}}"
+        />
+      </div>
+    </div>
+    <!-- Notes -->
+    <div class="row">
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.notes}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
       </div>
     </div>
   </div>

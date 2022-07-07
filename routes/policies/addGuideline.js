@@ -10,7 +10,7 @@ const {
 const limiter = require("../../config/limiter");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
+router.get("/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages

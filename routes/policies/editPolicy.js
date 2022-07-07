@@ -29,9 +29,6 @@ router.get(
       // clear session messages.
       req.session.messages = [];
 
-      // save policyID to session.
-      req.session.policyID = req.params.id;
-
       // dropdown values.
       // status options.
       var statusDropdownValues = await Dropdown.findAll({
@@ -229,7 +226,7 @@ router.post(
         },
         {
           where: {
-            policyID: req.session.policyID,
+            policyID: req.params.id,
           },
         }
       )

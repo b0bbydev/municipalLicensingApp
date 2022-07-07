@@ -190,23 +190,26 @@ router.get(
     // clear session messages
     req.session.messages = [];
 
+    // save policyID to session.
+    req.session.policyID = req.params.id;
+
     // get related procedures.
     let procedures = await Procedure.findAll({
       where: {
-        policyID: req.params.id, // policyID is in URL bar.
+        policyID: req.session.policyID, // policyID is in URL bar.
       },
     });
     // get related guidelines.
     let guidelines = await Guideline.findAll({
       where: {
-        policyID: req.params.id, // policyID is in URL bar.
+        policyID: req.session.policyID, // policyID is in URL bar.
       },
     });
     // get current policyName and notes.
     let policyInfo = await Policy.findOne({
       attributes: ["policyName", "notes"],
       where: {
-        policyID: req.params.id,
+        policyID: req.session.policyID,
       },
     });
 
@@ -219,7 +222,7 @@ router.get(
       procedures: procedures,
       guidelines: guidelines,
       policyInfo: policyInfo,
-      policyID: req.params.id,
+      policyID: req.session.policyID,
     });
   }
 );
