@@ -29,7 +29,7 @@
           class="form-control"
           placeholder="Policy Name"
           name="policyName"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="40"
           value="{{policyInfo.policyName}}"
@@ -48,6 +48,7 @@
           value="{{policyInfo.cowDate}}"
         />
       </div>
+      <!-- Council Resolution -->
       <div class="col-sm-6">
         <label for="Council Resolution" class="form-label">Council Resolution</label>
         <input
@@ -55,7 +56,7 @@
           class="form-control"
           placeholder="Council Resolution"
           name="councilResolution"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="40"
           value="{{policyInfo.councilResolution}}"

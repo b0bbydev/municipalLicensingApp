@@ -74,7 +74,7 @@ router.post(
     .trim(),
   body("policyName")
     .if(body("policyName").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Policy Name Entry!")
     .trim(),
   body("cowDate")
@@ -84,7 +84,7 @@ router.post(
     .trim(),
   body("councilResolution")
     .if(body("councilResolution").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Council Resolution Entry!")
     .trim(),
   body("dateApproved")
@@ -119,7 +119,7 @@ router.post(
     .trim(),
   body("division")
     .if(body("division").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Division Entry!")
     .trim(),
   body("authority")
@@ -129,7 +129,7 @@ router.post(
     .trim(),
   body("administrator")
     .if(body("administrator").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Administrator Entry!")
     .trim(),
   body("status")

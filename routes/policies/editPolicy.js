@@ -100,7 +100,7 @@ router.post(
     .trim(),
   body("policyName")
     .if(body("policyName").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Policy Name Entry!")
     .trim(),
   body("cowDate")
@@ -145,7 +145,7 @@ router.post(
     .trim(),
   body("division")
     .if(body("division").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Division Entry!")
     .trim(),
   body("authority")
@@ -155,7 +155,7 @@ router.post(
     .trim(),
   body("administrator")
     .if(body("administrator").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Administrator Entry!")
     .trim(),
   body("status")
@@ -165,7 +165,7 @@ router.post(
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-, ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {
