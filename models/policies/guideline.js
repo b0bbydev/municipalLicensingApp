@@ -17,7 +17,7 @@ const Guideline = sequelize.define("guideline", {
     allowNull: true,
   },
 
-  approvalDate: {
+  dateApproved: {
     type: Sequelize.DATEONLY,
     allowNull: true,
   },

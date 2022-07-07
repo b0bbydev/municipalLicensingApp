@@ -84,6 +84,11 @@ const PolicyHistory = sequelize.define(
       allowNull: true,
     },
 
+    legislationRequired: {
+      type: Sequelize.STRING(5),
+      allowNull: true,
+    },
+
     status: {
       type: Sequelize.ENUM("Archive", "Active", "Draft"),
       allowNull: true,

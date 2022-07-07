@@ -1,1 +1,57 @@
 <h2 class="text-center mt-1">Add Procedure</h2>
+<form class="row g-5 m-auto" method="POST">
+  <!-- check for error messages in the session -->
+  {{#if message}}
+    <div class="alert alert-danger">
+      {{message}}
+    </div>
+  {{/if}}
+  <div class="col-md-8 m-auto mt-5">
+    <h4>Procedure Information</h4>
+    <hr />
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Procedure Name" class="form-label">Procedure Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Procedure Name"
+          name="procedureNumber"
+          value="{{formData.procedureName}}"
+        />
+      </div>
+      <!-- Status -->
+      <div class="col-sm-6">
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          {{#if formData.status}}
+            <option
+              value="{{formData.status}}"
+              disabled
+              selected
+            >{{formData.status}}</option>
+          {{else}}
+            <option disabled selected>Status...</option>
+          {{/if}}
+          {{#each statusDropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+
+      </div>
+    </div>
+  </div>
+</form>

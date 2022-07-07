@@ -2,8 +2,6 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
-const Policy = require("./policy");
-const PolicyHistory = require("./policyHistory");
 const Procedure = require("./procedure");
 
 const ProcedureHistory = sequelize.define(
@@ -22,11 +20,11 @@ const ProcedureHistory = sequelize.define(
     },
 
     procedureName: {
-      type: Sequelize.STRING(40),
+      type: Sequelize.STRING(30),
       allowNull: true,
     },
 
-    approvalDate: {
+    dateApproved: {
       type: Sequelize.DATEONLY,
       allowNull: true,
     },
@@ -47,7 +45,7 @@ const ProcedureHistory = sequelize.define(
     },
 
     status: {
-      type: Sequelize.ENUM("Archive", "Active", "Draft"),
+      type: Sequelize.STRING(25),
       allowNull: true,
     },
 
@@ -65,10 +63,6 @@ const ProcedureHistory = sequelize.define(
     freezeTableName: true,
   }
 );
-
-Policy.hasMany(ProcedureHistory, {
-  foreignKey: "policyID",
-});
 
 Procedure.hasMany(ProcedureHistory, {
   foreignKey: "procedureID",

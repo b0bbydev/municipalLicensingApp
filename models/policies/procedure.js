@@ -17,7 +17,7 @@ const Procedure = sequelize.define("procedure", {
     allowNull: true,
   },
 
-  approvalDate: {
+  dateApproved: {
     type: Sequelize.DATEONLY,
     allowNull: true,
   },
