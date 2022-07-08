@@ -6,6 +6,7 @@ const { body, validationResult } = require("express-validator");
 const ActiveDirectory = require("activedirectory2");
 const config = {
   url: process.env.URL,
+  baseDN: process.env.BASE_DN,
 };
 var ad = new ActiveDirectory(config);
 
