@@ -6,15 +6,11 @@ const Address = require("../../models/dogtags/address");
 const Dropdown = require("../../models/dropdownManager/dropdown");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
-// authHelper middleware.
-const { auth, isLoggedIn } = require("../../config/authHelpers");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET /editOwner page */
 router.get(
   "/:id",
-  param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
+  param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);

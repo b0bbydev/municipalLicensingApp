@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-const { auth, isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const DropdownForm = require("../../models/dropdownManager/dropdownForm");
@@ -14,8 +13,6 @@ const Op = Sequelize.Op;
 const paginate = require("express-paginate");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET /dropdownManager */
 router.get("/", async (req, res, next) => {
@@ -40,7 +37,7 @@ router.get("/", async (req, res, next) => {
     .catch((err) => {
       return res.render("dropdownManager/index", {
         title: "BWG | Dropdown Manager",
-        message: "Page Error! ",
+        message: "Page Error!",
       });
     });
 });
@@ -144,7 +141,7 @@ router.get(
           .catch((err) =>
             res.render("dropdownManager", {
               title: "BWG | Dropdown Manager",
-              message: "Page Error! ",
+              message: "Page Error!",
             })
           );
       } else {
@@ -188,7 +185,7 @@ router.get(
           .catch((err) =>
             res.render("dropdownManager/form", {
               title: "BWG | Dropdown Manager",
-              message: "Page Error! ",
+              message: "Page Error!",
             })
           );
       }
@@ -239,7 +236,7 @@ router.post(
         .catch((err) => {
           return res.render("dropdownManager/index", {
             title: "BWG | Dropdown Manager",
-            message: "Page Error! ",
+            message: "Page Error!",
           });
         });
     }
@@ -274,14 +271,12 @@ router.get(
           },
         }
       )
-        .then((results) => {
-          // redirect to same page after success.
-          res.redirect(req.headers.referer);
-        })
+        // redirect to same page.
+        .then(res.redirect(req.headers.referer))
         .catch((err) => {
           return res.render("dropdownManager/index", {
             title: "BWG | Dropdown Manager",
-            message: "Page Error! ",
+            message: "Page Error!",
           });
         });
     }
@@ -316,14 +311,12 @@ router.get(
           },
         }
       )
-        .then((results) => {
-          // redirect to same page after success.
-          res.redirect(req.headers.referer);
-        })
+        // redirect to same page.
+        .then(res.redirect(req.headers.referer))
         .catch((err) => {
           return res.render("dropdownManager/index", {
             title: "BWG | Dropdown Manager",
-            message: "Page Error! ",
+            message: "Page Error!",
           });
         });
     }

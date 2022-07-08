@@ -5,10 +5,6 @@ const Dog = require("../../models/dogtags/dog");
 const Dropdown = require("../../models/dropdownManager/dropdown");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
-// authHelper middleware.
-const { auth, isLoggedIn } = require("../../config/authHelpers");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET /dogtags/editDog/:id */
 router.get(
@@ -85,6 +81,7 @@ router.get(
 /* POST /editDog/:id */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
     .matches(/^[0-9-]*$/)
@@ -215,13 +212,11 @@ router.post(
           },
         }
       )
-        .then((result) => {
-          res.redirect("/dogtags/owner/" + req.session.ownerID);
-        })
+        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
         .catch((err) => {
           return res.render("dogtags/editDog", {
             title: "BWG | Edit Dog",
-            message: "Page Error!" + err,
+            message: "Page Error!",
           });
         });
     }

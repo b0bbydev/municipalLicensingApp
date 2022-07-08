@@ -1,13 +1,10 @@
 var express = require("express");
 var router = express.Router();
-const { auth, isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Guideline = require("../../models/policies/guideline");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET /policies/editGuideline/:id */
 router.get(

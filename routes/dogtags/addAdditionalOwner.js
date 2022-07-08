@@ -4,10 +4,6 @@ var router = express.Router();
 const AdditionalOwner = require("../../models/dogtags/additionalOwner");
 // express-validate.
 const { body, validationResult } = require("express-validator");
-// authHelper middleware.
-const { auth, isLoggedIn } = require("../../config/authHelpers");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET addAdditionalOwner page. */
 router.get("/", async (req, res, next) => {

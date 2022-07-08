@@ -2,8 +2,6 @@ var express = require("express");
 var router = express.Router();
 // authHelper middleware.
 const { auth, isLoggedIn } = require("../config/authHelpers");
-// request limiter.
-const limiter = require("../config/limiter");
 
 /* GET home page. */
 router.get("/", isLoggedIn, auth, function (req, res, next) {

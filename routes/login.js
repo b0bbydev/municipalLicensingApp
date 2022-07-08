@@ -2,8 +2,6 @@ var express = require("express");
 var router = express.Router();
 // express-validate.
 const { body, validationResult } = require("express-validator");
-// request limiter.
-const limiter = require("../config/limiter");
 // AD.
 const ActiveDirectory = require("activedirectory2");
 const config = {

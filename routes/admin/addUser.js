@@ -2,8 +2,6 @@ var express = require("express");
 var router = express.Router();
 // models.
 const User = require("../../models/admin/user");
-// authHelper middleware.
-const { isLoggedIn, auth, isAdmin } = require("../../config/authHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -22,7 +20,7 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-/* POST /addOwner */
+/* POST /admin/addUser */
 router.post(
   "/",
   body("firstName")

@@ -5,41 +5,42 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const Guideline = require("../../models/policies/guideline");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
-// authHelper middleware.
-const { auth, isLoggedIn } = require("../../config/authHelpers");
 // express-validate.
-const { body, validationResult } = require("express-validator");
-// request limiter.
-const limiter = require("../../config/limiter");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET home page. */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // check if there's an error message in the session
+    let messages = req.session.messages || [];
+    // clear session messages
+    req.session.messages = [];
 
-  // dropdown values.
-  // status options.
-  var statusDropdownValues = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 12,
-      dropdownTitle: "Status Options",
-    },
-  });
+    // dropdown values.
+    // status options.
+    var statusDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 12,
+        dropdownTitle: "Status Options",
+      },
+    });
 
-  return res.render("policies/addGuideline", {
-    title: "BWG | Add Guideline",
-    errorMessages: messages,
-    email: req.session.email,
-    auth: req.session.auth.authLevel, // authorization.
-    statusDropdownValues: statusDropdownValues,
-  });
-});
+    return res.render("policies/addGuideline", {
+      title: "BWG | Add Guideline",
+      errorMessages: messages,
+      email: req.session.email,
+      auth: req.session.auth.authLevel, // authorization.
+      statusDropdownValues: statusDropdownValues,
+    });
+  }
+);
 
 /* POST /addGuideline */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("guidelineName")
     .if(body("guidelineName").notEmpty())
     .matches(/^[a-zA-Z0-9\/\-,. ]*$/)

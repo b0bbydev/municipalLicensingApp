@@ -1,6 +1,5 @@
 var express = require("express");
 var router = express.Router();
-const { auth, isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Policy = require("../../models/policies/policy");
@@ -18,8 +17,6 @@ const Op = Sequelize.Op;
 const paginate = require("express-paginate");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET /policies */
 router.get(

@@ -1,7 +1,5 @@
 var express = require("express");
 var router = express.Router();
-// authHelper middleware.
-const { auth, isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Owner = require("../../models/dogtags/owner");
 const Address = require("../../models/dogtags/address");
@@ -18,14 +16,10 @@ const dbHelpers = require("../../config/dbHelpers");
 const paginate = require("express-paginate");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET /dogtags */
 router.get(
   "/",
-  isLoggedIn,
-  auth,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
@@ -142,7 +136,7 @@ router.get(
           .catch((err) =>
             res.render("dogtags", {
               title: "BWG | Dogtags",
-              message: "Page Error! ",
+              message: "Page Error!",
             })
           );
 
@@ -186,7 +180,7 @@ router.get(
           .catch((err) =>
             res.render("dogtags", {
               title: "BWG | Dogtags",
-              message: "Page Error! ",
+              message: "Page Error!",
             })
           );
       } else if (req.query.filterCategory === "Additional Owner Name") {
@@ -233,7 +227,7 @@ router.get(
           .catch((err) =>
             res.render("dogtags", {
               title: "BWG | Dogtags",
-              message: "Page Error!" + err,
+              message: "Page Error!",
             })
           );
       } else {
@@ -281,7 +275,7 @@ router.get(
           .catch((err) =>
             res.render("dogtags", {
               title: "BWG | Dogtags",
-              message: "Page Error! ",
+              message: "Page Error!",
             })
           );
       }
@@ -292,7 +286,7 @@ router.get(
 /* GET owner page. */
 router.get(
   "/owner/:id",
-  param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
+  param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -327,8 +321,12 @@ router.get(
           ownerID: req.session.ownerID,
         },
       }).then((results) => {
-        // create ownerName from results.
-        ownerName = results.firstName + " " + results.lastName;
+        // create ownerName from results if valid.
+        if (results) {
+          ownerName = results.firstName + " " + results.lastName;
+        } else {
+          ownerName = null;
+        }
       });
 
       AdditionalOwner.findAndCountAll({
@@ -374,7 +372,7 @@ router.get(
           .catch((err) =>
             res.render("owner", {
               title: "BWG | Owner",
-              message: "Page Error! ",
+              message: "Page Error!",
             })
           );
       });
@@ -519,7 +517,7 @@ router.post(
         .catch((err) =>
           res.render("dogtags/additionalOwner", {
             title: "BWG | Additional Owner",
-            message: "Page Error! ",
+            message: "Page Error!",
           })
         );
     }

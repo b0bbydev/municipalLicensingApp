@@ -4,10 +4,6 @@ var router = express.Router();
 const Dog = require("../../models/dogtags/dog");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
-// authHelper middleware.
-const { auth, isLoggedIn } = require("../../config/authHelpers");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET /addDog/:id */
 router.get(
@@ -196,7 +192,7 @@ router.post(
         .catch((err) => {
           return res.render("dogtags/addDog", {
             title: "BWG | Add Dog",
-            message: "Page Error! ",
+            message: "Page Error!",
           });
         });
     }

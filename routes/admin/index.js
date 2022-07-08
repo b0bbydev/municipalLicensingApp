@@ -4,10 +4,6 @@ var router = express.Router();
 var User = require("../../models/admin/user");
 // pagination lib.
 const paginate = require("express-paginate");
-// express-validate.
-const { body, param, validationResult } = require("express-validator");
-// authHelper middleware.
-const { isLoggedIn, auth, isAdmin } = require("../../config/authHelpers");
 
 /* GET /admin page. */
 router.get("/", async (req, res, next) => {
@@ -43,34 +39,24 @@ router.get("/", async (req, res, next) => {
 
 /* POST /admin page */
 router.post("/", async (req, res, next) => {
-  // server side validation.
-  const errors = validationResult(req);
-
-  // if errors is NOT empty (if there are errors...).
-  if (!errors.isEmpty()) {
-    return res.render("admin/index", {
-      title: "BWG | Admin Panel",
-      errorMessages: messages,
-    });
-  } else {
-    User.update(
-      {
-        authLevel: req.body.authLevel,
+  // shouldn't need validation as there is technically no user input.
+  User.update(
+    {
+      authLevel: req.body.authLevel,
+    },
+    {
+      where: {
+        email: req.body.email,
       },
-      {
-        where: {
-          email: req.body.email,
-        },
-      }
-    )
-      .then(res.redirect("/admin"))
-      .catch((err) => {
-        return res.render("admin/index", {
-          title: "BWG | Admin Panel",
-          message: "Page Error!",
-        });
+    }
+  )
+    .then(res.redirect("/admin"))
+    .catch((err) => {
+      return res.render("admin/index", {
+        title: "BWG | Admin Panel",
+        message: "Page Error!",
       });
-  }
+    });
 });
 
 module.exports = router;

@@ -1,13 +1,10 @@
 var express = require("express");
 var router = express.Router();
-const { auth, isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Procedure = require("../../models/policies/procedure");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET /policies/editProcedure/:id */
 router.get(
@@ -66,6 +63,7 @@ router.get(
 /* POST /policies/editProcedure/:id */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("procedureName")
     .if(body("procedureName").notEmpty())
     .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
@@ -144,14 +142,11 @@ router.post(
           },
         }
       )
-        .then((results) => {
-          // redirect to /policies/policy/:id
-          res.redirect("/policies/policy/" + req.session.policyID);
-        })
+        .then(res.redirect("/policies/policy/" + req.session.policyID))
         .catch((err) => {
           return res.render("policies/editProcedure", {
             title: "BWG | Edit Procedure",
-            message: "Page Error! ",
+            message: "Page Error!",
           });
         });
     }

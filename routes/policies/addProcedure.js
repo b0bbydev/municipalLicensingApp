@@ -5,12 +5,8 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const Procedure = require("../../models/policies/procedure");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
-// authHelper middleware.
-const { auth, isLoggedIn } = require("../../config/authHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET home page. */
 router.get("/:id", async (req, res, next) => {

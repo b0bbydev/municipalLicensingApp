@@ -6,10 +6,6 @@ const Address = require("../../models/dogtags/address");
 const Dropdown = require("../../models/dropdownManager/dropdown");
 // express-validate.
 const { body, validationResult } = require("express-validator");
-// authHelper middleware.
-const { auth, isLoggedIn } = require("../../config/authHelpers");
-// request limiter.
-const limiter = require("../../config/limiter");
 
 /* GET addOwner page. */
 router.get("/", async (req, res, next) => {
@@ -157,7 +153,7 @@ router.post(
         .catch((err) => {
           return res.render("dogtags/addOwner", {
             title: "BWG | Add Owner",
-            message: "Page Error! ",
+            message: "Page Error!",
           });
         });
     }
