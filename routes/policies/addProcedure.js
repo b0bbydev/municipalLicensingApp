@@ -6,11 +6,7 @@ const Procedure = require("../../models/policies/procedure");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // authHelper middleware.
-const {
-  dogLicenseAuth,
-  adminAuth,
-  isLoggedIn,
-} = require("../../config/authHelpers");
+const { auth, isLoggedIn } = require("../../config/authHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // request limiter.

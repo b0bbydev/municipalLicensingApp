@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { isLoggedIn } = require("../../config/authHelpers");
+const { auth, isLoggedIn } = require("../../config/authHelpers");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // models.

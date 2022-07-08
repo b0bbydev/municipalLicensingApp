@@ -7,7 +7,7 @@ const paginate = require("express-paginate");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 // authHelper middleware.
-const { adminAuth, isLoggedIn } = require("../../config/authHelpers");
+const { auth, isLoggedIn } = require("../../config/authHelpers");
 
 /* GET /admin page. */
 router.get("/", async (req, res, next) => {

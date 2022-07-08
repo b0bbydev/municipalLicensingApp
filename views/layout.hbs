@@ -67,21 +67,45 @@
                 </a>
               </li>
             {{/ifCond}}
-            {{#if admin}}
-              <li class="nav-item-admin w-100 p-1">
-                <a href="/admin" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-person-check"></i>
-                  <span class="ms-1 d-none d-sm-inline">Admin Panel</span>
-                </a>
-              </li>
-            {{/if}}
+            <!-- Home -->
             <li class="nav-item-home w-100 p-1">
               <a href="/" class="nav-link align-middle ps-3">
                 <i class="fs-4 icon-blue bi bi-house"></i>
                 <span class="ms-1 d-none d-sm-inline">Home</span>
               </a>
             </li>
-            {{#ifCond admin "||" dogAuth}}
+            {{#ifCond auth "===" "Admin"}}
+              <!-- Admin - admin panel -->
+              <li class="nav-item-admin w-100 p-1">
+                <a href="/admin" class="nav-link align-middle ps-3">
+                  <i class="fs-4 icon-blue bi bi-person-check"></i>
+                  <span class="ms-1 d-none d-sm-inline">Admin Panel</span>
+                </a>
+              </li>
+              <!-- Admin - dog tag licenses -->
+              <li class="nav-item w-100 p-1">
+                <a href="/dogtags" class="nav-link align-middle ps-3">
+                  <i class="fs-4 icon-blue bi bi-receipt-cutoff"></i>
+                  <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
+                </a>
+              </li>
+              <!-- Admin - dropdown manager -->
+              <li class="nav-item w-100 p-1">
+                <a href="/dropdownManager" class="nav-link align-middle ps-3">
+                  <i class="fs-4 icon-blue bi bi-menu-button-fill"></i>
+                  <span class="ms-1 d-none d-sm-inline">Dropdown Manager</span>
+                </a>
+              </li>
+              <!-- Admin - policies -->
+              <li class="nav-item w-100 p-1">
+                <a href="/policies" class="nav-link align-middle ps-3">
+                  <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
+                  <span class="ms-1 d-none d-sm-inline">Policies</span>
+                </a>
+              </li>
+            {{/ifCond}}
+            <!-- dog auth -->
+            {{#ifCond auth "===" "Dog Licenses"}}
               <li class="nav-item w-100 p-1">
                 <a href="/dogtags" class="nav-link align-middle ps-3">
                   <i class="fs-4 icon-blue bi bi-receipt-cutoff"></i>
@@ -89,15 +113,7 @@
                 </a>
               </li>
             {{/ifCond}}
-            {{#if admin}}
-              <li class="nav-item w-100 p-1">
-                <a href="/dropdownManager" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-menu-button-fill"></i>
-                  <span class="ms-1 d-none d-sm-inline">Dropdown Manager</span>
-                </a>
-              </li>
-            {{/if}}
-            {{#ifCond admin "||" policyAuth}}
+            {{#ifCond auth "===" "Policies"}}
               <li class="nav-item w-100 p-1">
                 <a href="/policies" class="nav-link align-middle ps-3">
                   <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>

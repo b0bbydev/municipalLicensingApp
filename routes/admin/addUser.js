@@ -3,7 +3,7 @@ var router = express.Router();
 // models.
 const User = require("../../models/admin/user");
 // authHelper middleware.
-const { adminAuth, isLoggedIn } = require("../../config/authHelpers");
+const { auth, isLoggedIn } = require("../../config/authHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 

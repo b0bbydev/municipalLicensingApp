@@ -5,11 +5,7 @@ const Dog = require("../../models/dogtags/dog");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 // authHelper middleware.
-const {
-  isLoggedIn,
-  dogLicenseAuth,
-  adminAuth,
-} = require("../../config/authHelpers");
+const { auth, isLoggedIn } = require("../../config/authHelpers");
 // request limiter.
 const limiter = require("../../config/limiter");
 

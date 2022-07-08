@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const { isLoggedIn } = require("../../config/authHelpers");
+const { auth, isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Guideline = require("../../models/policies/guideline");

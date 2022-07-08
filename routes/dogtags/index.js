@@ -1,11 +1,7 @@
 var express = require("express");
 var router = express.Router();
 // authHelper middleware.
-const {
-  isLoggedIn,
-  dogLicenseAuth,
-  adminAuth,
-} = require("../../config/authHelpers");
+const { auth, isLoggedIn } = require("../../config/authHelpers");
 // models.
 const Owner = require("../../models/dogtags/owner");
 const Address = require("../../models/dogtags/address");
@@ -29,8 +25,7 @@ const limiter = require("../../config/limiter");
 router.get(
   "/",
   isLoggedIn,
-  adminAuth,
-  dogLicenseAuth,
+  auth,
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
