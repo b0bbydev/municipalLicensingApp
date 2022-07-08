@@ -33,8 +33,7 @@ router.get("/", async (req, res, next) => {
         title: "BWG | Dropdown Manager",
         errorMessages: messages,
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
         data: results.rows,
       });
     })
@@ -64,8 +63,7 @@ router.post(
         title: "BWG | Dropdown Manager",
         message: "Error!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
       });
     } else {
       // create dropdown form.
@@ -97,8 +95,7 @@ router.get(
         title: "BWG | Dropdown Manager",
         message: "Error!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
       });
     } else {
       // check if there's an error message in the session.
@@ -130,8 +127,7 @@ router.get(
               title: "BWG | Dropdown Manager - " + formName[0].formName,
               errorMessages: messages,
               email: req.session.email,
-              dogAuth: req.session.dogAuth,
-              admin: req.session.admin,
+              auth: req.session.auth.authLevel, // authorization.
               formName: formName[0].formName,
               lastEnteredDropdownTitle: req.session.lastEnteredDropdownTitle,
               data: results.rows,
@@ -174,8 +170,7 @@ router.get(
             return res.render("dropdownManager/form", {
               title: "BWG | Dropdown Manager - " + formName[0].formName,
               email: req.session.email,
-              dogAuth: req.session.dogAuth,
-              admin: req.session.admin,
+              auth: req.session.auth.authLevel, // authorization.
               formName: formName[0].formName,
               data: results.rows,
               dropdownFormID: req.params.id,
@@ -226,8 +221,7 @@ router.post(
         title: "BWG | Dropdown Manager",
         message: "Invalid entry!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
       });
     } else {
       Dropdown.create({
@@ -267,8 +261,7 @@ router.get(
         title: "BWG | Dropdown Manager",
         message: "Invalid entry!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
       });
     } else {
       Dropdown.update(
@@ -310,8 +303,7 @@ router.get(
         title: "BWG | Dropdown Manager",
         message: "Invalid entry!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
       });
     } else {
       Dropdown.update(

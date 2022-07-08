@@ -18,7 +18,7 @@ router.get("/", isLoggedIn, auth, function (req, res, next) {
     title: "BWG | Home",
     errorMessages: messages,
     email: req.session.email,
-    auth: req.session.auth.authLevel,
+    auth: req.session.auth.authLevel, // authorization.
     baseUrl: req.baseUrl, // back button logic.
     indexUrl: "/", // back button logic.
   });

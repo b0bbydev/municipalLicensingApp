@@ -46,8 +46,7 @@ router.get(
           title: "BWG | Edit Guideline",
           errorMessages: messages,
           email: req.session.email,
-          dogAuth: req.session.dogAuth,
-          admin: req.session.admin,
+          auth: req.session.auth.authLevel, // authorization.
           statusDropdownValues: statusDropdownValues,
           guidelineInfo: {
             guidelineName: results.guidelineName,
@@ -115,8 +114,7 @@ router.post(
         title: "BWG | Edit Guideline",
         message: errorArray[0].msg,
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
         // if the form submission is unsuccessful, save their values.
         formData: {
           guidelineName: req.body.guidelineName,

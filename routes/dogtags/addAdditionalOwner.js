@@ -20,8 +20,7 @@ router.get("/", async (req, res, next) => {
     title: "BWG | Add Additional Owner",
     errorMessages: messages,
     email: req.session.email,
-    dogAuth: req.session.dogAuth,
-    admin: req.session.admin,
+    auth: req.session.auth.authLevel, // authorization.
   });
 });
 
@@ -71,8 +70,7 @@ router.post(
         title: "BWG | Additional Owner",
         message: errorArray[0].msg,
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
         // if the form submission is unsuccessful, save their values.
         formData: {
           firstName: req.body.firstName,

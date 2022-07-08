@@ -23,8 +23,7 @@ router.get(
         title: "BWG | Add Dog",
         message: "Page Error!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
       });
     } else {
       // check if there's an error message in the session.
@@ -36,8 +35,7 @@ router.get(
         title: "BWG | Add Dog",
         errorMessages: messages,
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
       });
     }
   }
@@ -124,8 +122,7 @@ router.post(
         title: "BWG | Add Dog",
         message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
         // if the form submission is unsuccessful, save their values.
         formData: {
           tagNumber: req.body.tagNumber,
@@ -150,8 +147,7 @@ router.post(
         title: "BWG | Add Dog",
         message: "Invalid Date Format!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
         // if the form submission is unsuccessful, save their values.
         formData: {
           tagNumber: req.body.tagNumber,

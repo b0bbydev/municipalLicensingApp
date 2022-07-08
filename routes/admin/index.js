@@ -29,7 +29,7 @@ router.get("/", async (req, res, next) => {
       title: "BWG | Admin Panel",
       errorMessages: messages,
       email: req.session.email,
-      admin: req.session.admin, // authorization.
+      auth: req.session.auth.authLevel, // authorization.
       data: results.rows,
       pageCount,
       itemCount,

@@ -18,7 +18,7 @@ router.get("/", async (req, res, next) => {
     title: "BWG | Admin Panel",
     errorMessages: messages,
     email: req.session.email,
-    admin: req.session.admin, // authorization.
+    auth: req.session.auth.authLevel, // authorization.
   });
 });
 
@@ -50,8 +50,7 @@ router.post(
         title: "BWG | Owner",
         message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
         // if the form submission is unsuccessful, save their values.
         formData: {
           firstName: req.body.firstName,

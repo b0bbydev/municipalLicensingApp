@@ -68,9 +68,7 @@ router.get(
               title: "BWG | Policies",
               errorMessages: messages,
               email: req.session.email,
-              dogAuth: req.session.dogAuth, // authorization.
-              policyAuth: req.session.policyAuth, // authorization.
-              admin: req.session.admin, // authorization.
+              auth: req.session.auth.authLevel, // authorization.
               data: results.rows,
               dropdownValues: dropdownValues,
               pageCount,
@@ -110,9 +108,7 @@ router.get(
             return res.render("policies", {
               title: "BWG | Policies",
               email: req.session.email,
-              dogAuth: req.session.dogAuth, // authorization.
-              policyAuth: req.session.policyAuth, // authorization.
-              admin: req.session.admin, // authorization.
+              auth: req.session.auth.authLevel, // authorization.
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
@@ -155,9 +151,7 @@ router.post(
         title: "BWG | Policies",
         message: "Page Error!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth, // authorization.
-        policyAuth: req.session.policyAuth, // authorization.
-        admin: req.session.admin, // authorization.
+        auth: req.session.auth.authLevel, // authorization.
       });
     } else {
       // get the specified policy based on name.
@@ -217,9 +211,7 @@ router.get(
       title: "BWG | Policy",
       errorMessages: messages,
       email: req.session.email,
-      dogAuth: req.session.dogAuth, // authorization.
-      policyAuth: req.session.policyAuth, // authorization.
-      admin: req.session.admin, // authorization.
+      auth: req.session.auth.authLevel, // authorization.
       procedures: procedures,
       guidelines: guidelines,
       policyInfo: policyInfo,
@@ -313,9 +305,7 @@ router.get(
                 title: "BWG | Policy History",
                 errorMessages: messages,
                 email: req.session.email,
-                dogAuth: req.session.dogAuth, // authorization.
-                policyAuth: req.session.policyAuth, // authorization.
-                admin: req.session.admin, // authorization.
+                auth: req.session.auth.authLevel, // authorization.
                 policyHistory: policyHistory.rows,
                 policyName: policyName,
                 procedureHistory: procedureHistory.rows,
@@ -396,9 +386,7 @@ router.get(
                   title: "BWG | Policy History",
                   errorMessages: messages,
                   email: req.session.email,
-                  dogAuth: req.session.dogAuth, // authorization.
-                  policyAuth: req.session.policyAuth, // authorization.
-                  admin: req.session.admin, // authorization.
+                  auth: req.session.auth.authLevel, // authorization.
                   policyHistory: policyHistory.rows,
                   policyName: policyName,
                   procedureHistory: procedureHistory.rows,
@@ -479,9 +467,7 @@ router.get(
                   title: "BWG | Policy History",
                   errorMessages: messages,
                   email: req.session.email,
-                  dogAuth: req.session.dogAuth, // authorization.
-                  policyAuth: req.session.policyAuth, // authorization.
-                  admin: req.session.admin, // authorization.
+                  auth: req.session.auth.authLevel, // authorization.
                   policyHistory: policyHistory.rows,
                   policyName: policyName,
                   procedureHistory: procedureHistory.rows,
@@ -571,9 +557,7 @@ router.get(
                   title: "BWG | Policy History",
                   errorMessages: messages,
                   email: req.session.email,
-                  dogAuth: req.session.dogAuth, // authorization.
-                  policyAuth: req.session.policyAuth, // authorization.
-                  admin: req.session.admin, // authorization.
+                  auth: req.session.auth.authLevel, // authorization.
                   policyHistory: policyHistory.rows,
                   policyName: policyName,
                   procedureHistory: procedureHistory.rows,

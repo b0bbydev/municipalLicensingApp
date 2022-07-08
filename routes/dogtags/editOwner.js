@@ -25,8 +25,7 @@ router.get(
         title: "BWG | Owner",
         message: "Error!",
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
       });
     } else {
       // check if there's an error message in the session,
@@ -59,8 +58,7 @@ router.get(
             title: "BWG | Edit Owner",
             errorMessages: messages,
             email: req.session.email,
-            dogAuth: req.session.dogAuth,
-            admin: req.session.admin,
+            auth: req.session.auth.authLevel, // authorization.
             ownerID: req.session.ownerID,
             dropdownValues: dropdownValues,
             ownerInfo: {
@@ -167,8 +165,7 @@ router.post(
         title: "BWG | Edit Owner",
         message: errorArray[0].msg,
         email: req.session.email,
-        dogAuth: req.session.dogAuth,
-        admin: req.session.admin,
+        auth: req.session.auth.authLevel, // authorization.
         dropdownValues: dropdownValues,
         // if the form submission is unsuccessful, save their values.
         ownerInfo: {
