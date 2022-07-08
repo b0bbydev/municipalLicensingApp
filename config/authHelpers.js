@@ -28,5 +28,39 @@ module.exports = {
     } else {
       next();
     }
+  }, // end of auth().
+
+  /* create page specific middleware which will redirect the user to home page. */
+  // force admin auth.
+  isAdmin: function (req, res, next) {
+    if (req.session.auth.authLevel === "Admin") {
+      next();
+    } else {
+      res.redirect("/");
+    }
+  }, // end of isAdmin().
+
+  // force dog license auth.
+  isDogLicense: function (req, res, next) {
+    if (
+      req.session.auth.authLevel === "Dog Licenses" ||
+      req.session.auth.authLevel === "Admin"
+    ) {
+      next();
+    } else {
+      res.redirect("/");
+    }
+  },
+
+  // force policies auth.
+  isPolicy: function (req, res, next) {
+    if (
+      req.session.auth.authLevel === "Policies" ||
+      req.session.auth.authLevel === "Admin"
+    ) {
+      next();
+    } else {
+      res.redirect("/");
+    }
   },
 };

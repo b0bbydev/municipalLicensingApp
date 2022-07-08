@@ -29,6 +29,14 @@ var indexRouter = require("./routes/index");
 // request limiter.
 const limiter = require("./config/limiter");
 var moment = require("moment");
+// authHelper middleware.
+const {
+  isLoggedIn,
+  auth,
+  isAdmin,
+  isDogLicense,
+  isPolicy,
+} = require("./config/authHelpers");
 
 /* admin related routes */
 var adminRouter = require("./routes/admin/index");
@@ -159,32 +167,32 @@ app.use("/login", loginRouter);
 app.use("/", indexRouter);
 
 /* admin related routes */
-app.use("/admin", adminRouter);
-app.use("/admin/addUser", adminAddUserRouter);
+app.use("/admin", isAdmin, adminRouter);
+app.use("/admin/addUser", isAdmin, adminAddUserRouter);
 
 /* dropdownManager related routes */
-app.use("/dropdownManager", dropdownRouter);
+app.use("/dropdownManager", isAdmin, dropdownRouter);
 
 /* policies related routes. */
-app.use("/policies", policiesRouter);
-app.use("/policies/addPolicy", addPoliciesRouter);
-app.use("/policies/editPolicy", editPolicyRouter);
+app.use("/policies", isPolicy, policiesRouter);
+app.use("/policies/addPolicy", isPolicy, addPoliciesRouter);
+app.use("/policies/editPolicy", isPolicy, editPolicyRouter);
 
-app.use("/policies/addProcedure", addProcedureRouter);
-app.use("/policies/editProcedure", editProcedureRouter);
+app.use("/policies/addProcedure", isPolicy, addProcedureRouter);
+app.use("/policies/editProcedure", isPolicy, editProcedureRouter);
 
-app.use("/policies/addGuideline", addGuidelineRouter);
-app.use("/policies/editGuideline", editGuidelineRouter);
+app.use("/policies/addGuideline", isPolicy, addGuidelineRouter);
+app.use("/policies/editGuideline", isPolicy, editGuidelineRouter);
 
 /* dogtag related routes. */
-app.use("/dogtags", dogTagRouter);
+app.use("/dogtags", isDogLicense, dogTagRouter);
 // owner.
-app.use("/dogtags/addOwner", addOwnerRouter);
-app.use("/dogtags/addAdditionalOwner", addAdditionalOwnerRouter);
-app.use("/dogtags/editOwner", editOwnerRouter);
+app.use("/dogtags/addOwner", isDogLicense, addOwnerRouter);
+app.use("/dogtags/addAdditionalOwner", isDogLicense, addAdditionalOwnerRouter);
+app.use("/dogtags/editOwner", isDogLicense, editOwnerRouter);
 // dog.
-app.use("/dogtags/addDog", addDogRouter);
-app.use("/dogtags/editDog", editDogRouter);
+app.use("/dogtags/addDog", isDogLicense, addDogRouter);
+app.use("/dogtags/editDog", isDogLicense, editDogRouter);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
