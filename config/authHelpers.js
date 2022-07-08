@@ -16,7 +16,7 @@ module.exports = {
       req.session.admin = true;
       next();
     } else {
-      // if not admin, don't create admin session variable, just forward them to next middleware.
+      // if not auth'd, don't create session variable, just forward them to next middleware.
       next();
     }
   },

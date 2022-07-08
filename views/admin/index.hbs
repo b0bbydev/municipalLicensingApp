@@ -15,19 +15,88 @@
     >
       <thead>
         <tr>
-          <th>User ID</th>
-          <th>First Name</th>
-          <th>Last Name</th>
+          <th>Employee Name</th>
           <th>Email</th>
+          <th>Authorization Level</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>ID</td>
-          <td>FName</td>
-          <td>LName</td>
-          <td>Email</td>
-        </tr>
+        {{#each data}}
+          <tr>
+            <td>{{this.firstName}} {{this.lastName}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.authLevel}}</td>
+            <td><a
+                class="btn btn-sm btn-secondary"
+                data-bs-toggle="modal"
+                data-bs-target="#manageAccessModal-{{this.userID}}"
+              >Manage Access</a></td>
+          </tr>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="manageAccessModal-{{this.userID}}"
+            tabindex="-1"
+            aria-labelledby="manageAccessModal"
+            aria-hidden="true"
+          >
+            <form method="POST">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Manage Authorization</h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col">
+                        <label for="Email" class="form-label">Email</label>
+                        <input
+                          class="form-control"
+                          placeholder="Email"
+                          value="{{this.email}}"
+                          name="email"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label
+                          for="Authorization Level"
+                          class="form-label"
+                        >Authorization Level</label>
+                        <select class="form-select" name="authLevel">
+                          <option disabled selected>Auth Level...</option>
+                          <option value="Admin">Admin</option>
+                          <option value="Dog Licenses">Dog Licenses</option>
+                          <option value="Policies">Policies</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >Close</button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                    >Submit</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        {{/each}}
       </tbody>
     </table>
     <nav id="pagination">

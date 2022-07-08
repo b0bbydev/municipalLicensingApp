@@ -25,6 +25,11 @@ const User = sequelize.define("user", {
     type: Sequelize.STRING(50),
     allowNull: true,
   },
+
+  authLevel: {
+    type: Sequelize.STRING(20),
+    allowNull: true,
+  },
 });
 
 module.exports = User;
