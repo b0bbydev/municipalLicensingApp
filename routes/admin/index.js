@@ -7,9 +7,9 @@ const paginate = require("express-paginate");
 
 /* GET /admin page. */
 router.get("/", async (req, res, next) => {
-  // check if there's an error message in the session
+  // check if there's an error message in the session.
   let messages = req.session.messages || [];
-  // clear session messages
+  // clear session messages.
   req.session.messages = [];
 
   // get Users.
@@ -25,7 +25,7 @@ router.get("/", async (req, res, next) => {
       title: "BWG | Admin Panel",
       errorMessages: messages,
       email: req.session.email,
-      auth: req.session.auth.authLevel, // authorization.
+      auth: req.session.auth, // authorization.
       data: results.rows,
       pageCount,
       itemCount,

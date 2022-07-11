@@ -31,7 +31,7 @@ router.get(
       title: "BWG | Add Guideline",
       errorMessages: messages,
       email: req.session.email,
-      auth: req.session.auth.authLevel, // authorization.
+      auth: req.session.auth, // authorization.
       statusDropdownValues: statusDropdownValues,
     });
   }
@@ -98,7 +98,7 @@ router.post(
         title: "BWG | Add Policy",
         message: errorArray[0].msg,
         email: req.session.email,
-        auth: req.session.auth.authLevel, // authorization.
+        auth: req.session.auth, // authorization.
         statusDropdownValues: statusDropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {

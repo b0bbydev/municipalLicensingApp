@@ -74,19 +74,12 @@
                 <span class="ms-1 d-none d-sm-inline">Home</span>
               </a>
             </li>
-            {{#ifCond auth "===" "Admin"}}
+            {{#includes auth "Admin"}}
               <!-- Admin - admin panel -->
               <li class="nav-item-admin w-100 p-1">
                 <a href="/admin" class="nav-link align-middle ps-3">
                   <i class="fs-4 icon-blue bi bi-person-check"></i>
                   <span class="ms-1 d-none d-sm-inline">Admin Panel</span>
-                </a>
-              </li>
-              <!-- Admin - dog tag licenses -->
-              <li class="nav-item w-100 p-1">
-                <a href="/dogtags" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-receipt-cutoff"></i>
-                  <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
                 </a>
               </li>
               <!-- Admin - dropdown manager -->
@@ -96,31 +89,25 @@
                   <span class="ms-1 d-none d-sm-inline">Dropdown Manager</span>
                 </a>
               </li>
-              <!-- Admin - policies -->
-              <li class="nav-item w-100 p-1">
-                <a href="/policies" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
-                  <span class="ms-1 d-none d-sm-inline">Policies</span>
-                </a>
-              </li>
-            {{/ifCond}}
+            {{/includes}}
             <!-- dog auth -->
-            {{#ifCond auth "===" "Dog Licenses"}}
+            {{#includes auth "Dog Licenses"}}
               <li class="nav-item w-100 p-1">
                 <a href="/dogtags" class="nav-link align-middle ps-3">
                   <i class="fs-4 icon-blue bi bi-receipt-cutoff"></i>
                   <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
                 </a>
               </li>
-            {{/ifCond}}
-            {{#ifCond auth "===" "Policies"}}
+            {{/includes}}
+            <!-- policy auth -->
+            {{#includes auth "Policies"}}
               <li class="nav-item w-100 p-1">
                 <a href="/policies" class="nav-link align-middle ps-3">
                   <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
                   <span class="ms-1 d-none d-sm-inline">Policies</span>
                 </a>
               </li>
-            {{/ifCond}}
+            {{/includes}}
           </ul>
           <div class="nav-item-logout w-100 p-1">
             <a href="/logout" class="nav-link align-middle ps-3">

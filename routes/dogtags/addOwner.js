@@ -25,7 +25,7 @@ router.get("/", async (req, res, next) => {
     title: "BWG | Add Owner",
     errorMessages: messages,
     email: req.session.email,
-    auth: req.session.auth.authLevel, // authorization.
+    auth: req.session.auth, // authorization.
     dropdownValues: dropdownValues,
   });
 });
@@ -108,7 +108,7 @@ router.post(
         title: "BWG | Owner",
         message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
-        auth: req.session.auth.authLevel, // authorization.
+        auth: req.session.auth, // authorization.
         dropdownValues: dropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {

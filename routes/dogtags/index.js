@@ -72,7 +72,7 @@ router.get(
               title: "BWG | Dog Tags",
               errorMessages: messages,
               email: req.session.email,
-              auth: req.session.auth.authLevel, // authorization.
+              auth: req.session.auth, // authorization.
               data: results.rows,
               dropdownValues: dropdownValues,
               pageCount,
@@ -119,7 +119,7 @@ router.get(
               title: "BWG | Dog Tags",
               errorMessages: messages,
               email: req.session.email,
-              auth: req.session.auth.authLevel, // authorization.
+              auth: req.session.auth, // authorization.
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
@@ -163,7 +163,7 @@ router.get(
             return res.render("dogtags/search/dogTagNumberSearch", {
               title: "BWG | Dog Tags",
               email: req.session.email,
-              auth: req.session.auth.authLevel, // authorization.
+              auth: req.session.auth, // authorization.
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
@@ -210,7 +210,7 @@ router.get(
             return res.render("dogtags/search/additionalOwnerSearch", {
               title: "BWG | Dog Tags",
               email: req.session.email,
-              auth: req.session.auth.authLevel, // authorization.
+              auth: req.session.auth, // authorization.
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
@@ -258,7 +258,7 @@ router.get(
               title: "BWG | Dog Tags",
               errorMessages: messages,
               email: req.session.email,
-              auth: req.session.auth.authLevel, // authorization.
+              auth: req.session.auth, // authorization.
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
@@ -353,7 +353,7 @@ router.get(
               title: "BWG | Owner",
               errorMessages: messages,
               email: req.session.email,
-              auth: req.session.auth.authLevel, // authorization.
+              auth: req.session.auth, // authorization.
               ownerName: ownerName,
               ownerID: req.session.ownerID,
               queryCount: "Dog(s) on record: " + results.count,
@@ -463,7 +463,7 @@ router.get(
           title: "BWG | Additional Owner",
           errorMessages: messages,
           email: req.session.email,
-          auth: req.session.auth.authLevel, // authorization.
+          auth: req.session.auth, // authorization.
           additionalOwnerInfo: {
             firstName: results.firstName,
             lastName: results.lastName,
@@ -570,7 +570,7 @@ router.get(
           title: "BWG | Tag History",
           errorMessages: messages,
           email: req.session.email,
-          auth: req.session.auth.authLevel, // authorization.
+          auth: req.session.auth, // authorization.
           ownerID: req.session.ownerID,
           dogName: dogName[0].dogName,
           tagNumberHistory: tagNumberHistory,
@@ -643,7 +643,7 @@ router.get(
             title: "BWG | Expired Tags",
             errorMessages: messages,
             email: req.session.email,
-            auth: req.session.auth.authLevel, // authorization.
+            auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             data: results.rows,
             dropdownValues: dropdownValues,
@@ -695,7 +695,7 @@ router.get(
             title: "BWG | Expired Tags",
             errorMessages: messages,
             email: req.session.email,
-            auth: req.session.auth.authLevel, // authorization.
+            auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             data: results.rows,
             dropdownValues: dropdownValues,
@@ -741,7 +741,7 @@ router.get(
             title: "BWG | Expired Tags",
             errorMessages: messages,
             email: req.session.email,
-            auth: req.session.auth.authLevel, // authorization.
+            auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             data: results.rows,
             dropdownValues: dropdownValues,
@@ -791,7 +791,7 @@ router.get(
             title: "BWG | Expired Tags",
             errorMessages: messages,
             email: req.session.email,
-            auth: req.session.auth.authLevel, // authorization.
+            auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             data: results.rows,
             dropdownValues: dropdownValues,
@@ -842,7 +842,7 @@ router.get(
             title: "BWG | Expired Tags",
             errorMessages: messages,
             email: req.session.email,
-            auth: req.session.auth.authLevel, // authorization.
+            auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             data: results.rows,
             dropdownValues: dropdownValues,
@@ -902,7 +902,7 @@ router.get(
           layout: "",
           errorMessages: messages,
           email: req.session.email,
-          auth: req.session.auth.authLevel, // authorization.
+          auth: req.session.auth, // authorization.
           ownerID: req.session.ownerID,
           // data to populate form with.
           data: {

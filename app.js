@@ -162,6 +162,15 @@ hbs.registerHelper("lowercase", function (str) {
   return str.toLowerCase();
 });
 
+// check if session var 'auth' includes valid authLevel.
+hbs.registerHelper("includes", function (array, value, options) {
+  if (array.includes(value)) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
+
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
