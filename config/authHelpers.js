@@ -33,7 +33,7 @@ module.exports = {
   /* create page specific middleware which will redirect the user to home page. */
   // force admin auth.
   isAdmin: function (req, res, next) {
-    if (req.session.auth.authLevel === "Admin") {
+    if (req.session.auth.authLevel.includes("Admin")) {
       next();
     } else {
       res.redirect("/");
@@ -42,10 +42,7 @@ module.exports = {
 
   // force dog license auth.
   isDogLicense: function (req, res, next) {
-    if (
-      req.session.auth.authLevel === "Dog Licenses" ||
-      req.session.auth.authLevel === "Admin"
-    ) {
+    if (req.session.auth.authLevel.includes("Dog Licenses")) {
       next();
     } else {
       res.redirect("/");
@@ -54,10 +51,7 @@ module.exports = {
 
   // force policies auth.
   isPolicy: function (req, res, next) {
-    if (
-      req.session.auth.authLevel === "Policies" ||
-      req.session.auth.authLevel === "Admin"
-    ) {
+    if (req.session.auth.authLevel.includes("Policies")) {
       next();
     } else {
       res.redirect("/");
