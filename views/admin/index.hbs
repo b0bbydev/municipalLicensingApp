@@ -26,8 +26,7 @@
           <tr>
             <td>{{this.firstName}} {{this.lastName}}</td>
             <td>{{this.email}}</td>
-            <td>{{#each roles}}{{this.roleName}}{{#unless @last}},
-                {{/unless}}{{/each}}</td>
+            <td>{{this.authLevel}}</td>
             <td><a
                 class="btn btn-sm btn-secondary"
                 data-bs-toggle="modal"
@@ -63,21 +62,6 @@
                           placeholder="Email"
                           value="{{this.email}}"
                           name="email"
-                          readonly
-                        />
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <label
-                          for="Current Authorization"
-                          class="form-label"
-                        >Current Authorization</label>
-                        <input
-                          class="form-control"
-                          placeholder="Current Authorization"
-                          value="test"
-                          name="currentAuthorization"
                           readonly
                         />
                       </div>

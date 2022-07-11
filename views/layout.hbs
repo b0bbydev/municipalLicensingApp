@@ -74,7 +74,7 @@
                 <span class="ms-1 d-none d-sm-inline">Home</span>
               </a>
             </li>
-            {{#includes auth "Admin"}}
+            {{#includes auth.authLevel "Admin"}}
               <!-- Admin - admin panel -->
               <li class="nav-item-admin w-100 p-1">
                 <a href="/admin" class="nav-link align-middle ps-3">
@@ -91,7 +91,7 @@
               </li>
             {{/includes}}
             <!-- dog auth -->
-            {{#includes auth "Dog Licenses"}}
+            {{#includes auth.authLevel "Dog Licenses"}}
               <li class="nav-item w-100 p-1">
                 <a href="/dogtags" class="nav-link align-middle ps-3">
                   <i class="fs-4 icon-blue bi bi-receipt-cutoff"></i>
@@ -99,7 +99,7 @@
                 </a>
               </li>
             {{/includes}}
-            {{#includes auth "Policies"}}
+            {{#includes auth.authLevel "Policies"}}
               <li class="nav-item w-100 p-1">
                 <a href="/policies" class="nav-link align-middle ps-3">
                   <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
