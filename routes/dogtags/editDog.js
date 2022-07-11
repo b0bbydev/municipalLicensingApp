@@ -20,7 +20,7 @@ router.get(
         title: "BWG | Edit Dog",
         message: "Page Error!",
         email: req.session.email,
-        auth: req.session.auth.authLevel, // authorization.
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session.
@@ -48,7 +48,7 @@ router.get(
             title: "BWG | Edit Dog",
             errorMessages: messages,
             email: req.session.email,
-            auth: req.session.auth.authLevel, // authorization.
+            auth: req.session.auth, // authorization.
             dropdownValues: dropdownValues,
             dogInfo: {
               tagNumber: results.tagNumber,
@@ -167,7 +167,7 @@ router.post(
         title: "BWG | Edit Dog",
         message: errorArray[0].msg,
         email: req.session.email,
-        auth: req.session.auth.authLevel, // authorization.
+        auth: req.session.auth, // authorization.
         dropdownValues: dropdownValues,
         // if the form submission is unsuccessful, save their values.
         dogInfo: {

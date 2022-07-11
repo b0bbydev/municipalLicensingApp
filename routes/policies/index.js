@@ -65,7 +65,7 @@ router.get(
               title: "BWG | Policies",
               errorMessages: messages,
               email: req.session.email,
-              auth: req.session.auth.authLevel, // authorization.
+              auth: req.session.auth, // authorization.
               data: results.rows,
               dropdownValues: dropdownValues,
               pageCount,
@@ -105,7 +105,7 @@ router.get(
             return res.render("policies", {
               title: "BWG | Policies",
               email: req.session.email,
-              auth: req.session.auth.authLevel, // authorization.
+              auth: req.session.auth, // authorization.
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
@@ -148,7 +148,7 @@ router.post(
         title: "BWG | Policies",
         message: "Page Error!",
         email: req.session.email,
-        auth: req.session.auth.authLevel, // authorization.
+        auth: req.session.auth, // authorization.
       });
     } else {
       // get the specified policy based on name.
@@ -208,7 +208,7 @@ router.get(
       title: "BWG | Policy",
       errorMessages: messages,
       email: req.session.email,
-      auth: req.session.auth.authLevel, // authorization.
+      auth: req.session.auth, // authorization.
       procedures: procedures,
       guidelines: guidelines,
       policyInfo: policyInfo,
@@ -302,7 +302,7 @@ router.get(
                 title: "BWG | Policy History",
                 errorMessages: messages,
                 email: req.session.email,
-                auth: req.session.auth.authLevel, // authorization.
+                auth: req.session.auth, // authorization.
                 policyHistory: policyHistory.rows,
                 policyName: policyName,
                 procedureHistory: procedureHistory.rows,
@@ -383,7 +383,7 @@ router.get(
                   title: "BWG | Policy History",
                   errorMessages: messages,
                   email: req.session.email,
-                  auth: req.session.auth.authLevel, // authorization.
+                  auth: req.session.auth, // authorization.
                   policyHistory: policyHistory.rows,
                   policyName: policyName,
                   procedureHistory: procedureHistory.rows,
@@ -464,7 +464,7 @@ router.get(
                   title: "BWG | Policy History",
                   errorMessages: messages,
                   email: req.session.email,
-                  auth: req.session.auth.authLevel, // authorization.
+                  auth: req.session.auth, // authorization.
                   policyHistory: policyHistory.rows,
                   policyName: policyName,
                   procedureHistory: procedureHistory.rows,
@@ -554,7 +554,7 @@ router.get(
                   title: "BWG | Policy History",
                   errorMessages: messages,
                   email: req.session.email,
-                  auth: req.session.auth.authLevel, // authorization.
+                  auth: req.session.auth, // authorization.
                   policyHistory: policyHistory.rows,
                   policyName: policyName,
                   procedureHistory: procedureHistory.rows,
