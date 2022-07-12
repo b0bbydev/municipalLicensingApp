@@ -42,7 +42,7 @@ router.post("/", async (req, res, next) => {
   // shouldn't need validation as there is technically no user input.
   User.update(
     {
-      authLevel: req.body.authLevel,
+      authLevel: req.body.currentAuthLevel,
     },
     {
       where: {

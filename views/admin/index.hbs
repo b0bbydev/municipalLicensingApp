@@ -66,18 +66,46 @@
                         />
                       </div>
                     </div>
-                    <div class="row">
+                    <div class="row mt-1">
                       <div class="col">
                         <label
-                          for="Authorization Level"
+                          for="Current Authorization Level(s)"
                           class="form-label"
-                        >Authorization Level</label>
-                        <input
+                        >Current Authorization Level(s)</label>
+                        <textarea
                           class="form-control"
-                          placeholder="Authorization Level(s)"
-                          value="{{this.authLevel}}"
-                          name="authLevel"
-                        />
+                          placeholder="Current Authorization Level(s)"
+                          name="currentAuthLevel"
+                          id="currentAuthLevel-{{this.userID}}"
+                          rows="3"
+                        >{{this.authLevel}}</textarea>
+                      </div>
+                    </div>
+                    <div class="row mt-1">
+                      <label
+                        for="Available Authorization Levels"
+                        class="form-label"
+                      >Available Authorization Levels</label>
+                      <div class="col-sm-4">
+                        <a
+                          class="btn btn-sm btn-secondary"
+                          id="adminAuth"
+                          onclick="adminAuth({{this.userID}});"
+                        >Admin</a>
+                      </div>
+                      <div class="col-sm-4">
+                        <a
+                          class="btn btn-sm btn-secondary"
+                          id="dogLicenseAuth"
+                          onclick="dogLicenseAuth({{this.userID}});"
+                        >Dog Licenses</a>
+                      </div>
+                      <div class="col-sm-4">
+                        <a
+                          class="btn btn-sm btn-secondary"
+                          id="policyAuth"
+                          onclick="policyAuth({{this.userID}});"
+                        >Policies</a>
                       </div>
                     </div>
                   </div>

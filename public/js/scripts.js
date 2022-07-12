@@ -47,3 +47,52 @@ function fillForm() {
   document.getElementById("workPhone").value = "123-123-1234";
   document.getElementById("email").value = "test@test.com";
 }
+
+/* auth helpers */
+function adminAuth(modalID) {
+  // get current text in input field to append.
+  var currentText = document.getElementById(
+    "currentAuthLevel-" + modalID
+  ).value;
+
+  // check if currentText already contains 'Admin'. If it does, don't add it (return).
+  if (currentText.includes("Admin")) {
+    return;
+  } else {
+    // add Admin to list.
+    document.getElementById("currentAuthLevel-" + modalID).value =
+      currentText + "Admin\n";
+  }
+}
+
+function dogLicenseAuth(modalID) {
+  // get current text in input field to append.
+  var currentText = document.getElementById(
+    "currentAuthLevel-" + modalID
+  ).value;
+
+  // check if currentText already contains 'Dog Licenses'. If it does, don't add it (return).
+  if (currentText.includes("Dog Licenses")) {
+    return;
+  } else {
+    // add Dog Licenses to list.
+    document.getElementById("currentAuthLevel-" + modalID).value =
+      currentText + "Dog Licenses\n";
+  }
+}
+
+function policyAuth(modalID) {
+  // get current text in input field to append.
+  var currentText = document.getElementById(
+    "currentAuthLevel-" + modalID
+  ).value;
+
+  // check if currentText already contains 'Policies'. If it does, don't add it (return).
+  if (currentText.includes("Policies")) {
+    return;
+  } else {
+    // add Policies to list.
+    document.getElementById("currentAuthLevel-" + modalID).value =
+      currentText + "Policies\n";
+  }
+}
