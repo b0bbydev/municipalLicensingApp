@@ -45,7 +45,8 @@ router.post(
   body("currentAuthLevel")
     .if(body("currentAuthLevel").notEmpty())
     .matches(/^[\r\na-zA-Z0-9\/\-, ]+/)
-    .withMessage("Invalid Auth Level Entry!"),
+    .withMessage("Invalid Auth Level Entry!")
+    .trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
