@@ -78,6 +78,8 @@
                           name="currentAuthLevel"
                           id="currentAuthLevel-{{this.userID}}"
                           rows="3"
+                          pattern="[^()/><\][\\\x22;|]+"
+                          title="No special characters!"
                         >{{this.authLevel}}</textarea>
                       </div>
                     </div>

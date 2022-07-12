@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 // models.
 var User = require("../../models/admin/user");
+// express-validate.
+const { body, validationResult } = require("express-validator");
 // pagination lib.
 const paginate = require("express-paginate");
 
@@ -38,25 +40,47 @@ router.get("/", async (req, res, next) => {
 });
 
 /* POST /admin page */
-router.post("/", async (req, res, next) => {
-  // shouldn't need validation as there is technically no user input.
-  User.update(
-    {
-      authLevel: req.body.currentAuthLevel,
-    },
-    {
-      where: {
-        email: req.body.email,
-      },
-    }
-  )
-    .then(res.redirect("/admin"))
-    .catch((err) => {
+router.post(
+  "/",
+  body("currentAuthLevel")
+    .if(body("currentAuthLevel").notEmpty())
+    .matches(/^[\r\na-zA-Z0-9\/\-, ]+/)
+    .withMessage("Invalid Auth Level Entry!"),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
       return res.render("admin/index", {
         title: "BWG | Admin Panel",
-        message: "Page Error!",
+        message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
-    });
-});
+    } else {
+      User.update(
+        {
+          authLevel: req.body.currentAuthLevel,
+        },
+        {
+          where: {
+            email: req.body.email,
+          },
+        }
+      )
+        .then(res.redirect("/admin"))
+        .catch((err) => {
+          return res.render("admin/index", {
+            title: "BWG | Admin Panel",
+            message: "Page Error!",
+          });
+        });
+    }
+  }
+);
 
 module.exports = router;

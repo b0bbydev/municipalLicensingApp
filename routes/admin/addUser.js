@@ -42,10 +42,13 @@ router.post(
     // server side validation.
     const errors = validationResult(req);
 
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
+
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("dogtags/addOwner", {
-        title: "BWG | Owner",
+      return res.render("admin/addUser", {
+        title: "BWG | Add User",
         message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -61,12 +64,12 @@ router.post(
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        authLevel: "None",
+        authLevel: "",
       })
         .then(res.redirect("/admin"))
         .catch((err) => {
-          return res.render("admin", {
-            title: "BWG | Admin Panel",
+          return res.render("admin/addUser", {
+            title: "BWG | Add User",
             message: "Page Error!",
           });
         });
