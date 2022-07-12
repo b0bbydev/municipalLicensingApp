@@ -36,6 +36,8 @@ router.get(
       return res.render("dogtags", {
         title: "BWG | Dogtags",
         message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session
@@ -80,7 +82,7 @@ router.get(
           .catch((err) =>
             res.render("policies", {
               title: "BWG | Policies",
-              message: "Page Error! ",
+              message: "Page Error!",
             })
           );
       } else {
@@ -122,7 +124,7 @@ router.get(
           .catch((err) =>
             res.render("policies", {
               title: "BWG | Policies",
-              message: "Page Error! ",
+              message: "Page Error!",
             })
           );
       }
@@ -230,6 +232,8 @@ router.get(
       return res.render("policies/policyHistory", {
         title: "BWG | Policy History",
         message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session

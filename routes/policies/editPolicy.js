@@ -19,6 +19,7 @@ router.get(
       return res.render("policies/editPolicy", {
         title: "BWG | Edit Policy",
         message: "Page Error!",
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session.
@@ -62,6 +63,7 @@ router.get(
           statusDropdownValues: statusDropdownValues,
           categoryDropdownValues: categoryDropdownValues,
           authorityDropdownValues: authorityDropdownValues,
+          // if the form submission is unsuccessful, save their values.
           policyInfo: {
             policyNumber: results.policyNumber,
             policyName: results.policyName,
@@ -222,7 +224,7 @@ router.post(
         },
         {
           where: {
-            policyID: req.params.id,
+            policyID: req.params.id, // leave as params.
           },
         }
       )
@@ -231,7 +233,7 @@ router.post(
         .catch((err) => {
           return res.render("policies/editPolicy", {
             title: "BWG | Edit Policy",
-            message: "Page Error! ",
+            message: "Page Error!",
           });
         });
     }

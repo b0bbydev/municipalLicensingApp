@@ -19,6 +19,7 @@ router.get(
       return res.render("policies/editProcedure", {
         title: "BWG | Edit Procedure",
         message: "Page Error!",
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session.
@@ -45,6 +46,7 @@ router.get(
           email: req.session.email,
           auth: req.session.auth, // authorization.
           statusDropdownValues: statusDropdownValues,
+          // if the form submission is unsuccessful, save their values.
           procedureInfo: {
             procedureName: results.procedureName,
             approvalDate: results.approvalDate,

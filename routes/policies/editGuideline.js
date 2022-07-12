@@ -19,6 +19,7 @@ router.get(
       return res.render("policies/editGuideline", {
         title: "BWG | Edit Guideline",
         message: "Page Error!",
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session.
@@ -45,6 +46,7 @@ router.get(
           email: req.session.email,
           auth: req.session.auth, // authorization.
           statusDropdownValues: statusDropdownValues,
+          // if the form submission is unsuccessful, save their values.
           guidelineInfo: {
             guidelineName: results.guidelineName,
             approvalDate: results.approvalDate,
@@ -63,6 +65,7 @@ router.get(
 /* POST /policies/editGuideline/:id */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("guidelineName")
     .if(body("guidelineName").notEmpty())
     .matches(/^[a-zA-Z0-9\/\-,. ]*$/)

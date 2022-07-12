@@ -5,7 +5,6 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const DropdownForm = require("../../models/dropdownManager/dropdownForm");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
-const dbHelpers = require("../../config/dbHelpers");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -102,8 +101,19 @@ router.get(
 
       // store formID in session to use in other endpoints.
       req.session.formID = req.params.id;
-      // get formName.
-      var formName = await dbHelpers.getFormNameFromFormID(req.session.formID);
+
+      DropdownForm.findOne({
+        attributes: ["formName"],
+        where: {
+          dropdownFormID: req.session.formID,
+        },
+      }).then((results) => {
+        if (results) {
+          formName = results.formName;
+        } else {
+          formName = null;
+        }
+      });
 
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
@@ -112,7 +122,7 @@ router.get(
           limit: req.query.limit,
           offset: req.skip,
           where: {
-            dropdownFormID: req.params.id,
+            dropdownFormID: req.session.formID,
           },
         })
           .then((results) => {
@@ -121,14 +131,14 @@ router.get(
             const pageCount = Math.ceil(results.count / req.query.limit);
 
             return res.render("dropdownManager/form", {
-              title: "BWG | Dropdown Manager - " + formName[0].formName,
+              title: "BWG | Dropdown Manager",
               errorMessages: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
-              formName: formName[0].formName,
+              formName: formName,
               lastEnteredDropdownTitle: req.session.lastEnteredDropdownTitle,
               data: results.rows,
-              dropdownFormID: req.params.id,
+              dropdownFormID: req.session.formID,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -154,7 +164,7 @@ router.get(
             [filterCategory]: {
               [Op.like]: "%" + req.query.filterValue + "%",
             },
-            dropdownFormID: req.params.id,
+            dropdownFormID: req.session.formID,
           },
           limit: req.query.limit,
           offset: req.skip,
@@ -165,12 +175,12 @@ router.get(
             const pageCount = Math.ceil(results.count / req.query.limit);
 
             return res.render("dropdownManager/form", {
-              title: "BWG | Dropdown Manager - " + formName[0].formName,
+              title: "BWG | Dropdown Manager",
               email: req.session.email,
               auth: req.session.auth, // authorization.
-              formName: formName[0].formName,
+              formName: formName,
               data: results.rows,
-              dropdownFormID: req.params.id,
+              dropdownFormID: req.session.formID,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
               pageCount,

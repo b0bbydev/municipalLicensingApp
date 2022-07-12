@@ -17,9 +17,9 @@ router.get(
 
     // if errors is NOT empty (if there are errors...),
     if (!errors.isEmpty()) {
-      return res.render("dogtags", {
-        title: "BWG | Owner",
-        message: "Error!",
+      return res.render("dogtags/editOwner", {
+        title: "BWG | Edit Owner",
+        message: "Page Error!",
         email: req.session.email,
         auth: req.session.auth, // authorization.
       });

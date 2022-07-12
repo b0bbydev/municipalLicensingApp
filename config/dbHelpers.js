@@ -35,21 +35,6 @@ db.getDogNameFromDogID = (dogID) => {
   });
 };
 
-db.getFormNameFromFormID = (formID) => {
-  return new Promise((resolve, reject) => {
-    pool.query(
-      "SELECT formName FROM dropdownforms WHERE dropdownFormID = ?",
-      [formID],
-      (error, result) => {
-        if (error) {
-          return reject(error);
-        }
-        return resolve(result);
-      }
-    );
-  });
-};
-
 db.getAddressHistory = (ownerID) => {
   return new Promise((resolve, reject) => {
     pool.query(

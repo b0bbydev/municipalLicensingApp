@@ -35,6 +35,7 @@ router.get(
       return res.render("dogtags", {
         title: "BWG | Dogtags",
         message: "Page Error!",
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session
@@ -87,7 +88,7 @@ router.get(
           .catch((err) =>
             res.render("dogtags", {
               title: "BWG | Dogtags",
-              message: "Page Error! ",
+              message: "Page Error!",
             })
           );
       } else if (req.query.filterCategory === "Address") {
@@ -295,8 +296,9 @@ router.get(
     if (!errors.isEmpty()) {
       return res.render("dogtags", {
         title: "BWG | Owner",
-        message: "Error!",
+        message: "Page Error!",
         email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session
@@ -383,7 +385,7 @@ router.get(
 /* POST /dogtags/owner/:id page. (renews dogtag) */
 router.post(
   "/owner/:id",
-  param("id").isNumeric().trim(),
+  param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -394,6 +396,7 @@ router.post(
         title: "BWG | Owner",
         message: "Page Error!",
         email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
     } else {
       // get current date for automatic population of license.
@@ -435,8 +438,8 @@ router.post(
 /* GET /owner/:id/additionalOwner/:id  */
 router.get(
   "/owner/:id/additionalOwner/:additionalOwnerID",
-  param("id").isNumeric().trim(),
-  param("additionalOwnerID").isNumeric().trim(),
+  param("id").matches(/^\d+$/).trim(),
+  param("additionalOwnerID").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -447,6 +450,7 @@ router.get(
         title: "BWG | Additional Owner",
         message: "Page Error!",
         email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session
@@ -482,8 +486,8 @@ router.get(
 /* POST /owner/:id/additionalOwner/:id  */
 router.post(
   "/owner/:id/additionalOwner/:additionalOwnerID",
-  param("id").isNumeric().trim(),
-  param("additionalOwnerID").isNumeric().trim(),
+  param("id").matches(/^\d+$/).trim(),
+  param("additionalOwnerID").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -494,6 +498,7 @@ router.post(
         title: "BWG | Additional Owner",
         message: "Page Error!",
         email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
     } else {
       // update additionalOwner.
@@ -539,6 +544,7 @@ router.get(
         title: "BWG | Tag History",
         message: "Error!",
         email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session
@@ -599,6 +605,7 @@ router.get(
         title: "BWG | Expired Tags",
         message: "Error!",
         email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session
@@ -864,7 +871,7 @@ router.get(
 /* GET /dogtags/printDog/:id */
 router.get(
   "/printDog/:id",
-  param("id").matches(/^\d+$/).trim(), // ensure only a number is passed into the params.
+  param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -875,6 +882,7 @@ router.get(
         title: "BWG | Print Dog",
         message: "Error!",
         email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
     } else {
       // check if there's an error message in the session

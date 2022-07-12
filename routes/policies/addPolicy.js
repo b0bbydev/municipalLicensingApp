@@ -18,6 +18,7 @@ router.get("/", async (req, res, next) => {
     return res.render("policies/addPolicy", {
       title: "BWG | Add Policy",
       message: "Page Error!",
+      auth: req.session.auth, // authorization.
     });
   } else {
     // check if there's an error message in the session.
