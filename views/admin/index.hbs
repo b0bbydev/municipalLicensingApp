@@ -27,11 +27,17 @@
             <td>{{this.firstName}} {{this.lastName}}</td>
             <td>{{this.email}}</td>
             <td>{{this.authLevel}}</td>
-            <td><a
+            <td>
+              <a
+                class="btn btn-sm btn-secondary"
+                href="/admin/editUser/{{this.userID}}"
+              >Edit</a>
+              |
+              <a
                 class="btn btn-sm btn-secondary"
                 data-bs-toggle="modal"
                 data-bs-target="#manageAccessModal-{{this.userID}}"
-              >Manage Access</a></td>
+              >Manage</a></td>
           </tr>
           <!-- Modal -->
           <div

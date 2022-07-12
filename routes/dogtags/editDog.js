@@ -38,6 +38,7 @@ router.get(
       // save dogID to session.
       req.session.dogID = req.params.id;
 
+      // used to populate edit form fields.
       Dog.findOne({
         where: {
           dogID: req.session.dogID,

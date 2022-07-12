@@ -41,6 +41,7 @@ const {
 /* admin related routes */
 var adminRouter = require("./routes/admin/index");
 var adminAddUserRouter = require("./routes/admin/addUser");
+var adminEditUserRouter = require("./routes/admin/editUser");
 
 /* policies related routes. */
 var policiesRouter = require("./routes/policies/index");
@@ -178,6 +179,7 @@ app.use("/", indexRouter);
 /* admin related routes */
 app.use("/admin", isAdmin, adminRouter);
 app.use("/admin/addUser", isAdmin, adminAddUserRouter);
+app.use("/admin/editUser", isAdmin, adminEditUserRouter);
 
 /* dropdownManager related routes */
 app.use("/dropdownManager", isAdmin, dropdownRouter);
