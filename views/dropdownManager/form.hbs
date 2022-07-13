@@ -106,7 +106,7 @@
     </nav>
   </div>
 </div>
-{{#if admin}}
+{{#includes auth.authLevel "Admin"}}
   <!-- Add new dropdown value -->
   <div class="row">
     <div class="col">
@@ -154,4 +154,4 @@
       </form>
     </div>
   </div>
-{{/if}}
+{{/includes}}

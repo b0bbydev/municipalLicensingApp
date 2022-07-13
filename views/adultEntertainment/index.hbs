@@ -1,0 +1,64 @@
+<h2 class="text-center mt-1">Adult Entertainment Licenses</h2>
+<h4>Filtering</h4>
+<form class="mb-0" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterCategory"
+    title="filterSelect"
+    name="filterCategory"
+  >
+    <option disabled selected>Filter By...</option>
+    {{#if filterCategory}}
+      <option
+        value="{{filterCategory}}"
+        selected
+        disabled
+      >{{filterCategory}}</option>
+    {{/if}}
+    {{#each dropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <!-- filterValue input -->
+  <input
+    name="filterValue"
+    id="filterValue"
+    class="form-control-sm"
+    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+    title="No special characters!"
+    placeholder="Search..."
+    value="{{filterValue}}"
+  />
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/adultEntertainment"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+<div class="row">
+  <div class="col mb-1">
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
+  </div>
+</div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}

@@ -43,6 +43,9 @@ var adminRouter = require("./routes/admin/index");
 var adminAddUserRouter = require("./routes/admin/addUser");
 var adminEditUserRouter = require("./routes/admin/editUser");
 
+/* adult entertainment related routes */
+var adultEntertainmentRouter = require("./routes/adultEntertainment/index");
+
 /* policies related routes. */
 var policiesRouter = require("./routes/policies/index");
 var addPoliciesRouter = require("./routes/policies/addPolicy");
@@ -183,6 +186,9 @@ app.use("/admin/editUser", isAdmin, adminEditUserRouter);
 
 /* dropdownManager related routes */
 app.use("/dropdownManager", isAdmin, dropdownRouter);
+
+/* adult entertainment related routes */
+app.use("/adultEntertainment", adultEntertainmentRouter);
 
 /* policies related routes. */
 app.use("/policies", isPolicy, policiesRouter);
