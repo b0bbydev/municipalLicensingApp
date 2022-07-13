@@ -77,7 +77,7 @@
       <th>Street Name</th>
       <th>Town</th>
       <th>Postal Code</th>
-      <th>Contact</th>
+      <th>Contact Name</th>
       <th>Contact Phone</th>
       <th>License #</th>
       <th>Issue Date</th>
@@ -85,18 +85,20 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td>business name</td>
-      <td>owner</td>
-      <td>street number</td>
-      <td>street name</td>
-      <td>town</td>
-      <td>postal code</td>
-      <td>contact</td>
-      <td>contact phone</td>
-      <td>license #</td>
-      <td>issue date</td>
-      <td>expiry date</td>
-    </tr>
+    {{#each data}}
+      <tr>
+        <td>{{this.businessName}}</td>
+        <td>{{this.ownerName}}</td>
+        <td>{{this.streetNumber}}</td>
+        <td>{{this.streetName}}</td>
+        <td>{{this.town}}</td>
+        <td>{{this.postalCode}}</td>
+        <td>{{this.contactName}}</td>
+        <td>{{this.contactPhone}}</td>
+        <td>{{this.licenseNumber}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+      </tr>
+    {{/each}}
   </tbody>
 </table>

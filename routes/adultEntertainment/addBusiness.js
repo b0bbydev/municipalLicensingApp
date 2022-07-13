@@ -35,12 +35,12 @@ router.post(
   "/",
   body("businessName")
     .if(body("businessName").notEmpty())
-    .matches(/^[a-zA-Z\'-]*$/)
+    .matches(/^[ a-zA-Z\'-]*$/)
     .withMessage("Invalid Business Name Entry!")
     .trim(),
   body("ownerName")
     .if(body("ownerName").notEmpty())
-    .matches(/^[a-zA-Z\'-]*$/)
+    .matches(/^[ a-zA-Z\'-]*$/)
     .withMessage("Invalid Owner Name Entry!")
     .trim(),
   body("contactPhone")
@@ -144,7 +144,7 @@ router.post(
           ],
         },
         {
-          include: [BusinessAddress],
+          include: BusinessAddress,
         }
       )
         .then(res.redirect("/adultEntertainment"))

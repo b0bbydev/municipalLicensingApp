@@ -2,7 +2,7 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
-const Business = require("../dogtags/owner");
+const Business = require("../adultEntertainment/business");
 
 const BusinessAddress = sequelize.define("businessAddress", {
   businessAddressID: {
