@@ -17,12 +17,12 @@ const Business = sequelize.define("business", {
   },
 
   ownerName: {
-    type: Sequelize.STRING(30),
+    type: Sequelize.STRING(50),
     allowNull: true,
   },
 
   contactName: {
-    type: Sequelize.STRING(30),
+    type: Sequelize.STRING(50),
     allowNull: true,
   },
 

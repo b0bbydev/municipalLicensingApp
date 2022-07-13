@@ -1,9 +1,8 @@
 var express = require("express");
 var router = express.Router();
-// models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 
-/* GET /adultEntertainment page. */
+/* GET /adultEntertainment/addBusiness page. */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -13,12 +12,12 @@ router.get("/", async (req, res, next) => {
   // get dropdown values.
   var dropdownValues = await Dropdown.findAll({
     where: {
-      dropdownFormID: 15,
+      dropdownFormID: 13, // streets
     },
   });
 
-  return res.render("adultEntertainment/index", {
-    title: "BWG | Home",
+  return res.render("adultEntertainment/addBusiness", {
+    title: "BWG | Add Business",
     errorMessages: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
