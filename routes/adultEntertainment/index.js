@@ -17,8 +17,8 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  return res.render("adultEntertainment/index", {
-    title: "BWG | Home",
+  return res.render("adultEntertainment", {
+    title: "BWG | Adult Entertainment",
     errorMessages: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.

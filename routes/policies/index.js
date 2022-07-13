@@ -33,8 +33,8 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("dogtags", {
-        title: "BWG | Dogtags",
+      return res.render("policies", {
+        title: "BWG | Policies",
         message: "Page Error!",
         email: req.session.email,
         auth: req.session.auth, // authorization.

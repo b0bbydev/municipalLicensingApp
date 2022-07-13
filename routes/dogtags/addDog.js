@@ -168,7 +168,7 @@ router.post(
       // expiryDate should always be the following year, jan.31.
       var expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
 
-      // create dog with owner and license association.
+      // create dog.
       Dog.create({
         tagNumber: req.body.tagNumber,
         dogName: req.body.dogName,

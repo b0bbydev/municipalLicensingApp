@@ -30,13 +30,7 @@ var indexRouter = require("./routes/index");
 const limiter = require("./config/limiter");
 var moment = require("moment");
 // authHelper middleware.
-const {
-  isLoggedIn,
-  auth,
-  isAdmin,
-  isDogLicense,
-  isPolicy,
-} = require("./config/authHelpers");
+const { isAdmin, isDogLicense, isPolicy } = require("./config/authHelpers");
 
 /* admin related routes */
 var adminRouter = require("./routes/admin/index");
@@ -169,11 +163,10 @@ hbs.registerHelper("lowercase", function (str) {
 
 // check if session var 'auth' includes valid authLevel.
 hbs.registerHelper("includes", function (array, value, options) {
-  if (array.includes(value)) {
+  if (array.indexOf(value) > -1) {
     return options.fn(this);
-  } else {
-    return options.inverse(this);
   }
+  return options.inverse(this);
 });
 
 // use routes here.
@@ -189,8 +182,12 @@ app.use("/admin/editUser", isAdmin, adminEditUserRouter);
 app.use("/dropdownManager", isAdmin, dropdownRouter);
 
 /* adult entertainment related routes */
-app.use("/adultEntertainment", adultEntertainmentRouter);
-app.use("/adultEntertainment/addBusiness", adultEntertainmentAddBusinessRouter);
+app.use("/adultEntertainment", isAdmin, adultEntertainmentRouter);
+app.use(
+  "/adultEntertainment/addBusiness",
+  isAdmin,
+  adultEntertainmentAddBusinessRouter
+);
 
 /* policies related routes. */
 app.use("/policies", isPolicy, policiesRouter);

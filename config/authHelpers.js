@@ -23,7 +23,7 @@ module.exports = {
 
     // if authLevel exits - set it in session; if not forward to next middleware.
     if (authLevel) {
-      req.session.auth = authLevel;
+      req.session.auth = authLevel.authLevel;
       next();
     } else {
       next();
@@ -33,7 +33,7 @@ module.exports = {
   /* create page specific middleware which will redirect the user to home page. */
   // force admin auth.
   isAdmin: function (req, res, next) {
-    if (req.session.auth.authLevel.includes("Admin")) {
+    if (req.session.auth.includes("Admin")) {
       next();
     } else {
       res.redirect("/");
@@ -42,7 +42,7 @@ module.exports = {
 
   // force dog license auth.
   isDogLicense: function (req, res, next) {
-    if (req.session.auth.authLevel.includes("Dog Licenses")) {
+    if (req.session.auth.includes("Dog Licenses")) {
       next();
     } else {
       res.redirect("/");
@@ -51,7 +51,7 @@ module.exports = {
 
   // force policies auth.
   isPolicy: function (req, res, next) {
-    if (req.session.auth.authLevel.includes("Policies")) {
+    if (req.session.auth.includes("Policies")) {
       next();
     } else {
       res.redirect("/");
