@@ -180,3 +180,7 @@ td {
   text-decoration: underline;
   font-size: 0.85rem;
 }
+
+#filterButton {
+  margin-bottom: .20rem !important;
+}

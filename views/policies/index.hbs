@@ -55,11 +55,11 @@
 </div>
 <div class="row">
   <div class="col mb-1">
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
     <a href="/policies/addPolicy" class="btn btn-sm btn-primary float-end">Add
       Policy</a>
-    {{#if queryCount}}
-      <strong>{{queryCount}}</strong>
-    {{/if}}
   </div>
 </div>
 

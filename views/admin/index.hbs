@@ -24,15 +24,12 @@
       <tbody>
         {{#each data}}
           <tr>
-            <td>{{this.firstName}} {{this.lastName}}</td>
+            <td><a id="ownerLink" href="/admin/editUser/{{this.userID}}">
+                {{this.firstName}}
+                {{this.lastName}}</a></td>
             <td>{{this.email}}</td>
             <td>{{this.authLevel}}</td>
             <td>
-              <a
-                class="btn btn-sm btn-secondary"
-                href="/admin/editUser/{{this.userID}}"
-              >Edit</a>
-              |
               <a
                 class="btn btn-sm btn-secondary"
                 data-bs-toggle="modal"
