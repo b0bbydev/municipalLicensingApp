@@ -62,3 +62,54 @@
     {{message}}
   </div>
 {{/if}}
+
+<!-- Table -->
+<table class="table table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Business Name</th>
+      <th>Owner</th>
+      <th>Location</th>
+      <th>Town</th>
+      <th>Postal Code</th>
+      <th>Contact</th>
+      <th>Contact Phone</th>
+      <th>License #</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>business name</td>
+      <td>owner</td>
+      <td>location</td>
+      <td>town</td>
+      <td>postal code</td>
+      <td>contact</td>
+      <td>contact phone</td>
+      <td>license #</td>
+      <td>issue date</td>
+      <td>expiry date</td>
+    </tr>
+  </tbody>
+</table>
+<nav id="pagination">
+  <ul class="pagination pagination-sm">
+    {{#if paginate.hasPreviousPages}}
+      <li class="page-item">
+        <a class="page-link" href="{{prev}}">Prev</a>
+      </li>
+    {{/if}}
+    {{#each pages}}
+      <li class="page-item">
+        <a class="page-link" href="{{this.url}}">{{this.number}}</a>
+      </li>
+    {{/each}}
+    {{#if hasMorePages}}
+      <li class="page-item">
+        <a class="page-link" href="{{paginate.href}}">Next</a>
+      </li>
+    {{/if}}
+  </ul>
+</nav>
