@@ -55,6 +55,7 @@ var editGuidelineRouter = require("./routes/policies/editGuideline");
 
 /* dropdown related routes. */
 var dropdownRouter = require("./routes/dropdownManager/index");
+var dropdownFormRouter = require("./routes/dropdownManager/form");
 
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
@@ -181,6 +182,7 @@ app.use("/admin/editUser", isAdmin, adminEditUserRouter);
 
 /* dropdownManager related routes */
 app.use("/dropdownManager", isAdmin, dropdownRouter);
+app.use("/dropdownManager/form", isAdmin, dropdownFormRouter);
 
 /* adult entertainment licensing related routes */
 app.use("/adultEntertainment", isAdmin, adultEntertainmentRouter);

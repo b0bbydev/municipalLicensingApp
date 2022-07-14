@@ -9,13 +9,6 @@
     required
   >
     <option value="" disabled selected>Filter By...</option>
-    {{#if filterCategory}}
-      <option
-        value="{{filterCategory}}"
-        selected
-        disabled
-      >{{filterCategory}}</option>
-    {{/if}}
     {{#each dropdownValues}}
       {{#if this.isDisabled}}
         <option

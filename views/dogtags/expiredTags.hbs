@@ -6,11 +6,9 @@
     id="filterCategory"
     title="filterSelect"
     name="filterCategory"
+    required
   >
-    <option disabled selected>Filter By...</option>
-    {{#if filterCategory}}
-      <option value="{{filterCategory}}" selected>{{filterCategory}}</option>
-    {{/if}}
+    <option value="" disabled selected>Filter By...</option>
     {{#each dropdownValues}}
       {{#if this.isDisabled}}
         <option
@@ -27,9 +25,7 @@
     name="filterValue"
     id="filterValue"
     class="form-control-sm"
-    pattern="^[^\x27\x22;=_()*&%$#!
-					
-					<>\/\^\\]*$"
+    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
     title="No special characters!"
     placeholder="Search..."
     value="{{filterValue}}"

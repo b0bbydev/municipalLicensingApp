@@ -10,13 +10,6 @@
         name="filterCategory"
       >
         <option disabled selected>Filter By...</option>
-        {{#if filterCategory}}
-          <option
-            value="{{filterCategory}}"
-            selected
-            disabled
-          >{{filterCategory}}</option>
-        {{/if}}
         <option value="Dropdown Title">Dropdown Title</option>
         <option value="Dropdown Value">Dropdown Value</option>
       </select>
@@ -71,11 +64,11 @@
             <td>{{this.dropdownValue}}</td>
             <td>{{this.isDisabled}}</td>
             <td><a
-                href="/dropdownManager/enable/{{this.dropdownID}}"
+                href="/dropdownManager/form/{{dropdownFormID}}/enable/{{this.dropdownID}}"
                 class="btn btn-sm btn-success"
               >Enable</a>
               <a
-                href="/dropdownManager/disable/{{this.dropdownID}}"
+                href="/dropdownManager/form/{{dropdownFormID}}/disable/{{this.dropdownID}}"
                 class="btn btn-sm btn-secondary"
               >Disable</a></td>
           </tr>
@@ -106,7 +99,7 @@
     </nav>
   </div>
 </div>
-{{#includes auth.authLevel "Admin"}}
+{{#includes auth "Admin"}}
   <!-- Add new dropdown value -->
   <div class="row">
     <div class="col">
