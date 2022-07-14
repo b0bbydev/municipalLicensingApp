@@ -133,6 +133,7 @@ router.post(
           healthInspection: req.body.healthInspection,
           zoningClearance: req.body.zoningClearance,
           feePaid: req.body.feePaid,
+          notes: req.body.notes,
           businessAddresses: [
             {
               streetNumber: req.body.streetNumber,
