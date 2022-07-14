@@ -1,12 +1,12 @@
 <h2 class="text-center mt-1">Add Business</h2>
 <form class="row g-5 m-auto" method="POST">
-  <!-- check for error messages in the session -->
-  {{#if message}}
-    <div class="alert alert-danger">
-      {{message}}
-    </div>
-  {{/if}}
   <div class="col-md-7 m-auto mt-5">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
     <h4>Business Information</h4>
     <hr />
     <div class="row">
@@ -166,24 +166,26 @@
       </div>
       <!-- Issue Date -->
       <div class="col-sm-4">
-        <label for="Issue Date" class="form-label">Issue Date</label>
+        <label for="Issue Date" class="form-label">Issue Date*</label>
         <input
           type="date"
           class="form-control"
           name="issueDate"
           placeholder="Issue Date"
           value="{{formData.issueDate}}"
+          required
         />
       </div>
       <!-- Expiry Date -->
       <div class="col-sm-4">
-        <label for="Expiry Date" class="form-label">Expiry Date</label>
+        <label for="Expiry Date" class="form-label">Expiry Date*</label>
         <input
           type="date"
           class="form-control"
           name="expiryDate"
           placeholder="Expiry Date"
           value="{{formData.expiryDate}}"
+          required
         />
       </div>
     </div>
