@@ -82,6 +82,7 @@
       <th>License #</th>
       <th>Issue Date</th>
       <th>Expiry Date</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -100,7 +101,98 @@
         <td>{{this.licenseNumber}}</td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/adultEntertainment/editBusiness/{{this.businessID}}"
+          >Edit</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#businessModal-{{this.businessID}}"
+          >Documentation</a></td>
       </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="businessModal-{{this.businessID}}"
+        tabindex="-1"
+        aria-labelledby="businessModal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Documentation</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <strong>Police VSC:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.policeVSC}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Certificate of Insurance:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.certificateOfInsurance}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Photo ID:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.photoID}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Health Inspection:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.healthInspection}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Zoning Clearance:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.zoningClearance}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Fee Paid:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.feePaid}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     {{/each}}
   </tbody>
 </table>
