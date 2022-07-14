@@ -89,10 +89,12 @@
       <tr>
         <td>{{this.businessName}}</td>
         <td>{{this.ownerName}}</td>
-        <td>{{this.streetNumber}}</td>
-        <td>{{this.streetName}}</td>
-        <td>{{this.town}}</td>
-        <td>{{this.postalCode}}</td>
+        {{#each businessAddresses}}
+          <td>{{this.streetNumber}}</td>
+          <td>{{this.streetName}}</td>
+          <td>{{this.town}}</td>
+          <td>{{this.postalCode}}</td>
+        {{/each}}
         <td>{{this.contactName}}</td>
         <td>{{this.contactPhone}}</td>
         <td>{{this.licenseNumber}}</td>

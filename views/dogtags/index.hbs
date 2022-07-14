@@ -6,8 +6,9 @@
     id="filterCategory"
     title="filterSelect"
     name="filterCategory"
+    required
   >
-    <option disabled selected>Filter By...</option>
+    <option value="" disabled selected>Filter By...</option>
     {{#if filterCategory}}
       <option
         value="{{filterCategory}}"

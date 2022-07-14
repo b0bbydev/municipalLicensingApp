@@ -144,7 +144,7 @@ router.post(
           ],
         },
         {
-          include: BusinessAddress,
+          include: [BusinessAddress],
         }
       )
         .then(res.redirect("/adultEntertainment"))
