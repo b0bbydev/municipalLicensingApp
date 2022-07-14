@@ -1,0 +1,55 @@
+<h2 class="text-center m-1">Add A Record</h2>
+<div class="row g-5 m-auto">
+  <div class="col-md-7 m-auto mt-5">
+    <h4>Select A Type Of Record</h4>
+    <hr />
+    <div class="row">
+      <div class="col">
+        <select class="form-select" id="cars">
+          <option value="Select here..." disabled selected>Select here...</option>
+          <option value="Policy">Policy</option>
+          <option value="Procedure">Procedure</option>
+          <option value="Guideline">Guideline</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form class="row g-5 m-auto" method="POST" style="display: none;">
+  <div class="col-md-7 m-auto mt-5">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Test Information</h4>
+    <hr />
+    <div class="row">
+      <!-- Policy Name -->
+      <div class="col-sm-6">
+        <label for="Policy Name" class="form-label">Policy Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Policy Name"
+          name="policyName"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="40"
+          value="{{formData.policyName}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

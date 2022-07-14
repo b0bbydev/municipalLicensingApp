@@ -44,6 +44,7 @@ var adultEntertainmentEditBusinessRouter = require("./routes/adultEntertainment/
 
 /* policies related routes. */
 var policiesRouter = require("./routes/policies/index");
+var addRecordRouter = require("./routes/policies/addRecord");
 var addPoliciesRouter = require("./routes/policies/addPolicy");
 var editPolicyRouter = require("./routes/policies/editPolicy");
 
@@ -199,6 +200,7 @@ app.use(
 
 /* policies related routes. */
 app.use("/policies", isPolicy, policiesRouter);
+app.use("/policies/addRecord", isPolicy, addRecordRouter);
 app.use("/policies/addPolicy", isPolicy, addPoliciesRouter);
 app.use("/policies/editPolicy", isPolicy, editPolicyRouter);
 
