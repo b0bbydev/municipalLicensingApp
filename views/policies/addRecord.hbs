@@ -1,32 +1,48 @@
 <h2 class="text-center m-1">Add A Record</h2>
 <div class="row g-5 m-auto">
-  <div class="col-md-7 m-auto mt-5">
+  <div class="col-md-7 m-auto mt-4">
     <h4>Select A Type Of Record</h4>
     <hr />
     <div class="row">
       <div class="col">
-        <select class="form-select" id="cars">
+        <select class="form-select" id="cars" onchange="changeOptions(this);">
           <option value="Select here..." disabled selected>Select here...</option>
-          <option value="Policy">Policy</option>
-          <option value="Procedure">Procedure</option>
-          <option value="Guideline">Guideline</option>
+          <option value="policyForm">Policy</option>
+          <option value="procedureForm">Procedure</option>
+          <option value="guidelineForm">Guideline</option>
         </select>
       </div>
     </div>
   </div>
 </div>
 
-<form class="row g-5 m-auto" method="POST" style="display: none;">
-  <div class="col-md-7 m-auto mt-5">
+<form
+  class="row g-5 m-auto recordsForm"
+  name="policyForm"
+  style="display: none;"
+  method="POST"
+>
+  <div class="col-md-7 m-auto mt-4">
     <!-- check for error messages in the session -->
     {{#if message}}
       <div class="alert alert-danger">
         {{message}}
       </div>
     {{/if}}
-    <h4>Test Information</h4>
+    <h4>Policy Information</h4>
     <hr />
     <div class="row">
+      <!-- Policy Number -->
+      <div class="col-sm-6">
+        <label for="Policy Number" class="form-label">Policy Number</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Policy Number"
+          name="policyNumber"
+          value="{{formData.policyNumber}}"
+        />
+      </div>
       <!-- Policy Name -->
       <div class="col-sm-6">
         <label for="Policy Name" class="form-label">Policy Name</label>
@@ -40,6 +56,540 @@
           maxlength="40"
           value="{{formData.policyName}}"
         />
+      </div>
+    </div>
+    <div class="row">
+      <!-- COW Date -->
+      <div class="col-sm-6">
+        <label for="COW Date" class="form-label">COW Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="COW Date"
+          name="cowDate"
+          value="{{formData.cowDate}}"
+        />
+      </div>
+      <!-- Council Resolution -->
+      <div class="col-sm-6">
+        <label for="Council Resolution" class="form-label">Council Resolution</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Council Resolution"
+          name="councilResolution"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="40"
+          value="{{formData.councilResolution}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Date Approved -->
+      <div class="col-sm-4">
+        <label for="Date Approved" class="form-label">Date Approved</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Approved"
+          name="dateApproved"
+          value="{{formData.dateApproved}}"
+        />
+      </div>
+      <!-- Date Amended -->
+      <div class="col-sm-4">
+        <label for="Date Amended" class="form-label">Date Amended</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Amended"
+          name="dateAmended"
+          value="{{formData.dateAmended}}"
+        />
+      </div>
+      <!-- Date Effective -->
+      <div class="col-sm-4">
+        <label for="Date Effective" class="form-label">Date Effective</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Effective"
+          name="dateEffective"
+          value="{{formData.dateEffective}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Category -->
+      <div class="col-sm-4">
+        <label for="Category" class="form-label">Category</label>
+        <select class="form-select" name="category">
+          {{#if formData.category}}
+            <option
+              value="{{formData.category}}"
+              disabled
+              selected
+            >{{formData.category}}</option>
+          {{else}}
+            <option disabled selected>Category...</option>
+          {{/if}}
+          {{#each categoryDropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+      <!-- Last Review Date -->
+      <div class="col-sm-4">
+        <label for="Last Review Date" class="form-label">Last Review Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Last Review Date"
+          name="lastReviewDate"
+          value="{{formData.lastReviewDate}}"
+        />
+      </div>
+      <!-- Scheduled Review Date -->
+      <div class="col-sm-4">
+        <label for="Scheduled Review Date" class="form-label">Scheduled Review
+          Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Scheduled Review Date"
+          name="scheduledReviewDate"
+          value="{{formData.scheduledReviewDate}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Division -->
+      <div class="col-sm-6">
+        <label for="Division" class="form-label">Division</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Division"
+          name="division"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="40"
+          value="{{formData.division}}"
+        />
+      </div>
+      <!-- Authority -->
+      <div class="col-sm-6">
+        <label for="Authority" class="form-label">Authority</label>
+        <select class="form-select" name="authority">
+          {{#if formData.authority}}
+            <option
+              value="{{formData.authority}}"
+              disabled
+              selected
+            >{{formData.authority}}</option>
+          {{else}}
+            <option disabled selected>Authority...</option>
+          {{/if}}
+          {{#each authorityDropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Administrator -->
+      <div class="col-sm-6">
+        <label for="Administrator" class="form-label">Administrator</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Administrator"
+          name="administrator"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="40"
+          value="{{formData.administrator}}"
+        />
+      </div>
+      <!-- Status -->
+      <div class="col-sm-6">
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          {{#if formData.status}}
+            <option
+              value="{{formData.status}}"
+              disabled
+              selected
+            >{{formData.status}}</option>
+          {{else}}
+            <option disabled selected>Status...</option>
+          {{/if}}
+          {{#each statusDropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Legislation Required -->
+      <label for="Legislation Required" class="form-label">Legislation Required</label>
+      <!-- Yes -->
+      <div class="col-sm-6">
+        <div class="form-check">
+          <label class="form-check-label" for="legislationRequired">
+            Yes
+          </label>
+          {{#ifCond formData.legislationRequired "===" "Yes"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="Yes"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="Yes"
+            />
+          {{/ifCond}}
+        </div>
+      </div>
+      <!-- No -->
+      <div class="col-sm-6">
+        <div class="form-check">
+          <label class="form-check-label" for="legislationRequired">
+            No
+          </label>
+          {{#ifCond formData.legislationRequired "===" "No"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="No"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="No"
+            />
+          {{/ifCond}}
+        </div>
+      </div>
+    </div>
+    <!-- Notes -->
+    <div class="row">
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.notes}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Procedures Form -->
+<form
+  class="row g-5 m-auto recordsForm"
+  name="procedureForm"
+  style="display: none;"
+  method="POST"
+>
+  <div class="col-md-7 m-auto mt-4">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Procedure Information</h4>
+    <hr />
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Procedure Name" class="form-label">Procedure Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Procedure Name"
+          name="procedureName"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.procedureName}}"
+          maxlength="30"
+          required
+        />
+      </div>
+      <!-- Status -->
+      <div class="col-sm-6">
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          {{#if formData.status}}
+            <option
+              value="{{formData.status}}"
+              disabled
+              selected
+            >{{formData.status}}</option>
+          {{else}}
+            <option disabled selected>Status...</option>
+          {{/if}}
+          {{#each statusDropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Date Approved -->
+      <div class="col-sm-6">
+        <label for="Date Approved" class="form-label">Date Approved</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Approved"
+          name="dateApproved"
+          value="{{formData.dateApproved}}"
+        />
+      </div>
+      <!-- Date Amended -->
+      <div class="col-sm-6">
+        <label for="Date Amended" class="form-label">Date Amended</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Amended"
+          name="dateAmended"
+          value="{{formData.dateAmended}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Last Review Date -->
+      <div class="col-sm-6">
+        <label for="Last Review Date" class="form-label">Last Review Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Last Review Date"
+          name="lastReviewDate"
+          value="{{formData.lastReviewDate}}"
+        />
+      </div>
+      <!-- Scheduled Review Date -->
+      <div class="col-sm-6">
+        <label for="Scheduled Review Date" class="form-label">Scheduled Review
+          Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Scheduled Review Date"
+          name="scheduledReviewDate"
+          value="{{formData.scheduledReviewDate}}"
+        />
+      </div>
+    </div>
+    <!-- Notes -->
+    <div class="row">
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.notes}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Guideline Form -->
+<form
+  class="row g-5 m-auto recordsForm"
+  name="guidelineForm"
+  style="display: none;"
+  method="POST"
+>
+  <div class="col-md-7 m-auto mt-4">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Guideline Information</h4>
+    <hr />
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="Guideline Name" class="form-label">Guideline Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Guideline Name"
+          name="guidelineName"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.guidelineName}}"
+          maxlength="30"
+          required
+        />
+      </div>
+      <!-- Status -->
+      <div class="col-sm-6">
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          {{#if formData.status}}
+            <option
+              value="{{formData.status}}"
+              disabled
+              selected
+            >{{formData.status}}</option>
+          {{else}}
+            <option disabled selected>Status...</option>
+          {{/if}}
+          {{#each statusDropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Date Approved -->
+      <div class="col-sm-6">
+        <label for="Date Approved" class="form-label">Date Approved</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Approved"
+          name="dateApproved"
+          value="{{formData.dateApproved}}"
+        />
+      </div>
+      <!-- Date Amended -->
+      <div class="col-sm-6">
+        <label for="Date Amended" class="form-label">Date Amended</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Amended"
+          name="dateAmended"
+          value="{{formData.dateAmended}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Last Review Date -->
+      <div class="col-sm-6">
+        <label for="Last Review Date" class="form-label">Last Review Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Last Review Date"
+          name="lastReviewDate"
+          value="{{formData.lastReviewDate}}"
+        />
+      </div>
+      <!-- Scheduled Review Date -->
+      <div class="col-sm-6">
+        <label for="Scheduled Review Date" class="form-label">Scheduled Review
+          Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Scheduled Review Date"
+          name="scheduledReviewDate"
+          value="{{formData.scheduledReviewDate}}"
+        />
+      </div>
+    </div>
+    <!-- Notes -->
+    <div class="row">
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.notes}}</textarea>
       </div>
     </div>
     <div class="row">
