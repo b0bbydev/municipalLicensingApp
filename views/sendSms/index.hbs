@@ -1,0 +1,34 @@
+<h2 class="text-center mt-1">Send SMS</h2>
+<form class="row g-5 m-auto" method="POST">
+  <div class="col-md-7 m-auto mt-5">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Text Message Information</h4>
+    <hr />
+    <!-- Notes -->
+    <div class="row">
+      <div class="col">
+        <label for="Text Message" class="form-label">Text Message</label>
+        <textarea
+          type="text"
+          name="textMessage"
+          class="form-control"
+          rows="3"
+        ></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

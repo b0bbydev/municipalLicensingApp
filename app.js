@@ -68,6 +68,9 @@ var editOwnerRouter = require("./routes/dogtags/editOwner");
 var addDogRouter = require("./routes/dogtags/addDog");
 var editDogRouter = require("./routes/dogtags/editDog");
 
+/* Send SMS routes */
+var sendSmsRouter = require("./routes/sendSms/index");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -85,7 +88,6 @@ app.set("view engine", "hbs");
 //app.use(morgan("dev", { stream: logger.stream.write }));
 // helmet - protecting against common HTTP vulnerabilities.
 //app.use(helmet());
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -219,6 +221,9 @@ app.use("/dogtags/editOwner", isDogLicense, editOwnerRouter);
 // dog.
 app.use("/dogtags/addDog", isDogLicense, addDogRouter);
 app.use("/dogtags/editDog", isDogLicense, editDogRouter);
+
+/* Send SMS related routes */
+app.use("/sendSms", sendSmsRouter);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
