@@ -1,9 +1,8 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var User = require("../../models/admin/user");
-var Role = require("../../models/admin/role");
-var UserRole = require("../../models/admin/userRole");
+const User = require("../../models/admin/user");
+const Dropdown = require("../../models/dropdownManager/dropdown");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // pagination lib.
@@ -16,15 +15,11 @@ router.get("/", async (req, res, next) => {
   // clear session messages.
   req.session.messages = [];
 
-  // user roles.
-  let userRole = await User.findAll({
-    include: [
-      {
-        model: Role,
-        attributes: ["roleName"],
-        through: { where: { userId: 1 } },
-      },
-    ],
+  // get dropdown values.
+  var dropdownValues = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 17, // user list filtering
+    },
   });
 
   // get Users.
@@ -42,7 +37,7 @@ router.get("/", async (req, res, next) => {
       email: req.session.email,
       auth: req.session.auth, // authorization.
       data: results.rows,
-      userRole: userRole,
+      dropdownValues: dropdownValues,
       pageCount,
       itemCount,
       queryCount: "Records returned: " + results.count,

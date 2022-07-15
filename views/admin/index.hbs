@@ -5,10 +5,54 @@
     {{message}}
   </div>
 {{/if}}
-<div class="row">
+<h4>Filtering</h4>
+<form class="mb-0" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterCategory"
+    title="filterSelect"
+    name="filterCategory"
+    required
+  >
+    <option value="" disabled selected>Filter By...</option>
+    {{#each dropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <!-- filterValue input -->
+  <input
+    name="filterValue"
+    id="filterValue"
+    class="form-control-sm"
+    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+    title="No special characters!"
+    placeholder="Search..."
+    value="{{filterValue}}"
+  />
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/dogtags"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+<div class="row mt-1">
   <div class="col">
-    <h4>User List</h4>
-    <a class="btn btn-sm btn-primary mb-1" href="/admin/addUser">Add User</a>
+    <h4 class="float-start">User List</h4>
+    <a class="btn btn-sm btn-primary mb-1 float-end" href="/admin/addUser">Add
+      User</a>
     <!-- Table -->
     <table
       class="table table-sm table-bordered table-striped table-hover sortable"

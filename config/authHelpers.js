@@ -1,7 +1,6 @@
 // models.
 var User = require("../models/admin/user");
 var Role = require("../models/admin/role");
-var UserRole = require("../models/admin/userRole");
 
 module.exports = {
   // this method will redirect the user back to login page, if the session doesn't contain an email.
