@@ -20,9 +20,9 @@ router.get("/", function (req, res, next) {
 /* POST /sendSms page. */
 // router.post("/", function (req, res, next) {
 //   var PhloClient = plivo.PhloClient;
-//   var authId = process.env.AUTH_ID;
-//   var authToken = process.env.AUTH_TOKEN;
-//   var phloId = "<phlo_id>";
+//   var authId = "MAM2EYNJK3ZDHMZJQXN2";
+//   var authToken = "NWY5YTE1ODRiNWNlMmJjMGI1NjE1MjkzMGIwNWU0";
+//   var phloId = "e05a43a8-8be9-491d-a0b1-06b4fac88b72";
 //   var phloClient = (phlo = null);
 
 //   phloClient = new PhloClient(authId, authToken);
@@ -41,9 +41,9 @@ router.post("/", function (req, res, next) {
   let client = new plivo.Client(process.env.AUTH_ID, process.env.AUTH_TOKEN);
   client.messages
     .create({
-      src: process.env.SENDER_ID,
-      dst: "+19057156835",
-      text: req.body.textMessage,
+      src: "TownOfBWG",
+      dst: "+12893835612",
+      text: "test",
     })
     .then(function (message_created) {
       console.log(message_created);

@@ -15,6 +15,7 @@
       <thead>
         <tr>
           <th>Role(s)</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -22,6 +23,10 @@
           {{#each roles}}
             <tr>
               <td>{{this.roleName}}</td>
+              <td><a
+                  class="btn btn-sm btn-secondary"
+                  href="/admin/manageAccess/{{../../userId}}/{{this.id}}"
+                >Revoke</a></td>
             </tr>
           {{/each}}
         {{/each}}

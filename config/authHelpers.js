@@ -1,5 +1,7 @@
 // models.
 var User = require("../models/admin/user");
+var Role = require("../models/admin/role");
+var UserRole = require("../models/admin/userRole");
 
 module.exports = {
   // this method will redirect the user back to login page, if the session doesn't contain an email.
@@ -14,20 +16,30 @@ module.exports = {
   // create a method to decide authLevel based on session email and what is in user table.
   auth: async (req, res, next) => {
     // get authLevel for user.
-    let authLevel = await User.findOne({
-      attributes: ["authLevel"],
+    User.findOne({
+      include: [
+        {
+          model: Role,
+          attributes: ["roleName"],
+          through: {},
+        },
+      ],
       where: {
         email: req.session.email,
       },
-    });
+    }).then((results) => {
+      let roles = results.roles;
+      let roleNames = [];
 
-    // if authLevel exits - set it in session; if not forward to next middleware.
-    if (authLevel) {
-      req.session.auth = authLevel.authLevel;
+      // loop through roleNames and add to array.
+      for (i = 0; i < roles.length; i++) {
+        roleNames.push(roles[i].roleName);
+      }
+
+      // send to session as String.
+      req.session.auth = roleNames.toString();
       next();
-    } else {
-      next();
-    }
+    });
   }, // end of auth().
 
   /* create page specific middleware which will redirect the user to home page. */
