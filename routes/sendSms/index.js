@@ -18,36 +18,36 @@ router.get("/", function (req, res, next) {
 });
 
 /* POST /sendSms page. */
-router.post("/", function (req, res, next) {
-  var PhloClient = plivo.PhloClient;
-  var authId = "<auth_id>";
-  var authToken = "<auth_token>";
-  var phloId = "<phlo_id>";
-  var phloClient = (phlo = null);
+// router.post("/", function (req, res, next) {
+//   var PhloClient = plivo.PhloClient;
+//   var authId = process.env.AUTH_ID;
+//   var authToken = process.env.AUTH_TOKEN;
+//   var phloId = "<phlo_id>";
+//   var phloClient = (phlo = null);
 
-  phloClient = new PhloClient(authId, authToken);
-  phloClient
-    .phlo(phloId)
-    .run()
-    .then(function (result) {
-      console.log("Phlo run result", result);
-    })
-    .catch(function (err) {
-      console.error("Phlo run failed", err);
-    });
-});
-
-// router.all("/", function (req, res, next) {
-//   let client = new plivo.Client("<auth_id>", "<auth_token>");
-//   client.messages
-//     .create({
-//       src: "<sender_id>",
-//       dst: "<destination_number>",
-//       text: "Hello, from Bobby!",
+//   phloClient = new PhloClient(authId, authToken);
+//   phloClient
+//     .phlo(phloId)
+//     .run()
+//     .then(function (result) {
+//       console.log("Phlo run result", result);
 //     })
-//     .then(function (message_created) {
-//       console.log(message_created);
+//     .catch(function (err) {
+//       console.error("Phlo run failed", err);
 //     });
 // });
+
+router.post("/", function (req, res, next) {
+  let client = new plivo.Client(process.env.AUTH_ID, process.env.AUTH_TOKEN);
+  client.messages
+    .create({
+      src: process.env.SENDER_ID,
+      dst: "+19057156835",
+      text: req.body.textMessage,
+    })
+    .then(function (message_created) {
+      console.log(message_created);
+    });
+});
 
 module.exports = router;

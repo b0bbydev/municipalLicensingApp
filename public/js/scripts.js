@@ -57,11 +57,12 @@ function adminAuth(modalID) {
 
   // check if currentText already contains 'Admin'. If it does, don't add it (return).
   if (currentText.includes("Admin")) {
-    return;
+    document.getElementById("currentAuthLevel-" + modalID).value =
+      currentText.replace("Admin,", "");
   } else {
     // add Admin to list.
     document.getElementById("currentAuthLevel-" + modalID).value =
-      currentText + "Admin\n";
+      currentText + "Admin, ";
   }
 }
 
@@ -73,27 +74,29 @@ function dogLicenseAuth(modalID) {
 
   // check if currentText already contains 'Dog Licenses'. If it does, don't add it (return).
   if (currentText.includes("Dog Licenses")) {
-    return;
+    document.getElementById("currentAuthLevel-" + modalID).value =
+      currentText.replace("Dog Licenses,", "");
   } else {
     // add Dog Licenses to list.
     document.getElementById("currentAuthLevel-" + modalID).value =
-      currentText + "Dog Licenses\n";
+      currentText + "Dog Licenses, ";
   }
 }
 
 function policyAuth(modalID) {
   // get current text in input field to append.
-  var currentText = document.getElementById(
+  let currentText = document.getElementById(
     "currentAuthLevel-" + modalID
   ).value;
 
   // check if currentText already contains 'Policies'. If it does, don't add it (return).
   if (currentText.includes("Policies")) {
-    return;
+    document.getElementById("currentAuthLevel-" + modalID).value =
+      currentText.replace("Policies,", "");
   } else {
     // add Policies to list.
     document.getElementById("currentAuthLevel-" + modalID).value =
-      currentText + "Policies\n";
+      currentText + "Policies, ";
   }
 }
 

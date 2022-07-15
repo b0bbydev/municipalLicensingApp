@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 // models.
 var User = require("../../models/admin/user");
+var Role = require("../../models/admin/role");
+var UserRole = require("../../models/admin/userRole");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // pagination lib.
@@ -13,6 +15,17 @@ router.get("/", async (req, res, next) => {
   let messages = req.session.messages || [];
   // clear session messages.
   req.session.messages = [];
+
+  // user roles.
+  let userRole = await User.findAll({
+    include: [
+      {
+        model: Role,
+        attributes: ["roleName"],
+        through: { where: { userId: 1 } },
+      },
+    ],
+  });
 
   // get Users.
   User.findAndCountAll({
@@ -29,6 +42,7 @@ router.get("/", async (req, res, next) => {
       email: req.session.email,
       auth: req.session.auth, // authorization.
       data: results.rows,
+      userRole: userRole,
       pageCount,
       itemCount,
       queryCount: "Records returned: " + results.count,

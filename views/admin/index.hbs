@@ -17,118 +17,22 @@
         <tr>
           <th>Employee Name</th>
           <th>Email</th>
-          <th>Authorization Level(s)</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         {{#each data}}
           <tr>
-            <td><a id="ownerLink" href="/admin/editUser/{{this.userID}}">
+            <td><a id="ownerLink" href="/admin/editUser/{{this.id}}">
                 {{this.firstName}}
                 {{this.lastName}}</a></td>
             <td>{{this.email}}</td>
-            <td>{{this.authLevel}}</td>
             <td>
               <a
                 class="btn btn-sm btn-secondary"
-                data-bs-toggle="modal"
-                data-bs-target="#manageAccessModal-{{this.userID}}"
+                href="/admin/manageAccess/{{this.id}}"
               >Manage Access</a></td>
           </tr>
-          <!-- Modal -->
-          <div
-            class="modal fade"
-            id="manageAccessModal-{{this.userID}}"
-            tabindex="-1"
-            aria-labelledby="manageAccessModal"
-            aria-hidden="true"
-          >
-            <form method="POST">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Manage Authorization</h5>
-                    <button
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div class="modal-body">
-                    <div class="row">
-                      <div class="col">
-                        <label for="Email" class="form-label">Email</label>
-                        <input
-                          class="form-control"
-                          placeholder="Email"
-                          value="{{this.email}}"
-                          name="email"
-                          readonly
-                        />
-                      </div>
-                    </div>
-                    <div class="row mt-1">
-                      <div class="col">
-                        <label
-                          for="Current Authorization Level(s)"
-                          class="form-label"
-                        >Current Authorization Level(s)</label>
-                        <textarea
-                          class="form-control"
-                          placeholder="Current Authorization Level(s)"
-                          name="currentAuthLevel"
-                          id="currentAuthLevel-{{this.userID}}"
-                          rows="3"
-                          pattern="[^()/><\][\\\x22;|]+"
-                          title="No special characters!"
-                        >{{this.authLevel}}</textarea>
-                      </div>
-                    </div>
-                    <div class="row mt-1">
-                      <label
-                        for="Available Authorization Levels"
-                        class="form-label"
-                      >Available Authorization Levels</label>
-                      <div class="col-sm-4">
-                        <a
-                          class="btn btn-sm btn-secondary"
-                          id="adminAuth"
-                          onclick="adminAuth({{this.userID}});"
-                        >Admin</a>
-                      </div>
-                      <div class="col-sm-4">
-                        <a
-                          class="btn btn-sm btn-secondary"
-                          id="dogLicenseAuth"
-                          onclick="dogLicenseAuth({{this.userID}});"
-                        >Dog Licenses</a>
-                      </div>
-                      <div class="col-sm-4">
-                        <a
-                          class="btn btn-sm btn-secondary"
-                          id="policyAuth"
-                          onclick="policyAuth({{this.userID}});"
-                        >Policies</a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >Close</button>
-                    <button
-                      type="submit"
-                      class="btn btn-primary"
-                    >Submit</button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
         {{/each}}
       </tbody>
     </table>

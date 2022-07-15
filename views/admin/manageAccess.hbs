@@ -1,0 +1,32 @@
+<h2 class="text-center">Manage Access</h2>
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+<div class="row">
+  <div class="col">
+    <h4>User Name</h4>
+    <a class="btn btn-sm btn-primary mb-1" href="#">Add Role</a>
+    <!-- Table -->
+    <table
+      class="table table-sm table-bordered table-striped table-hover sortable"
+    >
+      <thead>
+        <tr>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each data}}
+          {{#each roles}}
+            <tr>
+              <td>{{this.roleName}}</td>
+            </tr>
+          {{/each}}
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

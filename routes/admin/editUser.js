@@ -30,7 +30,7 @@ router.get(
       // used to populate edit form fields.
       User.findOne({
         where: {
-          userID: req.params.id,
+          id: req.params.id,
         },
       })
         .then((results) => {
@@ -102,10 +102,11 @@ router.post(
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           email: req.body.email,
+          authLevel: req.body.authLevel,
         },
         {
           where: {
-            userID: req.params.id,
+            id: req.params.id,
           },
         }
       )
