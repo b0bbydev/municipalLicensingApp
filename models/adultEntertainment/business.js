@@ -47,32 +47,32 @@ const Business = sequelize.define("business", {
   },
 
   policeVSC: {
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
   certificateOfInsurance: {
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
   photoID: {
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
   healthInspection: {
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
   zoningClearance: {
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
   feePaid: {
-    type: Sequelize.BOOLEAN,
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 

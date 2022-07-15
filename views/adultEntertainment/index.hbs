@@ -6,15 +6,9 @@
     id="filterCategory"
     title="filterSelect"
     name="filterCategory"
+    required
   >
-    <option disabled selected>Filter By...</option>
-    {{#if filterCategory}}
-      <option
-        value="{{filterCategory}}"
-        selected
-        disabled
-      >{{filterCategory}}</option>
-    {{/if}}
+    <option value="" disabled selected>Filter By...</option>
     {{#each dropdownValues}}
       {{#if this.isDisabled}}
         <option
@@ -72,9 +66,8 @@
   <thead>
     <tr>
       <th>Business Name</th>
-      <th>Owner</th>
-      <th>Street Number</th>
-      <th>Street Name</th>
+      <th>Owner Name</th>
+      <th>Address</th>
       <th>Town</th>
       <th>Postal Code</th>
       <th>Contact Name</th>
@@ -91,8 +84,7 @@
         <td>{{this.businessName}}</td>
         <td>{{this.ownerName}}</td>
         {{#each businessAddresses}}
-          <td>{{this.streetNumber}}</td>
-          <td>{{this.streetName}}</td>
+          <td>{{this.streetNumber}} {{this.streetName}}</td>
           <td>{{this.town}}</td>
           <td>{{this.postalCode}}</td>
         {{/each}}
