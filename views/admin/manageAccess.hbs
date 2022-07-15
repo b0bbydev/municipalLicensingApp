@@ -7,15 +7,14 @@
 {{/if}}
 <div class="row">
   <div class="col">
-    <h4>User Name</h4>
-    <a class="btn btn-sm btn-primary mb-1" href="#">Add Role</a>
+    <h4>{{userName}}</h4>
     <!-- Table -->
     <table
       class="table table-sm table-bordered table-striped table-hover sortable"
     >
       <thead>
         <tr>
-          <th>Role</th>
+          <th>Role(s)</th>
         </tr>
       </thead>
       <tbody>
@@ -30,3 +29,25 @@
     </table>
   </div>
 </div>
+<form method="POST">
+  <div class="row">
+    <div class="col">
+      <label for="Select A Role" class="form-label title-text">Select A Role</label>
+      <select class="form-select" name="roleId" required>
+        <option value="" selected disabled>Select a role...</option>
+        <option value="1">Admin</option>
+        <option value="2">Dog Licenses</option>
+        <option value="3">Policies</option>
+      </select>
+    </div>
+  </div>
+  <div class="row pt-1">
+    <div class="col">
+      <button
+        id="submitButton"
+        class="btn btn-primary mt-1"
+        type="submit"
+      >Submit</button>
+    </div>
+  </div>
+</form>

@@ -3,8 +3,11 @@ var router = express.Router();
 // models.
 var User = require("../../models/admin/user");
 var Role = require("../../models/admin/role");
+var UserRole = require("../../models/admin/userRole");
+// express-validate.
+const { body, validationResult } = require("express-validator");
 
-/* GET /admin/manageAccess page. */
+/* GET /admin/manageAccess */
 router.get("/:id", async (req, res, next) => {
   // check if there's an error message in the session.
   let messages = req.session.messages || [];
@@ -30,8 +33,38 @@ router.get("/:id", async (req, res, next) => {
       email: req.session.email,
       auth: req.session.auth, // authorization.
       data: results,
+      userName: results[0].firstName + " " + results[0].lastName,
     });
   });
+});
+
+/* POST /admin/manageAccess */
+router.post("/:id", async (req, res, next) => {
+  // server side validation.
+  const errors = validationResult(req);
+
+  // if errors is NOT empty (if there are errors...)
+  if (!errors.isEmpty()) {
+    return res.render("admin/manageAccess", {
+      title: "BWG | Manage Access",
+      message: "Error!",
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+    });
+  } else {
+    // create dropdown form.
+    UserRole.create({
+      userId: req.params.id,
+      roleId: req.body.roleId,
+    })
+      .then(res.redirect(req.headers.referer))
+      .catch((err) => {
+        return res.render("admin/manageAccess", {
+          title: "BWG | Manage Access",
+          message: "Page Error!",
+        });
+      });
+  }
 });
 
 module.exports = router;
