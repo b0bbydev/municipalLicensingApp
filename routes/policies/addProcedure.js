@@ -66,6 +66,11 @@ router.post(
     .matches(/^\d{4}-\d{2}-\d{2}$/)
     .withMessage("Invalid Scheduled Review Date Entry!")
     .trim(),
+  body("category")
+    .if(body("category").notEmpty())
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
+    .withMessage("Invalid Category Entry!")
+    .trim(),
   body("notes")
     .if(body("notes").notEmpty())
     .matches(/^[a-zA-Z0-9\/\-, ]*$/)
@@ -103,6 +108,7 @@ router.post(
           dateAmended: req.body.dateAmended,
           lastReviewDate: req.body.lastReviewDate,
           scheduledReviewDate: req.body.scheduledReviewDate,
+          category: req.body.category,
           notes: req.body.notes,
         },
       });
@@ -115,11 +121,11 @@ router.post(
         dateAmended: funcHelpers.fixDate(req.body.dateAmended),
         lastReviewDate: funcHelpers.fixDate(req.body.lastReviewDate),
         scheduledReviewDate: funcHelpers.fixDate(req.body.scheduledReviewDate),
+        category: req.body.category,
         notes: req.body.notes,
-        policyID: req.session.policyID,
       })
         // redirect back to the policy they were viewing.
-        .then(res.redirect("/policies/policy/" + req.session.policyID))
+        .then(res.redirect("/policies"))
         .catch((err) => {
           return res.render("policies/addProcedure", {
             title: "BWG | Add Procedure",

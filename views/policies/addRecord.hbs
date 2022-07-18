@@ -341,14 +341,14 @@
   name="procedureForm"
   style="display: none;"
   method="POST"
-  action="policies/addProcedure"
+  action="/policies/addRecord/addProcedure"
 >
   <div class="col-md-7 m-auto mt-4">
     <h4>Procedure Information</h4>
     <hr />
     <div class="row">
       <div class="col-sm-6">
-        <label for="Procedure Name" class="form-label">Procedure Name</label>
+        <label for="Procedure Name" class="form-label">Procedure Name*</label>
         <input
           type="text"
           class="form-control"
@@ -476,7 +476,7 @@
   name="guidelineForm"
   style="display: none;"
   method="POST"
-  action="policies/addGuideline"
+  action="/policies/addRecord/addGuideline"
 >
   <div class="col-md-7 m-auto mt-4">
     <!-- check for error messages in the session -->
@@ -489,7 +489,7 @@
     <hr />
     <div class="row">
       <div class="col-sm-6">
-        <label for="Guideline Name" class="form-label">Guideline Name</label>
+        <label for="Guideline Name" class="form-label">Guideline Name*</label>
         <input
           type="text"
           class="form-control"
