@@ -123,6 +123,7 @@ router.post(
         scheduledReviewDate: funcHelpers.fixDate(req.body.scheduledReviewDate),
         category: req.body.category,
         notes: req.body.notes,
+        policyID: req.session.policyID,
       })
         // redirect back to the policy they were viewing.
         .then(res.redirect("/policies"))

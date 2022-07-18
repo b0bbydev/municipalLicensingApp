@@ -26,6 +26,8 @@ router.get("/", async (req, res, next) => {
     let messages = req.session.messages || [];
     // clear session messages.
     req.session.messages = [];
+    // delete session policyID.
+    delete req.session.policyID;
 
     // dropdown values.
     // status options.
