@@ -42,18 +42,19 @@
     <div class="row">
       <!-- Street Number -->
       <div class="col-sm-4">
-        <label for="Street Number" class="form-label">Street Number</label>
+        <label for="Street Number" class="form-label">Street Number*</label>
         <input
           type="number"
           class="form-control"
           placeholder="Street Number"
           name="streetNumber"
           value="{{ownerInfo.streetNumber}}"
+          required
         />
       </div>
       <!-- Street Name -->
       <div class="col-sm-4">
-        <label for="Street Name" class="form-label">Street Name</label>
+        <label for="Street Name" class="form-label">Street Name*</label>
         <input
           class="form-control"
           id="streetName"
@@ -62,6 +63,7 @@
           list="streets"
           placeholder="Street Name..."
           value="{{ownerInfo.streetName}}"
+          required
         />
         <datalist id="streets">
           {{#each dropdownValues}}
