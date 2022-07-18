@@ -1,11 +1,21 @@
 <h2 class="text-center m-1">Add A Record</h2>
 <div class="row g-5 m-auto">
   <div class="col-md-7 m-auto mt-4">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
     <h4>Choose A Type Of Record</h4>
     <hr />
     <div class="row">
       <div class="col">
-        <select class="form-select" id="cars" onchange="changeOptions(this);">
+        <select
+          class="form-select"
+          name="recordType"
+          onchange="changeOptions(this);"
+        >
           <option value="Select here..." disabled selected>Select a type here...</option>
           <option value="policyForm">Policy</option>
           <option value="procedureForm">Procedure</option>
@@ -21,26 +31,22 @@
   name="policyForm"
   style="display: none;"
   method="POST"
+  action="/policies/addPolicy"
 >
   <div class="col-md-7 m-auto mt-4">
-    <!-- check for error messages in the session -->
-    {{#if message}}
-      <div class="alert alert-danger">
-        {{message}}
-      </div>
-    {{/if}}
     <h4>Policy Information</h4>
     <hr />
     <div class="row">
       <!-- Policy Number -->
       <div class="col-sm-6">
-        <label for="Policy Number" class="form-label">Policy Number</label>
+        <label for="Policy Number" class="form-label">Policy Number*</label>
         <input
           type="number"
           class="form-control"
           placeholder="Policy Number"
           name="policyNumber"
           value="{{formData.policyNumber}}"
+          required
         />
       </div>
       <!-- Policy Name -->
@@ -124,9 +130,9 @@
     <div class="row">
       <!-- Category -->
       <div class="col-sm-4">
-        <label for="Category" class="form-label">Category</label>
-        <select class="form-select" name="category">
-          <option disabled selected>Category...</option>
+        <label for="Category" class="form-label">Category*</label>
+        <select class="form-select" name="category" required>
+          <option value="" disabled selected>Category...</option>
           {{#each categoryDropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -335,14 +341,9 @@
   name="procedureForm"
   style="display: none;"
   method="POST"
+  action="policies/addProcedure"
 >
   <div class="col-md-7 m-auto mt-4">
-    <!-- check for error messages in the session -->
-    {{#if message}}
-      <div class="alert alert-danger">
-        {{message}}
-      </div>
-    {{/if}}
     <h4>Procedure Information</h4>
     <hr />
     <div class="row">
@@ -364,15 +365,7 @@
       <div class="col-sm-6">
         <label for="Status" class="form-label">Status</label>
         <select class="form-select" name="status">
-          {{#if formData.status}}
-            <option
-              value="{{formData.status}}"
-              disabled
-              selected
-            >{{formData.status}}</option>
-          {{else}}
-            <option disabled selected>Status...</option>
-          {{/if}}
+          <option disabled selected>Status...</option>
           {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -414,7 +407,7 @@
     </div>
     <div class="row">
       <!-- Last Review Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Last Review Date" class="form-label">Last Review Date</label>
         <input
           type="date"
@@ -425,7 +418,7 @@
         />
       </div>
       <!-- Scheduled Review Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Scheduled Review Date" class="form-label">Scheduled Review
           Date</label>
         <input
@@ -434,6 +427,20 @@
           placeholder="Scheduled Review Date"
           name="scheduledReviewDate"
           value="{{formData.scheduledReviewDate}}"
+        />
+      </div>
+      <div class="col-sm-4">
+        <label for="Category" class="form-label">Category</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Category"
+          name="category"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="Procedure"
+          maxlength="25"
+          required
         />
       </div>
     </div>
@@ -469,6 +476,7 @@
   name="guidelineForm"
   style="display: none;"
   method="POST"
+  action="policies/addGuideline"
 >
   <div class="col-md-7 m-auto mt-4">
     <!-- check for error messages in the session -->
@@ -548,7 +556,7 @@
     </div>
     <div class="row">
       <!-- Last Review Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Last Review Date" class="form-label">Last Review Date</label>
         <input
           type="date"
@@ -559,7 +567,7 @@
         />
       </div>
       <!-- Scheduled Review Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Scheduled Review Date" class="form-label">Scheduled Review
           Date</label>
         <input
@@ -568,6 +576,20 @@
           placeholder="Scheduled Review Date"
           name="scheduledReviewDate"
           value="{{formData.scheduledReviewDate}}"
+        />
+      </div>
+      <div class="col-sm-4">
+        <label for="Category" class="form-label">Category</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Category"
+          name="category"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="Guideline"
+          maxlength="25"
+          required
         />
       </div>
     </div>

@@ -42,6 +42,11 @@ const Guideline = sequelize.define("guideline", {
     allowNull: true,
   },
 
+  category: {
+    type: Sequelize.STRING(25),
+    allowNull: true,
+  },
+
   notes: {
     type: Sequelize.STRING,
     allowNull: true,

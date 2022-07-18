@@ -42,8 +42,8 @@ router.post("/", function (req, res, next) {
   client.messages
     .create({
       src: "TownOfBWG",
-      dst: "+12893835612",
-      text: "test",
+      dst: "+19057156835",
+      text: req.body.textMessage,
     })
     .then(function (message_created) {
       console.log(message_created);
