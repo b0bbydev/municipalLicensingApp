@@ -3,6 +3,7 @@ var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Guideline = require("../../models/policies/guideline");
+const Policy = require("../../models/policies/policy");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -10,6 +11,8 @@ const Op = Sequelize.Op;
 const funcHelpers = require("../../config/funcHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
+// express-validate.
+const { body, validationResult } = require("express-validator");
 
 /* GET /policies/guidelines page. */
 router.get("/", async (req, res, next) => {
@@ -24,6 +27,9 @@ router.get("/", async (req, res, next) => {
       dropdownFormID: 19, // Procedure Filtering Form
     },
   });
+
+  // get all policies.
+  var policies = await Policy.findAll();
 
   // if there are no filter parameters.
   if (!req.query.filterCategory || !req.query.filterValue) {
@@ -47,6 +53,7 @@ router.get("/", async (req, res, next) => {
         auth: req.session.auth, // authorization.
         data: results.rows,
         dropdownValues: dropdownValues,
+        policies: policies,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
@@ -105,5 +112,61 @@ router.get("/", async (req, res, next) => {
       );
   }
 });
+
+/* POST /policies/procedures */
+router.post(
+  "/",
+  body("policyName")
+    .if(body("policyName").notEmpty())
+    .matches(/^[a-zA-Z0-9\/\-. ]*$/)
+    .withMessage("Invalid Policy Name Entry!")
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("policies/guidelines", {
+        title: "BWG | Guidelines",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // get the specified policy based on name.
+      Policy.findOne({
+        attributes: ["policyID"],
+        where: {
+          policyName: req.body.policyName,
+        },
+      })
+        .then((results) => {
+          policyID = results.policyID;
+        })
+        .then(() => {
+          Guideline.update(
+            {
+              policyID: policyID,
+            },
+            {
+              where: {
+                guidelineID: req.body.guidelineID,
+              },
+            }
+          );
+        })
+        .then(() => {
+          res.redirect("/policies");
+        })
+        .catch((err) =>
+          res.render("policies/guidelines", {
+            title: "BWG | Guidelines",
+            message: "Page Error!",
+          })
+        );
+    }
+  }
+);
 
 module.exports = router;

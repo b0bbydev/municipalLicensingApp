@@ -82,8 +82,75 @@
               <a
                 href="/policies/editGuideline/{{this.guidelineID}}"
                 class="btn btn-sm btn-secondary"
-              >Edit</a></td>
+              >Edit</a> |
+              <a
+                data-bs-toggle="modal"
+                data-bs-target="#addToPolicyModal-{{this.guidelineID}}"
+                class="btn btn-sm btn-secondary"
+              >Add to Policy</a></td>
           </tr>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="addToPolicyModal-{{this.guidelineID}}"
+            tabindex="-1"
+            aria-labelledby="addToPolicyModal"
+            aria-hidden="true"
+          >
+            <form method="POST">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">Add Guideline to Existing Policy</h5>
+                    <button
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <label for="Guideline ID" class="form-label">Guideline ID</label>
+                    <input
+                      list="policies"
+                      class="form-control"
+                      placeholder="Guideline ID"
+                      name="guidelineID"
+                      value="{{this.guidelineID}}"
+                      readonly
+                    />
+                    <label for="Policy Name" class="form-label">Enter the name
+                      of the policy</label>
+                    <input
+                      list="policies"
+                      class="form-control"
+                      placeholder="Policy Name"
+                      name="policyName"
+                      required
+                    />
+                    <datalist id="policies">
+                      {{#each ../policies}}
+                        <option
+                          value="{{this.policyName}}"
+                        >{{this.policyName}}</option>
+                      {{/each}}
+                    </datalist>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >Close</button>
+                    <button
+                      type="submit"
+                      class="btn btn-primary"
+                    >Submit</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
         {{/each}}
       </tbody>
     </table>
