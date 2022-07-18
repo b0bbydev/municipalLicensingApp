@@ -3,6 +3,8 @@ var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Guideline = require("../../models/policies/guideline");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { param, body, validationResult } = require("express-validator");
 
@@ -49,7 +51,7 @@ router.get(
           // if the form submission is unsuccessful, save their values.
           guidelineInfo: {
             guidelineName: results.guidelineName,
-            approvalDate: results.approvalDate,
+            dateApproved: results.dateApproved,
             lastReviewDate: results.lastReviewDate,
             scheduledReviewDate: results.scheduledReviewDate,
             dateAmended: results.dateAmended,
@@ -96,6 +98,11 @@ router.post(
     .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
+  body("category")
+    .if(body("category").notEmpty())
+    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
+    .withMessage("Invalid Category Entry!")
+    .trim(),
   body("notes")
     .if(body("notes").notEmpty())
     .matches(/^[a-zA-Z0-9\/\-, ]*$/)
@@ -123,6 +130,7 @@ router.post(
           scheduledReviewDate: req.body.scheduledReviewDate,
           dateAmended: req.body.dateAmended,
           status: req.body.status,
+          category: req.body.category,
           notes: req.body.notes,
         },
       });
@@ -131,11 +139,14 @@ router.post(
       Guideline.update(
         {
           guidelineName: req.body.guidelineName,
-          dateApproved: req.body.dateApproved,
-          lastReviewDate: req.body.lastReviewDate,
-          scheduledReviewDate: req.body.scheduledReviewDate,
-          dateAmended: req.body.dateAmended,
+          dateApproved: funcHelpers.fixDate(req.body.dateApproved),
+          lastReviewDate: funcHelpers.fixDate(req.body.lastReviewDate),
+          scheduledReviewDate: funcHelpers.fixDate(
+            req.body.scheduledReviewDate
+          ),
+          dateAmended: funcHelpers.fixDate(req.body.dateAmended),
           status: req.body.status,
+          category: req.body.category,
           notes: req.body.notes,
         },
         {
@@ -144,10 +155,7 @@ router.post(
           },
         }
       )
-        .then((results) => {
-          // redirect to /policies/policy/:id
-          res.redirect("/policies/policy/" + req.session.policyID);
-        })
+        .then(res.redirect("/policies"))
         .catch((err) => {
           return res.render("policies/editGuideline", {
             title: "BWG | Edit Guideline",
