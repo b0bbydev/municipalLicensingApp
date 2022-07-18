@@ -27,25 +27,29 @@
       </div>
       <!-- Street Number -->
       <div class="col-sm-4">
-        <label for="Street Number" class="form-label">Street Number</label>
+        <label for="Street Number" class="form-label">Street Number*</label>
         <input
           type="number"
           placeholder="Street Number"
           class="form-control"
           name="streetNumber"
           value="{{formData.streetNumber}}"
+          required
         />
       </div>
       <!-- Street Name -->
       <div class="col-sm-4">
-        <label for="Street Name" class="form-label">Street Name</label>
-        <select
-          class="form-select"
+        <label for="Street Name" class="form-label">Street Name*</label>
+        <input
+          class="form-control"
           id="streetName"
           title="streetName"
           name="streetName"
-        >
-          <option disabled selected>Street Name...</option>
+          list="streets"
+          placeholder="Street Name..."
+          required
+        />
+        <datalist id="streets">
           {{#each dropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -58,7 +62,7 @@
               >{{this.dropdownValue}}</option>
             {{/if}}
           {{/each}}
-        </select>
+        </datalist>
       </div>
     </div>
     <div class="row">
