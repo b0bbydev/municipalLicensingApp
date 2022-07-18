@@ -1,14 +1,14 @@
 var express = require("express");
 var router = express.Router();
 
-/* GET /policies/procedure page. */
+/* GET /policies/procedures page. */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
   req.session.messages = [];
 
-  return res.render("policies/procedure", {
+  return res.render("policies/procedures", {
     title: "BWG | Procedures",
     errorMessages: messages,
     email: req.session.email,
