@@ -184,3 +184,7 @@ td {
 #filterButton {
   margin-bottom: .20rem !important;
 }
+
+#unrelatedProceduresGuidelines {
+  font-size: 0.85rem;
+}

@@ -49,9 +49,11 @@ var addRecordRouter = require("./routes/policies/addRecord");
 var addPoliciesRouter = require("./routes/policies/addPolicy");
 var editPolicyRouter = require("./routes/policies/editPolicy");
 
+var proceduresRouter = require("./routes/policies/procedure");
 var addProcedureRouter = require("./routes/policies/addProcedure");
 var editProcedureRouter = require("./routes/policies/editProcedure");
 
+var guidelinesRouter = require("./routes/policies/guideline");
 var addGuidelineRouter = require("./routes/policies/addGuideline");
 var editGuidelineRouter = require("./routes/policies/editGuideline");
 
@@ -208,9 +210,11 @@ app.use("/policies/addRecord", isPolicy, addRecordRouter);
 app.use("/policies/addPolicy", isPolicy, addPoliciesRouter);
 app.use("/policies/editPolicy", isPolicy, editPolicyRouter);
 
+app.use("/policies/procedure", isPolicy, proceduresRouter);
 app.use("/policies/addProcedure", isPolicy, addProcedureRouter);
 app.use("/policies/editProcedure", isPolicy, editProcedureRouter);
 
+app.use("/policies/guideline", isPolicy, guidelinesRouter);
 app.use("/policies/addGuideline", isPolicy, addGuidelineRouter);
 app.use("/policies/editGuideline", isPolicy, editGuidelineRouter);
 
