@@ -93,6 +93,9 @@ router.get(
           );
       } else if (req.query.filterCategory === "Address") {
         Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
           // functions in where clause, fancy.
           where: Sequelize.where(
             Sequelize.fn(
@@ -209,6 +212,53 @@ router.get(
             const pageCount = Math.ceil(results.count / req.query.limit);
 
             return res.render("dogtags/search/additionalOwnerSearch", {
+              title: "BWG | Dog Tags",
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              dropdownValues: dropdownValues,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("dogtags", {
+              title: "BWG | Dogtags",
+              message: "Page Error!",
+            })
+          );
+      } else if (req.query.filterCategory === "Vendor") {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          where: {
+            $vendor$: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+          },
+          include: [
+            {
+              model: Dog,
+            },
+            {
+              model: Address,
+            },
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogtags/search/vendorSearch", {
               title: "BWG | Dog Tags",
               email: req.session.email,
               auth: req.session.auth, // authorization.

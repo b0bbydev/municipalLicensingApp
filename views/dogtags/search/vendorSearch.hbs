@@ -45,6 +45,14 @@
   >Reset</a>
 </form>
 
+<div class="row">
+  <div class="col mb-1">
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
+  </div>
+</div>
+
 <!-- check for error messages in the session -->
 {{#if message}}
   <div class="alert alert-danger">
@@ -52,16 +60,12 @@
   </div>
 {{/if}}
 
-<table class="table table-sm table-bordered table-striped table-hover sortable">
+<table class="sortable table table-bordered table-striped table-hover">
   <thead>
     <tr>
       <th>Owner Name</th>
-      <th>Tag Number</th>
-      <th>Dog Name</th>
-      <th>Breed</th>
-      <th>Colour</th>
-      <th>Issue Date</th>
-      <th>Expiry Date</th>
+      <th>Home Phone</th>
+      <th>Email</th>
     </tr>
   </thead>
   <tbody>
@@ -71,14 +75,8 @@
             id="ownerLink"
             href="/dogtags/owner/{{this.ownerID}}"
           >{{this.firstName}} {{this.lastName}}</a></td>
-        {{#each dogs}}
-          <td>{{this.tagNumber}}</td>
-          <td>{{this.dogName}}</td>
-          <td>{{this.breed}}</td>
-          <td>{{this.colour}}</td>
-          <td>{{this.issueDate}}</td>
-          <td>{{this.expiryDate}}</td>
-        {{/each}}
+        <td class="text-nowrap">{{this.homePhone}}</td>
+        <td>{{this.email}}</td>
       </tr>
     {{/each}}
   </tbody>
