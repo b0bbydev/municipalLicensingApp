@@ -54,19 +54,16 @@
       <!-- Street Name -->
       <div class="col-sm-4">
         <label for="Street Name" class="form-label">Street Name</label>
-        <select
-          class="form-select"
+        <input
+          class="form-control"
           id="streetName"
           title="streetName"
           name="streetName"
-        >
-          <option disabled selected>Street Name...</option>
-          {{#if ownerInfo.streetName}}
-            <option
-              value="{{ownerInfo.streetName}}"
-              selected
-            >{{ownerInfo.streetName}}</option>
-          {{/if}}
+          list="streets"
+          placeholder="Street Name..."
+          value="{{ownerInfo.streetName}}"
+        />
+        <datalist id="streets">
           {{#each dropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -79,7 +76,7 @@
               >{{this.dropdownValue}}</option>
             {{/if}}
           {{/each}}
-        </select>
+        </datalist>
       </div>
       <!-- PO Box/Apt/RR -->
       <div class="col-sm-4">

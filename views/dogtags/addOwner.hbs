@@ -12,7 +12,7 @@
     <div class="row">
       <!-- First Name -->
       <div class="col-sm-6">
-        <label for="First Name" class="form-label">First Name</label>
+        <label for="First Name" class="form-label">First Name*</label>
         <input
           id="firstName"
           type="text"
@@ -23,11 +23,12 @@
           title="No special characters!"
           value="{{{formData.firstName}}}"
           maxlength="25"
+          required
         />
       </div>
       <!-- Last Name -->
       <div class="col-sm-6">
-        <label for="Last Name" class="form-label">Last Name</label>
+        <label for="Last Name" class="form-label">Last Name*</label>
         <input
           id="lastName"
           type="text"
@@ -38,6 +39,7 @@
           title="No special characters!"
           value="{{formData.lastName}}"
           maxlength="25"
+          required
         />
       </div>
     </div>
@@ -56,13 +58,15 @@
       <!-- Street Name -->
       <div class="col-sm-4">
         <label for="Street Name" class="form-label">Street Name</label>
-        <select
-          class="form-select"
+        <input
+          class="form-control"
           id="streetName"
           title="streetName"
           name="streetName"
-        >
-          <option disabled selected>Street Name...</option>
+          list="streets"
+          placeholder="Street Name..."
+        />
+        <datalist id="streets">
           {{#each dropdownValues}}
             {{#if this.isDisabled}}
               <option
@@ -75,7 +79,7 @@
               >{{this.dropdownValue}}</option>
             {{/if}}
           {{/each}}
-        </select>
+        </datalist>
       </div>
       <!-- PO Box/Apt/RR -->
       <div class="col-sm-4">

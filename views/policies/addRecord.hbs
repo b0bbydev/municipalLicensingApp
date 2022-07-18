@@ -1,12 +1,12 @@
 <h2 class="text-center m-1">Add A Record</h2>
 <div class="row g-5 m-auto">
   <div class="col-md-7 m-auto mt-4">
-    <h4>Select A Type Of Record</h4>
+    <h4>Choose A Type Of Record</h4>
     <hr />
     <div class="row">
       <div class="col">
         <select class="form-select" id="cars" onchange="changeOptions(this);">
-          <option value="Select here..." disabled selected>Select here...</option>
+          <option value="Select here..." disabled selected>Select a type here...</option>
           <option value="policyForm">Policy</option>
           <option value="procedureForm">Procedure</option>
           <option value="guidelineForm">Guideline</option>
@@ -45,7 +45,7 @@
       </div>
       <!-- Policy Name -->
       <div class="col-sm-6">
-        <label for="Policy Name" class="form-label">Policy Name</label>
+        <label for="Policy Name" class="form-label">Policy Name*</label>
         <input
           type="text"
           class="form-control"
@@ -55,6 +55,7 @@
           title="No special characters!"
           maxlength="40"
           value="{{formData.policyName}}"
+          required
         />
       </div>
     </div>
@@ -125,15 +126,7 @@
       <div class="col-sm-4">
         <label for="Category" class="form-label">Category</label>
         <select class="form-select" name="category">
-          {{#if formData.category}}
-            <option
-              value="{{formData.category}}"
-              disabled
-              selected
-            >{{formData.category}}</option>
-          {{else}}
-            <option disabled selected>Category...</option>
-          {{/if}}
+          <option disabled selected>Category...</option>
           {{#each categoryDropdownValues}}
             {{#if this.isDisabled}}
               <option
