@@ -12,7 +12,7 @@
     <div class="row">
       <!-- Guideline Name -->
       <div class="col-sm-6">
-        <label for="Guideline Name" class="form-label">Guideline Name</label>
+        <label for="Guideline Name" class="form-label">Guideline Name*</label>
         <input
           type="text"
           class="form-control"
@@ -64,7 +64,7 @@
     </div>
     <div class="row">
       <!-- Date Amended -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Date Amended" class="form-label">Date Amended</label>
         <input
           type="date"
@@ -75,7 +75,7 @@
         />
       </div>
       <!-- Status -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Status" class="form-label">Status</label>
         <select class="form-select" name="status">
           <option disabled selected>Status...</option>
@@ -99,6 +99,20 @@
             {{/if}}
           {{/each}}
         </select>
+      </div>
+      <div class="col-sm-4">
+        <label for="Category" class="form-label">Category</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Category"
+          name="category"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{guidelineInfo.category}}"
+          maxlength="25"
+          required
+        />
       </div>
     </div>
     <div class="row">

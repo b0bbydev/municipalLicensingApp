@@ -56,6 +56,7 @@ router.get(
             scheduledReviewDate: results.scheduledReviewDate,
             dateAmended: results.dateAmended,
             status: results.status,
+            category: results.category,
             notes: results.notes,
           },
         });

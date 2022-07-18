@@ -12,18 +12,19 @@
     <div class="row">
       <!-- Policy Number -->
       <div class="col-sm-6">
-        <label for="Policy Number" class="form-label">Policy Number</label>
+        <label for="Policy Number" class="form-label">Policy Number*</label>
         <input
           type="number"
           class="form-control"
           placeholder="Policy Number"
           name="policyNumber"
           value="{{formData.policyNumber}}"
+          required
         />
       </div>
       <!-- Policy Name -->
       <div class="col-sm-6">
-        <label for="Policy Name" class="form-label">Policy Name</label>
+        <label for="Policy Name" class="form-label">Policy Name*</label>
         <input
           type="text"
           class="form-control"
@@ -33,6 +34,7 @@
           title="No special characters!"
           maxlength="40"
           value="{{formData.policyName}}"
+          required
         />
       </div>
     </div>
