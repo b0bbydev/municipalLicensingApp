@@ -1,4 +1,4 @@
-<h2 class="text-center mt-1">Send SMS</h2>
+<h2 class="text-center mt-1">Send SMS (TESTING)</h2>
 <form class="row g-5 m-auto" method="POST">
   <div class="col-md-7 m-auto mt-5">
     <!-- check for error messages in the session -->
@@ -9,17 +9,18 @@
     {{/if}}
     <h4>Text Message Information</h4>
     <hr />
-    {{! <div class="row">
+    <div class="row">
       <div class="col">
-        <label for="Recipients" class="form-label">Recipients</label>
+        <label for="Recipient" class="form-label">Recipient (Only enter one
+          number with "1" in front of it, no dashes)</label>
         <input
           type="text"
           class="form-control"
-          placeholder="Recipients"
-          name="recipients"
+          placeholder="19054567890"
+          name="recipient"
         />
       </div>
-    </div> }}
+    </div>
     <!-- Text Message -->
     <div class="row">
       <div class="col">

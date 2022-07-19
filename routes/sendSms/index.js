@@ -41,13 +41,14 @@ router.post("/", function (req, res, next) {
   let client = new plivo.Client(process.env.AUTH_ID, process.env.AUTH_TOKEN);
   client.messages
     .create({
-      src: "", // rented number from Plivo.
-      dst: "+19057156835",
+      src: process.env.SRC_NUMBER, // rented number from Plivo.
+      dst: "+" + req.body.recipient,
       text: req.body.textMessage,
     })
     .then(function (message_created) {
       console.log(message_created);
-    });
+    })
+    .then(res.redirect("/sendSms"));
 });
 
 module.exports = router;
