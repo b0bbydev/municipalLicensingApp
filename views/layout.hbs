@@ -92,7 +92,7 @@
               <!-- Admin - Send SMS -->
               <li class="nav-item w-100 p-1">
                 <a href="/sendSms" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-chat-dots-fill"></i>
+                  <i class="fs-4 icon-blue bi bi-chat-dots"></i>
                   <span class="ms-1 d-none d-sm-inline">Send SMS</span>
                 </a>
               </li>
@@ -107,12 +107,22 @@
                     Licenses</span>
                 </a>
               </li>
+              <!-- Admin - Street Closure Permits -->
+              <li class="nav-item w-100 p-1">
+                <a
+                  href="/streetClosurePermit"
+                  class="nav-link align-middle ps-3"
+                >
+                  <i class="fs-4 icon-blue bi bi-signpost"></i>
+                  <span class="ms-1 d-none d-sm-inline">Street Closure Permits</span>
+                </a>
+              </li>
             {{/includes}}
             <!-- dog auth -->
             {{#includes auth "Dog Licenses"}}
               <li class="nav-item w-100 p-1">
                 <a href="/dogtags" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-receipt-cutoff"></i>
+                  <i class="fs-4 icon-blue bi bi-tag"></i>
                   <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
                 </a>
               </li>

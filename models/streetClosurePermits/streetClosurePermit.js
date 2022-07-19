@@ -11,7 +11,47 @@ const StreetClosurePermit = sequelize.define("streetClosurePermit", {
     primaryKey: true,
   },
 
+  permitNumber: {
+    type: Sequelize.STRING(15),
+    allowNull: true,
+  },
+
+  issueDate: {
+    type: Sequelize.DATEONLY,
+    allowNull: true,
+  },
+
   sponser: {
+    type: Sequelize.STRING(50),
+    allowNull: true,
+  },
+
+  coordinatorName: {
+    type: Sequelize.STRING(50),
+    allowNull: true,
+  },
+
+  coordinatorPhone: {
+    type: Sequelize.STRING(20),
+    allowNull: true,
+  },
+
+  coordinatorEmail: {
+    type: Sequelize.STRING(20),
+    allowNull: true,
+  },
+
+  everydayContactName: {
+    type: Sequelize.STRING(50),
+    allowNull: true,
+  },
+
+  everydayContactPhone: {
+    type: Sequelize.STRING(20),
+    allowNull: true,
+  },
+
+  everydayContactEmail: {
     type: Sequelize.STRING(50),
     allowNull: true,
   },
@@ -31,33 +71,28 @@ const StreetClosurePermit = sequelize.define("streetClosurePermit", {
     allowNull: true,
   },
 
-  coordinatorName: {
-    type: Sequelize.STRING(50),
+  description: {
+    type: Sequelize.STRING(255),
     allowNull: true,
   },
 
-  coordinatorPhone: {
-    type: Sequelize.STRING(20),
+  noiseExemption: {
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
-  everydayContact: {
-    type: Sequelize.STRING(50),
+  alcoholServed: {
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
-  everydayPhone: {
-    type: Sequelize.STRING(20),
+  estimatedAttendance: {
+    type: Sequelize.INTEGER,
     allowNull: true,
   },
 
-  issueDate: {
-    type: Sequelize.DATEONLY,
-    allowNull: true,
-  },
-
-  permitNumber: {
-    type: Sequelize.STRING(15),
+  cleanupPlan: {
+    type: Sequelize.STRING(255),
     allowNull: true,
   },
 });

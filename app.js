@@ -74,6 +74,10 @@ var editDogRouter = require("./routes/dogtags/editDog");
 /* Send SMS routes */
 var sendSmsRouter = require("./routes/sendSms/index");
 
+/* Street Closure Permits related routes. */
+var streetClosurePermitRouter = require("./routes/streetClosurePermit/index");
+var addStreetClosurePermitRouter = require("./routes/streetClosurePermit/addPermit");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -230,6 +234,10 @@ app.use("/dogtags/editDog", isDogLicense, editDogRouter);
 
 /* Send SMS related routes */
 app.use("/sendSms", sendSmsRouter);
+
+/* Street Closure Permits related routes. */
+app.use("/streetClosurePermit", streetClosurePermitRouter);
+app.use("/streetClosurePermit/addPermit", addStreetClosurePermitRouter);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
