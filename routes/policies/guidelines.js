@@ -113,7 +113,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-/* POST /policies/procedures */
+/* POST /policies/guidelines */
 router.post(
   "/",
   body("policyName")
@@ -157,7 +157,7 @@ router.post(
           );
         })
         .then(() => {
-          res.redirect("/policies");
+          res.redirect("/policies/guidelines");
         })
         .catch((err) =>
           res.render("policies/guidelines", {

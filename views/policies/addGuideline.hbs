@@ -78,7 +78,7 @@
     </div>
     <div class="row">
       <!-- Last Review Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Last Review Date" class="form-label">Last Review Date</label>
         <input
           type="date"
@@ -89,7 +89,7 @@
         />
       </div>
       <!-- Scheduled Review Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Scheduled Review Date" class="form-label">Scheduled Review
           Date</label>
         <input
@@ -98,6 +98,21 @@
           placeholder="Scheduled Review Date"
           name="scheduledReviewDate"
           value="{{formData.scheduledReviewDate}}"
+        />
+      </div>
+      <!-- Category -->
+      <div class="col-sm-4">
+        <label for="Category" class="form-label">Category*</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Category"
+          name="category"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="Guideline"
+          maxlength="25"
+          required
         />
       </div>
     </div>

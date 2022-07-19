@@ -157,7 +157,7 @@ router.post(
           );
         })
         .then(() => {
-          res.redirect("/policies");
+          res.redirect("/policies/procedures");
         })
         .catch((err) =>
           res.render("policies/procedures", {
