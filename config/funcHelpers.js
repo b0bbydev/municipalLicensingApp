@@ -6,7 +6,7 @@ module.exports = {
     });
   },
 
-  fixDate: function (str) {
+  fixEmptyValue: function (str) {
     if (str === " " || str === "") {
       str = null;
     }

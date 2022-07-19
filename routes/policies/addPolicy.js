@@ -204,14 +204,16 @@ router.post(
       Policy.create({
         policyNumber: req.body.policyNumber,
         policyName: req.body.policyName,
-        cowDate: funcHelpers.fixDate(req.body.cowDate),
+        cowDate: funcHelpers.fixEmptyValue(req.body.cowDate),
         councilResolution: req.body.councilResolution,
-        dateApproved: funcHelpers.fixDate(req.body.dateApproved),
-        dateAmended: funcHelpers.fixDate(req.body.dateAmended),
-        dateEffective: funcHelpers.fixDate(req.body.dateEffective),
+        dateApproved: funcHelpers.fixEmptyValue(req.body.dateApproved),
+        dateAmended: funcHelpers.fixEmptyValue(req.body.dateAmended),
+        dateEffective: funcHelpers.fixEmptyValue(req.body.dateEffective),
         category: req.body.category,
-        lastReviewDate: funcHelpers.fixDate(req.body.lastReviewDate),
-        scheduledReviewDate: funcHelpers.fixDate(req.body.scheduledReviewDate),
+        lastReviewDate: funcHelpers.fixEmptyValue(req.body.lastReviewDate),
+        scheduledReviewDate: funcHelpers.fixEmptyValue(
+          req.body.scheduledReviewDate
+        ),
         division: req.body.division,
         authority: req.body.authority,
         administrator: req.body.administrator,

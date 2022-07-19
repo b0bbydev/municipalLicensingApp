@@ -193,7 +193,7 @@ router.post(
           breed: req.body.breed,
           colour: req.body.colour,
           gender: req.body.gender,
-          dateOfBirth: funcHelpers.fixDate(req.body.dateOfBirth),
+          dateOfBirth: funcHelpers.fixEmptyValue(req.body.dateOfBirth),
           designation: req.body.designation,
           spade: req.body.spade,
           rabiesTagNumber: req.body.rabiesTagNumber,

@@ -140,12 +140,12 @@ router.post(
       Guideline.update(
         {
           guidelineName: req.body.guidelineName,
-          dateApproved: funcHelpers.fixDate(req.body.dateApproved),
-          lastReviewDate: funcHelpers.fixDate(req.body.lastReviewDate),
-          scheduledReviewDate: funcHelpers.fixDate(
+          dateApproved: funcHelpers.fixEmptyValue(req.body.dateApproved),
+          lastReviewDate: funcHelpers.fixEmptyValue(req.body.lastReviewDate),
+          scheduledReviewDate: funcHelpers.fixEmptyValue(
             req.body.scheduledReviewDate
           ),
-          dateAmended: funcHelpers.fixDate(req.body.dateAmended),
+          dateAmended: funcHelpers.fixEmptyValue(req.body.dateAmended),
           status: req.body.status,
           category: req.body.category,
           notes: req.body.notes,

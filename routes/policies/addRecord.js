@@ -148,10 +148,12 @@ router.post(
       Procedure.create({
         procedureName: req.body.procedureName,
         status: req.body.status,
-        dateApproved: funcHelpers.fixDate(req.body.dateApproved),
-        dateAmended: funcHelpers.fixDate(req.body.dateAmended),
-        lastReviewDate: funcHelpers.fixDate(req.body.lastReviewDate),
-        scheduledReviewDate: funcHelpers.fixDate(req.body.scheduledReviewDate),
+        dateApproved: funcHelpers.fixEmptyValue(req.body.dateApproved),
+        dateAmended: funcHelpers.fixEmptyValue(req.body.dateAmended),
+        lastReviewDate: funcHelpers.fixEmptyValue(req.body.lastReviewDate),
+        scheduledReviewDate: funcHelpers.fixEmptyValue(
+          req.body.scheduledReviewDate
+        ),
         category: req.body.category,
         notes: req.body.notes,
       })
@@ -246,10 +248,12 @@ router.post(
       Guideline.create({
         guidelineName: req.body.guidelineName,
         status: req.body.status,
-        dateApproved: funcHelpers.fixDate(req.body.dateApproved),
-        dateAmended: funcHelpers.fixDate(req.body.dateAmended),
-        lastReviewDate: funcHelpers.fixDate(req.body.lastReviewDate),
-        scheduledReviewDate: funcHelpers.fixDate(req.body.scheduledReviewDate),
+        dateApproved: funcHelpers.fixEmptyValue(req.body.dateApproved),
+        dateAmended: funcHelpers.fixEmptyValue(req.body.dateAmended),
+        lastReviewDate: funcHelpers.fixEmptyValue(req.body.lastReviewDate),
+        scheduledReviewDate: funcHelpers.fixEmptyValue(
+          req.body.scheduledReviewDate
+        ),
         category: req.body.category,
         notes: req.body.notes,
       })

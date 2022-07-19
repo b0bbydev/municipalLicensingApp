@@ -1,1 +1,342 @@
 <h2 class="text-center mt-1">Add Street Closure Permit</h2>
+<form class="row g-5 m-auto" method="POST">
+  <div class="col-md-7 m-auto mt-5">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Event Coordinator Information</h4>
+    <hr />
+    <div class="row">
+      <!-- Coordinator Full Name -->
+      <div class="col-sm-4">
+        <label for="Full Name" class="form-label">Full Name*</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Coordinator Full Name"
+          name="coordinatorName"
+          value="{{formData.coordinatorName}}"
+          required
+        />
+      </div>
+      <!-- Phone Number -->
+      <div class="col-sm-4">
+        <label for="Phone Number" class="form-label">Phone Number</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Phone Number"
+          name="coordinatorPhone"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.coordinatorPhone}}"
+        />
+      </div>
+      <!-- Email -->
+      <div class="col-sm-4">
+        <label for="Email" class="form-label">Email</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Email"
+          name="coordinatorEmail"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.coordinatorEmail}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Event Sponser -->
+      <div class="col">
+        <label for="Event Sponser" class="form-label">Event Sponser</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Event Sponser"
+          name="sponser"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.sponser}}"
+        />
+      </div>
+    </div>
+    <h4 class="mt-2">Everyday Contact Information</h4>
+    <hr />
+    <div class="row">
+      <!-- Everyday Contact Full Name -->
+      <div class="col-sm-4">
+        <label for="Full Name" class="form-label">Full Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Everyday Contact Full Name"
+          name="everydayContactName"
+          value="{{formData.everydayContactName}}"
+        />
+      </div>
+      <!-- Everyday Phone Number -->
+      <div class="col-sm-4">
+        <label for="Phone Number" class="form-label">Phone Number</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Phone Number"
+          name="everydayContactPhone"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.phoneNumber}}"
+        />
+      </div>
+      <!-- Email -->
+      <div class="col-sm-4">
+        <label for="Email" class="form-label">Email</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Email"
+          name="everydayContactEmail"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.everydayContactEmail}}"
+        />
+      </div>
+    </div>
+    <h4 class="mt-2">Event Information</h4>
+    <hr />
+    <div class="row">
+      <!-- Permit Number -->
+      <div class="col-sm-6">
+        <label for="Permit Number" class="form-label">Permit Number*</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Permit Number"
+          name="permitNumber"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.permitNumber}}"
+          required
+        />
+      </div>
+      <!-- Issue Date -->
+      <div class="col-sm-6">
+        <label for="Issue Date" class="form-label">Issue Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Issue Date"
+          name="issueDate"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.issueDate}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Closure Location -->
+      <div class="col-sm-4">
+        <label for="Closure Location" class="form-label">Closure Location</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Closure Location"
+          name="closureLocation"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.closureLocation}}"
+        />
+      </div>
+      <!-- Closure Date -->
+      <div class="col-sm-4">
+        <label for="Closure Date" class="form-label">Closure Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Closure Date"
+          name="closureDate"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.closureDate}}"
+        />
+      </div>
+      <!-- Closure Time -->
+      <div class="col-sm-4">
+        <label for="Closure Time" class="form-label">Closure Time</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Closure Time"
+          name="closureTime"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.closureTime}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Estimated Attendance -->
+      <div class="col">
+        <label for="Estimated Attendance" class="form-label">Estimated
+          Attendance</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Estimated Attendance"
+          name="estimatedAttendance"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.estimatedAttendance}}"
+        />
+      </div>
+      <div class="col mt-3">
+        <!-- Alcohol Served -->
+        <label for="Alcohol Served" class="form-label">Alcohol Served</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-4">
+            <div class="form-check">
+              <label class="form-check-label" for="Alcohol Served">
+                Yes
+              </label>
+              {{#ifCond formData.alcoholServed "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="alcoholServed"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="alcoholServed"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-4">
+            <div class="form-check">
+              <label class="form-check-label" for="Alcohol Served">
+                No
+              </label>
+              {{#ifCond formData.alcoholServed "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="alcoholServed"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="alcoholServed"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col mt-3">
+        <!-- Noise Exemption -->
+        <label for="Noise Exemption" class="form-label">Noise Exemption</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Noise Exemption">
+                Yes
+              </label>
+              {{#ifCond formData.noiseExemption "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="noiseExemption"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="noiseExemption"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Noise Exemption">
+                No
+              </label>
+              {{#ifCond formData.noiseExemption "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="noiseExemption"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="noiseExemption"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Description -->
+    <div class="row">
+      <div class="col">
+        <label for="Description" class="form-label">Description</label>
+        <textarea
+          type="text"
+          name="description"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.description}}</textarea>
+      </div>
+    </div>
+    <!-- Cleanup Plan -->
+    <div class="row">
+      <div class="col">
+        <label for="Description" class="form-label">Cleanup Plan</label>
+        <textarea
+          type="text"
+          name="cleanupPlan"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.cleanupPlan}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
