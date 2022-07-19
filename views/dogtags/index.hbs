@@ -69,9 +69,7 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>Owner ID</th>
-      <th>First Name</th>
-      <th>Last Name</th>
+      <th>Owner Name</th>
       <th>Home Phone</th>
       <th>Work Phone</th>
       <th>Cell Phone</th>
@@ -91,10 +89,7 @@
           <a
             id="ownerLink"
             href="/dogtags/owner/{{this.ownerID}}"
-          >{{this.ownerID}}</a>
-        </td>
-        <td>{{this.firstName}}</td>
-        <td>{{this.lastName}}</td>
+          >{{this.firstName}} {{this.lastName}}</a></td>
         <td>{{this.homePhone}}</td>
         <td>{{this.workPhone}}</td>
         <td>{{this.cellPhone}}</td>

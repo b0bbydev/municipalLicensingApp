@@ -58,6 +58,7 @@ router.get(
         Owner.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
+          order: [["ownerID", "DESC"]],
           include: [
             {
               model: Address,

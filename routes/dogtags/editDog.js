@@ -3,6 +3,8 @@ var router = express.Router();
 // models.
 const Dog = require("../../models/dogtags/dog");
 const Dropdown = require("../../models/dropdownManager/dropdown");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -103,11 +105,6 @@ router.post(
     .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Colour Entry!")
     .trim(),
-  body("dateOfBirth")
-    .if(body("dateOfBirth").exists())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Of Birth Entry!")
-    .trim(),
   body("gender")
     .if(body("gender").notEmpty())
     .isAlpha()
@@ -196,7 +193,7 @@ router.post(
           breed: req.body.breed,
           colour: req.body.colour,
           gender: req.body.gender,
-          dateOfBirth: req.body.dateOfBirth,
+          dateOfBirth: funcHelpers.fixDate(req.body.dateOfBirth),
           designation: req.body.designation,
           spade: req.body.spade,
           rabiesTagNumber: req.body.rabiesTagNumber,

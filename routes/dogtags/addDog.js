@@ -2,6 +2,9 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dog = require("../../models/dogtags/dog");
+const Dropdown = require("../../models/dropdownManager/dropdown");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -27,11 +30,19 @@ router.get(
       // clear session messages.
       req.session.messages = [];
 
+      // get dropdown values.
+      var dropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 11, // the specific ID for this dropdown menu. Maybe change to something dynamic? Not sure of the possiblities as of yet.
+        },
+      });
+
       return res.render("dogtags/addDog", {
         title: "BWG | Add Dog",
         errorMessages: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
+        dropdownValues: dropdownValues,
       });
     }
   }
@@ -59,11 +70,6 @@ router.post(
     .if(body("colour").notEmpty())
     .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Colour Entry!")
-    .trim(),
-  body("dateOfBirth")
-    .if(body("dateOfBirth").exists())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Of Birth Entry!")
     .trim(),
   body("gender")
     .if(body("gender").notEmpty())
@@ -138,7 +144,7 @@ router.post(
         },
       });
       // handle date validation seperate because express-validate does bad job at dates.
-    } else if (!req.body.dateOfBirth || !req.body.rabiesExpiry) {
+    } else if (!req.body.rabiesExpiry) {
       return res.render("dogtags/addDog", {
         title: "BWG | Add Dog",
         message: "Invalid Date Format!",
@@ -175,7 +181,7 @@ router.post(
         breed: req.body.breed,
         colour: req.body.colour,
         gender: req.body.gender,
-        dateOfBirth: req.body.dateOfBirth,
+        dateOfBirth: funcHelpers.fixDate(req.body.dateOfBirth),
         designation: req.body.designation,
         spade: req.body.spade,
         rabiesTagNumber: req.body.rabiesTagNumber,
