@@ -33,7 +33,14 @@ router.get(
       // get dropdown values.
       var dropdownValues = await Dropdown.findAll({
         where: {
-          dropdownFormID: 11, // the specific ID for this dropdown menu. Maybe change to something dynamic? Not sure of the possiblities as of yet.
+          dropdownFormID: 11, // edit dog form.
+        },
+      });
+
+      // vendor values.
+      var vendorValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 10, // add dog form.
         },
       });
 
@@ -43,6 +50,7 @@ router.get(
         email: req.session.email,
         auth: req.session.auth, // authorization.
         dropdownValues: dropdownValues,
+        vendorValues: vendorValues,
       });
     }
   }

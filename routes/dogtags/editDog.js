@@ -37,6 +37,13 @@ router.get(
         },
       });
 
+      // vendor values.
+      var vendorValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 10, // add dog form.
+        },
+      });
+
       // save dogID to session.
       req.session.dogID = req.params.id;
 
@@ -53,6 +60,7 @@ router.get(
             email: req.session.email,
             auth: req.session.auth, // authorization.
             dropdownValues: dropdownValues,
+            vendorValues: vendorValues,
             dogInfo: {
               tagNumber: results.tagNumber,
               dogName: results.dogName,

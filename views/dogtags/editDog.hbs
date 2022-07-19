@@ -55,16 +55,21 @@
       <!-- Vendor -->
       <div class="col-sm-6">
         <label for="Vendor" class="form-label">Vendor</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Vendor"
-          name="vendor"
-          pattern="[^()/><\][\\\x22;|]+"
-          title="No special characters!"
-          value="{{dogInfo.vendor}}"
-          maxlength="50"
-        />
+        <select class="form-select" name="vendor">
+          <option disabled selected>Vendor...</option>
+          {{#each vendorValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
       </div>
       <!-- Dog Name -->
       <div class="col-sm-6">
