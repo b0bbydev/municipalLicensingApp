@@ -41,8 +41,8 @@ router.post("/", function (req, res, next) {
   let client = new plivo.Client(process.env.AUTH_ID, process.env.AUTH_TOKEN);
   client.messages
     .create({
-      src: "+19057156835", // me
-      dst: "+12893835612", // chris
+      src: "", // rented number from Plivo.
+      dst: "+19057156835",
       text: req.body.textMessage,
     })
     .then(function (message_created) {
