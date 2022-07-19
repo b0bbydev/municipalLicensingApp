@@ -65,13 +65,37 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>Street Closure Permit ID</th>
+      <th>Coordinator Name</th>
+      <th>Everyday Contact Name</th>
+      <th>Permit Number</th>
+      <th>Issue Date</th>
+      <th>Event Sponser</th>
+      <th>Closure Location</th>
+      <th>Closure Date</th>
+      <th>Closure Time</th>
+      <th>Description</th>
+      <th>Noise Exemption</th>
+      <th>Alcohol Served</th>
+      <th>Estimated Attendance</th>
+      <th>Clean-up Plan</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
       <tr>
-        <td>{{this.streetClosurePermitID}}</td>
+        <td>{{this.coordinatorName}}</td>
+        <td>{{this.everydayContactName}}</td>
+        <td>{{this.permitNumber}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.sponser}}</td>
+        <td>{{this.closureLocation}}</td>
+        <td>{{this.closureDate}}</td>
+        <td>{{this.closureTime}}</td>
+        <td>{{this.description}}</td>
+        <td>{{this.noiseExemption}}</td>
+        <td>{{this.alcoholServed}}</td>
+        <td>{{this.estimatedAttendance}}</td>
+        <td>{{this.cleanupPlan}}</td>
       </tr>
     {{/each}}
   </tbody>
