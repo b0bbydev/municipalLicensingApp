@@ -99,11 +99,6 @@ router.post(
     .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Rabies Tag Number Entry!")
     .trim(),
-  body("rabiesExpiry")
-    .if(body("rabiesExpiry").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Rabies Expiry Entry!")
-    .trim(),
   body("vetOffice")
     .if(body("vetOffice").notEmpty())
     .matches(/^[a-zA-Z0-9, ]*$/)
@@ -151,31 +146,6 @@ router.post(
           notes: req.body.notes,
         },
       });
-      // handle date validation seperate because express-validate does bad job at dates.
-    } else if (!req.body.rabiesExpiry) {
-      return res.render("dogtags/addDog", {
-        title: "BWG | Add Dog",
-        message: "Invalid Date Format!",
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        // if the form submission is unsuccessful, save their values.
-        formData: {
-          tagNumber: req.body.tagNumber,
-          dogName: req.body.dogName,
-          breed: req.body.breed,
-          colour: req.body.colour,
-          dateOfBirth: req.body.dateOfBirth,
-          gender: req.body.gender,
-          spade: req.body.spade,
-          designation: req.body.designation,
-          rabiesTagNumber: req.body.rabiesTagNumber,
-          rabiesExpiry: req.body.rabiesExpiry,
-          vetOffice: req.body.vetOffice,
-          tagRequired: req.body.tagRequired,
-          vendor: req.body.vendor,
-          notes: req.body.notes,
-        },
-      });
     } else {
       // get current date for automatic population of license.
       var issueDate = new Date();
@@ -193,7 +163,7 @@ router.post(
         designation: req.body.designation,
         spade: req.body.spade,
         rabiesTagNumber: req.body.rabiesTagNumber,
-        rabiesExpiry: req.body.rabiesExpiry,
+        rabiesExpiry: funcHelpers.fixEmptyValue(req.body.rabiesExpiry),
         vetOffice: req.body.vetOffice,
         tagRequired: req.body.tagRequired,
         vendor: req.body.vendor,

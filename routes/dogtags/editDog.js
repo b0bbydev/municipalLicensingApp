@@ -133,11 +133,6 @@ router.post(
     .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Rabies Tag Number Entry!")
     .trim(),
-  body("rabiesExpiry")
-    .if(body("rabiesExpiry").exists())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Rabies Expiry Entry!")
-    .trim(),
   body("vetOffice")
     .if(body("vetOffice").notEmpty())
     .matches(/^[a-zA-Z0-9, ]*$/)
@@ -205,7 +200,7 @@ router.post(
           designation: req.body.designation,
           spade: req.body.spade,
           rabiesTagNumber: req.body.rabiesTagNumber,
-          rabiesExpiry: req.body.rabiesExpiry,
+          rabiesExpiry: funcHelpers.fixEmptyValue(req.body.rabiesExpiry),
           vetOffice: req.body.vetOffice,
           tagRequired: req.body.tagRequired,
           vendor: req.body.vendor,
