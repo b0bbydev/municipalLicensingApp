@@ -66,14 +66,22 @@
   <thead>
     <tr>
       <th>Operator Name</th>
+      <th>Operator Address</th>
+      <th>Operator Phone</th>
+      <th>Operator Email</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
       <tr>
-        {{#each donationBinOperators}}
-          <td>{{this.name}}</td>
+        <td>{{this.firstName}} {{this.lastName}}</td>
+        {{#each donationBinOperatorAddresses}}
+          <td>{{this.streetNumber}} {{this.streetName}}</td>
         {{/each}}
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        <td><a href="#" class="btn btn-sm btn-secondary">Edit</a></td>
       </tr>
     {{/each}}
   </tbody>

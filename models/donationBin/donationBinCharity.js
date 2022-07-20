@@ -2,6 +2,7 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
+var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
 
 const DonationBinCharity = sequelize.define("donationBinCharity", {
   donationBinCharityID: {
@@ -45,6 +46,11 @@ const DonationBinCharity = sequelize.define("donationBinCharity", {
     type: Sequelize.ENUM("Charity", "Not-For-Profit", "For-Profit"),
     allowNull: true,
   },
+});
+
+// create relationship with donationBinOperator.
+DonationBinOperator.hasMany(DonationBinCharity, {
+  foreignKey: "donationBinOperatorID",
 });
 
 module.exports = DonationBinCharity;

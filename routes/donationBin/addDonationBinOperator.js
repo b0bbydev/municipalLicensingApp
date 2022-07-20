@@ -5,6 +5,7 @@ var Dropdown = require("../../models/dropdownManager/dropdown");
 var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
 // express-validate.
 const { body, validationResult } = require("express-validator");
+const DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
 
 /* GET /donationBin/addDonationBinOperator */
 router.get("/", async (req, res, next) => {
@@ -46,15 +47,49 @@ router.post("/", async (req, res, next) => {
       auth: req.session.auth, // authorization.
       dropdownValues: dropdownValues,
       // save form values if submission is unsuccessful.
-      formData: {},
+      formData: {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        phoneNumber: req.body.phoneNumber,
+        email: req.body.email,
+        licenseNumber: req.body.licenseNumber,
+        photoID: req.body.photoID,
+        charityInformation: req.body.charityInformation,
+        ownerConsent: req.body.ownerConsent,
+        certificateOfInsurance: req.body.certificateOfInsurance,
+        sitePlan: req.body.sitePlan,
+        streetNumber: req.body.streetNumber,
+        streetName: req.body.streetName,
+        town: req.body.town,
+        postalCode: req.body.postalCode,
+      },
     });
   } else {
-    DonationBinOperator.create({
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      phoneNumber: req.body.phoneNumber,
-      email: req.body.email,
-    })
+    DonationBinOperator.create(
+      {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        phoneNumber: req.body.phoneNumber,
+        email: req.body.email,
+        licenseNumber: req.body.licenseNumber,
+        photoID: req.body.photoID,
+        charityInformation: req.body.charityInformation,
+        ownerConsent: req.body.ownerConsent,
+        certificateOfInsurance: req.body.certificateOfInsurance,
+        sitePlan: req.body.sitePlan,
+        donationBinOperatorAddresses: [
+          {
+            streetNumber: req.body.streetNumber,
+            streetName: req.body.streetName,
+            town: req.body.town,
+            postalCode: req.body.postalCode,
+          },
+        ],
+      },
+      {
+        include: [DonationBinOperatorAddress],
+      }
+    )
       .then(res.redirect("/donationBin"))
       .catch((err) => {
         return res.render("donationBin/addDonationBinOperator", {

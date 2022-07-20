@@ -6,6 +6,7 @@ var DonationBinOperator = require("../../models/donationBin/donationBinOperator"
 var DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
 // pagination lib.
 const paginate = require("express-paginate");
+const DonationBinCharity = require("../../models/donationBin/donationBinCharity");
 
 /* GET /donationBin */
 router.get("/", async (req, res, next) => {
@@ -14,18 +15,15 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  DonationBin.findAndCountAll({
+  DonationBinOperator.findAndCountAll({
     limit: req.query.limit,
     offset: req.skip,
-    // nested include because DonationBinOperatorAddress is NOT directly related to DonationBin.
     include: [
       {
-        model: DonationBinOperator,
-        include: [
-          {
-            model: DonationBinOperatorAddress,
-          },
-        ],
+        model: DonationBinOperatorAddress,
+      },
+      {
+        model: DonationBinCharity,
       },
     ],
   }).then((results) => {
