@@ -2,9 +2,10 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
+const DonationBin = require("../donationBin/donationBin");
 
-const Operator = sequelize.define("Operator", {
-  operatorID: {
+const DonationBinOperator = sequelize.define("donationBinOperator", {
+  donationBinOperatorID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
@@ -31,40 +32,45 @@ const Operator = sequelize.define("Operator", {
     allowNull: true,
   },
 
-  organizationName: {
+  licenseNumber: {
     type: Sequelize.STRING(50),
     allowNull: true,
   },
 
-  registrationNumber: {
-    type: Sequelize.STRING(50),
-    allowNull: true,
-  },
-
-  photo: {
-    type: Sequelize.ENUM("Complete", "Not Complete"),
+  photoID: {
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
   charityInformation: {
-    type: Sequelize.ENUM("Complete", "Not Complete"),
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
   sitePlan: {
-    type: Sequelize.ENUM("Complete", "Not Complete"),
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
-  insurance: {
-    type: Sequelize.ENUM("Complete", "Not Complete"),
+  certificateOfInsurance: {
+    type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,
   },
 
   ownerConsent: {
-    type: Sequelize.ENUM("Complete", "Not Complete"),
+    type: Sequelize.ENUM("Yes", "No"),
+    allowNull: true,
+  },
+
+  notes: {
+    type: Sequelize.STRING(255),
     allowNull: true,
   },
 });
 
-module.exports = Operator;
+// create relationship with donationBin table.
+DonationBin.hasMany(DonationBinOperator, {
+  foreignKey: "donationBinID",
+});
+
+module.exports = DonationBinOperator;
