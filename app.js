@@ -81,6 +81,8 @@ var editStreetClosurePermitRouter = require("./routes/streetClosurePermit/editPe
 
 /* Donation Bin related routes */
 var donationBinRouter = require("./routes/donationBin/index");
+var addDonationBinRouter = require("./routes/donationBin/addDonationBin");
+var addDonationBinOperatorRouter = require("./routes/donationBin/addDonationBinOperator");
 
 var app = express();
 
@@ -246,6 +248,8 @@ app.use("/streetClosurePermit/editPermit", editStreetClosurePermitRouter);
 
 /* Donation Bin related routes */
 app.use("/donationBin", donationBinRouter);
+app.use("/donationBin/addDonationBin", addDonationBinRouter);
+app.use("/donationBin/addDonationBinOperator", addDonationBinOperatorRouter);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
