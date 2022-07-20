@@ -64,26 +64,6 @@ router.post(
     .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
-  body("dateApproved")
-    .if(body("dateApproved").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Approved Entry!")
-    .trim(),
-  body("dateAmended")
-    .if(body("dateAmended").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Amended Entry!")
-    .trim(),
-  body("lastReviewDate")
-    .if(body("lastReviewDate").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Last Review Date Entry!")
-    .trim(),
-  body("scheduledReviewDate")
-    .if(body("scheduledReviewDate").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Scheduled Review Date Entry!")
-    .trim(),
   body("notes")
     .if(body("notes").notEmpty())
     .matches(/^[a-zA-Z0-9\/\-, ]*$/)

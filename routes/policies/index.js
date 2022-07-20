@@ -33,7 +33,7 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("policies", {
+      return res.render("policies/index", {
         title: "BWG | Policies",
         message: "Page Error!",
         email: req.session.email,
@@ -146,7 +146,7 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("policies", {
+      return res.render("policies/index", {
         title: "BWG | Policies",
         message: "Page Error!",
         email: req.session.email,

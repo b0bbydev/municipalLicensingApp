@@ -35,7 +35,7 @@ router.post(
   "/",
   body("businessName")
     .if(body("businessName").notEmpty())
-    .matches(/^[ a-zA-Z\'-]*$/)
+    .matches(/^[ a-zA-Z0-9\'-]*$/)
     .withMessage("Invalid Business Name Entry!")
     .trim(),
   body("ownerName")

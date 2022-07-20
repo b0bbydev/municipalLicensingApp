@@ -2,9 +2,6 @@ var express = require("express");
 var router = express.Router();
 // models.
 const DropdownForm = require("../../models/dropdownManager/dropdownForm");
-// sequelize.
-const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -20,7 +17,7 @@ router.get("/", async (req, res, next) => {
     offset: req.skip,
   })
     .then((results) => {
-      return res.render("dropdownManager", {
+      return res.render("dropdownManager/index", {
         title: "BWG | Dropdown Manager",
         errorMessages: messages,
         email: req.session.email,
@@ -29,7 +26,7 @@ router.get("/", async (req, res, next) => {
       });
     })
     .catch((err) => {
-      return res.render("dropdownManager", {
+      return res.render("dropdownManager/index", {
         title: "BWG | Dropdown Manager",
         message: "Page Error!",
       });
@@ -41,7 +38,7 @@ router.post(
   "/",
   body("formName")
     .notEmpty()
-    .matches(/^[a-zA-Z0-9\/\- ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-, ]*$/)
     .withMessage("Invalid Form/Dropdown Name Entry!")
     .trim(),
   async (req, res, next) => {
@@ -50,9 +47,9 @@ router.post(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("dropdownManager", {
+      return res.render("dropdownManager/index", {
         title: "BWG | Dropdown Manager",
-        message: "Error!",
+        message: "Page Error!",
         email: req.session.email,
         auth: req.session.auth, // authorization.
       });
@@ -63,7 +60,7 @@ router.post(
       })
         .then(res.redirect("/dropdownManager"))
         .catch((err) => {
-          return res.render("dropdownManager", {
+          return res.render("dropdownManager/index", {
             title: "BWG | Dropdown Manager",
             message: "Page Error!",
           });

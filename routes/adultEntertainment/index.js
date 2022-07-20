@@ -29,7 +29,7 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("adultEntertainment", {
+      return res.render("adultEntertainment/index", {
         title: "BWG | Adult Entertainment Licenses",
         message: "Page Error!",
         auth: req.session.auth, // authorization.
@@ -62,7 +62,7 @@ router.get(
           const itemCount = results.count;
           const pageCount = Math.ceil(results.count / req.query.limit);
 
-          return res.render("adultEntertainment", {
+          return res.render("adultEntertainment/index", {
             title: "BWG | Adult Entertainment Licenses",
             errorMessages: messages,
             email: req.session.email,
@@ -102,7 +102,7 @@ router.get(
             const itemCount = results.count;
             const pageCount = Math.ceil(results.count / req.query.limit);
 
-            return res.render("adultEntertainment", {
+            return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               errorMessages: messages,
               email: req.session.email,
@@ -121,7 +121,7 @@ router.get(
           })
           // catch any scary errors and render page error.
           .catch((err) =>
-            res.render("adultEntertainment", {
+            res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               message: "Page Error!",
             })
@@ -150,7 +150,7 @@ router.get(
             const itemCount = results.count;
             const pageCount = Math.ceil(results.count / req.query.limit);
 
-            return res.render("adultEntertainment", {
+            return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               errorMessages: messages,
               email: req.session.email,
@@ -169,7 +169,7 @@ router.get(
           })
           // catch any scary errors and render page error.
           .catch((err) =>
-            res.render("adultEntertainment", {
+            res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               message: "Page Error!",
             })

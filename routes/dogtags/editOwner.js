@@ -39,6 +39,7 @@ router.get(
         },
       });
 
+      // populate input fields with existing values.
       Owner.findOne({
         where: {
           ownerID: req.session.ownerID,
@@ -57,6 +58,7 @@ router.get(
             auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             dropdownValues: dropdownValues,
+            // existing values.
             ownerInfo: {
               firstName: results.firstName,
               lastName: results.lastName,

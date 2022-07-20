@@ -26,8 +26,8 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("dogtags", {
-        title: "BWG | Dogtags",
+      return res.render("admin/index", {
+        title: "BWG | Admin Panel",
         message: "Page Error!",
         auth: req.session.auth, // authorization.
       });

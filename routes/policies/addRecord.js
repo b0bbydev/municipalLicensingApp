@@ -11,57 +11,45 @@ const { body, validationResult } = require("express-validator");
 
 /* GET /addRecord */
 router.get("/", async (req, res, next) => {
-  // server side validation.
-  const errors = validationResult(req);
+  // check if there's an error message in the session.
+  let messages = req.session.messages || [];
+  // clear session messages.
+  req.session.messages = [];
+  // delete session policyID.
+  delete req.session.policyID;
 
-  // if errors is NOT empty (if there are errors...).
-  if (!errors.isEmpty()) {
-    return res.render("policies/addRecord", {
-      title: "BWG | Add Record",
-      message: "Page Error!",
-      auth: req.session.auth, // authorization.
-    });
-  } else {
-    // check if there's an error message in the session.
-    let messages = req.session.messages || [];
-    // clear session messages.
-    req.session.messages = [];
-    // delete session policyID.
-    delete req.session.policyID;
+  // dropdown values.
+  // status options.
+  var statusDropdownValues = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 12,
+      dropdownTitle: "Status Options",
+    },
+  });
+  // category options.
+  var categoryDropdownValues = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 12,
+      dropdownTitle: "Category Options",
+    },
+  });
+  // authority options.
+  var authorityDropdownValues = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 12,
+      dropdownTitle: "Authority Options",
+    },
+  });
 
-    // dropdown values.
-    // status options.
-    var statusDropdownValues = await Dropdown.findAll({
-      where: {
-        dropdownFormID: 12,
-        dropdownTitle: "Status Options",
-      },
-    });
-    // category options.
-    var categoryDropdownValues = await Dropdown.findAll({
-      where: {
-        dropdownFormID: 12,
-        dropdownTitle: "Category Options",
-      },
-    });
-    // authority options.
-    var authorityDropdownValues = await Dropdown.findAll({
-      where: {
-        dropdownFormID: 12,
-        dropdownTitle: "Authority Options",
-      },
-    });
-
-    return res.render("policies/addRecord", {
-      title: "BWG | Add Record",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      statusDropdownValues: statusDropdownValues,
-      categoryDropdownValues: categoryDropdownValues,
-      authorityDropdownValues: authorityDropdownValues,
-    });
-  }
+  return res.render("policies/addRecord", {
+    title: "BWG | Add Record",
+    errorMessages: messages,
+    email: req.session.email,
+    auth: req.session.auth, // authorization.
+    statusDropdownValues: statusDropdownValues,
+    categoryDropdownValues: categoryDropdownValues,
+    authorityDropdownValues: authorityDropdownValues,
+  });
 });
 
 /* POST /addProcedure */
@@ -76,26 +64,6 @@ router.post(
     .if(body("status").notEmpty())
     .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Status Entry!")
-    .trim(),
-  body("dateApproved")
-    .if(body("dateApproved").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Approved Entry!")
-    .trim(),
-  body("dateAmended")
-    .if(body("dateAmended").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Amended Entry!")
-    .trim(),
-  body("lastReviewDate")
-    .if(body("lastReviewDate").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Last Review Date Entry!")
-    .trim(),
-  body("scheduledReviewDate")
-    .if(body("scheduledReviewDate").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Scheduled Review Date Entry!")
     .trim(),
   body("category")
     .if(body("category").notEmpty())
@@ -181,26 +149,6 @@ router.post(
     .if(body("status").notEmpty())
     .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Status Entry!")
-    .trim(),
-  body("dateApproved")
-    .if(body("dateApproved").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Approved Entry!")
-    .trim(),
-  body("dateAmended")
-    .if(body("dateAmended").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Amended Entry!")
-    .trim(),
-  body("lastReviewDate")
-    .if(body("lastReviewDate").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Last Review Date Entry!")
-    .trim(),
-  body("scheduledReviewDate")
-    .if(body("scheduledReviewDate").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Scheduled Review Date Entry!")
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())

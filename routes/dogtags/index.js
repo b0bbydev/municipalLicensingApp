@@ -283,6 +283,7 @@ router.get(
             })
           );
       } else if (req.query.filterCategory === "Owner Name") {
+        // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
         if (req.query.filterValue.trim().indexOf(" ") != -1) {
           Owner.findAndCountAll({
             limit: req.query.limit,
@@ -620,6 +621,7 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
+      // populate input fields with existing values.
       AdditionalOwner.findOne({
         where: {
           additionalOwnerID: req.params.additionalOwnerID,
@@ -630,6 +632,7 @@ router.get(
           errorMessages: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
+          // existing values.
           additionalOwnerInfo: {
             firstName: results.firstName,
             lastName: results.lastName,

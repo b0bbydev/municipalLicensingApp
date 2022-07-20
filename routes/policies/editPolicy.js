@@ -104,45 +104,15 @@ router.post(
     .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
     .withMessage("Invalid Policy Name Entry!")
     .trim(),
-  body("cowDate")
-    .if(body("cowDate").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid COW Date Entry!")
-    .trim(),
   body("councilResolution")
     .if(body("councilResolution").notEmpty())
     .matches(/^[a-zA-Z0-9\/\- ]*$/)
     .withMessage("Invalid Council Resolution Entry!")
     .trim(),
-  body("dateApproved")
-    .if(body("dateApproved").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Approved Entry!")
-    .trim(),
-  body("dateAmended")
-    .if(body("dateAmended").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Amended Entry!")
-    .trim(),
-  body("dateEffective")
-    .if(body("dateEffective").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Date Effective Entry!")
-    .trim(),
   body("category")
     .if(body("category").notEmpty())
     .matches(/^[a-zA-Z\/\- ]*$/)
     .withMessage("Invalid Category Entry!")
-    .trim(),
-  body("lastReviewDate")
-    .if(body("lastReviewDate").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Last Review Date Entry!")
-    .trim(),
-  body("scheduledReviewDate")
-    .if(body("scheduledReviewDate").notEmpty())
-    .matches(/^\d{4}-\d{2}-\d{2}$/)
-    .withMessage("Invalid Scheduled Review Date Entry!")
     .trim(),
   body("division")
     .if(body("division").notEmpty())
@@ -178,8 +148,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("policies/addPolicy", {
-        title: "BWG | Add Policy",
+      return res.render("policies/editPolicy", {
+        title: "BWG | Edit Policy",
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.

@@ -12,68 +12,82 @@ router.get(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
-    // check if there's an error message in the session
-    let messages = req.session.messages || [];
-    // clear session messages
-    req.session.messages = [];
+    // server side validation.
+    const errors = validationResult(req);
 
-    // get dropdown values.
-    var dropdownValues = await Dropdown.findAll({
-      where: {
-        dropdownFormID: 13, // streets
-      },
-    });
-
-    // send businessID to session.
-    req.session.businessID = req.params.id;
-
-    // used to populate edit form fields.
-    Business.findOne({
-      where: {
-        businessID: req.session.businessID,
-      },
-      include: [
-        {
-          model: BusinessAddress,
-        },
-      ],
-    })
-      .then((results) => {
-        return res.render("adultEntertainment/editBusiness", {
-          title: "BWG | Edit Business",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          dropdownValues: dropdownValues,
-          businessInfo: {
-            businessName: results.businessName,
-            streetNumber: results.businessAddresses[0].streetNumber,
-            streetName: results.businessAddresses[0].streetName,
-            poBoxAptRR: results.businessAddresses[0].poBoxAptRR,
-            postalCode: results.businessAddresses[0].postalCode,
-            town: results.businessAddresses[0].town,
-            ownerName: results.ownerName,
-            contactName: results.contactName,
-            contactPhone: results.contactPhone,
-            licenseNumber: results.licenseNumber,
-            issueDate: results.issueDate,
-            expiryDate: results.expiryDate,
-            policeVSC: results.policeVSC,
-            certificateOfInsurance: results.certificateOfInsurance,
-            photoID: results.photoID,
-            healthInspection: results.healthInspection,
-            zoningClearance: results.zoningClearance,
-            feePaid: results.feePaid,
-            notes: results.notes,
-          },
-        });
-      })
-      .catch((err) => {
-        return res.render("adultEntertainment/editBusiness", {
-          title: "BWG | Edit Business",
-          message: "Page Error!",
-        });
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("adultEntertainment/editBusiness", {
+        title: "BWG | Edit Business",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
       });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // get dropdown values.
+      var dropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
+      // send businessID to session.
+      req.session.businessID = req.params.id;
+
+      // used to populate edit form fields.
+      Business.findOne({
+        where: {
+          businessID: req.session.businessID,
+        },
+        include: [
+          {
+            model: BusinessAddress,
+          },
+        ],
+      })
+        .then((results) => {
+          return res.render("adultEntertainment/editBusiness", {
+            title: "BWG | Edit Business",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            dropdownValues: dropdownValues,
+            // values to populate input fields.
+            businessInfo: {
+              businessName: results.businessName,
+              streetNumber: results.businessAddresses[0].streetNumber,
+              streetName: results.businessAddresses[0].streetName,
+              poBoxAptRR: results.businessAddresses[0].poBoxAptRR,
+              postalCode: results.businessAddresses[0].postalCode,
+              town: results.businessAddresses[0].town,
+              ownerName: results.ownerName,
+              contactName: results.contactName,
+              contactPhone: results.contactPhone,
+              licenseNumber: results.licenseNumber,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              policeVSC: results.policeVSC,
+              certificateOfInsurance: results.certificateOfInsurance,
+              photoID: results.photoID,
+              healthInspection: results.healthInspection,
+              zoningClearance: results.zoningClearance,
+              feePaid: results.feePaid,
+              notes: results.notes,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("adultEntertainment/editBusiness", {
+            title: "BWG | Edit Business",
+            message: "Page Error!",
+          });
+        });
+    }
   }
 );
 
@@ -82,7 +96,7 @@ router.post(
   "/:id",
   body("businessName")
     .if(body("businessName").notEmpty())
-    .matches(/^[ a-zA-Z\'-]*$/)
+    .matches(/^[ a-zA-Z0-9\'-]*$/)
     .withMessage("Invalid Business Name Entry!")
     .trim(),
   body("ownerName")
@@ -197,37 +211,6 @@ router.post(
         },
       });
     } else {
-      //   // create business
-      //   Business.update(
-      //     {
-      //       businessName: req.body.businessName,
-      //       ownerName: req.body.ownerName,
-      //       contactName: req.body.contactName,
-      //       contactPhone: req.body.contactPhone,
-      //       licenseNumber: req.body.licenseNumber,
-      //       issueDate: req.body.issueDate,
-      //       expiryDate: req.body.expiryDate,
-      //       policeVSC: req.body.policeVSC,
-      //       certificateOfInsurance: req.body.certificateOfInsurance,
-      //       photoID: req.body.photoID,
-      //       healthInspection: req.body.healthInspection,
-      //       zoningClearance: req.body.zoningClearance,
-      //       feePaid: req.body.feePaid,
-      //       notes: req.body.notes,
-      //       businessAddresses: [
-      //         {
-      //           streetNumber: req.body.streetNumber,
-      //           streetName: req.body.streetName,
-      //           poBoxAptRR: req.body.poBoxAptRR,
-      //           town: req.body.town,
-      //           postalCode: req.body.postalCode,
-      //         },
-      //       ],
-      //     },
-      //     {
-      //       include: [BusinessAddress],
-      //     }
-      //   )
       Business.update(
         {
           businessName: req.body.businessName,

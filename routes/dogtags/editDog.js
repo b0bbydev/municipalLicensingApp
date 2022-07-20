@@ -61,6 +61,7 @@ router.get(
             auth: req.session.auth, // authorization.
             dropdownValues: dropdownValues,
             vendorValues: vendorValues,
+            // for populating input fields with existing values.
             dogInfo: {
               tagNumber: results.tagNumber,
               dogName: results.dogName,
