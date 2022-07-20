@@ -13,27 +13,40 @@ router.get(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
   async (req, res, next) => {
-    // check if there's an error message in the session
-    let messages = req.session.messages || [];
-    // clear session messages
-    req.session.messages = [];
+    // server side validation.
+    const errors = validationResult(req);
 
-    // dropdown values.
-    // status options.
-    var statusDropdownValues = await Dropdown.findAll({
-      where: {
-        dropdownFormID: 12,
-        dropdownTitle: "Status Options",
-      },
-    });
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("policies/addGuideline", {
+        title: "BWG | Add Guideline",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-    return res.render("policies/addGuideline", {
-      title: "BWG | Add Guideline",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      statusDropdownValues: statusDropdownValues,
-    });
+      // dropdown values.
+      // status options.
+      var statusDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 12,
+          dropdownTitle: "Status Options",
+        },
+      });
+
+      return res.render("policies/addGuideline", {
+        title: "BWG | Add Guideline",
+        errorMessages: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        statusDropdownValues: statusDropdownValues,
+      });
+    }
   }
 );
 
@@ -95,7 +108,7 @@ router.post(
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("policies/addGuideline", {
-        title: "BWG | Add Policy",
+        title: "BWG | Add Guideline",
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.

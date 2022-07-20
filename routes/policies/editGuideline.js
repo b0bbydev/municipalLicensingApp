@@ -37,6 +37,7 @@ router.get(
         },
       });
 
+      // for populating input fields with existing values.
       Guideline.findOne({
         where: {
           guidelineID: req.params.id, // guidelineID is passed into URL.

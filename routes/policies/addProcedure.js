@@ -6,32 +6,49 @@ const Procedure = require("../../models/policies/procedure");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET home page. */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // dropdown values.
-  // status options.
-  var statusDropdownValues = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 12,
-      dropdownTitle: "Status Options",
-    },
-  });
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("policies/addProcedure", {
+        title: "BWG | Add Guideline",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  return res.render("policies/addProcedure", {
-    title: "BWG | Add Procedure",
-    errorMessages: messages,
-    email: req.session.email,
-    auth: req.session.auth, // authorization.
-    statusDropdownValues: statusDropdownValues,
-  });
-});
+      // dropdown values.
+      // status options.
+      var statusDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 12,
+          dropdownTitle: "Status Options",
+        },
+      });
+
+      return res.render("policies/addProcedure", {
+        title: "BWG | Add Guideline",
+        errorMessages: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        statusDropdownValues: statusDropdownValues,
+      });
+    }
+  }
+);
 
 /* POST /addProcedure */
 router.post(
@@ -95,7 +112,7 @@ router.post(
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("policies/addProcedure", {
-        title: "BWG | Add Policy",
+        title: "BWG | Add Procedure",
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
