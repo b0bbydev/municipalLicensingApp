@@ -402,7 +402,7 @@ router.get(
         Owner.findAndCountAll({
           where: {
             [filterCategory]: {
-              [Op.like]: req.query.filterValue + "%",
+              [Op.like]: "%" + req.query.filterValue + "%",
             },
           },
           limit: req.query.limit,
