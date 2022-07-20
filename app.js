@@ -79,6 +79,9 @@ var streetClosurePermitRouter = require("./routes/streetClosurePermit/index");
 var addStreetClosurePermitRouter = require("./routes/streetClosurePermit/addPermit");
 var editStreetClosurePermitRouter = require("./routes/streetClosurePermit/editPermit");
 
+/* Donation Bin related routes */
+var donationBinRouter = require("./routes/donationBin/index");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -240,6 +243,9 @@ app.use("/sendSms", sendSmsRouter);
 app.use("/streetClosurePermit", streetClosurePermitRouter);
 app.use("/streetClosurePermit/addPermit", addStreetClosurePermitRouter);
 app.use("/streetClosurePermit/editPermit", editStreetClosurePermitRouter);
+
+/* Donation Bin related routes */
+app.use("/donationBin", donationBinRouter);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
