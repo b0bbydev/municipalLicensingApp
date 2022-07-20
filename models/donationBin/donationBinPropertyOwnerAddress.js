@@ -7,7 +7,7 @@ const DonationBinPropertyOwner = require("../donationBin/donationBinPropertyOwne
 const DonationBinPropertyOwnerAddress = sequelize.define(
   "donationBinPropertyOwnerAddress",
   {
-    donationBinPropertyOwnerID: {
+    donationBinPropertyOwnerAddressID: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
@@ -36,7 +36,7 @@ const DonationBinPropertyOwnerAddress = sequelize.define(
   }
 );
 
-// create relationship with donationBin table.
+// create relationship with donationBinPropertyOwner table.
 DonationBinPropertyOwner.hasMany(DonationBinPropertyOwnerAddress, {
   foreignKey: "donationBinPropertyOwnerID",
 });
