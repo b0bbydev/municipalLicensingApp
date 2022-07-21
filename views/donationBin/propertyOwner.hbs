@@ -1,14 +1,14 @@
 <h2 class="text-center mt-1">Property Owner</h2>
-<h4>Donation Bin Operators</h4>
+<h4>Property Owners</h4>
 <div class="row">
   <div class="col mb-1">
     {{#if queryCount}}
       <strong class="float-start mt-1">{{queryCount}}</strong>
     {{/if}}
     <a
-      href="/donationBin/addDonationBinOperator"
+      href="/donationBin/addPropertyOwner"
       class="btn btn-sm btn-primary float-end"
-    >Add Bin Operator</a>
+    >Add Property Owner</a>
   </div>
 </div>
 
@@ -23,81 +23,14 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>Operator Name</th>
-      <th>Actions</th>
+      <th>TH</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
       <tr>
-        <td>{{this.firstName}} {{this.lastName}}</td>
-        <td><a
-            class="btn btn-sm btn-secondary"
-            data-bs-toggle="modal"
-            data-bs-target="#assignOperatorModal"
-          >Assign A Bin</a></td>
+        <td>TD</td>
       </tr>
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="assignOperatorModal"
-        tabindex="-1"
-        aria-labelledby="assignOperatorModal"
-        aria-hidden="true"
-      >
-        <form method="POST">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Assign A Bin</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col">
-                    <label for="Donation Bin ID" class="form-label">Donation Bin
-                      ID</label>
-                    <input
-                      class="form-control"
-                      placeholder="Donation Bin Operator ID"
-                      value="{{this.donationBinOperatorID}}"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <label for="Donation Bins" class="form-label">Donation Bins</label>
-                <input
-                  class="form-control"
-                  title="operators"
-                  name="operator"
-                  list="operators"
-                  placeholder="Donation Bins..."
-                />
-                <datalist id="operators">
-                  {{#each ../operators}}
-                    <option
-                      value="{{this.firstName}} {{this.lastName}}"
-                    >{{this.firstName}} {{this.lastName}}</option>
-                  {{/each}}
-                </datalist>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >Close</button>
-                <button type="submit" class="btn btn-primary">Search</button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
     {{/each}}
   </tbody>
 </table>
