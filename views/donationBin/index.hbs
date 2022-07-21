@@ -48,9 +48,9 @@
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
     <a
-      href="/donationBin/addPropertyOwner"
+      href="/donationBin/addDonationBinCharity"
       class="btn btn-sm btn-primary float-end"
-    >Add Property Owner</a>
+    >Add Charity/Organization</a>
   </div>
 </div>
 
@@ -65,13 +65,28 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>TH</th>
+      <th>Charity Name</th>
+      <th>Registration Number</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
+      <th>Organization Type</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
       <tr>
-        <td>TD</td>
+        <td><a
+            id="ownerLink"
+            href="/donationBin/propertyOwner"
+          >{{this.charityName}}</a></td>
+        <td>{{this.registrationNumber}}</td>
+        <td>{{this.charityPhoneNumber}}</td>
+        <td>{{this.charityEmail}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td>{{this.organizationType}}</td>
       </tr>
     {{/each}}
   </tbody>

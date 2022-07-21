@@ -10,41 +10,17 @@ const Op = Sequelize.Op;
 const paginate = require("express-paginate");
 
 /* GET /donationBin/propertyOwner/:id */
-router.get("/:id", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
   req.session.messages = [];
 
-  var operators = await DonationBinOperator.findAll();
-
-  DonationBinOperator.findAndCountAll({
-    limit: req.query.limit,
-    offset: req.skip,
-    include: [
-      {
-        model: DonationBin,
-      },
-    ],
-  }).then((results) => {
-    // for pagination.
-    const itemCount = results.count;
-    const pageCount = Math.ceil(results.count / req.query.limit);
-
-    return res.render("donationBin/propertyOwner", {
-      title: "BWG | Property Owner",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      data: results.rows,
-      operators: operators,
-      pageCount,
-      itemCount,
-      queryCount: "Records returned: " + results.count,
-      pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-      prev: paginate.href(req)(true),
-      hasMorePages: paginate.hasNextPages(req)(pageCount),
-    });
+  return res.render("donationBin/propertyOwner", {
+    title: "BWG | Property Owner",
+    errorMessages: messages,
+    email: req.session.email,
+    auth: req.session.auth, // authorization.
   });
 });
 
