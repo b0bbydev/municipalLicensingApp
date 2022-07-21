@@ -65,35 +65,13 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>Property Owner Name</th>
-      <th>Phone Number</th>
-      <th>Email</th>
-      <th>Address</th>
-      <th>Actions</th>
+      <th>TH</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
       <tr>
-        <td><a
-            id="ownerLink"
-            href="/donationBin/propertyOwner/{{this.donationBinPropertyOwnerID}}"
-          >{{this.firstName}}
-            {{this.lastName}}</a></td>
-        <td>{{this.phoneNumber}}</td>
-        <td>{{this.email}}</td>
-        {{#each donationBinPropertyOwnerAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}},
-            {{this.postalCode}}</td>
-        {{/each}}
-        <td><a href="#" class="btn btn-sm btn-secondary">Edit</a>
-          |
-          <a
-            href="/donationBin/addDonationBin/{{this.donationBinPropertyOwnerID}}"
-            class="btn btn-sm btn-secondary"
-          >Add Donation Bin</a></td>
+        <td>TD</td>
       </tr>
     {{/each}}
   </tbody>

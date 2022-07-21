@@ -2,6 +2,7 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
+const DonationBinCharity = require("./donationBinCharity");
 
 const DonationBinPropertyOwner = sequelize.define("donationBinPropertyOwner", {
   donationBinPropertyOwnerID: {
@@ -30,6 +31,11 @@ const DonationBinPropertyOwner = sequelize.define("donationBinPropertyOwner", {
     type: Sequelize.STRING(50),
     allowNull: true,
   },
+});
+
+// create relationship with donationBinOperator table.
+DonationBinCharity.hasMany(DonationBinPropertyOwner, {
+  foreignKey: "donationBinCharityID",
 });
 
 module.exports = DonationBinPropertyOwner;
