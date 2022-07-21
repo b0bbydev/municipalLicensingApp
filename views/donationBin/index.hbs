@@ -75,7 +75,10 @@
   <tbody>
     {{#each data}}
       <tr>
-        <td><a id="ownerLink" href="#">{{this.firstName}}
+        <td><a
+            id="ownerLink"
+            href="/donationBin/propertyOwner/{{this.donationBinPropertyOwnerID}}"
+          >{{this.firstName}}
             {{this.lastName}}</a></td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>

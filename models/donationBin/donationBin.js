@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
 var DonationBinPropertyOwner = require("../../models/donationBin/donationBinPropertyOwner");
+var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
 
 const DonationBin = sequelize.define("donationBin", {
   donationBinID: {
@@ -41,6 +42,11 @@ const DonationBin = sequelize.define("donationBin", {
 // create relationship with donationBin.
 DonationBinPropertyOwner.hasMany(DonationBin, {
   foreignKey: "donationBinPropertyOwnerID",
+});
+
+// create relationship with donationBin.
+DonationBinOperator.hasMany(DonationBin, {
+  foreignKey: "donationBinOperatorID",
 });
 
 module.exports = DonationBin;

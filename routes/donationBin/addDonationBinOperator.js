@@ -4,6 +4,9 @@ var router = express.Router();
 var Dropdown = require("../../models/dropdownManager/dropdown");
 var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
 const DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
+const DonationBinCharity = require("../../models/donationBin/donationBinCharity");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -14,10 +17,17 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
+  // get streets.
+  var streets = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 13, // streets
+    },
+  });
+
   // get dropdown values.
   var dropdownValues = await Dropdown.findAll({
     where: {
-      dropdownFormID: 13, // streets
+      dropdownFormID: 21, // streets
     },
   });
 
@@ -26,6 +36,7 @@ router.get("/", async (req, res, next) => {
     errorMessages: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
+    streets: streets,
     dropdownValues: dropdownValues,
   });
 });
@@ -90,7 +101,20 @@ router.post("/", async (req, res, next) => {
         include: [DonationBinOperatorAddress],
       }
     )
-      .then(res.redirect("/donationBin"))
+      .then(() => {
+        DonationBinCharity.create({
+          name: req.body.name,
+          charityPhoneNumber: req.body.charityPhoneNumber,
+          charityEmail: req.body.charityEmail,
+          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+          registrationNumber: req.body.registrationNumber,
+          organizationType: req.body.organizationType,
+        });
+      })
+      .then(() => {
+        return res.redirect("/donationBin");
+      })
       .catch((err) => {
         return res.render("donationBin/addDonationBinOperator", {
           title: "BWG | Add Donation Bin Operator",
