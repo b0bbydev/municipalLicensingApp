@@ -48,9 +48,9 @@
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
     <a
-      href="/donationBin/addDonationBinOperator"
+      href="/donationBin/addPropertyOwner"
       class="btn btn-sm btn-primary float-end"
-    >Add Donation Bin Operator</a>
+    >Add Property Owner</a>
   </div>
 </div>
 
@@ -65,10 +65,10 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>Operator Name</th>
-      <th>Operator Address</th>
-      <th>Operator Phone</th>
-      <th>Operator Email</th>
+      <th>Property Owner Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Address</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -76,12 +76,20 @@
     {{#each data}}
       <tr>
         <td>{{this.firstName}} {{this.lastName}}</td>
-        {{#each donationBinOperatorAddresses}}
-          <td>{{this.streetNumber}} {{this.streetName}}</td>
-        {{/each}}
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
-        <td><a href="#" class="btn btn-sm btn-secondary">Edit</a></td>
+        {{#each donationBinPropertyOwnerAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}},
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td><a href="#" class="btn btn-sm btn-secondary">Edit</a>
+          |
+          <a
+            href="/donationBin/addDonationBin/{{this.donationBinPropertyOwnerID}}"
+            class="btn btn-sm btn-secondary"
+          >Add Donation Bin</a></td>
       </tr>
     {{/each}}
   </tbody>

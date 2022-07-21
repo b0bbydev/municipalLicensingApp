@@ -1,1 +1,94 @@
 <h2 class="text-center mt-1">Add Donation Bin</h2>
+<form class="row g-5 m-auto" method="POST">
+  <div class="col-md-7 m-auto mt-5">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4 class="mt-2">Donation Bin Information</h4>
+    <hr />
+    <div class="row">
+      <!-- Colour -->
+      <div class="col-sm-6">
+        <label for="Colour" class="form-label">Colour</label>
+        <input
+          type="text"
+          placeholder="Colour"
+          class="form-control"
+          name="colour"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{{formData.colour}}}"
+          maxlength="25"
+        />
+      </div>
+      <!-- Material -->
+      <div class="col-sm-6">
+        <label for="Material" class="form-label">Material</label>
+        <input
+          type="text"
+          placeholder="Material"
+          class="form-control"
+          name="material"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{{formData.material}}}"
+          maxlength="25"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Pickup Schedule -->
+      <div class="col">
+        <label for="Pickup Schedule" class="form-label">Pickup Schedule</label>
+        <textarea
+          type="text"
+          name="pickupSchedule"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.pickupSchedule}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Items Collected -->
+      <div class="col">
+        <label for="Items Collected" class="form-label">Items Collected</label>
+        <textarea
+          type="text"
+          name="itemsCollected"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.itemCollected}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Notes -->
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.notes}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

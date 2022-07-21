@@ -2,11 +2,10 @@ var express = require("express");
 var router = express.Router();
 // models.
 var DonationBin = require("../../models/donationBin/donationBin");
-var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
-var DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
+var DonationBinPropertyOwner = require("../../models/donationBin/donationBinPropertyOwner");
+var DonationBinPropertyOwnerAddress = require("../../models/donationBin/donationBinPropertyOwnerAddress");
 // pagination lib.
 const paginate = require("express-paginate");
-const DonationBinCharity = require("../../models/donationBin/donationBinCharity");
 
 /* GET /donationBin */
 router.get("/", async (req, res, next) => {
@@ -15,15 +14,12 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  DonationBinOperator.findAndCountAll({
+  DonationBinPropertyOwner.findAndCountAll({
     limit: req.query.limit,
     offset: req.skip,
     include: [
       {
-        model: DonationBinOperatorAddress,
-      },
-      {
-        model: DonationBinCharity,
+        model: DonationBinPropertyOwnerAddress,
       },
     ],
   }).then((results) => {

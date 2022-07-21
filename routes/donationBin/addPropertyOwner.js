@@ -2,12 +2,12 @@ var express = require("express");
 var router = express.Router();
 // models.
 var Dropdown = require("../../models/dropdownManager/dropdown");
-var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
-const DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
+var DonationBinPropertyOwner = require("../../models/donationBin/donationBinPropertyOwner");
+var DonationBinPropertyOwnerAddress = require("../../models/donationBin/donationBinPropertyOwnerAddress");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /donationBin/addDonationBinOperator */
+/* GET /donationBin/addPropertyOwner */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -21,8 +21,8 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  return res.render("donationBin/addDonationBinOperator", {
-    title: "BWG | Add Donation Bin Operator",
+  return res.render("donationBin/addPropertyOwner", {
+    title: "BWG | Add Property Owner",
     errorMessages: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
@@ -30,7 +30,7 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-/* POST /donationBin/addDonationBinOperator */
+/* POST /donationBin/addPropertyOwner */
 router.post("/", async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);
@@ -40,8 +40,8 @@ router.post("/", async (req, res, next) => {
 
   // if errors is NOT empty (if there are errors...).
   if (!errors.isEmpty()) {
-    return res.render("donationBin/addDonationBinOperator", {
-      title: "BWG | Add Donation Bin Operator",
+    return res.render("donationBin/addPropertyOwner", {
+      title: "BWG | Add Property Owner",
       errorMessages: errorArray[0].msg,
       email: req.session.email,
       auth: req.session.auth, // authorization.
@@ -52,12 +52,6 @@ router.post("/", async (req, res, next) => {
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
         email: req.body.email,
-        licenseNumber: req.body.licenseNumber,
-        photoID: req.body.photoID,
-        charityInformation: req.body.charityInformation,
-        ownerConsent: req.body.ownerConsent,
-        certificateOfInsurance: req.body.certificateOfInsurance,
-        sitePlan: req.body.sitePlan,
         streetNumber: req.body.streetNumber,
         streetName: req.body.streetName,
         town: req.body.town,
@@ -65,19 +59,13 @@ router.post("/", async (req, res, next) => {
       },
     });
   } else {
-    DonationBinOperator.create(
+    DonationBinPropertyOwner.create(
       {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
         email: req.body.email,
-        licenseNumber: req.body.licenseNumber,
-        photoID: req.body.photoID,
-        charityInformation: req.body.charityInformation,
-        ownerConsent: req.body.ownerConsent,
-        certificateOfInsurance: req.body.certificateOfInsurance,
-        sitePlan: req.body.sitePlan,
-        donationBinOperatorAddresses: [
+        donationBinPropertyOwnerAddresses: [
           {
             streetNumber: req.body.streetNumber,
             streetName: req.body.streetName,
@@ -87,13 +75,13 @@ router.post("/", async (req, res, next) => {
         ],
       },
       {
-        include: [DonationBinOperatorAddress],
+        include: [DonationBinPropertyOwnerAddress],
       }
     )
       .then(res.redirect("/donationBin"))
       .catch((err) => {
-        return res.render("donationBin/addDonationBinOperator", {
-          title: "BWG | Add Donation Bin Operator",
+        return res.render("donationBin/addPropertyOwner", {
+          title: "BWG | Add Property Owner",
           message: "Page Error!",
         });
       });
