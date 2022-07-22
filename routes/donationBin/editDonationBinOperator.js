@@ -5,7 +5,7 @@ var Dropdown = require("../../models/dropdownManager/dropdown");
 var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
 const DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /donationBin/editDonationBinOperator/:id */
 router.get("/:id", async (req, res, next) => {
@@ -58,88 +58,137 @@ router.get("/:id", async (req, res, next) => {
 });
 
 /* POST /donationBin/editDonationBinOperator/:id */
-router.post("/:id", async (req, res, next) => {
-  // server side validation.
-  const errors = validationResult(req);
+router.post(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  body("firstName")
+    .if(body("firstName").notEmpty())
+    .matches(/^[a-zA-Z\'-]*$/)
+    .withMessage("Invalid First Name Entry!")
+    .trim(),
+  body("lastName")
+    .if(body("lastName").notEmpty())
+    .matches(/^[a-zA-Z\'-]*$/)
+    .withMessage("Invalid Last Name Entry!")
+    .trim(),
+  body("phoneNumber")
+    .if(body("phoneNumber").notEmpty())
+    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .withMessage("Invalid Phone Number Entry!")
+    .trim(),
+  body("email")
+    .if(body("email").notEmpty())
+    .isEmail()
+    .withMessage("Invalid Email Entry!")
+    .trim(),
+  body("licenseNumber")
+    .if(body("licenseNumber").notEmpty())
+    .matches(/^[a-zA-Z0-9\/\-,.' ]*$/)
+    .withMessage("Invalid License Number Entry!")
+    .trim(),
+  body("streetNumber")
+    .if(body("streetNumber").notEmpty())
+    .matches(/^[0-9. ]*$/)
+    .withMessage("Invalid Street Number Entry!")
+    .trim(),
+  body("streetName")
+    .if(body("streetName").notEmpty())
+    .matches(/^[a-zA-Z. ]*$/)
+    .withMessage("Invalid Street Name Entry!")
+    .trim(),
+  body("town")
+    .if(body("town").notEmpty())
+    .matches(/^[a-zA-Z, ]*$/)
+    .withMessage("Invalid Town Entry!")
+    .trim(),
+  body("postalCode")
+    .if(body("postalCode").notEmpty())
+    .matches(/^[a-zA-Z0-9- ]*$/)
+    .withMessage("Invalid Postal Code Entry!")
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // use built-in array() to convert Result object to array for custom error messages.
-  var errorArray = errors.array();
-  // get streets.
-  var streets = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 13, // streets
-    },
-  });
-
-  // if errors is NOT empty (if there are errors...).
-  if (!errors.isEmpty()) {
-    return res.render("donationBin/editDonationBinOperator", {
-      title: "BWG | Edit Donation Bin Operator",
-      errorMessages: errorArray[0].msg,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      // save form values if submission is unsuccessful.
-      formData: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        phoneNumber: req.body.phoneNumber,
-        email: req.body.email,
-        licenseNumber: req.body.licenseNumber,
-        photoID: req.body.photoID,
-        charityInformation: req.body.charityInformation,
-        ownerConsent: req.body.ownerConsent,
-        certificateOfInsurance: req.body.certificateOfInsurance,
-        sitePlan: req.body.sitePlan,
-        streetNumber: req.body.streetNumber,
-        streetName: req.body.streetName,
-        town: req.body.town,
-        postalCode: req.body.postalCode,
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
+    // get streets.
+    var streets = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 13, // streets
       },
     });
-  } else {
-    DonationBinOperator.update(
-      {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        phoneNumber: req.body.phoneNumber,
-        email: req.body.email,
-        licenseNumber: req.body.licenseNumber,
-        photoID: req.body.photoID,
-        charityInformation: req.body.charityInformation,
-        ownerConsent: req.body.ownerConsent,
-        certificateOfInsurance: req.body.certificateOfInsurance,
-        sitePlan: req.body.sitePlan,
-        donationBinOperatorAddresses: [
-          {
-            streetNumber: req.body.streetNumber,
-            streetName: req.body.streetName,
-            town: req.body.town,
-            postalCode: req.body.postalCode,
-          },
-        ],
-      },
-      {
-        where: {
-          donationBinOperatorID: req.params.id,
+
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("donationBin/editDonationBinOperator", {
+        title: "BWG | Edit Donation Bin Operator",
+        errorMessages: errorArray[0].msg,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        streets: streets,
+        // save form values if submission is unsuccessful.
+        formData: {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          phoneNumber: req.body.phoneNumber,
+          email: req.body.email,
+          licenseNumber: req.body.licenseNumber,
+          photoID: req.body.photoID,
+          charityInformation: req.body.charityInformation,
+          ownerConsent: req.body.ownerConsent,
+          certificateOfInsurance: req.body.certificateOfInsurance,
+          sitePlan: req.body.sitePlan,
+          streetNumber: req.body.streetNumber,
+          streetName: req.body.streetName,
+          town: req.body.town,
+          postalCode: req.body.postalCode,
         },
-      },
-      {
-        include: [DonationBinOperatorAddress],
-      }
-    )
-      .then(() => {
-        return res.redirect(
-          "/donationBin/operators/" + req.session.donationBinPropertyOwnerID
-        );
-      })
-      .catch((err) => {
-        return res.render("donationBin/editDonationBinOperator", {
-          title: "BWG | Edit Donation Bin Operator",
-          message: "Page Error!",
-        });
       });
+    } else {
+      DonationBinOperator.update(
+        {
+          firstName: req.body.firstName,
+          lastName: req.body.lastName,
+          phoneNumber: req.body.phoneNumber,
+          email: req.body.email,
+          licenseNumber: req.body.licenseNumber,
+          photoID: req.body.photoID,
+          charityInformation: req.body.charityInformation,
+          ownerConsent: req.body.ownerConsent,
+          certificateOfInsurance: req.body.certificateOfInsurance,
+          sitePlan: req.body.sitePlan,
+          donationBinOperatorAddresses: [
+            {
+              streetNumber: req.body.streetNumber,
+              streetName: req.body.streetName,
+              town: req.body.town,
+              postalCode: req.body.postalCode,
+            },
+          ],
+        },
+        {
+          where: {
+            donationBinOperatorID: req.params.id,
+          },
+        },
+        {
+          include: [DonationBinOperatorAddress],
+        }
+      )
+        .then(() => {
+          return res.redirect(
+            "/donationBin/operators/" + req.session.donationBinPropertyOwnerID
+          );
+        })
+        .catch((err) => {
+          return res.render("donationBin/editDonationBinOperator", {
+            title: "BWG | Edit Donation Bin Operator",
+            message: "Page Error!",
+          });
+        });
+    }
   }
-});
+);
 
 module.exports = router;
