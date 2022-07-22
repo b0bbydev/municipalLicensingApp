@@ -2,12 +2,12 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
-const HawkerPeddlerPropertyOwner = require("./hawkerPeddlerPropertyOwner");
+const HawkerPeddlerBusiness = require("./hawkerPeddlerBusiness");
 
-const HawkerPeddlerPropertyOwnerAddress = sequelize.define(
-  "hawkerPeddlerPropertyOwnerAddress",
+const HawkerPeddlerBusinessAddress = sequelize.define(
+  "hawkerPeddlerBusinessAddress",
   {
-    hawkerPeddlerPropertyOwnerAddressID: {
+    hawkerPeddlerBusinessAddressID: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
@@ -36,8 +36,8 @@ const HawkerPeddlerPropertyOwnerAddress = sequelize.define(
   }
 );
 
-HawkerPeddlerPropertyOwner.hasMany(HawkerPeddlerPropertyOwnerAddress, {
-  foreignKey: "hawkerPeddlerPropertyOwnerID",
+HawkerPeddlerBusiness.hasMany(HawkerPeddlerBusinessAddress, {
+  foreignKey: "hawkerPeddlerBusinessID",
 });
 
-module.exports = HawkerPeddlerPropertyOwnerAddress;
+module.exports = HawkerPeddlerBusiness;
