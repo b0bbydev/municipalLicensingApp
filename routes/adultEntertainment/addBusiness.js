@@ -55,7 +55,7 @@ router.post(
     .trim(),
   body("streetName")
     .if(body("streetName").notEmpty())
-    .matches(/^[a-zA-Z. ]*$/)
+    .matches(/^[a-zA-Z0-9. ]*$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("poBoxAptRR")

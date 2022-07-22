@@ -12,11 +12,14 @@ router.get("/:id", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
+  req.session.hawkerPeddlerPropertyID = req.params.id;
+
   return res.render("hawkerPeddler/businesses", {
     title: "BWG | Hawker & Peddler Businesses",
     errorMessages: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
+    hawkerPeddlerPropertyID: req.session.hawkerPeddlerPropertyID,
   });
 });
 
