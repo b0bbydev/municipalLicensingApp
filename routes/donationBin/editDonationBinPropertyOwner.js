@@ -136,25 +136,28 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          donationBinCharityID: req.session.donationBinCharityID,
-          donationBinPropertyOwnerAddresses: [
+        },
+        {
+          where: {
+            donationBinPropertyOwnerID: req.params.id,
+          },
+        }
+      )
+        .then(() => {
+          DonationBinPropertyOwnerAddress.update(
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
             },
-          ],
-        },
-        {
-          where: {
-            donationBinPropertyOwnerID: req.params.id,
-          },
-        },
-        {
-          include: [DonationBinPropertyOwnerAddress],
-        }
-      )
+            {
+              where: {
+                donationBinPropertyOwnerID: req.params.id,
+              },
+            }
+          );
+        })
         .then(() => {
           return res.redirect(
             "/donationBin/propertyOwner/" + req.session.donationBinCharityID

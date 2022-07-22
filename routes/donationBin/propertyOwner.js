@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 // models.
 var DonationBinPropertyOwner = require("../../models/donationBin/donationBinPropertyOwner");
+var DonationBinPropertyOwnerAddress = require("../../models/donationBin/donationBinPropertyOwnerAddress");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -24,6 +25,11 @@ router.get("/:id", async (req, res, next) => {
     where: {
       donationBinCharityID: req.session.donationBinCharityID,
     },
+    include: [
+      {
+        model: DonationBinPropertyOwnerAddress,
+      },
+    ],
   }).then((results) => {
     // for pagination.
     const itemCount = results.count;

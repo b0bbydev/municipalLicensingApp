@@ -158,24 +158,28 @@ router.post(
           ownerConsent: req.body.ownerConsent,
           certificateOfInsurance: req.body.certificateOfInsurance,
           sitePlan: req.body.sitePlan,
-          donationBinOperatorAddresses: [
+        },
+        {
+          where: {
+            donationBinOperatorID: req.params.id,
+          },
+        }
+      )
+        .then(() => {
+          DonationBinOperatorAddress.update(
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
             },
-          ],
-        },
-        {
-          where: {
-            donationBinOperatorID: req.params.id,
-          },
-        },
-        {
-          include: [DonationBinOperatorAddress],
-        }
-      )
+            {
+              where: {
+                donationBinOperatorID: req.params.id,
+              },
+            }
+          );
+        })
         .then(() => {
           return res.redirect(
             "/donationBin/operators/" + req.session.donationBinPropertyOwnerID

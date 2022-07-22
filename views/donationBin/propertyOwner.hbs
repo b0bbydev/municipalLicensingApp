@@ -25,6 +25,7 @@
       <th>Property Owner Name</th>
       <th>Phone Number</th>
       <th>Email</th>
+      <th>Address</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -38,6 +39,12 @@
             {{this.lastName}}</a></td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
+        {{#each donationBinPropertyOwnerAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
         <td><a
             class="btn btn-sm btn-secondary"
             href="/donationBin/editDonationBinPropertyOwner/{{this.donationBinPropertyOwnerID}}"
