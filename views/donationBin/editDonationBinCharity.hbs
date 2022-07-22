@@ -1,4 +1,4 @@
-<h2 class="text-center mt-1">Add Donation Bin Charity</h2>
+<h2 class="text-center mt-1">Edit Donation Bin Charity</h2>
 <form class="row g-5 m-auto" method="POST">
   <div class="col-md-7 m-auto mt-5">
     <!-- check for error messages in the session -->
@@ -15,12 +15,12 @@
         <label for="Charity Name" class="form-label">Charity Name*</label>
         <input
           type="text"
-          placeholder="Name"
+          placeholder="Charity Name"
           class="form-control"
           name="charityName"
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
-          value="{{{formData.name}}}"
+          value="{{{formData.charityName}}}"
           maxlength="25"
           required
         />
@@ -96,7 +96,15 @@
       <div class="col-sm-6">
         <label for="Organization Type" class="form-label">Organization Type</label>
         <select class="form-select" name="organizationType">
-          <option disabled selected>Organization Type...</option>
+          {{#if formData.organizationType}}
+            <option
+              value="{{formData.organizationType}}"
+              disabled
+              selected
+            >{{formData.organizationType}}</option>
+          {{else}}
+            <option disabled selected>Organization Type...</option>
+          {{/if}}
           {{#each dropdownValues}}
             {{#if this.isDisabled}}
               <option
