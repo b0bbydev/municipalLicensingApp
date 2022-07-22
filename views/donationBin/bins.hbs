@@ -27,6 +27,7 @@
       <th>Colour</th>
       <th>Material</th>
       <th>Notes</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -37,6 +38,10 @@
         <td>{{this.colour}}</td>
         <td>{{this.material}}</td>
         <td>{{this.notes}}</td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/donationBin/editDonationBin/{{this.donationBinID}}"
+          >Edit</a></td>
       </tr>
     {{/each}}
   </tbody>

@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 // models.
 var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
+var DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
 // pagination lib.
 const paginate = require("express-paginate");
 
@@ -21,6 +22,11 @@ router.get("/:id", async (req, res, next) => {
     where: {
       donationBinPropertyOwnerID: req.session.donationBinPropertyOwnerID,
     },
+    include: [
+      {
+        model: DonationBinOperatorAddress,
+      },
+    ],
   }).then((results) => {
     // for pagination.
     const itemCount = results.count;

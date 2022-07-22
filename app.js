@@ -81,8 +81,12 @@ var editStreetClosurePermitRouter = require("./routes/streetClosurePermit/editPe
 
 /* Donation Bin related routes */
 var donationBinRouter = require("./routes/donationBin/index");
+
 var addDonationBinRouter = require("./routes/donationBin/addDonationBin");
+var editDonationBinRouter = require("./routes/donationBin/editDonationBin");
+
 var addDonationBinOperatorRouter = require("./routes/donationBin/addDonationBinOperator");
+var editDonationBinOperatorRouter = require("./routes/donationBin/editDonationBinOperator");
 
 var addPropertyOwnerRouter = require("./routes/donationBin/addPropertyOwner");
 var editPropertyOwnerRouter = require("./routes/donationBin/editDonationBinPropertyOwner");
@@ -259,8 +263,12 @@ app.use("/streetClosurePermit/editPermit", editStreetClosurePermitRouter);
 
 /* Donation Bin related routes */
 app.use("/donationBin", donationBinRouter);
+
 app.use("/donationBin/addDonationBin", addDonationBinRouter);
+app.use("/donationBin/editDonationBin", editDonationBinRouter);
+
 app.use("/donationBin/addDonationBinOperator", addDonationBinOperatorRouter);
+app.use("/donationBin/editDonationBinOperator", editDonationBinOperatorRouter);
 
 app.use("/donationBin/addPropertyOwner", addPropertyOwnerRouter);
 app.use("/donationBin/editDonationBinPropertyOwner", editPropertyOwnerRouter);

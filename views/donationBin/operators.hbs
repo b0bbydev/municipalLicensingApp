@@ -23,8 +23,16 @@
   <thead>
     <tr>
       <th>Operator Name</th>
+      <th>Operator Address</th>
       <th>Phone Number</th>
       <th>Email</th>
+      <th>License Number</th>
+      <th>Photo ID</th>
+      <th>Charity Information</th>
+      <th>Site Plan</th>
+      <th>Certificate of Insurance</th>
+      <th>Owner Consent</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -35,8 +43,24 @@
             href="/donationBin/bins/{{this.donationBinOperatorID}}"
           >{{this.firstName}}
             {{this.lastName}}</a></td>
+        {{#each donationBinOperatorAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
+        <td>{{this.licenseNumber}}</td>
+        <td>{{this.photoID}}</td>
+        <td>{{this.charityInformation}}</td>
+        <td>{{this.sitePlan}}</td>
+        <td>{{this.certificateOfInsurance}}</td>
+        <td>{{this.ownerConsent}}</td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/donationBin/editDonationBinOperator/{{this.donationBinOperatorID}}"
+          >Edit</a></td>
       </tr>
     {{/each}}
   </tbody>
