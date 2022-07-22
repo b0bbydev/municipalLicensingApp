@@ -103,7 +103,8 @@ router.post(
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           itemsForSale: req.body.itemsForSale,
-          hawkerPeddlerPropertyID: req.session.hawkerPeddlerPropertyID,
+          hawkerPeddlerPropertyOwnerID:
+            req.session.hawkerPeddlerPropertyOwnerID,
           hawkerPeddlerBusinessAddresses: [
             {
               streetNumber: req.body.streetNumber,
