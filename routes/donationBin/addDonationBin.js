@@ -6,7 +6,7 @@ var DonationBin = require("../../models/donationBin/donationBin");
 const { body, validationResult } = require("express-validator");
 
 /* GET /donationBin/addDonationBin/:id */
-router.get("/:id", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -21,7 +21,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 /* POST /donationBin/addDonationBin/:id */
-router.post("/:id", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);
 
@@ -52,9 +52,11 @@ router.post("/:id", async (req, res, next) => {
       pickupSchedule: req.body.pickupSchedule,
       itemsCollected: req.body.itemsCollected,
       notes: req.body.notes,
-      donationBinPropertyOwnerID: req.params.id,
+      donationBinOperatorID: req.session.donationBinOperatorID,
     })
-      .then(res.redirect("/donationBin"))
+      .then(
+        res.redirect("/donationBin/bins/" + req.session.donationBinOperatorID)
+      )
       .catch((err) => {
         return res.render("donationBin/addDonationBin", {
           title: "BWG | Add Donation Bin",

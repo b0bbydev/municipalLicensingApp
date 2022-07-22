@@ -87,6 +87,7 @@ var addPropertyOwnerRouter = require("./routes/donationBin/addPropertyOwner");
 var propertyOwnerRouter = require("./routes/donationBin/propertyOwner");
 var addDonationBinCharityRouter = require("./routes/donationBin/addDonationBinCharity");
 var donationBinOperatorsRoute = require("./routes/donationBin/operators");
+var binsRoute = require("./routes/donationBin/bins");
 
 var app = express();
 
@@ -258,6 +259,7 @@ app.use("/donationBin/addPropertyOwner", addPropertyOwnerRouter);
 app.use("/donationBin/propertyOwner", propertyOwnerRouter);
 app.use("/donationBin/addDonationBinCharity", addDonationBinCharityRouter);
 app.use("/donationBin/operators", donationBinOperatorsRoute);
+app.use("/donationBin/bins", binsRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

@@ -8,7 +8,7 @@ const DonationBinOperatorAddress = require("../../models/donationBin/donationBin
 const { body, validationResult } = require("express-validator");
 
 /* GET /donationBin/addDonationBinOperator/:id */
-router.get("/:id", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -31,7 +31,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 /* POST /donationBin/addDonationBinOperator/:id */
-router.post("/:id", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);
 
@@ -77,7 +77,7 @@ router.post("/:id", async (req, res, next) => {
         ownerConsent: req.body.ownerConsent,
         certificateOfInsurance: req.body.certificateOfInsurance,
         sitePlan: req.body.sitePlan,
-        donationBinPropertyOwnerID: req.params.id,
+        donationBinPropertyOwnerID: req.session.donationBinPropertyOwnerID,
         donationBinOperatorAddresses: [
           {
             streetNumber: req.body.streetNumber,
@@ -93,7 +93,7 @@ router.post("/:id", async (req, res, next) => {
     )
       .then(() => {
         return res.redirect(
-          "/donationBin/propertyOwner/" + req.session.donationBinCharityID
+          "/donationBin/operators/" + req.session.donationBinPropertyOwnerID
         );
       })
       .catch((err) => {
