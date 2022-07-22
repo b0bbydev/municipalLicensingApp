@@ -102,6 +102,8 @@ var binsRoute = require("./routes/donationBin/bins");
 /* Hawker & Peddler related routes */
 var hawkerPeddlerRoute = require("./routes/hawkerPeddler/index");
 
+var hawkerPeddlerAddBusinessRoute = require("./routes/hawkerPeddler/addBusiness");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -286,6 +288,8 @@ app.use("/donationBin/bins", binsRoute);
 
 /* Hawker & Peddler related routes */
 app.use("/hawkerPeddler", hawkerPeddlerRoute);
+
+app.use("/hawkerPeddler/addBusiness", hawkerPeddlerAddBusinessRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

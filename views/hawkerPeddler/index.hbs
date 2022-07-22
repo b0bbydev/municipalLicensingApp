@@ -1,1 +1,53 @@
 <h2 class="text-center mt-1">Hawker & Peddler Licensing</h2>
+<div class="row">
+  <div class="col mb-1">
+    <h4>Businesses</h4>
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
+    <a
+      href="/hawkerPeddler/addBusiness"
+      class="btn btn-sm btn-primary float-end"
+    >Add A Business</a>
+  </div>
+</div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<!-- Table -->
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>TH</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td>TD</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<nav id="pagination">
+  <ul class="pagination pagination-sm">
+    {{#if paginate.hasPreviousPages}}
+      <li class="page-item"><a class="page-link" href="{{prev}}">Prev</a></li>
+    {{/if}}
+    {{#each pages}}
+      <li class="page-item">
+        <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
+    {{/each}}
+    {{#if hasMorePages}}
+      <li class="page-item"><a
+          class="page-link"
+          href="{{paginate.href}}"
+        >Next</a></li>
+    {{/if}}
+  </ul>
+</nav>
