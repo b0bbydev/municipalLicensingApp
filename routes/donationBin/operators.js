@@ -1,14 +1,11 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var DonationBinPropertyOwner = require("../../models/donationBin/donationBinPropertyOwner");
-// sequelize.
-const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
+var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
 // pagination lib.
 const paginate = require("express-paginate");
 
-/* GET /donationBin/propertyOwner/:id */
+/* GET /donationBin/operators/:id */
 router.get("/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -16,21 +13,21 @@ router.get("/:id", async (req, res, next) => {
   req.session.messages = [];
 
   // send charityID to session.
-  req.session.donationBinCharityID = req.params.id;
+  req.session.donationBinPropertyOwnerID = req.params.id;
 
-  DonationBinPropertyOwner.findAndCountAll({
+  DonationBinOperator.findAndCountAll({
     limit: req.query.limit,
     offset: req.skip,
     where: {
-      donationBinCharityID: req.session.donationBinCharityID,
+      donationBinPropertyOwnerID: req.session.donationBinPropertyOwnerID,
     },
   }).then((results) => {
     // for pagination.
     const itemCount = results.count;
     const pageCount = Math.ceil(results.count / req.query.limit);
 
-    return res.render("donationBin/propertyOwner", {
-      title: "BWG | Property Owner",
+    return res.render("donationBin/operators", {
+      title: "BWG | Donation Bin Operators",
       errorMessages: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.

@@ -49,25 +49,18 @@ router.post("/", async (req, res, next) => {
       dropdownValues: dropdownValues,
       // save form values if submission is unsuccessful.
       formData: {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        phoneNumber: req.body.phoneNumber,
-        email: req.body.email,
-        licenseNumber: req.body.licenseNumber,
-        photoID: req.body.photoID,
-        charityInformation: req.body.charityInformation,
-        ownerConsent: req.body.ownerConsent,
-        certificateOfInsurance: req.body.certificateOfInsurance,
-        sitePlan: req.body.sitePlan,
-        streetNumber: req.body.streetNumber,
-        streetName: req.body.streetName,
-        town: req.body.town,
-        postalCode: req.body.postalCode,
+        charityName: req.body.charityName,
+        charityPhoneNumber: req.body.charityPhoneNumber,
+        charityEmail: req.body.charityEmail,
+        issueDate: req.body.issueDate,
+        expiryDate: req.body.expiryDate,
+        registrationNumber: req.body.registrationNumber,
+        organizationType: req.body.organizationType,
       },
     });
   } else {
     DonationBinCharity.create({
-      name: req.body.name,
+      charityName: req.body.charityName,
       charityPhoneNumber: req.body.charityPhoneNumber,
       charityEmail: req.body.charityEmail,
       issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),

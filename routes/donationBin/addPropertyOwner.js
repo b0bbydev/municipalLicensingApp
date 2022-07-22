@@ -65,6 +65,7 @@ router.post("/", async (req, res, next) => {
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
         email: req.body.email,
+        donationBinCharityID: req.session.donationBinCharityID,
         donationBinPropertyOwnerAddresses: [
           {
             streetNumber: req.body.streetNumber,
@@ -78,7 +79,11 @@ router.post("/", async (req, res, next) => {
         include: [DonationBinPropertyOwnerAddress],
       }
     )
-      .then(res.redirect("/donationBin"))
+      .then(
+        res.redirect(
+          "/donationBin/propertyOwner/" + req.session.donationBinCharityID
+        )
+      )
       .catch((err) => {
         return res.render("donationBin/addPropertyOwner", {
           title: "BWG | Add Property Owner",

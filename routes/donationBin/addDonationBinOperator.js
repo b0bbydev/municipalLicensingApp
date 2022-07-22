@@ -4,12 +4,11 @@ var router = express.Router();
 var Dropdown = require("../../models/dropdownManager/dropdown");
 var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
 const DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
-const DonationBinCharity = require("../../models/donationBin/donationBinCharity");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /donationBin/addDonationBinOperator */
-router.get("/", async (req, res, next) => {
+/* GET /donationBin/addDonationBinOperator/:id */
+router.get("/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -28,12 +27,11 @@ router.get("/", async (req, res, next) => {
     email: req.session.email,
     auth: req.session.auth, // authorization.
     streets: streets,
-    dropdownValues: dropdownValues,
   });
 });
 
-/* POST /donationBin/addDonationBinOperator */
-router.post("/", async (req, res, next) => {
+/* POST /donationBin/addDonationBinOperator/:id */
+router.post("/:id", async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);
 
@@ -79,6 +77,7 @@ router.post("/", async (req, res, next) => {
         ownerConsent: req.body.ownerConsent,
         certificateOfInsurance: req.body.certificateOfInsurance,
         sitePlan: req.body.sitePlan,
+        donationBinPropertyOwnerID: req.params.id,
         donationBinOperatorAddresses: [
           {
             streetNumber: req.body.streetNumber,
@@ -93,7 +92,9 @@ router.post("/", async (req, res, next) => {
       }
     )
       .then(() => {
-        return res.redirect("/donationBin");
+        return res.redirect(
+          "/donationBin/propertyOwner/" + req.session.donationBinCharityID
+        );
       })
       .catch((err) => {
         return res.render("donationBin/addDonationBinOperator", {

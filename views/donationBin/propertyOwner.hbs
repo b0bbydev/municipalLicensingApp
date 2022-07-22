@@ -23,13 +23,21 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>TH</th>
+      <th>Property Owner Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
       <tr>
-        <td>TD</td>
+        <td><a
+            id="ownerLink"
+            href="/donationBin/operators/{{this.donationBinPropertyOwnerID}}"
+          >{{this.firstName}}
+            {{this.lastName}}</a></td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
       </tr>
     {{/each}}
   </tbody>
