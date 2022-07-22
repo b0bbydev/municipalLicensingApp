@@ -45,8 +45,69 @@
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.organizationType}}</td>
-        <td><a class="btn btn-sm btn-secondary" href="#">Renew</a></td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#donationBinRenewModal"
+          >Renew</a></td>
       </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="donationBinRenewModal"
+        tabindex="-1"
+        aria-labelledby="donationBinRenewModal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Donation Bin Renewal</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <label for="Charity ID" class="form-label">Charity ID</label>
+                    <input
+                      class="form-control"
+                      placeholder="Charity ID"
+                      value="{{this.donationBinCharityID}}"
+                      name="donationBinCharityID"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Charity Name" class="form-label">Charity Name</label>
+                    <input
+                      class="form-control"
+                      placeholder="Charity Name"
+                      value="{{this.charityName}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit Renewal</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     {{/each}}
   </tbody>
 </table>
