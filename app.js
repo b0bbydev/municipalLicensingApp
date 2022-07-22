@@ -32,6 +32,9 @@ var moment = require("moment");
 // authHelper middleware.
 const { isAdmin, isDogLicense, isPolicy } = require("./config/authHelpers");
 
+// const x = require("./models/hawkerPeddler/hawkerPeddlerPropertyOwnerAddress");
+// x.sync();
+
 /* admin related routes */
 var adminRouter = require("./routes/admin/index");
 var adminAddUserRouter = require("./routes/admin/addUser");
@@ -100,6 +103,8 @@ var binsRoute = require("./routes/donationBin/bins");
 
 /* Hawker & Peddler related routes */
 var hawkerPeddlerRoute = require("./routes/hawkerPeddler/index");
+
+var hawkerPeddlerAddPropertyOwnerRoute = require("./routes/hawkerPeddler/addPropertyOwner");
 
 var hawkerPeddlerAddBusinessRoute = require("./routes/hawkerPeddler/addBusiness");
 
@@ -286,6 +291,8 @@ app.use("/donationBin/bins", binsRoute);
 
 /* Hawker & Peddler related routes */
 app.use("/hawkerPeddler", hawkerPeddlerRoute);
+
+app.use("/hawkerPeddler/addPropertyOwner", hawkerPeddlerAddPropertyOwnerRoute);
 
 app.use("/hawkerPeddler/addBusiness", hawkerPeddlerAddBusinessRoute);
 

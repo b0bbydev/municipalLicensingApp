@@ -977,6 +977,118 @@ router.get(
             hasMorePages: paginate.hasNextPages(req)(pageCount),
           });
         });
+      } else if (req.query.filterCategory === "Owner Name") {
+        // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
+        if (req.query.filterValue.trim().indexOf(" ") != -1) {
+          Owner.findAndCountAll({
+            limit: req.query.limit,
+            offset: req.skip,
+            subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+            where: Sequelize.where(
+              Sequelize.fn(
+                "concat",
+                Sequelize.col("firstName"),
+                " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+                Sequelize.col("lastName")
+              ),
+              {
+                [Op.like]: "%" + req.query.filterValue + "%",
+              }
+            ),
+            include: [
+              {
+                model: Address,
+              },
+            ],
+          })
+            .then((results) => {
+              // for pagination.
+              const itemCount = results.count;
+              const pageCount = Math.ceil(results.count / req.query.limit);
+
+              return res.render("dogtags", {
+                title: "BWG | Dog Tags",
+                errorMessages: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                data: results.rows,
+                filterCategory: req.query.filterCategory,
+                filterValue: req.query.filterValue,
+                dropdownValues: dropdownValues,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + results.count,
+                pages: paginate.getArrayPages(req)(
+                  5,
+                  pageCount,
+                  req.query.page
+                ),
+                prev: paginate.href(req)(true),
+                hasMorePages: paginate.hasNextPages(req)(pageCount),
+              });
+            })
+            // catch any scary errors and render page error.
+            .catch((err) =>
+              res.render("dogtags", {
+                title: "BWG | Dogtags",
+                message: "Page Error!",
+              })
+            );
+        } else {
+          Owner.findAndCountAll({
+            limit: req.query.limit,
+            offset: req.skip,
+            subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+            where: {
+              [Op.or]: {
+                firstName: {
+                  [Op.like]: "%" + req.query.filterValue + "%",
+                },
+                lastName: {
+                  [Op.like]: "%" + req.query.filterValue + "%",
+                },
+              },
+            },
+            include: [
+              {
+                model: Address,
+              },
+            ],
+          })
+            .then((results) => {
+              // for pagination.
+              const itemCount = results.count;
+              const pageCount = Math.ceil(results.count / req.query.limit);
+
+              return res.render("dogtags", {
+                title: "BWG | Dog Tags",
+                errorMessages: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                data: results.rows,
+                filterCategory: req.query.filterCategory,
+                filterValue: req.query.filterValue,
+                dropdownValues: dropdownValues,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + results.count,
+                pages: paginate.getArrayPages(req)(
+                  5,
+                  pageCount,
+                  req.query.page
+                ),
+                prev: paginate.href(req)(true),
+                hasMorePages: paginate.hasNextPages(req)(pageCount),
+              });
+            })
+            // catch any scary errors and render page error.
+            .catch((err) =>
+              res.render("dogtags", {
+                title: "BWG | Dogtags",
+                message: "Page Error!",
+              })
+            );
+        }
       } else {
         // format filterCategory to match column name in db - via handy dandy camelize() function.
         var filterCategory = funcHelpers.camelize(req.query.filterCategory);

@@ -1,14 +1,14 @@
 <h2 class="text-center mt-1">Hawker & Peddler Licensing</h2>
 <div class="row">
   <div class="col mb-1">
-    <h4>Businesses</h4>
+    <h4>Property Owners</h4>
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
     <a
-      href="/hawkerPeddler/addBusiness"
+      href="/hawkerPeddler/addPropertyOwner"
       class="btn btn-sm btn-primary float-end"
-    >Add A Business</a>
+    >Add A Property Owner</a>
   </div>
 </div>
 
@@ -23,13 +23,28 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>TH</th>
+      <th>Property Owner Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Address</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
       <tr>
-        <td>TD</td>
+        <td><a
+            id="ownerLink"
+            href="/hawkerPeddler/addBusiness/{{this.hawkerPeddlerPropertyOwnerID}}"
+          >{{this.firstName}}
+            {{this.lastName}}</a></td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        {{#each hawkerPeddlerPropertyOwnerAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
       </tr>
     {{/each}}
   </tbody>
