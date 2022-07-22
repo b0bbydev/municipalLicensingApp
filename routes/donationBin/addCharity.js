@@ -6,10 +6,10 @@ var DonationBinCharity = require("../../models/donationBin/donationBinCharity");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
-const { body, param, validationResult } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 
-/* GET /donationBin/editDonationBinCharity/:id */
-router.get("/:id", async (req, res, next) => {
+/* GET /donationBin/addCharity */
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -22,34 +22,18 @@ router.get("/:id", async (req, res, next) => {
     },
   });
 
-  DonationBinCharity.findOne({
-    where: {
-      donationBinCharityID: req.params.id,
-    },
-  }).then((results) => {
-    return res.render("donationBin/editDonationBinCharity", {
-      title: "BWG | Edit Donation Bin Charity",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      dropdownValues: dropdownValues,
-      formData: {
-        charityName: results.charityName,
-        charityPhoneNumber: results.charityPhoneNumber,
-        charityEmail: results.charityEmail,
-        issueDate: results.issueDate,
-        expiryDate: results.expiryDate,
-        registrationNumber: results.registrationNumber,
-        organizationType: results.organizationType,
-      },
-    });
+  return res.render("donationBin/addCharity", {
+    title: "BWG | Add Donation Bin Charity",
+    errorMessages: messages,
+    email: req.session.email,
+    auth: req.session.auth, // authorization.
+    dropdownValues: dropdownValues,
   });
 });
 
-/* POST /donationBin/editDonationBinCharity/:id */
+/* POST /donationBin/addDonationBinCharity */
 router.post(
-  "/:id",
-  param("id").matches(/^\d+$/).trim(),
+  "/",
   body("charityName")
     .if(body("charityName").notEmpty())
     .matches(/^[a-zA-Z0-9\/\-,.' ]*$/)
@@ -91,8 +75,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("donationBin/editDonationBinCharity", {
-        title: "BWG | Edit Donation Bin Charity",
+      return res.render("donationBin/addCharity", {
+        title: "BWG | Add Donation Bin Charity",
         errorMessages: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -109,28 +93,21 @@ router.post(
         },
       });
     } else {
-      DonationBinCharity.update(
-        {
-          charityName: req.body.charityName,
-          charityPhoneNumber: req.body.charityPhoneNumber,
-          charityEmail: req.body.charityEmail,
-          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
-          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
-          registrationNumber: req.body.registrationNumber,
-          organizationType: req.body.organizationType,
-        },
-        {
-          where: {
-            donationBinCharityID: req.params.id,
-          },
-        }
-      )
+      DonationBinCharity.create({
+        charityName: req.body.charityName,
+        charityPhoneNumber: req.body.charityPhoneNumber,
+        charityEmail: req.body.charityEmail,
+        issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+        expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+        registrationNumber: req.body.registrationNumber,
+        organizationType: req.body.organizationType,
+      })
         .then(() => {
           return res.redirect("/donationBin");
         })
         .catch((err) => {
-          return res.render("donationBin/editDonationBinCharity", {
-            title: "BWG | Edit Donation Bin Charity",
+          return res.render("donationBin/addCharity", {
+            title: "BWG | Add Donation Bin Charity",
             message: "Page Error!",
           });
         });

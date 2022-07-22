@@ -5,10 +5,10 @@ var Dropdown = require("../../models/dropdownManager/dropdown");
 var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
 const DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
 // express-validate.
-const { body, param, validationResult } = require("express-validator");
+const { body, validationResult } = require("express-validator");
 
-/* GET /donationBin/editDonationBinOperator/:id */
-router.get("/:id", async (req, res, next) => {
+/* GET /donationBin/addOperator */
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -21,46 +21,18 @@ router.get("/:id", async (req, res, next) => {
     },
   });
 
-  DonationBinOperator.findOne({
-    where: {
-      donationBinOperatorID: req.params.id,
-    },
-    include: [
-      {
-        model: DonationBinOperatorAddress,
-      },
-    ],
-  }).then((results) => {
-    return res.render("donationBin/editDonationBinOperator", {
-      title: "BWG | Edit Donation Bin Operator",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      formData: {
-        firstName: results.firstName,
-        lastName: results.lastName,
-        phoneNumber: results.phoneNumber,
-        email: results.email,
-        licenseNumber: results.licenseNumber,
-        photoID: results.photoID,
-        charityInformation: results.charityInformation,
-        ownerConsent: results.ownerConsent,
-        certificateOfInsurance: results.certificateOfInsurance,
-        sitePlan: results.sitePlan,
-        streetNumber: results.donationBinOperatorAddresses[0].streetNumber,
-        streetName: results.donationBinOperatorAddresses[0].streetName,
-        town: results.donationBinOperatorAddresses[0].town,
-        postalCode: results.donationBinOperatorAddresses[0].postalCode,
-      },
-    });
+  return res.render("donationBin/addOperator", {
+    title: "BWG | Add Donation Bin Operator",
+    errorMessages: messages,
+    email: req.session.email,
+    auth: req.session.auth, // authorization.
+    streets: streets,
   });
 });
 
-/* POST /donationBin/editDonationBinOperator/:id */
+/* POST /donationBin/addDonationBinOperator */
 router.post(
-  "/:id",
-  param("id").matches(/^\d+$/).trim(),
+  "/",
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\'-]*$/)
@@ -112,6 +84,7 @@ router.post(
 
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
+
     // get streets.
     var streets = await Dropdown.findAll({
       where: {
@@ -121,8 +94,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("donationBin/editDonationBinOperator", {
-        title: "BWG | Edit Donation Bin Operator",
+      return res.render("donationBin/addOperator", {
+        title: "BWG | Add Donation Bin Operator",
         errorMessages: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -146,7 +119,7 @@ router.post(
         },
       });
     } else {
-      DonationBinOperator.update(
+      DonationBinOperator.create(
         {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
@@ -158,36 +131,28 @@ router.post(
           ownerConsent: req.body.ownerConsent,
           certificateOfInsurance: req.body.certificateOfInsurance,
           sitePlan: req.body.sitePlan,
-        },
-        {
-          where: {
-            donationBinOperatorID: req.params.id,
-          },
-        }
-      )
-        .then(() => {
-          DonationBinOperatorAddress.update(
+          donationBinPropertyOwnerID: req.session.donationBinPropertyOwnerID,
+          donationBinOperatorAddresses: [
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
             },
-            {
-              where: {
-                donationBinOperatorID: req.params.id,
-              },
-            }
-          );
-        })
+          ],
+        },
+        {
+          include: [DonationBinOperatorAddress],
+        }
+      )
         .then(() => {
           return res.redirect(
             "/donationBin/operators/" + req.session.donationBinPropertyOwnerID
           );
         })
         .catch((err) => {
-          return res.render("donationBin/editDonationBinOperator", {
-            title: "BWG | Edit Donation Bin Operator",
+          return res.render("donationBin/addOperator", {
+            title: "BWG | Add Donation Bin Operator",
             message: "Page Error!",
           });
         });

@@ -7,7 +7,7 @@ var DonationBinPropertyOwnerAddress = require("../../models/donationBin/donation
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
-/* GET /donationBin/editDonationBinPropertyOwner/:id */
+/* GET /donationBin/editPropertyOwner/:id */
 router.get("/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -31,7 +31,7 @@ router.get("/:id", async (req, res, next) => {
       },
     ],
   }).then((results) => {
-    return res.render("donationBin/editDonationBinPropertyOwner", {
+    return res.render("donationBin/editPropertyOwner", {
       title: "BWG | Edit Property Owner",
       errorMessages: messages,
       email: req.session.email,
@@ -111,7 +111,7 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("donationBin/editDonationBinPropertyOwner", {
+      return res.render("donationBin/editPropertyOwner", {
         title: "BWG | Edit Property Owner",
         errorMessages: errorArray[0].msg,
         email: req.session.email,
@@ -164,7 +164,7 @@ router.post(
           );
         })
         .catch((err) => {
-          return res.render("donationBin/editDonationBinPropertyOwner", {
+          return res.render("donationBin/editPropertyOwner", {
             title: "BWG | Edit Property Owner",
             message: "Page Error!",
           });
