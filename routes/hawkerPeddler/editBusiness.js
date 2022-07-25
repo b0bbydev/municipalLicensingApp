@@ -14,9 +14,6 @@ router.get("/:id", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  // send hawkerPeddlerBusinessID to session.
-  req.session.hawkerPeddlerBusinessID = req.params.id;
-
   // get dropdown values.
   var dropdownValues = await Dropdown.findAll({
     where: {

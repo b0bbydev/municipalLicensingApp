@@ -107,6 +107,7 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
+          hawkerPeddlerBusinessID: req.session.hawkerPeddlerBusinessID,
           hawkerPeddlerPropertyOwnerAddresses: [
             {
               streetNumber: req.body.streetNumber,
@@ -121,7 +122,9 @@ router.post(
         }
       )
         .then(() => {
-          return res.redirect("/hawkerPeddler");
+          return res.redirect(
+            "/hawkerPeddler/business/" + req.session.hawkerPeddlerBusinessID
+          );
         })
         .catch((err) => {
           return res.render("hawkerPeddler/addPropertyOwner", {
