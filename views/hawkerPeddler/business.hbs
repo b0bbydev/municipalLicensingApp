@@ -1,15 +1,4 @@
-<h2 class="text-center mt-1">Hawker & Peddler Businesses</h2>
-<div class="row">
-  <div class="col mb-1">
-    {{#if queryCount}}
-      <strong class="float-start mt-2">{{queryCount}}</strong>
-    {{/if}}
-    <a
-      href="/hawkerPeddler/addPropertyOwner"
-      class="btn btn-sm btn-primary float-end"
-    >Add A Property Owner</a>
-  </div>
-</div>
+<h2 class="text-center mt-1">Hawker & Peddler Business</h2>
 
 <!-- check for error messages in the session -->
 {{#if message}}
@@ -18,7 +7,19 @@
   </div>
 {{/if}}
 
-<!-- Table -->
+<!-- Property Owners Table -->
+<div class="row">
+  <h4>Property Owners</h4>
+  <div class="col mb-1">
+    {{#if propertyOwnersCount}}
+      <strong class="float-start mt-2">{{propertyOwnersCount}}</strong>
+    {{/if}}
+    <a
+      href="/hawkerPeddler/addPropertyOwner"
+      class="btn btn-sm btn-primary float-end"
+    >Add A Property Owner</a>
+  </div>
+</div>
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
@@ -30,7 +31,7 @@
     </tr>
   </thead>
   <tbody>
-    {{#each data}}
+    {{#each propertyOwners}}
       <tr>
         <td>{{this.firstName}} {{this.lastName}}</td>
         <td>{{this.phoneNumber}}</td>
@@ -45,6 +46,47 @@
             class="btn btn-sm btn-secondary"
             href="/hawkerPeddler/editPropertyOwner/{{this.hawkerPeddlerPropertyOwnerID}}"
           >Edit</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<!-- Applicants Table -->
+<div class="row">
+  <h4>Applicants</h4>
+  <div class="col mb-1">
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
+    <a
+      href="/hawkerPeddler/addApplicant"
+      class="btn btn-sm btn-primary float-end"
+    >Add An Applicant</a>
+  </div>
+</div>
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Property Owner Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each propertyOwners}}
+      <tr>
+        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        {{#each hawkerPeddlerPropertyOwnerAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td><a class="btn btn-sm btn-secondary" href="#">Edit</a></td>
       </tr>
     {{/each}}
   </tbody>

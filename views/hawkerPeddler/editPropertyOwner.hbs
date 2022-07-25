@@ -1,0 +1,154 @@
+<h2 class="text-center mt-1">Edit Property Owner</h2>
+<form class="row g-5 m-auto" method="POST">
+  <div class="col-md-7 m-auto mt-5">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Property Owner Information</h4>
+    <hr />
+    <div class="row">
+      <!-- First Name -->
+      <div class="col-sm-6">
+        <label for="First Name" class="form-label">First Name*</label>
+        <input
+          type="text"
+          placeholder="First Name"
+          class="form-control"
+          name="firstName"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{{formData.firstName}}}"
+          maxlength="25"
+          required
+        />
+      </div>
+      <!-- Last Name -->
+      <div class="col-sm-6">
+        <label for="Last Name" class="form-label">Last Name</label>
+        <input
+          type="text"
+          placeholder="Last Name"
+          class="form-control"
+          name="lastName"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.lastName}}"
+          maxlength="25"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Phone Number -->
+      <div class="col-sm-6">
+        <label for="Phone Number" class="form-label">Phone Number</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Phone Number"
+          name="phoneNumber"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.phoneNumber}}"
+        />
+      </div>
+      <!-- Email -->
+      <div class="col-sm-6">
+        <label for="Email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Email"
+          name="email"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.email}}"
+          maxlength="50"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Street Number -->
+      <div class="col-sm-6">
+        <label for="Street Number" class="form-label">Street Number*</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Street Number"
+          name="streetNumber"
+          value="{{formData.streetNumber}}"
+          required
+        />
+      </div>
+      <!-- Street Name -->
+      <div class="col-sm-6">
+        <label for="Street Name" class="form-label">Street Name*</label>
+        <input
+          class="form-control"
+          id="streetName"
+          title="streetName"
+          name="streetName"
+          list="streets"
+          placeholder="Street Name..."
+          value="{{{formData.streetName}}}"
+          required
+        />
+        <datalist id="streets">
+          {{#each dropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </datalist>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Town -->
+      <div class="col-sm-6">
+        <label for="Town" class="form-label">Town</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Town"
+          name="town"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.town}}"
+          maxlength="30"
+        />
+      </div>
+      <!-- Postal Code -->
+      <div class="col-sm-6">
+        <label for="Postal Code" class="form-label">Postal Code</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Postal Code"
+          name="postalCode"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.postalCode}}"
+          maxlength="15"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

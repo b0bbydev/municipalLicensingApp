@@ -14,22 +14,24 @@ router.get("/:id", async (req, res, next) => {
   // send hawkerPeddlerBusinessID to session.
   req.session.hawkerPeddlerBusinessID = req.params.id;
 
-  HawkerPeddlerPropertyOwner.findAndCountAll({
-    limit: req.query.limit,
-    offset: req.skip,
-    include: [
-      {
-        model: HawkerPeddlerPropertyOwnerAddress,
-      },
-    ],
-  }).then((results) => {
+  Promise.all([
+    HawkerPeddlerPropertyOwner.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      include: [
+        {
+          model: HawkerPeddlerPropertyOwnerAddress,
+        },
+      ],
+    }),
+  ]).then((data) => {
     return res.render("hawkerPeddler/business", {
       title: "BWG | Hawker & Peddler Business",
       errorMessages: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.
-      data: results.rows,
-      queryCount: "Records returned: " + results.count,
+      propertyOwners: data[0].rows,
+      propertyOwnersCount: "Records returned: " + data[0].count,
     });
   });
 });

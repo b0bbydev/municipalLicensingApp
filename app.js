@@ -98,10 +98,14 @@ var binRoute = require("./routes/donationBin/bin");
 
 /* Hawker & Peddler related routes */
 var hawkerPeddlerRoute = require("./routes/hawkerPeddler/index");
+
 var hawkerPeddlerAddPropertyOwnerRoute = require("./routes/hawkerPeddler/addPropertyOwner");
+var hawkerPeddlerEditPropertyOwnerRoute = require("./routes/hawkerPeddler/editPropertyOwner");
 
 var hawkerPeddlerAddBusinessRoute = require("./routes/hawkerPeddler/addBusiness");
 var hawkerPeddlerEditBusinessRoute = require("./routes/hawkerPeddler/editBusiness");
+
+var hawkerPeddlerAddApplicantRoute = require("./routes/hawkerPeddler/addApplicant");
 
 var hawkerPeddlerBusinessRoute = require("./routes/hawkerPeddler/business");
 
@@ -286,7 +290,14 @@ app.use("/donationBin/bin", binRoute);
 
 /* Hawker & Peddler related routes */
 app.use("/hawkerPeddler", hawkerPeddlerRoute);
+
 app.use("/hawkerPeddler/addPropertyOwner", hawkerPeddlerAddPropertyOwnerRoute);
+app.use(
+  "/hawkerPeddler/editPropertyOwner",
+  hawkerPeddlerEditPropertyOwnerRoute
+);
+
+app.use("/hawkerPeddler/addApplicant", hawkerPeddlerAddApplicantRoute);
 
 app.use("/hawkerPeddler/business", hawkerPeddlerBusinessRoute);
 app.use("/hawkerPeddler/addBusiness", hawkerPeddlerAddBusinessRoute);
