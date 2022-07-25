@@ -30,6 +30,31 @@ const HawkerPeddlerBusiness = sequelize.define("hawkerPeddlerBusiness", {
     type: Sequelize.STRING(255),
     allowNull: true,
   },
+
+  notes: {
+    type: Sequelize.STRING(255),
+    allowNull: true,
+  },
+
+  policeVSC: {
+    type: Sequelize.ENUM("Yes", "No"),
+    allowNull: true,
+  },
+
+  photoID: {
+    type: Sequelize.ENUM("Yes", "No"),
+    allowNull: true,
+  },
+
+  sitePlan: {
+    type: Sequelize.ENUM("Yes", "No"),
+    allowNull: true,
+  },
+
+  zoningClearance: {
+    type: Sequelize.ENUM("Yes", "No"),
+    allowNull: true,
+  },
 });
 
 module.exports = HawkerPeddlerBusiness;
