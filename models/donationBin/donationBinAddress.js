@@ -4,38 +4,38 @@ const Sequelize = require("sequelize");
 const sequelize = require("../../config/sequelizeConfig");
 const DonationBin = require("./donationBin");
 
-const DonationBinPropertyOwner = sequelize.define("donationBinPropertyOwner", {
-  donationBinPropertyOwnerID: {
+const DonationBinAddress = sequelize.define("donationBinAddress", {
+  donationBinAddressID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
   },
 
-  firstName: {
+  streetNumber: {
+    type: Sequelize.INTEGER(10),
+    allowNull: true,
+  },
+
+  streetName: {
     type: Sequelize.STRING(50),
     allowNull: true,
   },
 
-  lastName: {
-    type: Sequelize.STRING(50),
+  town: {
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 
-  phoneNumber: {
-    type: Sequelize.STRING(20),
-    allowNull: true,
-  },
-
-  email: {
-    type: Sequelize.STRING(50),
+  postalCode: {
+    type: Sequelize.STRING(15),
     allowNull: true,
   },
 });
 
 // create relationship with donationBinOperator table.
-DonationBin.hasMany(DonationBinPropertyOwner, {
+DonationBin.hasMany(DonationBinAddress, {
   foreignKey: "donationBinID",
 });
 
-module.exports = DonationBinPropertyOwner;
+module.exports = DonationBinAddress;

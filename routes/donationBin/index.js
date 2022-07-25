@@ -1,7 +1,8 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var DonationBinCharity = require("../../models/donationBin/donationBinCharity");
+var DonationBin = require("../../models/donationBin/donationBin");
+const DonationBinAddress = require("../../models/donationBin/donationBinAddress");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // pagination lib.
@@ -14,9 +15,14 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  DonationBinCharity.findAndCountAll({
+  DonationBin.findAndCountAll({
     limit: req.query.limit,
     offset: req.skip,
+    include: [
+      {
+        model: DonationBinAddress,
+      },
+    ],
   }).then((results) => {
     // for pagination.
     const itemCount = results.count;
@@ -38,7 +44,7 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-// renew license.
+/* POST /donationBin - renews license. */
 router.post("/", async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);

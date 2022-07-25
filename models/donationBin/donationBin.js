@@ -2,7 +2,6 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
-var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
 
 const DonationBin = sequelize.define("donationBin", {
   donationBinID: {
@@ -10,6 +9,16 @@ const DonationBin = sequelize.define("donationBin", {
     autoIncrement: true,
     allowNull: false,
     primaryKey: true,
+  },
+
+  issueDate: {
+    type: Sequelize.DATEONLY,
+    allowNull: true,
+  },
+
+  expiryDate: {
+    type: Sequelize.DATEONLY,
+    allowNull: true,
   },
 
   itemsCollected: {
@@ -36,11 +45,6 @@ const DonationBin = sequelize.define("donationBin", {
     type: Sequelize.STRING(255),
     allowNull: true,
   },
-});
-
-// create relationship with donationBin.
-DonationBinOperator.hasMany(DonationBin, {
-  foreignKey: "donationBinOperatorID",
 });
 
 module.exports = DonationBin;

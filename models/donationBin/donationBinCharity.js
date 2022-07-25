@@ -2,6 +2,7 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
+const DonationBin = require("./donationBin");
 
 const DonationBinCharity = sequelize.define("donationBinCharity", {
   donationBinCharityID: {
@@ -21,23 +22,13 @@ const DonationBinCharity = sequelize.define("donationBinCharity", {
     allowNull: true,
   },
 
-  charityPhoneNumber: {
+  phoneNumber: {
     type: Sequelize.STRING(20),
     allowNull: true,
   },
 
-  charityEmail: {
+  email: {
     type: Sequelize.STRING(50),
-    allowNull: true,
-  },
-
-  issueDate: {
-    type: Sequelize.DATEONLY,
-    allowNull: true,
-  },
-
-  expiryDate: {
-    type: Sequelize.DATEONLY,
     allowNull: true,
   },
 
@@ -45,6 +36,10 @@ const DonationBinCharity = sequelize.define("donationBinCharity", {
     type: Sequelize.ENUM("Charity", "Not-For-Profit", "For-Profit"),
     allowNull: true,
   },
+});
+
+DonationBin.hasMany(DonationBinCharity, {
+  foreignKey: "donationBinID",
 });
 
 module.exports = DonationBinCharity;
