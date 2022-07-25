@@ -27,6 +27,8 @@
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
+      <th>Items For Sale</th>
+      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -45,11 +47,84 @@
             {{this.town}}
             {{this.postalCode}}</td>
         {{/each}}
+        <td>{{this.itemsForSale}}</td>
+        <td>{{this.notes}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
             href="/hawkerPeddler/editBusiness/{{this.hawkerPeddlerBusinessID}}"
-          >Edit</a></td>
+          >Edit</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#hawkerPeddlerModal-{{this.hawkerPeddlerBusinessID}}"
+          >Documentation</a></td>
       </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="hawkerPeddlerModal-{{this.hawkerPeddlerBusinessID}}"
+        tabindex="-1"
+        aria-labelledby="Hawker Peddler Modal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Documentation</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <strong>Police VSC:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.policeVSC}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Photo ID:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.photoID}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Site Plan:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.sitePlan}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Zoning Clearance:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.zoningClearance}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     {{/each}}
   </tbody>
 </table>

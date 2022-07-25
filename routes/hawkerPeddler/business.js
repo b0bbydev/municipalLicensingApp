@@ -3,6 +3,8 @@ var router = express.Router();
 // models.
 const HawkerPeddlerPropertyOwner = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwner");
 const HawkerPeddlerPropertyOwnerAddress = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwnerAddress");
+const HawkerPeddlerApplicant = require("../../models/hawkerPeddler/hawkerPeddlerApplicant");
+const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawkerPeddlerApplicantAddress");
 
 /* GET /hawkerPeddler/business/:id */
 router.get("/:id", async (req, res, next) => {
@@ -24,6 +26,15 @@ router.get("/:id", async (req, res, next) => {
         },
       ],
     }),
+    HawkerPeddlerApplicant.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      include: [
+        {
+          model: HawkerPeddlerApplicantAddress,
+        },
+      ],
+    }),
   ]).then((data) => {
     return res.render("hawkerPeddler/business", {
       title: "BWG | Hawker & Peddler Business",
@@ -31,7 +42,9 @@ router.get("/:id", async (req, res, next) => {
       email: req.session.email,
       auth: req.session.auth, // authorization.
       propertyOwners: data[0].rows,
+      applicants: data[1].rows,
       propertyOwnersCount: "Records returned: " + data[0].count,
+      applicantsCount: "Records returned: " + data[1].count,
     });
   });
 });

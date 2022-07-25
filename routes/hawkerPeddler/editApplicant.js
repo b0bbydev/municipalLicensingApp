@@ -7,8 +7,8 @@ const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawker
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /hawkerPeddler/addApplicant */
-router.get("/", async (req, res, next) => {
+/* GET /hawkerPeddler/editApplicant/:id */
+router.get("/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -21,18 +21,41 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  return res.render("hawkerPeddler/addApplicant", {
-    title: "BWG | Add Applicant",
-    errorMessages: messages,
-    email: req.session.email,
-    auth: req.session.auth, // authorization.
-    streets: streets,
+  HawkerPeddlerApplicant.findOne({
+    where: {
+      hawkerPeddlerApplicantID: req.params.id,
+    },
+    include: [
+      {
+        model: HawkerPeddlerApplicantAddress,
+      },
+    ],
+  }).then((results) => {
+    return res.render("hawkerPeddler/editApplicant", {
+      title: "BWG | Edit Applicant",
+      errorMessages: messages,
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+      streets: streets,
+      // populate input fields with existing values.
+      formData: {
+        firstName: results.firstName,
+        lastName: results.lastName,
+        phoneNumber: results.phoneNumber,
+        email: results.email,
+        licenseNumber: results.licenseNumber,
+        streetNumber: results.hawkerPeddlerApplicantAddresses[0].streetNumber,
+        streetName: results.hawkerPeddlerApplicantAddresses[0].streetName,
+        town: results.hawkerPeddlerApplicantAddresses[0].town,
+        postalCode: results.hawkerPeddlerApplicantAddresses[0].postalCode,
+      },
+    });
   });
 });
 
-/* POST /hawkerPeddler/addApplicant */
+/* POST /hawkerPeddler/editApplicant/:id */
 router.post(
-  "/",
+  "/:id",
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\'-]*$/)
@@ -87,8 +110,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/addApplicant", {
-        title: "BWG | Add Applicant",
+      return res.render("hawkerPeddler/editApplicant", {
+        title: "BWG | Edit Applicant",
         errorMessages: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -107,35 +130,43 @@ router.post(
         },
       });
     } else {
-      HawkerPeddlerApplicant.create(
+      HawkerPeddlerApplicant.update(
         {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           licenseNumber: req.body.licenseNumber,
-          hawkerPeddlerBusinessID: req.session.hawkerPeddlerBusinessID,
-          hawkerPeddlerApplicantAddresses: [
+        },
+        {
+          where: {
+            hawkerPeddlerApplicantID: req.params.id,
+          },
+        }
+      )
+        .then(() => {
+          HawkerPeddlerApplicantAddress.update(
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
             },
-          ],
-        },
-        {
-          include: [HawkerPeddlerApplicantAddress],
-        }
-      )
+            {
+              where: {
+                hawkerPeddlerApplicantID: req.params.id,
+              },
+            }
+          );
+        })
         .then(() => {
           return res.redirect(
             "/hawkerPeddler/business/" + req.session.hawkerPeddlerBusinessID
           );
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/addApplicant", {
-            title: "BWG | Add Applicant",
+          return res.render("hawkerPeddler/editApplicant", {
+            title: "BWG | Edit Applicant",
             message: "Page Error!",
           });
         });

@@ -106,6 +106,7 @@ var hawkerPeddlerAddBusinessRoute = require("./routes/hawkerPeddler/addBusiness"
 var hawkerPeddlerEditBusinessRoute = require("./routes/hawkerPeddler/editBusiness");
 
 var hawkerPeddlerAddApplicantRoute = require("./routes/hawkerPeddler/addApplicant");
+var hawkerPeddlerEditApplicantRoute = require("./routes/hawkerPeddler/editApplicant");
 
 var hawkerPeddlerBusinessRoute = require("./routes/hawkerPeddler/business");
 
@@ -298,6 +299,7 @@ app.use(
 );
 
 app.use("/hawkerPeddler/addApplicant", hawkerPeddlerAddApplicantRoute);
+app.use("/hawkerPeddler/editApplicant", hawkerPeddlerEditApplicantRoute);
 
 app.use("/hawkerPeddler/business", hawkerPeddlerBusinessRoute);
 app.use("/hawkerPeddler/addBusiness", hawkerPeddlerAddBusinessRoute);

@@ -55,8 +55,8 @@
 <div class="row">
   <h4>Applicants</h4>
   <div class="col mb-1">
-    {{#if queryCount}}
-      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{#if applicantsCount}}
+      <strong class="float-start mt-2">{{applicantsCount}}</strong>
     {{/if}}
     <a
       href="/hawkerPeddler/addApplicant"
@@ -67,26 +67,31 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>Property Owner Name</th>
+      <th>Applicant Name</th>
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
+      <th>License #</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    {{#each propertyOwners}}
+    {{#each applicants}}
       <tr>
         <td>{{this.firstName}} {{this.lastName}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
-        {{#each hawkerPeddlerPropertyOwnerAddresses}}
+        {{#each hawkerPeddlerApplicantAddresses}}
           <td>{{this.streetNumber}}
             {{this.streetName}},
             {{this.town}}
             {{this.postalCode}}</td>
         {{/each}}
-        <td><a class="btn btn-sm btn-secondary" href="#">Edit</a></td>
+        <td>{{this.licenseNumber}}</td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/hawkerPeddler/editApplicant/{{this.hawkerPeddlerApplicantID}}"
+          >Edit</a></td>
       </tr>
     {{/each}}
   </tbody>
