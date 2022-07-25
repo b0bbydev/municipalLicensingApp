@@ -131,7 +131,7 @@ router.post(
           ownerConsent: req.body.ownerConsent,
           certificateOfInsurance: req.body.certificateOfInsurance,
           sitePlan: req.body.sitePlan,
-          donationBinPropertyOwnerID: req.session.donationBinPropertyOwnerID,
+          donationBinID: req.session.donationBinID,
           donationBinOperatorAddresses: [
             {
               streetNumber: req.body.streetNumber,
@@ -146,9 +146,7 @@ router.post(
         }
       )
         .then(() => {
-          return res.redirect(
-            "/donationBin/operators/" + req.session.donationBinPropertyOwnerID
-          );
+          return res.redirect("/donationBin/bin/" + req.session.donationBinID);
         })
         .catch((err) => {
           return res.render("donationBin/addOperator", {

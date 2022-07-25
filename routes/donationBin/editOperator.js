@@ -181,9 +181,7 @@ router.post(
           );
         })
         .then(() => {
-          return res.redirect(
-            "/donationBin/operators/" + req.session.donationBinPropertyOwnerID
-          );
+          return res.redirect("/donationBin/bin/" + req.session.donationBinID);
         })
         .catch((err) => {
           return res.render("donationBin/editOperator", {

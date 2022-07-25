@@ -107,7 +107,7 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          donationBinCharityID: req.session.donationBinCharityID,
+          donationBinID: req.session.donationBinID,
           donationBinPropertyOwnerAddresses: [
             {
               streetNumber: req.body.streetNumber,
@@ -122,9 +122,7 @@ router.post(
         }
       )
         .then(() => {
-          return res.redirect(
-            "/donationBin/propertyOwner/" + req.session.donationBinCharityID
-          );
+          return res.redirect("/donationBin/bin/" + req.session.donationBinID);
         })
         .catch((err) => {
           return res.render("donationBin/addPropertyOwner", {

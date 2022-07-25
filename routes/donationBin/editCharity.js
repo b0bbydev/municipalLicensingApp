@@ -3,8 +3,6 @@ var router = express.Router();
 // models.
 var Dropdown = require("../../models/dropdownManager/dropdown");
 var DonationBinCharity = require("../../models/donationBin/donationBinCharity");
-// helpers.
-const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -33,12 +31,11 @@ router.get("/:id", async (req, res, next) => {
       email: req.session.email,
       auth: req.session.auth, // authorization.
       dropdownValues: dropdownValues,
+      // populate input fields with existing values.
       formData: {
         charityName: results.charityName,
-        charityPhoneNumber: results.charityPhoneNumber,
-        charityEmail: results.charityEmail,
-        issueDate: results.issueDate,
-        expiryDate: results.expiryDate,
+        phoneNumber: results.phoneNumber,
+        email: results.email,
         registrationNumber: results.registrationNumber,
         organizationType: results.organizationType,
       },
@@ -55,13 +52,13 @@ router.post(
     .matches(/^[a-zA-Z0-9\/\-,.' ]*$/)
     .withMessage("Invalid Charity Name Entry!")
     .trim(),
-  body("charityPhoneNumber")
-    .if(body("charityPhoneNumber").notEmpty())
+  body("phoneNumber")
+    .if(body("phoneNumber").notEmpty())
     .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
     .withMessage("Invalid Phone Number Entry!")
     .trim(),
-  body("charityEmail")
-    .if(body("charityEmail").notEmpty())
+  body("email")
+    .if(body("email").notEmpty())
     .isEmail()
     .withMessage("Invalid Email Entry!")
     .trim(),
@@ -100,10 +97,8 @@ router.post(
         // save form values if submission is unsuccessful.
         formData: {
           charityName: req.body.charityName,
-          charityPhoneNumber: req.body.charityPhoneNumber,
-          charityEmail: req.body.charityEmail,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
+          phoneNumber: req.body.phoneNumber,
+          email: req.body.email,
           registrationNumber: req.body.registrationNumber,
           organizationType: req.body.organizationType,
         },
@@ -112,10 +107,8 @@ router.post(
       DonationBinCharity.update(
         {
           charityName: req.body.charityName,
-          charityPhoneNumber: req.body.charityPhoneNumber,
-          charityEmail: req.body.charityEmail,
-          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
-          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+          phoneNumber: req.body.phoneNumber,
+          email: req.body.email,
           registrationNumber: req.body.registrationNumber,
           organizationType: req.body.organizationType,
         },
@@ -126,7 +119,7 @@ router.post(
         }
       )
         .then(() => {
-          return res.redirect("/donationBin");
+          return res.redirect("/donationBin/bin/" + req.session.donationBinID);
         })
         .catch((err) => {
           return res.render("donationBin/editCharity", {

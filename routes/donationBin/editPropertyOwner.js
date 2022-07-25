@@ -159,9 +159,7 @@ router.post(
           );
         })
         .then(() => {
-          return res.redirect(
-            "/donationBin/propertyOwner/" + req.session.donationBinCharityID
-          );
+          return res.redirect("/donationBin/bin/" + req.session.donationBinID);
         })
         .catch((err) => {
           return res.render("donationBin/editPropertyOwner", {

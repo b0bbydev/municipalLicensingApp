@@ -85,7 +85,6 @@ var donationBinRouter = require("./routes/donationBin/index");
 var addDonationBinCharityRouter = require("./routes/donationBin/addCharity");
 var editDonationBinCharityRouter = require("./routes/donationBin/editCharity");
 
-var propertyOwnerRouter = require("./routes/donationBin/propertyOwner");
 var addPropertyOwnerRouter = require("./routes/donationBin/addPropertyOwner");
 var editPropertyOwnerRouter = require("./routes/donationBin/editPropertyOwner");
 
@@ -95,7 +94,6 @@ var editDonationBinOperatorRouter = require("./routes/donationBin/editOperator")
 var addDonationBinRouter = require("./routes/donationBin/addDonationBin");
 var editDonationBinRouter = require("./routes/donationBin/editDonationBin");
 
-var donationBinOperatorsRoute = require("./routes/donationBin/operators");
 var binRoute = require("./routes/donationBin/bin");
 
 /* Hawker & Peddler related routes */
@@ -274,7 +272,6 @@ app.use("/donationBin", donationBinRouter);
 app.use("/donationBin/addCharity", addDonationBinCharityRouter);
 app.use("/donationBin/editCharity", editDonationBinCharityRouter);
 
-app.use("/donationBin/propertyOwner", propertyOwnerRouter);
 app.use("/donationBin/addPropertyOwner", addPropertyOwnerRouter);
 app.use("/donationBin/editPropertyOwner", editPropertyOwnerRouter);
 
@@ -284,7 +281,6 @@ app.use("/donationBin/editOperator", editDonationBinOperatorRouter);
 app.use("/donationBin/addDonationBin", addDonationBinRouter);
 app.use("/donationBin/editDonationBin", editDonationBinRouter);
 
-app.use("/donationBin/operators", donationBinOperatorsRoute);
 app.use("/donationBin/bin", binRoute);
 
 /* Hawker & Peddler related routes */
