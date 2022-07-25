@@ -94,6 +94,11 @@ const PolicyHistory = sequelize.define(
       allowNull: true,
     },
 
+    fileHoldURL: {
+      type: Sequelize.STRING(255),
+      allowNull: true,
+    },
+
     notes: {
       type: Sequelize.STRING,
       allowNull: true,

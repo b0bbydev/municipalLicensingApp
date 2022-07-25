@@ -86,6 +86,11 @@ const Policy = sequelize.define("policy", {
     allowNull: true,
   },
 
+  fileHoldURL: {
+    type: Sequelize.STRING(255),
+    allowNull: true,
+  },
+
   notes: {
     type: Sequelize.STRING,
     allowNull: true,

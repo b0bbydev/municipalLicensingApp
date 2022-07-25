@@ -166,6 +166,7 @@ router.post(
           administrator: req.body.administrator,
           legislationRequired: req.body.legislationRequired,
           status: req.body.status,
+          fileHoldURL: req.body.fileHoldURL,
           notes: req.body.notes,
         },
       });
@@ -189,6 +190,7 @@ router.post(
         administrator: req.body.administrator,
         legislationRequired: req.body.legislationRequired,
         status: req.body.status,
+        fileHoldURL: req.body.fileHoldURL,
         notes: req.body.notes,
       })
         // redirect to /policies.

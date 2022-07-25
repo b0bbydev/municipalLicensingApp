@@ -65,7 +65,7 @@ router.get(
           statusDropdownValues: statusDropdownValues,
           categoryDropdownValues: categoryDropdownValues,
           authorityDropdownValues: authorityDropdownValues,
-          // if the form submission is unsuccessful, save their values.
+          // populate input fields with existing values.
           policyInfo: {
             policyNumber: results.policyNumber,
             policyName: results.policyName,
@@ -82,6 +82,7 @@ router.get(
             administrator: results.administrator,
             legislationRequired: results.legislationRequired,
             status: results.status,
+            fileHoldURL: results.fileHoldURL,
             notes: results.notes,
           },
         });
@@ -170,6 +171,7 @@ router.post(
           administrator: req.body.administrator,
           legislationRequired: req.body.legislationRequired,
           status: req.body.status,
+          fileHoldURL: req.body.fileHoldURL,
           notes: req.body.notes,
         },
       });
@@ -194,6 +196,7 @@ router.post(
           administrator: req.body.administrator,
           legislationRequired: req.body.legislationRequired,
           status: req.body.status,
+          fileHoldURL: req.body.fileHoldURL,
           notes: req.body.notes,
         },
         {
