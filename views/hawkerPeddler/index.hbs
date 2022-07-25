@@ -24,6 +24,8 @@
   <thead>
     <tr>
       <th>Business Name</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
@@ -39,6 +41,8 @@
             id="ownerLink"
             href="/hawkerPeddler/business/{{this.hawkerPeddlerBusinessID}}"
           >{{this.businessName}}</a></td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each hawkerPeddlerBusinessAddresses}}
@@ -51,19 +55,86 @@
         <td>{{this.notes}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#hawkerPeddlerRenewModal-{{this.hawkerPeddlerBusinessID}}"
+          >Renew</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
             href="/hawkerPeddler/editBusiness/{{this.hawkerPeddlerBusinessID}}"
           >Edit</a>
           |
           <a
             class="btn btn-sm btn-secondary"
             data-bs-toggle="modal"
-            data-bs-target="#hawkerPeddlerModal-{{this.hawkerPeddlerBusinessID}}"
+            data-bs-target="#hawkerPeddlerDocumentationModal-{{this.hawkerPeddlerBusinessID}}"
           >Documentation</a></td>
       </tr>
-      <!-- Modal -->
+      <!-- Renew Modal -->
       <div
         class="modal fade"
-        id="hawkerPeddlerModal-{{this.hawkerPeddlerBusinessID}}"
+        id="hawkerPeddlerRenewModal-{{this.hawkerPeddlerBusinessID}}"
+        tabindex="-1"
+        aria-labelledby="Hawker Peddler Renewal Modal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Renew Business</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <label
+                      for="Hawker Peddler Business ID"
+                      class="form-label"
+                    >Hawker Peddler Business ID</label>
+                    <input
+                      class="form-control"
+                      placeholder="Hawker Peddler Business ID"
+                      value="{{this.hawkerPeddlerBusinessID}}"
+                      name="hawkerPeddlerBusinessID"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Business Name" class="form-label">Business Name</label>
+                    <input
+                      class="form-control"
+                      placeholder="Business Name"
+                      value="{{this.businessName}}"
+                      name="businessName"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit Renewal</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Documentation Modal -->
+      <div
+        class="modal fade"
+        id="hawkerPeddlerDocumentationModal-{{this.hawkerPeddlerBusinessID}}"
         tabindex="-1"
         aria-labelledby="Hawker Peddler Modal"
         aria-hidden="true"

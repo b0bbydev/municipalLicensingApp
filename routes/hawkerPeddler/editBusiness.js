@@ -4,6 +4,8 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const HawkerPeddlerBusiness = require("../../models/hawkerPeddler/hawkerPeddlerBusiness");
 const HawkerPeddlerBusinessAddress = require("../../models/hawkerPeddler/hawkerPeddlerBusinessAddress");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -42,6 +44,8 @@ router.get("/:id", async (req, res, next) => {
         businessName: results.businessName,
         phoneNumber: results.phoneNumber,
         email: results.email,
+        issueDate: results.issueDate,
+        expiryDate: results.expiryDate,
         policeVSC: results.policeVSC,
         photoID: results.photoID,
         sitePlan: results.sitePlan,
@@ -132,6 +136,8 @@ router.post(
           businessName: req.body.businessName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
           policeVSC: req.body.policeVSC,
           photoID: req.body.photoID,
           sitePlan: req.body.sitePlan,
@@ -151,6 +157,8 @@ router.post(
           businessName: req.body.businessName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
+          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           policeVSC: req.body.policeVSC,
           photoID: req.body.photoID,
           sitePlan: req.body.sitePlan,

@@ -5,6 +5,8 @@ const HawkerPeddlerBusiness = require("../../models/hawkerPeddler/hawkerPeddlerB
 const HawkerPeddlerBusinessAddress = require("../../models/hawkerPeddler/hawkerPeddlerBusinessAddress");
 // pagination lib.
 const paginate = require("express-paginate");
+// express-validate.
+const { body, validationResult } = require("express-validator");
 
 /* GET /hawkerPeddler page. */
 router.get("/", async (req, res, next) => {
@@ -27,7 +29,7 @@ router.get("/", async (req, res, next) => {
     const pageCount = Math.ceil(results.count / req.query.limit);
 
     return res.render("hawkerPeddler/index", {
-      title: "BWG | Hawker & Peddler",
+      title: "BWG | Hawker & Peddler Licensing",
       errorMessages: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.
@@ -40,6 +42,49 @@ router.get("/", async (req, res, next) => {
       hasMorePages: paginate.hasNextPages(req)(pageCount),
     });
   });
+});
+
+/* POST /hawkerPeddler - renews license. */
+router.post("/", async (req, res, next) => {
+  // server side validation.
+  const errors = validationResult(req);
+
+  // if errors is NOT empty (if there are errors...).
+  if (!errors.isEmpty()) {
+    return res.render("hawkerPeddler/index", {
+      title: "BWG | Hawker & Peddler Licensing",
+      errorMessages: "Page Error!",
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+    });
+  } else {
+    // get current date for automatic population of license.
+    var issueDate = new Date();
+    // init expiryDate.
+    var expiryDate = new Date();
+
+    // if issueDate is in November or December.
+    if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+      expiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+    } else {
+      expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+    }
+
+    // update license.
+    HawkerPeddlerBusiness.update(
+      {
+        issueDate: issueDate,
+        expiryDate: expiryDate,
+      },
+      {
+        where: {
+          hawkerPeddlerBusinessID: req.body.hawkerPeddlerBusinessID,
+        },
+      }
+    ).then(() => {
+      return res.redirect("/hawkerPeddler");
+    });
+  }
 });
 
 module.exports = router;
