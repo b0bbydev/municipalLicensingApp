@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var HawkerPeddlerBusiness = require("../../models/hawkerPeddler/hawkerPeddlerBusiness");
-var HawkerPeddlerBusinessAddress = require("../../models/hawkerPeddler/hawkerPeddlerBusinessAddress");
+const HawkerPeddlerBusiness = require("../../models/hawkerPeddler/hawkerPeddlerBusiness");
+const HawkerPeddlerBusinessAddress = require("../../models/hawkerPeddler/hawkerPeddlerBusinessAddress");
 // pagination lib.
 const paginate = require("express-paginate");
 

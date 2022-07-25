@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var Dropdown = require("../../models/dropdownManager/dropdown");
-var HawkerPeddlerPropertyOwner = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwner");
-var HawkerPeddlerPropertyOwnerAddress = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwnerAddress");
+const Dropdown = require("../../models/dropdownManager/dropdown");
+const HawkerPeddlerPropertyOwner = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwner");
+const HawkerPeddlerPropertyOwnerAddress = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwnerAddress");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 

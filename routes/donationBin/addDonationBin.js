@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var DonationBin = require("../../models/donationBin/donationBin");
-var DonationBinAddress = require("../../models/donationBin/donationBinAddress");
-var Dropdown = require("../../models/dropdownManager/dropdown");
+const DonationBin = require("../../models/donationBin/donationBin");
+const DonationBinAddress = require("../../models/donationBin/donationBinAddress");
+const Dropdown = require("../../models/dropdownManager/dropdown");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.

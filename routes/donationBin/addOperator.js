@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var Dropdown = require("../../models/dropdownManager/dropdown");
-var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
+const Dropdown = require("../../models/dropdownManager/dropdown");
+const DonationBinOperator = require("../../models/donationBin/donationBinOperator");
 const DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
 // express-validate.
 const { body, validationResult } = require("express-validator");

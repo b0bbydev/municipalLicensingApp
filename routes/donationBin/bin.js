@@ -1,11 +1,11 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var DonationBinPropertyOwner = require("../../models/donationBin/donationBinPropertyOwner");
-var DonationBinPropertyOwnerAddress = require("../../models/donationBin/donationBinPropertyOwnerAddress");
-var DonationBinOperator = require("../../models/donationBin/donationBinOperator");
-var DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
-var DonationBinCharity = require("../../models/donationBin/donationBinCharity");
+const DonationBinPropertyOwner = require("../../models/donationBin/donationBinPropertyOwner");
+const DonationBinPropertyOwnerAddress = require("../../models/donationBin/donationBinPropertyOwnerAddress");
+const DonationBinOperator = require("../../models/donationBin/donationBinOperator");
+const DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
+const DonationBinCharity = require("../../models/donationBin/donationBinCharity");
 
 /* GET /donationBin/bin/:id */
 router.get("/:id", async (req, res, next) => {

@@ -1,7 +1,9 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var DonationBin = require("../../models/donationBin/donationBin");
+const Dropdown = require("../../models/dropdownManager/dropdown");
+const DonationBin = require("../../models/donationBin/donationBin");
+const DonationBinAddress = require("../../models/donationBin/donationBinAddress");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -12,22 +14,39 @@ router.get("/:id", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
+  // get streets.
+  var streets = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 13, // streets
+    },
+  });
+
   DonationBin.findOne({
     where: {
       donationBinID: req.params.id,
     },
+    include: [
+      {
+        model: DonationBinAddress,
+      },
+    ],
   }).then((results) => {
     return res.render("donationBin/editDonationBin", {
       title: "BWG | Edit Donation Bin",
       errorMessages: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.
+      streets: streets,
       formData: {
         colour: results.colour,
         material: results.material,
         pickupSchedule: results.pickupSchedule,
         itemsCollected: results.itemsCollected,
         notes: results.notes,
+        streetNumber: results.donationBinAddresses[0].streetNumber,
+        streetName: results.donationBinAddresses[0].streetName,
+        town: results.donationBinAddresses[0].town,
+        postalCode: results.donationBinAddresses[0].postalCode,
       },
     });
   });

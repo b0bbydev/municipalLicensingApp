@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var DonationBin = require("../../models/donationBin/donationBin");
+const DonationBin = require("../../models/donationBin/donationBin");
 const DonationBinAddress = require("../../models/donationBin/donationBinAddress");
 // express-validate.
 const { body, validationResult } = require("express-validator");

@@ -10,6 +10,47 @@
     <h4 class="mt-2">Donation Bin Information</h4>
     <hr />
     <div class="row">
+      <!-- Street Number -->
+      <div class="col-sm-6">
+        <label for="Street Number" class="form-label">Street Number*</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Street Number"
+          name="streetNumber"
+          value="{{formData.streetNumber}}"
+          required
+        />
+      </div>
+      <!-- Street Name -->
+      <div class="col-sm-6">
+        <label for="Street Name" class="form-label">Street Name*</label>
+        <input
+          class="form-control"
+          title="streetName"
+          name="streetName"
+          list="streets"
+          placeholder="Street Name..."
+          value="{{formData.streetName}}"
+          required
+        />
+        <datalist id="streets">
+          {{#each streets}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </datalist>
+      </div>
+    </div>
+    <div class="row">
       <!-- Colour -->
       <div class="col-sm-6">
         <label for="Colour" class="form-label">Colour</label>

@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var Dropdown = require("../../models/dropdownManager/dropdown");
-var DonationBinPropertyOwner = require("../../models/donationBin/donationBinPropertyOwner");
-var DonationBinPropertyOwnerAddress = require("../../models/donationBin/donationBinPropertyOwnerAddress");
+const Dropdown = require("../../models/dropdownManager/dropdown");
+const DonationBinPropertyOwner = require("../../models/donationBin/donationBinPropertyOwner");
+const DonationBinPropertyOwnerAddress = require("../../models/donationBin/donationBinPropertyOwnerAddress");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 

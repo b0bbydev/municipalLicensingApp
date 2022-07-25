@@ -1,9 +1,9 @@
 var express = require("express");
 var router = express.Router();
 // models.
-var User = require("../../models/admin/user");
-var Role = require("../../models/admin/role");
-var UserRole = require("../../models/admin/userRole");
+const User = require("../../models/admin/user");
+const Role = require("../../models/admin/role");
+const UserRole = require("../../models/admin/userRole");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
