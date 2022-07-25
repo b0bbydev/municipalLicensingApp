@@ -2,7 +2,6 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
-const HawkerPeddlerPropertyOwner = require("./hawkerPeddlerPropertyOwner");
 
 const HawkerPeddlerBusiness = sequelize.define("hawkerPeddlerBusiness", {
   hawkerPeddlerBusinessID: {
@@ -31,10 +30,6 @@ const HawkerPeddlerBusiness = sequelize.define("hawkerPeddlerBusiness", {
     type: Sequelize.STRING(255),
     allowNull: true,
   },
-});
-
-HawkerPeddlerPropertyOwner.hasMany(HawkerPeddlerBusiness, {
-  foreignKey: "hawkerPeddlerPropertyOwnerID",
 });
 
 module.exports = HawkerPeddlerBusiness;

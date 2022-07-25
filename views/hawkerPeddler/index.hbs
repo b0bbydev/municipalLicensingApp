@@ -1,14 +1,14 @@
 <h2 class="text-center mt-1">Hawker & Peddler Licensing</h2>
 <div class="row">
   <div class="col mb-1">
-    <h4>Property Owners</h4>
+    <h4>Businesses</h4>
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
     <a
-      href="/hawkerPeddler/addPropertyOwner"
+      href="/hawkerPeddler/addBusiness"
       class="btn btn-sm btn-primary float-end"
-    >Add A Property Owner</a>
+    >Add A Business</a>
   </div>
 </div>
 
@@ -23,7 +23,7 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>Property Owner Name</th>
+      <th>Business Name</th>
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
@@ -35,12 +35,11 @@
       <tr>
         <td><a
             id="ownerLink"
-            href="/hawkerPeddler/businesses/{{this.hawkerPeddlerPropertyOwnerID}}"
-          >{{this.firstName}}
-            {{this.lastName}}</a></td>
+            href="/hawkerPeddler/business/{{this.hawkerPeddlerBusinessID}}"
+          >{{this.businessName}}</a></td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
-        {{#each hawkerPeddlerPropertyOwnerAddresses}}
+        {{#each hawkerPeddlerBusinessAddresses}}
           <td>{{this.streetNumber}}
             {{this.streetName}},
             {{this.town}}
@@ -48,7 +47,7 @@
         {{/each}}
         <td><a
             class="btn btn-sm btn-secondary"
-            href="/donationBin/editPropertyOwner/{{this.hawkerPeddlerPropertyOwnerID}}"
+            href="/hawkerPeddler/editBusiness/{{this.hawkerPeddlerBusinessID}}"
           >Edit</a></td>
       </tr>
     {{/each}}

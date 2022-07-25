@@ -7,12 +7,15 @@ const HawkerPeddlerBusinessAddress = require("../../models/hawkerPeddler/hawkerP
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /hawkerPeddler/addBusiness */
-router.get("/", async (req, res, next) => {
+/* GET /hawkerPeddler/editBusiness/:id */
+router.get("/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
   req.session.messages = [];
+
+  // send hawkerPeddlerBusinessID to session.
+  req.session.hawkerPeddlerBusinessID = req.params.id;
 
   // get dropdown values.
   var dropdownValues = await Dropdown.findAll({
@@ -21,18 +24,40 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  return res.render("hawkerPeddler/addBusiness", {
-    title: "BWG | Add Business",
-    errorMessages: messages,
-    email: req.session.email,
-    auth: req.session.auth, // authorization.
-    dropdownValues: dropdownValues,
+  HawkerPeddlerBusiness.findOne({
+    where: {
+      hawkerPeddlerBusinessID: req.params.id,
+    },
+    include: [
+      {
+        model: HawkerPeddlerBusinessAddress,
+      },
+    ],
+  }).then((results) => {
+    return res.render("hawkerPeddler/editBusiness", {
+      title: "BWG | Edit Business",
+      errorMessages: messages,
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+      dropdownValues: dropdownValues,
+      // populate input fields with exisitng values.
+      formData: {
+        businessName: results.businessName,
+        phoneNumber: results.phoneNumber,
+        email: results.email,
+        itemsForSale: results.itemsForSale,
+        streetNumber: results.hawkerPeddlerBusinessAddresses[0].streetNumber,
+        streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
+        town: results.hawkerPeddlerBusinessAddresses[0].town,
+        postalCode: results.hawkerPeddlerBusinessAddresses[0].postalCode,
+      },
+    });
   });
 });
 
-/* POST /hawkerPeddler/addBusiness */
+/* POST /hawkerPeddler/editBusiness/:id */
 router.post(
-  "/",
+  "/:id",
   body("businessName")
     .if(body("businessName").notEmpty())
     .matches(/^[ a-zA-Z0-9\'-]*$/)
@@ -89,8 +114,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/addBusiness", {
-        title: "BWG | Add Business",
+      return res.render("hawkerPeddler/editBusiness", {
+        title: "BWG | Edit Business",
         message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -109,31 +134,40 @@ router.post(
       });
     } else {
       // create business.
-      HawkerPeddlerBusiness.create(
+      HawkerPeddlerBusiness.update(
         {
           businessName: req.body.businessName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           itemsForSale: req.body.itemsForSale,
-          hawkerPeddlerBusinessAddresses: [
+        },
+        {
+          where: {
+            hawkerPeddlerBusinessID: req.params.id,
+          },
+        }
+      )
+        .then(() => {
+          HawkerPeddlerBusinessAddress.update(
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
             },
-          ],
-        },
-        {
-          include: [HawkerPeddlerBusinessAddress],
-        }
-      )
+            {
+              where: {
+                hawkerPeddlerBusinessID: req.params.id,
+              },
+            }
+          );
+        })
         .then(() => {
           return res.redirect("/hawkerPeddler");
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/addBusiness", {
-            title: "BWG | Add Business",
+          return res.render("hawkerPeddler/editBusiness", {
+            title: "BWG | Edit Business",
             message: "Page Error!",
           });
         });

@@ -100,9 +100,10 @@ var binRoute = require("./routes/donationBin/bin");
 var hawkerPeddlerRoute = require("./routes/hawkerPeddler/index");
 var hawkerPeddlerAddPropertyOwnerRoute = require("./routes/hawkerPeddler/addPropertyOwner");
 
-var hawkerPeddlerBusinessesRoute = require("./routes/hawkerPeddler/businesses");
-
 var hawkerPeddlerAddBusinessRoute = require("./routes/hawkerPeddler/addBusiness");
+var hawkerPeddlerEditBusinessRoute = require("./routes/hawkerPeddler/editBusiness");
+
+var hawkerPeddlerBusinessRoute = require("./routes/hawkerPeddler/business");
 
 var app = express();
 
@@ -287,8 +288,9 @@ app.use("/donationBin/bin", binRoute);
 app.use("/hawkerPeddler", hawkerPeddlerRoute);
 app.use("/hawkerPeddler/addPropertyOwner", hawkerPeddlerAddPropertyOwnerRoute);
 
-app.use("/hawkerPeddler/businesses", hawkerPeddlerBusinessesRoute);
+app.use("/hawkerPeddler/business", hawkerPeddlerBusinessRoute);
 app.use("/hawkerPeddler/addBusiness", hawkerPeddlerAddBusinessRoute);
+app.use("/hawkerPeddler/editBusiness", hawkerPeddlerEditBusinessRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

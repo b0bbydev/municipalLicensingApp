@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
 // models.
-const HawkerPeddlerPropertyOwner = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwner");
-const HawkerPeddlerPropertyOwnerAddress = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwnerAddress");
+const HawkerPeddlerBusiness = require("../../models/hawkerPeddler/hawkerPeddlerBusiness");
+const HawkerPeddlerBusinessAddress = require("../../models/hawkerPeddler/hawkerPeddlerBusinessAddress");
 // pagination lib.
 const paginate = require("express-paginate");
 
@@ -13,12 +13,12 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  HawkerPeddlerPropertyOwner.findAndCountAll({
+  HawkerPeddlerBusiness.findAndCountAll({
     limit: req.query.limit,
     offset: req.skip,
     include: [
       {
-        model: HawkerPeddlerPropertyOwnerAddress,
+        model: HawkerPeddlerBusinessAddress,
       },
     ],
   }).then((results) => {
