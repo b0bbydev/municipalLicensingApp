@@ -27,6 +27,7 @@
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -45,6 +46,10 @@
             {{this.town}}
             {{this.postalCode}}</td>
         {{/each}}
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/donationBin/editPropertyOwner/{{this.hawkerPeddlerPropertyOwnerID}}"
+          >Edit</a></td>
       </tr>
     {{/each}}
   </tbody>

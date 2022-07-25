@@ -71,14 +71,14 @@ router.post("/", async (req, res, next) => {
     }
 
     // update license.
-    DonationBinCharity.update(
+    DonationBin.update(
       {
         issueDate: issueDate,
         expiryDate: expiryDate,
       },
       {
         where: {
-          donationBinCharityID: req.body.donationBinCharityID,
+          donationBinID: req.body.donationBinID,
         },
       }
     ).then(() => {

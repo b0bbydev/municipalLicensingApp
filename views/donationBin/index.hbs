@@ -54,6 +54,12 @@
         <td>{{this.notes}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#donationBinRenewModal"
+          >Renew</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
             href="/donationBin/editDonationBin/{{this.donationBinID}}"
           >Edit</a></td>
       </tr>
@@ -80,25 +86,28 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col">
-                    <label for="Charity ID" class="form-label">Charity ID</label>
+                    <label for="Donation Bin ID" class="form-label">Donation Bin
+                      ID</label>
                     <input
                       class="form-control"
-                      placeholder="Charity ID"
-                      value="{{this.donationBinCharityID}}"
-                      name="donationBinCharityID"
+                      placeholder="Donation Bin ID"
+                      value="{{this.donationBinID}}"
+                      name="donationBinID"
                       readonly
                     />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <label for="Charity Name" class="form-label">Charity Name</label>
-                    <input
-                      class="form-control"
-                      placeholder="Charity Name"
-                      value="{{this.charityName}}"
-                      readonly
-                    />
+                    <label for="Address" class="form-label">Address</label>
+                    {{#each donationBinAddresses}}
+                      <input
+                        class="form-control"
+                        placeholder="Address"
+                        value="{{this.streetNumber}} {{this.streetName}}, {{this.town}} {{this.postalCode}}"
+                        readonly
+                      />
+                    {{/each}}
                   </div>
                 </div>
               </div>
