@@ -42,7 +42,12 @@ router.get("/:id", async (req, res, next) => {
         businessName: results.businessName,
         phoneNumber: results.phoneNumber,
         email: results.email,
+        policeVSC: results.policeVSC,
+        photoID: results.photoID,
+        sitePlan: results.sitePlan,
+        zoningClearance: results.zoningClearance,
         itemsForSale: results.itemsForSale,
+        notes: results.notes,
         streetNumber: results.hawkerPeddlerBusinessAddresses[0].streetNumber,
         streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
         town: results.hawkerPeddlerBusinessAddresses[0].town,
@@ -95,6 +100,11 @@ router.post(
     .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
     .withMessage("Invalid Items For Sale Entry!")
     .trim(),
+  body("notes")
+    .if(body("notes").notEmpty())
+    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .withMessage("Invalid Notes Entry!")
+    .trim(),
   async (req, res, next) => {
     // server side validation.
     const errors = validationResult(req);
@@ -122,7 +132,12 @@ router.post(
           businessName: req.body.businessName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
+          policeVSC: req.body.policeVSC,
+          photoID: req.body.photoID,
+          sitePlan: req.body.sitePlan,
+          zoningClearance: req.body.zoningClearance,
           itemsForSale: req.body.itemsForSale,
+          notes: req.body.notes,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
           town: req.body.town,
@@ -136,7 +151,12 @@ router.post(
           businessName: req.body.businessName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
+          policeVSC: req.body.policeVSC,
+          photoID: req.body.photoID,
+          sitePlan: req.body.sitePlan,
+          zoningClearance: req.body.zoningClearance,
           itemsForSale: req.body.itemsForSale,
+          notes: req.body.notes,
         },
         {
           where: {

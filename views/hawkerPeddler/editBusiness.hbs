@@ -126,6 +126,226 @@
       </div>
     </div>
     <div class="row">
+      <div class="col">
+        <!-- Police VSC -->
+        <label for="Police VSC" class="form-label">Police VSC</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Police VSC">
+                Yes
+              </label>
+              {{#ifCond formData.policeVSC "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="policeVSC"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="policeVSC"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Police VSC">
+                No
+              </label>
+              {{#ifCond formData.policeVSC "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="policeVSC"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="policeVSC"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <!-- Photo ID -->
+        <label for="Photo ID" class="form-label">Photo ID</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Photo ID">
+                Yes
+              </label>
+              {{#ifCond formData.photoID "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="photoID"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="photoID"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Photo ID">
+                No
+              </label>
+              {{#ifCond formData.photoID "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="photoID"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="photoID"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- Site Plan -->
+        <label for="Photo ID" class="form-label">Site Plan</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Site Plan">
+                Yes
+              </label>
+              {{#ifCond formData.sitePlan "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="sitePlan"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="sitePlan"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Site Plan">
+                No
+              </label>
+              {{#ifCond formData.sitePlan "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="sitePlan"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="sitePlan"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <!-- Zoning Clearance -->
+        <label for="Zoning Clearance" class="form-label">Zoning Clearance</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Zoning Clearance">
+                Yes
+              </label>
+              {{#ifCond formData.zoningClearance "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="zoningClearance"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="zoningClearance"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Zoning Clearance">
+                No
+              </label>
+              {{#ifCond formData.zoningClearance "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="zoningClearance"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="zoningClearance"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <!-- Items For Sale -->
       <div class="col">
         <label for="Notes" class="form-label">Items For Sale</label>
@@ -137,6 +357,20 @@
           title="No special characters!"
           maxlength="255"
         >{{formData.itemsForSale}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Notes -->
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.notes}}</textarea>
       </div>
     </div>
     <div class="row">
