@@ -31,6 +31,11 @@ const KennelOwner = sequelize.define("kennelowner", {
     type: Sequelize.STRING(50),
     allowNull: true,
   },
+
+  licenseNumber: {
+    type: Sequelize.STRING(50),
+    allowNull: true,
+  },
 });
 
 Kennel.hasMany(KennelOwner, {

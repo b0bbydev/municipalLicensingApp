@@ -1,0 +1,98 @@
+<h2 class="text-center mt-1">Kennel</h2>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<!-- Property Owners Table -->
+<div class="row">
+  <h4>Property Owners</h4>
+  <div class="col mb-1">
+    {{#if propertyOwnersCount}}
+      <strong class="float-start mt-2">{{propertyOwnersCount}}</strong>
+    {{/if}}
+    <a
+      href="/kennels/addPropertyOwner"
+      class="btn btn-sm btn-primary float-end"
+    >Add A Property Owner</a>
+  </div>
+</div>
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Property Owner Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each propertyOwners}}
+      <tr>
+        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        {{#each kennelPropertyOwnerAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/kennels/editPropertyOwner/{{this.kennelPropertyOwnerID}}"
+          >Edit</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<!-- Kennel Owners Table -->
+<div class="row">
+  <h4>Kennel Owners</h4>
+  <div class="col mb-1">
+    {{#if applicantsCount}}
+      <strong class="float-start mt-2">{{applicantsCount}}</strong>
+    {{/if}}
+    <a
+      href="/kennels/addKennelOwner"
+      class="btn btn-sm btn-primary float-end"
+    >Add A Kennel Owner</a>
+  </div>
+</div>
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Kennel Owner Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>License #</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each applicants}}
+      <tr>
+        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        {{#each hawkerPeddlerApplicantAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td>{{this.licenseNumber}}</td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/hawkerPeddler/editApplicant/{{this.hawkerPeddlerApplicantID}}"
+          >Edit</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -115,8 +115,12 @@ var hawkerPeddlerBusinessRoute = require("./routes/hawkerPeddler/business");
 /* Kennel related routes */
 var kennelsRoute = require("./routes/kennels/index");
 
+var kennelRoute = require("./routes/kennels/kennel");
 var addKennelRoute = require("./routes/kennels/addKennel");
 var editKennelRoute = require("./routes/kennels/editKennel");
+
+var addKennelPropertyOwnerRoute = require("./routes/kennels/addPropertyOwner");
+var editKennelPropertyOwnerRoute = require("./routes/kennels/editPropertyOwner");
 
 var app = express();
 
@@ -317,8 +321,12 @@ app.use("/hawkerPeddler/editBusiness", hawkerPeddlerEditBusinessRoute);
 /* kennel related routes */
 app.use("/kennels", kennelsRoute);
 
+app.use("/kennels/kennel", kennelRoute);
 app.use("/kennels/addKennel", addKennelRoute);
 app.use("/kennels/editKennel", editKennelRoute);
+
+app.use("/kennels/addPropertyOwner", addKennelPropertyOwnerRoute);
+app.use("/kennels/editPropertyOwner", editKennelPropertyOwnerRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

@@ -2,7 +2,7 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
-const KennelPropertyOwner = require("./kennelOwner");
+const KennelPropertyOwner = require("./kennelPropertyOwner");
 
 const KennelPropertyOwnerAddress = sequelize.define(
   "kennelPropertyOwnerAddress",

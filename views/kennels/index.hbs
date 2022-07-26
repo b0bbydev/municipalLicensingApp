@@ -33,7 +33,10 @@
   <tbody>
     {{#each data}}
       <tr>
-        <td><a id="ownerLink" href="#">{{this.kennelName}}</a></td>
+        <td><a
+            id="ownerLink"
+            href="/kennels/kennel/{{this.kennelID}}"
+          >{{this.kennelName}}</a></td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.phoneNumber}}</td>
