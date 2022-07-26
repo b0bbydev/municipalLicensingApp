@@ -25,6 +25,9 @@ router.get("/:id", async (req, res, next) => {
           model: HawkerPeddlerPropertyOwnerAddress,
         },
       ],
+      where: {
+        hawkerPeddlerBusinessID: req.params.id,
+      },
     }),
     HawkerPeddlerApplicant.findAndCountAll({
       limit: req.query.limit,
@@ -34,6 +37,9 @@ router.get("/:id", async (req, res, next) => {
           model: HawkerPeddlerApplicantAddress,
         },
       ],
+      where: {
+        hawkerPeddlerBusinessID: req.params.id,
+      },
     }),
   ]).then((data) => {
     return res.render("hawkerPeddler/business", {

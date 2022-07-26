@@ -94,7 +94,7 @@ var editDonationBinOperatorRouter = require("./routes/donationBin/editOperator")
 var addDonationBinRouter = require("./routes/donationBin/addDonationBin");
 var editDonationBinRouter = require("./routes/donationBin/editDonationBin");
 
-var binRoute = require("./routes/donationBin/bin");
+var binsRoute = require("./routes/donationBin/bins");
 
 /* Hawker & Peddler related routes */
 var hawkerPeddlerRoute = require("./routes/hawkerPeddler/index");
@@ -284,10 +284,9 @@ app.use("/donationBin/editPropertyOwner", editPropertyOwnerRouter);
 app.use("/donationBin/addOperator", addDonationBinOperatorRouter);
 app.use("/donationBin/editOperator", editDonationBinOperatorRouter);
 
+app.use("/donationBin/bins", binsRoute);
 app.use("/donationBin/addDonationBin", addDonationBinRouter);
 app.use("/donationBin/editDonationBin", editDonationBinRouter);
-
-app.use("/donationBin/bin", binRoute);
 
 /* Hawker & Peddler related routes */
 app.use("/hawkerPeddler", hawkerPeddlerRoute);

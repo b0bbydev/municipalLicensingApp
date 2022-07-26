@@ -39,7 +39,7 @@
         {{#each donationBinAddresses}}
           <td><a
               id="ownerLink"
-              href="/donationBin/bin/{{this.donationBinID}}"
+              href="/donationBin/bins/{{this.donationBinID}}"
             >{{this.streetNumber}}
               {{this.streetName}},
               {{this.town}}
@@ -55,7 +55,7 @@
         <td><a
             class="btn btn-sm btn-secondary"
             data-bs-toggle="modal"
-            data-bs-target="#donationBinRenewModal"
+            data-bs-target="#donationBinRenewModal-{{this.donationBinID}}"
           >Renew</a>
           |
           <a
@@ -66,7 +66,7 @@
       <!-- Modal -->
       <div
         class="modal fade"
-        id="donationBinRenewModal"
+        id="donationBinRenewModal-{{this.donationBinID}}"
         tabindex="-1"
         aria-labelledby="donationBinRenewModal"
         aria-hidden="true"
