@@ -76,13 +76,13 @@
             </li>
             {{#includes auth "Admin"}}
               <!-- Admin - force IIS reset -->
-              <li class="nav-item-admin w-100 p-1">
+              {{! <li class="nav-item-admin w-100 p-1">
                 <a href="/iisreset" class="nav-link align-middle ps-3">
                   <i class="fs-4 icon-blue bi bi-person-check"></i>
                   <span class="ms-1 d-none d-sm-inline">Force IIS Reset (Click =
                     Crash)</span>
                 </a>
-              </li>
+              </li> }}
               <!-- Admin - admin panel -->
               <li class="nav-item-admin w-100 p-1">
                 <a href="/admin" class="nav-link align-middle ps-3">
@@ -104,67 +104,110 @@
                   <span class="ms-1 d-none d-sm-inline">Send SMS</span>
                 </a>
               </li>
-              <!-- Admin - adult entertainment -->
-              <li class="nav-item w-100 p-1">
-                <a
-                  href="/adultEntertainment"
-                  class="nav-link align-middle ps-3"
+            {{/includes}}
+            <div
+              class="accordion accordion-flush w-100 nav-item"
+              id="accordionExample"
+            >
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseOne"
+                    aria-expanded="false"
+                    aria-controls="collapseOne"
+                  >
+                    <i class="fs-4 icon-blue bi bi-grid"></i>
+                    <span class="dropmenu-text ms-2 d-none d-sm-inline">
+                      Licensing Apps</span>
+                  </button>
+                </h2>
+                <div
+                  id="collapseOne"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
                 >
-                  <i class="fs-4 icon-blue bi bi-receipt-cutoff"></i>
-                  <span class="ms-1 d-none d-sm-inline">Adult Entertainment
-                    Licenses</span>
-                </a>
-              </li>
-              <!-- Admin - Street Closure Permits -->
-              <li class="nav-item w-100 p-1">
-                <a
-                  href="/streetClosurePermit"
-                  class="nav-link align-middle ps-3"
-                >
-                  <i class="fs-4 icon-blue bi bi-signpost"></i>
-                  <span class="ms-1 d-none d-sm-inline">Street Closure Permits</span>
-                </a>
-              </li>
-              <!-- Admin - Donation Bin Licenses -->
-              <li class="nav-item w-100 p-1">
-                <a href="/donationBin" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-box2"></i>
-                  <span class="ms-1 d-none d-sm-inline">Donation Bin Licenses</span>
-                </a>
-              </li>
-              <!-- Admin - Hawker & Peddler Licenses -->
-              <li class="nav-item w-100 p-1">
-                <a href="/hawkerPeddler" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-shop"></i>
-                  <span class="ms-1 d-none d-sm-inline">Hawker & Peddler
-                    Licenses</span>
-                </a>
-              </li>
-              <!-- Admin - kennel licenses -->
-              <li class="nav-item-admin w-100 p-1">
-                <a href="/kennel" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-person-check"></i>
-                  <span class="ms-1 d-none d-sm-inline">Kennel Licenses</span>
-                </a>
-              </li>
-            {{/includes}}
-            <!-- dog auth -->
-            {{#includes auth "Dog Licenses"}}
-              <li class="nav-item w-100 p-1">
-                <a href="/dogtags" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-tag"></i>
-                  <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
-                </a>
-              </li>
-            {{/includes}}
-            {{#includes auth "Policies"}}
-              <li class="nav-item w-100 p-1">
-                <a href="/policies" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
-                  <span class="ms-1 d-none d-sm-inline">Policies Management</span>
-                </a>
-              </li>
-            {{/includes}}
+                  <ul
+                    class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
+                  >
+                    {{#includes auth "Admin"}}
+                      <!-- Admin - adult entertainment -->
+                      <li class="nav-item w-100 p-1">
+                        <a
+                          href="/adultEntertainment"
+                          class="nav-link align-middle ps-3"
+                        >
+                          <i class="fs-4 icon-blue bi bi-receipt-cutoff"></i>
+                          <span class="ms-1 d-none d-sm-inline">Adult
+                            Entertainment Licenses</span>
+                        </a>
+                      </li>
+                      <!-- Admin - Street Closure Permits -->
+                      <li class="nav-item w-100 p-1">
+                        <a
+                          href="/streetClosurePermit"
+                          class="nav-link align-middle ps-3"
+                        >
+                          <i class="fs-4 icon-blue bi bi-signpost"></i>
+                          <span class="ms-1 d-none d-sm-inline">Street Closure
+                            Permits</span>
+                        </a>
+                      </li>
+                      <!-- Admin - Donation Bin Licenses -->
+                      <li class="nav-item w-100 p-1">
+                        <a
+                          href="/donationBin"
+                          class="nav-link align-middle ps-3"
+                        >
+                          <i class="fs-4 icon-blue bi bi-box2"></i>
+                          <span class="ms-1 d-none d-sm-inline">Donation Bin
+                            Licenses</span>
+                        </a>
+                      </li>
+                      <!-- Admin - Hawker & Peddler Licenses -->
+                      <li class="nav-item w-100 p-1">
+                        <a
+                          href="/hawkerPeddler"
+                          class="nav-link align-middle ps-3"
+                        >
+                          <i class="fs-4 icon-blue bi bi-shop"></i>
+                          <span class="ms-1 d-none d-sm-inline">Hawker & Peddler
+                            Licenses</span>
+                        </a>
+                      </li>
+                      <!-- Admin - kennel licenses -->
+                      <li class="nav-item-admin w-100 p-1">
+                        <a href="/kennel" class="nav-link align-middle ps-3">
+                          <i class="fs-4 icon-blue bi bi-postcard"></i>
+                          <span class="ms-1 d-none d-sm-inline">Kennel Licenses</span>
+                        </a>
+                      </li>
+                    {{/includes}}
+                    <!-- dog auth -->
+                    {{#includes auth "Dog Licenses"}}
+                      <li class="nav-item w-100 p-1">
+                        <a href="/dogtags" class="nav-link align-middle ps-3">
+                          <i class="fs-4 icon-blue bi bi-tag"></i>
+                          <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
+                        </a>
+                      </li>
+                    {{/includes}}
+                    {{#includes auth "Policies"}}
+                      <li class="nav-item-last w-100 p-1">
+                        <a href="/policies" class="nav-link align-middle ps-3">
+                          <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
+                          <span class="ms-1 d-none d-sm-inline">Policies
+                            Management</span>
+                        </a>
+                      </li>
+                    {{/includes}}
+                  </ul>
+                </div>
+              </div>
+            </div>
           </ul>
           <div class="nav-item-logout w-100 p-1">
             <a href="/logout" class="nav-link align-middle ps-3">

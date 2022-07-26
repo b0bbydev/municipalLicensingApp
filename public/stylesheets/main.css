@@ -16,6 +16,10 @@ td {
   word-break: break-word;
 }
 
+.dropmenu-text {
+  font-size: 0.9rem;
+}
+
 .nav-item:hover,
 .nav-item-home:hover,
 .nav-item-admin:hover,
@@ -51,6 +55,13 @@ td {
   font-size: 0.9rem;
   cursor: pointer;
   border-top: 1px solid #dedede;
+}
+
+.nav-item-last {
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-bottom: none;
 }
 
 .nav-item-back {
