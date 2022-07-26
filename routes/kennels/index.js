@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 // models.
+const Dropdown = require("../../models/dropdownManager/dropdown");
 const Kennel = require("../../models/kennel/kennel");
 const KennelAddress = require("../../models/kennel/kennelAddress");
 // pagination lib.
@@ -14,6 +15,13 @@ router.get("/", async (req, res, next) => {
   let messages = req.session.messages || [];
   // clear session messages
   req.session.messages = [];
+
+  // get dropdown values.
+  var dropdownValues = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 24,
+    },
+  });
 
   Kennel.findAndCountAll({
     limit: req.query.limit,
@@ -34,6 +42,7 @@ router.get("/", async (req, res, next) => {
       email: req.session.email,
       auth: req.session.auth, // authorization.
       data: results.rows,
+      dropdownValues: dropdownValues,
       pageCount,
       itemCount,
       queryCount: "Records returned: " + results.count,

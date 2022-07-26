@@ -29,6 +29,25 @@
     </table>
   </div>
 </div>
+<nav id="pagination">
+  <ul class="pagination pagination-sm">
+    {{#if paginate.hasPreviousPages}}
+      <li class="page-item">
+        <a class="page-link" href="{{prev}}">Prev</a>
+      </li>
+    {{/if}}
+    {{#each pages}}
+      <li class="page-item">
+        <a class="page-link" href="{{this.url}}">{{this.number}}</a>
+      </li>
+    {{/each}}
+    {{#if hasMorePages}}
+      <li class="page-item">
+        <a class="page-link" href="{{paginate.href}}">Next</a>
+      </li>
+    {{/if}}
+  </ul>
+</nav>
 <!-- Add new dropdown form -->
 <div class="row newDropdownForm">
   <div class="col-sm-4">

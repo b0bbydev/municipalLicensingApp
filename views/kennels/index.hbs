@@ -1,7 +1,50 @@
 <h2 class="text-center mt-1">Kennel Licensing</h2>
+<h4>Filtering</h4>
+<form class="mb-0" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterCategory"
+    title="filterSelect"
+    name="filterCategory"
+    required
+  >
+    <option value="" disabled selected>Filter By...</option>
+    {{#each dropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <!-- filterValue input -->
+  <input
+    name="filterValue"
+    id="filterValue"
+    class="form-control-sm"
+    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+    title="No special characters!"
+    placeholder="Search..."
+    value="{{filterValue}}"
+  />
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/kennels"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
 <div class="row">
   <div class="col mb-1">
-    <h4>Kennels</h4>
+    <h4 class="mb-0 mt-1">Kennels</h4>
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}

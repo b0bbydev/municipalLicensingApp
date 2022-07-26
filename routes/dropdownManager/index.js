@@ -2,6 +2,8 @@ var express = require("express");
 var router = express.Router();
 // models.
 const DropdownForm = require("../../models/dropdownManager/dropdownForm");
+// pagination lib.
+const paginate = require("express-paginate");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -17,12 +19,22 @@ router.get("/", async (req, res, next) => {
     offset: req.skip,
   })
     .then((results) => {
+      // for pagination.
+      const itemCount = results.count;
+      const pageCount = Math.ceil(results.count / req.query.limit);
+
       return res.render("dropdownManager/index", {
         title: "BWG | Dropdown Manager",
         errorMessages: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
+        pageCount,
+        itemCount,
+        queryCount: "Records returned: " + results.count,
+        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+        prev: paginate.href(req)(true),
+        hasMorePages: paginate.hasNextPages(req)(pageCount),
       });
     })
     .catch((err) => {
