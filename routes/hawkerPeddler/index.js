@@ -1,8 +1,14 @@
 var express = require("express");
 var router = express.Router();
 // models.
+const Dropdown = require("../../models/dropdownManager/dropdown");
 const HawkerPeddlerBusiness = require("../../models/hawkerPeddler/hawkerPeddlerBusiness");
 const HawkerPeddlerBusinessAddress = require("../../models/hawkerPeddler/hawkerPeddlerBusinessAddress");
+const HawkerPeddlerApplicant = require("../../models/hawkerPeddler/hawkerPeddlerApplicant");
+const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawkerPeddlerApplicantAddress");
+// sequelize.
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
@@ -15,33 +21,220 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  HawkerPeddlerBusiness.findAndCountAll({
-    limit: req.query.limit,
-    offset: req.skip,
-    include: [
-      {
-        model: HawkerPeddlerBusinessAddress,
-      },
-    ],
-  }).then((results) => {
-    // for pagination.
-    const itemCount = results.count;
-    const pageCount = Math.ceil(results.count / req.query.limit);
-
-    return res.render("hawkerPeddler/index", {
-      title: "BWG | Hawker & Peddler Licensing",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      data: results.rows,
-      pageCount,
-      itemCount,
-      queryCount: "Records returned: " + results.count,
-      pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-      prev: paginate.href(req)(true),
-      hasMorePages: paginate.hasNextPages(req)(pageCount),
-    });
+  // get dropdown values.
+  var dropdownValues = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 23,
+    },
   });
+
+  // if there are no filter parameters.
+  if (!req.query.filterCategory || !req.query.filterValue) {
+    HawkerPeddlerBusiness.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      include: [
+        {
+          model: HawkerPeddlerBusinessAddress,
+        },
+      ],
+    }).then((results) => {
+      // for pagination.
+      const itemCount = results.count;
+      const pageCount = Math.ceil(results.count / req.query.limit);
+
+      return res.render("hawkerPeddler/index", {
+        title: "BWG | Hawker & Peddler Licensing",
+        errorMessages: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        data: results.rows,
+        dropdownValues: dropdownValues,
+        pageCount,
+        itemCount,
+        queryCount: "Records returned: " + results.count,
+        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+        prev: paginate.href(req)(true),
+        hasMorePages: paginate.hasNextPages(req)(pageCount),
+      });
+    });
+  } else if (req.query.filterCategory === "Business Name") {
+    HawkerPeddlerBusiness.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      where: {
+        businessName: {
+          [Op.like]: "%" + req.query.filterValue + "%",
+        },
+      },
+      include: [
+        {
+          model: HawkerPeddlerBusinessAddress,
+        },
+      ],
+    }).then((results) => {
+      // for pagination.
+      const itemCount = results.count;
+      const pageCount = Math.ceil(results.count / req.query.limit);
+
+      return res.render("hawkerPeddler/index", {
+        title: "BWG | Hawker & Peddler Licensing",
+        errorMessages: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        data: results.rows,
+        dropdownValues: dropdownValues,
+        filterCategory: req.query.filterCategory,
+        filterValue: req.query.filterValue,
+        pageCount,
+        itemCount,
+        queryCount: "Records returned: " + results.count,
+        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+        prev: paginate.href(req)(true),
+        hasMorePages: paginate.hasNextPages(req)(pageCount),
+      });
+    });
+  } else if (req.query.filterCategory === "Applicant Name") {
+    // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
+    if (req.query.filterValue.trim().indexOf(" ") != -1) {
+      HawkerPeddlerApplicant.findAndCountAll({
+        limit: req.query.limit,
+        offset: req.skip,
+        subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+        where: Sequelize.where(
+          Sequelize.fn(
+            "concat",
+            Sequelize.col("firstName"),
+            " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+            Sequelize.col("lastName")
+          ),
+          {
+            [Op.like]: "%" + req.query.filterValue + "%",
+          }
+        ),
+        include: [
+          {
+            model: HawkerPeddlerApplicantAddress,
+          },
+        ],
+      }).then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
+        return res.render("hawkerPeddler/search/applicantSearch", {
+          title: "BWG | Hawker & Peddler Licensing",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          dropdownValues: dropdownValues,
+          filterCategory: req.query.filterCategory,
+          filterValue: req.query.filterValue,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      });
+    } else {
+      HawkerPeddlerApplicant.findAndCountAll({
+        limit: req.query.limit,
+        offset: req.skip,
+        subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+        where: {
+          [Op.or]: {
+            firstName: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+            lastName: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+          },
+        },
+        include: [
+          {
+            model: HawkerPeddlerApplicantAddress,
+          },
+        ],
+      }).then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
+        return res.render("hawkerPeddler/search/applicantSearch", {
+          title: "BWG | Hawker & Peddler Licensing",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          dropdownValues: dropdownValues,
+          filterCategory: req.query.filterCategory,
+          filterValue: req.query.filterValue,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      });
+    }
+  } else if (req.query.filterCategory === "Applicant Address") {
+    HawkerPeddlerApplicant.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+      // functions in where clause, fancy.
+      where: Sequelize.where(
+        Sequelize.fn(
+          "concat",
+          Sequelize.col("streetNumber"),
+          " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+          Sequelize.col("streetName")
+        ),
+        {
+          [Op.like]: "%" + req.query.filterValue + "%",
+        }
+      ),
+      include: [
+        {
+          model: HawkerPeddlerApplicantAddress,
+        },
+      ],
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
+        return res.render("hawkerPeddler/search/applicantSearch", {
+          title: "BWG | Hawker & Peddler Licensing",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          dropdownValues: dropdownValues,
+          filterCategory: req.query.filterCategory,
+          filterValue: req.query.filterValue,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      // catch any scary errors and render page error.
+      .catch((err) =>
+        res.render("hawkerPeddler/index", {
+          title: "BWG | Hawker & Peddler Licensing",
+          message: "Page Error!",
+        })
+      );
+  }
 });
 
 /* POST /hawkerPeddler - renews license. */

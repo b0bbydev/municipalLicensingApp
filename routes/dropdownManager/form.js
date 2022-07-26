@@ -142,17 +142,17 @@ router.get(
 /* POST /dropdownManager/form/:id */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("dropdownValue")
     .notEmpty()
-    .matches(/^[^'";=_()*&%$#!<>\^\\]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,&'" ]*$/)
     .withMessage("Invalid Dropdown Value Entry!")
     .trim(),
   body("dropdownTitle")
     .notEmpty()
-    .matches(/^[^'";=_()*&%$#!<>\^\\]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,&'" ]*$/)
     .withMessage("Invalid Dropdown Title Entry!")
     .trim(),
-  param("id").matches(/^\d+$/).trim(),
   function (req, res, next) {
     // server side validation.
     const errors = validationResult(req);

@@ -1,0 +1,51 @@
+<h2 class="text-center mt-1">Hawker & Peddler Licensing</h2>
+<div class="row">
+  <div class="col mb-1">
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
+  </div>
+</div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Applicant Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>License #</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td><a
+            id="ownerLink"
+            href="/hawkerPeddler/business/{{this.hawkerPeddlerBusinessID}}"
+          >{{this.firstName}} {{this.lastName}}</a></td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        {{#each hawkerPeddlerApplicantAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td>{{this.licenseNumber}}</td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/hawkerPeddler/editApplicant/{{this.hawkerPeddlerApplicantID}}"
+          >Edit</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
