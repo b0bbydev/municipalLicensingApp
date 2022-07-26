@@ -1,0 +1,131 @@
+<h2 class="text-center mt-1">Donation Bin Licensing</h2>
+<div class="row">
+  <div class="col mb-1">
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
+  </div>
+</div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<!-- Operators Table -->
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>License #</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td><a
+            id="ownerLink"
+            href="/donationBin/bins/{{this.donationBinID}}"
+          >{{this.firstName}} {{this.lastName}}</a></td>
+        <td>{{this.licenseNumber}}</td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        {{#each donationBinOperatorAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/donationBin/editOperator/{{this.donationBinOperatorID}}"
+          >Edit</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#donationBinModal-{{this.donationBinOperatorID}}"
+          >Documentation</a></td>
+      </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="donationBinModal-{{this.donationBinOperatorID}}"
+        tabindex="-1"
+        aria-labelledby="Donation Bin Modal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Documentation</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <strong>Photo ID:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.photoID}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Charity Information:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.charityInformation}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Site Plan:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.sitePlan}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Certificate Of Insurance:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.certificateOfInsurance}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Owner Consent:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.ownerConsent}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    {{/each}}
+  </tbody>
+</table>
