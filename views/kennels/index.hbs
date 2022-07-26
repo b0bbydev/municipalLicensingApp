@@ -5,7 +5,7 @@
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
-    <a href="/kennel/addKennel" class="btn btn-sm btn-primary float-end">Add A
+    <a href="/kennels/addKennel" class="btn btn-sm btn-primary float-end">Add A
       Kennel</a>
   </div>
 </div>
@@ -33,7 +33,7 @@
   <tbody>
     {{#each data}}
       <tr>
-        <td>{{this.kennelName}}</td>
+        <td><a id="ownerLink" href="#">{{this.kennelName}}</a></td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.phoneNumber}}</td>
@@ -47,7 +47,7 @@
           |
           <a
             class="btn btn-sm btn-secondary"
-            href="/kennel/editKennel/{{this.kennelID}}"
+            href="/kennels/editKennel/{{this.kennelID}}"
           >Edit</a>
           |
           <a

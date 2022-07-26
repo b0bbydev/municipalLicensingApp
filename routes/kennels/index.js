@@ -8,7 +8,7 @@ const paginate = require("express-paginate");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /kennel page. */
+/* GET /kennels page. */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -28,7 +28,7 @@ router.get("/", async (req, res, next) => {
     const itemCount = results.count;
     const pageCount = Math.ceil(results.count / req.query.limit);
 
-    return res.render("kennel/index", {
+    return res.render("kennels/index", {
       title: "BWG | Kennel Licensing",
       errorMessages: messages,
       email: req.session.email,
@@ -51,7 +51,7 @@ router.post("/", async (req, res, next) => {
 
   // if errors is NOT empty (if there are errors...).
   if (!errors.isEmpty()) {
-    return res.render("kennel/index", {
+    return res.render("kennels/index", {
       title: "BWG | Kennel Licensing",
       errorMessages: "Page Error!",
       email: req.session.email,
@@ -82,7 +82,7 @@ router.post("/", async (req, res, next) => {
         },
       }
     ).then(() => {
-      return res.redirect("/kennel");
+      return res.redirect("/kennels");
     });
   }
 });

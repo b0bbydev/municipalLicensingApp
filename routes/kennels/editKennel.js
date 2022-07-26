@@ -9,8 +9,8 @@ const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /kennel/addKennel page. */
-router.get("/", async (req, res, next) => {
+/* GET /kennel/editKennel page. */
+router.get("/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -23,18 +23,46 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  return res.render("kennel/addKennel", {
-    title: "BWG | Add A Kennel",
-    errorMessages: messages,
-    email: req.session.email,
-    auth: req.session.auth, // authorization.
-    streets: streets,
+  Kennel.findOne({
+    where: {
+      kennelID: req.params.id,
+    },
+    include: [
+      {
+        model: KennelAddress,
+      },
+    ],
+  }).then((results) => {
+    return res.render("kennels/editKennel", {
+      title: "BWG | Edit A Kennel",
+      errorMessages: messages,
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+      streets: streets,
+      // populate input fields with existing values.
+      formData: {
+        kennelName: results.kennelName,
+        phoneNumber: results.phoneNumber,
+        email: results.email,
+        issueDate: results.issueDate,
+        expiryDate: results.expiryDate,
+        policeCheck: results.policeCheck,
+        photoID: results.photoID,
+        acoInspection: results.acoInspection,
+        zoningClearance: results.zoningClearance,
+        notes: results.notes,
+        streetNumber: results.kennelAddresses[0].streetNumber,
+        streetName: results.kennelAddresses[0].streetName,
+        town: results.kennelAddresses[0].town,
+        postalCode: results.kennelAddresses[0].postalCode,
+      },
+    });
   });
 });
 
-/* POST /kennel/addKennel */
+/* POST /kennel/editKennel */
 router.post(
-  "/",
+  "/:id",
   body("kennelName")
     .if(body("kennelName").notEmpty())
     .matches(/^[ a-zA-Z0-9\'-]*$/)
@@ -91,8 +119,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("kennel/addKennel", {
-        title: "BWG | Add Kennel",
+      return res.render("kennels/editKennel", {
+        title: "BWG | Edit Kennel",
         message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -116,8 +144,7 @@ router.post(
         },
       });
     } else {
-      // create business.
-      Kennel.create(
+      Kennel.update(
         {
           kennelName: req.body.kennelName,
           phoneNumber: req.body.phoneNumber,
@@ -129,25 +156,34 @@ router.post(
           acoInspection: req.body.acoInspection,
           zoningClearance: req.body.zoningClearance,
           notes: req.body.notes,
-          kennelAddresses: [
+        },
+        {
+          where: {
+            kennelID: req.params.id,
+          },
+        }
+      )
+        .then(() => {
+          KennelAddress.update(
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
             },
-          ],
-        },
-        {
-          include: [KennelAddress],
-        }
-      )
+            {
+              where: {
+                kennelID: req.params.id,
+              },
+            }
+          );
+        })
         .then(() => {
-          return res.redirect("/kennel");
+          return res.redirect("/kennels");
         })
         .catch((err) => {
-          return res.render("kennel/addKennel", {
-            title: "BWG | Add Kennel",
+          return res.render("kennels/editKennel", {
+            title: "BWG | Edit A Kennel",
             message: "Page Error!",
           });
         });
