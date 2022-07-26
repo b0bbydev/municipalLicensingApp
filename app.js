@@ -122,6 +122,9 @@ var editKennelRoute = require("./routes/kennels/editKennel");
 var addKennelPropertyOwnerRoute = require("./routes/kennels/addPropertyOwner");
 var editKennelPropertyOwnerRoute = require("./routes/kennels/editPropertyOwner");
 
+var addKennelOwnerRoute = require("./routes/kennels/addKennelOwner");
+var editKennelOwnerRoute = require("./routes/kennels/editKennelOwner");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -327,6 +330,9 @@ app.use("/kennels/editKennel", editKennelRoute);
 
 app.use("/kennels/addPropertyOwner", addKennelPropertyOwnerRoute);
 app.use("/kennels/editPropertyOwner", editKennelPropertyOwnerRoute);
+
+app.use("/kennels/addKennelOwner", addKennelOwnerRoute);
+app.use("/kennels/editKennelOwner", editKennelOwnerRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

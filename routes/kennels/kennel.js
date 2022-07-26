@@ -3,6 +3,8 @@ var router = express.Router();
 // models.
 const KennelPropertyOwner = require("../../models/kennel/kennelPropertyOwner");
 const KennelPropertyOwnerAddress = require("../../models/kennel/kennelPropertyOwnerAddress");
+const KennelOwner = require("../../models/kennel/kennelOwner");
+const KennelOwnerAddress = require("../../models/kennel/kennelOwnerAddress");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -29,6 +31,18 @@ router.get("/:id", async (req, res, next) => {
         kennelID: req.params.id,
       },
     }),
+    KennelOwner.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      include: [
+        {
+          model: KennelOwnerAddress,
+        },
+      ],
+      where: {
+        kennelID: req.params.id,
+      },
+    }),
   ]).then((data) => {
     return res.render("kennels/kennel", {
       title: "BWG | Kennel Licensing",
@@ -36,7 +50,9 @@ router.get("/:id", async (req, res, next) => {
       email: req.session.email,
       auth: req.session.auth, // authorization.
       propertyOwners: data[0].rows,
+      kennelOwners: data[1].rows,
       propertyOwnersCount: "Records returned: " + data[0].count,
+      kennelOwnersCount: "Records returned: " + data[1].count,
     });
   });
 });

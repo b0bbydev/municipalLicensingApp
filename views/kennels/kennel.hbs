@@ -55,8 +55,8 @@
 <div class="row">
   <h4>Kennel Owners</h4>
   <div class="col mb-1">
-    {{#if applicantsCount}}
-      <strong class="float-start mt-2">{{applicantsCount}}</strong>
+    {{#if kennelOwnersCount}}
+      <strong class="float-start mt-2">{{kennelOwnersCount}}</strong>
     {{/if}}
     <a
       href="/kennels/addKennelOwner"
@@ -76,12 +76,12 @@
     </tr>
   </thead>
   <tbody>
-    {{#each applicants}}
+    {{#each kennelOwners}}
       <tr>
         <td>{{this.firstName}} {{this.lastName}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
-        {{#each hawkerPeddlerApplicantAddresses}}
+        {{#each kennelOwnerAddresses}}
           <td>{{this.streetNumber}}
             {{this.streetName}},
             {{this.town}}
@@ -90,7 +90,7 @@
         <td>{{this.licenseNumber}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
-            href="/hawkerPeddler/editApplicant/{{this.hawkerPeddlerApplicantID}}"
+            href="/kennels/editKennelOwner/{{this.kennelOwnerID}}"
           >Edit</a></td>
       </tr>
     {{/each}}
