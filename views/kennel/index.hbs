@@ -1,1 +1,201 @@
 <h2 class="text-center mt-1">Kennel Licensing</h2>
+<div class="row">
+  <div class="col mb-1">
+    <h4>Kennels</h4>
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
+    <a href="/kennel/addKennel" class="btn btn-sm btn-primary float-end">Add A
+      Kennel</a>
+  </div>
+</div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<!-- Table -->
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Kennel Name</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Notes</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td>{{this.kennelName}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        <td>{{this.notes}}</td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#kennelRenewModal-{{this.kennelID}}"
+          >Renew</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
+            href="/kennel/editKennel/{{this.kennelID}}"
+          >Edit</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#kennelDocumentationModal-{{this.kennelID}}"
+          >Documentation</a></td>
+      </tr>
+      <!-- Renew Modal -->
+      <div
+        class="modal fade"
+        id="kennelRenewModal-{{this.kennelID}}"
+        tabindex="-1"
+        aria-labelledby="Kennel Renewal Modal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Renew Kennel</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <label for="Kennel ID" class="form-label">Kennel ID</label>
+                    <input
+                      class="form-control"
+                      placeholder="Kennel ID"
+                      value="{{this.kennelID}}"
+                      name="kennelID"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Kennel Name" class="form-label">Kennel Name</label>
+                    <input
+                      class="form-control"
+                      placeholder="Kennel Name"
+                      value="{{this.kennelName}}"
+                      name="kennelName"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit Renewal</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Documentation Modal -->
+      <div
+        class="modal fade"
+        id="kennelDocumentationModal-{{this.kennelID}}"
+        tabindex="-1"
+        aria-labelledby="Kennel Documentation Modal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Kennel Documentation</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <strong>Police Check:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.policeCheck}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Photo ID:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.photoID}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>ACO Inspection:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.acoInspection}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Zoning Clearance:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.zoningClearance}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    {{/each}}
+  </tbody>
+</table>
+<nav id="pagination">
+  <ul class="pagination pagination-sm">
+    {{#if paginate.hasPreviousPages}}
+      <li class="page-item"><a class="page-link" href="{{prev}}">Prev</a></li>
+    {{/if}}
+    {{#each pages}}
+      <li class="page-item">
+        <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
+    {{/each}}
+    {{#if hasMorePages}}
+      <li class="page-item"><a
+          class="page-link"
+          href="{{paginate.href}}"
+        >Next</a></li>
+    {{/if}}
+  </ul>
+</nav>
