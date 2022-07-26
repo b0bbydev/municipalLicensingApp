@@ -112,6 +112,9 @@ var hawkerPeddlerEditApplicantRoute = require("./routes/hawkerPeddler/editApplic
 
 var hawkerPeddlerBusinessRoute = require("./routes/hawkerPeddler/business");
 
+/* Kennel related routes */
+var kennelRoute = require("./routes/kennel/index");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -307,6 +310,9 @@ app.use("/hawkerPeddler/editApplicant", hawkerPeddlerEditApplicantRoute);
 app.use("/hawkerPeddler/business", hawkerPeddlerBusinessRoute);
 app.use("/hawkerPeddler/addBusiness", hawkerPeddlerAddBusinessRoute);
 app.use("/hawkerPeddler/editBusiness", hawkerPeddlerEditBusinessRoute);
+
+/* kennel related routes */
+app.use("/kennel", kennelRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
