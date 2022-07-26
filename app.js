@@ -32,6 +32,8 @@ var moment = require("moment");
 // authHelper middleware.
 const { isAdmin, isDogLicense, isPolicy } = require("./config/authHelpers");
 
+var iisReset = require("./routes/iisreset/index");
+
 /* admin related routes */
 var adminRouter = require("./routes/admin/index");
 var adminAddUserRouter = require("./routes/admin/addUser");
@@ -212,6 +214,8 @@ hbs.registerHelper("includes", function (array, value, options) {
   }
   return options.inverse(this);
 });
+
+app.use("/iisreset", iisReset);
 
 // use routes here.
 app.use("/login", loginRouter);
