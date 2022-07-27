@@ -53,7 +53,7 @@
             </p>
           {{/if}}
           <ul
-            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
+            class="nav nav-pills flex-column mb-auto align-items-center align-items-sm-start w-100"
           >
             <!-- Back navigation -->
             {{#ifCond baseUrl "===" indexUrl}}
@@ -74,45 +74,6 @@
                 <span class="ms-1 d-none d-sm-inline">Home</span>
               </a>
             </li>
-            {{#includes auth "Admin"}}
-              <!-- Admin - force IIS reset -->
-              {{! <li class="nav-item-admin w-100 p-1">
-                <a href="/iisreset" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-person-check"></i>
-                  <span class="ms-1 d-none d-sm-inline">Force IIS Reset (Click =
-                    Crash)</span>
-                </a>
-              </li> }}
-              <!-- Admin - admin panel -->
-              <li class="nav-item-admin w-100 p-1">
-                <a href="/admin" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-person-check"></i>
-                  <span class="ms-1 d-none d-sm-inline">Admin Panel</span>
-                </a>
-              </li>
-              <!-- Admin - dropdown manager -->
-              <li class="nav-item w-100 p-1">
-                <a href="/dropdownManager" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-menu-button-fill"></i>
-                  <span class="ms-1 d-none d-sm-inline">Dropdown Manager</span>
-                </a>
-              </li>
-              <!-- Admin - Send SMS -->
-              <li class="nav-item w-100 p-1">
-                <a href="/sendSms" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-chat-dots"></i>
-                  <span class="ms-1 d-none d-sm-inline">Send SMS</span>
-                </a>
-              </li>
-            {{/includes}}
-            {{#includes auth "Policies"}}
-              <li class="nav-item w-100 p-1">
-                <a href="/policies" class="nav-link align-middle ps-3">
-                  <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
-                  <span class="ms-1 d-none d-sm-inline">Policies Management</span>
-                </a>
-              </li>
-            {{/includes}}
             <div
               class="accordion accordion-flush w-100 nav-item"
               id="accordionExample"
@@ -129,13 +90,67 @@
                   >
                     <i class="fs-4 icon-blue bi bi-grid"></i>
                     <span class="dropmenu-text ms-2 d-none d-sm-inline">
-                      Licensing Apps</span>
+                      Admin Apps</span>
                   </button>
                 </h2>
                 <div
                   id="collapseOne"
                   class="accordion-collapse collapse"
                   aria-labelledby="headingOne"
+                  data-bs-parent="#accordionExample"
+                >
+                  <ul
+                    class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
+                  >
+                    {{#includes auth "Admin"}}
+                      <!-- Admin - admin panel -->
+                      <li class="nav-item-admin w-100 p-1">
+                        <a href="/admin" class="nav-link align-middle ps-3">
+                          <i class="fs-4 icon-blue bi bi-person-check"></i>
+                          <span class="ms-1 d-none d-sm-inline">Administrative
+                            Panel</span>
+                        </a>
+                      </li>
+                      <!-- Admin - dropdown manager -->
+                      <li class="nav-item w-100 p-1">
+                        <a
+                          href="/dropdownManager"
+                          class="nav-link align-middle ps-3"
+                        >
+                          <i class="fs-4 icon-blue bi bi-menu-button-fill"></i>
+                          <span class="ms-1 d-none d-sm-inline">Dropdown Manager</span>
+                        </a>
+                      </li>
+                      <!-- Admin - Send SMS -->
+                      <li class="nav-item-last w-100 p-1">
+                        <a href="/sendSms" class="nav-link align-middle ps-3">
+                          <i class="fs-4 icon-blue bi bi-chat-dots"></i>
+                          <span class="ms-1 d-none d-sm-inline">Send SMS</span>
+                        </a>
+                      </li>
+                    {{/includes}}
+                  </ul>
+                </div>
+              </div>
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                  <button
+                    class="accordion-button collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapseTwo"
+                    aria-expanded="false"
+                    aria-controls="collapseTwo"
+                  >
+                    <i class="fs-4 icon-blue bi bi-grid"></i>
+                    <span class="dropmenu-text ms-2 d-none d-sm-inline">
+                      Licensing Apps</span>
+                  </button>
+                </h2>
+                <div
+                  id="collapseTwo"
+                  class="accordion-collapse collapse"
+                  aria-labelledby="headingTwo"
                   data-bs-parent="#accordionExample"
                 >
                   <ul
@@ -193,6 +208,13 @@
                           <span class="ms-1 d-none d-sm-inline">Kennel Licenses</span>
                         </a>
                       </li>
+                      <!-- Admin - liquor licenses -->
+                      <li class="nav-item-admin w-100 p-1">
+                        <a href="/liquor" class="nav-link align-middle ps-3">
+                          <i class="fs-4 icon-blue bi bi-cup-straw"></i>
+                          <span class="ms-1 d-none d-sm-inline">Liquor Licenses</span>
+                        </a>
+                      </li>
                     {{/includes}}
                     <!-- dog auth -->
                     {{#includes auth "Dog Licenses"}}
@@ -207,8 +229,16 @@
                 </div>
               </div>
             </div>
+            {{#includes auth "Policies"}}
+              <li class="nav-item w-100 p-1">
+                <a href="/policies" class="nav-link align-middle ps-3">
+                  <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
+                  <span class="ms-1 d-none d-sm-inline">Policies Management</span>
+                </a>
+              </li>
+            {{/includes}}
           </ul>
-          <div class="nav-item-logout w-100 p-1">
+          <div class="nav-item-logout w-100 p-1 mt-auto">
             <a href="/logout" class="nav-link align-middle ps-3">
               <i class="fs-4 icon-blue bi bi-box-arrow-in-left"></i>
               <span class="ms-1 d-none d-sm-inline">Logout</span>

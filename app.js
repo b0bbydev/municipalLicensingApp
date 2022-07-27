@@ -125,6 +125,9 @@ var editKennelPropertyOwnerRoute = require("./routes/kennels/editPropertyOwner")
 var addKennelOwnerRoute = require("./routes/kennels/addKennelOwner");
 var editKennelOwnerRoute = require("./routes/kennels/editKennelOwner");
 
+/* Liquor License related routes */
+var liquorRoute = require("./routes/liquor/index");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -333,6 +336,9 @@ app.use("/kennels/editPropertyOwner", editKennelPropertyOwnerRoute);
 
 app.use("/kennels/addKennelOwner", addKennelOwnerRoute);
 app.use("/kennels/editKennelOwner", editKennelOwnerRoute);
+
+/* Liquor License related routes */
+app.use("/liquor", liquorRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
