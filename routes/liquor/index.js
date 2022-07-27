@@ -7,6 +7,8 @@ const LiquorBusinessAddress = require("../../models/liquor/liquorBusinessAddress
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // pagination lib.
@@ -75,6 +77,98 @@ router.get(
             hasMorePages: paginate.hasNextPages(req)(pageCount),
           });
         });
+      } else if (req.query.filterCategory === "Business Address") {
+        LiquorBusiness.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          // functions in where clause, fancy.
+          where: Sequelize.where(
+            Sequelize.fn(
+              "concat",
+              Sequelize.col("streetNumber"),
+              " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+              Sequelize.col("streetName")
+            ),
+            {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            }
+          ),
+          include: [
+            {
+              model: LiquorBusinessAddress,
+            },
+          ],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
+
+          return res.render("liquor/index", {
+            title: "BWG | Liquor Licensing",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterCategory: req.query.filterCategory,
+            filterValue: req.query.filterValue,
+            dropdownValues: dropdownValues,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        });
+      } else {
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+        // create filter query.
+        LiquorBusiness.findAndCountAll({
+          where: {
+            [filterCategory]: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+          },
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: LiquorBusinessAddress,
+            },
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("liquor/index", {
+              title: "BWG | Liquor Licensing",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              dropdownValues: dropdownValues,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("liquor/index", {
+              title: "BWG | Liquor Licensing",
+              message: "Page Error!",
+            })
+          );
       }
     }
   }
