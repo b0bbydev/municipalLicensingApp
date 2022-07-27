@@ -70,6 +70,7 @@
       <th>Contact Name</th>
       <th>Contact Phone</th>
       <th>Date Started</th>
+      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -87,6 +88,7 @@
         <td>{{this.contactName}}</td>
         <td>{{this.contactPhone}}</td>
         <td>{{this.dateStarted}}</td>
+        <td>{{this.notes}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
             href="/liquor/editBusiness/{{this.liquorBusinessID}}"
@@ -121,50 +123,106 @@
               <div class="modal-body">
                 <div class="row">
                   <div class="col">
-                    <strong>Police VSC:</strong>
+                    <strong>Application Type:</strong>
                   </div>
                   <div class="col float-end">
-                    <p>{{this.policeVSC}}</p>
+                    <p>{{this.applicationType}}</p>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <strong>Certificate of Insurance:</strong>
+                    <strong>Fee Receieved:</strong>
                   </div>
                   <div class="col float-end">
-                    <p>{{this.certificateOfInsurance}}</p>
+                    <p>{{this.feeReceived}}</p>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <strong>Photo ID:</strong>
+                    <strong>Municipal Information Signed:</strong>
                   </div>
                   <div class="col float-end">
-                    <p>{{this.photoID}}</p>
+                    <p>{{this.municipalInformationSigned}}</p>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <strong>Health Inspection:</strong>
+                    <strong>Municipal Information Sent To AGCO:</strong>
                   </div>
                   <div class="col float-end">
-                    <p>{{this.healthInspection}}</p>
+                    <p>{{this.municipalInformationSentToAGCO}}</p>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <strong>Zoning Clearance:</strong>
+                    <strong>Fire Approval Received:</strong>
                   </div>
                   <div class="col float-end">
-                    <p>{{this.zoningClearance}}</p>
+                    <p>{{this.fireApprovalReceived}}</p>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <strong>Fee Paid:</strong>
+                    <strong>Fire Sent To AGCO:</strong>
                   </div>
                   <div class="col float-end">
-                    <p>{{this.feePaid}}</p>
+                    <p>{{this.fireSentToAGCO}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Planning Approval Received:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.planningApprovalReceived}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Planning Sent To AGCO:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.planningSentToAGCO}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>SMDHU Approval Received:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.smdhuApprovalReceived}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>SMDHU Sent To AGCO:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.smdhuSentToAGCO}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Building Approval Received:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.buildingApprovalReceived}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Building Sent To AGCO:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.buildingSentToAGCO}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>License Approved:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.licenseApproved}}</p>
                   </div>
                 </div>
               </div>
