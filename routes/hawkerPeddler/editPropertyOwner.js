@@ -58,12 +58,12 @@ router.post(
   "/:id",
   body("firstName")
     .if(body("firstName").notEmpty())
-    .matches(/^[a-zA-Z\'-]*$/)
+    .matches(/^[a-zA-Z\/\-',. ]*$/)
     .withMessage("Invalid First Name Entry!")
     .trim(),
   body("lastName")
     .if(body("lastName").notEmpty())
-    .matches(/^[a-zA-Z\'-]*$/)
+    .matches(/^[a-zA-Z\/\-',. ]*$/)
     .withMessage("Invalid Last Name Entry!")
     .trim(),
   body("phoneNumber")

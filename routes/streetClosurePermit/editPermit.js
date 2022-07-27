@@ -71,7 +71,7 @@ router.post(
   "/:id",
   body("coordinatorName")
     .notEmpty()
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[a-zA-Z\/\-',. ]*$/)
     .withMessage("Invalid Coordinator Name Entry!")
     .trim(),
   body("coordinatorPhone")
@@ -91,7 +91,7 @@ router.post(
     .trim(),
   body("everydayContactName")
     .if(body("everydayContactName").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[a-zA-Z\/\-',. ]*$/)
     .withMessage("Invalid Everyday Contact Name Entry!")
     .trim(),
   body("everydayContactPhone")

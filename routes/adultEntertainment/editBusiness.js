@@ -101,7 +101,7 @@ router.post(
     .trim(),
   body("ownerName")
     .if(body("ownerName").notEmpty())
-    .matches(/^[ a-zA-Z\'-]*$/)
+    .matches(/^[a-zA-Z\/\-',. ]*$/)
     .withMessage("Invalid Owner Name Entry!")
     .trim(),
   body("contactPhone")

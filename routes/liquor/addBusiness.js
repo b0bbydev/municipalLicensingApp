@@ -47,7 +47,7 @@ router.post(
     .trim(),
   body("contactName")
     .if(body("contactName").notEmpty())
-    .matches(/^[ a-zA-Z0-9\'-]*$/)
+    .matches(/^[a-zA-Z0-9\/\-',. ]*$/)
     .withMessage("Invalid Contact Name Entry!")
     .trim(),
   body("contactPhone")
