@@ -66,44 +66,54 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>TH</th>
+      <th>Registered Business Name</th>
+      <th>Operating Business Name</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
+      <th>Items For Sale</th>
+      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
       <tr>
-        <td></td>
+        <td>{{this.registeredBusinessName}}</td>
+        <td>{{this.operatingBusinessName}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td>{{this.itemsForSale}}</td>
+        <td>{{this.notes}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
             data-bs-toggle="modal"
-            data-bs-target="#hawkerPeddlerRenewModal-{{this.hawkerPeddlerBusinessID}}"
+            data-bs-target="#refreshmentVehicleRenewModal-{{this.refreshmentVehicleID}}"
           >Renew</a>
           |
           <a
             class="btn btn-sm btn-secondary"
-            href="/hawkerPeddler/editBusiness/{{this.hawkerPeddlerBusinessID}}"
+            href="/refreshmentVehicles/editVehicle/{{this.refreshmentVehicleID}}"
           >Edit</a>
           |
           <a
             class="btn btn-sm btn-secondary"
             data-bs-toggle="modal"
-            data-bs-target="#hawkerPeddlerDocumentationModal-{{this.hawkerPeddlerBusinessID}}"
+            data-bs-target="#refreshmentDocumentationModal-{{this.refreshmentVehicleID}}"
           >Documentation</a></td>
       </tr>
       <!-- Renew Modal -->
       <div
         class="modal fade"
-        id="hawkerPeddlerRenewModal-{{this.hawkerPeddlerBusinessID}}"
+        id="refreshmentVehicleRenewModal-{{this.refreshmentVehicleID}}"
         tabindex="-1"
-        aria-labelledby="Hawker Peddler Renewal Modal"
+        aria-labelledby="Refreshment Vehicle Renewal Modal"
         aria-hidden="true"
       >
         <form method="POST">
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title">Renew Business</h5>
+                <h5 class="modal-title">Renew Vehicle</h5>
                 <button
                   type="button"
                   class="btn-close"
@@ -115,26 +125,29 @@
                 <div class="row">
                   <div class="col">
                     <label
-                      for="Hawker Peddler Business ID"
+                      for="Refreshment Vehicle ID"
                       class="form-label"
-                    >Hawker Peddler Business ID</label>
+                    >Refreshment Vehicle ID</label>
                     <input
                       class="form-control"
-                      placeholder="Hawker Peddler Business ID"
-                      value="{{this.hawkerPeddlerBusinessID}}"
-                      name="hawkerPeddlerBusinessID"
+                      placeholder="Refreshment Vehicle ID"
+                      value="{{this.refreshmentVehicleID}}"
+                      name="refreshmentVehicleID"
                       readonly
                     />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <label for="Business Name" class="form-label">Business Name</label>
+                    <label
+                      for="Registered Business Name"
+                      class="form-label"
+                    >Registered Business Name</label>
                     <input
                       class="form-control"
-                      placeholder="Business Name"
-                      value="{{this.businessName}}"
-                      name="businessName"
+                      placeholder="Registered Name"
+                      value="{{this.registeredBusinessName}}"
+                      name="registeredBusinessName"
                       readonly
                     />
                   </div>
@@ -155,9 +168,9 @@
       <!-- Documentation Modal -->
       <div
         class="modal fade"
-        id="hawkerPeddlerDocumentationModal-{{this.hawkerPeddlerBusinessID}}"
+        id="refreshmentDocumentationModal-{{this.refreshmentVehicleID}}"
         tabindex="-1"
-        aria-labelledby="Hawker Peddler Modal"
+        aria-labelledby="Refreshment Vehicle Modal"
         aria-hidden="true"
       >
         <form method="POST">
@@ -173,6 +186,14 @@
                 ></button>
               </div>
               <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <strong>Special Event:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.specialEvent}}</p>
+                  </div>
+                </div>
                 <div class="row">
                   <div class="col">
                     <strong>Police VSC:</strong>
@@ -191,10 +212,50 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <strong>Site Plan:</strong>
+                    <strong>Drivers Abstract:</strong>
                   </div>
                   <div class="col float-end">
-                    <p>{{this.sitePlan}}</p>
+                    <p>{{this.driversAbstract}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Safety Certificate:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.safetyCertificate}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Vehicle Ownership:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.vehicleOwnership}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Citizenship:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.citizenship}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Insurance:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.insurance}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Fire Approval:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.fireApproval}}</p>
                   </div>
                 </div>
                 <div class="row">
@@ -203,6 +264,14 @@
                   </div>
                   <div class="col float-end">
                     <p>{{this.zoningClearance}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Health Inspection:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.healthInspection}}</p>
                   </div>
                 </div>
               </div>

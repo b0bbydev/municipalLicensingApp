@@ -4,6 +4,8 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Business = require("../../models/adultEntertainment/business");
 const BusinessAddress = require("../../models/adultEntertainment/businessAddress");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -116,35 +118,6 @@ router.post(
           notes: req.body.notes,
         },
       });
-      // handle empty dates seperately because express-validate sucks.
-    } else if (!req.body.issueDate || !req.body.expiryDate) {
-      return res.render("adultEntertainment/addBusiness", {
-        title: "BWG | Add Business",
-        message: "Invalid Issue/Expiry Date!",
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        dropdownValues: dropdownValues,
-        // if the form submission is unsuccessful, save their values.
-        formData: {
-          businessName: req.body.businessName,
-          streetNumber: req.body.streetNumber,
-          streetName: req.body.streetName,
-          poBoxAptRR: req.body.poBoxAptRR,
-          ownerName: req.body.ownerName,
-          contactName: req.body.contactName,
-          contactPhone: req.body.contactPhone,
-          licenseNumber: req.body.licenseNumber,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
-          policeVSC: req.body.policeVSC,
-          certificateOfInsurance: req.body.certificateOfInsurance,
-          photoID: req.body.photoID,
-          healthInspection: req.body.healthInspection,
-          zoningClearance: req.body.zoningClearance,
-          feePaid: req.body.feePaid,
-          notes: req.body.notes,
-        },
-      });
     } else {
       // create business
       Business.create(
@@ -154,8 +127,8 @@ router.post(
           contactName: req.body.contactName,
           contactPhone: req.body.contactPhone,
           licenseNumber: req.body.licenseNumber,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
+          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           policeVSC: req.body.policeVSC,
           certificateOfInsurance: req.body.certificateOfInsurance,
           photoID: req.body.photoID,

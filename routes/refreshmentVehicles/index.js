@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
+const RefreshmentVehicle = require("../../models/refreshmentVehicles/refreshmentVehicle");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -19,11 +20,27 @@ router.get("/", async (req, res, next) => {
 
   // if there are no filter parameters.
   if (!req.query.filterCategory || !req.query.filterValue) {
-    return res.render("refreshmentVehicles/index", {
-      title: "BWG | Refreshment Vehicle Licensing",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
+    RefreshmentVehicle.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+    }).then((results) => {
+      // for pagination.
+      const itemCount = results.count;
+      const pageCount = Math.ceil(results.count / req.query.limit);
+
+      return res.render("refreshmentVehicles/index", {
+        title: "BWG | Refreshment Vehicle Licensing",
+        errorMessages: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        data: results.rows,
+        pageCount,
+        itemCount,
+        queryCount: "Records returned: " + results.count,
+        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+        prev: paginate.href(req)(true),
+        hasMorePages: paginate.hasNextPages(req)(pageCount),
+      });
     });
   }
 });

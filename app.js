@@ -134,6 +134,9 @@ var editLiquorBusinessRoute = require("./routes/liquor/editBusiness");
 /* Refreshment Vehicle related routes. */
 var refreshmentVehicleRoute = require("./routes/refreshmentVehicles/index");
 
+var addRefreshmentVehicleRoute = require("./routes/refreshmentVehicles/addVehicle");
+var editRefreshmentVehicleRoute = require("./routes/refreshmentVehicles/editVehicle");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -351,6 +354,9 @@ app.use("/liquor/editBusiness", editLiquorBusinessRoute);
 
 /* Refreshment Vehicle related routes */
 app.use("/refreshmentVehicles", refreshmentVehicleRoute);
+
+app.use("/refreshmentVehicles/addVehicle", addRefreshmentVehicleRoute);
+app.use("/refreshmentVehicles/editVehicle", editRefreshmentVehicleRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

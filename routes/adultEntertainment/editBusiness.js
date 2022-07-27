@@ -4,6 +4,8 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Business = require("../../models/adultEntertainment/business");
 const BusinessAddress = require("../../models/adultEntertainment/businessAddress");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -218,8 +220,8 @@ router.post(
           contactName: req.body.contactName,
           contactPhone: req.body.contactPhone,
           licenseNumber: req.body.licenseNumber,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
+          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           policeVSC: req.body.policeVSC,
           certificateOfInsurance: req.body.certificateOfInsurance,
           photoID: req.body.photoID,
