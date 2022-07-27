@@ -1,1 +1,184 @@
 <h2 class="text-center mt-1">Liquor Licenses</h2>
+<h4>Filtering</h4>
+<form class="mb-0" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterCategory"
+    title="filterSelect"
+    name="filterCategory"
+    required
+  >
+    <option value="" disabled selected>Filter By...</option>
+    {{#each dropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <!-- filterValue input -->
+  <input
+    name="filterValue"
+    id="filterValue"
+    class="form-control-sm"
+    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+    title="No special characters!"
+    placeholder="Search..."
+    value="{{filterValue}}"
+  />
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/liquor"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+<div class="row">
+  <div class="col mb-1">
+    <h4 class="mb-0 mt-1">Businesses</h4>
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
+    <a href="/liquor/addBusiness" class="btn btn-sm btn-primary float-end">Add A
+      Business</a>
+  </div>
+</div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<!-- Table -->
+<table class="table table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Business Name</th>
+      <th>Business Phone</th>
+      <th>Address</th>
+      <th>Contact Name</th>
+      <th>Contact Phone</th>
+      <th>Date Started</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td>{{this.businessName}}</td>
+        <td>{{this.businessPhone}}</td>
+        {{#each liquorBusinessAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td>{{this.contactName}}</td>
+        <td>{{this.contactPhone}}</td>
+        <td>{{this.dateStarted}}</td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/liquor/editBusiness/{{this.liquorBusinessID}}"
+          >Edit</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#liquorModal-{{this.liquorBusinessID}}"
+          >Documentation</a></td>
+      </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="liquorModal-{{this.liquorBusinessID}}"
+        tabindex="-1"
+        aria-labelledby="liquorModal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Documentation</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <strong>Police VSC:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.policeVSC}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Certificate of Insurance:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.certificateOfInsurance}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Photo ID:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.photoID}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Health Inspection:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.healthInspection}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Zoning Clearance:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.zoningClearance}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Fee Paid:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.feePaid}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    {{/each}}
+  </tbody>
+</table>

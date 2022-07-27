@@ -1,0 +1,931 @@
+<h2 class="text-center mt-1">Edit Business</h2>
+<form class="row g-5 m-auto" method="POST">
+  <div class="col-md-7 m-auto mt-5">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Business Information</h4>
+    <hr />
+    <div class="row">
+      <!-- Business Name -->
+      <div class="col-sm-6">
+        <label for="Business Name" class="form-label">Business Name*</label>
+        <input
+          type="text"
+          placeholder="Business Name"
+          class="form-control"
+          name="businessName"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.businessName}}"
+          maxlength="30"
+          required
+        />
+      </div>
+      <!-- Business Phone -->
+      <div class="col-sm-6">
+        <label for="Business Phone" class="form-label">Business Phone</label>
+        <input
+          type="text"
+          placeholder="Business Phone"
+          class="form-control"
+          name="businessPhone"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.businessPhone}}"
+          maxlength="15"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Contact Name -->
+      <div class="col-sm-6">
+        <label for="Contact Name" class="form-label">Contact Name</label>
+        <input
+          type="text"
+          placeholder="Contact Name"
+          class="form-control"
+          name="contactName"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.contactName}}"
+          maxlength="50"
+        />
+      </div>
+      <!-- Contact Phone -->
+      <div class="col-sm-6">
+        <label for="Contact Phone" class="form-label">Contact Phone</label>
+        <input
+          type="text"
+          placeholder="Contact Phone"
+          class="form-control"
+          name="contactPhone"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.contactPhone}}"
+          maxlength="15"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Street Number -->
+      <div class="col-sm-6">
+        <label for="Street Number" class="form-label">Street Number*</label>
+        <input
+          type="number"
+          placeholder="Street Number"
+          class="form-control"
+          name="streetNumber"
+          value="{{formData.streetNumber}}"
+          required
+        />
+      </div>
+      <!-- Street Name -->
+      <div class="col-sm-6">
+        <label for="Street Name" class="form-label">Street Name*</label>
+        <input
+          class="form-control"
+          id="streetName"
+          title="streetName"
+          name="streetName"
+          list="streets"
+          placeholder="Street Name..."
+          value="{{formData.streetName}}"
+          required
+        />
+        <datalist id="streets">
+          {{#each streets}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </datalist>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Town -->
+      <div class="col-sm-4">
+        <label for="Town" class="form-label">Town</label>
+        <input
+          type="text"
+          placeholder="Town"
+          class="form-control"
+          name="town"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="Bradford"
+          maxlength="30"
+        />
+      </div>
+      <!-- Postal Code -->
+      <div class="col-sm-4">
+        <label for="Postal Code" class="form-label">Postal Code</label>
+        <input
+          type="text"
+          placeholder="Postal Code"
+          class="form-control"
+          name="postalCode"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.postalCode}}"
+          maxlength="15"
+        />
+      </div>
+      <!-- Date Started -->
+      <div class="col-sm-4">
+        <label for="Date Started" class="form-label">Date Started</label>
+        <input
+          type="date"
+          class="form-control"
+          name="dateStarted"
+          placeholder="Date Started"
+          value="{{formData.dateStarted}}"
+          required
+        />
+      </div>
+    </div>
+    <h4 class="mt-2">Documentation</h4>
+    <hr />
+    <div class="row">
+      <div class="col">
+        <!-- Application Type -->
+        <label for="Application Type" class="form-label">Application Type</label>
+        <div class="row">
+          <!-- New -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Application Type">
+                New
+              </label>
+              {{#ifCond formData.applicationType "===" "New"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="applicationType"
+                  value="New"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="applicationType"
+                  value="New"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- Amendment -->
+          <div class="col-sm-4">
+            <div class="form-check">
+              <label class="form-check-label" for="Application Type">
+                Amendment
+              </label>
+              {{#ifCond formData.applicationType "===" "Amendment"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="applicationType"
+                  value="Amendment"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="applicationType"
+                  value="Amendment"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <!-- Fee Received -->
+        <label for="Fee Received" class="form-label">Fee Received</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Fee Received">
+                Yes
+              </label>
+              {{#ifCond formData.feeReceived "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="feeReceived"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="feeReceived"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Fee Received">
+                No
+              </label>
+              {{#ifCond formData.feeReceived "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="feeReceived"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="feeReceived"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- Municipal Information Signed -->
+        <label for="Municipal Information Signed" class="form-label">Municipal
+          Information Signed</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label
+                class="form-check-label"
+                for="Municipal Information Signed"
+              >
+                Yes
+              </label>
+              {{#ifCond formData.municipalInformationSigned "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="municipalInformationSigned"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="municipalInformationSigned"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label
+                class="form-check-label"
+                for="Municipal Information Signed"
+              >
+                No
+              </label>
+              {{#ifCond formData.municipalInformationSigned "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="municipalInformationSigned"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="municipalInformationSigned"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <!-- Municipal Information Sent To AGCO -->
+        <label
+          for="Municipal Information Sent To AGCO"
+          class="form-label"
+        >Municipal Information Sent To AGCO</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label
+                class="form-check-label"
+                for="Municipal Information Sent To AGCO"
+              >
+                Yes
+              </label>
+              {{#ifCond formData.municipalInformationSentToAGCO "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="municipalInformationSentToAGCO"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="municipalInformationSentToAGCO"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label
+                class="form-check-label"
+                for="Municipal Information Sent To AGCO"
+              >
+                No
+              </label>
+              {{#ifCond formData.municipalInformationSentToAGCO "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="municipalInformationSentToAGCO"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="municipalInformationSentToAGCO"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- Fire Approval Receieved -->
+        <label for="Fire Approval Receieved" class="form-label">Fire Approval
+          Receieved</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Fire Approval Receieved">
+                Yes
+              </label>
+              {{#ifCond formData.fireApprovalReceived "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="fireApprovalReceived"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="fireApprovalReceived"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Fire Approval Receieved">
+                No
+              </label>
+              {{#ifCond formData.fireApprovalReceived "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="fireApprovalReceived"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="fireApprovalReceived"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <!-- Fire Sent To AGCO -->
+        <label for="Fire Sent To AGCO" class="form-label">Fire Sent To AGCO</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Fire Sent To AGCO">
+                Yes
+              </label>
+              {{#ifCond formData.fireSentToAGCO "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="fireSentToAGCO"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="fireSentToAGCO"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Fire Sent To AGCO">
+                No
+              </label>
+              {{#ifCond formData.fireSentToAGCO "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="fireSentToAGCO"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="fireSentToAGCO"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- Planning Approval Receieved -->
+        <label for="Planning Approval Receieved" class="form-label">Planning
+          Approval Receieved</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Planning Approval Receieved">
+                Yes
+              </label>
+              {{#ifCond formData.planningApprovalReceived "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="planningApprovalReceived"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="planningApprovalReceived"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Planning Approval Receieved">
+                No
+              </label>
+              {{#ifCond formData.planningApprovalReceived "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="planningApprovalReceived"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="planningApprovalReceived"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <!-- Planning Sent To AGCO -->
+        <label for="Planning Sent To AGCO" class="form-label">Planning Sent To
+          AGCO</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Planning Sent To AGCO">
+                Yes
+              </label>
+              {{#ifCond formData.planningSentToAGCO "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="planningSentToAGCO"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="planningSentToAGCO"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Planning Sent To AGCO">
+                No
+              </label>
+              {{#ifCond formData.planningSentToAGCO "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="planningSentToAGCO"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="planningSentToAGCO"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- SMDHU Approval Receieved -->
+        <label for="SMDHU Approval Receieved" class="form-label">SMDHU Approval
+          Receieved</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="SMDHU Approval Receieved">
+                Yes
+              </label>
+              {{#ifCond formData.smdhuApprovalReceived "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="smdhuApprovalReceived"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="smdhuApprovalReceived"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="SMDHU Approval Receieved">
+                No
+              </label>
+              {{#ifCond formData.smdhuApprovalReceived "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="smdhuApprovalReceived"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="smdhuApprovalReceived"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <!-- SMDHU Sent To AGCO -->
+        <label for="SMDHU Sent To AGCO" class="form-label">SMDHU Sent To AGCO</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="SMDHU Sent To AGCO">
+                Yes
+              </label>
+              {{#ifCond formData.smdhuSentToAGCO "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="smdhuSentToAGCO"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="smdhuSentToAGCO"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="SMDHU Sent To AGCO">
+                No
+              </label>
+              {{#ifCond formData.smdhuSentToAGCO "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="smdhuSentToAGCO"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="smdhuSentToAGCO"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- Building Approval Receieved -->
+        <label for="Building Approval Receieved" class="form-label">Building
+          Approval Receieved</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Building Approval Receieved">
+                Yes
+              </label>
+              {{#ifCond formData.buildingApprovalReceived "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buildingApprovalReceived"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buildingApprovalReceived"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Building Approval Receieved">
+                No
+              </label>
+              {{#ifCond formData.buildingApprovalReceived "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buildingApprovalReceived"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buildingApprovalReceived"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <!-- Building Sent To AGCO -->
+        <label for="Building Sent To AGCO" class="form-label">Building Sent To
+          AGCO</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Building Sent To AGCO">
+                Yes
+              </label>
+              {{#ifCond formData.buildingSentToAGCO "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buildingSentToAGCO"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buildingSentToAGCO"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="Building Sent To AGCO">
+                No
+              </label>
+              {{#ifCond formData.buildingSentToAGCO "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buildingSentToAGCO"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="buildingSentToAGCO"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- License Approved -->
+        <label for="Building Approval Receieved" class="form-label">License
+          Approved</label>
+        <div class="row">
+          <!-- Yes -->
+          <div class="col-sm-3">
+            <div class="form-check">
+              <label class="form-check-label" for="License Approved">
+                Yes
+              </label>
+              {{#ifCond formData.licenseApproved "===" "Yes"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="licenseApproved"
+                  value="Yes"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="licenseApproved"
+                  value="Yes"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+          <!-- No -->
+          <div class="col">
+            <div class="form-check">
+              <label class="form-check-label" for="License Approved">
+                No
+              </label>
+              {{#ifCond formData.licenseApproved "===" "No"}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="licenseApproved"
+                  value="No"
+                  checked
+                />
+              {{else}}
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="licenseApproved"
+                  value="No"
+                />
+              {{/ifCond}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- to keep structure -->
+      <div class="col">
+        <div class="row">
+          <div class="col-sm-3">
+          </div>
+          <div class="col-sm-3">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Notes -->
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.notes}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

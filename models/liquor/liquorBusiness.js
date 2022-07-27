@@ -16,6 +16,11 @@ const LiquorBusiness = sequelize.define("liquorbusiness", {
     allowNull: true,
   },
 
+  businessPhone: {
+    type: Sequelize.STRING(15),
+    allowNull: true,
+  },
+
   contactName: {
     type: Sequelize.STRING(50),
     allowNull: true,

@@ -24,7 +24,8 @@ td {
 .nav-item-home:hover,
 .nav-item-admin:hover,
 .nav-item-logout:hover,
-.nav-item-last:hover {
+.nav-item-last:hover,
+.accordion-button:hover {
   transition: 0.2s ease-in;
   background-color: rgba(230, 230, 230, 1);
 }

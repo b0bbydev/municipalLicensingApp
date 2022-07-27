@@ -2,17 +2,17 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
+const LiquorBusiness = require("../../models/liquor/liquorBusiness");
+const LiquorBusinessAddress = require("../../models/liquor/liquorBusinessAddress");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-// helper.
-const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // pagination lib.
 const paginate = require("express-paginate");
 
-/* GET /adultEntertainment page. */
+/* GET /liquor */
 router.get(
   "/",
   body("filterCategory")
@@ -41,17 +41,39 @@ router.get(
       // get dropdown values.
       var dropdownValues = await Dropdown.findAll({
         where: {
-          dropdownFormID: 15, // adult entertainment filtering options.
+          dropdownFormID: 25, // liquor licensing filtering options.
         },
       });
 
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
-        return res.render("liquor/index", {
-          title: "BWG | Liquor Licensing",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
+        LiquorBusiness.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: LiquorBusinessAddress,
+            },
+          ],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
+
+          return res.render("liquor/index", {
+            title: "BWG | Liquor Licensing",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            dropdownValues: dropdownValues,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
         });
       }
     }
