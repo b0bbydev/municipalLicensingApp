@@ -69,6 +69,7 @@
       <th>Expiry Date</th>
       <th>Phone Number</th>
       <th>Email</th>
+      <th>Address</th>
       <th>Notes</th>
       <th>Actions</th>
     </tr>
@@ -84,6 +85,12 @@
         <td>{{this.expiryDate}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
+        {{#each kennelAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
         <td>{{this.notes}}</td>
         <td><a
             class="btn btn-sm btn-secondary"

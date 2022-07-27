@@ -105,6 +105,14 @@
                 </a>
               </li>
             {{/includes}}
+            {{#includes auth "Policies"}}
+              <li class="nav-item w-100 p-1">
+                <a href="/policies" class="nav-link align-middle ps-3">
+                  <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
+                  <span class="ms-1 d-none d-sm-inline">Policies Management</span>
+                </a>
+              </li>
+            {{/includes}}
             <div
               class="accordion accordion-flush w-100 nav-item"
               id="accordionExample"
@@ -188,19 +196,10 @@
                     {{/includes}}
                     <!-- dog auth -->
                     {{#includes auth "Dog Licenses"}}
-                      <li class="nav-item w-100 p-1">
+                      <li class="nav-item-last w-100 p-1">
                         <a href="/dogtags" class="nav-link align-middle ps-3">
                           <i class="fs-4 icon-blue bi bi-tag"></i>
                           <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
-                        </a>
-                      </li>
-                    {{/includes}}
-                    {{#includes auth "Policies"}}
-                      <li class="nav-item-last w-100 p-1">
-                        <a href="/policies" class="nav-link align-middle ps-3">
-                          <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>
-                          <span class="ms-1 d-none d-sm-inline">Policies
-                            Management</span>
                         </a>
                       </li>
                     {{/includes}}
