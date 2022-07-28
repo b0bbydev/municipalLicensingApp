@@ -26,6 +26,11 @@ const POAMatter = sequelize.define("poaMatter", {
     allowNull: true,
   },
 
+  officerName: {
+    type: Sequelize.STRING(50),
+    allowNull: true,
+  },
+
   defendantName: {
     type: Sequelize.STRING(50),
     allowNull: true,
@@ -41,17 +46,12 @@ const POAMatter = sequelize.define("poaMatter", {
     allowNull: true,
   },
 
-  officerAssigned: {
-    type: Sequelize.STRING(50),
-    allowNull: true,
-  },
-
   setFine: {
     type: Sequelize.INTEGER,
     allowNull: true,
   },
 
-  fineAssesed: {
+  fineAssessed: {
     type: Sequelize.INTEGER,
     allowNull: true,
   },

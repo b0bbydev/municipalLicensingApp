@@ -151,6 +151,8 @@ var editRefreshmentVehicleOperator = require("./routes/refreshmentVehicles/editV
 /* POA Matter related routes */
 var poaMattersRoute = require("./routes/poaMatters/index");
 
+var addPoaMatterRoute = require("./routes/poaMatters/addPoaMatter");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -402,6 +404,8 @@ app.use(
 
 /* POA Matters related routes */
 app.use("/poaMatters", poaMattersRoute);
+
+app.use("/poaMatters/addPoaMatter", addPoaMatterRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

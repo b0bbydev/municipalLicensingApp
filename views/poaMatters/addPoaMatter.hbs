@@ -1,0 +1,285 @@
+<h2 class="text-center mt-1">Add POA Matter</h2>
+<form class="row g-5 m-auto" method="POST">
+  <div class="col-md-7 m-auto mt-3">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>POA Matter Information</h4>
+    <hr />
+    <div class="row">
+      <!-- Info Number -->
+      <div class="col-sm-4">
+        <label for="Info Number" class="form-label">Info Number*</label>
+        <input
+          type="text"
+          placeholder="Info Number"
+          class="form-control"
+          name="infoNumber"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.infoNumber}}"
+          required
+        />
+      </div>
+      <!-- Date Of Offence -->
+      <div class="col-sm-4">
+        <label for="Date Of Offence" class="form-label">Date Of Offence</label>
+        <input
+          type="date"
+          placeholder="Date Of Offence"
+          class="form-control"
+          name="dateOfOffence"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.dateOfOffence}}"
+        />
+      </div>
+      <!-- Date Closed -->
+      <div class="col-sm-4">
+        <label for="Date Closed" class="form-label">Date Closed</label>
+        <input
+          type="date"
+          placeholder="Date Closed"
+          class="form-control"
+          name="dateClosed"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.dateClosed}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- POA Type -->
+      <div class="col-sm-4">
+        <label for="POA Type" class="form-label">POA Type</label>
+        <select
+          class="form-select"
+          title="poaType"
+          name="poaType"
+          placeholder="POA Type..."
+        >
+          <option value="Part 1">Part 1</option>
+          <option value="Part 3">Part 3</option>
+        </select>
+      </div>
+      <!-- Officer Names -->
+      <div class="col-sm-4">
+        <label for="Officer" class="form-label">Officer</label>
+        <input
+          class="form-control"
+          title="Officer"
+          name="officerName"
+          list="officers"
+          placeholder="Officer Name..."
+        />
+        <datalist id="officers">
+          {{#each officerNames}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </datalist>
+      </div>
+      <!-- Defendant Name -->
+      <div class="col-sm-4">
+        <label for="Defendant Name" class="form-label">Defendant Name</label>
+        <input
+          type="text"
+          placeholder="Defendant Name"
+          class="form-control"
+          name="defendantName"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.defendantName}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- Offence -->
+        <label for="Offence" class="form-label">Offence</label>
+        <textarea
+          type="text"
+          name="offence"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+          rows="3"
+        >{{formData.offence}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Set Fine -->
+      <div class="col-sm-4">
+        <label for="Set Fine" class="form-label">Set Fine</label>
+        <input
+          type="number"
+          placeholder="Set Fine"
+          class="form-control"
+          name="setFine"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.setFine}}"
+        />
+      </div>
+      <!-- Fine Assesed -->
+      <div class="col-sm-4">
+        <label for="Fine Assessed" class="form-label">Fine Assessed</label>
+        <input
+          type="number"
+          placeholder="Fine Assessed"
+          class="form-control"
+          name="fineAssessed"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.fineAssessed}}"
+        />
+      </div>
+      <!-- Amount Paid -->
+      <div class="col-sm-4">
+        <label for="Amount Paid" class="form-label">Amount Paid</label>
+        <input
+          type="number"
+          placeholder="Amount Paid"
+          class="form-control"
+          name="amountPaid"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.amountPaid}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Verdict -->
+      <div class="col-sm-6">
+        <label for="Verdict" class="form-label">Verdict</label>
+        <select class="form-select" title="Verdict" name="verdict">
+          <option value="Option 1">Option 1</option>
+          <option value="Option 2">Option 2</option>
+        </select>
+      </div>
+      <!-- Prosecutor -->
+      <div class="col-sm-6">
+        <label for="Prosecutor" class="form-label">Prosecutor</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Prosecutor"
+          name="prosecutor"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.prosecutor}}"
+          maxlength="50"
+        />
+      </div>
+    </div>
+    <h4 class="mt-2">POA Matter Location</h4>
+    <hr />
+    <div class="row">
+      <!-- Street Number -->
+      <div class="col-sm-6">
+        <label for="Street Number" class="form-label">Street Number*</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Street Number"
+          name="streetNumber"
+          value="{{formData.streetNumber}}"
+          required
+        />
+      </div>
+      <!-- Street Name -->
+      <div class="col-sm-6">
+        <label for="Street Name" class="form-label">Street Name*</label>
+        <input
+          class="form-control"
+          id="streetName"
+          title="streetName"
+          name="streetName"
+          list="streets"
+          placeholder="Street Name..."
+          required
+        />
+        <datalist id="streets">
+          {{#each streets}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </datalist>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Town -->
+      <div class="col-sm-6">
+        <label for="Town" class="form-label">Town</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Town"
+          name="town"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.town}}"
+          maxlength="30"
+        />
+      </div>
+      <!-- Postal Code -->
+      <div class="col-sm-6">
+        <label for="Postal Code" class="form-label">Postal Code</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Postal Code"
+          name="postalCode"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.postalCode}}"
+          maxlength="15"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- Comment -->
+        <label for="Comment" class="form-label">Comment</label>
+        <textarea
+          type="text"
+          name="comment"
+          class="form-control"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+          rows="3"
+        >{{formData.comment}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
