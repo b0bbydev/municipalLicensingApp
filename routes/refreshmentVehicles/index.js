@@ -72,18 +72,18 @@ router.post("/", async (req, res, next) => {
     }
 
     // update license.
-    HawkerPeddlerBusiness.update(
+    RefreshmentVehicle.update(
       {
         issueDate: issueDate,
         expiryDate: expiryDate,
       },
       {
         where: {
-          hawkerPeddlerBusinessID: req.body.hawkerPeddlerBusinessID,
+          refreshmentVehicleID: req.body.refreshmentVehicleID,
         },
       }
     ).then(() => {
-      return res.redirect("/hawkerPeddler");
+      return res.redirect("/refreshmentVehicles");
     });
   }
 });

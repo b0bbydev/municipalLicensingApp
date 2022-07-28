@@ -78,7 +78,10 @@
   <tbody>
     {{#each data}}
       <tr>
-        <td>{{this.registeredBusinessName}}</td>
+        <td><a
+            id="ownerLink"
+            href="/refreshmentVehicles/vehicle/{{this.refreshmentVehicleID}}"
+          >{{this.registeredBusinessName}}</a></td>
         <td>{{this.operatingBusinessName}}</td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
