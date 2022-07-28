@@ -140,10 +140,13 @@ var editRefreshmentVehicleRoute = require("./routes/refreshmentVehicles/editVehi
 var vehicleRoute = require("./routes/refreshmentVehicles/vehicle");
 
 var addRefreshmentVehiclePropertyOwner = require("./routes/refreshmentVehicles/addPropertyOwner");
+var editRefreshmentVehiclePropertyOwner = require("./routes/refreshmentVehicles/editPropertyOwner");
 
 var addRefreshmentVehicleOwner = require("./routes/refreshmentVehicles/addVehicleOwner");
+var editRefreshmentVehicleOwner = require("./routes/refreshmentVehicles/editVehicleOwner");
 
 var addRefreshmentVehicleOperator = require("./routes/refreshmentVehicles/addVehicleOperator");
+var editRefreshmentVehicleOperator = require("./routes/refreshmentVehicles/editVehicleOperator");
 
 var app = express();
 
@@ -242,9 +245,14 @@ hbs.registerHelper("lowercase", function (str) {
 
 // check if session var 'auth' includes valid authLevel.
 hbs.registerHelper("includes", function (array, value, options) {
+  if (!array) {
+    return;
+  }
+
   if (array.indexOf(value) > -1) {
     return options.fn(this);
   }
+
   return options.inverse(this);
 });
 
@@ -372,12 +380,21 @@ app.use(
   "/refreshmentVehicles/addPropertyOwner",
   addRefreshmentVehiclePropertyOwner
 );
+app.use(
+  "/refreshmentVehicles/editPropertyOwner",
+  editRefreshmentVehiclePropertyOwner
+);
 
 app.use("/refreshmentVehicles/addVehicleOwner", addRefreshmentVehicleOwner);
+app.use("/refreshmentVehicles/editVehicleOwner", editRefreshmentVehicleOwner);
 
 app.use(
   "/refreshmentVehicles/addVehicleOperator",
   addRefreshmentVehicleOperator
+);
+app.use(
+  "/refreshmentVehicles/editVehicleOperator",
+  editRefreshmentVehicleOperator
 );
 
 // catch 404 and forward to error handler
