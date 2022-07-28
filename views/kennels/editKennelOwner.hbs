@@ -14,14 +14,13 @@
       <div class="col-sm-6">
         <label for="First Name" class="form-label">First Name*</label>
         <input
-          id="firstName"
           type="text"
           placeholder="First Name"
           class="form-control"
           name="firstName"
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
-          value="{{{formData.firstName}}}"
+          value="{{formData.firstName}}"
           maxlength="25"
           required
         />
@@ -30,7 +29,6 @@
       <div class="col-sm-6">
         <label for="Last Name" class="form-label">Last Name</label>
         <input
-          id="lastName"
           type="text"
           placeholder="Last Name"
           class="form-control"
@@ -54,6 +52,7 @@
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
           value="{{formData.phoneNumber}}"
+          maxlength="15"
         />
       </div>
       <!-- Email -->

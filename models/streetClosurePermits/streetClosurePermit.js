@@ -37,7 +37,7 @@ const StreetClosurePermit = sequelize.define("streetClosurePermit", {
   },
 
   coordinatorEmail: {
-    type: Sequelize.STRING(20),
+    type: Sequelize.STRING(50),
     allowNull: true,
   },
 

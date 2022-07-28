@@ -12,7 +12,7 @@ const LiquorBusiness = sequelize.define("liquorbusiness", {
   },
 
   businessName: {
-    type: Sequelize.STRING(30),
+    type: Sequelize.STRING(50),
     allowNull: true,
   },
 

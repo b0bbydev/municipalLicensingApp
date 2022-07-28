@@ -12,7 +12,7 @@
     <div class="row">
       <!-- First Name -->
       <div class="col-sm-6">
-        <label for="First Name" class="form-label">First Name</label>
+        <label for="First Name" class="form-label">First Name*</label>
         <input
           type="text"
           placeholder="First Name"
@@ -22,11 +22,12 @@
           title="No special characters!"
           value="{{{ownerInfo.firstName}}}"
           maxlength="25"
+          required
         />
       </div>
       <!-- Last Name -->
       <div class="col-sm-6">
-        <label for="Last Name" class="form-label">Last Name</label>
+        <label for="Last Name" class="form-label">Last Name*</label>
         <input
           type="text"
           placeholder="Last Name"
@@ -36,6 +37,7 @@
           title="No special characters!"
           value="{{ownerInfo.lastName}}"
           maxlength="25"
+          required
         />
       </div>
     </div>
