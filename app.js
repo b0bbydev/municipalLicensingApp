@@ -152,6 +152,7 @@ var editRefreshmentVehicleOperator = require("./routes/refreshmentVehicles/editV
 var poaMattersRoute = require("./routes/poaMatters/index");
 
 var addPoaMatterRoute = require("./routes/poaMatters/addPoaMatter");
+var editPoaMatterRoute = require("./routes/poaMatters/editPoaMatter");
 
 var app = express();
 
@@ -406,6 +407,7 @@ app.use(
 app.use("/poaMatters", poaMattersRoute);
 
 app.use("/poaMatters/addPoaMatter", addPoaMatterRoute);
+app.use("/poaMatters/editPoaMatter", editPoaMatterRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

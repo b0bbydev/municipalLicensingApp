@@ -37,7 +37,7 @@
   >Search</button>
   <a
     id="filterButton"
-    href="/kennels"
+    href="/poaMatters"
     class="btn btn-sm btn-secondary"
     type="submit"
   >Reset</a>
@@ -65,19 +65,47 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>TH</th>
+      <th>Info Number</th>
+      <th>Date Of Offence</th>
+      <th>Date Closed</th>
+      <th>Defendant</th>
+      <th>POA Type</th>
+      <th>Offence</th>
+      <th>Offence Location</th>
+      <th>Officer</th>
+      <th>Comments</th>
+      <th>Set Fine</th>
+      <th>Fine Assessed</th>
+      <th>Amount Paid</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
       <tr>
-        <td></td>
-        <td>
-          <a
+        <td>{{this.infoNumber}}</td>
+        <td>{{this.dateOfOffence}}</td>
+        <td>{{this.dateClosed}}</td>
+        <td>{{this.defendantName}}</td>
+        <td>{{this.poaType}}</td>
+        <td>{{this.offence}}</td>
+        {{#each poaMatterLocations}}
+          <td>{{this.streetName}}
+            {{this.streetNumber}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td>{{this.officerName}}</td>
+        <td>{{this.comment}}</td>
+        <td>{{#if this.setFine}} ${{this.setFine}} {{/if}}</td>
+        <td>{{#if this.fineAssessed}} ${{this.fineAssessed}} {{/if}}</td>
+        <td>{{#if this.amountPaid}} ${{this.amountPaid}} {{/if}}</td>
+        <td><a
             class="btn btn-sm btn-secondary"
-            href="#"
+            href="/poaMatters/editPoaMatter/{{this.poaMatterID}}"
           >Edit</a>
+          |
+          <a class="btn btn-sm btn-secondary" href="#">View Trial Dates</a></td>
       </tr>
     {{/each}}
   </tbody>

@@ -2,11 +2,11 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
+const POAMatter = require("../../models/poaMatters/poaMatter");
+const POAMatterLocation = require("../../models/poaMatters/poaMatterLocation");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
-// helper.
-const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // pagination lib.
@@ -45,12 +45,33 @@ router.get(
         },
       });
 
-      return res.render("poaMatters/index", {
-        title: "BWG | POA Matters",
-        errorMessages: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        dropdownValues: dropdownValues,
+      POAMatter.findAndCountAll({
+        limit: req.query.limit,
+        offset: req.skip,
+        include: [
+          {
+            model: POAMatterLocation,
+          },
+        ],
+      }).then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
+        return res.render("poaMatters/index", {
+          title: "BWG | POA Matters",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          dropdownValues: dropdownValues,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
       });
     }
   }
