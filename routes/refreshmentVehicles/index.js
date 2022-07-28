@@ -3,6 +3,10 @@ var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const RefreshmentVehicle = require("../../models/refreshmentVehicles/refreshmentVehicle");
+const RefreshmentVehicleOwner = require("../../models/refreshmentVehicles/refreshmentVehicleOwner");
+const RefreshmentVehicleOwnerAddress = require("../../models/refreshmentVehicles/refreshmentVehicleOwnerAddress");
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -17,6 +21,13 @@ router.get("/", async (req, res, next) => {
   let messages = req.session.messages || [];
   // clear session messages
   req.session.messages = [];
+
+  // get dropdown values.
+  var dropdownValues = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 26, // refreshment vehicle licensing filtering options.
+    },
+  });
 
   // if there are no filter parameters.
   if (!req.query.filterCategory || !req.query.filterValue) {
@@ -34,6 +45,7 @@ router.get("/", async (req, res, next) => {
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
+        dropdownValues: dropdownValues,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
@@ -42,6 +54,143 @@ router.get("/", async (req, res, next) => {
         hasMorePages: paginate.hasNextPages(req)(pageCount),
       });
     });
+  } else if (req.query.filterCategory === "Vehicle Owner Name") {
+    // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
+    if (req.query.filterValue.trim().indexOf(" ") != -1) {
+      RefreshmentVehicleOwner.findAndCountAll({
+        limit: req.query.limit,
+        offset: req.skip,
+        subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+        where: Sequelize.where(
+          Sequelize.fn(
+            "concat",
+            Sequelize.col("firstName"),
+            " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+            Sequelize.col("lastName")
+          ),
+          {
+            [Op.like]: "%" + req.query.filterValue + "%",
+          }
+        ),
+        include: [
+          {
+            model: RefreshmentVehicleOwnerAddress,
+          },
+        ],
+      }).then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
+        return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
+          title: "BWG | Refreshment Vehicle Licensing",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          dropdownValues: dropdownValues,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      });
+    } else {
+      RefreshmentVehicleOwner.findAndCountAll({
+        limit: req.query.limit,
+        offset: req.skip,
+        subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+        where: {
+          [Op.or]: {
+            firstName: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+            lastName: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+          },
+        },
+        include: [
+          {
+            model: RefreshmentVehicleOwnerAddress,
+          },
+        ],
+      })
+        .then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
+
+          return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
+            title: "BWG | Refreshment Vehicle Licensing",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterCategory: req.query.filterCategory,
+            filterValue: req.query.filterValue,
+            dropdownValues: dropdownValues,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        })
+        // catch any scary errors and render page error.
+        .catch((err) =>
+          res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
+            title: "BWG | Refreshment Vehicle Licensing",
+            message: "Page Error!",
+          })
+        );
+    }
+  } else {
+    // format filterCategory to match column name in db - via handy dandy camelize() function.
+    var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+    // create filter query.
+    RefreshmentVehicle.findAndCountAll({
+      where: {
+        [filterCategory]: {
+          [Op.like]: "%" + req.query.filterValue + "%",
+        },
+      },
+      limit: req.query.limit,
+      offset: req.skip,
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
+        return res.render("refreshmentVehicles/index", {
+          title: "BWG | Refreshment Vehicle Licensing",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterCategory: req.query.filterCategory,
+          filterValue: req.query.filterValue,
+          dropdownValues: dropdownValues,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      // catch any scary errors and render page error.
+      .catch((err) =>
+        res.render("refreshmentVehicles/index", {
+          title: "BWG | Refreshment Vehicle Licensing",
+          message: "Page Error!",
+        })
+      );
   }
 });
 
