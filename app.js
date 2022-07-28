@@ -143,6 +143,8 @@ var addRefreshmentVehiclePropertyOwner = require("./routes/refreshmentVehicles/a
 
 var addRefreshmentVehicleOwner = require("./routes/refreshmentVehicles/addVehicleOwner");
 
+var addRefreshmentVehicleOperator = require("./routes/refreshmentVehicles/addVehicleOperator");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -372,6 +374,11 @@ app.use(
 );
 
 app.use("/refreshmentVehicles/addVehicleOwner", addRefreshmentVehicleOwner);
+
+app.use(
+  "/refreshmentVehicles/addVehicleOperator",
+  addRefreshmentVehicleOperator
+);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

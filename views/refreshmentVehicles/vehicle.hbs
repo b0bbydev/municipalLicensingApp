@@ -44,7 +44,7 @@
         {{/each}}
         <td><a
             class="btn btn-sm btn-secondary"
-            href="/refreshmentVehicles/editPropertyOwner/{{this.hawkerPeddlerPropertyOwnerID}}"
+            href="/refreshmentVehicles/editPropertyOwner/{{this.refreshmentVehiclePropertyOwnerID}}"
           >Edit</a></td>
       </tr>
     {{/each}}
@@ -55,8 +55,8 @@
 <div class="row">
   <h4>Vehicle Owners</h4>
   <div class="col mb-1">
-    {{#if applicantsCount}}
-      <strong class="float-start mt-2">{{applicantsCount}}</strong>
+    {{#if vehicleOwnersCount}}
+      <strong class="float-start mt-2">{{vehicleOwnersCount}}</strong>
     {{/if}}
     <a
       href="/refreshmentVehicles/addVehicleOwner"
@@ -67,7 +67,7 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>Applicant Name</th>
+      <th>Owner Name</th>
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
@@ -76,12 +76,12 @@
     </tr>
   </thead>
   <tbody>
-    {{#each applicants}}
+    {{#each vehicleOwners}}
       <tr>
         <td>{{this.firstName}} {{this.lastName}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
-        {{#each hawkerPeddlerApplicantAddresses}}
+        {{#each refreshmentVehicleOwnerAddresses}}
           <td>{{this.streetNumber}}
             {{this.streetName}},
             {{this.town}}
@@ -90,7 +90,7 @@
         <td>{{this.licenseNumber}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
-            href="/refreshmentVehicles/editVehicleOwner/{{this.hawkerPeddlerApplicantID}}"
+            href="/refreshmentVehicles/editVehicleOwner/{{this.refreshmentVehicleOwnerID}}"
           >Edit</a></td>
       </tr>
     {{/each}}
@@ -101,8 +101,8 @@
 <div class="row">
   <h4>Vehicle Operators</h4>
   <div class="col mb-1">
-    {{#if applicantsCount}}
-      <strong class="float-start mt-2">{{applicantsCount}}</strong>
+    {{#if vehicleOperatorsCount}}
+      <strong class="float-start mt-2">{{vehicleOperatorsCount}}</strong>
     {{/if}}
     <a
       href="/refreshmentVehicles/addVehicleOperator"
@@ -113,30 +113,28 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>Applicant Name</th>
+      <th>Operator Name</th>
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
-      <th>License #</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    {{#each applicants}}
+    {{#each vehicleOperators}}
       <tr>
         <td>{{this.firstName}} {{this.lastName}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
-        {{#each hawkerPeddlerApplicantAddresses}}
+        {{#each refreshmentVehicleOperatorAddresses}}
           <td>{{this.streetNumber}}
             {{this.streetName}},
             {{this.town}}
             {{this.postalCode}}</td>
         {{/each}}
-        <td>{{this.licenseNumber}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
-            href="/refreshmentVehicles/editVehicleOperator/{{this.hawkerPeddlerApplicantID}}"
+            href="/refreshmentVehicles/editVehicleOperator/{{this.refreshmentVehicleOperatorID}}"
           >Edit</a></td>
       </tr>
     {{/each}}
