@@ -148,6 +148,9 @@ var editRefreshmentVehicleOwner = require("./routes/refreshmentVehicles/editVehi
 var addRefreshmentVehicleOperator = require("./routes/refreshmentVehicles/addVehicleOperator");
 var editRefreshmentVehicleOperator = require("./routes/refreshmentVehicles/editVehicleOperator");
 
+/* POA Matter related routes */
+var poaMattersRoute = require("./routes/poaMatters/index");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -396,6 +399,9 @@ app.use(
   "/refreshmentVehicles/editVehicleOperator",
   editRefreshmentVehicleOperator
 );
+
+/* POA Matters related routes */
+app.use("/poaMatters", poaMattersRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
