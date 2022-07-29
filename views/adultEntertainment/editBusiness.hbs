@@ -20,7 +20,7 @@
           name="businessName"
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{businessInfo.businessName}}"
+          value="{{formData.businessName}}"
           maxlength="50"
           required
         />
@@ -33,21 +33,24 @@
           placeholder="Street Number"
           class="form-control"
           name="streetNumber"
-          value="{{businessInfo.streetNumber}}"
+          value="{{formData.streetNumber}}"
         />
       </div>
       <!-- Street Name -->
       <div class="col-sm-4">
-        <label for="Street Name" class="form-label">Street Name</label>
-        <select
-          class="form-select"
+        <label for="Street Name" class="form-label">Street Name*</label>
+        <input
+          class="form-control"
           id="streetName"
           title="streetName"
           name="streetName"
-          value="{{businessInfo.streetName}}
-        >
-          <option disabled selected>Street Name...</option>
-          {{#each dropdownValues}}
+          list="streets"
+          placeholder="Street Name..."
+          value="{{formData.streetName}}"
+          required
+        />
+        <datalist id="streets">
+          {{#each streets}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"
@@ -59,7 +62,7 @@
               >{{this.dropdownValue}}</option>
             {{/if}}
           {{/each}}
-        </select>
+        </datalist>
       </div>
     </div>
     <div class="row">
@@ -73,7 +76,7 @@
           name="poBoxAptRR"
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
-          value="{{businessInfo.poBoxAptRR}}"
+          value="{{formData.poBoxAptRR}}"
           maxlength="25"
         />
       </div>
@@ -87,7 +90,7 @@
           name="town"
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
-          value="{{businessInfo.town}}"
+          value="{{formData.town}}"
           maxlength="30"
         />
       </div>
@@ -101,7 +104,7 @@
           name="postalCode"
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
-          value="{{businessInfo.postalCode}}"
+          value="{{formData.postalCode}}"
           maxlength="15"
         />
       </div>
@@ -117,7 +120,7 @@
           name="ownerName"
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{businessInfo.ownerName}}"
+          value="{{formData.ownerName}}"
           maxlength="50"
         />
       </div>
@@ -131,7 +134,7 @@
           name="contactName"
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{businessInfo.contactName}}"
+          value="{{formData.contactName}}"
           maxlength="50"
         />
       </div>
@@ -145,7 +148,7 @@
           name="contactPhone"
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{businessInfo.contactPhone}}"
+          value="{{formData.contactPhone}}"
           maxlength="15"
         />
       </div>
@@ -161,7 +164,7 @@
           name="licenseNumber"
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{businessInfo.licenseNumber}}"
+          value="{{formData.licenseNumber}}"
           maxlength="15"
         />
       </div>
@@ -173,7 +176,7 @@
           class="form-control"
           name="issueDate"
           placeholder="Issue Date"
-          value="{{businessInfo.issueDate}}"
+          value="{{formData.issueDate}}"
         />
       </div>
       <!-- Expiry Date -->
@@ -184,7 +187,7 @@
           class="form-control"
           name="expiryDate"
           placeholder="Expiry Date"
-          value="{{businessInfo.expiryDate}}"
+          value="{{formData.expiryDate}}"
         />
       </div>
     </div>
@@ -201,7 +204,7 @@
               <label class="form-check-label" for="policeVSC">
                 Yes
               </label>
-              {{#ifCond businessInfo.policeVSC "===" "Yes"}}
+              {{#ifCond formData.policeVSC "===" "Yes"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -225,7 +228,7 @@
               <label class="form-check-label" for="policeVSC">
                 No
               </label>
-              {{#ifCond businessInfo.policeVSC "===" "No"}}
+              {{#ifCond formData.policeVSC "===" "No"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -256,7 +259,7 @@
               <label class="form-check-label" for="certificateOfInsurance">
                 Yes
               </label>
-              {{#ifCond businessInfo.certificateOfInsurance "===" "Yes"}}
+              {{#ifCond formData.certificateOfInsurance "===" "Yes"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -280,7 +283,7 @@
               <label class="form-check-label" for="certificateOfInsurance">
                 No
               </label>
-              {{#ifCond businessInfo.certificateOfInsurance "===" "No"}}
+              {{#ifCond formData.certificateOfInsurance "===" "No"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -312,7 +315,7 @@
               <label class="form-check-label" for="photoID">
                 Yes
               </label>
-              {{#ifCond businessInfo.photoID "===" "Yes"}}
+              {{#ifCond formData.photoID "===" "Yes"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -336,7 +339,7 @@
               <label class="form-check-label" for="photoID">
                 No
               </label>
-              {{#ifCond businessInfo.photoID "===" "No"}}
+              {{#ifCond formData.photoID "===" "No"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -366,7 +369,7 @@
               <label class="form-check-label" for="healthInspection">
                 Yes
               </label>
-              {{#ifCond businessInfo.healthInspection "===" "Yes"}}
+              {{#ifCond formData.healthInspection "===" "Yes"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -390,7 +393,7 @@
               <label class="form-check-label" for="healthInspection">
                 No
               </label>
-              {{#ifCond businessInfo.healthInspection "===" "No"}}
+              {{#ifCond formData.healthInspection "===" "No"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -422,7 +425,7 @@
               <label class="form-check-label" for="zoningClearance">
                 Yes
               </label>
-              {{#ifCond businessInfo.zoningClearance "===" "Yes"}}
+              {{#ifCond formData.zoningClearance "===" "Yes"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -446,7 +449,7 @@
               <label class="form-check-label" for="zoningClearance">
                 No
               </label>
-              {{#ifCond businessInfo.zoningClearance "===" "No"}}
+              {{#ifCond formData.zoningClearance "===" "No"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -476,7 +479,7 @@
               <label class="form-check-label" for="feePaid">
                 Yes
               </label>
-              {{#ifCond businessInfo.feePaid "===" "Yes"}}
+              {{#ifCond formData.feePaid "===" "Yes"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -500,7 +503,7 @@
               <label class="form-check-label" for="feePaid">
                 No
               </label>
-              {{#ifCond businessInfo.feePaid "===" "No"}}
+              {{#ifCond formData.feePaid "===" "No"}}
                 <input
                   class="form-check-input"
                   type="radio"
@@ -532,7 +535,7 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
-        >{{businessInfo.notes}}</textarea>
+        >{{formData.notes}}</textarea>
       </div>
     </div>
     <div class="row">

@@ -82,7 +82,7 @@
           {{else}}
             <option disabled selected>Organization Type...</option>
           {{/if}}
-          {{#each dropdownValues}}
+          {{#each organizationTypes}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"

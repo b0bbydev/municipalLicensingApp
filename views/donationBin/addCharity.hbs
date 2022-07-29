@@ -74,7 +74,7 @@
         <label for="Organization Type" class="form-label">Organization Type</label>
         <select class="form-select" name="organizationType">
           <option disabled selected>Organization Type...</option>
-          {{#each dropdownValues}}
+          {{#each organizationTypes}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"

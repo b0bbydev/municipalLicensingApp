@@ -30,17 +30,17 @@ router.get(
       // clear session messages.
       req.session.messages = [];
 
-      // get dropdown values.
-      var dropdownValues = await Dropdown.findAll({
+      // get tagRequired options.
+      var tagRequiredOptions = await Dropdown.findAll({
         where: {
-          dropdownFormID: 11, // edit dog form.
+          dropdownFormID: 11,
         },
       });
 
       // vendor values.
       var vendorValues = await Dropdown.findAll({
         where: {
-          dropdownFormID: 10, // add dog form.
+          dropdownFormID: 10,
         },
       });
 
@@ -49,7 +49,7 @@ router.get(
         errorMessages: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
-        dropdownValues: dropdownValues,
+        tagRequiredOptions: tagRequiredOptions,
         vendorValues: vendorValues,
       });
     }

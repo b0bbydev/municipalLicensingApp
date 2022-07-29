@@ -28,7 +28,7 @@
           Required</label>
         <select class="form-select" name="tagRequired">
           <option disabled selected>Tag Required...</option>
-          {{#each dropdownValues}}
+          {{#each tagRequiredOptions}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"

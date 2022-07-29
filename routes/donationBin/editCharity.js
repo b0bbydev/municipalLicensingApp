@@ -13,8 +13,8 @@ router.get("/:id", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  // get dropdown values.
-  var dropdownValues = await Dropdown.findAll({
+  // get organization types.
+  var organizationTypes = await Dropdown.findAll({
     where: {
       dropdownFormID: 21, // organization types.
     },
@@ -30,7 +30,7 @@ router.get("/:id", async (req, res, next) => {
       errorMessages: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.
-      dropdownValues: dropdownValues,
+      organizationTypes: organizationTypes,
       // populate input fields with existing values.
       formData: {
         charityName: results.charityName,
@@ -79,8 +79,8 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
-    // get dropdown values.
-    var dropdownValues = await Dropdown.findAll({
+    // get organization types.
+    var organizationTypes = await Dropdown.findAll({
       where: {
         dropdownFormID: 21, // organization types.
       },
@@ -93,7 +93,7 @@ router.post(
         errorMessages: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
-        dropdownValues: dropdownValues,
+        organizationTypes: organizationTypes,
         // save form values if submission is unsuccessful.
         formData: {
           charityName: req.body.charityName,

@@ -68,8 +68,6 @@
       <th>Business Name</th>
       <th>Owner Name</th>
       <th>Address</th>
-      <th>Town</th>
-      <th>Postal Code</th>
       <th>Contact Name</th>
       <th>Contact Phone</th>
       <th>License #</th>
@@ -84,9 +82,10 @@
         <td>{{this.businessName}}</td>
         <td>{{this.ownerName}}</td>
         {{#each businessAddresses}}
-          <td>{{this.streetNumber}} {{this.streetName}}</td>
-          <td>{{this.town}}</td>
-          <td>{{this.postalCode}}</td>
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
         {{/each}}
         <td>{{this.contactName}}</td>
         <td>{{this.contactPhone}}</td>

@@ -36,7 +36,7 @@
           {{else}}
             <option disabled selected>Tag Required...</option>
           {{/if}}
-          {{#each dropdownValues}}
+          {{#each tagRequiredOptions}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"
@@ -56,7 +56,15 @@
       <div class="col-sm-6">
         <label for="Vendor" class="form-label">Vendor</label>
         <select class="form-select" name="vendor">
-          <option disabled selected>Vendor...</option>
+          {{#if dogInfo.vendor}}
+            <option
+              value="{{dogInfo.vendor}}"
+              disabled
+              selected
+            >{{dogInfo.vendor}}</option>
+          {{else}}
+            <option disabled selected>Tag Required...</option>
+          {{/if}}
           {{#each vendorValues}}
             {{#if this.isDisabled}}
               <option

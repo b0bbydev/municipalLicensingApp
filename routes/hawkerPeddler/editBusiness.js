@@ -16,8 +16,8 @@ router.get("/:id", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  // get dropdown values.
-  var dropdownValues = await Dropdown.findAll({
+  // get streets.
+  var streets = await Dropdown.findAll({
     where: {
       dropdownFormID: 13, // streets
     },
@@ -38,7 +38,7 @@ router.get("/:id", async (req, res, next) => {
       errorMessages: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.
-      dropdownValues: dropdownValues,
+      streets: streets,
       // populate input fields with exisitng values.
       formData: {
         businessName: results.businessName,
@@ -116,8 +116,8 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
-    // get dropdown values.
-    var dropdownValues = await Dropdown.findAll({
+    // get streets.
+    var streets = await Dropdown.findAll({
       where: {
         dropdownFormID: 13, // streets
       },
@@ -130,7 +130,7 @@ router.post(
         message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
         auth: req.session.auth, // authorization.
-        dropdownValues: dropdownValues,
+        streets: streets,
         // if the form submission is unsuccessful, save their values.
         formData: {
           businessName: req.body.businessName,

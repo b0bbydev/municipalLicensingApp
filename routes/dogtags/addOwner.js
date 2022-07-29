@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
   req.session.messages = [];
 
   // get dropdown values.
-  var dropdownValues = await Dropdown.findAll({
+  var streets = await Dropdown.findAll({
     where: {
       dropdownFormID: 13, // streets
     },
@@ -26,7 +26,7 @@ router.get("/", async (req, res, next) => {
     errorMessages: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
-    dropdownValues: dropdownValues,
+    streets: streets,
   });
 });
 
