@@ -23,9 +23,10 @@ router.get("/", async (req, res, next) => {
   req.session.messages = [];
 
   // get dropdown values.
-  var dropdownValues = await Dropdown.findAll({
+  var filterOptions = await Dropdown.findAll({
     where: {
-      dropdownFormID: 26, // refreshment vehicle licensing filtering options.
+      dropdownFormID: 29, // filtering options.
+      dropdownTitle: "Refreshment Vehicle Filtering Options",
     },
   });
 
@@ -45,7 +46,7 @@ router.get("/", async (req, res, next) => {
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
-        dropdownValues: dropdownValues,
+        filterOptions: filterOptions,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
@@ -88,7 +89,7 @@ router.get("/", async (req, res, next) => {
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          dropdownValues: dropdownValues,
+          filterOptions: filterOptions,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,
@@ -131,7 +132,7 @@ router.get("/", async (req, res, next) => {
             data: results.rows,
             filterCategory: req.query.filterCategory,
             filterValue: req.query.filterValue,
-            dropdownValues: dropdownValues,
+            filterOptions: filterOptions,
             pageCount,
             itemCount,
             queryCount: "Records returned: " + results.count,
@@ -175,7 +176,7 @@ router.get("/", async (req, res, next) => {
           data: results.rows,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
-          dropdownValues: dropdownValues,
+          filterOptions: filterOptions,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,

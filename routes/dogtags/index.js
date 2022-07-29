@@ -45,10 +45,11 @@ router.get(
       // delete session lastEnteredDropdownTitle.
       delete req.session.lastEnteredDropdownTitle;
 
-      // get dropdown values.
-      var dropdownValues = await Dropdown.findAll({
+      // get filtering options.
+      var filterOptions = await Dropdown.findAll({
         where: {
-          dropdownFormID: 1,
+          dropdownFormID: 29, // filtering options.
+          dropdownTitle: "Dog Owner Filtering Options",
         },
       });
 
@@ -76,7 +77,7 @@ router.get(
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
-              dropdownValues: dropdownValues,
+              filterOptions: filterOptions,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -128,7 +129,7 @@ router.get(
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
-              dropdownValues: dropdownValues,
+              filterOptions: filterOptions,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -172,7 +173,7 @@ router.get(
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
-              dropdownValues: dropdownValues,
+              filterOptions: filterOptions,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -219,7 +220,7 @@ router.get(
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
-              dropdownValues: dropdownValues,
+              filterOptions: filterOptions,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -266,7 +267,7 @@ router.get(
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
-              dropdownValues: dropdownValues,
+              filterOptions: filterOptions,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -319,7 +320,7 @@ router.get(
                 data: results.rows,
                 filterCategory: req.query.filterCategory,
                 filterValue: req.query.filterValue,
-                dropdownValues: dropdownValues,
+                filterOptions: filterOptions,
                 pageCount,
                 itemCount,
                 queryCount: "Records returned: " + results.count,
@@ -373,7 +374,7 @@ router.get(
                 data: results.rows,
                 filterCategory: req.query.filterCategory,
                 filterValue: req.query.filterValue,
-                dropdownValues: dropdownValues,
+                filterOptions: filterOptions,
                 pageCount,
                 itemCount,
                 queryCount: "Records returned: " + results.count,
@@ -426,7 +427,7 @@ router.get(
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
-              dropdownValues: dropdownValues,
+              filterOptions: filterOptions,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -779,9 +780,10 @@ router.get(
       req.session.messages = [];
 
       // get dropdown values.
-      var dropdownValues = await Dropdown.findAll({
+      var filterOptions = await Dropdown.findAll({
         where: {
-          dropdownFormID: 1,
+          dropdownFormID: 29, // filtering options.
+          dropdownTitle: "Dog Owner Filtering Options",
         },
       });
 
@@ -818,7 +820,7 @@ router.get(
             auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             data: results.rows,
-            dropdownValues: dropdownValues,
+            filterOptions: filterOptions,
             pageCount,
             itemCount,
             queryCount: "Records returned: " + results.count.length,
@@ -870,7 +872,7 @@ router.get(
             auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             data: results.rows,
-            dropdownValues: dropdownValues,
+            filterOptions: filterOptions,
             filterCategory: req.query.filterCategory,
             filterValue: req.query.filterValue,
             pageCount,
@@ -916,7 +918,7 @@ router.get(
             auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             data: results.rows,
-            dropdownValues: dropdownValues,
+            filterOptions: filterOptions,
             filterCategory: req.query.filterCategory,
             filterValue: req.query.filterValue,
             pageCount,
@@ -966,7 +968,7 @@ router.get(
             auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             data: results.rows,
-            dropdownValues: dropdownValues,
+            filterOptions: filterOptions,
             filterCategory: req.query.filterCategory,
             filterValue: req.query.filterValue,
             pageCount,
@@ -1014,7 +1016,7 @@ router.get(
                 data: results.rows,
                 filterCategory: req.query.filterCategory,
                 filterValue: req.query.filterValue,
-                dropdownValues: dropdownValues,
+                filterOptions: filterOptions,
                 pageCount,
                 itemCount,
                 queryCount: "Records returned: " + results.count,
@@ -1068,7 +1070,7 @@ router.get(
                 data: results.rows,
                 filterCategory: req.query.filterCategory,
                 filterValue: req.query.filterValue,
-                dropdownValues: dropdownValues,
+                filterOptions: filterOptions,
                 pageCount,
                 itemCount,
                 queryCount: "Records returned: " + results.count,
@@ -1129,7 +1131,7 @@ router.get(
             auth: req.session.auth, // authorization.
             ownerID: req.session.ownerID,
             data: results.rows,
-            dropdownValues: dropdownValues,
+            filterOptions: filterOptions,
             filterCategory: req.query.filterCategory,
             filterValue: req.query.filterValue,
             pageCount,

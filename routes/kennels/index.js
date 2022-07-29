@@ -21,10 +21,11 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  // get dropdown values.
-  var dropdownValues = await Dropdown.findAll({
+  // get filtering options.
+  var filterOptions = await Dropdown.findAll({
     where: {
-      dropdownFormID: 24,
+      dropdownFormID: 29, // filtering options.
+      dropdownTitle: "Kennel Filtering Options",
     },
   });
 
@@ -49,7 +50,7 @@ router.get("/", async (req, res, next) => {
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
-        dropdownValues: dropdownValues,
+        filterOptions: filterOptions,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
@@ -83,7 +84,7 @@ router.get("/", async (req, res, next) => {
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
-        dropdownValues: dropdownValues,
+        filterOptions: filterOptions,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
@@ -126,7 +127,7 @@ router.get("/", async (req, res, next) => {
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          dropdownValues: dropdownValues,
+          filterOptions: filterOptions,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
           pageCount,
@@ -178,7 +179,7 @@ router.get("/", async (req, res, next) => {
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          dropdownValues: dropdownValues,
+          filterOptions: filterOptions,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
           pageCount,
@@ -220,7 +221,7 @@ router.get("/", async (req, res, next) => {
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          dropdownValues: dropdownValues,
+          filterOptions: filterOptions,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
           pageCount,

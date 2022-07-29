@@ -47,10 +47,11 @@ router.get(
       // delete session lastEnteredDropdownTitle.
       delete req.session.lastEnteredDropdownTitle;
 
-      // get dropdown values.
-      var dropdownValues = await Dropdown.findAll({
+      // get filtering options.
+      var filterOptions = await Dropdown.findAll({
         where: {
-          dropdownFormID: 2,
+          dropdownFormID: 29, // filtering options.
+          dropdownTitle: "Policy Filtering Options",
         },
       });
 
@@ -69,7 +70,7 @@ router.get(
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
-              dropdownValues: dropdownValues,
+              filterOptions: filterOptions,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -111,7 +112,7 @@ router.get(
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
-              dropdownValues: dropdownValues,
+              filterOptions: filterOptions,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -244,15 +245,15 @@ router.get(
       // get month dropdown values.
       var monthDropdownValues = await Dropdown.findAll({
         where: {
-          dropdownFormID: 14,
-          dropdownTitle: "Months",
+          dropdownFormID: 29, // filtering options.
+          dropdownTitle: "Policy History Filtering Options - Months",
         },
       });
       // get month dropdown values.
       var yearDropdownValues = await Dropdown.findAll({
         where: {
-          dropdownFormID: 14,
-          dropdownTitle: "Years",
+          dropdownFormID: 29, // filtering options.
+          dropdownTitle: "Policy History Filtering Options - Years",
         },
       });
       // get policy name.

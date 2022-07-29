@@ -40,10 +40,11 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      // get dropdown values.
-      var dropdownValues = await Dropdown.findAll({
+      // get filtering options.
+      var filterOptions = await Dropdown.findAll({
         where: {
-          dropdownFormID: 25, // liquor licensing filtering options.
+          dropdownFormID: 29, // filtering options.
+          dropdownTitle: "Liquor Licensing Filtering Options",
         },
       });
 
@@ -68,7 +69,7 @@ router.get(
             email: req.session.email,
             auth: req.session.auth, // authorization.
             data: results.rows,
-            dropdownValues: dropdownValues,
+            filterOptions: filterOptions,
             pageCount,
             itemCount,
             queryCount: "Records returned: " + results.count,
@@ -112,7 +113,7 @@ router.get(
             data: results.rows,
             filterCategory: req.query.filterCategory,
             filterValue: req.query.filterValue,
-            dropdownValues: dropdownValues,
+            filterOptions: filterOptions,
             pageCount,
             itemCount,
             queryCount: "Records returned: " + results.count,
@@ -153,7 +154,7 @@ router.get(
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
-              dropdownValues: dropdownValues,
+              filterOptions: filterOptions,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,

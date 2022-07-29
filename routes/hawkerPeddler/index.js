@@ -22,9 +22,10 @@ router.get("/", async (req, res, next) => {
   req.session.messages = [];
 
   // get dropdown values.
-  var dropdownValues = await Dropdown.findAll({
+  var filterOptions = await Dropdown.findAll({
     where: {
-      dropdownFormID: 23,
+      dropdownFormID: 29, // filtering options.
+      dropdownTitle: "Hawker & Peddler Filtering Options",
     },
   });
 
@@ -49,7 +50,7 @@ router.get("/", async (req, res, next) => {
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
-        dropdownValues: dropdownValues,
+        filterOptions: filterOptions,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
@@ -83,7 +84,7 @@ router.get("/", async (req, res, next) => {
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
-        dropdownValues: dropdownValues,
+        filterOptions: filterOptions,
         filterCategory: req.query.filterCategory,
         filterValue: req.query.filterValue,
         pageCount,
@@ -128,7 +129,7 @@ router.get("/", async (req, res, next) => {
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          dropdownValues: dropdownValues,
+          filterOptions: filterOptions,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
           pageCount,
@@ -170,7 +171,7 @@ router.get("/", async (req, res, next) => {
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          dropdownValues: dropdownValues,
+          filterOptions: filterOptions,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
           pageCount,
@@ -216,7 +217,7 @@ router.get("/", async (req, res, next) => {
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          dropdownValues: dropdownValues,
+          filterOptions: filterOptions,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
           pageCount,

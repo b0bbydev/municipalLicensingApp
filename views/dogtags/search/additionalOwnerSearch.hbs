@@ -11,7 +11,7 @@
     {{#if filterCategory}}
       <option value="{{filterCategory}}" selected>{{filterCategory}}</option>
     {{/if}}
-    {{#each dropdownValues}}
+    {{#each filterOptions}}
       {{#if this.isDisabled}}
         <option
           value="{{this.dropdownValue}}"

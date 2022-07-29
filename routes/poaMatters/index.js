@@ -39,10 +39,11 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      // get dropdown values.
-      var dropdownValues = await Dropdown.findAll({
+      // get filtering options.
+      var filterOptions = await Dropdown.findAll({
         where: {
-          dropdownFormID: 28, // POA Matters filtering options.
+          dropdownFormID: 29, // filtering options.
+          dropdownTitle: "POA Matters Filtering Options",
         },
       });
 
@@ -68,7 +69,7 @@ router.get(
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          dropdownValues: dropdownValues,
+          filterOptions: filterOptions,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,
