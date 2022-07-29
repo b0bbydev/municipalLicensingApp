@@ -159,6 +159,9 @@ var editPoaMatterRoute = require("./routes/poaMatters/editPoaMatter");
 
 var addAdditionalTrialDates = require("./routes/poaMatters/addTrialDates");
 
+/* Taxi related routes */
+var taxiLicenseRoute = require("./routes/taxiLicenses/index");
+
 var app = express();
 
 // keep this before all routes that will use pagination.
@@ -420,6 +423,9 @@ app.use("/poaMatters/addPoaMatter", addPoaMatterRoute);
 app.use("/poaMatters/editPoaMatter", editPoaMatterRoute);
 
 app.use("/poaMatters/addTrialDates", addAdditionalTrialDates);
+
+/* Taxi related routes */
+app.use("/taxiLicenses", taxiLicenseRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
