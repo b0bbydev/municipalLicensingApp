@@ -32,6 +32,9 @@ var moment = require("moment");
 // authHelper middleware.
 const { isAdmin, isDogLicense, isPolicy } = require("./config/authHelpers");
 
+var x = require("./models/poaMatters/poaMatterTrial");
+x.sync();
+
 var iisReset = require("./routes/iisreset/index");
 
 /* admin related routes */
@@ -153,6 +156,8 @@ var poaMattersRoute = require("./routes/poaMatters/index");
 
 var addPoaMatterRoute = require("./routes/poaMatters/addPoaMatter");
 var editPoaMatterRoute = require("./routes/poaMatters/editPoaMatter");
+
+var addAdditionalTrialDates = require("./routes/poaMatters/addTrialDates");
 
 var app = express();
 
@@ -413,6 +418,8 @@ app.use("/poaMatters", poaMattersRoute);
 
 app.use("/poaMatters/addPoaMatter", addPoaMatterRoute);
 app.use("/poaMatters/editPoaMatter", editPoaMatterRoute);
+
+app.use("/poaMatters/addTrialDates", addAdditionalTrialDates);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

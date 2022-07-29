@@ -1,0 +1,63 @@
+<h2 class="text-center mt-1">Add Additional Trial Dates</h2>
+<form class="row g-5 m-auto" method="POST">
+  <div class="col-md-7 m-auto mt-3">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Trial Dates</h4>
+    <hr />
+    <div class="row">
+      <!-- Trial Date 1 -->
+      <div class="col-sm-4">
+        <label for="Trial Date 1" class="form-label">Trial Date 1</label>
+        <input
+          type="date"
+          placeholder="Trial Date 1"
+          class="form-control"
+          name="trialDateOne"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.trialDateOne}}"
+        />
+      </div>
+      <!-- Trial Date 2 -->
+      <div class="col-sm-4">
+        <label for="Trial Date 2" class="form-label">Trial Date 2</label>
+        <input
+          type="date"
+          placeholder="Trial Date 2"
+          class="form-control"
+          name="trialDateTwo"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.trialDateTwo}}"
+        />
+      </div>
+      <!-- Trial Date 3 -->
+      <div class="col-sm-4">
+        <label for="Trial Date 3" class="form-label">Trial Date 3</label>
+        <input
+          type="date"
+          placeholder="Trial Date 3"
+          class="form-control"
+          name="trialDateThree"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.trialDateThree}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

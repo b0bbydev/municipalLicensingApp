@@ -100,7 +100,7 @@
         <td>{{#if this.setFine}} ${{this.setFine}} {{/if}}</td>
         <td>{{#if this.fineAssessed}} ${{this.fineAssessed}} {{/if}}</td>
         <td>{{#if this.amountPaid}} ${{this.amountPaid}} {{/if}}</td>
-        <td><a
+        <td class="text-nowrap"><a
             class="btn btn-sm btn-secondary"
             href="/poaMatters/editPoaMatter/{{this.poaMatterID}}"
           >Edit</a>
@@ -149,7 +149,10 @@
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
               >Close</button>
-              <a class="btn btn-primary" href="#">Add Additional Trial Dates</a>
+              <a
+                class="btn btn-primary"
+                href="/poaMatters/addTrialDates/{{this.poaMatterID}}"
+              >Add Additional Trial Dates</a>
             </div>
           </div>
         </div>

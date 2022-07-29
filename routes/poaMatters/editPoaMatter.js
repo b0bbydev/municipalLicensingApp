@@ -5,6 +5,9 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const POAMatter = require("../../models/poaMatters/poaMatter");
 const POAMatterLocation = require("../../models/poaMatters/poaMatterLocation");
 const POAMatterTrial = require("../../models/poaMatters/poaMatterTrial");
+// sequelize.
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
@@ -224,18 +227,27 @@ router.post(
           // create array for bulkCreate.
           let trialDates = [
             {
-              trialDate: req.body.trialDateOne,
+              trialDate: funcHelpers.fixEmptyValue(req.body.trialDateOne),
               poaMatterID: req.params.id,
             },
             {
-              trialDate: req.body.trialDateTwo,
+              trialDate: funcHelpers.fixEmptyValue(req.body.trialDateTwo),
               poaMatterID: req.params.id,
             },
             {
-              trialDate: req.body.trialDateThree,
+              trialDate: funcHelpers.fixEmptyValue(req.body.trialDateThree),
               poaMatterID: req.params.id,
             },
           ];
+
+          // loops through trialDates and if trialDate is null, delete that whole specific object in the array.
+          for (const key in trialDates) {
+            if (trialDates[key].trialDate === null) {
+              // remove the key/object from the array.
+              trialDates.splice([key]);
+            }
+          }
+          // insert the array,
           POAMatterTrial.bulkCreate(trialDates);
         })
         .then(() => {
@@ -244,7 +256,7 @@ router.post(
         .catch((err) => {
           return res.render("poaMatters/editPoaMatter", {
             title: "BWG | Edit POA Matter",
-            message: "Page Error!" + err,
+            message: "Page Error!",
           });
         });
     }
