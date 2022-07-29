@@ -7,9 +7,10 @@
     title="filterSelect"
     name="filterCategory"
   >
-    <option disabled selected>Filter By...</option>
     {{#if filterCategory}}
       <option value="{{filterCategory}}" selected>{{filterCategory}}</option>
+    {{else}}
+      <option value="" disabled selected>Filter By...</option>
     {{/if}}
     {{#each filterOptions}}
       {{#if this.isDisabled}}

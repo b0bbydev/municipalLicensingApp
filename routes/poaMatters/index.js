@@ -8,6 +8,8 @@ const POAMatterTrial = require("../../models/poaMatters/poaMatterTrial");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // pagination lib.
@@ -47,37 +49,90 @@ router.get(
         },
       });
 
-      POAMatter.findAndCountAll({
-        limit: req.query.limit,
-        offset: req.skip,
-        include: [
-          {
-            model: POAMatterLocation,
-          },
-          {
-            model: POAMatterTrial,
-          },
-        ],
-      }).then((results) => {
-        // for pagination.
-        const itemCount = results.count;
-        const pageCount = Math.ceil(results.count / req.query.limit);
+      // if there are no filter parameters.
+      if (!req.query.filterCategory || !req.query.filterValue) {
+        POAMatter.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: POAMatterLocation,
+            },
+            {
+              model: POAMatterTrial,
+            },
+          ],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
 
-        return res.render("poaMatters/index", {
-          title: "BWG | POA Matters",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          data: results.rows,
-          filterOptions: filterOptions,
-          pageCount,
-          itemCount,
-          queryCount: "Records returned: " + results.count,
-          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-          prev: paginate.href(req)(true),
-          hasMorePages: paginate.hasNextPages(req)(pageCount),
+          return res.render("poaMatters/index", {
+            title: "BWG | POA Matters",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterOptions: filterOptions,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
         });
-      });
+      } else {
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+        POAMatter.findAndCountAll({
+          where: {
+            [filterCategory]: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+          },
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: POAMatterLocation,
+            },
+            {
+              model: POAMatterTrial,
+            },
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("poaMatters/index", {
+              title: "BWG | POA Matters",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) =>
+            res.render("poaMatters/index", {
+              title: "BWG | POA Matters",
+              message: "Page Error!",
+            })
+          );
+      }
     }
   }
 );
