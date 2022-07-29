@@ -5,57 +5,77 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const RefreshmentVehicleOperator = require("../../models/refreshmentVehicles/refreshmentVehicleOperator");
 const RefreshmentVehicleOperatorAddress = require("../../models/refreshmentVehicles/refreshmentVehicleOperatorAddress");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /refreshmentVehicles/editVehicleOperator/:id */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // get streets.
-  var streets = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 13, // streets
-    },
-  });
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("refreshmentVehicles/editVehicleOperator", {
+        title: "BWG | Edit Vehicle Operator",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  RefreshmentVehicleOperator.findOne({
-    where: {
-      refreshmentVehicleOperatorID: req.params.id,
-    },
-    include: [
-      {
-        model: RefreshmentVehicleOperatorAddress,
-      },
-    ],
-  }).then((results) => {
-    return res.render("refreshmentVehicles/editVehicleOperator", {
-      title: "BWG | Edit Vehicle Operator",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      // populate input fields with existing values.
-      formData: {
-        firstName: results.firstName,
-        lastName: results.lastName,
-        phoneNumber: results.phoneNumber,
-        email: results.email,
-        streetNumber:
-          results.refreshmentVehicleOperatorAddresses[0].streetNumber,
-        streetName: results.refreshmentVehicleOperatorAddresses[0].streetName,
-        town: results.refreshmentVehicleOperatorAddresses[0].town,
-        postalCode: results.refreshmentVehicleOperatorAddresses[0].postalCode,
-      },
-    });
-  });
-});
+      // get streets.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
+      RefreshmentVehicleOperator.findOne({
+        where: {
+          refreshmentVehicleOperatorID: req.params.id,
+        },
+        include: [
+          {
+            model: RefreshmentVehicleOperatorAddress,
+          },
+        ],
+      }).then((results) => {
+        return res.render("refreshmentVehicles/editVehicleOperator", {
+          title: "BWG | Edit Vehicle Operator",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          streets: streets,
+          // populate input fields with existing values.
+          formData: {
+            firstName: results.firstName,
+            lastName: results.lastName,
+            phoneNumber: results.phoneNumber,
+            email: results.email,
+            streetNumber:
+              results.refreshmentVehicleOperatorAddresses[0].streetNumber,
+            streetName:
+              results.refreshmentVehicleOperatorAddresses[0].streetName,
+            town: results.refreshmentVehicleOperatorAddresses[0].town,
+            postalCode:
+              results.refreshmentVehicleOperatorAddresses[0].postalCode,
+          },
+        });
+      });
+    }
+  }
+);
 
 /* POST /refreshmentVehicles/editVehicleOperator/:id */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\/\-',. ]*$/)

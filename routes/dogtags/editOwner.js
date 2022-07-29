@@ -7,7 +7,7 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
-/* GET /editOwner page */
+/* GET /editOwner/:id */
 router.get(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
@@ -84,7 +84,7 @@ router.get(
   }
 );
 
-/* POST /editOwner */
+/* POST /editOwner/:id */
 router.post(
   "/:id",
   param("id").matches(/^\d+$/).trim(),

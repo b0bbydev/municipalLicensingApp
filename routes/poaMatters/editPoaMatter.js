@@ -11,71 +11,89 @@ const Op = Sequelize.Op;
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /poaMatters/editPoaMatter/:id */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // get dropdown values.
-  var streets = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 13, // streets
-    },
-  });
-  var officerNames = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 27, // officer names
-    },
-  });
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("poaMatters/editPoaMatter", {
+        title: "BWG | Edit POA Matter",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  POAMatter.findOne({
-    where: {
-      poaMatterID: req.params.id,
-    },
-    include: [
-      {
-        model: POAMatterLocation,
-      },
-    ],
-  }).then((results) => {
-    return res.render("poaMatters/editPoaMatter", {
-      title: "BWG | Edit POA Matter",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      officerNames: officerNames,
-      // populate input fields with existing values.
-      formData: {
-        infoNumber: results.infoNumber,
-        dateOfOffence: results.dateOfOffence,
-        dateClosed: results.dateClosed,
-        poaType: results.poaType,
-        officerName: results.officerName,
-        defendantName: results.defendantName,
-        offence: results.offence,
-        comment: results.comment,
-        prosecutor: results.prosecutor,
-        verdict: results.verdict,
-        setFine: results.setFine,
-        fineAssessed: results.fineAssessed,
-        amountPaid: results.amountPaid,
-        streetNumber: results.poaMatterLocations[0].streetNumber,
-        streetName: results.poaMatterLocations[0].streetName,
-        town: results.poaMatterLocations[0].town,
-        postalCode: results.poaMatterLocations[0].postalCode,
-      },
-    });
-  });
-});
+      // get dropdown values.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+      var officerNames = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 27, // officer names
+        },
+      });
+
+      POAMatter.findOne({
+        where: {
+          poaMatterID: req.params.id,
+        },
+        include: [
+          {
+            model: POAMatterLocation,
+          },
+        ],
+      }).then((results) => {
+        return res.render("poaMatters/editPoaMatter", {
+          title: "BWG | Edit POA Matter",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          streets: streets,
+          officerNames: officerNames,
+          // populate input fields with existing values.
+          formData: {
+            infoNumber: results.infoNumber,
+            dateOfOffence: results.dateOfOffence,
+            dateClosed: results.dateClosed,
+            poaType: results.poaType,
+            officerName: results.officerName,
+            defendantName: results.defendantName,
+            offence: results.offence,
+            comment: results.comment,
+            prosecutor: results.prosecutor,
+            verdict: results.verdict,
+            setFine: results.setFine,
+            fineAssessed: results.fineAssessed,
+            amountPaid: results.amountPaid,
+            streetNumber: results.poaMatterLocations[0].streetNumber,
+            streetName: results.poaMatterLocations[0].streetName,
+            town: results.poaMatterLocations[0].town,
+            postalCode: results.poaMatterLocations[0].postalCode,
+          },
+        });
+      });
+    }
+  }
+);
 
 /* POST /poaMatters/editPoaMatter/:id */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("infoNumber")
     .if(body("infoNumber").notEmpty())
     .matches(/^[ a-zA-Z0-9\'-]*$/)

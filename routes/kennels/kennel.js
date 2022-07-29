@@ -6,55 +6,72 @@ const KennelPropertyOwnerAddress = require("../../models/kennel/kennelPropertyOw
 const KennelOwner = require("../../models/kennel/kennelOwner");
 const KennelOwnerAddress = require("../../models/kennel/kennelOwnerAddress");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /kennels/kennel/:id page. */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // send kennelID to session.
-  req.session.kennelID = req.params.id;
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("kennels/kennel", {
+        title: "BWG | Kennel Licensing",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  Promise.all([
-    KennelPropertyOwner.findAndCountAll({
-      limit: req.query.limit,
-      offset: req.skip,
-      include: [
-        {
-          model: KennelPropertyOwnerAddress,
-        },
-      ],
-      where: {
-        kennelID: req.params.id,
-      },
-    }),
-    KennelOwner.findAndCountAll({
-      limit: req.query.limit,
-      offset: req.skip,
-      include: [
-        {
-          model: KennelOwnerAddress,
-        },
-      ],
-      where: {
-        kennelID: req.params.id,
-      },
-    }),
-  ]).then((data) => {
-    return res.render("kennels/kennel", {
-      title: "BWG | Kennel Licensing",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      propertyOwners: data[0].rows,
-      kennelOwners: data[1].rows,
-      propertyOwnersCount: "Records returned: " + data[0].count,
-      kennelOwnersCount: "Records returned: " + data[1].count,
-    });
-  });
-});
+      // send kennelID to session.
+      req.session.kennelID = req.params.id;
+
+      Promise.all([
+        KennelPropertyOwner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: KennelPropertyOwnerAddress,
+            },
+          ],
+          where: {
+            kennelID: req.params.id,
+          },
+        }),
+        KennelOwner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          include: [
+            {
+              model: KennelOwnerAddress,
+            },
+          ],
+          where: {
+            kennelID: req.params.id,
+          },
+        }),
+      ]).then((data) => {
+        return res.render("kennels/kennel", {
+          title: "BWG | Kennel Licensing",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          propertyOwners: data[0].rows,
+          kennelOwners: data[1].rows,
+          propertyOwnersCount: "Records returned: " + data[0].count,
+          kennelOwnersCount: "Records returned: " + data[1].count,
+        });
+      });
+    }
+  }
+);
 
 module.exports = router;

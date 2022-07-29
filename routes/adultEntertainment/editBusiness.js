@@ -9,7 +9,7 @@ const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
-/* GET /adultEntertainment/editBusiness page. */
+/* GET /adultEntertainment/editBusiness */
 router.get(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
@@ -96,6 +96,7 @@ router.get(
 /* POST /adultEntertainment/editBusiness */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("businessName")
     .if(body("businessName").notEmpty())
     .matches(/^[ a-zA-Z0-9\'-]*$/)

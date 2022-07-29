@@ -8,49 +8,66 @@ const DonationBinAddress = require("../../models/donationBin/donationBinAddress"
 const { body, param, validationResult } = require("express-validator");
 
 /* GET /donationBin/editDonationBin/:id */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // get streets.
-  var streets = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 13, // streets
-    },
-  });
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("donationBin/editDonationBin", {
+        title: "BWG | Edit Donation Bin",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  DonationBin.findOne({
-    where: {
-      donationBinID: req.params.id,
-    },
-    include: [
-      {
-        model: DonationBinAddress,
-      },
-    ],
-  }).then((results) => {
-    return res.render("donationBin/editDonationBin", {
-      title: "BWG | Edit Donation Bin",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      formData: {
-        colour: results.colour,
-        material: results.material,
-        pickupSchedule: results.pickupSchedule,
-        itemsCollected: results.itemsCollected,
-        notes: results.notes,
-        streetNumber: results.donationBinAddresses[0].streetNumber,
-        streetName: results.donationBinAddresses[0].streetName,
-        town: results.donationBinAddresses[0].town,
-        postalCode: results.donationBinAddresses[0].postalCode,
-      },
-    });
-  });
-});
+      // get streets.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
+      DonationBin.findOne({
+        where: {
+          donationBinID: req.params.id,
+        },
+        include: [
+          {
+            model: DonationBinAddress,
+          },
+        ],
+      }).then((results) => {
+        return res.render("donationBin/editDonationBin", {
+          title: "BWG | Edit Donation Bin",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          streets: streets,
+          formData: {
+            colour: results.colour,
+            material: results.material,
+            pickupSchedule: results.pickupSchedule,
+            itemsCollected: results.itemsCollected,
+            notes: results.notes,
+            streetNumber: results.donationBinAddresses[0].streetNumber,
+            streetName: results.donationBinAddresses[0].streetName,
+            town: results.donationBinAddresses[0].town,
+            postalCode: results.donationBinAddresses[0].postalCode,
+          },
+        });
+      });
+    }
+  }
+);
 
 /* POST /donationBin/editDonationBin/:id */
 router.post(

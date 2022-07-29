@@ -5,52 +5,70 @@ const RefreshmentVehicle = require("../../models/refreshmentVehicles/refreshment
 // helper.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /refreshmentVehicles/editVehicle/:id */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  RefreshmentVehicle.findOne({
-    where: {
-      refreshmentVehicleID: req.params.id,
-    },
-  }).then((results) => {
-    return res.render("refreshmentVehicles/editVehicle", {
-      title: "BWG | Edit Vehicle",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      // populate input fields with existing values.
-      formData: {
-        registeredBusinessName: results.registeredBusinessName,
-        operatingBusinessName: results.operatingBusinessName,
-        issueDate: results.issueDate,
-        expiryDate: results.expiryDate,
-        specialEvent: results.specialEvent,
-        policeVSC: results.policeVSC,
-        photoID: results.photoID,
-        driversAbstract: results.driversAbstract,
-        safetyCertificate: results.safetyCertificate,
-        vehicleOwnership: results.vehicleOwnership,
-        citizenship: results.citizenship,
-        insurance: results.insurance,
-        zoningClearance: results.zoningClearance,
-        fireApproval: results.fireApproval,
-        healthInspection: results.healthInspection,
-        itemsForSale: results.itemsForSale,
-        notes: results.notes,
-      },
-    });
-  });
-});
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("refreshmentVehicles/editVehicle", {
+        title: "BWG | Edit Vehicle",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      RefreshmentVehicle.findOne({
+        where: {
+          refreshmentVehicleID: req.params.id,
+        },
+      }).then((results) => {
+        return res.render("refreshmentVehicles/editVehicle", {
+          title: "BWG | Edit Vehicle",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          // populate input fields with existing values.
+          formData: {
+            registeredBusinessName: results.registeredBusinessName,
+            operatingBusinessName: results.operatingBusinessName,
+            issueDate: results.issueDate,
+            expiryDate: results.expiryDate,
+            specialEvent: results.specialEvent,
+            policeVSC: results.policeVSC,
+            photoID: results.photoID,
+            driversAbstract: results.driversAbstract,
+            safetyCertificate: results.safetyCertificate,
+            vehicleOwnership: results.vehicleOwnership,
+            citizenship: results.citizenship,
+            insurance: results.insurance,
+            zoningClearance: results.zoningClearance,
+            fireApproval: results.fireApproval,
+            healthInspection: results.healthInspection,
+            itemsForSale: results.itemsForSale,
+            notes: results.notes,
+          },
+        });
+      });
+    }
+  }
+);
 
 /* POST /refreshmentVehicles/editVehicle/:id */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("registeredBusinessName")
     .if(body("registeredBusinessName").notEmpty())
     .matches(/^[a-zA-Z0-9\/\-'",. ]*$/)

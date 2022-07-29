@@ -8,54 +8,72 @@ const DonationBinOperatorAddress = require("../../models/donationBin/donationBin
 const { body, param, validationResult } = require("express-validator");
 
 /* GET /donationBin/editOperator/:id */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // get streets.
-  var streets = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 13, // streets
-    },
-  });
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("donationBin/editOperator", {
+        title: "BWG | Edit Donation Bin Operator",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  DonationBinOperator.findOne({
-    where: {
-      donationBinOperatorID: req.params.id,
-    },
-    include: [
-      {
-        model: DonationBinOperatorAddress,
-      },
-    ],
-  }).then((results) => {
-    return res.render("donationBin/editOperator", {
-      title: "BWG | Edit Donation Bin Operator",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      formData: {
-        firstName: results.firstName,
-        lastName: results.lastName,
-        phoneNumber: results.phoneNumber,
-        email: results.email,
-        licenseNumber: results.licenseNumber,
-        photoID: results.photoID,
-        charityInformation: results.charityInformation,
-        ownerConsent: results.ownerConsent,
-        certificateOfInsurance: results.certificateOfInsurance,
-        sitePlan: results.sitePlan,
-        streetNumber: results.donationBinOperatorAddresses[0].streetNumber,
-        streetName: results.donationBinOperatorAddresses[0].streetName,
-        town: results.donationBinOperatorAddresses[0].town,
-        postalCode: results.donationBinOperatorAddresses[0].postalCode,
-      },
-    });
-  });
-});
+      // get streets.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
+      DonationBinOperator.findOne({
+        where: {
+          donationBinOperatorID: req.params.id,
+        },
+        include: [
+          {
+            model: DonationBinOperatorAddress,
+          },
+        ],
+      }).then((results) => {
+        return res.render("donationBin/editOperator", {
+          title: "BWG | Edit Donation Bin Operator",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          streets: streets,
+          // populate input fields with existing values.
+          formData: {
+            firstName: results.firstName,
+            lastName: results.lastName,
+            phoneNumber: results.phoneNumber,
+            email: results.email,
+            licenseNumber: results.licenseNumber,
+            photoID: results.photoID,
+            charityInformation: results.charityInformation,
+            ownerConsent: results.ownerConsent,
+            certificateOfInsurance: results.certificateOfInsurance,
+            sitePlan: results.sitePlan,
+            streetNumber: results.donationBinOperatorAddresses[0].streetNumber,
+            streetName: results.donationBinOperatorAddresses[0].streetName,
+            town: results.donationBinOperatorAddresses[0].town,
+            postalCode: results.donationBinOperatorAddresses[0].postalCode,
+          },
+        });
+      });
+    }
+  }
+);
 
 /* POST /donationBin/editDonationBinOperator/:id */
 router.post(

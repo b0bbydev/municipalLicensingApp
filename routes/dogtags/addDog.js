@@ -56,9 +56,10 @@ router.get(
   }
 );
 
-/* POST addDog page. */
+/* POST /addDog */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
     .matches(/^[0-9-]*$/)

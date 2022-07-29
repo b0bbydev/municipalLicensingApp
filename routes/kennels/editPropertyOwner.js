@@ -5,56 +5,74 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const KennelPropertyOwner = require("../../models/kennel/kennelPropertyOwner");
 const KennelPropertyOwnerAddress = require("../../models/kennel/kennelPropertyOwnerAddress");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /kennels/editPropertyOwner/:id */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // get streets.
-  var streets = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 13, // streets
-    },
-  });
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("kennels/editPropertyOwner", {
+        title: "BWG | Edit Property Owner",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  KennelPropertyOwner.findOne({
-    where: {
-      kennelPropertyOwnerID: req.params.id,
-    },
-    include: [
-      {
-        model: KennelPropertyOwnerAddress,
-      },
-    ],
-  }).then((results) => {
-    return res.render("kennels/editPropertyOwner", {
-      title: "BWG | Edit Property Owner",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      // populate input fields with existing values.
-      formData: {
-        firstName: results.firstName,
-        lastName: results.lastName,
-        phoneNumber: results.phoneNumber,
-        email: results.email,
-        streetNumber: results.kennelPropertyOwnerAddresses[0].streetNumber,
-        streetName: results.kennelPropertyOwnerAddresses[0].streetName,
-        town: results.kennelPropertyOwnerAddresses[0].town,
-        postalCode: results.kennelPropertyOwnerAddresses[0].postalCode,
-      },
-    });
-  });
-});
+      // get streets.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
+      KennelPropertyOwner.findOne({
+        where: {
+          kennelPropertyOwnerID: req.params.id,
+        },
+        include: [
+          {
+            model: KennelPropertyOwnerAddress,
+          },
+        ],
+      }).then((results) => {
+        return res.render("kennels/editPropertyOwner", {
+          title: "BWG | Edit Property Owner",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          streets: streets,
+          // populate input fields with existing values.
+          formData: {
+            firstName: results.firstName,
+            lastName: results.lastName,
+            phoneNumber: results.phoneNumber,
+            email: results.email,
+            streetNumber: results.kennelPropertyOwnerAddresses[0].streetNumber,
+            streetName: results.kennelPropertyOwnerAddresses[0].streetName,
+            town: results.kennelPropertyOwnerAddresses[0].town,
+            postalCode: results.kennelPropertyOwnerAddresses[0].postalCode,
+          },
+        });
+      });
+    }
+  }
+);
 
 /* POST /kennels/editPropertyOwner/:id */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\/\-',. ]*$/)

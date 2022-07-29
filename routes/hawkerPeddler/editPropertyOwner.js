@@ -5,57 +5,77 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const HawkerPeddlerPropertyOwner = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwner");
 const HawkerPeddlerPropertyOwnerAddress = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwnerAddress");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /hawkerPeddler/editPropertyOwner/:id */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // get streets.
-  var streets = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 13, // streets
-    },
-  });
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("hawkerPeddler/editPropertyOwner", {
+        title: "BWG | Edit Property Owner",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  HawkerPeddlerPropertyOwner.findOne({
-    where: {
-      hawkerPeddlerPropertyOwnerID: req.params.id,
-    },
-    include: [
-      {
-        model: HawkerPeddlerPropertyOwnerAddress,
-      },
-    ],
-  }).then((results) => {
-    return res.render("hawkerPeddler/editPropertyOwner", {
-      title: "BWG | Edit Property Owner",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      // populate input fields with existing values.
-      formData: {
-        firstName: results.firstName,
-        lastName: results.lastName,
-        phoneNumber: results.phoneNumber,
-        email: results.email,
-        streetNumber:
-          results.hawkerPeddlerPropertyOwnerAddresses[0].streetNumber,
-        streetName: results.hawkerPeddlerPropertyOwnerAddresses[0].streetName,
-        town: results.hawkerPeddlerPropertyOwnerAddresses[0].town,
-        postalCode: results.hawkerPeddlerPropertyOwnerAddresses[0].postalCode,
-      },
-    });
-  });
-});
+      // get streets.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
+      HawkerPeddlerPropertyOwner.findOne({
+        where: {
+          hawkerPeddlerPropertyOwnerID: req.params.id,
+        },
+        include: [
+          {
+            model: HawkerPeddlerPropertyOwnerAddress,
+          },
+        ],
+      }).then((results) => {
+        return res.render("hawkerPeddler/editPropertyOwner", {
+          title: "BWG | Edit Property Owner",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          streets: streets,
+          // populate input fields with existing values.
+          formData: {
+            firstName: results.firstName,
+            lastName: results.lastName,
+            phoneNumber: results.phoneNumber,
+            email: results.email,
+            streetNumber:
+              results.hawkerPeddlerPropertyOwnerAddresses[0].streetNumber,
+            streetName:
+              results.hawkerPeddlerPropertyOwnerAddresses[0].streetName,
+            town: results.hawkerPeddlerPropertyOwnerAddresses[0].town,
+            postalCode:
+              results.hawkerPeddlerPropertyOwnerAddresses[0].postalCode,
+          },
+        });
+      });
+    }
+  }
+);
 
 /* POST /hawkerPeddler/editPropertyOwner/:id */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\/\-',. ]*$/)

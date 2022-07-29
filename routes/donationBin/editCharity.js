@@ -7,41 +7,58 @@ const DonationBinCharity = require("../../models/donationBin/donationBinCharity"
 const { body, param, validationResult } = require("express-validator");
 
 /* GET /donationBin/editCharity/:id */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // get organization types.
-  var organizationTypes = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 21, // organization types.
-    },
-  });
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("donationBin/editCharity", {
+        title: "BWG | Edit Donation Bin Charity",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  DonationBinCharity.findOne({
-    where: {
-      donationBinCharityID: req.params.id,
-    },
-  }).then((results) => {
-    return res.render("donationBin/editCharity", {
-      title: "BWG | Edit Donation Bin Charity",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      organizationTypes: organizationTypes,
-      // populate input fields with existing values.
-      formData: {
-        charityName: results.charityName,
-        phoneNumber: results.phoneNumber,
-        email: results.email,
-        registrationNumber: results.registrationNumber,
-        organizationType: results.organizationType,
-      },
-    });
-  });
-});
+      // get organization types.
+      var organizationTypes = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 21, // organization types.
+        },
+      });
+
+      DonationBinCharity.findOne({
+        where: {
+          donationBinCharityID: req.params.id,
+        },
+      }).then((results) => {
+        return res.render("donationBin/editCharity", {
+          title: "BWG | Edit Donation Bin Charity",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          organizationTypes: organizationTypes,
+          // populate input fields with existing values.
+          formData: {
+            charityName: results.charityName,
+            phoneNumber: results.phoneNumber,
+            email: results.email,
+            registrationNumber: results.registrationNumber,
+            organizationType: results.organizationType,
+          },
+        });
+      });
+    }
+  }
+);
 
 /* POST /donationBin/editCharity/:id */
 router.post(

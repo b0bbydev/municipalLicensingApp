@@ -9,7 +9,7 @@ const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /adultEntertainment/addBusiness page. */
+/* GET /adultEntertainment/addBusiness */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];

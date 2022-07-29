@@ -7,71 +7,90 @@ const LiquorBusinessAddress = require("../../models/liquor/liquorBusinessAddress
 // helper.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /liquor/editBusiness/:id */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // get dropdown values.
-  var streets = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 13, // streets
-    },
-  });
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("liquor/editBusiness", {
+        title: "BWG | Edit Business",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  LiquorBusiness.findOne({
-    where: {
-      liquorBusinessID: req.params.id,
-    },
-    include: [
-      {
-        model: LiquorBusinessAddress,
-      },
-    ],
-  }).then((results) => {
-    return res.render("liquor/editBusiness", {
-      title: "BWG | Edit Business",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      // populate input fields with existing values.
-      formData: {
-        businessName: results.businessName,
-        businessPhone: results.businessPhone,
-        streetNumber: results.liquorBusinessAddresses[0].streetNumber,
-        streetName: results.liquorBusinessAddresses[0].streetName,
-        town: results.liquorBusinessAddresses[0].town,
-        postalCode: results.liquorBusinessAddresses[0].postalCode,
-        contactName: results.contactName,
-        contactPhone: results.contactPhone,
-        dateStarted: results.dateStarted,
-        applicationType: results.applicationType,
-        feeReceived: results.feeReceived,
-        municipalInformationSigned: results.municipalInformationSigned,
-        municipalInformationSentToAGCO: results.municipalInformationSentToAGCO,
-        fireApprovalReceived: results.fireApprovalReceived,
-        fireSentToAGCO: results.fireSentToAGCO,
-        planningApprovalReceived: results.planningApprovalReceived,
-        planningSentToAGCO: results.planningSentToAGCO,
-        smdhuApprovalReceived: results.smdhuApprovalReceived,
-        smdhuSentToAGCO: results.smdhuSentToAGCO,
-        buildingApprovalReceived: results.buildingApprovalReceived,
-        buildingSentToAGCO: results.buildingSentToAGCO,
-        licenseApproved: results.licenseApproved,
-        notes: results.notes,
-      },
-    });
-  });
-});
+      // get dropdown values.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
+      LiquorBusiness.findOne({
+        where: {
+          liquorBusinessID: req.params.id,
+        },
+        include: [
+          {
+            model: LiquorBusinessAddress,
+          },
+        ],
+      }).then((results) => {
+        return res.render("liquor/editBusiness", {
+          title: "BWG | Edit Business",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          streets: streets,
+          // populate input fields with existing values.
+          formData: {
+            businessName: results.businessName,
+            businessPhone: results.businessPhone,
+            streetNumber: results.liquorBusinessAddresses[0].streetNumber,
+            streetName: results.liquorBusinessAddresses[0].streetName,
+            town: results.liquorBusinessAddresses[0].town,
+            postalCode: results.liquorBusinessAddresses[0].postalCode,
+            contactName: results.contactName,
+            contactPhone: results.contactPhone,
+            dateStarted: results.dateStarted,
+            applicationType: results.applicationType,
+            feeReceived: results.feeReceived,
+            municipalInformationSigned: results.municipalInformationSigned,
+            municipalInformationSentToAGCO:
+              results.municipalInformationSentToAGCO,
+            fireApprovalReceived: results.fireApprovalReceived,
+            fireSentToAGCO: results.fireSentToAGCO,
+            planningApprovalReceived: results.planningApprovalReceived,
+            planningSentToAGCO: results.planningSentToAGCO,
+            smdhuApprovalReceived: results.smdhuApprovalReceived,
+            smdhuSentToAGCO: results.smdhuSentToAGCO,
+            buildingApprovalReceived: results.buildingApprovalReceived,
+            buildingSentToAGCO: results.buildingSentToAGCO,
+            licenseApproved: results.licenseApproved,
+            notes: results.notes,
+          },
+        });
+      });
+    }
+  }
+);
 
 /* POST /liquor/editBusiness/:id */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("businessName")
     .if(body("businessName").notEmpty())
     .matches(/^[ a-zA-Z0-9\'"/,-]*$/)

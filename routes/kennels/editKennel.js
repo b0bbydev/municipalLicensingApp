@@ -7,62 +7,80 @@ const KennelAddress = require("../../models/kennel/kennelAddress");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /kennel/editKennel page. */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // get dropdown values.
-  var streets = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 13, // streets
-    },
-  });
+    // if errors is NOT empty (if there are errors...),
+    if (!errors.isEmpty()) {
+      return res.render("kennels/editKennel", {
+        title: "BWG | Edit A Kennel",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  Kennel.findOne({
-    where: {
-      kennelID: req.params.id,
-    },
-    include: [
-      {
-        model: KennelAddress,
-      },
-    ],
-  }).then((results) => {
-    return res.render("kennels/editKennel", {
-      title: "BWG | Edit A Kennel",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      // populate input fields with existing values.
-      formData: {
-        kennelName: results.kennelName,
-        phoneNumber: results.phoneNumber,
-        email: results.email,
-        issueDate: results.issueDate,
-        expiryDate: results.expiryDate,
-        policeCheck: results.policeCheck,
-        photoID: results.photoID,
-        acoInspection: results.acoInspection,
-        zoningClearance: results.zoningClearance,
-        notes: results.notes,
-        streetNumber: results.kennelAddresses[0].streetNumber,
-        streetName: results.kennelAddresses[0].streetName,
-        town: results.kennelAddresses[0].town,
-        postalCode: results.kennelAddresses[0].postalCode,
-      },
-    });
-  });
-});
+      // get dropdown values.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
+      Kennel.findOne({
+        where: {
+          kennelID: req.params.id,
+        },
+        include: [
+          {
+            model: KennelAddress,
+          },
+        ],
+      }).then((results) => {
+        return res.render("kennels/editKennel", {
+          title: "BWG | Edit A Kennel",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          streets: streets,
+          // populate input fields with existing values.
+          formData: {
+            kennelName: results.kennelName,
+            phoneNumber: results.phoneNumber,
+            email: results.email,
+            issueDate: results.issueDate,
+            expiryDate: results.expiryDate,
+            policeCheck: results.policeCheck,
+            photoID: results.photoID,
+            acoInspection: results.acoInspection,
+            zoningClearance: results.zoningClearance,
+            notes: results.notes,
+            streetNumber: results.kennelAddresses[0].streetNumber,
+            streetName: results.kennelAddresses[0].streetName,
+            town: results.kennelAddresses[0].town,
+            postalCode: results.kennelAddresses[0].postalCode,
+          },
+        });
+      });
+    }
+  }
+);
 
 /* POST /kennel/editKennel */
 router.post(
   "/:id",
+  param("id").matches(/^\d+$/).trim(),
   body("kennelName")
     .if(body("kennelName").notEmpty())
     .matches(/^[ a-zA-Z0-9\'-]*$/)

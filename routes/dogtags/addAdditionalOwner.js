@@ -5,7 +5,7 @@ const AdditionalOwner = require("../../models/dogtags/additionalOwner");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET addAdditionalOwner page. */
+/* GET /addAdditionalOwner */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -20,7 +20,7 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-/* POST addAdditionalOwner */
+/* POST /addAdditionalOwner */
 router.post(
   "/",
   body("firstName")
