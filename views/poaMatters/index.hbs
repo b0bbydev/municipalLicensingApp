@@ -90,8 +90,8 @@
         <td>{{this.poaType}}</td>
         <td>{{this.offence}}</td>
         {{#each poaMatterLocations}}
-          <td>{{this.streetName}}
-            {{this.streetNumber}},
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
             {{this.town}}
             {{this.postalCode}}</td>
         {{/each}}
@@ -105,8 +105,55 @@
             href="/poaMatters/editPoaMatter/{{this.poaMatterID}}"
           >Edit</a>
           |
-          <a class="btn btn-sm btn-secondary" href="#">View Trial Dates</a></td>
+          <a
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#poaMatterModal-{{this.poaMatterID}}"
+          >View Trial Dates</a></td>
       </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="poaMatterModal-{{this.poaMatterID}}"
+        tabindex="-1"
+        aria-labelledby="POA Matter Modal"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Info Number:
+                {{this.infoNumber}}</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              {{#each poaMatterTrials}}
+                <div class="row">
+                  <div class="col">
+                    <strong>Trial Date {{incremented @index}}:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.trialDate}}</p>
+                  </div>
+                </div>
+              {{/each}}
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Close</button>
+              <a class="btn btn-primary" href="#">Add Additional Trial Dates</a>
+            </div>
+          </div>
+        </div>
+      </div>
     {{/each}}
   </tbody>
 </table>

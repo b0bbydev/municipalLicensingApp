@@ -4,6 +4,7 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const POAMatter = require("../../models/poaMatters/poaMatter");
 const POAMatterLocation = require("../../models/poaMatters/poaMatterLocation");
+const POAMatterTrial = require("../../models/poaMatters/poaMatterTrial");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
@@ -179,6 +180,25 @@ router.post(
           include: [POAMatterLocation],
         }
       )
+        // results because we need to get the poaMatter ID to relate the rows.
+        .then((results) => {
+          // create array for bulkCreate.
+          let trialDates = [
+            {
+              trialDate: req.body.trialDateOne,
+              poaMatterID: results.poaMatterID,
+            },
+            {
+              trialDate: req.body.trialDateTwo,
+              poaMatterID: results.poaMatterID,
+            },
+            {
+              trialDate: req.body.trialDateThree,
+              poaMatterID: results.poaMatterID,
+            },
+          ];
+          POAMatterTrial.bulkCreate(trialDates);
+        })
         .then(() => {
           return res.redirect("/poaMatters");
         })

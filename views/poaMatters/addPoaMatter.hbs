@@ -21,7 +21,6 @@
           pattern="[^()/><\][\\\x22,;|]+"
           title="No special characters!"
           value="{{formData.infoNumber}}"
-          required
         />
       </div>
       <!-- Date Of Offence -->
@@ -161,6 +160,47 @@
       </div>
     </div>
     <div class="row">
+      <!-- Trial Date 1 -->
+      <div class="col-sm-4">
+        <label for="Trial Date 1" class="form-label">Trial Date 1</label>
+        <input
+          type="date"
+          placeholder="Trial Date 1"
+          class="form-control"
+          name="trialDateOne"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.trialDateOne}}"
+        />
+      </div>
+      <!-- Trial Date 2 -->
+      <div class="col-sm-4">
+        <label for="Trial Date 2" class="form-label">Trial Date 2</label>
+        <input
+          type="date"
+          placeholder="Trial Date 2"
+          class="form-control"
+          name="trialDateTwo"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.trialDateTwo}}"
+        />
+      </div>
+      <!-- Trial Date 3 -->
+      <div class="col-sm-4">
+        <label for="Trial Date 3" class="form-label">Trial Date 3</label>
+        <input
+          type="date"
+          placeholder="Trial Date 3"
+          class="form-control"
+          name="trialDateThree"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.trialDateThree}}"
+        />
+      </div>
+    </div>
+    <div class="row">
       <!-- Verdict -->
       <div class="col-sm-6">
         <label for="Verdict" class="form-label">Verdict</label>
@@ -196,7 +236,6 @@
           placeholder="Street Number"
           name="streetNumber"
           value="{{formData.streetNumber}}"
-          required
         />
       </div>
       <!-- Street Name -->
@@ -209,7 +248,7 @@
           name="streetName"
           list="streets"
           placeholder="Street Name..."
-          required
+          value="{{formData.streetName}}"
         />
         <datalist id="streets">
           {{#each streets}}

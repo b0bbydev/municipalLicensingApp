@@ -4,6 +4,7 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const POAMatter = require("../../models/poaMatters/poaMatter");
 const POAMatterLocation = require("../../models/poaMatters/poaMatterLocation");
+const POAMatterTrial = require("../../models/poaMatters/poaMatterTrial");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
@@ -28,13 +29,44 @@ router.get("/:id", async (req, res, next) => {
     },
   });
 
-  return res.render("poaMatters/addPoaMatter", {
-    title: "BWG | Add POA Matter",
-    errorMessages: messages,
-    email: req.session.email,
-    auth: req.session.auth, // authorization.
-    streets: streets,
-    officerNames: officerNames,
+  POAMatter.findOne({
+    where: {
+      poaMatterID: req.params.id,
+    },
+    include: [
+      {
+        model: POAMatterLocation,
+      },
+    ],
+  }).then((results) => {
+    return res.render("poaMatters/editPoaMatter", {
+      title: "BWG | Edit POA Matter",
+      errorMessages: messages,
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+      streets: streets,
+      officerNames: officerNames,
+      // populate input fields with existing values.
+      formData: {
+        infoNumber: results.infoNumber,
+        dateOfOffence: results.dateOfOffence,
+        dateClosed: results.dateClosed,
+        poaType: results.poaType,
+        officerName: results.officerName,
+        defendantName: results.defendantName,
+        offence: results.offence,
+        comment: results.comment,
+        prosecutor: results.prosecutor,
+        verdict: results.verdict,
+        setFine: results.setFine,
+        fineAssessed: results.fineAssessed,
+        amountPaid: results.amountPaid,
+        streetNumber: results.poaMatterLocations[0].streetNumber,
+        streetName: results.poaMatterLocations[0].streetName,
+        town: results.poaMatterLocations[0].town,
+        postalCode: results.poaMatterLocations[0].postalCode,
+      },
+    });
   });
 });
 
@@ -151,7 +183,7 @@ router.post(
         },
       });
     } else {
-      POAMatter.create(
+      POAMatter.update(
         {
           infoNumber: req.body.infoNumber,
           dateOfOffence: funcHelpers.fixEmptyValue(req.body.dateOfOffence),
@@ -166,26 +198,53 @@ router.post(
           setFine: funcHelpers.fixEmptyValue(req.body.setFine),
           fineAssessed: funcHelpers.fixEmptyValue(req.body.fineAssessed),
           amountPaid: funcHelpers.fixEmptyValue(req.body.amountPaid),
-          poaMatterLocations: [
+        },
+        {
+          where: {
+            poaMatterID: req.params.id,
+          },
+        }
+      )
+        .then(() => {
+          POAMatterLocation.update(
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
             },
-          ],
-        },
-        {
-          include: [POAMatterLocation],
-        }
-      )
+            {
+              where: {
+                poaMatterID: req.params.id,
+              },
+            }
+          );
+        })
+        .then(() => {
+          // create array for bulkCreate.
+          let trialDates = [
+            {
+              trialDate: req.body.trialDateOne,
+              poaMatterID: req.params.id,
+            },
+            {
+              trialDate: req.body.trialDateTwo,
+              poaMatterID: req.params.id,
+            },
+            {
+              trialDate: req.body.trialDateThree,
+              poaMatterID: req.params.id,
+            },
+          ];
+          POAMatterTrial.bulkCreate(trialDates);
+        })
         .then(() => {
           return res.redirect("/poaMatters");
         })
         .catch((err) => {
           return res.render("poaMatters/editPoaMatter", {
             title: "BWG | Edit POA Matter",
-            message: "Page Error!",
+            message: "Page Error!" + err,
           });
         });
     }

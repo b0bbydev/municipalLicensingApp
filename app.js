@@ -262,6 +262,11 @@ hbs.registerHelper("includes", function (array, value, options) {
   return options.inverse(this);
 });
 
+hbs.registerHelper("incremented", function (index) {
+  index++;
+  return index;
+});
+
 app.use("/iisreset", iisReset);
 
 // use routes here.

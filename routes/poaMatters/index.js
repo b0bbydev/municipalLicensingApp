@@ -4,6 +4,7 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const POAMatter = require("../../models/poaMatters/poaMatter");
 const POAMatterLocation = require("../../models/poaMatters/poaMatterLocation");
+const POAMatterTrial = require("../../models/poaMatters/poaMatterTrial");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -51,6 +52,9 @@ router.get(
         include: [
           {
             model: POAMatterLocation,
+          },
+          {
+            model: POAMatterTrial,
           },
         ],
       }).then((results) => {
