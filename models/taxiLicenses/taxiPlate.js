@@ -27,8 +27,28 @@ const TaxiPlate = sequelize.define("taxiPlate", {
     allowNull: true,
   },
 
-  cabCompany: {
-    type: Sequelize.STRING(50),
+  email: {
+    type: Sequelize.STRING(15),
+    allowNull: true,
+  },
+
+  townPlateNumber: {
+    type: Sequelize.INTEGER,
+    allowNull: true,
+  },
+
+  vehicleYearMakeModel: {
+    type: Sequelize.STRING(35),
+    allowNull: true,
+  },
+
+  provincialPlate: {
+    type: Sequelize.STRING(20),
+    allowNull: true,
+  },
+
+  vin: {
+    type: Sequelize.STRING(40),
     allowNull: true,
   },
 

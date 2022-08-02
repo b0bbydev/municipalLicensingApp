@@ -48,6 +48,7 @@
 </form>
 <div class="row">
   <div class="col mb-1">
+    <h4 class="mb-0 mt-1">Brokers</h4>
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
@@ -69,29 +70,50 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>TH</th>
+      <th>Company Name</th>
+      <th>Owner Name</th>
+      <th>Phone Number</th>
+      <th>Address</th>
+      <th>License Number</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
       <tr>
-        <td>{{this.infoNumber}}</td>
+        <td><a
+            id="ownerLink"
+            href="/taxiLicenses/broker/{{this.taxiBrokerID}}"
+          >{{this.companyName}}</a></td>
+        <td>{{this.ownerName}}</td>
+        <td>{{this.phoneNumber}}</td>
+        {{#each taxiBrokerAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td>{{this.licenseNumber}}</td>
         <td class="text-nowrap"><a
             class="btn btn-sm btn-secondary"
-            href="/taxiLicenses/editBroker/{{this.ID}}"
+            href="#"
+          >Renew</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
+            href="/taxiLicenses/editBroker/{{this.taxiBrokerID}}"
           >Edit</a>
           |
           <a
             class="btn btn-sm btn-secondary"
             data-bs-toggle="modal"
-            data-bs-target="#taxiLicenseModal-{{this.ID}}"
+            data-bs-target="#taxiLicenseDocumentationModal-{{this.taxiBrokerID}}"
           >Documentation</a></td>
       </tr>
       <!-- Modal -->
       <div
         class="modal fade"
-        id="taxiLicenseModal-{{this.poaMatterID}}"
+        id="taxiLicenseDocumentationModal-{{this.taxiBrokerID}}"
         tabindex="-1"
         aria-labelledby="Taxi License Modal"
         aria-hidden="true"
@@ -99,7 +121,7 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Title Here: </h5>
+              <h5 class="modal-title">Documentation</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -108,16 +130,54 @@
               ></button>
             </div>
             <div class="modal-body">
-              {{#each data}}
-                <div class="row">
-                  <div class="col">
-                    <strong>Asdf: </strong>
-                  </div>
-                  <div class="col float-end">
-                    <p>asdf</p>
-                  </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Police VSC: </strong>
                 </div>
-              {{/each}}
+                <div class="col float-end">
+                  <p>{{this.policeVSC}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Citizenship: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.citizenship}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Photo ID: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.photoID}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Drivers Abstract: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.driversAbstract}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Certificate Of Insurance: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.certificateOfInsurance}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Zoning Approval: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.zoningApproval}}</p>
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -125,7 +185,6 @@
                 class="btn btn-secondary"
                 data-bs-dismiss="modal"
               >Close</button>
-              <a class="btn btn-primary" href="#">Submit</a>
             </div>
           </div>
         </div>

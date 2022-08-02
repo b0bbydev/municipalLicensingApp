@@ -1,0 +1,74 @@
+<h2 class="text-center mt-1">Taxi Licenses</h2>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<!-- Drivers Table -->
+<div class="row">
+  <h4>Taxi Drivers</h4>
+  <div class="col mb-1">
+    {{#if platesCount}}
+      <strong class="float-start mt-2">{{platesCount}}</strong>
+    {{/if}}
+    <a
+      href="/taxiLicenses/addDriver"
+      class="btn btn-sm btn-primary float-end"
+    >Add A Driver</a>
+  </div>
+</div>
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>TH</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each plates}}
+      <tr>
+        <td></td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/taxiLicenses/editApplicant/{{this.hawkerPeddlerApplicantID}}"
+          >Edit</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<!-- Plates Table -->
+<div class="row">
+  <h4>Plates</h4>
+  <div class="col mb-1">
+    {{#if platesCount}}
+      <strong class="float-start mt-2">{{platesCount}}</strong>
+    {{/if}}
+    <a
+      href="/taxiLicenses/addPlate"
+      class="btn btn-sm btn-primary float-end"
+    >Add A Plate</a>
+  </div>
+</div>
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>TH</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each plates}}
+      <tr>
+        <td></td>
+        <td><a
+            class="btn btn-sm btn-secondary"
+            href="/hawkerPeddler/editApplicant/{{this.hawkerPeddlerApplicantID}}"
+          >Edit</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
