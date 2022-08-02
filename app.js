@@ -32,9 +32,6 @@ var moment = require("moment");
 // authHelper middleware.
 const { isAdmin, isDogLicense, isPolicy } = require("./config/authHelpers");
 
-var x = require("./models/poaMatters/poaMatterTrial");
-x.sync();
-
 var iisReset = require("./routes/iisreset/index");
 
 /* admin related routes */
@@ -161,6 +158,9 @@ var addAdditionalTrialDates = require("./routes/poaMatters/addTrialDates");
 
 /* Taxi related routes */
 var taxiLicenseRoute = require("./routes/taxiLicenses/index");
+
+var addTaxiBrokerRoute = require("./routes/taxiLicenses/addBroker");
+var editTaxiBrokerRoute = require("./routes/taxiLicenses/editBroker");
 
 var app = express();
 
@@ -426,6 +426,9 @@ app.use("/poaMatters/addTrialDates", addAdditionalTrialDates);
 
 /* Taxi related routes */
 app.use("/taxiLicenses", taxiLicenseRoute);
+
+app.use("/taxiLicenses/addBroker", addTaxiBrokerRoute);
+app.use("/taxiLicenses/editBroker", editTaxiBrokerRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
