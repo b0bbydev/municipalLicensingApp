@@ -25,27 +25,27 @@ router.post(
   "/",
   body("firstName")
     .if(body("firstName").notEmpty())
-    .matches(/^[a-zA-Z\/\-',. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid First Name Entry!")
     .trim(),
   body("lastName")
     .if(body("lastName").notEmpty())
-    .matches(/^[a-zA-Z\/\-',. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Last Name Entry!")
     .trim(),
   body("homePhone")
     .if(body("homePhone").notEmpty())
-    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Home Phone Number Entry!")
     .trim(),
   body("cellPhone")
     .if(body("cellPhone").notEmpty())
-    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Cell Phone Number Entry!")
     .trim(),
   body("workPhone")
     .if(body("workPhone").notEmpty())
-    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Work Phone Number Entry!")
     .trim(),
   body("email")

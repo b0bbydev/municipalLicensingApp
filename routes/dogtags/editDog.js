@@ -96,52 +96,52 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
-    .matches(/^[0-9-]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Tag Number Entry!")
     .trim(),
   body("dogName")
     .if(body("dogName").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Dog Name Entry!")
     .trim(),
   body("breed")
     .if(body("breed").notEmpty())
-    .matches(/^[a-zA-Z\/\-,. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Breed Entry!")
     .trim(),
   body("colour")
     .if(body("colour").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Colour Entry!")
     .trim(),
   body("gender")
     .if(body("gender").notEmpty())
-    .isAlpha()
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Gender Entry!")
     .trim(),
   body("spade")
     .if(body("spade").notEmpty())
-    .isAlpha()
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Spade/Neutered Entry!")
     .trim(),
   body("designation")
     .if(body("designation").notEmpty())
-    .isAlpha()
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Designation Entry!")
     .trim(),
   body("rabiesTagNumber")
     .if(body("rabiesTagNumber").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Rabies Tag Number Entry!")
     .trim(),
   body("vetOffice")
     .if(body("vetOffice").notEmpty())
-    .matches(/^[a-zA-Z0-9, ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Vet Office Entry!")
     .trim(),
   body("vendor")
     .if(body("vendor").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Vendor Entry!")
     .trim(),
   body("notes")

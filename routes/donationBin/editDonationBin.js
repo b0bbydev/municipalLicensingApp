@@ -73,14 +73,34 @@ router.get(
 router.post(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
+  body("streetNumber")
+    .if(body("streetNumber").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Street Number Entry!")
+    .trim(),
+  body("streetName")
+    .if(body("streetName").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Street Name Entry!")
+    .trim(),
+  body("town")
+    .if(body("town").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Town Entry!")
+    .trim(),
+  body("postalCode")
+    .if(body("postalCode").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Postal Code Entry!")
+    .trim(),
   body("colour")
     .if(body("colour").notEmpty())
-    .matches(/^[a-zA-Z\/\-,. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Colour Entry!")
     .trim(),
   body("material")
     .if(body("material").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,.' ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Material Entry!")
     .trim(),
   body("pickupSchedule")
@@ -137,9 +157,24 @@ router.post(
           },
         }
       )
-        .then(
-          res.redirect("/donationBin/bins/" + req.session.donationBinOperatorID)
-        )
+        .then(() => {
+          DonationBinAddress.update(
+            {
+              streetNumber: req.body.streetNumber,
+              streetName: req.body.streetName,
+              town: req.body.town,
+              postalCode: req.body.postalCode,
+            },
+            {
+              where: {
+                donationBinID: req.params.id,
+              },
+            }
+          );
+        })
+        .then(() => {
+          return res.redirect("/donationBin");
+        })
         .catch((err) => {
           return res.render("donationBin/editDonationBin", {
             title: "BWG | Edit Donation Bin",

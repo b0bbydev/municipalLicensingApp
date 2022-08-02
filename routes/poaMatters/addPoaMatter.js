@@ -52,22 +52,22 @@ router.post(
   "/",
   body("infoNumber")
     .if(body("infoNumber").notEmpty())
-    .matches(/^[ a-zA-Z0-9\'-]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Info Number Entry!")
     .trim(),
   body("officerName")
     .if(body("officerName").notEmpty())
-    .matches(/^[ a-zA-Z0-9\'-]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Officer Name Entry!")
     .trim(),
   body("defendantName")
     .if(body("defendantName").notEmpty())
-    .matches(/^[ a-zA-Z0-9\'-]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Defendant Name Entry!")
     .trim(),
   body("poaType")
     .if(body("poaType").notEmpty())
-    .matches(/^[ a-zA-Z0-9\'-]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid POA Type Entry!")
     .trim(),
   body("offence")
@@ -77,12 +77,12 @@ router.post(
     .trim(),
   body("prosecutor")
     .if(body("prosecutor").notEmpty())
-    .matches(/^[ a-zA-Z0-9\'-]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Prosecutor Entry!")
     .trim(),
   body("verdict")
     .if(body("verdict").notEmpty())
-    .matches(/^[ a-zA-Z0-9\'-]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Verdict Entry!")
     .trim(),
   body("comment")
@@ -92,22 +92,22 @@ router.post(
     .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
-    .matches(/^[0-9. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Street Number Entry!")
     .trim(),
   body("streetName")
     .if(body("streetName").notEmpty())
-    .matches(/^[a-zA-Z0-9. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[a-zA-Z, ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[a-zA-Z0-9- ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   async (req, res, next) => {

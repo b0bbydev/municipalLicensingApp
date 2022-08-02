@@ -58,7 +58,7 @@ router.post(
           // render login page with error message.
           return res.render("login", {
             title: "BWG",
-            message: "Credential Error!",
+            message: "Login Error!",
             layout: "hideLayout.hbs",
           });
         }
@@ -70,7 +70,7 @@ router.post(
           // render login page with error message.
           return res.render("login", {
             title: "BWG",
-            message: "Credential Error!",
+            message: "Login Error!",
             layout: "hideLayout.hbs",
           });
         }

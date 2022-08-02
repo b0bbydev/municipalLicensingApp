@@ -37,32 +37,32 @@ router.post(
   "/",
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
-    .matches(/^[0-9. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Street Number Entry!")
     .trim(),
   body("streetName")
     .if(body("streetName").notEmpty())
-    .matches(/^[a-zA-Z0-9. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[a-zA-Z, ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[a-zA-Z0-9- ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   body("colour")
     .if(body("colour").notEmpty())
-    .matches(/^[a-zA-Z\/\-,. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Colour Entry!")
     .trim(),
   body("material")
     .if(body("material").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,.' ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Material Entry!")
     .trim(),
   body("pickupSchedule")

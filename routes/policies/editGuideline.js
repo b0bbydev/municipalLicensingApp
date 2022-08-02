@@ -72,22 +72,22 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("guidelineName")
     .if(body("guidelineName").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Guideline Name Entry!")
     .trim(),
   body("status")
     .if(body("status").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
   body("category")
     .if(body("category").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Category Entry!")
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-, ]*$/)
+    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {

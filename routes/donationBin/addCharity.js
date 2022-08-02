@@ -34,12 +34,12 @@ router.post(
   "/",
   body("charityName")
     .if(body("charityName").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,.' ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Charity Name Entry!")
     .trim(),
   body("phoneNumber")
     .if(body("phoneNumber").notEmpty())
-    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Phone Number Entry!")
     .trim(),
   body("email")
@@ -49,12 +49,12 @@ router.post(
     .trim(),
   body("registrationNumber")
     .if(body("registrationNumber").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,.' ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Registration Number Entry!")
     .trim(),
   body("organizationType")
     .if(body("organizationType").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,.' ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Organization Type Entry!")
     .trim(),
   async (req, res, next) => {

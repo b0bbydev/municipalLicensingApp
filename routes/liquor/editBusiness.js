@@ -93,42 +93,42 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("businessName")
     .if(body("businessName").notEmpty())
-    .matches(/^[ a-zA-Z0-9\'"/,-]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Business Name Entry!")
     .trim(),
   body("businessPhone")
     .if(body("businessPhone").notEmpty())
-    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Business Phone Number Entry!")
     .trim(),
   body("contactName")
     .if(body("contactName").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-',. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Contact Name Entry!")
     .trim(),
   body("contactPhone")
     .if(body("contactPhone").notEmpty())
-    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Contact Phone Number Entry!")
     .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
-    .matches(/^[0-9. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Street Number Entry!")
     .trim(),
   body("streetName")
     .if(body("streetName").notEmpty())
-    .matches(/^[a-zA-Z0-9. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[a-zA-Z, ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[a-zA-Z0-9- ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   async (req, res, next) => {

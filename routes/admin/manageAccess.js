@@ -11,36 +11,52 @@ const Op = Sequelize.Op;
 const { body, param, validationResult } = require("express-validator");
 
 /* GET /admin/manageAccess */
-router.get("/:id", async (req, res, next) => {
-  // check if there's an error message in the session.
-  let messages = req.session.messages || [];
-  // clear session messages.
-  req.session.messages = [];
+router.get(
+  "/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // user roles.
-  User.findAll({
-    include: [
-      {
-        model: Role,
-        attributes: ["id", "roleName"],
-        through: { where: { userId: req.params.id } },
-      },
-    ],
-    where: {
-      id: req.params.id,
-    },
-  }).then((results) => {
-    return res.render("admin/manageAccess", {
-      title: "BWG | Manage Access",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      data: results,
-      userId: req.params.id,
-      userName: results[0].firstName + " " + results[0].lastName,
-    });
-  });
-});
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("admin/index", {
+        title: "BWG | Admin Panel",
+        message: "Page Error!",
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session.
+      let messages = req.session.messages || [];
+      // clear session messages.
+      req.session.messages = [];
+
+      // user roles.
+      User.findAll({
+        include: [
+          {
+            model: Role,
+            attributes: ["id", "roleName"],
+            through: { where: { userId: req.params.id } },
+          },
+        ],
+        where: {
+          id: req.params.id,
+        },
+      }).then((results) => {
+        return res.render("admin/manageAccess", {
+          title: "BWG | Manage Access",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results,
+          userId: req.params.id,
+          userName: results[0].firstName + " " + results[0].lastName,
+        });
+      });
+    }
+  }
+);
 
 /* POST /admin/manageAccess */
 router.post("/:id", async (req, res, next) => {

@@ -56,12 +56,12 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("guidelineName")
     .if(body("guidelineName").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Guideline Name Entry!")
     .trim(),
   body("status")
     .if(body("status").notEmpty())
-    .matches(/^[a-zA-Z\/\- ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
   body("notes")
