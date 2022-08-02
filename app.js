@@ -165,6 +165,10 @@ var editTaxiBrokerRoute = require("./routes/taxiLicenses/editBroker");
 var taxiBrokerRoute = require("./routes/taxiLicenses/broker");
 
 var addTaxiDriverRoute = require("./routes/taxiLicenses/addDriver");
+var editTaxiDriverRoute = require("./routes/taxiLicenses/editDriver");
+
+var addTaxiPlateRoute = require("./routes/taxiLicenses/addPlate");
+var editTaxiPlateRoute = require("./routes/taxiLicenses/editPlate");
 
 var app = express();
 
@@ -437,6 +441,10 @@ app.use("/taxiLicenses/editBroker", editTaxiBrokerRoute);
 app.use("/taxiLicenses/broker", taxiBrokerRoute);
 
 app.use("/taxiLicenses/addDriver", addTaxiDriverRoute);
+app.use("/taxiLicenses/editDriver", editTaxiDriverRoute);
+
+app.use("/taxiLicenses/addPlate", addTaxiPlateRoute);
+app.use("/taxiLicenses/editPlate", editTaxiPlateRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {

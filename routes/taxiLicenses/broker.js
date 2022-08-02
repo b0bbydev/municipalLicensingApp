@@ -3,6 +3,8 @@ var router = express.Router();
 // models.
 const TaxiDriver = require("../../models/taxiLicenses/taxiDriver");
 const TaxiDriverAddress = require("../../models/taxiLicenses/taxiDriverAddress");
+const TaxiPlate = require("../../models/taxiLicenses/taxiPlate");
+const TaxiPlateOwnerAddress = require("../../models/taxiLicenses/taxiPlateOwnerAddress");
 
 /* GET /taxiLicenses/broker/:id */
 router.get("/:id", async (req, res, next) => {
@@ -27,6 +29,18 @@ router.get("/:id", async (req, res, next) => {
         taxiBrokerID: req.params.id,
       },
     }),
+    TaxiPlate.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      include: [
+        {
+          model: TaxiPlateOwnerAddress,
+        },
+      ],
+      where: {
+        taxiBrokerID: req.params.id,
+      },
+    }),
   ]).then((data) => {
     return res.render("taxiLicenses/broker", {
       title: "BWG | Taxi Licenses",
@@ -34,7 +48,9 @@ router.get("/:id", async (req, res, next) => {
       email: req.session.email,
       auth: req.session.auth, // authorization.
       taxiDrivers: data[0].rows,
+      taxiPlates: data[1].rows,
       taxiDriversCount: "Records returned: " + data[0].count,
+      taxiPlatesCount: "Records returned: " + data[1].count,
     });
   });
 });

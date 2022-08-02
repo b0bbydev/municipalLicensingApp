@@ -38,7 +38,7 @@ const TaxiPlate = sequelize.define("taxiPlate", {
   },
 
   vehicleYearMakeModel: {
-    type: Sequelize.STRING(35),
+    type: Sequelize.STRING(40),
     allowNull: true,
   },
 

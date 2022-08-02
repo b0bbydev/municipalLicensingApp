@@ -2,14 +2,14 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
-const TaxiDriver = require("../../models/taxiLicenses/taxiDriver");
-const TaxiDriverAddress = require("../../models/taxiLicenses/taxiDriverAddress");
+const TaxiPlate = require("../../models/taxiLicenses/taxiPlate");
+const TaxiPlateOwnerAddress = require("../../models/taxiLicenses/taxiPlateOwnerAddress");
 // helper.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /taxiLicenses/addDriver */
+/* GET /taxiLicenses/addPlate */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -23,59 +23,56 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  // get cab companies.
-  var cabCompanies = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 30, // cab companies
-    },
-  });
-
-  return res.render("taxiLicenses/addDriver", {
-    title: "BWG | Add Taxi Driver",
+  return res.render("taxiLicenses/addPlate", {
+    title: "BWG | Add Taxi Plate",
     errorMessages: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
     streets: streets,
-    cabCompanies: cabCompanies,
   });
 });
 
-/* POST /taxiLicenses/addDriver */
+/* POST /taxiLicenses/addPlate */
 router.post(
   "/",
   body("firstName")
     .if(body("firstName").notEmpty())
-    .matches(/^[a-zA-Z\/\-',. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid First Name Entry!")
     .trim(),
   body("lastName")
     .if(body("lastName").notEmpty())
-    .matches(/^[a-zA-Z\/\-',. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Last Name Entry!")
     .trim(),
   body("phoneNumber")
     .if(body("phoneNumber").notEmpty())
-    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Phone Number Entry!")
     .trim(),
-  body("streetName")
-    .if(body("streetName").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-'",. ]*$/)
-    .withMessage("Invalid Street Name Entry!")
+  body("email")
+    .if(body("email").notEmpty())
+    .isEmail()
+    .withMessage("Invalid Email Entry!")
     .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
-    .matches(/^[0-9. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Street Number Entry!")
+    .trim(),
+  body("streetName")
+    .if(body("streetName").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[a-zA-Z, ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[a-zA-Z0-9- ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   body("notes")
@@ -92,8 +89,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("taxiLicenses/addDriver", {
-        title: "BWG | Add Taxi Driver",
+      return res.render("taxiLicenses/addPlate", {
+        title: "BWG | Add Taxi Plate",
         errorMessages: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -103,13 +100,20 @@ router.post(
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
-          cabCompany: req.body.cabCompany,
+          email: req.body.email,
+          townPlateNumber: req.body.townPlateNumber,
+          vehicleYearMakeModel: req.body.vehicleYearMakeModel,
+          provincialPlate: req.body.provincialPlate,
+          vin: req.body.vin,
           issueDate: req.body.issueDate,
           expiryDate: req.body.expiryDate,
           policeVSC: req.body.policeVSC,
-          citizenship: req.body.citizenship,
-          photoID: req.body.photoID,
           driversAbstract: req.body.driversAbstract,
+          photoID: req.body.photoID,
+          safetyCertificate: req.body.safetyCertificate,
+          byLawInspection: req.body.byLawInspection,
+          insurance: req.body.insurance,
+          vehicleOwnership: req.body.vehicleOwnership,
           notes: req.body.notes,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
@@ -118,21 +122,28 @@ router.post(
         },
       });
     } else {
-      TaxiDriver.create(
+      TaxiPlate.create(
         {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
-          cabCompany: req.body.cabCompany,
+          email: req.body.email,
+          townPlateNumber: req.body.townPlateNumber,
+          vehicleYearMakeModel: req.body.vehicleYearMakeModel,
+          provincialPlate: req.body.provincialPlate,
+          vin: req.body.vin,
           issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
           expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           policeVSC: req.body.policeVSC,
-          citizenship: req.body.citizenship,
-          photoID: req.body.photoID,
           driversAbstract: req.body.driversAbstract,
+          photoID: req.body.photoID,
+          safetyCertificate: req.body.safetyCertificate,
+          byLawInspection: req.body.byLawInspection,
+          insurance: req.body.insurance,
+          vehicleOwnership: req.body.vehicleOwnership,
           notes: req.body.notes,
           taxiBrokerID: req.session.brokerID,
-          taxiDriverAddresses: [
+          taxiPlateOwnerAddresses: [
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
@@ -142,15 +153,15 @@ router.post(
           ],
         },
         {
-          include: [TaxiDriverAddress],
+          include: [TaxiPlateOwnerAddress],
         }
       )
         .then(() => {
           return res.redirect("/taxiLicenses/broker/" + req.session.brokerID);
         })
         .catch((err) => {
-          return res.render("taxiLicenses/addDriver", {
-            title: "BWG | Add Taxi Driver",
+          return res.render("taxiLicenses/addPlate", {
+            title: "BWG | Add Taxi Plate",
             message: "Page Error!",
           });
         });

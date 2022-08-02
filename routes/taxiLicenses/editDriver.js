@@ -9,8 +9,8 @@ const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /taxiLicenses/addDriver */
-router.get("/", async (req, res, next) => {
+/* GET /taxiLicenses/editDriver/:id */
+router.get("/:id", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -30,19 +30,48 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  return res.render("taxiLicenses/addDriver", {
-    title: "BWG | Add Taxi Driver",
-    errorMessages: messages,
-    email: req.session.email,
-    auth: req.session.auth, // authorization.
-    streets: streets,
-    cabCompanies: cabCompanies,
+  TaxiDriver.findOne({
+    where: {
+      taxiDriverID: req.params.id,
+    },
+    include: [
+      {
+        model: TaxiDriverAddress,
+      },
+    ],
+  }).then((results) => {
+    return res.render("taxiLicenses/editDriver", {
+      title: "BWG | Edit Taxi Driver",
+      errorMessages: messages,
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+      streets: streets,
+      cabCompanies: cabCompanies,
+      // populate input fields with existing values.
+      formData: {
+        firstName: results.firstName,
+        lastName: results.lastName,
+        phoneNumber: results.phoneNumber,
+        cabCompany: results.cabCompany,
+        issueDate: results.issueDate,
+        expiryDate: results.expiryDate,
+        policeVSC: results.policeVSC,
+        citizenship: results.citizenship,
+        photoID: results.photoID,
+        driversAbstract: results.driversAbstract,
+        notes: results.notes,
+        streetNumber: results.taxiDriverAddresses[0].streetNumber,
+        streetName: results.taxiDriverAddresses[0].streetName,
+        town: results.taxiDriverAddresses[0].town,
+        postalCode: results.taxiDriverAddresses[0].postalCode,
+      },
+    });
   });
 });
 
-/* POST /taxiLicenses/addDriver */
+/* POST /taxiLicenses/editDriver/:id */
 router.post(
-  "/",
+  "/:id",
   body("firstName")
     .if(body("firstName").notEmpty())
     .matches(/^[a-zA-Z\/\-',. ]*$/)
@@ -92,8 +121,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("taxiLicenses/addDriver", {
-        title: "BWG | Add Taxi Driver",
+      return res.render("taxiLicenses/editDriver", {
+        title: "BWG | Edit Taxi Driver",
         errorMessages: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -118,7 +147,7 @@ router.post(
         },
       });
     } else {
-      TaxiDriver.create(
+      TaxiDriver.update(
         {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
@@ -131,26 +160,34 @@ router.post(
           photoID: req.body.photoID,
           driversAbstract: req.body.driversAbstract,
           notes: req.body.notes,
-          taxiBrokerID: req.session.brokerID,
-          taxiDriverAddresses: [
+        },
+        {
+          where: {
+            taxiDriverID: req.params.id,
+          },
+        }
+      )
+        .then(() => {
+          TaxiDriverAddress.update(
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
             },
-          ],
-        },
-        {
-          include: [TaxiDriverAddress],
-        }
-      )
+            {
+              where: {
+                taxiDriverID: req.params.id,
+              },
+            }
+          );
+        })
         .then(() => {
           return res.redirect("/taxiLicenses/broker/" + req.session.brokerID);
         })
         .catch((err) => {
-          return res.render("taxiLicenses/addDriver", {
-            title: "BWG | Add Taxi Driver",
+          return res.render("taxiLicenses/editDriver", {
+            title: "BWG | Edit Taxi Driver",
             message: "Page Error!",
           });
         });

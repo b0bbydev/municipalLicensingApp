@@ -24,6 +24,12 @@
   <thead>
     <tr>
       <th>Driver Name</th>
+      <th>Phone Number</th>
+      <th>Cab Company</th>
+      <th>Address</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
+      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -31,21 +37,103 @@
     {{#each taxiDrivers}}
       <tr>
         <td>{{this.firstName}} {{this.lastName}}</td>
-        <td><a
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.cabCompany}}</td>
+        {{#each taxiDriverAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td>{{this.notes}}</td>
+        <td><a class="btn btn-sm btn-secondary" href="#">Renew</a>
+          |
+          <a
             class="btn btn-sm btn-secondary"
-            href="/taxiLicenses/editApplicant/{{this.hawkerPeddlerApplicantID}}"
-          >Edit</a></td>
+            href="/taxiLicenses/editDriver/{{this.taxiDriverID}}"
+          >Edit</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#taxiDriverDocumentationModal-{{this.taxiDriverID}}"
+          >Documentation</a></td>
       </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="taxiDriverDocumentationModal-{{this.taxiDriverID}}"
+        tabindex="-1"
+        aria-labelledby="Taxi Driver Modal"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Documentation</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col">
+                  <strong>Police VSC: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.policeVSC}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Citizenship: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.citizenship}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Photo ID: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.photoID}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Drivers Abstract: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.driversAbstract}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     {{/each}}
   </tbody>
 </table>
 
-<!-- Plates Table -->
+<!-- Taxi Plates Table -->
 <div class="row">
   <h4>Plates</h4>
   <div class="col mb-1">
-    {{#if platesCount}}
-      <strong class="float-start mt-2">{{platesCount}}</strong>
+    {{#if taxiPlatesCount}}
+      <strong class="float-start mt-2">{{taxiPlatesCount}}</strong>
     {{/if}}
     <a
       href="/taxiLicenses/addPlate"
@@ -56,19 +144,139 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>TH</th>
+      <th>Town Plate Number</th>
+      <th>Vehicle Owner Name</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Address</th>
+      <th>Year, Make & Model</th>
+      <th>Provincial Plate</th>
+      <th>VIN</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
+      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    {{#each plates}}
+    {{#each taxiPlates}}
       <tr>
-        <td></td>
-        <td><a
+        <td>{{this.townPlateNumber}}</td>
+        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        {{#each taxiPlateOwnerAddresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td>{{this.vehicleYearMakeModel}}</td>
+        <td>{{this.provincialPlate}}</td>
+        <td>{{this.vin}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td>{{this.notes}}</td>
+        <td><a class="btn btn-sm btn-secondary" href="#">Renew</a>
+          |
+          <a
             class="btn btn-sm btn-secondary"
-            href="/hawkerPeddler/editApplicant/{{this.hawkerPeddlerApplicantID}}"
-          >Edit</a></td>
+            href="/taxiLicenses/editPlate/{{this.taxiPlateID}}"
+          >Edit</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#taxiPlateDocumentationModal-{{this.taxiPlateID}}"
+          >Documentation</a></td>
       </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="taxiPlateDocumentationModal-{{this.taxiPlateID}}"
+        tabindex="-1"
+        aria-labelledby="Taxi Plate Modal"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Documentation</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col">
+                  <strong>Police VSC: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.policeVSC}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Drivers Abstract: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.driversAbstract}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Photo ID: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.photoID}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Safety Certificate: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.safetyCertificate}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>By-Law Inspection: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.byLawInspection}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Insurance: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.insurance}}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <strong>Vehicle Ownership: </strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.vehicleOwnership}}</p>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
     {{/each}}
   </tbody>
 </table>
