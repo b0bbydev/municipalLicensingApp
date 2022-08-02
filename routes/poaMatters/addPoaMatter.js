@@ -23,9 +23,16 @@ router.get("/", async (req, res, next) => {
       dropdownFormID: 13, // streets
     },
   });
+  // get officer names.
   var officerNames = await Dropdown.findAll({
     where: {
       dropdownFormID: 27, // officer names
+    },
+  });
+  // get verdict options.
+  var verdictOptions = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 31,
     },
   });
 
@@ -36,6 +43,7 @@ router.get("/", async (req, res, next) => {
     auth: req.session.auth, // authorization.
     streets: streets,
     officerNames: officerNames,
+    verdictOptions: verdictOptions,
   });
 });
 

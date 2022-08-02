@@ -5,9 +5,6 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const POAMatter = require("../../models/poaMatters/poaMatter");
 const POAMatterLocation = require("../../models/poaMatters/poaMatterLocation");
 const POAMatterTrial = require("../../models/poaMatters/poaMatterTrial");
-// sequelize.
-const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
@@ -41,9 +38,16 @@ router.get(
           dropdownFormID: 13, // streets
         },
       });
+      // get officer names.
       var officerNames = await Dropdown.findAll({
         where: {
           dropdownFormID: 27, // officer names
+        },
+      });
+      // get verdict options.
+      var verdictOptions = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 31,
         },
       });
 
@@ -64,6 +68,7 @@ router.get(
           auth: req.session.auth, // authorization.
           streets: streets,
           officerNames: officerNames,
+          verdictOptions: verdictOptions,
           // populate input fields with existing values.
           formData: {
             infoNumber: results.infoNumber,

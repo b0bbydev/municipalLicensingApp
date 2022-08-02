@@ -81,6 +81,8 @@
       <th>Set Fine</th>
       <th>Fine Assessed</th>
       <th>Amount Paid</th>
+      <th>Verdict</th>
+      <th>Prosecutor</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -104,6 +106,8 @@
         <td>{{#if this.setFine}} ${{this.setFine}} {{/if}}</td>
         <td>{{#if this.fineAssessed}} ${{this.fineAssessed}} {{/if}}</td>
         <td>{{#if this.amountPaid}} ${{this.amountPaid}} {{/if}}</td>
+        <td>{{this.verdict}}</td>
+        <td>{{this.prosecutor}}</td>
         <td class="text-nowrap"><a
             class="btn btn-sm btn-secondary"
             href="/poaMatters/editPoaMatter/{{this.poaMatterID}}"
