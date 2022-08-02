@@ -32,6 +32,7 @@ router.get("/", async (req, res, next) => {
   });
 });
 
+/* POST /taxiLicenses/addBroker */
 router.post(
   "/",
   body("ownerName")

@@ -145,12 +145,12 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("dropdownValue")
     .notEmpty()
-    .matches(/^[a-zA-Z0-9\/\-,&'" ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,.&'" ]*$/)
     .withMessage("Invalid Dropdown Value Entry!")
     .trim(),
   body("dropdownTitle")
     .notEmpty()
-    .matches(/^[a-zA-Z0-9\/\-,&'" ]*$/)
+    .matches(/^[a-zA-Z0-9\/\-,.&'" ]*$/)
     .withMessage("Invalid Dropdown Title Entry!")
     .trim(),
   function (req, res, next) {

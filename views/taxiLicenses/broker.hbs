@@ -11,8 +11,8 @@
 <div class="row">
   <h4>Taxi Drivers</h4>
   <div class="col mb-1">
-    {{#if platesCount}}
-      <strong class="float-start mt-2">{{platesCount}}</strong>
+    {{#if taxiDriversCount}}
+      <strong class="float-start mt-2">{{taxiDriversCount}}</strong>
     {{/if}}
     <a
       href="/taxiLicenses/addDriver"
@@ -23,14 +23,14 @@
 <table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>TH</th>
+      <th>Driver Name</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody>
-    {{#each plates}}
+    {{#each taxiDrivers}}
       <tr>
-        <td></td>
+        <td>{{this.firstName}} {{this.lastName}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
             href="/taxiLicenses/editApplicant/{{this.hawkerPeddlerApplicantID}}"
