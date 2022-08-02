@@ -75,6 +75,8 @@
       <th>Phone Number</th>
       <th>Address</th>
       <th>License Number</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -94,9 +96,12 @@
             {{this.postalCode}}</td>
         {{/each}}
         <td>{{this.licenseNumber}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
         <td class="text-nowrap"><a
             class="btn btn-sm btn-secondary"
-            href="#"
+            data-bs-toggle="modal"
+            data-bs-target="#brokerRenewModal-{{this.taxiBrokerID}}"
           >Renew</a>
           |
           <a
@@ -110,7 +115,65 @@
             data-bs-target="#taxiLicenseDocumentationModal-{{this.taxiBrokerID}}"
           >Documentation</a></td>
       </tr>
-      <!-- Modal -->
+      <!-- Renew Modal -->
+      <div
+        class="modal fade"
+        id="brokerRenewModal-{{this.taxiBrokerID}}"
+        tabindex="-1"
+        aria-labelledby="Broker Renewal Modal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Renew Taxi Broker</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <label for="Broker ID" class="form-label">Broker ID</label>
+                    <input
+                      class="form-control"
+                      placeholder="Broker ID"
+                      value="{{this.taxiBrokerID}}"
+                      name="taxiBrokerID"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Company Name" class="form-label">Company Name</label>
+                    <input
+                      class="form-control"
+                      placeholder="Company Name"
+                      value="{{this.companyName}}"
+                      name="companyName"
+                      readonly
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit Renewal</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Doucmentation Modal -->
       <div
         class="modal fade"
         id="taxiLicenseDocumentationModal-{{this.taxiBrokerID}}"
