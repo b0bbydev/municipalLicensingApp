@@ -131,7 +131,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.render("refreshmentVehicles/editVehicleOwner", {
         title: "BWG | Edit Vehicle Owner",
-        errorMessages: errorArray[0].msg,
+        message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         dropdownValues: dropdownValues,

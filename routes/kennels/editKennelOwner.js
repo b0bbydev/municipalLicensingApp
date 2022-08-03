@@ -130,7 +130,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.render("kennels/editKennelOwner", {
         title: "BWG | Edit Kennel Owner",
-        errorMessages: errorArray[0].msg,
+        message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         dropdownValues: dropdownValues,

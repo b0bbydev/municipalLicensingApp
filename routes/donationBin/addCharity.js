@@ -75,7 +75,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.render("donationBin/addCharity", {
         title: "BWG | Add Donation Bin Charity",
-        errorMessages: errorArray[0].msg,
+        message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         organizationTypes: organizationTypes,

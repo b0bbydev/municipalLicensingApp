@@ -91,7 +91,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.render("kennels/addPropertyOwner", {
         title: "BWG | Add Property Owner",
-        errorMessages: errorArray[0].msg,
+        message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         streets: streets,
