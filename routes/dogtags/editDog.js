@@ -156,10 +156,17 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
-    // get dropdown values.
-    var dropdownValues = await Dropdown.findAll({
+    // get tagRequired options.
+    var tagRequiredOptions = await Dropdown.findAll({
       where: {
         dropdownFormID: 11,
+      },
+    });
+
+    // vendor values.
+    var vendorValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 10,
       },
     });
 
@@ -170,7 +177,8 @@ router.post(
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
-        dropdownValues: dropdownValues,
+        tagRequiredOptions: tagRequiredOptions,
+        vendorValues: vendorValues,
         // if the form submission is unsuccessful, save their values.
         dogInfo: {
           tagNumber: req.body.tagNumber,

@@ -157,14 +157,18 @@ router.post(
     // server side validation.
     const errors = validationResult(req);
 
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
+
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       // render dropdown page with error message.
       return res.render("dropdownManager/form", {
         title: "BWG | Dropdown Manager",
-        message: "Invalid entry!",
+        message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
         auth: req.session.auth, // authorization.
+        dropdownFormID: req.session.formID,
       });
     } else {
       Dropdown.create({

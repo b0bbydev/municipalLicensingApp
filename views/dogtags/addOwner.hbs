@@ -14,7 +14,6 @@
       <div class="col-sm-6">
         <label for="First Name" class="form-label">First Name*</label>
         <input
-          id="firstName"
           type="text"
           placeholder="First Name"
           class="form-control"
@@ -30,7 +29,6 @@
       <div class="col-sm-6">
         <label for="Last Name" class="form-label">Last Name*</label>
         <input
-          id="lastName"
           type="text"
           placeholder="Last Name"
           class="form-control"
@@ -61,11 +59,10 @@
         <label for="Street Name" class="form-label">Street Name*</label>
         <input
           class="form-control"
-          id="streetName"
-          title="streetName"
           name="streetName"
           list="streets"
           placeholder="Street Name..."
+          value="{{formData.streetName}}"
           required
         />
         <datalist id="streets">

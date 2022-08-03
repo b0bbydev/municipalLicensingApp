@@ -122,6 +122,20 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
+    // get tagRequired options.
+    var tagRequiredOptions = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 11,
+      },
+    });
+
+    // vendor values.
+    var vendorValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 10,
+      },
+    });
+
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("dogtags/addDog", {
@@ -130,6 +144,8 @@ router.post(
         email: req.session.email,
         auth: req.session.auth, // authorization.
         // if the form submission is unsuccessful, save their values.
+        tagRequiredOptions: tagRequiredOptions,
+        vendorValues: vendorValues,
         formData: {
           tagNumber: req.body.tagNumber,
           dogName: req.body.dogName,

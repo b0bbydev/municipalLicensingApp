@@ -64,7 +64,6 @@ router.post(
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
-        authLevel: "",
       })
         .then(res.redirect("/admin"))
         .catch((err) => {

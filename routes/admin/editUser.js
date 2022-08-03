@@ -39,6 +39,7 @@ router.get(
             errorMessages: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
+            // populate input fields with existing values.
             formData: {
               firstName: results.firstName,
               lastName: results.lastName,
@@ -102,7 +103,6 @@ router.post(
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           email: req.body.email,
-          authLevel: req.body.authLevel,
         },
         {
           where: {
