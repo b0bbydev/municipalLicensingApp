@@ -38,13 +38,10 @@ router.get(
         },
       });
 
-      // send businessID to session.
-      req.session.businessID = req.params.id;
-
       // used to populate edit form fields.
       Business.findOne({
         where: {
-          businessID: req.session.businessID,
+          businessID: req.params.id,
         },
         include: [
           {
@@ -183,6 +180,54 @@ router.post(
         },
       });
     } else {
+      // create empty objects to hold data.
+      let currentData = {};
+      let newData = {};
+
+      // get current data.
+      Business.findOne({
+        where: {
+          businessID: req.params.id,
+        },
+      }).then((results) => {
+        // put the CURRENT data into an object.
+        currentData = {
+          businessName: results.dataValues.businessName,
+          ownerName: results.dataValues.ownerName,
+          contactName: results.dataValues.contactName,
+          contactPhone: results.dataValues.contactPhone,
+          licenseNumber: results.dataValues.licenseNumber,
+          issueDate: results.dataValues.issueDate,
+          expiryDate: results.dataValues.expiryDate,
+          policeVSC: results.dataValues.policeVSC,
+          certificateOfInsurance: results.dataValues.certificateOfInsurance,
+          photoID: results.dataValues.photoID,
+          healthInspection: results.dataValues.healthInspection,
+          zoningClearance: results.dataValues.zoningClearance,
+          feePaid: results.dataValues.feePaid,
+          notes: results.dataValues.notes,
+        };
+
+        // put the NEW data into an object.
+        newData = {
+          businessName: req.body.businessName,
+          ownerName: req.body.ownerName,
+          contactName: req.body.contactName,
+          contactPhone: req.body.contactPhone,
+          licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
+          policeVSC: req.body.policeVSC,
+          certificateOfInsurance: req.body.certificateOfInsurance,
+          photoID: req.body.photoID,
+          healthInspection: req.body.healthInspection,
+          zoningClearance: req.body.zoningClearance,
+          feePaid: req.body.feePaid,
+          notes: req.body.notes,
+        };
+        console.log(funcHelpers.areObjectsEqual(currentData, newData));
+      });
+
       Business.update(
         {
           businessName: req.body.businessName,
@@ -202,25 +247,63 @@ router.post(
         },
         {
           where: {
-            businessID: req.session.businessID,
+            businessID: req.params.id,
           },
         }
       )
         .then(() => {
-          BusinessAddress.update(
-            {
-              streetNumber: req.body.streetNumber,
+          // create empty objects to hold data.
+          let currentData = {};
+          let newData = {};
+
+          // get current data.
+          Business.findOne({
+            where: {
+              businessID: req.params.id,
+            },
+            include: [
+              {
+                model: BusinessAddress,
+              },
+            ],
+          }).then((results) => {
+            // put the CURRENT data into an object.
+            currentData = {
+              streetNumber:
+                results.businessAddresses[0].dataValues.streetNumber,
+              streetName: results.businessAddresses[0].dataValues.streetName,
+              poBoxAptRR: results.businessAddresses[0].dataValues.poBoxAptRR,
+              town: results.businessAddresses[0].dataValues.town,
+              postalCode: results.businessAddresses[0].dataValues.postalCode,
+            };
+
+            // put the NEW data into an object.
+            newData = {
+              streetNumber: parseInt(req.body.streetNumber),
               streetName: req.body.streetName,
               poBoxAptRR: req.body.poBoxAptRR,
               town: req.body.town,
               postalCode: req.body.postalCode,
-            },
-            {
-              where: {
-                businessID: req.session.businessID,
-              },
+            };
+
+            // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
+            if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+              BusinessAddress.update(
+                {
+                  streetNumber: req.body.streetNumber,
+                  streetName: req.body.streetName,
+                  poBoxAptRR: req.body.poBoxAptRR,
+                  town: req.body.town,
+                  postalCode: req.body.postalCode,
+                },
+                {
+                  where: {
+                    businessID: req.params.id,
+                  },
+                }
+              );
             }
-          );
+          });
         })
         // redirect back to /adultEntertainment.
         .then(() => {
