@@ -197,7 +197,7 @@ router.post(
           },
         }
       )
-        .then((result) => {
+        .then(() => {
           // update Address.
           Address.update(
             {

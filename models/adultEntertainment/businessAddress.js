@@ -38,7 +38,6 @@ const BusinessAddress = sequelize.define("businessAddress", {
   },
 });
 
-// create relationship with business table.
 Business.hasMany(BusinessAddress, {
   foreignKey: "businessID",
 });
