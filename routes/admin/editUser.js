@@ -39,7 +39,7 @@ router.get(
             errorMessages: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
-            userInfo: {
+            formData: {
               firstName: results.firstName,
               lastName: results.lastName,
               email: results.email,

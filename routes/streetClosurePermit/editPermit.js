@@ -71,12 +71,12 @@ router.post(
   "/:id",
   body("coordinatorName")
     .notEmpty()
-    .matches(/^[a-zA-Z\/\-',. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Coordinator Name Entry!")
     .trim(),
   body("coordinatorPhone")
     .if(body("coordinatorPhone").notEmpty())
-    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Coordinator Phone Number Entry!")
     .trim(),
   body("coordinatorEmail")
@@ -86,17 +86,17 @@ router.post(
     .trim(),
   body("sponser")
     .if(body("sponser").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,.:' ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Event Sponser Entry!")
     .trim(),
   body("everydayContactName")
     .if(body("everydayContactName").notEmpty())
-    .matches(/^[a-zA-Z\/\-',. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Everyday Contact Name Entry!")
     .trim(),
   body("everydayContactPhone")
     .if(body("everydayContactPhone").notEmpty())
-    .matches(/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Everyday Contact Phone Number Entry!")
     .trim(),
   body("everydayContactEmail")
@@ -106,22 +106,22 @@ router.post(
     .trim(),
   body("permitNumber")
     .if(body("permitNumber").notEmpty())
-    .matches(/^[0-9]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Permit Number Entry!")
     .trim(),
   body("closureLocation")
     .if(body("closureLocation").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,.:"' ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Closure Location Entry!")
     .trim(),
   body("closureTime")
     .if(body("closureTime").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-,.:"' ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Closure Time Entry!")
     .trim(),
   body("estimatedAttendance")
     .if(body("estimatedAttendance").notEmpty())
-    .matches(/^[0-9]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Estimated Attendance Entry!")
     .trim(),
   body("description")

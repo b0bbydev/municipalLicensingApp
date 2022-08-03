@@ -71,12 +71,12 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("registeredBusinessName")
     .if(body("registeredBusinessName").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-'",. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Registered Business Name Entry!")
     .trim(),
   body("operatingBusinessName")
     .if(body("operatingBusinessName").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-'",. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Operating Business Name Entry!")
     .trim(),
   body("itemsForSale")
