@@ -29,7 +29,6 @@ router.get(
       // clear session messages.
       req.session.messages = [];
 
-      // dropdown values.
       // status options.
       var statusDropdownValues = await Dropdown.findAll({
         where: {
@@ -147,6 +146,28 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
+    // status options.
+    var statusDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 12,
+        dropdownTitle: "Status Options",
+      },
+    });
+    // category options.
+    var categoryDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 12,
+        dropdownTitle: "Category Options",
+      },
+    });
+    // authority options.
+    var authorityDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 12,
+        dropdownTitle: "Authority Options",
+      },
+    });
+
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("policies/editPolicy", {
@@ -154,6 +175,9 @@ router.post(
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
+        statusDropdownValues: statusDropdownValues,
+        categoryDropdownValues: categoryDropdownValues,
+        authorityDropdownValues: authorityDropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {
           policyNumber: req.body.policyNumber,

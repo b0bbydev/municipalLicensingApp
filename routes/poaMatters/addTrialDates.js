@@ -57,10 +57,12 @@ router.post(
         message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
         auth: req.session.auth, // authorization.
-        streets: streets,
-        officerNames: officerNames,
         // if the form submission is unsuccessful, save their values.
-        formData: {},
+        formData: {
+          trialDateOne: req.body.trialDateOne,
+          trialDateTwo: req.body.trialDateTwo,
+          trialDateThree: req.body.trialDateThree,
+        },
       });
     } else {
       // create array for bulkCreate.
@@ -95,7 +97,7 @@ router.post(
         .catch((err) => {
           return res.render("poaMatters/addTrialDates", {
             title: "BWG | Add Trial Dates",
-            message: "Page Error!" + err,
+            message: "Page Error!",
           });
         });
     }

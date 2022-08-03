@@ -21,10 +21,11 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  // get dropdown values.
-  var dropdownValues = await Dropdown.findAll({
+  // get filter options.
+  var filterOptions = await Dropdown.findAll({
     where: {
-      dropdownFormID: 19, // Procedure Filtering Form
+      dropdownFormID: 29, // filtering options.
+      dropdownTitle: "Guideline Filtering Options",
     },
   });
 
@@ -52,7 +53,7 @@ router.get("/", async (req, res, next) => {
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
-        dropdownValues: dropdownValues,
+        filterOptions: filterOptions,
         policies: policies,
         pageCount,
         itemCount,
@@ -94,7 +95,7 @@ router.get("/", async (req, res, next) => {
           data: results.rows,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
-          dropdownValues: dropdownValues,
+          filterOptions: filterOptions,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,

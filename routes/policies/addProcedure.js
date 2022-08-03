@@ -30,7 +30,6 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      // dropdown values.
       // status options.
       var statusDropdownValues = await Dropdown.findAll({
         where: {
@@ -80,7 +79,6 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
-    // dropdown values.
     // status options.
     var statusDropdownValues = await Dropdown.findAll({
       where: {

@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  // get dropdown values.
+  // get streets.
   var streets = await Dropdown.findAll({
     where: {
       dropdownFormID: 13, // streets
@@ -117,15 +117,22 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
-    // get dropdown values.
+    // get streets.
     var streets = await Dropdown.findAll({
       where: {
         dropdownFormID: 13, // streets
       },
     });
+    // get officer names.
     var officerNames = await Dropdown.findAll({
       where: {
         dropdownFormID: 27, // officer names
+      },
+    });
+    // get verdict options.
+    var verdictOptions = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 31,
       },
     });
 
@@ -138,6 +145,7 @@ router.post(
         auth: req.session.auth, // authorization.
         streets: streets,
         officerNames: officerNames,
+        verdictOptions: verdictOptions,
         // if the form submission is unsuccessful, save their values.
         formData: {
           infoNumber: req.body.infoNumber,

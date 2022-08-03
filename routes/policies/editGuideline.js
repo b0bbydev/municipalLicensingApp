@@ -97,6 +97,14 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
+    // status options.
+    var statusDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 12,
+        dropdownTitle: "Status Options",
+      },
+    });
+
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("policies/editGuideline", {
@@ -104,6 +112,7 @@ router.post(
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
+        statusDropdownValues: statusDropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {
           guidelineName: req.body.guidelineName,
