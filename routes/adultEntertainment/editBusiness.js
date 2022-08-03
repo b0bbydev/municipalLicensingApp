@@ -182,37 +182,6 @@ router.post(
           notes: req.body.notes,
         },
       });
-      // handle empty dates seperately because express-validate sucks.
-    } else if (!req.body.issueDate || !req.body.expiryDate) {
-      return res.render("adultEntertainment/editBusiness", {
-        title: "BWG | Edit Business",
-        message: "Invalid Issue/Expiry Date!",
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        streets: streets,
-        // if the form submission is unsuccessful, save their values.
-        formData: {
-          businessName: req.body.businessName,
-          streetNumber: req.body.streetNumber,
-          streetName: req.body.streetName,
-          poBoxAptRR: req.body.poBoxAptRR,
-          town: req.body.town,
-          postalCode: req.body.postalCode,
-          ownerName: req.body.ownerName,
-          contactName: req.body.contactName,
-          contactPhone: req.body.contactPhone,
-          licenseNumber: req.body.licenseNumber,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
-          policeVSC: req.body.policeVSC,
-          certificateOfInsurance: req.body.certificateOfInsurance,
-          photoID: req.body.photoID,
-          healthInspection: req.body.healthInspection,
-          zoningClearance: req.body.zoningClearance,
-          feePaid: req.body.feePaid,
-          notes: req.body.notes,
-        },
-      });
     } else {
       Business.update(
         {
@@ -237,7 +206,7 @@ router.post(
           },
         }
       )
-        .then((result) => {
+        .then(() => {
           BusinessAddress.update(
             {
               streetNumber: req.body.streetNumber,
@@ -254,7 +223,9 @@ router.post(
           );
         })
         // redirect back to /adultEntertainment.
-        .then(res.redirect("/adultEntertainment"))
+        .then(() => {
+          return res.redirect("/adultEntertainment");
+        })
         .catch((err) => {
           return res.render("adultEntertainment/editBusiness", {
             title: "BWG | Edit Business",

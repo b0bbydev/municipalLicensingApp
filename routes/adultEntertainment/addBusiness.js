@@ -150,11 +150,13 @@ router.post(
           include: [BusinessAddress],
         }
       )
-        .then(res.redirect("/adultEntertainment"))
+        .then(() => {
+          return res.redirect("/adultEntertainment");
+        })
         .catch((err) => {
           return res.render("adultEntertainment/addBusiness", {
             title: "BWG | Add Business",
-            message: "Page Error!",
+            message: "Page Error!" + err,
           });
         });
     }
