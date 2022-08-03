@@ -187,7 +187,8 @@ td {
 
 #getExpiredTags,
 #additionalOwnerLinks,
-#policyHistoryButton {
+#policyHistoryButton,
+#historyLink {
   color: #0096d6 !important;
   cursor: pointer;
   text-decoration: underline;

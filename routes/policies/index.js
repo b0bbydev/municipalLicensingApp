@@ -133,12 +133,12 @@ router.get(
   }
 );
 
-/* POST /policies */
+/* POST /policies - getting value to search by, then redirect */
 router.post(
   "/",
   body("policyName")
     .if(body("policyName").notEmpty())
-    .matches(/^[a-zA-Z0-9\/\-. ]*$/)
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Policy Name Entry!")
     .trim(),
   async (req, res, next) => {
@@ -256,6 +256,7 @@ router.get(
           dropdownTitle: "Policy History Filtering Options - Years",
         },
       });
+
       // get policy name.
       Policy.findOne({
         attributes: ["policyName"],

@@ -180,4 +180,47 @@ router.get(
   }
 );
 
+/* POST /adultEntertainment - getting value to search by, then redirect */
+router.post(
+  "/",
+  body("businessName")
+    .if(body("businessName").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Business Name Entry!")
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("adultEntertainment/index", {
+        title: "BWG | Adult Entertainment Licenses",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // get the specified business.
+      Business.findOne({
+        where: {
+          businessName: req.body.businessName,
+        },
+      })
+        .then((results) => {
+          // redirect to unique history page.
+          return res.redirect(
+            "/adultEntertainment/history/" + results.businessID
+          );
+        }) // catch any scary errors and render page error.
+        .catch((err) =>
+          res.render("adultEntertainment/history", {
+            title: "BWG | Adult Entertainment License History",
+            message: "Page Error!",
+          })
+        );
+    }
+  }
+);
+
 module.exports = router;
