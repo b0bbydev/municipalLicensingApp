@@ -96,7 +96,6 @@ router.post(
         message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
         auth: req.session.auth, // authorization.
-        dropdownValues: dropdownValues,
         streets: streets,
         // if the form submission is unsuccessful, save their values.
         formData: {

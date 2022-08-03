@@ -22,7 +22,6 @@ router.get("/", async (req, res, next) => {
       dropdownFormID: 13, // streets
     },
   });
-
   // get cab companies.
   var cabCompanies = await Dropdown.findAll({
     where: {
@@ -90,6 +89,19 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
+    // get streets.
+    var streets = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 13, // streets
+      },
+    });
+    // get cab companies.
+    var cabCompanies = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 30, // cab companies
+      },
+    });
+
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("taxiLicenses/addDriver", {
@@ -97,7 +109,8 @@ router.post(
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
-        dropdownValues: dropdownValues,
+        streets: streets,
+        cabCompanies: cabCompanies,
         // save form values if submission is unsuccessful.
         formData: {
           firstName: req.body.firstName,

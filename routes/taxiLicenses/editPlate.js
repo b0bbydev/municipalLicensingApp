@@ -123,6 +123,13 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
+    // get streets.
+    var streets = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 13, // streets
+      },
+    });
+
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("taxiLicenses/editPlate", {
@@ -130,7 +137,7 @@ router.post(
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
-        dropdownValues: dropdownValues,
+        streets: streets,
         // save form values if submission is unsuccessful.
         formData: {
           firstName: req.body.firstName,
