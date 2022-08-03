@@ -57,6 +57,7 @@ router.get(
         Dropdown.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
+          order: [["dropdownID", "DESC"]],
           where: {
             dropdownFormID: req.session.formID,
           },

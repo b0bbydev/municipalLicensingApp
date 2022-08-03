@@ -1,11 +1,14 @@
 var express = require("express");
 var router = express.Router();
 // models.
+const Dropdown = require("../../models/dropdownManager/dropdown");
 const TaxiBroker = require("../../models/taxiLicenses/taxiBroker");
 const TaxiBrokerAddress = require("../../models/taxiLicenses/taxiBrokerAddress");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
@@ -18,33 +21,93 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  TaxiBroker.findAndCountAll({
-    limit: req.query.limit,
-    offset: req.skip,
-    include: [
-      {
-        model: TaxiBrokerAddress,
-      },
-    ],
-  }).then((results) => {
-    // for pagination.
-    const itemCount = results.count;
-    const pageCount = Math.ceil(results.count / req.query.limit);
-
-    return res.render("taxiLicenses/index", {
-      title: "BWG | Taxi Licenses",
-      errorMessages: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      data: results.rows,
-      pageCount,
-      itemCount,
-      queryCount: "Records returned: " + results.count,
-      pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-      prev: paginate.href(req)(true),
-      hasMorePages: paginate.hasNextPages(req)(pageCount),
-    });
+  // get filtering options.
+  var filterOptions = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 29, // filtering options.
+      dropdownTitle: "Taxi Filtering Options",
+    },
   });
+
+  // if there are no filter parameters.
+  if (!req.query.filterCategory || !req.query.filterValue) {
+    TaxiBroker.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      include: [
+        {
+          model: TaxiBrokerAddress,
+        },
+      ],
+    }).then((results) => {
+      // for pagination.
+      const itemCount = results.count;
+      const pageCount = Math.ceil(results.count / req.query.limit);
+
+      return res.render("taxiLicenses/index", {
+        title: "BWG | Taxi Licenses",
+        errorMessages: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        data: results.rows,
+        filterOptions: filterOptions,
+        pageCount,
+        itemCount,
+        queryCount: "Records returned: " + results.count,
+        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+        prev: paginate.href(req)(true),
+        hasMorePages: paginate.hasNextPages(req)(pageCount),
+      });
+    });
+  } else {
+    // format filterCategory to match column name in db - via handy dandy camelize() function.
+    var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+    // create filter query.
+    TaxiBroker.findAndCountAll({
+      where: {
+        [filterCategory]: {
+          [Op.like]: "%" + req.query.filterValue + "%",
+        },
+      },
+      limit: req.query.limit,
+      offset: req.skip,
+      include: [
+        {
+          model: TaxiBrokerAddress,
+        },
+      ],
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
+        return res.render("taxiLicenses/index", {
+          title: "BWG | Taxi Licenses",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterCategory: req.query.filterCategory,
+          filterValue: req.query.filterValue,
+          filterOptions: filterOptions,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      // catch any scary errors and render page error.
+      .catch((err) =>
+        res.render("taxiLicenses/index", {
+          title: "BWG | Taxi Licenses",
+          message: "Page Error!",
+        })
+      );
+  }
 });
 
 /* POST /taxiLicenses - renews license. */
