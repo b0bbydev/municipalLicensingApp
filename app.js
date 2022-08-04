@@ -89,6 +89,8 @@ var donationBinAddressHistoryRouter = require("./routes/donationBin/donationBinA
 
 var donationBinPropertyOwnerAddressHistoryRouter = require("./routes/donationBin/donationBinPropertyOwnerAddressHistory");
 
+var donationBinOperatorAddressHistoryRouter = require("./routes/donationBin/donationBinOperatorAddressHistory");
+
 var addDonationBinCharityRouter = require("./routes/donationBin/addCharity");
 var editDonationBinCharityRouter = require("./routes/donationBin/editCharity");
 
@@ -361,6 +363,11 @@ app.use(
 app.use(
   "/donationBin/donationBinPropertyOwnerAddressHistory",
   donationBinPropertyOwnerAddressHistoryRouter
+);
+
+app.use(
+  "/donationBin/donationBinOperatorAddressHistory",
+  donationBinOperatorAddressHistoryRouter
 );
 
 app.use("/donationBin/addCharity", addDonationBinCharityRouter);
