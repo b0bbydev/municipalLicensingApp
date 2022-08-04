@@ -4,6 +4,8 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const KennelPropertyOwner = require("../../models/kennel/kennelPropertyOwner");
 const KennelPropertyOwnerAddress = require("../../models/kennel/kennelPropertyOwnerAddress");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -162,19 +164,52 @@ router.post(
         }
       )
         .then(() => {
-          KennelPropertyOwnerAddress.update(
-            {
-              streetNumber: req.body.streetNumber,
+          /* begin check for ONLY updating data when a value has changed. */
+          // create empty objects to hold data.
+          let currentData = {};
+          let newData = {};
+
+          // get current data.
+          KennelPropertyOwnerAddress.findOne({
+            where: {
+              kennelPropertyOwnerID: req.params.id,
+            },
+          }).then((results) => {
+            currentData = {
+              streetNumber: results.streetNumber,
+              streetName: results.streetName,
+              town: results.town,
+              postalCode: results.postalCode,
+            };
+
+            // put the NEW data into an object.
+            newData = {
+              streetNumber: parseInt(req.body.streetNumber),
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
-            },
-            {
-              where: {
-                kennelPropertyOwnerID: req.params.id,
-              },
+            };
+
+            console.log(funcHelpers.areObjectsEqual(currentData, newData));
+
+            // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
+            if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+              // update address.
+              KennelPropertyOwnerAddress.update(
+                {
+                  streetNumber: req.body.streetNumber,
+                  streetName: req.body.streetName,
+                  town: req.body.town,
+                  postalCode: req.body.postalCode,
+                },
+                {
+                  where: {
+                    kennelPropertyOwnerID: req.params.id,
+                  },
+                }
+              );
             }
-          );
+          });
         })
         .then(() => {
           return res.redirect("/kennels/kennel/" + req.session.kennelID);
