@@ -4,6 +4,8 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const HawkerPeddlerPropertyOwner = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwner");
 const HawkerPeddlerPropertyOwnerAddress = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwnerAddress");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -165,19 +167,49 @@ router.post(
         }
       )
         .then(() => {
-          HawkerPeddlerPropertyOwnerAddress.update(
-            {
-              streetNumber: req.body.streetNumber,
+          /* begin check for ONLY updating data when a value has changed. */
+          // create empty objects to hold data.
+          let currentData = {};
+          let newData = {};
+
+          // get current data.
+          HawkerPeddlerPropertyOwnerAddress.findOne({
+            where: {
+              hawkerPeddlerPropertyOwnerID: req.params.id,
+            },
+          }).then((results) => {
+            currentData = {
+              streetNumber: results.streetNumber,
+              streetName: results.streetName,
+              town: results.town,
+              postalCode: results.postalCode,
+            };
+
+            // put the NEW data into an object.
+            newData = {
+              streetNumber: parseInt(req.body.streetNumber),
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
-            },
-            {
-              where: {
-                hawkerPeddlerPropertyOwnerID: req.params.id,
-              },
+            };
+
+            // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
+            if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+              HawkerPeddlerPropertyOwnerAddress.update(
+                {
+                  streetNumber: req.body.streetNumber,
+                  streetName: req.body.streetName,
+                  town: req.body.town,
+                  postalCode: req.body.postalCode,
+                },
+                {
+                  where: {
+                    hawkerPeddlerPropertyOwnerID: req.params.id,
+                  },
+                }
+              );
             }
-          );
+          });
         })
         .then(() => {
           return res.redirect(
