@@ -130,6 +130,8 @@ var kennelsRoute = require("./routes/kennels/index");
 
 var kennelAddressHistoryRoute = require("./routes/kennels/kennelAddressHistory");
 
+var kennelOwnerAddressHistoryRoute = require("./routes/kennels/kennelOwnerAddressHistory");
+
 var kennelRoute = require("./routes/kennels/kennel");
 var addKennelRoute = require("./routes/kennels/addKennel");
 var editKennelRoute = require("./routes/kennels/editKennel");
@@ -426,6 +428,8 @@ app.use("/hawkerPeddler/editBusiness", hawkerPeddlerEditBusinessRoute);
 app.use("/kennels", kennelsRoute);
 
 app.use("/kennels/kennelAddressHistory", kennelAddressHistoryRoute);
+
+app.use("/kennels/kennelOwnerAddressHistory", kennelOwnerAddressHistoryRoute);
 
 app.use("/kennels/kennel", kennelRoute);
 app.use("/kennels/addKennel", addKennelRoute);
