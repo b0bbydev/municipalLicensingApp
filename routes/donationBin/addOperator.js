@@ -146,7 +146,7 @@ router.post(
         }
       )
         .then(() => {
-          return res.redirect("/donationBin/bin/" + req.session.donationBinID);
+          return res.redirect("/donationBin/bins/" + req.session.donationBinID);
         })
         .catch((err) => {
           return res.render("donationBin/addOperator", {

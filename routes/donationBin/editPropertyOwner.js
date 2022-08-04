@@ -4,6 +4,8 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const DonationBinPropertyOwner = require("../../models/donationBin/donationBinPropertyOwner");
 const DonationBinPropertyOwnerAddress = require("../../models/donationBin/donationBinPropertyOwnerAddress");
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -162,22 +164,51 @@ router.post(
         }
       )
         .then(() => {
-          DonationBinPropertyOwnerAddress.update(
-            {
-              streetNumber: req.body.streetNumber,
+          /* begin check for ONLY updating data when a value has changed. */
+          // create empty objects to hold data.
+          let currentData = {};
+          let newData = {};
+
+          // get current data.
+          DonationBinPropertyOwnerAddress.findOne({
+            where: {
+              donationBinPropertyOwnerID: req.params.id,
+            },
+          }).then((results) => {
+            currentData = {
+              streetNumber: results.streetNumber,
+              streetName: results.streetName,
+              town: results.town,
+              postalCode: results.postalCode,
+            };
+
+            newData = {
+              streetNumber: parseInt(req.body.streetNumber),
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
-            },
-            {
-              where: {
-                donationBinPropertyOwnerID: req.params.id,
-              },
+            };
+
+            // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
+            if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+              DonationBinPropertyOwnerAddress.update(
+                {
+                  streetNumber: req.body.streetNumber,
+                  streetName: req.body.streetName,
+                  town: req.body.town,
+                  postalCode: req.body.postalCode,
+                },
+                {
+                  where: {
+                    donationBinPropertyOwnerID: req.params.id,
+                  },
+                }
+              );
             }
-          );
+          });
         })
         .then(() => {
-          return res.redirect("/donationBin/bin/" + req.session.donationBinID);
+          return res.redirect("/donationBin/bins/" + req.session.donationBinID);
         })
         .catch((err) => {
           return res.render("donationBin/editPropertyOwner", {

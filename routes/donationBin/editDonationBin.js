@@ -4,6 +4,8 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const DonationBin = require("../../models/donationBin/donationBin");
 const DonationBinAddress = require("../../models/donationBin/donationBinAddress");
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -53,15 +55,17 @@ router.get(
           auth: req.session.auth, // authorization.
           streets: streets,
           formData: {
+            issueDate: results.issueDate,
+            expiryDate: results.expiryDate,
+            streetNumber: results.donationBinAddresses[0].streetNumber,
+            streetName: results.donationBinAddresses[0].streetName,
+            town: results.donationBinAddresses[0].town,
+            postalCode: results.donationBinAddresses[0].postalCode,
             colour: results.colour,
             material: results.material,
             pickupSchedule: results.pickupSchedule,
             itemsCollected: results.itemsCollected,
             notes: results.notes,
-            streetNumber: results.donationBinAddresses[0].streetNumber,
-            streetName: results.donationBinAddresses[0].streetName,
-            town: results.donationBinAddresses[0].town,
-            postalCode: results.donationBinAddresses[0].postalCode,
           },
         });
       });
@@ -132,7 +136,7 @@ router.post(
       },
     });
 
-    // if errors is NOT empty (if there are errors...).
+    // if ERRORS in form EXIST.
     if (!errors.isEmpty()) {
       return res.render("donationBin/editDonationBin", {
         title: "BWG | Edit Donation Bin",
@@ -152,6 +156,8 @@ router.post(
     } else {
       DonationBin.update(
         {
+          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           colour: req.body.colour,
           material: req.body.material,
           pickupSchedule: req.body.pickupSchedule,
@@ -165,19 +171,50 @@ router.post(
         }
       )
         .then(() => {
-          DonationBinAddress.update(
-            {
-              streetNumber: req.body.streetNumber,
+          /* begin check for ONLY updating data when a value has changed. */
+          // create empty objects to hold data.
+          let currentData = {};
+          let newData = {};
+
+          // get current data.
+          DonationBinAddress.findOne({
+            where: {
+              donationBinID: req.params.id,
+            },
+          }).then((results) => {
+            currentData = {
+              streetNumber: results.streetNumber,
+              streetName: results.streetName,
+              town: results.town,
+              postalCode: results.postalCode,
+            };
+
+            // put the NEW data into an object.
+            newData = {
+              streetNumber: parseInt(req.body.streetNumber),
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
-            },
-            {
-              where: {
-                donationBinID: req.params.id,
-              },
+            };
+
+            // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
+            if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+              // update address.
+              DonationBinAddress.update(
+                {
+                  streetNumber: req.body.streetNumber,
+                  streetName: req.body.streetName,
+                  town: req.body.town,
+                  postalCode: req.body.postalCode,
+                },
+                {
+                  where: {
+                    donationBinID: req.params.id,
+                  },
+                }
+              );
             }
-          );
+          });
         })
         .then(() => {
           return res.redirect("/donationBin");

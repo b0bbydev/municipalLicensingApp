@@ -27,7 +27,6 @@
         <label for="Street Name" class="form-label">Street Name*</label>
         <input
           class="form-control"
-          title="streetName"
           name="streetName"
           list="streets"
           placeholder="Street Name..."
@@ -48,6 +47,60 @@
             {{/if}}
           {{/each}}
         </datalist>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Town -->
+      <div class="col-sm-6">
+        <label for="Town" class="form-label">Town</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Town"
+          name="town"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.town}}"
+          maxlength="30"
+        />
+      </div>
+      <!-- Postal Code -->
+      <div class="col-sm-6">
+        <label for="Postal Code" class="form-label">Postal Code</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Postal Code"
+          name="postalCode"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.postalCode}}"
+          maxlength="15"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Issue Date -->
+      <div class="col-sm-6">
+        <label for="Issue Date" class="form-label">Issue Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Issue Date"
+          name="issueDate"
+          value="{{formData.issueDate}}"
+        />
+      </div>
+      <!-- Expiry Date -->
+      <div class="col-sm-6">
+        <label for="Expiry Date" class="form-label">Expiry Date</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Expiry Date"
+          name="expiryDate"
+          value="{{formData.expiryDate}}"
+        />
       </div>
     </div>
     <div class="row">

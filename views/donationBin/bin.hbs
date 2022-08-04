@@ -37,10 +37,13 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each donationBinPropertyOwnerAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}}
-            {{this.postalCode}}</td>
+          <td><a
+              href="/donationBin/donationBinPropertyOwnerAddressHistory/{{this.donationBinPropertyOwnerID}}"
+              id="ownerLink"
+            >{{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}</a></td>
         {{/each}}
         <td><a
             class="btn btn-sm btn-secondary"
