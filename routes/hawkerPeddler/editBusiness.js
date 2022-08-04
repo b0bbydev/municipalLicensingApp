@@ -220,6 +220,7 @@ router.post(
 
             // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
             if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+              // update address.
               HawkerPeddlerBusinessAddress.update(
                 {
                   streetNumber: req.body.streetNumber,

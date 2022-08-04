@@ -112,6 +112,8 @@ var hawkerPeddlerBusinessAddressHistoryRoute = require("./routes/hawkerPeddler/b
 
 var hawkerPeddlerPropertyOwnerAddressHistoryRoute = require("./routes/hawkerPeddler/propertyOwnerAddressHistory");
 
+var hawkerPeddlerApplicantAddressHistoryRoute = require("./routes/hawkerPeddler/applicantAddressHistory");
+
 var hawkerPeddlerAddPropertyOwnerRoute = require("./routes/hawkerPeddler/addPropertyOwner");
 var hawkerPeddlerEditPropertyOwnerRoute = require("./routes/hawkerPeddler/editPropertyOwner");
 
@@ -398,6 +400,11 @@ app.use(
 app.use(
   "/hawkerPeddler/propertyOwnerAddressHistory",
   hawkerPeddlerPropertyOwnerAddressHistoryRoute
+);
+
+app.use(
+  "/hawkerPeddler/applicantAddressHistory",
+  hawkerPeddlerApplicantAddressHistoryRoute
 );
 
 app.use("/hawkerPeddler/addPropertyOwner", hawkerPeddlerAddPropertyOwnerRoute);
