@@ -33,7 +33,6 @@ const DonationBinAddress = sequelize.define("donationBinAddress", {
   },
 });
 
-// create relationship with donationBinOperator table.
 DonationBin.hasMany(DonationBinAddress, {
   foreignKey: "donationBinID",
 });

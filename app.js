@@ -85,6 +85,8 @@ var editStreetClosurePermitRouter = require("./routes/streetClosurePermit/editPe
 /* Donation Bin related routes */
 var donationBinRouter = require("./routes/donationBin/index");
 
+var donationBinAddressHistoryRouter = require("./routes/donationBin/donationBinAddressHistory");
+
 var addDonationBinCharityRouter = require("./routes/donationBin/addCharity");
 var editDonationBinCharityRouter = require("./routes/donationBin/editCharity");
 
@@ -348,6 +350,11 @@ app.use("/streetClosurePermit/editPermit", editStreetClosurePermitRouter);
 
 /* Donation Bin related routes */
 app.use("/donationBin", donationBinRouter);
+
+app.use(
+  "/donationBin/donationBinAddressHistory",
+  donationBinAddressHistoryRouter
+);
 
 app.use("/donationBin/addCharity", addDonationBinCharityRouter);
 app.use("/donationBin/editCharity", editDonationBinCharityRouter);
