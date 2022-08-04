@@ -52,7 +52,7 @@
       id="historyLink"
       data-bs-toggle="modal"
       data-bs-target="#historyModal"
-    >View History</a>
+    >View Address History</a>
   </div>
 </div>
 <div class="row">
@@ -86,6 +86,7 @@
       <th>License #</th>
       <th>Issue Date</th>
       <th>Expiry Date</th>
+      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -105,6 +106,7 @@
         <td>{{this.licenseNumber}}</td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
+        <td>{{this.notes}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
             href="/adultEntertainment/editBusiness/{{this.businessID}}"

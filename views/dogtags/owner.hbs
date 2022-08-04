@@ -201,11 +201,8 @@
       >
         <thead>
           <tr>
-            <th>Street Number</th>
-            <th>Street Name</th>
+            <th>Address</th>
             <th>PO Box/Apt/RR</th>
-            <th>Town</th>
-            <th>Postal Code</th>
             <th>Action</th>
             <th>Last Modified</th>
           </tr>
@@ -213,11 +210,11 @@
         <tbody>
           {{#each items}}
             <tr>
-              <td>{{this.streetNumber}}</td>
-              <td>{{this.streetName}}</td>
+              <td>{{this.streetNumber}}
+                {{this.streetName}},
+                {{this.town}}
+                {{this.postalCode}}</td>
               <td>{{this.poBoxAptRR}}</td>
-              <td>{{this.town}}</td>
-              <td>{{this.postalCode}}</td>
               <td>{{this.action}}</td>
               <td>{{formatDate this.lastModified}}</td>
             </tr>

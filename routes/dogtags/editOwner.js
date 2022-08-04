@@ -6,6 +6,7 @@ const Address = require("../../models/dogtags/address");
 const Dropdown = require("../../models/dropdownManager/dropdown");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
+const funcHelpers = require("../../config/funcHelpers");
 
 /* GET /editOwner/:id */
 router.get(
@@ -150,7 +151,7 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
-    // get dropdown values.
+    // get streets.
     var streets = await Dropdown.findAll({
       where: {
         dropdownFormID: 13, // streets
@@ -181,40 +182,113 @@ router.post(
         },
       });
     } else {
-      // update owner.
-      Owner.update(
-        {
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          homePhone: req.body.homePhone,
-          cellPhone: req.body.cellPhone,
-          workPhone: req.body.workPhone,
-          email: req.body.email,
+      /* begin check for ONLY updating data when a value has changed. */
+      // create empty objects to hold data.
+      let currentData = {};
+      let newData = {};
+
+      // get current data.
+      Owner.findOne({
+        where: {
+          ownerID: req.params.id,
         },
-        {
-          where: {
-            ownerID: req.session.ownerID,
-          },
-        }
-      )
+      })
+        .then((results) => {
+          currentData = {
+            firstName: results.firstName,
+            lastName: results.lastName,
+            homePhone: results.homePhone,
+            cellPhone: results.cellPhone,
+            workPhone: results.workPhone,
+            email: results.email,
+          };
+
+          // put the NEW data into an object.
+          // fixEmptyValue() in this case will replace any 'undefined' values with null.
+          // which is required when comparing objects as null != defined, making them techinically different.
+          newData = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            homePhone: req.body.homePhone,
+            cellPhone: req.body.cellPhone,
+            workPhone: req.body.workPhone,
+            email: req.body.email,
+          };
+
+          // compare the two objects to check if they contain equal properties. If NOT (false), then proceed with update.
+          if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+            // update owner.
+            Owner.update(
+              {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                homePhone: req.body.homePhone,
+                cellPhone: req.body.cellPhone,
+                workPhone: req.body.workPhone,
+                email: req.body.email,
+              },
+              {
+                where: {
+                  ownerID: req.session.ownerID,
+                },
+              }
+            );
+          }
+        })
         .then(() => {
-          // update Address.
-          Address.update(
-            {
-              streetNumber: req.body.streetNumber,
+          // create empty objects to hold data.
+          let currentData = {};
+          let newData = {};
+
+          // get current data.
+          Owner.findOne({
+            where: {
+              ownerID: req.params.id,
+            },
+            include: [
+              {
+                model: Address,
+              },
+            ],
+          }).then((results) => {
+            // put the CURRENT data into an object.
+            currentData = {
+              streetNumber: results.addresses[0].dataValues.streetNumber,
+              streetName: results.addresses[0].dataValues.streetName,
+              poBoxAptRR: results.addresses[0].dataValues.poBoxAptRR,
+              town: results.addresses[0].dataValues.town,
+              postalCode: results.addresses[0].dataValues.postalCode,
+            };
+
+            // put the NEW data into an object.
+            newData = {
+              streetNumber: parseInt(req.body.streetNumber),
               streetName: req.body.streetName,
               poBoxAptRR: req.body.poBoxAptRR,
               town: req.body.town,
               postalCode: req.body.postalCode,
-            },
-            {
-              where: {
-                ownerID: req.session.ownerID,
-              },
+            };
+
+            // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
+            if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+              // update Address.
+              Address.update(
+                {
+                  streetNumber: req.body.streetNumber,
+                  streetName: req.body.streetName,
+                  poBoxAptRR: req.body.poBoxAptRR,
+                  town: req.body.town,
+                  postalCode: req.body.postalCode,
+                },
+                {
+                  where: {
+                    ownerID: req.session.ownerID,
+                  },
+                }
+              );
             }
-          );
+          });
         })
-        // redirect back to dogtags.
         .then(res.redirect("/dogtags"))
         .catch((err) => {
           return res.render("dogtags/editOwner", {

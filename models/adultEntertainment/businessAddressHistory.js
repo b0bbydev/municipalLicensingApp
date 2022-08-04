@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
 const BusinessAddress = require("../adultEntertainment/businessAddress");
+const Business = require("../adultEntertainment/business");
 
 const BusinessAddressHistory = sequelize.define(
   "businessesAddressHistory",
@@ -56,6 +57,10 @@ const BusinessAddressHistory = sequelize.define(
 
 BusinessAddress.hasMany(BusinessAddressHistory, {
   foreignKey: "businessAddressID",
+});
+
+Business.hasMany(BusinessAddressHistory, {
+  foreignKey: "businessID",
 });
 
 module.exports = BusinessAddressHistory;

@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
+const BusinessAddressHistory = require("../../models/adultEntertainment/businessAddressHistory");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -46,13 +47,22 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      return res.render("adultEntertainment/history", {
-        title: "BWG | Adult Entertainment License History",
-        errorMessages: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        monthDropdownValues: monthDropdownValues,
-        yearDropdownValues: yearDropdownValues,
+      BusinessAddressHistory.findAndCountAll({
+        where: {
+          businessID: req.params.id,
+        },
+        order: [["businessAddressHistoryID", "DESC"]],
+      }).then((results) => {
+        return res.render("adultEntertainment/history", {
+          title: "BWG | Adult Entertainment License History",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          monthDropdownValues: monthDropdownValues,
+          yearDropdownValues: yearDropdownValues,
+          data: results.rows,
+          businessID: req.params.id,
+        });
       });
     }
   }
