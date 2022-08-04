@@ -108,6 +108,8 @@ var binsRoute = require("./routes/donationBin/bins");
 /* Hawker & Peddler related routes */
 var hawkerPeddlerRoute = require("./routes/hawkerPeddler/index");
 
+var hawkerPeddlerBusinessAddressHistoryRoute = require("./routes/hawkerPeddler/businessAddressHistory");
+
 var hawkerPeddlerAddPropertyOwnerRoute = require("./routes/hawkerPeddler/addPropertyOwner");
 var hawkerPeddlerEditPropertyOwnerRoute = require("./routes/hawkerPeddler/editPropertyOwner");
 
@@ -385,6 +387,11 @@ app.use("/donationBin/editDonationBin", editDonationBinRouter);
 
 /* Hawker & Peddler related routes */
 app.use("/hawkerPeddler", hawkerPeddlerRoute);
+
+app.use(
+  "/hawkerPeddler/businessAddressHistory",
+  hawkerPeddlerBusinessAddressHistoryRoute
+);
 
 app.use("/hawkerPeddler/addPropertyOwner", hawkerPeddlerAddPropertyOwnerRoute);
 app.use(

@@ -14,7 +14,7 @@ const paginate = require("express-paginate");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /hawkerPeddler page. */
+/* GET /hawkerPeddler */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -280,5 +280,49 @@ router.post("/", async (req, res, next) => {
     });
   }
 });
+
+/* POST /hawkerPeddler/history - getting value to search by, then redirect */
+router.post(
+  "/history",
+  body("businessName")
+    .if(body("businessName").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Business Name Entry!")
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("hawkerPeddler/index", {
+        title: "BWG | Hawker & Peddler Licensing",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // get the specified business.
+      HawkerPeddlerBusiness.findOne({
+        where: {
+          businessName: req.body.businessName,
+        },
+      })
+        .then((results) => {
+          // redirect to unique history page.
+          return res.redirect(
+            "/hawkerPeddler/businessAddressHistory/" +
+              results.hawkerPeddlerBusinessID
+          );
+        }) // catch any scary errors and render page error.
+        .catch((err) =>
+          res.render("hawkerPeddler/index", {
+            title: "BWG | Hawker & Peddler Licensing",
+            message: "Page Error!",
+          })
+        );
+    }
+  }
+);
 
 module.exports = router;
