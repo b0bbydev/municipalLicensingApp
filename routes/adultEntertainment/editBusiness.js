@@ -148,7 +148,7 @@ router.post(
       },
     });
 
-    // if errors is NOT empty (if there are errors...)
+    // if ERRORS in form EXIST.
     if (!errors.isEmpty()) {
       return res.render("adultEntertainment/editBusiness", {
         title: "BWG | Edit Business",
@@ -180,6 +180,7 @@ router.post(
         },
       });
     } else {
+      /* begin check for ONLY updating data when a value has changed. */
       // create empty objects to hold data.
       let currentData = {};
       let newData = {};
@@ -189,68 +190,80 @@ router.post(
         where: {
           businessID: req.params.id,
         },
-      }).then((results) => {
-        // put the CURRENT data into an object.
-        currentData = {
-          businessName: results.dataValues.businessName,
-          ownerName: results.dataValues.ownerName,
-          contactName: results.dataValues.contactName,
-          contactPhone: results.dataValues.contactPhone,
-          licenseNumber: results.dataValues.licenseNumber,
-          issueDate: results.dataValues.issueDate,
-          expiryDate: results.dataValues.expiryDate,
-          policeVSC: results.dataValues.policeVSC,
-          certificateOfInsurance: results.dataValues.certificateOfInsurance,
-          photoID: results.dataValues.photoID,
-          healthInspection: results.dataValues.healthInspection,
-          zoningClearance: results.dataValues.zoningClearance,
-          feePaid: results.dataValues.feePaid,
-          notes: results.dataValues.notes,
-        };
+      })
+        .then((results) => {
+          // put the CURRENT data into an object.
+          currentData = {
+            businessName: results.dataValues.businessName,
+            ownerName: results.dataValues.ownerName,
+            contactName: results.dataValues.contactName,
+            contactPhone: results.dataValues.contactPhone,
+            licenseNumber: results.dataValues.licenseNumber,
+            issueDate: results.dataValues.issueDate,
+            expiryDate: results.dataValues.expiryDate,
+            policeVSC: results.dataValues.policeVSC,
+            certificateOfInsurance: results.dataValues.certificateOfInsurance,
+            photoID: results.dataValues.photoID,
+            healthInspection: results.dataValues.healthInspection,
+            zoningClearance: results.dataValues.zoningClearance,
+            feePaid: results.dataValues.feePaid,
+            notes: results.dataValues.notes,
+          };
 
-        // put the NEW data into an object.
-        newData = {
-          businessName: req.body.businessName,
-          ownerName: req.body.ownerName,
-          contactName: req.body.contactName,
-          contactPhone: req.body.contactPhone,
-          licenseNumber: req.body.licenseNumber,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
-          policeVSC: req.body.policeVSC,
-          certificateOfInsurance: req.body.certificateOfInsurance,
-          photoID: req.body.photoID,
-          healthInspection: req.body.healthInspection,
-          zoningClearance: req.body.zoningClearance,
-          feePaid: req.body.feePaid,
-          notes: req.body.notes,
-        };
-        console.log(funcHelpers.areObjectsEqual(currentData, newData));
-      });
+          // put the NEW data into an object.
+          // fixEmptyValue() in this case will replace any 'undefined' values with null.
+          // which is required when comparing objects as null != defined, making them techinically different.
+          newData = {
+            businessName: req.body.businessName,
+            ownerName: req.body.ownerName,
+            contactName: req.body.contactName,
+            contactPhone: req.body.contactPhone,
+            licenseNumber: req.body.licenseNumber,
+            issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+            expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+            policeVSC: funcHelpers.fixEmptyValue(req.body.policeVSC),
+            certificateOfInsurance: funcHelpers.fixEmptyValue(
+              req.body.certificateOfInsurance
+            ),
+            photoID: funcHelpers.fixEmptyValue(req.body.photoID),
+            healthInspection: funcHelpers.fixEmptyValue(
+              req.body.healthInspection
+            ),
+            zoningClearance: funcHelpers.fixEmptyValue(
+              req.body.zoningClearance
+            ),
+            feePaid: funcHelpers.fixEmptyValue(req.body.feePaid),
+            notes: req.body.notes,
+          };
 
-      Business.update(
-        {
-          businessName: req.body.businessName,
-          ownerName: req.body.ownerName,
-          contactName: req.body.contactName,
-          contactPhone: req.body.contactPhone,
-          licenseNumber: req.body.licenseNumber,
-          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
-          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
-          policeVSC: req.body.policeVSC,
-          certificateOfInsurance: req.body.certificateOfInsurance,
-          photoID: req.body.photoID,
-          healthInspection: req.body.healthInspection,
-          zoningClearance: req.body.zoningClearance,
-          feePaid: req.body.feePaid,
-          notes: req.body.notes,
-        },
-        {
-          where: {
-            businessID: req.params.id,
-          },
-        }
-      )
+          // compare the two objects to check if they contain equal properties. If NOT (false), then proceed with update.
+          if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+            // update business.
+            Business.update(
+              {
+                businessName: req.body.businessName,
+                ownerName: req.body.ownerName,
+                contactName: req.body.contactName,
+                contactPhone: req.body.contactPhone,
+                licenseNumber: req.body.licenseNumber,
+                issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+                expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+                policeVSC: req.body.policeVSC,
+                certificateOfInsurance: req.body.certificateOfInsurance,
+                photoID: req.body.photoID,
+                healthInspection: req.body.healthInspection,
+                zoningClearance: req.body.zoningClearance,
+                feePaid: req.body.feePaid,
+                notes: req.body.notes,
+              },
+              {
+                where: {
+                  businessID: req.params.id,
+                },
+              }
+            );
+          }
+        })
         .then(() => {
           // create empty objects to hold data.
           let currentData = {};
@@ -288,6 +301,7 @@ router.post(
 
             // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
             if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+              // update business address.
               BusinessAddress.update(
                 {
                   streetNumber: req.body.streetNumber,

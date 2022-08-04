@@ -7,7 +7,7 @@ module.exports = {
   },
 
   fixEmptyValue: function (str) {
-    if (str === " " || str === "") {
+    if (str === " " || str === "" || str === undefined) {
       str = null;
     }
     return str;
