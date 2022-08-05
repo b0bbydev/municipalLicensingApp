@@ -36,7 +36,6 @@ const RefreshmentVehicleOwnerAddress = sequelize.define(
   }
 );
 
-// create relationship with donationBinOperator table.
 RefreshmentVehicleOwner.hasMany(RefreshmentVehicleOwnerAddress, {
   foreignKey: "refreshmentVehicleOwnerID",
 });

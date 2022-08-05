@@ -157,6 +157,10 @@ var refreshmentVehicleRoute = require("./routes/refreshmentVehicles/index");
 
 var refreshmentVehicleOperatorAddressHistoryRoute = require("./routes/refreshmentVehicles/vehicleOperatorAddressHistory");
 
+var refreshmentVehicleOwnerAddressHistoryRoute = require("./routes/refreshmentVehicles/vehicleOwnerAddressHistory");
+
+var refreshmentVehiclePropertyOwnerAddressHistoryRoute = require("./routes/refreshmentVehicles/vehiclePropertyOwnerAddressHistory");
+
 var addRefreshmentVehicleRoute = require("./routes/refreshmentVehicles/addVehicle");
 var editRefreshmentVehicleRoute = require("./routes/refreshmentVehicles/editVehicle");
 
@@ -466,6 +470,16 @@ app.use("/refreshmentVehicles", refreshmentVehicleRoute);
 app.use(
   "/refreshmentVehicles/vehicleOperatorAddressHistory",
   refreshmentVehicleOperatorAddressHistoryRoute
+);
+
+app.use(
+  "/refreshmentVehicles/vehicleOwnerAddressHistory",
+  refreshmentVehicleOwnerAddressHistoryRoute
+);
+
+app.use(
+  "/refreshmentVehicles/vehiclePropertyOwnerAddressHistory",
+  refreshmentVehiclePropertyOwnerAddressHistoryRoute
 );
 
 app.use("/refreshmentVehicles/addVehicle", addRefreshmentVehicleRoute);

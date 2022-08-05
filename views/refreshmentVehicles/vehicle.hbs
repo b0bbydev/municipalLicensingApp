@@ -37,10 +37,13 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each refreshmentVehiclePropertyOwnerAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}}
-            {{this.postalCode}}</td>
+          <td><a
+              id="ownerLink"
+              href="/refreshmentVehicles/vehiclePropertyOwnerAddressHistory/{{this.refreshmentVehiclePropertyOwnerID}}"
+            >{{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}</a></td>
         {{/each}}
         <td><a
             class="btn btn-sm btn-secondary"
@@ -82,10 +85,14 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each refreshmentVehicleOwnerAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}}
-            {{this.postalCode}}</td>
+          <td><a
+              id="ownerLink"
+              href="/refreshmentVehicles/vehicleOwnerAddressHistory/{{this.refreshmentVehicleOwnerID}}"
+            >
+              {{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}</a></td>
         {{/each}}
         <td>{{this.licenseNumber}}</td>
         <td><a
