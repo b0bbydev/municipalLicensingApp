@@ -3,6 +3,11 @@ var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const KennelOwnerAddressHistory = require("../../models/kennel/kennelOwnerAddressHistory");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
+// sequelize.
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -47,23 +52,116 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      KennelOwnerAddressHistory.findAndCountAll({
-        where: {
-          kennelOwnerID: req.params.id,
-        },
-        order: [["kennelOwnerAddressHistoryID", "DESC"]],
-      }).then((results) => {
-        return res.render("kennels/kennelOwnerAddressHistory", {
-          title: "BWG | Kennel Owner Address History",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          monthDropdownValues: monthDropdownValues,
-          yearDropdownValues: yearDropdownValues,
-          data: results.rows,
-          kennelOwnerID: req.params.id,
+      // if there are no filter parameters.
+      if (!req.query.filterMonth && !req.query.filterYear) {
+        KennelOwnerAddressHistory.findAndCountAll({
+          where: {
+            kennelOwnerID: req.params.id,
+          },
+          order: [["lastModified", "DESC"]],
+        }).then((results) => {
+          return res.render("kennels/kennelOwnerAddressHistory", {
+            title: "BWG | Kennel Owner Address History",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            monthDropdownValues: monthDropdownValues,
+            yearDropdownValues: yearDropdownValues,
+            data: results.rows,
+            kennelOwnerID: req.params.id,
+          });
         });
-      });
+        // both year and month filter.
+      } else if (req.query.filterMonth && req.query.filterYear) {
+        KennelOwnerAddressHistory.findAndCountAll({
+          where: {
+            [Op.and]: [
+              { kennelOwnerID: req.params.id },
+              Sequelize.where(
+                Sequelize.fn("year", Sequelize.col("lastModified")),
+                [req.query.filterYear]
+              ),
+              Sequelize.where(
+                Sequelize.fn("month", Sequelize.col("lastModified")),
+                [funcHelpers.monthToNumber(req.query.filterMonth)]
+              ),
+            ],
+          },
+          order: [["lastModified", "DESC"]],
+        }).then((results) => {
+          return res.render("kennels/kennelOwnerAddressHistory", {
+            title: "BWG | Kennel Owner Address History",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            monthDropdownValues: monthDropdownValues,
+            yearDropdownValues: yearDropdownValues,
+            data: results.rows,
+            kennelOwnerID: req.params.id,
+            filterMonth: req.query.filterMonth,
+            filterYear: req.query.filterYear,
+          });
+        });
+        // if at least one filter exists.
+      } else if (req.query.filterMonth || req.query.filterYear) {
+        /* IF ONLY YEAR. */
+        if (!req.query.filterMonth) {
+          KennelOwnerAddressHistory.findAndCountAll({
+            where: {
+              // where kennelOwnerID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              [Op.and]: [
+                { kennelOwnerID: req.params.id },
+                Sequelize.where(
+                  Sequelize.fn("year", Sequelize.col("lastModified")),
+                  [req.query.filterYear]
+                ),
+              ],
+            },
+            order: [["lastModified", "DESC"]],
+          }).then((results) => {
+            return res.render("kennels/kennelOwnerAddressHistory", {
+              title: "BWG | Kennel Owner Address History",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
+              data: results.rows,
+              kennelOwnerID: req.params.id,
+              filterMonth: req.query.filterMonth,
+              filterYear: req.query.filterYear,
+            });
+          });
+          /* IF ONLY MONTH. */
+        } else if (!req.query.filterYear) {
+          KennelOwnerAddressHistory.findAndCountAll({
+            where: {
+              // where kennelOwnerID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              [Op.and]: [
+                { kennelOwnerID: req.params.id },
+                Sequelize.where(
+                  Sequelize.fn("month", Sequelize.col("lastModified")),
+                  [funcHelpers.monthToNumber(req.query.filterMonth)]
+                ),
+              ],
+            },
+            order: [["lastModified", "DESC"]],
+          }).then((results) => {
+            return res.render("kennels/kennelOwnerAddressHistory", {
+              title: "BWG | Kennel Owner Address History",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
+              data: results.rows,
+              kennelOwnerID: req.params.id,
+              filterMonth: req.query.filterMonth,
+              filterYear: req.query.filterYear,
+            });
+          });
+        }
+      }
     }
   }
 );

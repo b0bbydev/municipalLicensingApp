@@ -7,12 +7,20 @@
     title="Month Filter"
     name="filterMonth"
   >
-    <option disabled selected>Month...</option>
     {{#if filterMonth}}
       <option value="{{filterMonth}}" selected>{{filterMonth}}</option>
+    {{else}}
+      <option value="" disabled selected>Month...</option>
     {{/if}}
     {{#each monthDropdownValues}}
-      <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
     {{/each}}
   </select>
   <select
@@ -21,12 +29,20 @@
     title="Year Filter"
     name="filterYear"
   >
-    <option disabled selected>Year...</option>
     {{#if filterYear}}
       <option value="{{filterYear}}" selected>{{filterYear}}</option>
+    {{else}}
+      <option value="" disabled selected>Year...</option>
     {{/if}}
     {{#each yearDropdownValues}}
-      <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
     {{/each}}
   </select>
   <button
