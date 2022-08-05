@@ -156,8 +156,8 @@
                   <ul
                     class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
                   >
-                    {{#includes auth "Admin"}}
-                      <!-- Admin - adult entertainment -->
+                    {{#includes auth "Enforcement"}}
+                      <!-- Enforcement - Adult Entertainment -->
                       <li class="nav-item w-100 p-1">
                         <a
                           href="/adultEntertainment"
@@ -168,7 +168,7 @@
                             Entertainment Licenses</span>
                         </a>
                       </li>
-                      <!-- Admin - Donation Bin Licenses -->
+                      <!-- Enforcement - Donation Bin Licenses -->
                       <li class="nav-item w-100 p-1">
                         <a
                           href="/donationBin"
@@ -179,7 +179,14 @@
                             Licenses</span>
                         </a>
                       </li>
-                      <!-- Admin - Hawker & Peddler Licenses -->
+                      <!-- Enforcement - Dogtag Licenses -->
+                      <li class="nav-item-last w-100 p-1">
+                        <a href="/dogtags" class="nav-link align-middle ps-3">
+                          <i class="fs-4 icon-blue bi bi-tag"></i>
+                          <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
+                        </a>
+                      </li>
+                      <!-- Enforcement - Hawker & Peddler Licenses -->
                       <li class="nav-item w-100 p-1">
                         <a
                           href="/hawkerPeddler"
@@ -190,21 +197,21 @@
                             Licenses</span>
                         </a>
                       </li>
-                      <!-- Admin - kennel licenses -->
+                      <!-- Enforcement - Kennel Licenses -->
                       <li class="nav-item-admin w-100 p-1">
                         <a href="/kennels" class="nav-link align-middle ps-3">
                           <i class="fs-4 icon-blue bi bi-postcard"></i>
                           <span class="ms-1 d-none d-sm-inline">Kennel Licenses</span>
                         </a>
                       </li>
-                      <!-- Admin - liquor licenses -->
+                      <!-- Enforcement - Liquor Licenses -->
                       <li class="nav-item-admin w-100 p-1">
                         <a href="/liquor" class="nav-link align-middle ps-3">
                           <i class="fs-4 icon-blue bi bi-cup-straw"></i>
                           <span class="ms-1 d-none d-sm-inline">Liquor Licenses</span>
                         </a>
                       </li>
-                      <!-- Admin - refreshment vehicle licenses -->
+                      <!-- Enforcement - Refreshment Vehicle Licenses -->
                       <li class="nav-item-admin w-100 p-1">
                         <a
                           href="/refreshmentVehicles"
@@ -215,7 +222,7 @@
                             Vehicle Licenses</span>
                         </a>
                       </li>
-                      <!-- Admin - taxi licenses -->
+                      <!-- Enforcement - Taxi Licenses -->
                       <li class="nav-item-admin w-100 p-1">
                         <a
                           href="/taxiLicenses"
@@ -226,21 +233,12 @@
                         </a>
                       </li>
                     {{/includes}}
-                    <!-- dog auth -->
-                    {{#includes auth "Dog Licenses"}}
-                      <li class="nav-item-last w-100 p-1">
-                        <a href="/dogtags" class="nav-link align-middle ps-3">
-                          <i class="fs-4 icon-blue bi bi-tag"></i>
-                          <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
-                        </a>
-                      </li>
-                    {{/includes}}
                   </ul>
                 </div>
               </div>
             </div>
-            {{#includes auth "Admin"}}
-              <!-- Admin - Street Closure Permits -->
+            {{#includes auth "Enforcement"}}
+              <!-- Enforcement - Street Closure Permits -->
               <li class="nav-item w-100 p-1">
                 <a
                   href="/streetClosurePermit"
@@ -250,7 +248,7 @@
                   <span class="ms-1 d-none d-sm-inline">Street Closure Permits</span>
                 </a>
               </li>
-              <!-- Admin - POA Matters -->
+              <!-- Enforcement - POA Matters -->
               <li class="nav-item w-100 p-1">
                 <a href="/poaMatters" class="nav-link align-middle ps-3">
                   <i class="fs-4 icon-blue bi bi-bank"></i>
@@ -259,6 +257,7 @@
               </li>
             {{/includes}}
             {{#includes auth "Policies"}}
+              <!-- Policies - POA Matters -->
               <li class="nav-item w-100 p-1">
                 <a href="/policies" class="nav-link align-middle ps-3">
                   <i class="fs-4 icon-blue bi bi-calendar2-minus"></i>

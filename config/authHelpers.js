@@ -12,9 +12,9 @@ module.exports = {
     } // end of if-else.
   }, // end of isLoggedIn().
 
-  // create a method to decide authLevel based on session email and what is in user table.
+  // create a method to decide roleName based on session email and what is in user table.
   auth: async (req, res, next) => {
-    // get authLevel for user.
+    // get roleName for user.
     User.findOne({
       include: [
         {
@@ -51,18 +51,18 @@ module.exports = {
     }
   }, // end of isAdmin().
 
-  // force dog license auth.
-  isDogLicense: function (req, res, next) {
-    if (req.session.auth.includes("Dog Licenses")) {
+  // force policies auth.
+  isPolicy: function (req, res, next) {
+    if (req.session.auth.includes("Policies")) {
       next();
     } else {
       res.redirect("/");
     }
   },
 
-  // force policies auth.
-  isPolicy: function (req, res, next) {
-    if (req.session.auth.includes("Policies")) {
+  // force enforcement auth.
+  isEnforcement: function (req, res, next) {
+    if (req.session.auth.includes("Enforcement")) {
       next();
     } else {
       res.redirect("/");

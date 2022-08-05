@@ -31,6 +31,9 @@ router.get(
       // clear session messages.
       req.session.messages = [];
 
+      // get all roles.
+      var roles = await Role.findAll();
+
       // user roles.
       User.findAll({
         include: [
@@ -52,6 +55,7 @@ router.get(
           data: results,
           userId: req.params.id,
           userName: results[0].firstName + " " + results[0].lastName,
+          roles: roles,
         });
       });
     }
@@ -77,11 +81,13 @@ router.post("/:id", async (req, res, next) => {
       userId: req.params.id,
       roleId: req.body.roleId,
     })
-      .then(res.redirect(req.headers.referer))
+      .then(() => {
+        return res.redirect(req.headers.referer);
+      })
       .catch((err) => {
         return res.render("admin/manageAccess", {
           title: "BWG | Manage Access",
-          message: "Page Error!",
+          message: "Page Error!" + err,
         });
       });
   }

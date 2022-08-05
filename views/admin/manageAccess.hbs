@@ -40,9 +40,9 @@
       <label for="Select A Role" class="form-label title-text">Select A Role</label>
       <select class="form-select" name="roleId" required>
         <option value="" selected disabled>Select a role...</option>
-        <option value="1">Admin</option>
-        <option value="2">Dog Licenses</option>
-        <option value="3">Policies</option>
+          {{#each roles}}
+            <option value="{{incremented @index}}">{{this.roleName}}</option>
+        {{/each}}
       </select>
     </div>
   </div>

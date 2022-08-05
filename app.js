@@ -30,7 +30,7 @@ var indexRouter = require("./routes/index");
 const limiter = require("./config/limiter");
 var moment = require("moment");
 // authHelper middleware.
-const { isAdmin, isDogLicense, isPolicy } = require("./config/authHelpers");
+const { isAdmin, isEnforcement, isPolicy } = require("./config/authHelpers");
 
 var iisReset = require("./routes/iisreset/index");
 
@@ -316,11 +316,11 @@ hbs.registerHelper("incremented", function (index) {
   return index;
 });
 
-app.use("/iisreset", iisReset);
-
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
+
+app.use("/iisreset", isAdmin, iisReset);
 
 /* admin related routes */
 app.use("/admin", isAdmin, adminRouter);
@@ -332,224 +332,326 @@ app.use("/admin/manageAccess", isAdmin, adminManageAccessRouter);
 app.use("/dropdownManager", isAdmin, dropdownRouter);
 app.use("/dropdownManager/form", isAdmin, dropdownFormRouter);
 
+/* Send SMS related routes */
+app.use("/sendSms", isAdmin, sendSmsRouter);
+
 /* adult entertainment licensing related routes */
-app.use("/adultEntertainment", isAdmin, adultEntertainmentRouter);
+app.use("/adultEntertainment", isEnforcement, adultEntertainmentRouter);
 app.use(
   "/adultEntertainment/addBusiness",
-  isAdmin,
+  isEnforcement,
   adultEntertainmentAddBusinessRouter
 );
 app.use(
   "/adultEntertainment/editBusiness",
-  isAdmin,
+  isEnforcement,
   adultEntertainmentEditBusinessRouter
 );
-app.use("/adultEntertainment/history", adultEntertainmentHistoryRouter);
+app.use(
+  "/adultEntertainment/history",
+  isEnforcement,
+  adultEntertainmentHistoryRouter
+);
 
 /* policies related routes. */
-app.use("/policies", isPolicy, policiesRouter);
-app.use("/policies/addRecord", isPolicy, addRecordRouter);
-app.use("/policies/addPolicy", isPolicy, addPoliciesRouter);
-app.use("/policies/editPolicy", isPolicy, editPolicyRouter);
+app.use("/policies", policiesRouter);
+app.use("/policies/addRecord", addRecordRouter);
+app.use("/policies/addPolicy", addPoliciesRouter);
+app.use("/policies/editPolicy", editPolicyRouter);
 
-app.use("/policies/procedures", isPolicy, proceduresRouter);
-app.use("/policies/addProcedure", isPolicy, addProcedureRouter);
-app.use("/policies/editProcedure", isPolicy, editProcedureRouter);
+app.use("/policies/procedures", proceduresRouter);
+app.use("/policies/addProcedure", addProcedureRouter);
+app.use("/policies/editProcedure", editProcedureRouter);
 
-app.use("/policies/guidelines", isPolicy, guidelinesRouter);
-app.use("/policies/addGuideline", isPolicy, addGuidelineRouter);
-app.use("/policies/editGuideline", isPolicy, editGuidelineRouter);
+app.use("/policies/guidelines", guidelinesRouter);
+app.use("/policies/addGuideline", addGuidelineRouter);
+app.use("/policies/editGuideline", editGuidelineRouter);
 
 /* dogtag related routes. */
-app.use("/dogtags", isDogLicense, dogTagRouter);
+app.use("/dogtags", isEnforcement, dogTagRouter);
 // owner.
-app.use("/dogtags/addOwner", isDogLicense, addOwnerRouter);
-app.use("/dogtags/addAdditionalOwner", isDogLicense, addAdditionalOwnerRouter);
-app.use("/dogtags/editOwner", isDogLicense, editOwnerRouter);
+app.use("/dogtags/addOwner", isEnforcement, addOwnerRouter);
+app.use("/dogtags/addAdditionalOwner", isEnforcement, addAdditionalOwnerRouter);
+app.use("/dogtags/editOwner", isEnforcement, editOwnerRouter);
 // dog.
-app.use("/dogtags/addDog", isDogLicense, addDogRouter);
-app.use("/dogtags/editDog", isDogLicense, editDogRouter);
-
-/* Send SMS related routes */
-app.use("/sendSms", sendSmsRouter);
+app.use("/dogtags/addDog", isEnforcement, addDogRouter);
+app.use("/dogtags/editDog", isEnforcement, editDogRouter);
 
 /* Street Closure Permits related routes. */
-app.use("/streetClosurePermit", streetClosurePermitRouter);
-app.use("/streetClosurePermit/addPermit", addStreetClosurePermitRouter);
-app.use("/streetClosurePermit/editPermit", editStreetClosurePermitRouter);
+app.use("/streetClosurePermit", isEnforcement, streetClosurePermitRouter);
+app.use(
+  "/streetClosurePermit/addPermit",
+  isEnforcement,
+  addStreetClosurePermitRouter
+);
+app.use(
+  "/streetClosurePermit/editPermit",
+  isEnforcement,
+  editStreetClosurePermitRouter
+);
 
 /* Donation Bin related routes */
-app.use("/donationBin", donationBinRouter);
+app.use("/donationBin", isEnforcement, donationBinRouter);
 
 app.use(
   "/donationBin/donationBinAddressHistory",
+  isEnforcement,
   donationBinAddressHistoryRouter
 );
 
 app.use(
   "/donationBin/donationBinPropertyOwnerAddressHistory",
+  isEnforcement,
   donationBinPropertyOwnerAddressHistoryRouter
 );
 
 app.use(
   "/donationBin/donationBinOperatorAddressHistory",
+  isEnforcement,
   donationBinOperatorAddressHistoryRouter
 );
 
-app.use("/donationBin/addCharity", addDonationBinCharityRouter);
-app.use("/donationBin/editCharity", editDonationBinCharityRouter);
+app.use("/donationBin/addCharity", isEnforcement, addDonationBinCharityRouter);
+app.use(
+  "/donationBin/editCharity",
+  isEnforcement,
+  editDonationBinCharityRouter
+);
 
-app.use("/donationBin/addPropertyOwner", addPropertyOwnerRouter);
-app.use("/donationBin/editPropertyOwner", editPropertyOwnerRouter);
+app.use("/donationBin/addPropertyOwner", isEnforcement, addPropertyOwnerRouter);
+app.use(
+  "/donationBin/editPropertyOwner",
+  isEnforcement,
+  editPropertyOwnerRouter
+);
 
-app.use("/donationBin/addOperator", addDonationBinOperatorRouter);
-app.use("/donationBin/editOperator", editDonationBinOperatorRouter);
+app.use(
+  "/donationBin/addOperator",
+  isEnforcement,
+  addDonationBinOperatorRouter
+);
+app.use(
+  "/donationBin/editOperator",
+  isEnforcement,
+  editDonationBinOperatorRouter
+);
 
-app.use("/donationBin/bins", binsRoute);
-app.use("/donationBin/addDonationBin", addDonationBinRouter);
-app.use("/donationBin/editDonationBin", editDonationBinRouter);
+app.use("/donationBin/bins", isEnforcement, binsRoute);
+app.use("/donationBin/addDonationBin", isEnforcement, addDonationBinRouter);
+app.use("/donationBin/editDonationBin", isEnforcement, editDonationBinRouter);
 
 /* Hawker & Peddler related routes */
-app.use("/hawkerPeddler", hawkerPeddlerRoute);
+app.use("/hawkerPeddler", isEnforcement, hawkerPeddlerRoute);
 
 app.use(
   "/hawkerPeddler/businessAddressHistory",
+  isEnforcement,
   hawkerPeddlerBusinessAddressHistoryRoute
 );
 
 app.use(
   "/hawkerPeddler/propertyOwnerAddressHistory",
+  isEnforcement,
   hawkerPeddlerPropertyOwnerAddressHistoryRoute
 );
 
 app.use(
   "/hawkerPeddler/applicantAddressHistory",
+  isEnforcement,
   hawkerPeddlerApplicantAddressHistoryRoute
 );
 
-app.use("/hawkerPeddler/addPropertyOwner", hawkerPeddlerAddPropertyOwnerRoute);
+app.use(
+  "/hawkerPeddler/addPropertyOwner",
+  isEnforcement,
+  hawkerPeddlerAddPropertyOwnerRoute
+);
 app.use(
   "/hawkerPeddler/editPropertyOwner",
+  isEnforcement,
   hawkerPeddlerEditPropertyOwnerRoute
 );
 
-app.use("/hawkerPeddler/addApplicant", hawkerPeddlerAddApplicantRoute);
-app.use("/hawkerPeddler/editApplicant", hawkerPeddlerEditApplicantRoute);
+app.use(
+  "/hawkerPeddler/addApplicant",
+  isEnforcement,
+  hawkerPeddlerAddApplicantRoute
+);
+app.use(
+  "/hawkerPeddler/editApplicant",
+  isEnforcement,
+  hawkerPeddlerEditApplicantRoute
+);
 
-app.use("/hawkerPeddler/business", hawkerPeddlerBusinessRoute);
-app.use("/hawkerPeddler/addBusiness", hawkerPeddlerAddBusinessRoute);
-app.use("/hawkerPeddler/editBusiness", hawkerPeddlerEditBusinessRoute);
+app.use("/hawkerPeddler/business", isEnforcement, hawkerPeddlerBusinessRoute);
+app.use(
+  "/hawkerPeddler/addBusiness",
+  isEnforcement,
+  hawkerPeddlerAddBusinessRoute
+);
+app.use(
+  "/hawkerPeddler/editBusiness",
+  isEnforcement,
+  hawkerPeddlerEditBusinessRoute
+);
 
 /* kennel related routes */
-app.use("/kennels", kennelsRoute);
+app.use("/kennels", isEnforcement, kennelsRoute);
 
-app.use("/kennels/kennelAddressHistory", kennelAddressHistoryRoute);
+app.use(
+  "/kennels/kennelAddressHistory",
+  isEnforcement,
+  kennelAddressHistoryRoute
+);
 
-app.use("/kennels/kennelOwnerAddressHistory", kennelOwnerAddressHistoryRoute);
+app.use(
+  "/kennels/kennelOwnerAddressHistory",
+  isEnforcement,
+  kennelOwnerAddressHistoryRoute
+);
 
 app.use(
   "/kennels/kennelPropertyOwnerAddressHistory",
+  isEnforcement,
   kennelPropertyOwnerAddressHistoryRoute
 );
 
-app.use("/kennels/kennel", kennelRoute);
-app.use("/kennels/addKennel", addKennelRoute);
-app.use("/kennels/editKennel", editKennelRoute);
+app.use("/kennels/kennel", isEnforcement, kennelRoute);
+app.use("/kennels/addKennel", isEnforcement, addKennelRoute);
+app.use("/kennels/editKennel", isEnforcement, editKennelRoute);
 
-app.use("/kennels/addPropertyOwner", addKennelPropertyOwnerRoute);
-app.use("/kennels/editPropertyOwner", editKennelPropertyOwnerRoute);
+app.use(
+  "/kennels/addPropertyOwner",
+  isEnforcement,
+  addKennelPropertyOwnerRoute
+);
+app.use(
+  "/kennels/editPropertyOwner",
+  isEnforcement,
+  editKennelPropertyOwnerRoute
+);
 
-app.use("/kennels/addKennelOwner", addKennelOwnerRoute);
-app.use("/kennels/editKennelOwner", editKennelOwnerRoute);
+app.use("/kennels/addKennelOwner", isEnforcement, addKennelOwnerRoute);
+app.use("/kennels/editKennelOwner", isEnforcement, editKennelOwnerRoute);
 
 /* Liquor License related routes */
-app.use("/liquor", liquorRoute);
+app.use("/liquor", isEnforcement, liquorRoute);
 
-app.use("/liquor/businessAddressHistory", liquorBusinessAddressHistoryRoute);
+app.use(
+  "/liquor/businessAddressHistory",
+  isEnforcement,
+  liquorBusinessAddressHistoryRoute
+);
 
-app.use("/liquor/addBusiness", addLiquorBusinessRoute);
-app.use("/liquor/editBusiness", editLiquorBusinessRoute);
+app.use("/liquor/addBusiness", isEnforcement, addLiquorBusinessRoute);
+app.use("/liquor/editBusiness", isEnforcement, editLiquorBusinessRoute);
 
 /* Refreshment Vehicle related routes */
-app.use("/refreshmentVehicles", refreshmentVehicleRoute);
+app.use("/refreshmentVehicles", isEnforcement, refreshmentVehicleRoute);
 
 app.use(
   "/refreshmentVehicles/vehicleOperatorAddressHistory",
+  isEnforcement,
   refreshmentVehicleOperatorAddressHistoryRoute
 );
 
 app.use(
   "/refreshmentVehicles/vehicleOwnerAddressHistory",
+  isEnforcement,
   refreshmentVehicleOwnerAddressHistoryRoute
 );
 
 app.use(
   "/refreshmentVehicles/vehiclePropertyOwnerAddressHistory",
+  isEnforcement,
   refreshmentVehiclePropertyOwnerAddressHistoryRoute
 );
 
-app.use("/refreshmentVehicles/addVehicle", addRefreshmentVehicleRoute);
-app.use("/refreshmentVehicles/editVehicle", editRefreshmentVehicleRoute);
+app.use(
+  "/refreshmentVehicles/addVehicle",
+  isEnforcement,
+  addRefreshmentVehicleRoute
+);
+app.use(
+  "/refreshmentVehicles/editVehicle",
+  isEnforcement,
+  editRefreshmentVehicleRoute
+);
 
-app.use("/refreshmentVehicles/vehicle", vehicleRoute);
+app.use("/refreshmentVehicles/vehicle", isEnforcement, vehicleRoute);
 
 app.use(
   "/refreshmentVehicles/addPropertyOwner",
+  isEnforcement,
   addRefreshmentVehiclePropertyOwner
 );
 app.use(
   "/refreshmentVehicles/editPropertyOwner",
+  isEnforcement,
   editRefreshmentVehiclePropertyOwner
 );
 
-app.use("/refreshmentVehicles/addVehicleOwner", addRefreshmentVehicleOwner);
-app.use("/refreshmentVehicles/editVehicleOwner", editRefreshmentVehicleOwner);
+app.use(
+  "/refreshmentVehicles/addVehicleOwner",
+  isEnforcement,
+  addRefreshmentVehicleOwner
+);
+app.use(
+  "/refreshmentVehicles/editVehicleOwner",
+  isEnforcement,
+  editRefreshmentVehicleOwner
+);
 
 app.use(
   "/refreshmentVehicles/addVehicleOperator",
+  isEnforcement,
   addRefreshmentVehicleOperator
 );
 app.use(
   "/refreshmentVehicles/editVehicleOperator",
+  isEnforcement,
   editRefreshmentVehicleOperator
 );
 
 /* POA Matters related routes */
-app.use("/poaMatters", poaMattersRoute);
+app.use("/poaMatters", isEnforcement, poaMattersRoute);
 
-app.use("/poaMatters/addPoaMatter", addPoaMatterRoute);
-app.use("/poaMatters/editPoaMatter", editPoaMatterRoute);
+app.use("/poaMatters/addPoaMatter", isEnforcement, addPoaMatterRoute);
+app.use("/poaMatters/editPoaMatter", isEnforcement, editPoaMatterRoute);
 
-app.use("/poaMatters/addTrialDates", addAdditionalTrialDates);
+app.use("/poaMatters/addTrialDates", isEnforcement, addAdditionalTrialDates);
 
 /* Taxi related routes */
-app.use("/taxiLicenses", taxiLicenseRoute);
+app.use("/taxiLicenses", isEnforcement, taxiLicenseRoute);
 
 app.use(
   "/taxiLicenses/brokerAddressHistory",
+  isEnforcement,
   taxiLicenseBrokerAddressHistoryRoute
 );
 
 app.use(
   "/taxiLicenses/driverAddressHistory",
+  isEnforcement,
   taxiLicenseDriverAddressHistoryRoute
 );
 
 app.use(
   "/taxiLicenses/plateOwnerAddressHistory",
+  isEnforcement,
   taxiLicensePlateOwnerAddressHistoryRoute
 );
 
-app.use("/taxiLicenses/addBroker", addTaxiBrokerRoute);
-app.use("/taxiLicenses/editBroker", editTaxiBrokerRoute);
+app.use("/taxiLicenses/addBroker", isEnforcement, addTaxiBrokerRoute);
+app.use("/taxiLicenses/editBroker", isEnforcement, editTaxiBrokerRoute);
 
-app.use("/taxiLicenses/broker", taxiBrokerRoute);
+app.use("/taxiLicenses/broker", isEnforcement, taxiBrokerRoute);
 
-app.use("/taxiLicenses/addDriver", addTaxiDriverRoute);
-app.use("/taxiLicenses/editDriver", editTaxiDriverRoute);
+app.use("/taxiLicenses/addDriver", isEnforcement, addTaxiDriverRoute);
+app.use("/taxiLicenses/editDriver", isEnforcement, editTaxiDriverRoute);
 
-app.use("/taxiLicenses/addPlate", addTaxiPlateRoute);
-app.use("/taxiLicenses/editPlate", editTaxiPlateRoute);
+app.use("/taxiLicenses/addPlate", isEnforcement, addTaxiPlateRoute);
+app.use("/taxiLicenses/editPlate", isEnforcement, editTaxiPlateRoute);
 
 // catch 404 and forward to error handler
 app.use(limiter, function (req, res, next) {
