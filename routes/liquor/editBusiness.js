@@ -242,10 +242,6 @@ router.post(
               postalCode: req.body.postalCode,
             };
 
-            console.log("CURRENT DATA:", currentData);
-            console.log("NEW DATA:", newData);
-            console.log(funcHelpers.areObjectsEqual(currentData, newData));
-
             // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
             if (!funcHelpers.areObjectsEqual(currentData, newData)) {
               // update address.
