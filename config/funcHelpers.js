@@ -29,13 +29,13 @@ module.exports = {
         return "6";
       case "July":
         return "7";
-      case "Auguest":
+      case "August":
         return "8";
       case "September":
         return "9";
       case "October":
         return "10";
-      case "Novemeber":
+      case "November":
         return "11";
       case "December":
         return "12";

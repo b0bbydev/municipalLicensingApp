@@ -3,6 +3,11 @@ var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const DonationBinPropertyOwnerAddressHistory = require("../../models/donationBin/donationBinPropertyOwnerAddressHistory");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
+// sequelize.
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -37,7 +42,7 @@ router.get(
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
       return res.render("donationBin/donationBinPropertyOwnerAddressHistory", {
-        title: "BWG | Donation Bin Property Owner Address History",
+        title: "BWG | Property Owner Address History",
         message: "Page Error!",
         auth: req.session.auth, // authorization.
       });
@@ -47,26 +52,128 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
-      DonationBinPropertyOwnerAddressHistory.findAndCountAll({
-        where: {
-          donationBinPropertyOwnerID: req.params.id,
-        },
-        order: [["donationBinPropertyOwnerAddressHistoryID", "DESC"]],
-      }).then((results) => {
-        return res.render(
-          "donationBin/donationBinPropertyOwnerAddressHistory",
-          {
-            title: "BWG | Donation Bin Property Owner Address History",
-            errorMessages: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            monthDropdownValues: monthDropdownValues,
-            yearDropdownValues: yearDropdownValues,
-            data: results.rows,
+      // if there are no filter parameters.
+      if (!req.query.filterMonth && !req.query.filterYear) {
+        DonationBinPropertyOwnerAddressHistory.findAndCountAll({
+          where: {
             donationBinPropertyOwnerID: req.params.id,
-          }
-        );
-      });
+          },
+          order: [["lastModified", "DESC"]],
+        }).then((results) => {
+          return res.render(
+            "donationBin/donationBinPropertyOwnerAddressHistory",
+            {
+              title: "BWG | Property Owner Address History",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
+              data: results.rows,
+              donationBinPropertyOwnerID: req.params.id,
+            }
+          );
+        });
+        // both year and month filter.
+      } else if (req.query.filterMonth && req.query.filterYear) {
+        DonationBinPropertyOwnerAddressHistory.findAndCountAll({
+          where: {
+            [Op.and]: [
+              { donationBinPropertyOwnerID: req.params.id },
+              Sequelize.where(
+                Sequelize.fn("year", Sequelize.col("lastModified")),
+                [req.query.filterYear]
+              ),
+              Sequelize.where(
+                Sequelize.fn("month", Sequelize.col("lastModified")),
+                [funcHelpers.monthToNumber(req.query.filterMonth)]
+              ),
+            ],
+          },
+          order: [["lastModified", "DESC"]],
+        }).then((results) => {
+          return res.render(
+            "donationBin/donationBinPropertyOwnerAddressHistory",
+            {
+              title: "BWG | Property Owner Address History",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
+              data: results.rows,
+              donationBinPropertyOwnerID: req.params.id,
+              filterMonth: req.query.filterMonth,
+              filterYear: req.query.filterYear,
+            }
+          );
+        });
+        // if at least one filter exists.
+      } else if (req.query.filterMonth || req.query.filterYear) {
+        /* IF ONLY YEAR. */
+        if (!req.query.filterMonth) {
+          DonationBinPropertyOwnerAddressHistory.findAndCountAll({
+            where: {
+              // where donationBinPropertyOwnerID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              [Op.and]: [
+                { donationBinPropertyOwnerID: req.params.id },
+                Sequelize.where(
+                  Sequelize.fn("year", Sequelize.col("lastModified")),
+                  [req.query.filterYear]
+                ),
+              ],
+            },
+            order: [["lastModified", "DESC"]],
+          }).then((results) => {
+            return res.render(
+              "donationBin/donationBinPropertyOwnerAddressHistory",
+              {
+                title: "BWG | Property Owner Address History",
+                errorMessages: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                monthDropdownValues: monthDropdownValues,
+                yearDropdownValues: yearDropdownValues,
+                data: results.rows,
+                donationBinPropertyOwnerID: req.params.id,
+                filterMonth: req.query.filterMonth,
+                filterYear: req.query.filterYear,
+              }
+            );
+          });
+          /* IF ONLY MONTH. */
+        } else if (!req.query.filterYear) {
+          DonationBinPropertyOwnerAddressHistory.findAndCountAll({
+            where: {
+              // where donationBinPropertyOwnerID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              [Op.and]: [
+                { donationBinPropertyOwnerID: req.params.id },
+                Sequelize.where(
+                  Sequelize.fn("month", Sequelize.col("lastModified")),
+                  [funcHelpers.monthToNumber(req.query.filterMonth)]
+                ),
+              ],
+            },
+            order: [["lastModified", "DESC"]],
+          }).then((results) => {
+            return res.render(
+              "donationBin/donationBinPropertyOwnerAddressHistory",
+              {
+                title: "BWG | Property Owner Address History",
+                errorMessages: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                monthDropdownValues: monthDropdownValues,
+                yearDropdownValues: yearDropdownValues,
+                data: results.rows,
+                donationBinPropertyOwnerID: req.params.id,
+                filterMonth: req.query.filterMonth,
+                filterYear: req.query.filterYear,
+              }
+            );
+          });
+        }
+      }
     }
   }
 );
