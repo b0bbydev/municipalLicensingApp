@@ -153,4 +153,47 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+/* POST /taxiLicenses/history - getting value to search by, then redirect */
+router.post(
+  "/history",
+  body("companyName")
+    .if(body("companyName").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Company Name Entry!")
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("taxiLicenses/index", {
+        title: "BWG | Taxi Licenses",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // get the specified company.
+      TaxiBroker.findOne({
+        where: {
+          companyName: req.body.companyName,
+        },
+      })
+        .then((results) => {
+          // redirect to unique history page.
+          return res.redirect(
+            "/taxiLicenses/brokerAddressHistory/" + results.taxiBrokerID
+          );
+        }) // catch any scary errors and render page error.
+        .catch((err) =>
+          res.render("taxiLicenses/index", {
+            title: "BWG | Taxi Licenses",
+            message: "Page Error!",
+          })
+        );
+    }
+  }
+);
+
 module.exports = router;

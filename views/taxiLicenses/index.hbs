@@ -47,6 +47,15 @@
   >Reset</a>
 </form>
 <div class="row">
+  <div class="col mt-1">
+    <a
+      id="historyLink"
+      data-bs-toggle="modal"
+      data-bs-target="#historyModal"
+    >View Address History</a>
+  </div>
+</div>
+<div class="row">
   <div class="col mb-1">
     <h4 class="mb-0 mt-1">Brokers</h4>
     {{#if queryCount}}
@@ -272,3 +281,52 @@
     {{/if}}
   </ul>
 </nav>
+
+<!-- History Modal -->
+<div
+  class="modal fade"
+  id="historyModal"
+  tabindex="-1"
+  aria-labelledby="History Modal"
+  aria-hidden="true"
+>
+  <form method="POST" action="/taxiLicenses/history">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">History Search</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <label for="Company Name" class="form-label">Enter the name of the
+            broker company</label>
+          <input
+            list="companies"
+            class="form-control"
+            placeholder="Company Name"
+            name="companyName"
+            required
+          />
+          <datalist id="companies">
+            {{#each data}}
+              <option value="{{this.companyName}}">{{this.companyName}}</option>
+            {{/each}}
+          </datalist>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >Close</button>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

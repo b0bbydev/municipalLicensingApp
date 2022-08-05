@@ -1,0 +1,72 @@
+<h2 class="text-center mt-1">Plate Owner Address History</h2>
+<h4>Filtering</h4>
+<form class="mb-1" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterMonth"
+    title="Month Filter"
+    name="filterMonth"
+  >
+    <option disabled selected>Month...</option>
+    {{#if filterMonth}}
+      <option value="{{filterMonth}}" selected>{{filterMonth}}</option>
+    {{/if}}
+    {{#each monthDropdownValues}}
+      <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+    {{/each}}
+  </select>
+  <select
+    class="form-select-sm"
+    id="filterYear"
+    title="Year Filter"
+    name="filterYear"
+  >
+    <option disabled selected>Year...</option>
+    {{#if filterYear}}
+      <option value="{{filterYear}}" selected>{{filterYear}}</option>
+    {{/if}}
+    {{#each yearDropdownValues}}
+      <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+    {{/each}}
+  </select>
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/taxiLicenses/plateOwnerAddressHistory/{{taxiPlateID}}"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<table class="table table-sm table-bordered table-striped table-hover sortable">
+  <thead>
+    <tr>
+      <th>Address</th>
+      <th>Last Modified</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td>{{this.streetNumber}}
+          {{this.streetName}},
+          {{this.town}}
+          {{this.postalCode}}</td>
+        <td>{{formatDate this.lastModified}}</td>
+        <td>{{this.action}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

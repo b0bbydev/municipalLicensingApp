@@ -186,6 +186,12 @@ var addAdditionalTrialDates = require("./routes/poaMatters/addTrialDates");
 /* Taxi related routes */
 var taxiLicenseRoute = require("./routes/taxiLicenses/index");
 
+var taxiLicenseBrokerAddressHistoryRoute = require("./routes/taxiLicenses/brokerAddressHistory");
+
+var taxiLicenseDriverAddressHistoryRoute = require("./routes/taxiLicenses/driverAddressHistory");
+
+var taxiLicensePlateOwnerAddressHistoryRoute = require("./routes/taxiLicenses/plateOwnerAddressHistory");
+
 var addTaxiBrokerRoute = require("./routes/taxiLicenses/addBroker");
 var editTaxiBrokerRoute = require("./routes/taxiLicenses/editBroker");
 
@@ -518,6 +524,21 @@ app.use("/poaMatters/addTrialDates", addAdditionalTrialDates);
 
 /* Taxi related routes */
 app.use("/taxiLicenses", taxiLicenseRoute);
+
+app.use(
+  "/taxiLicenses/brokerAddressHistory",
+  taxiLicenseBrokerAddressHistoryRoute
+);
+
+app.use(
+  "/taxiLicenses/driverAddressHistory",
+  taxiLicenseDriverAddressHistoryRoute
+);
+
+app.use(
+  "/taxiLicenses/plateOwnerAddressHistory",
+  taxiLicensePlateOwnerAddressHistoryRoute
+);
 
 app.use("/taxiLicenses/addBroker", addTaxiBrokerRoute);
 app.use("/taxiLicenses/editBroker", editTaxiBrokerRoute);

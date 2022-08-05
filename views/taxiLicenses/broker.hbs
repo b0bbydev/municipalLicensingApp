@@ -40,10 +40,13 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.cabCompany}}</td>
         {{#each taxiDriverAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}}
-            {{this.postalCode}}</td>
+          <td><a
+              id="ownerLink"
+              href="/taxiLicenses/driverAddressHistory/{{this.taxiDriverID}}"
+            >{{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}</a></td>
         {{/each}}
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
@@ -227,10 +230,13 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each taxiPlateOwnerAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}}
-            {{this.postalCode}}</td>
+          <td><a
+              id="ownerLink"
+              href="/taxiLicenses/plateOwnerAddressHistory/{{this.taxiPlateID}}"
+            >{{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}</a></td>
         {{/each}}
         <td>{{this.vehicleYearMakeModel}}</td>
         <td>{{this.provincialPlate}}</td>
