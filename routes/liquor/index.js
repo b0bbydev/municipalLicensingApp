@@ -175,4 +175,47 @@ router.get(
   }
 );
 
+/* POST /liquor - getting value to search by, then redirect */
+router.post(
+  "/",
+  body("businessName")
+    .if(body("businessName").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Business Name Entry!")
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("liquor/index", {
+        title: "BWG | Liquor Licensing",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // get the specified business.
+      LiquorBusiness.findOne({
+        where: {
+          businessName: req.body.businessName,
+        },
+      })
+        .then((results) => {
+          // redirect to unique history page.
+          return res.redirect(
+            "/liquor/businessAddressHistory/" + results.liquorBusinessID
+          );
+        }) // catch any scary errors and render page error.
+        .catch((err) =>
+          res.render("liquor/index", {
+            title: "BWG | Liquor Licensing",
+            message: "Page Error!",
+          })
+        );
+    }
+  }
+);
+
 module.exports = router;

@@ -217,19 +217,53 @@ router.post(
         }
       )
         .then(() => {
-          LiquorBusinessAddress.update(
-            {
-              streetNumber: req.body.streetNumber,
+          // create empty objects to hold data.
+          let currentData = {};
+          let newData = {};
+
+          // get current data.
+          LiquorBusinessAddress.findOne({
+            where: {
+              liquorBusinessID: req.params.id,
+            },
+          }).then((results) => {
+            currentData = {
+              streetNumber: results.streetNumber,
+              streetName: results.streetName,
+              town: results.town,
+              postalCode: results.postalCode,
+            };
+
+            // put the NEW data into an object.
+            newData = {
+              streetNumber: parseInt(req.body.streetNumber),
               streetName: req.body.streetName,
               town: req.body.town,
               postalCode: req.body.postalCode,
-            },
-            {
-              where: {
-                liquorBusinessID: req.params.id,
-              },
+            };
+
+            console.log("CURRENT DATA:", currentData);
+            console.log("NEW DATA:", newData);
+            console.log(funcHelpers.areObjectsEqual(currentData, newData));
+
+            // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
+            if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+              // update address.
+              LiquorBusinessAddress.update(
+                {
+                  streetNumber: req.body.streetNumber,
+                  streetName: req.body.streetName,
+                  town: req.body.town,
+                  postalCode: req.body.postalCode,
+                },
+                {
+                  where: {
+                    liquorBusinessID: req.params.id,
+                  },
+                }
+              );
             }
-          );
+          });
         })
         .then(res.redirect("/liquor"))
         .catch((err) => {

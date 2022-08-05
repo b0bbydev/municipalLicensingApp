@@ -22,11 +22,6 @@ const LiquorBusinessAddress = sequelize.define("liquorBusinessAddress", {
     allowNull: true,
   },
 
-  poBoxAptRR: {
-    type: Sequelize.STRING(25),
-    allowNull: true,
-  },
-
   town: {
     type: Sequelize.STRING(30),
     allowNull: true,

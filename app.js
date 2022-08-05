@@ -147,6 +147,8 @@ var editKennelOwnerRoute = require("./routes/kennels/editKennelOwner");
 /* Liquor License related routes */
 var liquorRoute = require("./routes/liquor/index");
 
+var liquorBusinessAddressHistoryRoute = require("./routes/liquor/businessAddressHistory");
+
 var addLiquorBusinessRoute = require("./routes/liquor/addBusiness");
 var editLiquorBusinessRoute = require("./routes/liquor/editBusiness");
 
@@ -450,6 +452,8 @@ app.use("/kennels/editKennelOwner", editKennelOwnerRoute);
 
 /* Liquor License related routes */
 app.use("/liquor", liquorRoute);
+
+app.use("/liquor/businessAddressHistory", liquorBusinessAddressHistoryRoute);
 
 app.use("/liquor/addBusiness", addLiquorBusinessRoute);
 app.use("/liquor/editBusiness", editLiquorBusinessRoute);
