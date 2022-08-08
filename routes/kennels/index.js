@@ -29,6 +29,18 @@ router.get("/", async (req, res, next) => {
     },
   });
 
+  // get current date.
+  var issueDate = new Date();
+  // init expiryDate.
+  var modalExpiryDate = new Date();
+
+  // if issueDate is in November or December.
+  if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+    modalExpiryDate = new Date(issueDate.getFullYear() + 2, 5, 30);
+  } else {
+    modalExpiryDate = new Date(issueDate.getFullYear() + 1, 5, 30); // year, month (june = 5), day
+  }
+
   // if there are no filter parameters.
   if (!req.query.filterCategory || !req.query.filterValue) {
     Kennel.findAndCountAll({
@@ -51,6 +63,7 @@ router.get("/", async (req, res, next) => {
         auth: req.session.auth, // authorization.
         data: results.rows,
         filterOptions: filterOptions,
+        modalExpiryDate: modalExpiryDate,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
@@ -85,6 +98,7 @@ router.get("/", async (req, res, next) => {
         auth: req.session.auth, // authorization.
         data: results.rows,
         filterOptions: filterOptions,
+        modalExpiryDate: modalExpiryDate,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
@@ -127,9 +141,10 @@ router.get("/", async (req, res, next) => {
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          filterOptions: filterOptions,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
+          filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,
@@ -179,9 +194,10 @@ router.get("/", async (req, res, next) => {
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          filterOptions: filterOptions,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
+          filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,
@@ -221,9 +237,10 @@ router.get("/", async (req, res, next) => {
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
-          filterOptions: filterOptions,
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
+          filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,
@@ -257,9 +274,9 @@ router.post("/", async (req, res, next) => {
 
     // if issueDate is in November or December.
     if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
-      expiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+      expiryDate = new Date(issueDate.getFullYear() + 2, 5, 30);
     } else {
-      expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+      expiryDate = new Date(issueDate.getFullYear() + 1, 5, 30); // year, month (june = 5), day
     }
 
     // update license.

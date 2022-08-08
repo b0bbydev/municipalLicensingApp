@@ -14,7 +14,7 @@ const { body, validationResult } = require("express-validator");
 // pagination lib.
 const paginate = require("express-paginate");
 
-/* GET /adultEntertainment page. */
+/* GET /adultEntertainment */
 router.get(
   "/",
   body("filterCategory")

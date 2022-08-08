@@ -29,6 +29,18 @@ router.get("/", async (req, res, next) => {
     },
   });
 
+  // get current date.
+  var issueDate = new Date();
+  // init expiryDate.
+  var modalExpiryDate = new Date();
+
+  // if issueDate is in November or December.
+  if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+    modalExpiryDate = new Date(issueDate.getFullYear() + 2, 2, 31);
+  } else {
+    modalExpiryDate = new Date(issueDate.getFullYear() + 1, 2, 31); // year, month (march = 2), day
+  }
+
   // if there are no filter parameters.
   if (!req.query.filterCategory || !req.query.filterValue) {
     TaxiBroker.findAndCountAll({
@@ -51,6 +63,7 @@ router.get("/", async (req, res, next) => {
         auth: req.session.auth, // authorization.
         data: results.rows,
         filterOptions: filterOptions,
+        modalExpiryDate: modalExpiryDate,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,
@@ -92,6 +105,7 @@ router.get("/", async (req, res, next) => {
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
           filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,
@@ -110,7 +124,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-/* POST /taxiLicenses - renews license. */
+/* POST /taxiLicenses - renews broker license. */
 router.post("/", async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);
@@ -131,9 +145,9 @@ router.post("/", async (req, res, next) => {
 
     // if issueDate is in November or December.
     if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
-      expiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+      expiryDate = new Date(issueDate.getFullYear() + 2, 2, 31);
     } else {
-      expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+      expiryDate = new Date(issueDate.getFullYear() + 1, 2, 31); // year, month (march = 2), day
     }
 
     // update license.

@@ -18,6 +18,18 @@ router.get("/:id", async (req, res, next) => {
   // send taxiBrokerID to session.
   req.session.brokerID = req.params.id;
 
+  // get current date.
+  var issueDate = new Date();
+  // init expiryDate.
+  var modalExpiryDate = new Date();
+
+  // if issueDate is in November or December.
+  if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+    modalExpiryDate = new Date(issueDate.getFullYear() + 2, 2, 31);
+  } else {
+    modalExpiryDate = new Date(issueDate.getFullYear() + 1, 2, 31); // year, month (march = 2), day
+  }
+
   Promise.all([
     TaxiDriver.findAndCountAll({
       limit: req.query.limit,
@@ -49,6 +61,7 @@ router.get("/:id", async (req, res, next) => {
       errorMessages: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.
+      modalExpiryDate: modalExpiryDate,
       taxiDrivers: data[0].rows,
       taxiPlates: data[1].rows,
       taxiDriversCount: "Records returned: " + data[0].count,
@@ -78,9 +91,9 @@ router.post("/renewDriver", async (req, res, next) => {
 
     // if issueDate is in November or December.
     if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
-      expiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+      expiryDate = new Date(issueDate.getFullYear() + 2, 2, 31);
     } else {
-      expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+      expiryDate = new Date(issueDate.getFullYear() + 1, 2, 31); // year, month (march = 2), day
     }
 
     // update license.
@@ -121,9 +134,9 @@ router.post("/renewPlate", async (req, res, next) => {
 
     // if issueDate is in November or December.
     if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
-      expiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+      expiryDate = new Date(issueDate.getFullYear() + 2, 2, 31);
     } else {
-      expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+      expiryDate = new Date(issueDate.getFullYear() + 1, 2, 31); // year, month (march = 2), day
     }
 
     // update license.

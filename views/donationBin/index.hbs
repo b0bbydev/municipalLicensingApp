@@ -115,7 +115,7 @@
             href="/donationBin/donationBinAddressHistory/{{this.donationBinID}}"
           >Address History</a></td>
       </tr>
-      <!-- Modal -->
+      <!-- Renewal Modal -->
       <div
         class="modal fade"
         id="donationBinRenewModal-{{this.donationBinID}}"
@@ -162,6 +162,7 @@
                     {{/each}}
                   </div>
                 </div>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
               </div>
               <div class="modal-footer">
                 <button
