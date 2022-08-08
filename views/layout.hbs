@@ -78,31 +78,31 @@
               class="accordion accordion-flush w-100 nav-item"
               id="accordionExample"
             >
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne"
-                    aria-expanded="false"
-                    aria-controls="collapseOne"
+              {{#includes auth "Admin"}}
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseOne"
+                      aria-expanded="false"
+                      aria-controls="collapseOne"
+                    >
+                      <i class="fs-4 icon-blue bi bi-grid"></i>
+                      <span class="dropmenu-text ms-2 d-none d-sm-inline">
+                        Admin Apps</span>
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseOne"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample"
                   >
-                    <i class="fs-4 icon-blue bi bi-grid"></i>
-                    <span class="dropmenu-text ms-2 d-none d-sm-inline">
-                      Admin Apps</span>
-                  </button>
-                </h2>
-                <div
-                  id="collapseOne"
-                  class="accordion-collapse collapse"
-                  aria-labelledby="headingOne"
-                  data-bs-parent="#accordionExample"
-                >
-                  <ul
-                    class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
-                  >
-                    {{#includes auth "Admin"}}
+                    <ul
+                      class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
+                    >
                       <!-- Admin - admin panel -->
                       <li class="nav-item-admin w-100 p-1">
                         <a href="/admin" class="nav-link align-middle ps-3">
@@ -128,10 +128,10 @@
                           <span class="ms-1 d-none d-sm-inline">Send SMS</span>
                         </a>
                       </li>
-                    {{/includes}}
-                  </ul>
+                    </ul>
+                  </div>
                 </div>
-              </div>
+              {{/includes}}
               <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
                   <button
@@ -156,7 +156,7 @@
                   <ul
                     class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
                   >
-                    {{#includes auth "Enforcement"}}
+                    {{#includes auth "Admin"}}
                       <!-- Enforcement - Adult Entertainment -->
                       <li class="nav-item w-100 p-1">
                         <a
@@ -179,6 +179,8 @@
                             Licenses</span>
                         </a>
                       </li>
+                    {{/includes}}
+                    {{#includes auth "Enforcement"}}
                       <!-- Enforcement - Dogtag Licenses -->
                       <li class="nav-item-last w-100 p-1">
                         <a href="/dogtags" class="nav-link align-middle ps-3">
@@ -186,6 +188,8 @@
                           <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
                         </a>
                       </li>
+                    {{/includes}}
+                    {{#includes auth "Admin"}}
                       <!-- Enforcement - Hawker & Peddler Licenses -->
                       <li class="nav-item w-100 p-1">
                         <a
@@ -237,7 +241,7 @@
                 </div>
               </div>
             </div>
-            {{#includes auth "Enforcement"}}
+            {{#includes auth "Admin"}}
               <!-- Enforcement - Street Closure Permits -->
               <li class="nav-item w-100 p-1">
                 <a

@@ -480,6 +480,18 @@ router.get(
       // get dogHistory data.
       var dogHistory = await dbHelpers.getDogHistory(req.session.ownerID);
 
+      // get current date.
+      var issueDate = new Date();
+      // init expiryDate.
+      var modalExpiryDate = new Date();
+
+      // if issueDate is in November or December.
+      if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+        modalExpiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+      } else {
+        modalExpiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+      }
+
       // get ownerName.
       Owner.findOne({
         attributes: ["firstName", "lastName"],
@@ -527,6 +539,7 @@ router.get(
               additionalOwners: additionalOwners.rows,
               addressHistory: addressHistory,
               dogHistory: dogHistory,
+              modalExpiryDate: modalExpiryDate,
               pageCount,
               itemCount,
               pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
@@ -546,7 +559,7 @@ router.get(
   }
 );
 
-/* POST /dogtags/owner/:id page. (renews dogtag) */
+/* POST /dogtags/owner/:id (renews dogtag) */
 router.post(
   "/owner/:id",
   param("id").matches(/^\d+$/).trim(),
@@ -588,7 +601,9 @@ router.post(
           },
         }
       )
-        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
+        .then(() => {
+          return res.redirect("/dogtags/owner/" + req.session.ownerID);
+        })
         .catch((err) =>
           res.render("owner", {
             title: "BWG | Owner",

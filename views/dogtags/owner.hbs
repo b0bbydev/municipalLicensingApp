@@ -89,17 +89,17 @@
         <td class="text-nowrap">{{this.vendor}}</td>
         <td>{{this.notes}}</td>
         <td class="text-nowrap">
-          <a
-            href="/dogtags/editDog/{{this.dogID}}"
-            class="btn btn-sm btn-secondary"
-          >Edit Dog</a>
-          |
           <button
             type="button"
             class="btn btn-sm btn-secondary"
             data-bs-toggle="modal"
             data-bs-target="#tagNumberModal-{{this.dogID}}"
           >Renew</button>
+          |
+          <a
+            href="/dogtags/editDog/{{this.dogID}}"
+            class="btn btn-sm btn-secondary"
+          >Edit Dog</a>
           |
           <a
             href="/dogtags/printDog/{{this.dogID}}"
@@ -145,6 +145,7 @@
                   name="tagNumber"
                   required
                 />
+                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
               </div>
               <div class="modal-footer">
                 <button

@@ -109,6 +109,12 @@
         <td>{{this.notes}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#renewalModal-{{this.businessID}}"
+          >Renew</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary"
             href="/adultEntertainment/editBusiness/{{this.businessID}}"
           >Edit</a>
           |
@@ -118,7 +124,7 @@
             data-bs-target="#businessModal-{{this.businessID}}"
           >Documentation</a></td>
       </tr>
-      <!-- Modal -->
+      <!-- Documentation Modal -->
       <div
         class="modal fade"
         id="businessModal-{{this.businessID}}"
@@ -199,6 +205,58 @@
           </div>
         </form>
       </div>
+      <!-- Renewal Modal -->
+      <div
+        class="modal fade"
+        id="renewalModal-{{this.businessID}}"
+        tabindex="-1"
+        aria-labelledby="Renewal Modal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Renew Business License</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <label for="Business ID" class="form-label">Business ID</label>
+                <input
+                  type="number"
+                  class="form-control"
+                  name="businessID"
+                  value="{{this.businessID}}"
+                  readonly
+                />
+                <label for="Business Name" class="form-label">Business Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Business Name"
+                  name="businessName"
+                  value="{{this.businessName}}"
+                  readonly
+                />
+                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit Renewal</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     {{/each}}
   </tbody>
 </table>
@@ -211,7 +269,7 @@
   aria-labelledby="History Modal"
   aria-hidden="true"
 >
-  <form method="POST">
+  <form method="POST" action="/adultEntertainment/history">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
