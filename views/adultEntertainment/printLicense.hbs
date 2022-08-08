@@ -1,0 +1,122 @@
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{title}}</title>
+    <!-- favicon -->
+    <link rel="icon" type="image/png" href="/images/bwg-logo.png" />
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <!-- Bootstrap JS -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <!-- Bootstrap Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
+    />
+    <!-- font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Gabriela&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Print horizontally -->
+    <style type="text/css" media="print">
+      @page { size: landscape; } body { font-family: 'Gabriela', serif;
+      font-weight: 600; border: 3px solid; } #normal { font-family: Arial,
+      Helvetica, sans-serif; font-weight: normal; }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <div class="col-sm-6">
+        <img
+          src="/images/bwg-background.gif"
+          alt="bwg-logo"
+          class="mt-2"
+          height="65"
+          width="400"
+        />
+      </div>
+      <!-- License Type -->
+      <div class="col-sm-4">
+        <p class="fs-2 mt-1">Adult Entertainment Business Licence</p>
+      </div>
+    </div>
+    <!-- License Info -->
+    <div class="row py-1">
+      <div class="col-sm-3 mt-1 ms-2">
+        <p class="fs-3">Granted To: </p>
+      </div>
+      <div class="col mt-1 ms-2">
+        <p id="normal" class="fs-4 mt-1">{{data.ownerName}},
+          {{data.businessName}}</p>
+      </div>
+    </div>
+    <div class="row py-1">
+      <div class="col-sm-5 mt-1 ms-2">
+        <p class="fs-3">To Conduct The Business Of: </p>
+      </div>
+      <div class="col mt-1 ms-2">
+        <p id="normal" class="fs-4 mt-1">Adult Entertainment Parlour</p>
+      </div>
+    </div>
+    <div class="row py-1">
+      <div class="col-sm-2 mt-1 ms-2">
+        <p class="fs-3">From: </p>
+      </div>
+      <div class="col mt-1 ms-2">
+        <p id="normal" class="fs-4 mt-1">{{data.streetNumber}}
+          {{data.streetName}},
+          {{data.town}}</p>
+      </div>
+    </div>
+    <div class="row py-1">
+      <div class="col-sm-2 mt-1 ms-2">
+        <p class="fs-3">Issue Date: </p>
+      </div>
+      <div class="col mt-1 ms-2">
+        <p id="normal" class="fs-4 mt-1">{{data.issueDate}}</p>
+      </div>
+    </div>
+    <!-- specific by-law info -->
+    <div class="row py-1">
+      <div class="col">
+        <p id="normal" class="px-5">In accordance with the Town of Bradford West
+          Gwillimbury By-law 2014-70, this Licence is hereby granted to operate
+          the business referenced above.</p>
+      </div>
+    </div>
+    <div class="row py-1">
+      <div class="col-sm-3 mt-1 ms-2 w-10 mb-5">
+        <p class="fs-3">Expiration Date: </p>
+      </div>
+      <div class="col mt-1 ms-2">
+        <p id="normal" class="fs-4 mt-1">{{data.expiryDate}}</p>
+      </div>
+    </div>
+    <div class="row ps-2 mt-5">
+      <div class="col">
+        <strong id="normal">____________________________</strong>
+        <p id="normal">Lauren Fortune, Licensing Officer</p>
+      </div>
+    </div>
+    <div class="row float-end pe-2 text-nowrap">
+      <div class="col">
+        <p class="fs-3">Licence Number:</p>
+      </div>
+      <div class="col">
+        <p id="normal" class="fs-4 mt-1">{{data.licenseNumber}}</p>
+      </div>
+    </div>
+  </body>
+</html>

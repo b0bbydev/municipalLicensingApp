@@ -10,7 +10,7 @@ const Op = Sequelize.Op;
 // helper.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 // pagination lib.
 const paginate = require("express-paginate");
 
@@ -284,6 +284,63 @@ router.post(
             message: "Page Error!",
           })
         );
+    }
+  }
+);
+
+/* GET /adultEntertainment/printLicense/:id */
+router.get(
+  "/printLicense/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("adultEntertainment/printLicense", {
+        title: "BWG | Print License",
+        message: "Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // get info.
+      Business.findOne({
+        where: {
+          businessID: req.params.id,
+        },
+        include: [
+          {
+            model: BusinessAddress,
+          },
+        ],
+      }).then((results) => {
+        // return endpoint after passing validation.
+        return res.render("adultEntertainment/printLicense", {
+          title: "BWG | Print License",
+          layout: "",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          // data to populate form with.
+          data: {
+            ownerName: results.ownerName,
+            businessName: results.businessName,
+            streetNumber: results.businessAddresses[0].streetNumber,
+            streetName: results.businessAddresses[0].streetName,
+            town: results.businessAddresses[0].town,
+            issueDate: results.issueDate,
+            expiryDate: results.expiryDate,
+            licenseNumber: results.licenseNumber,
+          },
+        });
+      });
     }
   }
 );
