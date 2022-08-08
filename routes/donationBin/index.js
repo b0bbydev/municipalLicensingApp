@@ -11,7 +11,7 @@ const DonationBinCharity = require("../../models/donationBin/donationBinCharity"
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { param, validationResult } = require("express-validator");
 // pagination lib.
 const paginate = require("express-paginate");
 
@@ -293,5 +293,63 @@ router.post("/", async (req, res, next) => {
     });
   }
 });
+
+/* GET /donationBin/printLicense/:id */
+router.get(
+  "/printLicense/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("donationBin/printLicense", {
+        title: "BWG | Print License",
+        message: "Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // get info.
+      DonationBin.findOne({
+        where: {
+          donationBinID: req.params.id,
+        },
+        include: [
+          {
+            model: DonationBinAddress,
+          },
+          {
+            model: DonationBinOperator,
+          },
+        ],
+      }).then((results) => {
+        // return endpoint after passing validation.
+        return res.render("donationBin/printLicense", {
+          title: "BWG | Print License",
+          layout: "",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          // data to populate form with.
+          data: {
+            streetName: results.donationBinAddresses[0].streetName,
+            streetNumber: results.donationBinAddresses[0].streetNumber,
+            town: results.donationBinAddresses[0].town,
+            licenseNumber: results.donationBinOperators[0].licenseNumber,
+            issueDate: results.issueDate,
+            expiryDate: results.expiryDate,
+          },
+        });
+      });
+    }
+  }
+);
 
 module.exports = router;

@@ -12,7 +12,7 @@ const Op = Sequelize.Op;
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /hawkerPeddler */
 router.get("/", async (req, res, next) => {
@@ -338,6 +338,70 @@ router.post(
             message: "Page Error!",
           })
         );
+    }
+  }
+);
+
+/* GET /hawkerPeddler/printLicense/:id */
+router.get(
+  "/printLicense/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("hawkerPeddler/printLicense", {
+        title: "BWG | Print License",
+        message: "Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // get info.
+      HawkerPeddlerBusiness.findOne({
+        where: {
+          hawkerPeddlerBusinessID: req.params.id,
+        },
+        include: [
+          {
+            model: HawkerPeddlerBusinessAddress,
+          },
+          {
+            model: HawkerPeddlerApplicant,
+          },
+        ],
+      }).then((results) => {
+        // return endpoint after passing validation.
+        return res.render("hawkerPeddler/printLicense", {
+          title: "BWG | Print License",
+          layout: "",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          // data to populate form with.
+          data: {
+            applicantName:
+              results.hawkerPeddlerApplicants[0].firstName +
+              " " +
+              results.hawkerPeddlerApplicants[0].lastName,
+            businessName: results.businessName,
+            streetNumber:
+              results.hawkerPeddlerBusinessAddresses[0].streetNumber,
+            streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
+            town: results.hawkerPeddlerBusinessAddresses[0].town,
+            issueDate: results.issueDate,
+            expiryDate: results.expiryDate,
+            licenseNumber: results.hawkerPeddlerApplicants[0].licenseNumber,
+          },
+        });
+      });
     }
   }
 );
