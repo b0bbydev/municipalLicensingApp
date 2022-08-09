@@ -156,7 +156,7 @@ router.post(
         .catch((err) => {
           return res.render("adultEntertainment/addBusiness", {
             title: "BWG | Add Business",
-            message: "Page Error!" + err,
+            message: "Page Error!",
           });
         });
     }

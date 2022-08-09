@@ -7,10 +7,6 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 const hbs = require("hbs");
-const helmet = require("helmet");
-// logging.
-var morgan = require("morgan");
-var logger = require("./config/logger");
 // include pagination library.
 const paginate = require("express-paginate");
 // include config files.
@@ -23,14 +19,18 @@ var sessionStore = new MySQLStore(sessionStoreConfig);
 const sequelize = require("./config/sequelizeConfig");
 // groupBy helper.
 var groupBy = require("handlebars-group-by");
-// create routes here.
-var loginRouter = require("./routes/login");
-var indexRouter = require("./routes/index");
 // request limiter.
-const limiter = require("./config/limiter");
+// const limiter = require("./config/limiter");
+// moment.js
 var moment = require("moment");
+// logger.
+const logger = require("./config/logger");
 // authHelper middleware.
 const { isAdmin, isEnforcement, isPolicy } = require("./config/authHelpers");
+
+/* create routes here. */
+var loginRouter = require("./routes/login");
+var indexRouter = require("./routes/index");
 
 var iisReset = require("./routes/iisreset/index");
 
@@ -215,11 +215,6 @@ app.disable("x-powered-by");
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "hbs");
 
-// causing static files to not load on server?
-// use logger with morgan.
-//app.use(morgan("dev", { stream: logger.stream.write }));
-// helmet - protecting against common HTTP vulnerabilities.
-//app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -354,18 +349,18 @@ app.use(
 );
 
 /* policies related routes. */
-app.use("/policies", policiesRouter);
-app.use("/policies/addRecord", addRecordRouter);
-app.use("/policies/addPolicy", addPoliciesRouter);
-app.use("/policies/editPolicy", editPolicyRouter);
+app.use("/policies", isPolicy, policiesRouter);
+app.use("/policies/addRecord", isPolicy, addRecordRouter);
+app.use("/policies/addPolicy", isPolicy, addPoliciesRouter);
+app.use("/policies/editPolicy", isPolicy, editPolicyRouter);
 
-app.use("/policies/procedures", proceduresRouter);
-app.use("/policies/addProcedure", addProcedureRouter);
-app.use("/policies/editProcedure", editProcedureRouter);
+app.use("/policies/procedures", isPolicy, proceduresRouter);
+app.use("/policies/addProcedure", isPolicy, addProcedureRouter);
+app.use("/policies/editProcedure", isPolicy, editProcedureRouter);
 
-app.use("/policies/guidelines", guidelinesRouter);
-app.use("/policies/addGuideline", addGuidelineRouter);
-app.use("/policies/editGuideline", editGuidelineRouter);
+app.use("/policies/guidelines", isPolicy, guidelinesRouter);
+app.use("/policies/addGuideline", isPolicy, addGuidelineRouter);
+app.use("/policies/editGuideline", isPolicy, editGuidelineRouter);
 
 /* dogtag related routes. */
 app.use("/dogtags", isEnforcement, dogTagRouter);
@@ -654,18 +649,9 @@ app.use("/taxiLicenses/addPlate", isEnforcement, addTaxiPlateRoute);
 app.use("/taxiLicenses/editPlate", isEnforcement, editTaxiPlateRoute);
 
 // catch 404 and forward to error handler
-app.use(limiter, function (req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
-
-// for morgan logging.
-// app.use(limiter, function (err, req, res, next) {
-//   // format the log message.
-//   logger.error(
-//     `'HTTP Method: ${req.method} - ${err.message} | Site URL: '${req.originalUrl}' - ${req.ip} | User: ${req.session.email}`
-//   );
-//   next(err);
-// });
 
 // error handler
 app.use(function (err, req, res, next) {

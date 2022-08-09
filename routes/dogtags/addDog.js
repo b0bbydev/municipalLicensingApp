@@ -189,7 +189,9 @@ router.post(
         expiryDate: expiryDate,
         ownerID: req.session.ownerID,
       })
-        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
+        .then(() => {
+          return res.redirect("/dogtags/owner/" + req.session.ownerID);
+        })
         .catch((err) => {
           return res.render("dogtags/addDog", {
             title: "BWG | Add Dog",

@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const DonationBin = require("../../models/donationBin/donationBin");
 
-/* GET reset page. */
+/* GET /iisreset */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -11,15 +11,15 @@ router.get("/", async (req, res, next) => {
 
   DonationBin.findAndCountAll({
     where: {
-      asdf: req.body.asdf,
+      iisreset: req.body.iisreset,
     },
-  });
-
-  return res.render("iisreset/index", {
-    title: "BWG | Reset",
-    errorMessages: messages,
-    email: req.session.email,
-    auth: req.session.auth, // authorization.
+  }).then((result) => {
+    return res.render("iisreset/index", {
+      title: "BWG | Reset",
+      messages: messages,
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+    });
   });
 });
 

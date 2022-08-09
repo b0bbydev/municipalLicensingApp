@@ -1,21 +1,17 @@
-// import winston.
-const winston = require("winston");
+const { createLogger, transports, format } = require("winston");
 
-const logger = winston.createLogger({
-  level: "info",
-  format: winston.format.json(),
-  transports: [
-    //
-    // - Write all logs with importance level of `error` or less to `error.log`
-    // - Write all logs with importance level of `info` or less to `combined.log`
-    //
-    new winston.transports.File({
-      filename: "./logs/error.log",
-      level: "error",
-    }),
-    new winston.transports.File({
-      filename: "./logs/combined.log",
-      level: "combined",
+const logger = createLogger({
+  format: format.combine(
+    format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+    format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
+  ),
+  level: "debug",
+  // log unhandled rejections.
+  rejectionHandlers: [
+    new transports.File({
+      filename: "./logs/errors.log",
+      maxsize: 5242880,
+      maxFiles: 5,
     }),
   ],
 });
