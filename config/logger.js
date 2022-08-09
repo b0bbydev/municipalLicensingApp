@@ -6,8 +6,8 @@ const logger = createLogger({
     format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
   ),
   level: "debug",
-  // log unhandled rejections.
-  rejectionHandlers: [
+  // log unhandled exceptions.
+  exceptionHandlers: [
     new transports.File({
       filename: "./logs/errors.log",
       maxsize: 5242880,
