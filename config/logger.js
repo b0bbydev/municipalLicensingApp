@@ -6,12 +6,13 @@ const logger = createLogger({
     format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
   ),
   level: "debug",
-  // log unhandled exceptions.
-  exceptionHandlers: [
+  transports: [
     new transports.File({
       filename: "./logs/errors.log",
       maxsize: 5242880,
       maxFiles: 5,
+      handleExceptions: true,
+      handleRejections: true,
     }),
   ],
 });
