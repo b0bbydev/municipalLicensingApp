@@ -86,26 +86,20 @@
         <td>{{this.tagRequired}}</td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
-        <td class="text-nowrap">{{this.vendor}}</td>
+        <td>{{this.vendor}}</td>
         <td>{{this.notes}}</td>
-        <td class="text-nowrap">
-          <button
-            type="button"
+        <td style="width: 11.5%;">
+          <a
             class="btn btn-sm btn-secondary"
             data-bs-toggle="modal"
             data-bs-target="#tagNumberModal-{{this.dogID}}"
-          >Renew</button>
+          >Renew</a>
           |
           <a
             href="/dogtags/editDog/{{this.dogID}}"
             class="btn btn-sm btn-secondary"
           >Edit Dog</a>
-          |
-          <a
-            href="/dogtags/printDog/{{this.dogID}}"
-            class="btn btn-sm btn-secondary"
-          >Print</a>
-        </td>
+          <a href="/dogtags/printDog/{{this.dogID}}" title="Print License"><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
       </tr>
       <!-- Modal -->
       <div

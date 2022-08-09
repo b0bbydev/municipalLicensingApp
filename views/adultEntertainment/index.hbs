@@ -75,7 +75,7 @@
 {{/if}}
 
 <!-- Table -->
-<table class="table table-bordered table-striped table-hover sortable">
+<table class="table table-sm table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
       <th>Business Name</th>
@@ -87,7 +87,7 @@
       <th>Issue Date</th>
       <th>Expiry Date</th>
       <th>Notes</th>
-      <th>Actions</th>
+      <th id="actionsCell">Actions</th>
     </tr>
   </thead>
   <tbody>
@@ -107,7 +107,7 @@
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.notes}}</td>
-        <td class="pe-0 me-0"><a
+        <td style="width: 17.5%;"><a
             class="btn btn-sm btn-secondary"
             data-bs-toggle="modal"
             data-bs-target="#renewalModal-{{this.businessID}}"
