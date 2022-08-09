@@ -47,34 +47,41 @@ router.get(
             model: HawkerPeddlerBusinessAddress,
           },
         ],
-      }).then((results) => {
-        return res.render("hawkerPeddler/editBusiness", {
-          title: "BWG | Edit Business",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          streets: streets,
-          // populate input fields with exisitng values.
-          formData: {
-            businessName: results.businessName,
-            phoneNumber: results.phoneNumber,
-            email: results.email,
-            issueDate: results.issueDate,
-            expiryDate: results.expiryDate,
-            policeVSC: results.policeVSC,
-            photoID: results.photoID,
-            sitePlan: results.sitePlan,
-            zoningClearance: results.zoningClearance,
-            itemsForSale: results.itemsForSale,
-            notes: results.notes,
-            streetNumber:
-              results.hawkerPeddlerBusinessAddresses[0].streetNumber,
-            streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
-            town: results.hawkerPeddlerBusinessAddresses[0].town,
-            postalCode: results.hawkerPeddlerBusinessAddresses[0].postalCode,
-          },
+      })
+        .then((results) => {
+          return res.render("hawkerPeddler/editBusiness", {
+            title: "BWG | Edit Business",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            streets: streets,
+            // populate input fields with exisitng values.
+            formData: {
+              businessName: results.businessName,
+              phoneNumber: results.phoneNumber,
+              email: results.email,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              policeVSC: results.policeVSC,
+              photoID: results.photoID,
+              sitePlan: results.sitePlan,
+              zoningClearance: results.zoningClearance,
+              itemsForSale: results.itemsForSale,
+              notes: results.notes,
+              streetNumber:
+                results.hawkerPeddlerBusinessAddresses[0].streetNumber,
+              streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
+              town: results.hawkerPeddlerBusinessAddresses[0].town,
+              postalCode: results.hawkerPeddlerBusinessAddresses[0].postalCode,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("hawkerPeddler/editBusiness", {
+            title: "BWG | Edit Business",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

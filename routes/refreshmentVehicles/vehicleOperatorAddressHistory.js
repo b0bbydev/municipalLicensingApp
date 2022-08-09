@@ -64,7 +64,7 @@ router.get(
             "refreshmentVehicles/vehicleOperatorAddressHistory",
             {
               title: "BWG | Vehicle Operator Address History",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               monthDropdownValues: monthDropdownValues,
@@ -96,7 +96,7 @@ router.get(
             "refreshmentVehicles/vehicleOperatorAddressHistory",
             {
               title: "BWG | Vehicle Operator Address History",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               monthDropdownValues: monthDropdownValues,
@@ -129,7 +129,7 @@ router.get(
               "refreshmentVehicles/vehicleOperatorAddressHistory",
               {
                 title: "BWG | Vehicle Operator Address History",
-                errorMessages: messages,
+                message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 monthDropdownValues: monthDropdownValues,
@@ -160,7 +160,7 @@ router.get(
               "refreshmentVehicles/vehicleOperatorAddressHistory",
               {
                 title: "BWG | Vehicle Operator Address History",
-                errorMessages: messages,
+                message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 monthDropdownValues: monthDropdownValues,

@@ -63,7 +63,7 @@ router.get(
           .then((results) => {
             return res.render("donationBin/donationBinOperatorAddressHistory", {
               title: "BWG | Donation Bin Operator Address History",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               monthDropdownValues: monthDropdownValues,
@@ -99,7 +99,7 @@ router.get(
           .then((results) => {
             return res.render("donationBin/donationBinOperatorAddressHistory", {
               title: "BWG | Donation Bin Operator Address History",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               monthDropdownValues: monthDropdownValues,
@@ -138,7 +138,7 @@ router.get(
                 "donationBin/donationBinOperatorAddressHistory",
                 {
                   title: "BWG | Donation Bin Operator Address History",
-                  errorMessages: messages,
+                  message: messages,
                   email: req.session.email,
                   auth: req.session.auth, // authorization.
                   monthDropdownValues: monthDropdownValues,
@@ -179,7 +179,7 @@ router.get(
                 "donationBin/donationBinOperatorAddressHistory",
                 {
                   title: "BWG | Donation Bin Operator Address History",
-                  errorMessages: messages,
+                  message: messages,
                   email: req.session.email,
                   auth: req.session.auth, // authorization.
                   monthDropdownValues: monthDropdownValues,

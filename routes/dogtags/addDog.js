@@ -46,7 +46,7 @@ router.get(
 
       return res.render("dogtags/addDog", {
         title: "BWG | Add Dog",
-        errorMessages: messages,
+        message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         tagRequiredOptions: tagRequiredOptions,

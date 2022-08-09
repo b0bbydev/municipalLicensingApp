@@ -60,7 +60,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("donationBin/index", {
           title: "BWG | Donation Bin Licenses",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -110,7 +110,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("donationBin/index", {
           title: "BWG | Donation Bin Licenses",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -164,7 +164,7 @@ router.get("/", async (req, res, next) => {
 
           return res.render("donationBin/search/donationBinOperatorSearch", {
             title: "BWG | Donation Bin Licenses",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             data: results.rows,
@@ -214,7 +214,7 @@ router.get("/", async (req, res, next) => {
 
           return res.render("donationBin/search/donationBinOperatorSearch", {
             title: "BWG | Donation Bin Licenses",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             data: results.rows,
@@ -254,7 +254,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("donationBin/search/donationBinCharitySearch", {
           title: "BWG | Donation Bin Licenses",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -288,7 +288,7 @@ router.post("/", async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.render("donationBin/index", {
       title: "BWG | Donation Bin Licenses",
-      errorMessages: "Page Error!",
+      message: "Page Error!",
       email: req.session.email,
       auth: req.session.auth, // authorization.
     });
@@ -370,7 +370,7 @@ router.get(
           return res.render("donationBin/printLicense", {
             title: "BWG | Print License",
             layout: "",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             // data to populate form with.

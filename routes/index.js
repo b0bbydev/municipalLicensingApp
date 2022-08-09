@@ -14,7 +14,7 @@ router.get("/", isLoggedIn, auth, function (req, res, next) {
 
   return res.render("index", {
     title: "BWG | Home",
-    errorMessages: messages,
+    message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
     baseUrl: req.baseUrl, // back button logic.

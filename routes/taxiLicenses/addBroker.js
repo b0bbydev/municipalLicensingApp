@@ -25,7 +25,7 @@ router.get("/", async (req, res, next) => {
 
   return res.render("taxiLicenses/addBroker", {
     title: "BWG | Add Taxi Broker",
-    errorMessages: messages,
+    message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
     streets: streets,

@@ -58,7 +58,7 @@ router.get("/:id", async (req, res, next) => {
   ]).then((data) => {
     return res.render("taxiLicenses/broker", {
       title: "BWG | Taxi Licenses",
-      errorMessages: messages,
+      message: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.
       modalExpiryDate: modalExpiryDate,
@@ -79,7 +79,7 @@ router.post("/renewDriver", async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.render("taxiLicenses/broker", {
       title: "BWG | Taxi Licenses",
-      errorMessages: "Page Error!",
+      message: "Page Error!",
       email: req.session.email,
       auth: req.session.auth, // authorization.
     });
@@ -122,7 +122,7 @@ router.post("/renewPlate", async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.render("taxiLicenses/broker", {
       title: "BWG | Taxi Licenses",
-      errorMessages: "Page Error!",
+      message: "Page Error!",
       email: req.session.email,
       auth: req.session.auth, // authorization.
     });

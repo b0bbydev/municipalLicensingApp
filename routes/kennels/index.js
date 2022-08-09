@@ -58,7 +58,7 @@ router.get("/", async (req, res, next) => {
 
       return res.render("kennels/index", {
         title: "BWG | Kennel Licensing",
-        errorMessages: messages,
+        message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
@@ -93,7 +93,7 @@ router.get("/", async (req, res, next) => {
 
       return res.render("kennels/index", {
         title: "BWG | Kennel Licensing",
-        errorMessages: messages,
+        message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
@@ -137,7 +137,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("kennels/index", {
           title: "BWG | Kennel Licensing",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -190,7 +190,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("kennels/search/kennelOwnerSearch", {
           title: "BWG | Kennel Licensing",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -233,7 +233,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("kennels/search/kennelOwnerSearch", {
           title: "BWG | Kennel Licensing",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -262,7 +262,7 @@ router.post("/", async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.render("kennels/index", {
       title: "BWG | Kennel Licensing",
-      errorMessages: "Page Error!",
+      message: "Page Error!",
       email: req.session.email,
       auth: req.session.auth, // authorization.
     });
@@ -379,7 +379,7 @@ router.get(
         return res.render("kennels/printLicense", {
           title: "BWG | Print License",
           layout: "",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           // data to populate form with.

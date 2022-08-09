@@ -50,7 +50,7 @@ router.get(
       }).then((results) => {
         return res.render("kennels/editKennel", {
           title: "BWG | Edit A Kennel",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           streets: streets,

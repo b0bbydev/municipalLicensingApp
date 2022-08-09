@@ -23,7 +23,7 @@ router.get("/", async (req, res, next) => {
 
   return res.render("kennels/addPropertyOwner", {
     title: "BWG | Add Property Owner",
-    errorMessages: messages,
+    message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
     streets: streets,

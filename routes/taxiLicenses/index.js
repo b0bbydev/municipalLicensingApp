@@ -58,7 +58,7 @@ router.get("/", async (req, res, next) => {
 
       return res.render("taxiLicenses/index", {
         title: "BWG | Taxi Licenses",
-        errorMessages: messages,
+        message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
@@ -98,7 +98,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("taxiLicenses/index", {
           title: "BWG | Taxi Licenses",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -133,7 +133,7 @@ router.post("/", async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.render("taxiLicenses/index", {
       title: "BWG | Taxi Licenses",
-      errorMessages: "Page Error!",
+      message: "Page Error!",
       email: req.session.email,
       auth: req.session.auth, // authorization.
     });
@@ -247,7 +247,7 @@ router.get(
         return res.render("taxiLicenses/printLicense", {
           title: "BWG | Print License",
           layout: "",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           // data to populate form with.

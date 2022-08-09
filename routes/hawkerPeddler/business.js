@@ -58,18 +58,25 @@ router.get(
             hawkerPeddlerBusinessID: req.params.id,
           },
         }),
-      ]).then((data) => {
-        return res.render("hawkerPeddler/business", {
-          title: "BWG | Hawker & Peddler Business",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          propertyOwners: data[0].rows,
-          applicants: data[1].rows,
-          propertyOwnersCount: "Records returned: " + data[0].count,
-          applicantsCount: "Records returned: " + data[1].count,
+      ])
+        .then((data) => {
+          return res.render("hawkerPeddler/business", {
+            title: "BWG | Hawker & Peddler Business",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            propertyOwners: data[0].rows,
+            applicants: data[1].rows,
+            propertyOwnersCount: "Records returned: " + data[0].count,
+            applicantsCount: "Records returned: " + data[1].count,
+          });
+        })
+        .catch((err) => {
+          return res.render("hawkerPeddler/business", {
+            title: "BWG | Hawker & Peddler Business",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

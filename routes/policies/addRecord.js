@@ -42,7 +42,7 @@ router.get("/", async (req, res, next) => {
 
   return res.render("policies/addRecord", {
     title: "BWG | Add Record",
-    errorMessages: messages,
+    message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
     statusDropdownValues: statusDropdownValues,

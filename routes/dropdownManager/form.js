@@ -69,7 +69,7 @@ router.get(
 
             return res.render("dropdownManager/form", {
               title: "BWG | Dropdown Manager",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               formName: formName,
@@ -85,12 +85,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("dropdownManager/form", {
+          .catch((err) => {
+            return res.render("dropdownManager/form", {
               title: "BWG | Dropdown Manager",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       } else {
         // format filterCategory to match column name in db - via handy dandy camelize() function.
         var filterCategory = funcHelpers.camelize(req.query.filterCategory);
@@ -129,12 +129,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("dropdownManager/form", {
+          .catch((err) => {
+            return res.render("dropdownManager/form", {
               title: "BWG | Dropdown Manager",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       }
     }
   }

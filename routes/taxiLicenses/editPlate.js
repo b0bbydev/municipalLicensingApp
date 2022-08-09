@@ -35,7 +35,7 @@ router.get("/:id", async (req, res, next) => {
   }).then((results) => {
     return res.render("taxiLicenses/editPlate", {
       title: "BWG | Edit Taxi Plate",
-      errorMessages: messages,
+      message: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.
       streets: streets,

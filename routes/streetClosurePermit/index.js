@@ -39,7 +39,7 @@ router.get("/", async (req, res, next) => {
         const pageCount = Math.ceil(results.count / req.query.limit);
         return res.render("streetClosurePermit/index", {
           title: "BWG | Street Closure Permits",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -78,7 +78,7 @@ router.get("/", async (req, res, next) => {
 
       return res.render("streetClosurePermit/index", {
         title: "BWG | Street Closure Permits",
-        errorMessages: messages,
+        message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,

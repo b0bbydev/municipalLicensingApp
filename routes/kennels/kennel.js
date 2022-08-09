@@ -61,7 +61,7 @@ router.get(
       ]).then((data) => {
         return res.render("kennels/kennel", {
           title: "BWG | Kennel Licensing",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           propertyOwners: data[0].rows,

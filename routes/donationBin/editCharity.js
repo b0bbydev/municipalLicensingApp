@@ -43,7 +43,7 @@ router.get(
         .then((results) => {
           return res.render("donationBin/", {
             title: "BWG | Edit Donation Bin Charity",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             organizationTypes: organizationTypes,

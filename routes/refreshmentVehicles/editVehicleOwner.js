@@ -50,7 +50,7 @@ router.get(
       }).then((results) => {
         return res.render("refreshmentVehicles/editVehicleOwner", {
           title: "BWG | Edit Vehicle Owner",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           streets: streets,

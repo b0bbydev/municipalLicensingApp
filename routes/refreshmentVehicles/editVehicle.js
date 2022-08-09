@@ -36,7 +36,7 @@ router.get(
       }).then((results) => {
         return res.render("refreshmentVehicles/editVehicle", {
           title: "BWG | Edit Vehicle",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           // populate input fields with existing values.

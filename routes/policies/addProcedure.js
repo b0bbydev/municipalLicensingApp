@@ -40,7 +40,7 @@ router.get(
 
       return res.render("policies/addProcedure", {
         title: "BWG | Add Guideline",
-        errorMessages: messages,
+        message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         statusDropdownValues: statusDropdownValues,

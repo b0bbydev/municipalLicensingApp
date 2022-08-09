@@ -57,7 +57,7 @@ router.get("/", async (req, res, next) => {
 
       return res.render("refreshmentVehicles/index", {
         title: "BWG | Refreshment Vehicle Licensing",
-        errorMessages: messages,
+        message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
@@ -101,7 +101,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
           title: "BWG | Refreshment Vehicle Licensing",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -143,7 +143,7 @@ router.get("/", async (req, res, next) => {
 
           return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
             title: "BWG | Refreshment Vehicle Licensing",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             data: results.rows,
@@ -188,7 +188,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("refreshmentVehicles/index", {
           title: "BWG | Refreshment Vehicle Licensing",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -223,7 +223,7 @@ router.post("/", async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.render("refreshmentVehicles/index", {
       title: "BWG | Refreshment Vehicle Licensing",
-      errorMessages: "Page Error!",
+      message: "Page Error!",
       email: req.session.email,
       auth: req.session.auth, // authorization.
     });
@@ -305,7 +305,7 @@ router.get(
         return res.render("refreshmentVehicles/printLicense", {
           title: "BWG | Print License",
           layout: "",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           // data to populate form with.

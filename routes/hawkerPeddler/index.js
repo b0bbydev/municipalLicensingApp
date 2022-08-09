@@ -51,27 +51,34 @@ router.get("/", async (req, res, next) => {
           model: HawkerPeddlerBusinessAddress,
         },
       ],
-    }).then((results) => {
-      // for pagination.
-      const itemCount = results.count;
-      const pageCount = Math.ceil(results.count / req.query.limit);
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
 
-      return res.render("hawkerPeddler/index", {
-        title: "BWG | Hawker & Peddler Licensing",
-        errorMessages: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        data: results.rows,
-        filterOptions: filterOptions,
-        modalExpiryDate: modalExpiryDate,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
+        return res.render("hawkerPeddler/index", {
+          title: "BWG | Hawker & Peddler Licensing",
+          message: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      .catch((err) => {
+        return res.render("hawkerPeddler/index", {
+          title: "BWG | Hawker & Peddler Licensing",
+          message: "Page Error!",
+        });
       });
-    });
   } else if (req.query.filterCategory === "Business Name") {
     HawkerPeddlerBusiness.findAndCountAll({
       limit: req.query.limit,
@@ -86,29 +93,36 @@ router.get("/", async (req, res, next) => {
           model: HawkerPeddlerBusinessAddress,
         },
       ],
-    }).then((results) => {
-      // for pagination.
-      const itemCount = results.count;
-      const pageCount = Math.ceil(results.count / req.query.limit);
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
 
-      return res.render("hawkerPeddler/index", {
-        title: "BWG | Hawker & Peddler Licensing",
-        errorMessages: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        data: results.rows,
-        filterCategory: req.query.filterCategory,
-        filterValue: req.query.filterValue,
-        filterOptions: filterOptions,
-        modalExpiryDate: modalExpiryDate,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
+        return res.render("hawkerPeddler/index", {
+          title: "BWG | Hawker & Peddler Licensing",
+          message: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterCategory: req.query.filterCategory,
+          filterValue: req.query.filterValue,
+          filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      .catch((err) => {
+        return res.render("hawkerPeddler/index", {
+          title: "BWG | Hawker & Peddler Licensing",
+          message: "Page Error!",
+        });
       });
-    });
   } else if (req.query.filterCategory === "Applicant Name") {
     // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
     if (req.query.filterValue.trim().indexOf(" ") != -1) {
@@ -132,29 +146,36 @@ router.get("/", async (req, res, next) => {
             model: HawkerPeddlerApplicantAddress,
           },
         ],
-      }).then((results) => {
-        // for pagination.
-        const itemCount = results.count;
-        const pageCount = Math.ceil(results.count / req.query.limit);
+      })
+        .then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
 
-        return res.render("hawkerPeddler/search/applicantSearch", {
-          title: "BWG | Hawker & Peddler Licensing",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          data: results.rows,
-          filterCategory: req.query.filterCategory,
-          filterValue: req.query.filterValue,
-          filterOptions: filterOptions,
-          modalExpiryDate: modalExpiryDate,
-          pageCount,
-          itemCount,
-          queryCount: "Records returned: " + results.count,
-          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-          prev: paginate.href(req)(true),
-          hasMorePages: paginate.hasNextPages(req)(pageCount),
+          return res.render("hawkerPeddler/search/applicantSearch", {
+            title: "BWG | Hawker & Peddler Licensing",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterCategory: req.query.filterCategory,
+            filterValue: req.query.filterValue,
+            filterOptions: filterOptions,
+            modalExpiryDate: modalExpiryDate,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        })
+        .catch((err) => {
+          return res.render("hawkerPeddler/search/applicantSearch", {
+            title: "BWG | Hawker & Peddler Licensing",
+            message: "Page Error!",
+          });
         });
-      });
     } else {
       HawkerPeddlerApplicant.findAndCountAll({
         limit: req.query.limit,
@@ -175,29 +196,36 @@ router.get("/", async (req, res, next) => {
             model: HawkerPeddlerApplicantAddress,
           },
         ],
-      }).then((results) => {
-        // for pagination.
-        const itemCount = results.count;
-        const pageCount = Math.ceil(results.count / req.query.limit);
+      })
+        .then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
 
-        return res.render("hawkerPeddler/search/applicantSearch", {
-          title: "BWG | Hawker & Peddler Licensing",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          data: results.rows,
-          filterCategory: req.query.filterCategory,
-          filterValue: req.query.filterValue,
-          filterOptions: filterOptions,
-          modalExpiryDate: modalExpiryDate,
-          pageCount,
-          itemCount,
-          queryCount: "Records returned: " + results.count,
-          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-          prev: paginate.href(req)(true),
-          hasMorePages: paginate.hasNextPages(req)(pageCount),
+          return res.render("hawkerPeddler/search/applicantSearch", {
+            title: "BWG | Hawker & Peddler Licensing",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterCategory: req.query.filterCategory,
+            filterValue: req.query.filterValue,
+            filterOptions: filterOptions,
+            modalExpiryDate: modalExpiryDate,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        })
+        .catch((err) => {
+          return res.render("hawkerPeddler/search/applicantSearch", {
+            title: "BWG | Hawker & Peddler Licensing",
+            message: "Page Error!",
+          });
         });
-      });
     }
   } else if (req.query.filterCategory === "Applicant Address") {
     HawkerPeddlerApplicant.findAndCountAll({
@@ -229,7 +257,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("hawkerPeddler/search/applicantSearch", {
           title: "BWG | Hawker & Peddler Licensing",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,
@@ -246,12 +274,12 @@ router.get("/", async (req, res, next) => {
         });
       })
       // catch any scary errors and render page error.
-      .catch((err) =>
-        res.render("hawkerPeddler/index", {
+      .catch((err) => {
+        return res.render("hawkerPeddler/search/applicantSearch", {
           title: "BWG | Hawker & Peddler Licensing",
           message: "Page Error!",
-        })
-      );
+        });
+      });
   }
 });
 
@@ -264,7 +292,7 @@ router.post("/", async (req, res, next) => {
   if (!errors.isEmpty()) {
     return res.render("hawkerPeddler/index", {
       title: "BWG | Hawker & Peddler Licensing",
-      errorMessages: "Page Error!",
+      message: "Page Error!",
       email: req.session.email,
       auth: req.session.auth, // authorization.
     });
@@ -292,9 +320,16 @@ router.post("/", async (req, res, next) => {
           hawkerPeddlerBusinessID: req.body.hawkerPeddlerBusinessID,
         },
       }
-    ).then(() => {
-      return res.redirect("/hawkerPeddler");
-    });
+    )
+      .then(() => {
+        return res.redirect("/hawkerPeddler");
+      }) // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("hawkerPeddler/index", {
+          title: "BWG | Hawker & Peddler Licensing",
+          message: "Page Error!",
+        });
+      });
   }
 });
 
@@ -382,7 +417,7 @@ router.get(
         return res.render("hawkerPeddler/printLicense", {
           title: "BWG | Print License",
           layout: "",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           // data to populate form with.

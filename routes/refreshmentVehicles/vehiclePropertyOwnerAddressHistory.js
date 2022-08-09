@@ -67,7 +67,7 @@ router.get(
             "refreshmentVehicles/vehiclePropertyOwnerAddressHistory",
             {
               title: "BWG | Property Owner Address History",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               monthDropdownValues: monthDropdownValues,
@@ -99,7 +99,7 @@ router.get(
             "refreshmentVehicles/vehiclePropertyOwnerAddressHistory",
             {
               title: "BWG | Property Owner Address History",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               monthDropdownValues: monthDropdownValues,
@@ -132,7 +132,7 @@ router.get(
               "refreshmentVehicles/vehiclePropertyOwnerAddressHistory",
               {
                 title: "BWG | Property Owner Address History",
-                errorMessages: messages,
+                message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 monthDropdownValues: monthDropdownValues,
@@ -163,7 +163,7 @@ router.get(
               "refreshmentVehicles/vehiclePropertyOwnerAddressHistory",
               {
                 title: "BWG | Property Owner Address History",
-                errorMessages: messages,
+                message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 monthDropdownValues: monthDropdownValues,

@@ -66,7 +66,7 @@ router.get(
 
             return res.render("policies", {
               title: "BWG | Policies",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
@@ -209,7 +209,7 @@ router.get(
 
     return res.render("policies/policy", {
       title: "BWG | Policy",
-      errorMessages: messages,
+      message: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.
       procedures: procedures,
@@ -306,7 +306,7 @@ router.get(
 
               return res.render("policies/policyHistory", {
                 title: "BWG | Policy History",
-                errorMessages: messages,
+                message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 policyHistory: policyHistory.rows,
@@ -387,7 +387,7 @@ router.get(
 
                 return res.render("policies/policyHistory", {
                   title: "BWG | Policy History",
-                  errorMessages: messages,
+                  message: messages,
                   email: req.session.email,
                   auth: req.session.auth, // authorization.
                   policyHistory: policyHistory.rows,
@@ -468,7 +468,7 @@ router.get(
 
                 return res.render("policies/policyHistory", {
                   title: "BWG | Policy History",
-                  errorMessages: messages,
+                  message: messages,
                   email: req.session.email,
                   auth: req.session.auth, // authorization.
                   policyHistory: policyHistory.rows,
@@ -558,7 +558,7 @@ router.get(
 
                 return res.render("policies/policyHistory", {
                   title: "BWG | Policy History",
-                  errorMessages: messages,
+                  message: messages,
                   email: req.session.email,
                   auth: req.session.auth, // authorization.
                   policyHistory: policyHistory.rows,

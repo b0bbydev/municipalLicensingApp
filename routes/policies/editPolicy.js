@@ -58,7 +58,7 @@ router.get(
       }).then((results) => {
         return res.render("policies/editPolicy", {
           title: "BWG | Edit Policy",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           statusDropdownValues: statusDropdownValues,

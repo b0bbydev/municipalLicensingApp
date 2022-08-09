@@ -49,7 +49,7 @@ router.get("/", async (req, res, next) => {
 
       return res.render("policies/guidelines", {
         title: "BWG | Guidelines",
-        errorMessages: messages,
+        message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
@@ -89,7 +89,7 @@ router.get("/", async (req, res, next) => {
 
         return res.render("policies/guidelines", {
           title: "BWG | Guidelines",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           data: results.rows,

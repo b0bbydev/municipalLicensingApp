@@ -44,7 +44,7 @@ router.get(
       }).then((results) => {
         return res.render("policies/editProcedure", {
           title: "BWG | Edit Procedure",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           statusDropdownValues: statusDropdownValues,

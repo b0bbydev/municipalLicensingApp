@@ -47,29 +47,36 @@ router.get(
             model: HawkerPeddlerPropertyOwnerAddress,
           },
         ],
-      }).then((results) => {
-        return res.render("hawkerPeddler/editPropertyOwner", {
-          title: "BWG | Edit Property Owner",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          streets: streets,
-          // populate input fields with existing values.
-          formData: {
-            firstName: results.firstName,
-            lastName: results.lastName,
-            phoneNumber: results.phoneNumber,
-            email: results.email,
-            streetNumber:
-              results.hawkerPeddlerPropertyOwnerAddresses[0].streetNumber,
-            streetName:
-              results.hawkerPeddlerPropertyOwnerAddresses[0].streetName,
-            town: results.hawkerPeddlerPropertyOwnerAddresses[0].town,
-            postalCode:
-              results.hawkerPeddlerPropertyOwnerAddresses[0].postalCode,
-          },
+      })
+        .then((results) => {
+          return res.render("hawkerPeddler/editPropertyOwner", {
+            title: "BWG | Edit Property Owner",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            streets: streets,
+            // populate input fields with existing values.
+            formData: {
+              firstName: results.firstName,
+              lastName: results.lastName,
+              phoneNumber: results.phoneNumber,
+              email: results.email,
+              streetNumber:
+                results.hawkerPeddlerPropertyOwnerAddresses[0].streetNumber,
+              streetName:
+                results.hawkerPeddlerPropertyOwnerAddresses[0].streetName,
+              town: results.hawkerPeddlerPropertyOwnerAddresses[0].town,
+              postalCode:
+                results.hawkerPeddlerPropertyOwnerAddresses[0].postalCode,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("hawkerPeddler/editPropertyOwner", {
+            title: "BWG | Edit Property Owner",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

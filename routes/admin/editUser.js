@@ -36,7 +36,7 @@ router.get(
         .then((results) => {
           return res.render("admin/editUser", {
             title: "BWG | Edit User",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             // populate input fields with existing values.

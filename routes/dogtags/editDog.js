@@ -56,7 +56,7 @@ router.get(
         .then((results) => {
           return res.render("dogtags/editDog", {
             title: "BWG | Edit Dog",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             tagRequiredOptions: tagRequiredOptions,

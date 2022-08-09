@@ -78,7 +78,7 @@ router.get(
 
             return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
@@ -125,7 +125,7 @@ router.get(
 
             return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
@@ -174,7 +174,7 @@ router.get(
 
             return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,

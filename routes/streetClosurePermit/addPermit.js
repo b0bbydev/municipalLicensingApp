@@ -16,7 +16,7 @@ router.get("/", function (req, res, next) {
 
   return res.render("streetClosurePermit/addPermit", {
     title: "BWG | Add Street Closure Permit",
-    errorMessages: messages,
+    message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
   });

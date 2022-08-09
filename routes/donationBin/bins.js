@@ -65,7 +65,7 @@ router.get(
         .then((data) => {
           return res.render("donationBin/bin", {
             title: "BWG | Donation Bin",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             propertyOwners: data[0].rows,

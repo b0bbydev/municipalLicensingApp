@@ -51,7 +51,7 @@ router.get(
         .then((results) => {
           return res.render("donationBin/editDonationBin", {
             title: "BWG | Edit Donation Bin",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             streets: streets,

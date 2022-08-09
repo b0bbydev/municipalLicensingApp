@@ -73,7 +73,7 @@ router.get(
 
             return res.render("dogtags/index", {
               title: "BWG | Dog Tags",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
@@ -123,7 +123,7 @@ router.get(
 
             return res.render("dogtags", {
               title: "BWG | Dog Tags",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
@@ -313,7 +313,7 @@ router.get(
 
               return res.render("dogtags", {
                 title: "BWG | Dog Tags",
-                errorMessages: messages,
+                message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 data: results.rows,
@@ -367,7 +367,7 @@ router.get(
 
               return res.render("dogtags", {
                 title: "BWG | Dog Tags",
-                errorMessages: messages,
+                message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 data: results.rows,
@@ -420,7 +420,7 @@ router.get(
 
             return res.render("dogtags", {
               title: "BWG | Dog Tags",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
@@ -528,7 +528,7 @@ router.get(
             // return endpoint after passing validation.
             return res.render("dogtags/owner", {
               title: "BWG | Owner",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               ownerName: ownerName,
@@ -645,7 +645,7 @@ router.get(
         .then((results) => {
           return res.render("dogtags/additionalOwner", {
             title: "BWG | Additional Owner",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             // existing values.
@@ -763,7 +763,7 @@ router.get(
         // return endpoint after passing validation.
         return res.render("dogtags/tagHistory", {
           title: "BWG | Tag History",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           ownerID: req.session.ownerID,
@@ -839,7 +839,7 @@ router.get(
             // return endpoint after passing validation.
             return res.render("dogtags/expiredTags", {
               title: "BWG | Expired Tags",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               ownerID: req.session.ownerID,
@@ -898,7 +898,7 @@ router.get(
             // return endpoint after passing validation.
             return res.render("dogtags/expiredTags", {
               title: "BWG | Expired Tags",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               ownerID: req.session.ownerID,
@@ -951,7 +951,7 @@ router.get(
             // return endpoint after passing validation.
             return res.render("dogtags/expiredTags", {
               title: "BWG | Expired Tags",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               ownerID: req.session.ownerID,
@@ -1008,7 +1008,7 @@ router.get(
             // return endpoint after passing validation.
             return res.render("dogtags/expiredTags", {
               title: "BWG | Expired Tags",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               ownerID: req.session.ownerID,
@@ -1061,7 +1061,7 @@ router.get(
 
               return res.render("dogtags/expiredTags", {
                 title: "BWG | Dog Tags",
-                errorMessages: messages,
+                message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 data: results.rows,
@@ -1115,7 +1115,7 @@ router.get(
 
               return res.render("dogtags/expiredTags", {
                 title: "BWG | Dog Tags",
-                errorMessages: messages,
+                message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 data: results.rows,
@@ -1178,7 +1178,7 @@ router.get(
             // return endpoint after passing validation.
             return res.render("dogtags/expiredTags", {
               title: "BWG | Expired Tags",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               ownerID: req.session.ownerID,

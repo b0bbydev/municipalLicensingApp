@@ -25,7 +25,7 @@ router.get("/", async (req, res, next) => {
 
   return res.render("kennels/addKennel", {
     title: "BWG | Add A Kennel",
-    errorMessages: messages,
+    message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
     streets: streets,

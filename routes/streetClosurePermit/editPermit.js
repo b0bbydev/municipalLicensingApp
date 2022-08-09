@@ -37,7 +37,7 @@ router.get(
       }).then((results) => {
         return res.render("streetClosurePermit/editPermit", {
           title: "BWG | Edit Street Closure Permit",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           // get values for input fields.

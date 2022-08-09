@@ -11,7 +11,7 @@ router.get("/", function (req, res, next) {
 
   return res.render("sendSms/index", {
     title: "BWG | Send SMS",
-    errorMessages: messages,
+    message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
   });

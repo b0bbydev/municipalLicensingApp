@@ -50,7 +50,7 @@ router.get(
         .then((results) => {
           return res.render("admin/manageAccess", {
             title: "BWG | Manage Access",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             data: results,

@@ -19,7 +19,7 @@ router.get("/", function (req, res, next) {
 
   return res.render("login", {
     title: "BWG | Login",
-    errorMessages: messages,
+    message: messages,
     layout: "hideLayout.hbs",
   });
 });

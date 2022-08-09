@@ -65,7 +65,7 @@ router.get(
 
           return res.render("liquor/index", {
             title: "BWG | Liquor Licensing",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             data: results.rows,
@@ -107,7 +107,7 @@ router.get(
 
           return res.render("liquor/index", {
             title: "BWG | Liquor Licensing",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             data: results.rows,
@@ -148,7 +148,7 @@ router.get(
 
             return res.render("liquor/index", {
               title: "BWG | Liquor Licensing",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,

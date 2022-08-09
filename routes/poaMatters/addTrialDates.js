@@ -31,7 +31,7 @@ router.get(
 
       return res.render("poaMatters/addTrialDates", {
         title: "BWG | Add Trial Dates",
-        errorMessages: messages,
+        message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
       });

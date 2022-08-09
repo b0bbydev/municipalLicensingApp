@@ -69,7 +69,7 @@ router.get(
 
           return res.render("poaMatters/index", {
             title: "BWG | POA Matters",
-            errorMessages: messages,
+            message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
             data: results.rows,
@@ -110,7 +110,7 @@ router.get(
 
             return res.render("poaMatters/index", {
               title: "BWG | POA Matters",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,

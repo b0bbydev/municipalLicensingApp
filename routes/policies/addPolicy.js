@@ -50,7 +50,7 @@ router.get("/", async (req, res, next) => {
 
     return res.render("policies/addPolicy", {
       title: "BWG | Add Policy",
-      errorMessages: messages,
+      message: messages,
       email: req.session.email,
       auth: req.session.auth, // authorization.
       statusDropdownValues: statusDropdownValues,

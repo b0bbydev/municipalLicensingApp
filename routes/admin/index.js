@@ -59,7 +59,7 @@ router.get(
 
             return res.render("admin/index", {
               title: "BWG | Admin Panel",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
@@ -102,7 +102,7 @@ router.get(
 
             return res.render("admin/index", {
               title: "BWG | Admin Panel",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
@@ -141,7 +141,7 @@ router.get(
 
             return res.render("admin/index", {
               title: "BWG | Admin Panel",
-              errorMessages: messages,
+              message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,

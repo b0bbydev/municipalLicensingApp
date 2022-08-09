@@ -23,7 +23,7 @@ router.get("/", async (req, res, next) => {
 
   return res.render("donationBin/addOperator", {
     title: "BWG | Add Donation Bin Operator",
-    errorMessages: messages,
+    message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
     streets: streets,

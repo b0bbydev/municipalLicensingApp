@@ -50,7 +50,7 @@ router.get(
       }).then((results) => {
         return res.render("liquor/editBusiness", {
           title: "BWG | Edit Business",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           streets: streets,

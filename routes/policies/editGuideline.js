@@ -45,7 +45,7 @@ router.get(
       }).then((results) => {
         return res.render("policies/editGuideline", {
           title: "BWG | Edit Guideline",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           statusDropdownValues: statusDropdownValues,

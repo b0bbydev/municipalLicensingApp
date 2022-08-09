@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
 
   return res.render("dogtags/addAdditionalOwner", {
     title: "BWG | Add Additional Owner",
-    errorMessages: messages,
+    message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
   });

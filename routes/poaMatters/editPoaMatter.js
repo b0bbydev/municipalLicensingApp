@@ -63,7 +63,7 @@ router.get(
       }).then((results) => {
         return res.render("poaMatters/editPoaMatter", {
           title: "BWG | Edit POA Matter",
-          errorMessages: messages,
+          message: messages,
           email: req.session.email,
           auth: req.session.auth, // authorization.
           streets: streets,

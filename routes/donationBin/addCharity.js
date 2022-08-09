@@ -22,7 +22,7 @@ router.get("/", async (req, res, next) => {
 
   return res.render("donationBin/addCharity", {
     title: "BWG | Add Donation Bin Charity",
-    errorMessages: messages,
+    message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
     organizationTypes: organizationTypes,
