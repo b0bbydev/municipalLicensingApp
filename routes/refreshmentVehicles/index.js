@@ -5,6 +5,9 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 const RefreshmentVehicle = require("../../models/refreshmentVehicles/refreshmentVehicle");
 const RefreshmentVehicleOwner = require("../../models/refreshmentVehicles/refreshmentVehicleOwner");
 const RefreshmentVehicleOwnerAddress = require("../../models/refreshmentVehicles/refreshmentVehicleOwnerAddress");
+const RefreshmentVehicleOperator = require("../../models/refreshmentVehicles/refreshmentVehicleOperator");
+const RefreshmentVehiclePropertyOwner = require("../../models/refreshmentVehicles/refreshmentVehiclePropertyOwner");
+const RefreshmentVehiclePropertyOwnerAddress = require("../../models/refreshmentVehicles/refreshmentVehiclePropertyOwnerAddress");
 // helper.
 const funcHelpers = require("../../config/funcHelpers");
 // sequelize.
@@ -13,7 +16,7 @@ const Op = Sequelize.Op;
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { param, validationResult } = require("express-validator");
 
 /* GET /refreshmentVehicles */
 router.get("/", async (req, res, next) => {
@@ -253,5 +256,81 @@ router.post("/", async (req, res, next) => {
     });
   }
 });
+
+/* GET /refreshmentVehicles/printLicense/:id */
+router.get(
+  "/printLicense/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("refreshmentVehicles/printLicense", {
+        title: "BWG | Print License",
+        message: "Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // get info.
+      RefreshmentVehicle.findOne({
+        where: {
+          refreshmentVehicleID: req.params.id,
+        },
+        include: [
+          {
+            model: RefreshmentVehicleOwner,
+          },
+          {
+            model: RefreshmentVehicleOperator,
+          },
+          {
+            model: RefreshmentVehiclePropertyOwner,
+            include: [
+              {
+                model: RefreshmentVehiclePropertyOwnerAddress,
+              },
+            ],
+          },
+        ],
+      }).then((results) => {
+        // return endpoint after passing validation.
+        return res.render("refreshmentVehicles/printLicense", {
+          title: "BWG | Print License",
+          layout: "",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          // data to populate form with.
+          data: {
+            refreshmentVehicleOperatorName:
+              results.refreshmentVehicleOperators[0].firstName +
+              " " +
+              results.refreshmentVehicleOperators[0].lastName,
+            operatingBusinessName: results.operatingBusinessName,
+            streetName:
+              results.refreshmentVehiclePropertyOwners[0]
+                .refreshmentVehiclePropertyOwnerAddresses[0].streetName,
+            streetNumber:
+              results.refreshmentVehiclePropertyOwners[0]
+                .refreshmentVehiclePropertyOwnerAddresses[0].streetNumber,
+            town: results.refreshmentVehiclePropertyOwners[0]
+              .refreshmentVehiclePropertyOwnerAddresses[0].town,
+            issueDate: results.issueDate,
+            expiryDate: results.expiryDate,
+            licenseNumber: results.refreshmentVehicleOwners[0].licenseNumber,
+          },
+        });
+      });
+    }
+  }
+);
 
 module.exports = router;

@@ -12,7 +12,7 @@ const Op = Sequelize.Op;
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /kennels page. */
 router.get("/", async (req, res, next) => {
@@ -335,6 +335,69 @@ router.post(
             message: "Page Error!",
           })
         );
+    }
+  }
+);
+
+/* GET /kennels/printLicense/:id */
+router.get(
+  "/printLicense/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("kennels/printLicense", {
+        title: "BWG | Print License",
+        message: "Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // get info.
+      Kennel.findOne({
+        where: {
+          kennelID: req.params.id,
+        },
+        include: [
+          {
+            model: KennelAddress,
+          },
+          {
+            model: KennelOwner,
+          },
+        ],
+      }).then((results) => {
+        // return endpoint after passing validation.
+        return res.render("kennels/printLicense", {
+          title: "BWG | Print License",
+          layout: "",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          // data to populate form with.
+          data: {
+            kennelOwnerName:
+              results.kennelowners[0].firstName +
+              " " +
+              results.kennelowners[0].lastName,
+            kennelName: results.kennelName,
+            streetNumber: results.kennelAddresses[0].streetNumber,
+            streetName: results.kennelAddresses[0].streetName,
+            town: results.kennelAddresses[0].town,
+            issueDate: results.issueDate,
+            expiryDate: results.expiryDate,
+            licenseNumber: results.kennelowners[0].licenseNumber,
+          },
+        });
+      });
     }
   }
 );
