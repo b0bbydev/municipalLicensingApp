@@ -52,27 +52,34 @@ router.get("/", async (req, res, next) => {
           model: DonationBinAddress,
         },
       ],
-    }).then((results) => {
-      // for pagination.
-      const itemCount = results.count;
-      const pageCount = Math.ceil(results.count / req.query.limit);
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
 
-      return res.render("donationBin/index", {
-        title: "BWG | Donation Bin Licenses",
-        errorMessages: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        data: results.rows,
-        filterOptions: filterOptions,
-        modalExpiryDate: modalExpiryDate,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
+        return res.render("donationBin/index", {
+          title: "BWG | Donation Bin Licenses",
+          errorMessages: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      .catch((err) => {
+        return res.render("donationBin/index", {
+          title: "BWG | Donation Bin Licenses",
+          message: "Page Error!",
+        });
       });
-    });
   } else if (req.query.filterCategory === "Address") {
     DonationBin.findAndCountAll({
       limit: req.query.limit,
@@ -149,29 +156,36 @@ router.get("/", async (req, res, next) => {
             model: DonationBinOperatorAddress,
           },
         ],
-      }).then((results) => {
-        // for pagination.
-        const itemCount = results.count;
-        const pageCount = Math.ceil(results.count / req.query.limit);
+      })
+        .then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
 
-        return res.render("donationBin/search/donationBinOperatorSearch", {
-          title: "BWG | Donation Bin Licenses",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          data: results.rows,
-          filterCategory: req.query.filterCategory,
-          filterValue: req.query.filterValue,
-          filterOptions: filterOptions,
-          modalExpiryDate: modalExpiryDate,
-          pageCount,
-          itemCount,
-          queryCount: "Records returned: " + results.count,
-          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-          prev: paginate.href(req)(true),
-          hasMorePages: paginate.hasNextPages(req)(pageCount),
+          return res.render("donationBin/search/donationBinOperatorSearch", {
+            title: "BWG | Donation Bin Licenses",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterCategory: req.query.filterCategory,
+            filterValue: req.query.filterValue,
+            filterOptions: filterOptions,
+            modalExpiryDate: modalExpiryDate,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        })
+        .catch((err) => {
+          return res.render("donationBin/search/donationBinOperatorSearch", {
+            title: "BWG | Donation Bin Licenses",
+            message: "Page Error!",
+          });
         });
-      });
     } else {
       DonationBinOperator.findAndCountAll({
         limit: req.query.limit,
@@ -192,12 +206,53 @@ router.get("/", async (req, res, next) => {
             model: DonationBinOperatorAddress,
           },
         ],
-      }).then((results) => {
+      })
+        .then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
+
+          return res.render("donationBin/search/donationBinOperatorSearch", {
+            title: "BWG | Donation Bin Licenses",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterCategory: req.query.filterCategory,
+            filterValue: req.query.filterValue,
+            filterOptions: filterOptions,
+            modalExpiryDate: modalExpiryDate,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        })
+        .catch((err) => {
+          return res.render("donationBin/search/donationBinOperatorSearch", {
+            title: "BWG | Donation Bin Licenses",
+            message: "Page Error!",
+          });
+        });
+    }
+  } else if (req.query.filterCategory === "Charity/Organization") {
+    DonationBinCharity.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      where: {
+        charityName: {
+          [Op.like]: "%" + req.query.filterValue + "%",
+        },
+      },
+    })
+      .then((results) => {
         // for pagination.
         const itemCount = results.count;
         const pageCount = Math.ceil(results.count / req.query.limit);
 
-        return res.render("donationBin/search/donationBinOperatorSearch", {
+        return res.render("donationBin/search/donationBinCharitySearch", {
           title: "BWG | Donation Bin Licenses",
           errorMessages: messages,
           email: req.session.email,
@@ -214,40 +269,13 @@ router.get("/", async (req, res, next) => {
           prev: paginate.href(req)(true),
           hasMorePages: paginate.hasNextPages(req)(pageCount),
         });
+      })
+      .catch((err) => {
+        return res.render("donationBin/search/donationBinCharitySearch", {
+          title: "BWG | Donation Bin Licenses",
+          message: "Page Error!",
+        });
       });
-    }
-  } else if (req.query.filterCategory === "Charity/Organization") {
-    DonationBinCharity.findAndCountAll({
-      limit: req.query.limit,
-      offset: req.skip,
-      where: {
-        charityName: {
-          [Op.like]: "%" + req.query.filterValue + "%",
-        },
-      },
-    }).then((results) => {
-      // for pagination.
-      const itemCount = results.count;
-      const pageCount = Math.ceil(results.count / req.query.limit);
-
-      return res.render("donationBin/search/donationBinCharitySearch", {
-        title: "BWG | Donation Bin Licenses",
-        errorMessages: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        data: results.rows,
-        filterCategory: req.query.filterCategory,
-        filterValue: req.query.filterValue,
-        filterOptions: filterOptions,
-        modalExpiryDate: modalExpiryDate,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
-      });
-    });
   }
 });
 
@@ -288,9 +316,16 @@ router.post("/", async (req, res, next) => {
           donationBinID: req.body.donationBinID,
         },
       }
-    ).then(() => {
-      return res.redirect("/donationBin");
-    });
+    )
+      .then(() => {
+        return res.redirect("/donationBin");
+      })
+      .catch((err) => {
+        return res.render("donationBin/index", {
+          title: "BWG | Donation Bin Licenses",
+          message: "Page Error!",
+        });
+      });
   }
 });
 
@@ -329,25 +364,32 @@ router.get(
             model: DonationBinOperator,
           },
         ],
-      }).then((results) => {
-        // return endpoint after passing validation.
-        return res.render("donationBin/printLicense", {
-          title: "BWG | Print License",
-          layout: "",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          // data to populate form with.
-          data: {
-            streetName: results.donationBinAddresses[0].streetName,
-            streetNumber: results.donationBinAddresses[0].streetNumber,
-            town: results.donationBinAddresses[0].town,
-            licenseNumber: results.donationBinOperators[0].licenseNumber,
-            issueDate: results.issueDate,
-            expiryDate: results.expiryDate,
-          },
+      })
+        .then((results) => {
+          // return endpoint after passing validation.
+          return res.render("donationBin/printLicense", {
+            title: "BWG | Print License",
+            layout: "",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            // data to populate form with.
+            data: {
+              streetName: results.donationBinAddresses[0].streetName,
+              streetNumber: results.donationBinAddresses[0].streetNumber,
+              town: results.donationBinAddresses[0].town,
+              licenseNumber: results.donationBinOperators[0].licenseNumber,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("donationBin/printLicense", {
+            title: "BWG | Print License",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

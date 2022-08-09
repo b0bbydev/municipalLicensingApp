@@ -47,26 +47,35 @@ router.get(
             model: DonationBinPropertyOwnerAddress,
           },
         ],
-      }).then((results) => {
-        return res.render("donationBin/editPropertyOwner", {
-          title: "BWG | Edit Property Owner",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          streets: streets,
-          formData: {
-            firstName: results.firstName,
-            lastName: results.lastName,
-            phoneNumber: results.phoneNumber,
-            email: results.email,
-            streetNumber:
-              results.donationBinPropertyOwnerAddresses[0].streetNumber,
-            streetName: results.donationBinPropertyOwnerAddresses[0].streetName,
-            town: results.donationBinPropertyOwnerAddresses[0].town,
-            postalCode: results.donationBinPropertyOwnerAddresses[0].postalCode,
-          },
+      })
+        .then((results) => {
+          return res.render("donationBin/editPropertyOwner", {
+            title: "BWG | Edit Property Owner",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            streets: streets,
+            formData: {
+              firstName: results.firstName,
+              lastName: results.lastName,
+              phoneNumber: results.phoneNumber,
+              email: results.email,
+              streetNumber:
+                results.donationBinPropertyOwnerAddresses[0].streetNumber,
+              streetName:
+                results.donationBinPropertyOwnerAddresses[0].streetName,
+              town: results.donationBinPropertyOwnerAddresses[0].town,
+              postalCode:
+                results.donationBinPropertyOwnerAddresses[0].postalCode,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("donationBin/editPropertyOwner", {
+            title: "BWG | Edit Property Owner",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

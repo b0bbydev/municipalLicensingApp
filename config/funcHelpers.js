@@ -46,10 +46,12 @@ module.exports = {
     const keys1 = Object.keys(object1);
     const keys2 = Object.keys(object2);
 
+    // if the object contains different amount of properties.
     if (keys1.length !== keys2.length) {
       return false;
     }
 
+    // loop through properties to check if they match.
     for (let key of keys1) {
       if (object1[key] !== object2[key]) {
         return false;

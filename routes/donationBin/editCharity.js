@@ -39,23 +39,30 @@ router.get(
         where: {
           donationBinCharityID: req.params.id,
         },
-      }).then((results) => {
-        return res.render("donationBin/editCharity", {
-          title: "BWG | Edit Donation Bin Charity",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          organizationTypes: organizationTypes,
-          // populate input fields with existing values.
-          formData: {
-            charityName: results.charityName,
-            phoneNumber: results.phoneNumber,
-            email: results.email,
-            registrationNumber: results.registrationNumber,
-            organizationType: results.organizationType,
-          },
+      })
+        .then((results) => {
+          return res.render("donationBin/", {
+            title: "BWG | Edit Donation Bin Charity",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            organizationTypes: organizationTypes,
+            // populate input fields with existing values.
+            formData: {
+              charityName: results.charityName,
+              phoneNumber: results.phoneNumber,
+              email: results.email,
+              registrationNumber: results.registrationNumber,
+              organizationType: results.organizationType,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("donationBin/editCharity", {
+            title: "BWG | Edit Donation Bin Charity",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

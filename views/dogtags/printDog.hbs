@@ -25,198 +25,207 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
     />
   </head>
-  <div class="row">
-    <div class="col mt-1 ms-2">
-      <p class="mb-0">Town of Bradford West Gwillimbury</p>
-      <p class="mb-0">100 Dissette St., Unit 7 & 8</p>
-      <p class="mb-0">P.O. Box 100, Bradford, Ontario, L3Z 2A7</p>
-      <p class="mb-0">Telephone: 905-775-5366</p>
-      <p class="mb-0">Fax: 905-775-0153</p>
-      <p class="mb-0">www.townofbwg.com</p>
+  <body>
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{else}}
+    <div class="row">
+      <div class="col mt-1 ms-2">
+        <p class="mb-0">Town of Bradford West Gwillimbury</p>
+        <p class="mb-0">100 Dissette St., Unit 7 & 8</p>
+        <p class="mb-0">P.O. Box 100, Bradford, Ontario, L3Z 2A7</p>
+        <p class="mb-0">Telephone: 905-775-5366</p>
+        <p class="mb-0">Fax: 905-775-0153</p>
+        <p class="mb-0">www.townofbwg.com</p>
+      </div>
+      <div class="col">
+        <img
+          src="/images/bwg-logo.png"
+          alt="bwg-logo"
+          class="float-end mt-2 me-4"
+        />
+      </div>
     </div>
-    <div class="col">
-      <img
-        src="/images/bwg-logo.png"
-        alt="bwg-logo"
-        class="float-end mt-2 me-4"
-      />
+
+    <br>
+
+    <div class="row">
+      <div class="col">
+        <h3>Dog License Application</h3>
+      </div>
     </div>
-  </div>
 
-  <br>
-
-  <div class="row">
-    <div class="col">
-      <h3>Dog License Application</h3>
+    <div class="row">
+      <div class="col-sm-3">
+        <table class="table table-sm table-bordered">
+          <tr>
+            <td><strong>Tag Number</strong></td>
+            <td>{{data.tagNumber}}</td>
+          </tr>
+          <tr>
+            <td><strong>Date Issued</strong></td>
+            <td>{{data.issueDate}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col-sm-3">
-      <table class="table table-sm table-bordered">
-        <tr>
-          <td><strong>Tag Number</strong></td>
-          <td>{{data.tagNumber}}</td>
-        </tr>
-        <tr>
-          <td><strong>Date Issued</strong></td>
-          <td>{{data.issueDate}}</td>
-        </tr>
-      </table>
+    <div class="row mt-0">
+      <div class="col">
+        <h4>Owner Information</h4>
+      </div>
     </div>
-  </div>
 
-  <div class="row mt-0">
-    <div class="col">
-      <h4>Owner Information</h4>
+    <div class="row">
+      <div class="col">
+        <table class="table table-sm table-bordered">
+          <tr>
+            <td><strong>First Name:<br /></strong> {{data.firstName}}</td>
+            <td><strong>Last Name:<br /></strong> {{data.lastName}}</td>
+            <td><strong>Email Address:<br /></strong> {{data.email}}</td>
+          </tr>
+        </table>
+        <table class="table table-sm table-bordered">
+          <tr>
+            <td><strong>Address:<br /></strong>
+              {{data.streetNumber}}
+              {{data.streetName}}</td>
+            <td><strong>Town:<br /></strong> {{data.town}}</td>
+            <td><strong>Unit/Apartment/PO Box:<br /></strong>
+              {{data.poBoxAptRR}}</td>
+          </tr>
+        </table>
+        <table class="table table-sm table-bordered">
+          <tr>
+            <td><strong>Postal Code:<br /></strong> {{data.postalCode}}</td>
+            <td><strong>Home Telephone:<br /></strong> {{data.homePhone}}</td>
+            <td><strong>Cell Telephone:<br /></strong> {{data.cellPhone}}</td>
+            <td><strong>Work Telephone:<br /></strong> {{data.workPhone}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col">
-      <table class="table table-sm table-bordered">
-        <tr>
-          <td><strong>First Name:<br /></strong> {{data.firstName}}</td>
-          <td><strong>Last Name:<br /></strong> {{data.lastName}}</td>
-          <td><strong>Email Address:<br /></strong> {{data.email}}</td>
-        </tr>
-      </table>
-      <table class="table table-sm table-bordered">
-        <tr>
-          <td><strong>Address:<br /></strong>
-            {{data.streetNumber}}
-            {{data.streetName}}</td>
-          <td><strong>Town:<br /></strong> {{data.town}}</td>
-          <td><strong>Unit/Apartment/PO Box:<br /></strong>
-            {{data.poBoxAptRR}}</td>
-        </tr>
-      </table>
-      <table class="table table-sm table-bordered">
-        <tr>
-          <td><strong>Postal Code:<br /></strong> {{data.postalCode}}</td>
-          <td><strong>Home Telephone:<br /></strong> {{data.homePhone}}</td>
-          <td><strong>Cell Telephone:<br /></strong> {{data.cellPhone}}</td>
-          <td><strong>Work Telephone:<br /></strong> {{data.workPhone}}</td>
-        </tr>
-      </table>
+    <div class="row">
+      <div class="col">
+        <h4>Dog Information</h4>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col">
-      <h4>Dog Information</h4>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col">
-      <table class="table table-sm table-bordered">
-        <tr>
-          <td><strong>Designation:<br /></strong> {{data.designation}}</td>
-          <td><strong>Dog's Name:<br /></strong> {{data.dogName}}</td>
-          <td><strong>Breed:<br /></strong> {{data.breed}}</td>
-          <td><strong>Animal Colour:<br /></strong> {{data.colour}}</td>
-          <td><strong>Gender:<br /></strong>
+    <div class="row">
+      <div class="col">
+        <table class="table table-sm table-bordered">
+          <tr>
+            <td><strong>Designation:<br /></strong> {{data.designation}}</td>
+            <td><strong>Dog's Name:<br /></strong> {{data.dogName}}</td>
+            <td><strong>Breed:<br /></strong> {{data.breed}}</td>
+            <td><strong>Animal Colour:<br /></strong> {{data.colour}}</td>
+            <td><strong>Gender:<br /></strong>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="Male"
+                  {{#ifCond data.gender "===" "M"}}
+                    checked="checked"
+                  {{/ifCond}}
+                />
+                Male
+                <input type="radio"
+                name="gender"
+                value="Female"
+                {{#ifCond data.gender "===" "F"}}
+                    checked="checked"
+                  {{/ifCond}}
+                />
+                Female
+            </td>
+          </tr>
+        </table>
+        <table class="table table-sm table-bordered">
+          <tr>
+            <td><strong>Spayed/Neutered:<br /></strong><input
+                type="radio"
+                name="spadeNeutered"
+                id="spadeNeutered"
+                value="Spade"
+                {{#ifCond data.spade "===" "Spade"}}
+                  checked="checked"
+                {{/ifCond}}
+              />
+              Spade
               <input
                 type="radio"
-                name="gender"
-                value="Male"
-                {{#ifCond data.gender "===" "M"}}
+                name="spade"
+                value="Neutered"
+                {{#ifCond data.spade "===" "Neutered"}}
                   checked="checked"
                 {{/ifCond}}
               />
-              Male
-              <input type="radio"
-              name="gender"
-              value="Female"
-              {{#ifCond data.gender "===" "F"}}
+              Neutered
+              <input
+                type="radio"
+                name="spade"
+                value="No"
+                {{#ifCond data.spade "===" "No"}}
                   checked="checked"
                 {{/ifCond}}
               />
-              Female
-          </td>
-        </tr>
-      </table>
-      <table class="table table-sm table-bordered">
-        <tr>
-          <td><strong>Spayed/Neutered:<br /></strong><input
-              type="radio"
-              name="spadeNeutered"
-              id="spadeNeutered"
-              value="Spade"
-              {{#ifCond data.spade "===" "Spade"}}
-                checked="checked"
-              {{/ifCond}}
-            />
-            Spade
-            <input
-              type="radio"
-              name="spade"
-              value="Neutered"
-              {{#ifCond data.spade "===" "Neutered"}}
-                checked="checked"
-              {{/ifCond}}
-            />
-            Neutered
-            <input
-              type="radio"
-              name="spade"
-              value="No"
-              {{#ifCond data.spade "===" "No"}}
-                checked="checked"
-              {{/ifCond}}
-            />
-            No</td>
-          <td><strong>Rabies Tag #:<br /></strong> {{data.rabiesTagNumber}}</td>
-          <td><strong>Rabies Expiry:<br /></strong> {{data.rabiesExpiry}}</td>
-        </tr>
-      </table>
-      <table class="table table-sm table-bordered">
-        <tr>
-          <td><strong>Veterinary Clinic:<br /></strong> {{data.vetOffice}}</td>
-        </tr>
-      </table>
+              No</td>
+            <td><strong>Rabies Tag #:<br /></strong> {{data.rabiesTagNumber}}</td>
+            <td><strong>Rabies Expiry:<br /></strong> {{data.rabiesExpiry}}</td>
+          </tr>
+        </table>
+        <table class="table table-sm table-bordered">
+          <tr>
+            <td><strong>Veterinary Clinic:<br /></strong> {{data.vetOffice}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col">
-      <h4>Payment</h4>
+    <div class="row">
+      <div class="col">
+        <h4>Payment</h4>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col">
-      <table class="table table-sm table-bordered">
-        <tr>
-          <td><strong>Payment Type:<br /></strong><input type="radio" />Visa
-            <input type="radio" />MasterCard
-            <input type="radio" />Debit
-            <input type="radio" />Cash
-            <input type="radio" />
-            Cheque</td>
-          <td><strong>Amount Received:<br /></strong></td>
-        </tr>
-      </table>
+    <div class="row">
+      <div class="col">
+        <table class="table table-sm table-bordered">
+          <tr>
+            <td><strong>Payment Type:<br /></strong><input type="radio" />Visa
+              <input type="radio" />MasterCard
+              <input type="radio" />Debit
+              <input type="radio" />Cash
+              <input type="radio" />
+              Cheque</td>
+            <td><strong>Amount Received:<br /></strong></td>
+          </tr>
+        </table>
+      </div>
     </div>
-  </div>
 
-  <div class="row mt-3">
-    <div class="col">
-      <strong
-      >Signature:_________________________________________________</strong>
-      <strong>Date:___________________</strong>
+    <div class="row mt-3">
+      <div class="col">
+        <strong
+        >Signature:_________________________________________________</strong>
+        <strong>Date:___________________</strong>
+      </div>
     </div>
-  </div>
 
-  <div class="row">
-    <div class="col">
-      <p><i><small>The personal information collected on this form is collected
-            under authority of By-law 2006-027. This information will be used to
-            license pets, to administer the animal license program and for
-            by-law enforcement. Questions about the collection of personal
-            information for this program should be directed to the Licensing
-            Officer at 905-775-5366 ext. 1102.</small></i></p>
+    <div class="row">
+      <div class="col">
+        <p><i><small>The personal information collected on this form is collected
+              under authority of By-law 2006-027. This information will be used to
+              license pets, to administer the animal license program and for
+              by-law enforcement. Questions about the collection of personal
+              information for this program should be directed to the Licensing
+              Officer at 905-775-5366 ext. 1102.</small></i></p>
+      </div>
     </div>
-  </div>
+    {{/if}}
+ </body>
 </html>

@@ -47,32 +47,40 @@ router.get(
             model: DonationBinOperatorAddress,
           },
         ],
-      }).then((results) => {
-        return res.render("donationBin/editOperator", {
-          title: "BWG | Edit Donation Bin Operator",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          streets: streets,
-          // populate input fields with existing values.
-          formData: {
-            firstName: results.firstName,
-            lastName: results.lastName,
-            phoneNumber: results.phoneNumber,
-            email: results.email,
-            licenseNumber: results.licenseNumber,
-            photoID: results.photoID,
-            charityInformation: results.charityInformation,
-            ownerConsent: results.ownerConsent,
-            certificateOfInsurance: results.certificateOfInsurance,
-            sitePlan: results.sitePlan,
-            streetNumber: results.donationBinOperatorAddresses[0].streetNumber,
-            streetName: results.donationBinOperatorAddresses[0].streetName,
-            town: results.donationBinOperatorAddresses[0].town,
-            postalCode: results.donationBinOperatorAddresses[0].postalCode,
-          },
+      })
+        .then((results) => {
+          return res.render("donationBin/editOperator", {
+            title: "BWG | Edit Donation Bin Operator",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            streets: streets,
+            // populate input fields with existing values.
+            formData: {
+              firstName: results.firstName,
+              lastName: results.lastName,
+              phoneNumber: results.phoneNumber,
+              email: results.email,
+              licenseNumber: results.licenseNumber,
+              photoID: results.photoID,
+              charityInformation: results.charityInformation,
+              ownerConsent: results.ownerConsent,
+              certificateOfInsurance: results.certificateOfInsurance,
+              sitePlan: results.sitePlan,
+              streetNumber:
+                results.donationBinOperatorAddresses[0].streetNumber,
+              streetName: results.donationBinOperatorAddresses[0].streetName,
+              town: results.donationBinOperatorAddresses[0].town,
+              postalCode: results.donationBinOperatorAddresses[0].postalCode,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("donationBin/editOperator", {
+            title: "BWG | Edit Donation Bin Operator",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

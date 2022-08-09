@@ -315,6 +315,7 @@ hbs.registerHelper("incremented", function (index) {
 app.use("/login", loginRouter);
 app.use("/", indexRouter);
 
+// force iisreset by crashing the app. (should restart since running as a service on Windows Server)
 app.use("/iisreset", isAdmin, iisReset);
 
 /* admin related routes */

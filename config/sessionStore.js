@@ -1,4 +1,3 @@
-/* this file contains sensitive information related to the database connection to create the sessionStore. */
 module.exports = {
   connectionLimit: process.env.CONNECTION_LIMIT,
   user: process.env.USER,

@@ -70,27 +70,34 @@ router.get(
               model: BusinessAddress,
             },
           ],
-        }).then((results) => {
-          // for pagination.
-          const itemCount = results.count;
-          const pageCount = Math.ceil(results.count / req.query.limit);
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
 
-          return res.render("adultEntertainment/index", {
-            title: "BWG | Adult Entertainment Licenses",
-            errorMessages: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            data: results.rows,
-            filterOptions: filterOptions,
-            modalExpiryDate: modalExpiryDate,
-            pageCount,
-            itemCount,
-            queryCount: "Records returned: " + results.count,
-            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-            prev: paginate.href(req)(true),
-            hasMorePages: paginate.hasNextPages(req)(pageCount),
+            return res.render("adultEntertainment/index", {
+              title: "BWG | Adult Entertainment Licenses",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterOptions: filterOptions,
+              modalExpiryDate: modalExpiryDate,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("adultEntertainment/index", {
+              title: "BWG | Adult Entertainment Licenses",
+              message: "Page Error!",
+            });
           });
-        });
       } else if (req.query.filterCategory === "Address") {
         Business.findAndCountAll({
           // functions in where clause, fancy.
@@ -320,27 +327,34 @@ router.get(
             model: BusinessAddress,
           },
         ],
-      }).then((results) => {
-        // return endpoint after passing validation.
-        return res.render("adultEntertainment/printLicense", {
-          title: "BWG | Print License",
-          layout: "",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          // data to populate form with.
-          data: {
-            ownerName: results.ownerName,
-            businessName: results.businessName,
-            streetNumber: results.businessAddresses[0].streetNumber,
-            streetName: results.businessAddresses[0].streetName,
-            town: results.businessAddresses[0].town,
-            issueDate: results.issueDate,
-            expiryDate: results.expiryDate,
-            licenseNumber: results.licenseNumber,
-          },
+      })
+        .then((results) => {
+          // return endpoint after passing validation.
+          return res.render("adultEntertainment/printLicense", {
+            title: "BWG | Print License",
+            layout: "",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            // data to populate form with.
+            data: {
+              ownerName: results.ownerName,
+              businessName: results.businessName,
+              streetNumber: results.businessAddresses[0].streetNumber,
+              streetName: results.businessAddresses[0].streetName,
+              town: results.businessAddresses[0].town,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              licenseNumber: results.licenseNumber,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("adultEntertainment/printLicense", {
+            title: "BWG | Print License",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

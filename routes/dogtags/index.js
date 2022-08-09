@@ -71,7 +71,7 @@ router.get(
             const itemCount = results.count;
             const pageCount = Math.ceil(results.count / req.query.limit);
 
-            return res.render("dogtags", {
+            return res.render("dogtags/index", {
               title: "BWG | Dog Tags",
               errorMessages: messages,
               email: req.session.email,
@@ -87,12 +87,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("dogtags", {
-              title: "BWG | Dogtags",
+          .catch((err) => {
+            return res.render("dogtags/index", {
+              title: "BWG | Dog Tags",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       } else if (req.query.filterCategory === "Address") {
         Owner.findAndCountAll({
           limit: req.query.limit,
@@ -139,13 +139,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("dogtags", {
-              title: "BWG | Dogtags",
+          .catch((err) => {
+            return res.render("dogtags/index", {
+              title: "BWG | Dog Tags",
               message: "Page Error!",
-            })
-          );
-
+            });
+          });
         // use a different function (SQL query) if filtering by tagNumber.
       } else if (req.query.filterCategory === "Dog Tag Number") {
         Owner.findAndCountAll({
@@ -183,12 +182,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("dogtags", {
-              title: "BWG | Dogtags",
+          .catch((err) => {
+            return res.render("dogtags/search/dogTagNumberSearch", {
+              title: "BWG | Dog Tags",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       } else if (req.query.filterCategory === "Additional Owner Name") {
         Owner.findAndCountAll({
           where: {
@@ -230,12 +229,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("dogtags", {
-              title: "BWG | Dogtags",
+          .catch((err) => {
+            return res.render("dogtags/search/additionalOwnerSearch", {
+              title: "BWG | Dog Tags",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       } else if (req.query.filterCategory === "Vendor") {
         Owner.findAndCountAll({
           limit: req.query.limit,
@@ -277,12 +276,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("dogtags", {
-              title: "BWG | Dogtags",
+          .catch((err) => {
+            return res.render("dogtags/index", {
+              title: "BWG | Dog Tags",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       } else if (req.query.filterCategory === "Owner Name") {
         // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
         if (req.query.filterValue.trim().indexOf(" ") != -1) {
@@ -334,12 +333,12 @@ router.get(
               });
             })
             // catch any scary errors and render page error.
-            .catch((err) =>
-              res.render("dogtags", {
-                title: "BWG | Dogtags",
+            .catch((err) => {
+              return res.render("dogtags/index", {
+                title: "BWG | Dog Tags",
                 message: "Page Error!",
-              })
-            );
+              });
+            });
         } else {
           Owner.findAndCountAll({
             limit: req.query.limit,
@@ -388,12 +387,12 @@ router.get(
               });
             })
             // catch any scary errors and render page error.
-            .catch((err) =>
-              res.render("dogtags", {
-                title: "BWG | Dogtags",
+            .catch((err) => {
+              return res.render("dogtags/index", {
+                title: "BWG | Dog Tags",
                 message: "Page Error!",
-              })
-            );
+              });
+            });
         }
       } else {
         // format filterCategory to match column name in db - via handy dandy camelize() function.
@@ -437,12 +436,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("dogtags", {
-              title: "BWG | Dogtags",
+          .catch((err) => {
+            return res.render("dogtags/index", {
+              title: "BWG | Dog Tags",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       }
     }
   }
@@ -548,12 +547,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("owner", {
-              title: "BWG | Owner",
+          .catch((err) => {
+            return res.render("dogtags/owner", {
+              title: "BWG | Dog Tags",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       });
     }
   }
@@ -604,12 +603,12 @@ router.post(
         .then(() => {
           return res.redirect("/dogtags/owner/" + req.session.ownerID);
         })
-        .catch((err) =>
-          res.render("owner", {
-            title: "BWG | Owner",
+        .catch((err) => {
+          return res.render("dogtags/owner", {
+            title: "BWG | Dog Tags",
             message: "Page Error!",
-          })
-        );
+          });
+        });
     }
   }
 );
@@ -642,24 +641,31 @@ router.get(
         where: {
           additionalOwnerID: req.params.additionalOwnerID,
         },
-      }).then((results) => {
-        return res.render("dogtags/additionalOwner", {
-          title: "BWG | Additional Owner",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          // existing values.
-          additionalOwnerInfo: {
-            firstName: results.firstName,
-            lastName: results.lastName,
-            town: results.town,
-            homePhone: results.homePhone,
-            cellPhone: results.cellPhone,
-            workPhone: results.workPhone,
-            email: results.email,
-          },
+      })
+        .then((results) => {
+          return res.render("dogtags/additionalOwner", {
+            title: "BWG | Additional Owner",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            // existing values.
+            additionalOwnerInfo: {
+              firstName: results.firstName,
+              lastName: results.lastName,
+              town: results.town,
+              homePhone: results.homePhone,
+              cellPhone: results.cellPhone,
+              workPhone: results.workPhone,
+              email: results.email,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("dogtags/additionalOwner", {
+            title: "BWG | Additional Owner",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );
@@ -699,7 +705,9 @@ router.post(
           },
         }
       )
-        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
+        .then(() => {
+          return res.redirect("/dogtags/owner/" + req.session.ownerID);
+        })
         .catch((err) =>
           res.render("dogtags/additionalOwner", {
             title: "BWG | Additional Owner",
@@ -822,28 +830,35 @@ router.get(
           ],
           group: "firstName",
           order: [["ownerID", "ASC"]],
-        }).then((results) => {
-          // for pagination.
-          const itemCount = results.count.length;
-          const pageCount = Math.ceil(results.count.length / req.query.limit);
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
 
-          // return endpoint after passing validation.
-          return res.render("dogtags/expiredTags", {
-            title: "BWG | Expired Tags",
-            errorMessages: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            ownerID: req.session.ownerID,
-            data: results.rows,
-            filterOptions: filterOptions,
-            pageCount,
-            itemCount,
-            queryCount: "Records returned: " + results.count.length,
-            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-            prev: paginate.href(req)(true),
-            hasMorePages: paginate.hasNextPages(req)(pageCount),
+            // return endpoint after passing validation.
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Expired Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              ownerID: req.session.ownerID,
+              data: results.rows,
+              filterOptions: filterOptions,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Dog Tags",
+              message: "Page Error!",
+            });
           });
-        });
       } else if (req.query.filterCategory === "Address") {
         Owner.findAndCountAll({
           limit: req.query.limit,
@@ -874,30 +889,37 @@ router.get(
           ],
           group: "firstName",
           order: [["ownerID", "ASC"]],
-        }).then((results) => {
-          // for pagination.
-          const itemCount = results.count.length;
-          const pageCount = Math.ceil(results.count.length / req.query.limit);
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
 
-          // return endpoint after passing validation.
-          return res.render("dogtags/expiredTags", {
-            title: "BWG | Expired Tags",
-            errorMessages: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            ownerID: req.session.ownerID,
-            data: results.rows,
-            filterOptions: filterOptions,
-            filterCategory: req.query.filterCategory,
-            filterValue: req.query.filterValue,
-            pageCount,
-            itemCount,
-            queryCount: "Records returned: " + results.count.length,
-            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-            prev: paginate.href(req)(true),
-            hasMorePages: paginate.hasNextPages(req)(pageCount),
+            // return endpoint after passing validation.
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Expired Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              ownerID: req.session.ownerID,
+              data: results.rows,
+              filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Dog Tags",
+              message: "Page Error!",
+            });
           });
-        });
       } else if (req.query.filterCategory === "Dog Tag Number") {
         Owner.findAndCountAll({
           limit: req.query.limit,
@@ -920,30 +942,37 @@ router.get(
           ],
           group: "firstName",
           order: [["ownerID", "ASC"]],
-        }).then((results) => {
-          // for pagination.
-          const itemCount = results.count.length;
-          const pageCount = Math.ceil(results.count.length / req.query.limit);
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
 
-          // return endpoint after passing validation.
-          return res.render("dogtags/expiredTags", {
-            title: "BWG | Expired Tags",
-            errorMessages: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            ownerID: req.session.ownerID,
-            data: results.rows,
-            filterOptions: filterOptions,
-            filterCategory: req.query.filterCategory,
-            filterValue: req.query.filterValue,
-            pageCount,
-            itemCount,
-            queryCount: "Records returned: " + results.count.length,
-            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-            prev: paginate.href(req)(true),
-            hasMorePages: paginate.hasNextPages(req)(pageCount),
+            // return endpoint after passing validation.
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Expired Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              ownerID: req.session.ownerID,
+              data: results.rows,
+              filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Dog Tags",
+              message: "Page Error!",
+            });
           });
-        });
       } else if (req.query.filterCategory === "Additional Owner Name") {
         Owner.findAndCountAll({
           limit: req.query.limit,
@@ -970,30 +999,37 @@ router.get(
             },
           ],
           order: [["ownerID", "ASC"]],
-        }).then((results) => {
-          // for pagination.
-          const itemCount = results.count;
-          const pageCount = Math.ceil(results.count / req.query.limit);
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
 
-          // return endpoint after passing validation.
-          return res.render("dogtags/expiredTags", {
-            title: "BWG | Expired Tags",
-            errorMessages: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            ownerID: req.session.ownerID,
-            data: results.rows,
-            filterOptions: filterOptions,
-            filterCategory: req.query.filterCategory,
-            filterValue: req.query.filterValue,
-            pageCount,
-            itemCount,
-            queryCount: "Records returned: " + results.count,
-            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-            prev: paginate.href(req)(true),
-            hasMorePages: paginate.hasNextPages(req)(pageCount),
+            // return endpoint after passing validation.
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Expired Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              ownerID: req.session.ownerID,
+              data: results.rows,
+              filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Dog Tags",
+              message: "Page Error!",
+            });
           });
-        });
       } else if (req.query.filterCategory === "Owner Name") {
         // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
         if (req.query.filterValue.trim().indexOf(" ") != -1) {
@@ -1023,7 +1059,7 @@ router.get(
               const itemCount = results.count;
               const pageCount = Math.ceil(results.count / req.query.limit);
 
-              return res.render("dogtags", {
+              return res.render("dogtags/expiredTags", {
                 title: "BWG | Dog Tags",
                 errorMessages: messages,
                 email: req.session.email,
@@ -1045,12 +1081,12 @@ router.get(
               });
             })
             // catch any scary errors and render page error.
-            .catch((err) =>
-              res.render("dogtags", {
-                title: "BWG | Dogtags",
+            .catch((err) => {
+              return res.render("dogtags/expiredTags", {
+                title: "BWG | Dog Tags",
                 message: "Page Error!",
-              })
-            );
+              });
+            });
         } else {
           Owner.findAndCountAll({
             limit: req.query.limit,
@@ -1077,7 +1113,7 @@ router.get(
               const itemCount = results.count;
               const pageCount = Math.ceil(results.count / req.query.limit);
 
-              return res.render("dogtags", {
+              return res.render("dogtags/expiredTags", {
                 title: "BWG | Dog Tags",
                 errorMessages: messages,
                 email: req.session.email,
@@ -1099,12 +1135,12 @@ router.get(
               });
             })
             // catch any scary errors and render page error.
-            .catch((err) =>
-              res.render("dogtags", {
-                title: "BWG | Dogtags",
+            .catch((err) => {
+              return res.render("dogtags/expiredTags", {
+                title: "BWG | Dog Tags",
                 message: "Page Error!",
-              })
-            );
+              });
+            });
         }
       } else {
         // format filterCategory to match column name in db - via handy dandy camelize() function.
@@ -1133,30 +1169,37 @@ router.get(
           ],
           group: "firstName",
           order: [["ownerID", "ASC"]],
-        }).then((results) => {
-          // for pagination.
-          const itemCount = results.count.length;
-          const pageCount = Math.ceil(results.count.length / req.query.limit);
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
 
-          // return endpoint after passing validation.
-          return res.render("dogtags/expiredTags", {
-            title: "BWG | Expired Tags",
-            errorMessages: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            ownerID: req.session.ownerID,
-            data: results.rows,
-            filterOptions: filterOptions,
-            filterCategory: req.query.filterCategory,
-            filterValue: req.query.filterValue,
-            pageCount,
-            itemCount,
-            queryCount: "Records returned: " + results.count.length,
-            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-            prev: paginate.href(req)(true),
-            hasMorePages: paginate.hasNextPages(req)(pageCount),
+            // return endpoint after passing validation.
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Expired Tags",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              ownerID: req.session.ownerID,
+              data: results.rows,
+              filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Dog Tags",
+              message: "Page Error!",
+            });
           });
-        });
       }
     }
   }
@@ -1197,42 +1240,49 @@ router.get(
             model: Address,
           },
         ],
-      }).then((results) => {
-        // return endpoint after passing validation.
-        return res.render("dogtags/printDog", {
-          title: "BWG | Print Dog",
-          layout: "",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          ownerID: req.session.ownerID,
-          // data to populate form with.
-          data: {
-            tagNumber: results.dogs[0].tagNumber,
-            issueDate: results.dogs[0].issueDate,
-            designation: results.dogs[0].designation,
-            dogName: results.dogs[0].dogName,
-            breed: results.dogs[0].breed,
-            colour: results.dogs[0].colour,
-            gender: results.dogs[0].gender,
-            spade: results.dogs[0].spade,
-            rabiesTagNumber: results.dogs[0].rabiesTagNumber,
-            rabiesExpiry: results.dogs[0].rabiesExpiry,
-            vetOffice: results.dogs[0].vetOffice,
-            firstName: results.firstName,
-            lastName: results.lastName,
-            email: results.email,
-            streetNumber: results.addresses[0].streetNumber,
-            streetName: results.addresses[0].streetName,
-            town: results.addresses[0].town,
-            poBoxAptRR: results.addresses[0].poBoxAptRR,
-            postalCode: results.addresses[0].postalCode,
-            homePhone: results.homePhone,
-            cellPhone: results.cellPhone,
-            workPhone: results.workPhone,
-          },
+      })
+        .then((results) => {
+          // return endpoint after passing validation.
+          return res.render("dogtags/printDog", {
+            title: "BWG | Print Dog",
+            layout: "",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            ownerID: req.session.ownerID,
+            // data to populate form with.
+            data: {
+              tagNumber: results.dogs[0].tagNumber,
+              issueDate: results.dogs[0].issueDate,
+              designation: results.dogs[0].designation,
+              dogName: results.dogs[0].dogName,
+              breed: results.dogs[0].breed,
+              colour: results.dogs[0].colour,
+              gender: results.dogs[0].gender,
+              spade: results.dogs[0].spade,
+              rabiesTagNumber: results.dogs[0].rabiesTagNumber,
+              rabiesExpiry: results.dogs[0].rabiesExpiry,
+              vetOffice: results.dogs[0].vetOffice,
+              firstName: results.firstName,
+              lastName: results.lastName,
+              email: results.email,
+              streetNumber: results.addresses[0].streetNumber,
+              streetName: results.addresses[0].streetName,
+              town: results.addresses[0].town,
+              poBoxAptRR: results.addresses[0].poBoxAptRR,
+              postalCode: results.addresses[0].postalCode,
+              homePhone: results.homePhone,
+              cellPhone: results.cellPhone,
+              workPhone: results.workPhone,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("dogtags/printDog", {
+            title: "BWG | Print Dog",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

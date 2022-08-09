@@ -38,72 +38,79 @@
     </style>
   </head>
   <body>
-    <div class="row mb-5">
-      <div class="col-sm-6">
-        <img
-          src="/images/bwg-background.gif"
-          alt="bwg-logo"
-          class="mt-2"
-          height="65"
-          width="400"
-        />
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
       </div>
-      <!-- License Type -->
-      <div class="col-sm-4">
-        <p class="fs-2 mt-2">Donation Bin Licence</p>
+    {{else}}
+      <div class="row mb-5">
+        <div class="col-sm-6">
+          <img
+            src="/images/bwg-background.gif"
+            alt="bwg-logo"
+            class="mt-2"
+            height="65"
+            width="400"
+          />
+        </div>
+        <!-- License Type -->
+        <div class="col-sm-4">
+          <p class="fs-2 mt-2">Donation Bin Licence</p>
+        </div>
       </div>
-    </div>
-    <!-- License Info -->
-    <div class="row py-1">
-      <div class="col-sm-2 mt-1 ms-2">
-        <p class="fs-3">Location: </p>
+      <!-- License Info -->
+      <div class="row py-1">
+        <div class="col-sm-2 mt-1 ms-2">
+          <p class="fs-3">Location: </p>
+        </div>
+        <div class="col mt-1 ms-2">
+          <p id="normal" class="fs-4 mt-1">{{data.streetNumber}}
+            {{data.streetName}},
+            {{data.town}}</p>
+        </div>
       </div>
-      <div class="col mt-1 ms-2">
-        <p id="normal" class="fs-4 mt-1">{{data.streetNumber}}
-          {{data.streetName}},
-          {{data.town}}</p>
+      <div class="row py-1">
+        <div class="col-sm-2 mt-1 ms-2">
+          <p class="fs-3">License #: </p>
+        </div>
+        <div class="col mt-1 ms-2">
+          <p id="normal" class="fs-4 mt-1">{{data.licenseNumber}}</p>
+        </div>
       </div>
-    </div>
-    <div class="row py-1">
-      <div class="col-sm-2 mt-1 ms-2">
-        <p class="fs-3">License #: </p>
+      <div class="row py-1">
+        <div class="col-sm-2 mt-1 ms-2">
+          <p class="fs-3">Issue Date: </p>
+        </div>
+        <div class="col mt-1 ms-2">
+          <p id="normal" class="fs-4 mt-1">{{data.issueDate}}</p>
+        </div>
       </div>
-      <div class="col mt-1 ms-2">
-        <p id="normal" class="fs-4 mt-1">{{data.licenseNumber}}</p>
+      <div class="row py-1">
+        <div class="col-sm-3 mt-1 ms-2 w-10 mb-5">
+          <p class="fs-3">Expiration Date: </p>
+        </div>
+        <div class="col mt-1 ms-2">
+          <p id="normal" class="fs-4 mt-1">{{data.expiryDate}}</p>
+        </div>
       </div>
-    </div>
-    <div class="row py-1">
-      <div class="col-sm-2 mt-1 ms-2">
-        <p class="fs-3">Issue Date: </p>
+      <!-- specific by-law info -->
+      <div class="row py-3">
+        <div class="col">
+          <p id="normal" class="px-5">This permit is issued under the Town of
+            Bradford West Gwillimbury's Donation Bin By-law 2015-93.</p>
+          <p id="normal" class="px-5">To report contraventions of this by-law
+            please contact the Enforcement Division at 905-775-5366. To view a
+            copy of the By-law please visit the Town's website at
+            <span id="underline">www.townofbwg.com.</span></p>
+        </div>
       </div>
-      <div class="col mt-1 ms-2">
-        <p id="normal" class="fs-4 mt-1">{{data.issueDate}}</p>
+      <div class="row pe-3 mt-5 float-end">
+        <div class="col mt-5">
+          <strong id="normal">____________________________</strong>
+          <p id="normal">Lauren Fortune, Licensing Officer</p>
+        </div>
       </div>
-    </div>
-    <div class="row py-1">
-      <div class="col-sm-3 mt-1 ms-2 w-10 mb-5">
-        <p class="fs-3">Expiration Date: </p>
-      </div>
-      <div class="col mt-1 ms-2">
-        <p id="normal" class="fs-4 mt-1">{{data.expiryDate}}</p>
-      </div>
-    </div>
-    <!-- specific by-law info -->
-    <div class="row py-3">
-      <div class="col">
-        <p id="normal" class="px-5">This permit is issued under the Town of
-          Bradford West Gwillimbury's Donation Bin By-law 2015-93.</p>
-        <p id="normal" class="px-5">To report contraventions of this by-law
-          please contact the Enforcement Division at 905-775-5366. To view a
-          copy of the By-law please visit the Town's website at
-          <span id="underline">www.townofbwg.com.</span></p>
-      </div>
-    </div>
-    <div class="row pe-3 mt-5 float-end">
-      <div class="col mt-5">
-        <strong id="normal">____________________________</strong>
-        <p id="normal">Lauren Fortune, Licensing Officer</p>
-      </div>
-    </div>
+    {{/if}}
   </body>
 </html>

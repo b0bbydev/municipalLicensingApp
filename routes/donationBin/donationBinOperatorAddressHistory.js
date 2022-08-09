@@ -59,18 +59,25 @@ router.get(
             donationBinOperatorID: req.params.id,
           },
           order: [["lastModified", "DESC"]],
-        }).then((results) => {
-          return res.render("donationBin/donationBinOperatorAddressHistory", {
-            title: "BWG | Donation Bin Operator Address History",
-            errorMessages: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            monthDropdownValues: monthDropdownValues,
-            yearDropdownValues: yearDropdownValues,
-            data: results.rows,
-            donationBinOperatorID: req.params.id,
+        })
+          .then((results) => {
+            return res.render("donationBin/donationBinOperatorAddressHistory", {
+              title: "BWG | Donation Bin Operator Address History",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
+              data: results.rows,
+              donationBinOperatorID: req.params.id,
+            });
+          })
+          .catch((err) => {
+            return res.render("donationBin/donationBinOperatorAddressHistory", {
+              title: "BWG | Donation Bin Operator Address History",
+              message: "Page Error!",
+            });
           });
-        });
         // both year and month filter.
       } else if (req.query.filterMonth && req.query.filterYear) {
         DonationBinOperatorAddressHistory.findAndCountAll({
@@ -88,20 +95,27 @@ router.get(
             ],
           },
           order: [["lastModified", "DESC"]],
-        }).then((results) => {
-          return res.render("donationBin/donationBinOperatorAddressHistory", {
-            title: "BWG | Donation Bin Operator Address History",
-            errorMessages: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            monthDropdownValues: monthDropdownValues,
-            yearDropdownValues: yearDropdownValues,
-            data: results.rows,
-            donationBinOperatorID: req.params.id,
-            filterMonth: req.query.filterMonth,
-            filterYear: req.query.filterYear,
+        })
+          .then((results) => {
+            return res.render("donationBin/donationBinOperatorAddressHistory", {
+              title: "BWG | Donation Bin Operator Address History",
+              errorMessages: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
+              data: results.rows,
+              donationBinOperatorID: req.params.id,
+              filterMonth: req.query.filterMonth,
+              filterYear: req.query.filterYear,
+            });
+          })
+          .catch((err) => {
+            return res.render("donationBin/donationBinOperatorAddressHistory", {
+              title: "BWG | Donation Bin Operator Address History",
+              message: "Page Error!",
+            });
           });
-        });
         // if at least one filter exists.
       } else if (req.query.filterMonth || req.query.filterYear) {
         /* IF ONLY YEAR. */
@@ -118,20 +132,33 @@ router.get(
               ],
             },
             order: [["lastModified", "DESC"]],
-          }).then((results) => {
-            return res.render("donationBin/donationBinOperatorAddressHistory", {
-              title: "BWG | Donation Bin Operator Address History",
-              errorMessages: messages,
-              email: req.session.email,
-              auth: req.session.auth, // authorization.
-              monthDropdownValues: monthDropdownValues,
-              yearDropdownValues: yearDropdownValues,
-              data: results.rows,
-              donationBinOperatorID: req.params.id,
-              filterMonth: req.query.filterMonth,
-              filterYear: req.query.filterYear,
+          })
+            .then((results) => {
+              return res.render(
+                "donationBin/donationBinOperatorAddressHistory",
+                {
+                  title: "BWG | Donation Bin Operator Address History",
+                  errorMessages: messages,
+                  email: req.session.email,
+                  auth: req.session.auth, // authorization.
+                  monthDropdownValues: monthDropdownValues,
+                  yearDropdownValues: yearDropdownValues,
+                  data: results.rows,
+                  donationBinOperatorID: req.params.id,
+                  filterMonth: req.query.filterMonth,
+                  filterYear: req.query.filterYear,
+                }
+              );
+            })
+            .catch((err) => {
+              return res.render(
+                "donationBin/donationBinOperatorAddressHistory",
+                {
+                  title: "BWG | Donation Bin Operator Address History",
+                  message: "Page Error!",
+                }
+              );
             });
-          });
           /* IF ONLY MONTH. */
         } else if (!req.query.filterYear) {
           DonationBinOperatorAddressHistory.findAndCountAll({
@@ -146,20 +173,33 @@ router.get(
               ],
             },
             order: [["lastModified", "DESC"]],
-          }).then((results) => {
-            return res.render("donationBin/donationBinOperatorAddressHistory", {
-              title: "BWG | Donation Bin Operator Address History",
-              errorMessages: messages,
-              email: req.session.email,
-              auth: req.session.auth, // authorization.
-              monthDropdownValues: monthDropdownValues,
-              yearDropdownValues: yearDropdownValues,
-              data: results.rows,
-              donationBinOperatorID: req.params.id,
-              filterMonth: req.query.filterMonth,
-              filterYear: req.query.filterYear,
+          })
+            .then((results) => {
+              return res.render(
+                "donationBin/donationBinOperatorAddressHistory",
+                {
+                  title: "BWG | Donation Bin Operator Address History",
+                  errorMessages: messages,
+                  email: req.session.email,
+                  auth: req.session.auth, // authorization.
+                  monthDropdownValues: monthDropdownValues,
+                  yearDropdownValues: yearDropdownValues,
+                  data: results.rows,
+                  donationBinOperatorID: req.params.id,
+                  filterMonth: req.query.filterMonth,
+                  filterYear: req.query.filterYear,
+                }
+              );
+            })
+            .catch((err) => {
+              return res.render(
+                "donationBin/donationBinOperatorAddressHistory",
+                {
+                  title: "BWG | Donation Bin Operator Address History",
+                  message: "Page Error!",
+                }
+              );
             });
-          });
         }
       }
     }

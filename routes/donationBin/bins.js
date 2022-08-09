@@ -7,7 +7,7 @@ const DonationBinOperator = require("../../models/donationBin/donationBinOperato
 const DonationBinOperatorAddress = require("../../models/donationBin/donationBinOperatorAddress");
 const DonationBinCharity = require("../../models/donationBin/donationBinCharity");
 // express-validate.
-const { body, param, validationResult } = require("express-validator");
+const { param, validationResult } = require("express-validator");
 
 /* GET /donationBin/bin/:id */
 router.get(
@@ -61,20 +61,27 @@ router.get(
             donationBinID: req.params.id,
           },
         }),
-      ]).then((data) => {
-        return res.render("donationBin/bin", {
-          title: "BWG | Donation Bin",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          propertyOwners: data[0].rows,
-          operators: data[1].rows,
-          charities: data[2].rows,
-          propertyOwnersCount: "Records returned: " + data[0].count,
-          operatorsCount: "Records returned: " + data[1].count,
-          charitiesCount: "Records returned: " + data[2].count,
+      ])
+        .then((data) => {
+          return res.render("donationBin/bin", {
+            title: "BWG | Donation Bin",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            propertyOwners: data[0].rows,
+            operators: data[1].rows,
+            charities: data[2].rows,
+            propertyOwnersCount: "Records returned: " + data[0].count,
+            operatorsCount: "Records returned: " + data[1].count,
+            charitiesCount: "Records returned: " + data[2].count,
+          });
+        })
+        .catch((err) => {
+          return res.render("donationBin/bin", {
+            title: "BWG | Donation Bin",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

@@ -46,18 +46,25 @@ router.get(
         where: {
           id: req.params.id,
         },
-      }).then((results) => {
-        return res.render("admin/manageAccess", {
-          title: "BWG | Manage Access",
-          errorMessages: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          data: results,
-          userId: req.params.id,
-          userName: results[0].firstName + " " + results[0].lastName,
-          roles: roles,
+      })
+        .then((results) => {
+          return res.render("admin/manageAccess", {
+            title: "BWG | Manage Access",
+            errorMessages: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results,
+            userId: req.params.id,
+            userName: results[0].firstName + " " + results[0].lastName,
+            roles: roles,
+          });
+        })
+        .catch((err) => {
+          return res.render("admin/manageAccess", {
+            title: "BWG | Manage Access",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );
@@ -87,7 +94,7 @@ router.post("/:id", async (req, res, next) => {
       .catch((err) => {
         return res.render("admin/manageAccess", {
           title: "BWG | Manage Access",
-          message: "Page Error!" + err,
+          message: "Page Error!",
         });
       });
   }
