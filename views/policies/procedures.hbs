@@ -63,6 +63,10 @@
           <th>Scheduled Review Date</th>
           <th>Date Amended</th>
           <th>Status</th>
+          <th>Division</th>
+          <th>Authority</th>
+          <th>Administrator</th>
+          <th>Legislation Required</th>
           <th>Notes</th>
           <th>Actions</th>
         </tr>
@@ -71,19 +75,21 @@
         {{#each data}}
           <tr>
             <td>{{this.procedureID}}</td>
-            <td>{{this.procedureName}}</td>
+            <td><a id="ownerLink" href="/policies/editProcedure/{{this.procedureID}}">{{this.procedureName}}</a></td>
             <td>{{this.dateApproved}}</td>
             <td>{{this.lastReviewDate}}</td>
             <td>{{this.scheduledReviewDate}}</td>
             <td>{{this.dateAmended}}</td>
             <td>{{this.status}}</td>
+            <td>{{this.division}}</td>
+            <td>{{this.authority}}</td>
+            <td>{{this.administrator}}</td>
+            <td>{{#ifCond this.legislationRequired "===" "Yes"}}
+            <input type="checkbox" onclick="return false;" checked />
+              {{else}}
+            <input type="checkbox" onclick="return false;" />{{/ifCond}}</td>
             <td>{{this.notes}}</td>
-            <td style="width: 15%;">
-              <a
-                href="/policies/editProcedure/{{this.procedureID}}"
-                class="btn btn-sm btn-secondary"
-              >Edit</a>
-              |
+            <td style="width: 17%;">
               <a
                 data-bs-toggle="modal"
                 data-bs-target="#addToPolicyModal-{{this.procedureID}}"
@@ -93,7 +99,12 @@
               <a
                 href="/policies/procedures/procedureHistory/{{this.procedureID}}"
                 class="btn btn-sm btn-secondary"
-              >History</a></td>
+              >History</a>
+              |
+              <a
+                href="{{this.fileholdURL}}"
+                class="btn btn-sm btn-secondary"
+              >Filehold</a></td>
           </tr>
           <!-- Modal -->
           <div

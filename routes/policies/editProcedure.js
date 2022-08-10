@@ -36,6 +36,13 @@ router.get(
           dropdownTitle: "Status Options",
         },
       });
+      // authority options.
+      var authorityDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 12,
+          dropdownTitle: "Authority Options",
+        },
+      });
 
       Procedure.findOne({
         where: {
@@ -49,6 +56,7 @@ router.get(
             email: req.session.email,
             auth: req.session.auth, // authorization.
             statusDropdownValues: statusDropdownValues,
+            authorityDropdownValues: authorityDropdownValues,
             // if the form submission is unsuccessful, save their values.
             procedureInfo: {
               procedureName: results.procedureName,
@@ -130,6 +138,13 @@ router.post(
         dropdownTitle: "Status Options",
       },
     });
+    // authority options.
+    var authorityDropdownValues = await Dropdown.findAll({
+      where: {
+        dropdownFormID: 12,
+        dropdownTitle: "Authority Options",
+      },
+    });
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
@@ -139,6 +154,7 @@ router.post(
         email: req.session.email,
         auth: req.session.auth, // authorization.
         statusDropdownValues: statusDropdownValues,
+        authorityDropdownValues: authorityDropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {
           procedureName: req.body.procedureName,

@@ -36,6 +36,13 @@ router.get(
           dropdownTitle: "Status Options",
         },
       });
+      // authority options.
+      var authorityDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 12,
+          dropdownTitle: "Authority Options",
+        },
+      });
 
       // for populating input fields with existing values.
       Guideline.findOne({
@@ -50,6 +57,7 @@ router.get(
             email: req.session.email,
             auth: req.session.auth, // authorization.
             statusDropdownValues: statusDropdownValues,
+            authorityDropdownValues: authorityDropdownValues,
             // if the form submission is unsuccessful, save their values.
             guidelineInfo: {
               guidelineName: results.guidelineName,
