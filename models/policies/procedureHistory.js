@@ -55,6 +55,31 @@ const ProcedureHistory = sequelize.define(
       allowNull: true,
     },
 
+    division: {
+      type: Sequelize.STRING(30),
+      allowNull: true,
+    },
+
+    authority: {
+      type: Sequelize.STRING(30),
+      allowNull: true,
+    },
+
+    administrator: {
+      type: Sequelize.STRING(30),
+      allowNull: true,
+    },
+
+    legislationRequired: {
+      type: Sequelize.STRING(5),
+      allowNull: true,
+    },
+
+    fileHoldURL: {
+      type: Sequelize.STRING(255),
+      allowNull: true,
+    },
+
     notes: {
       type: Sequelize.STRING,
       allowNull: true,
