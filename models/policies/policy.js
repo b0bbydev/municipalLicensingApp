@@ -12,7 +12,7 @@ const Policy = sequelize.define("policy", {
   },
 
   policyNumber: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING(30),
     allowNull: true,
   },
 

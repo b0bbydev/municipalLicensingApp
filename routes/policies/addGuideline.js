@@ -37,6 +37,13 @@ router.get(
           dropdownTitle: "Status Options",
         },
       });
+      // authority options.
+      var authorityDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 12,
+          dropdownTitle: "Authority Options",
+        },
+      });
 
       return res.render("policies/addGuideline", {
         title: "BWG | Add Guideline",
@@ -44,6 +51,7 @@ router.get(
         email: req.session.email,
         auth: req.session.auth, // authorization.
         statusDropdownValues: statusDropdownValues,
+        authorityDropdownValues: authorityDropdownValues,
       });
     }
   }

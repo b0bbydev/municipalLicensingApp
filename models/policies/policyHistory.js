@@ -20,7 +20,7 @@ const PolicyHistory = sequelize.define(
     },
 
     policyNumber: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING(30),
       allowNull: true,
     },
 
