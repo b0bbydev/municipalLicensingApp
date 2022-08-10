@@ -3,7 +3,6 @@ const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
 const Policy = require("./policy");
-const PolicyHistory = require("./policyHistory");
 const Procedure = require("./procedure");
 
 const ProcedureHistory = sequelize.define(

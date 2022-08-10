@@ -3,6 +3,7 @@ var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const Procedure = require("../../models/policies/procedure");
+const ProcedureHistory = require("../../models/policies/procedureHistory");
 const Policy = require("../../models/policies/policy");
 // sequelize.
 const Sequelize = require("sequelize");
@@ -12,7 +13,7 @@ const funcHelpers = require("../../config/funcHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
 /* GET /policies/procedures */
 router.get("/", async (req, res, next) => {
@@ -175,6 +176,77 @@ router.post(
             message: "Page Error!",
           });
         });
+    }
+  }
+);
+
+/* GET /policies/procedures/procedureHistory/:id */
+router.get(
+  "/procedureHistory/:id",
+  param("id").matches(/^\d+$/).trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("policies/procedureHistory", {
+        title: "BWG | Procedure History",
+        message: "Page Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // get month dropdown values.
+      var monthDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 29, // filtering options.
+          dropdownTitle: "Policy History Filtering Options - Months",
+        },
+      });
+      // get month dropdown values.
+      var yearDropdownValues = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 29, // filtering options.
+          dropdownTitle: "Policy History Filtering Options - Years",
+        },
+      });
+
+      // if there are no filter parameters.
+      if (!req.query.filterMonth && !req.query.filterYear) {
+        ProcedureHistory.findAndCountAll({
+          where: {
+            [Op.and]: {
+              procedureID: req.params.id,
+              policyID: null,
+            },
+          },
+          order: [["lastModified", "DESC"]],
+        })
+          .then((results) => {
+            return res.render("policies/procedureHistory", {
+              title: "BWG | Procedure History",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              procedureID: req.params.id,
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
+            });
+          })
+          .catch((err) => {
+            return res.render("policies/procedureHistory", {
+              title: "BWG | Procedure History",
+              message: "Page Error!",
+            });
+          });
+      }
     }
   }
 );

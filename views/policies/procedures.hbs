@@ -78,7 +78,7 @@
             <td>{{this.dateAmended}}</td>
             <td>{{this.status}}</td>
             <td>{{this.notes}}</td>
-            <td>
+            <td style="width: 15%;">
               <a
                 href="/policies/editProcedure/{{this.procedureID}}"
                 class="btn btn-sm btn-secondary"
@@ -88,7 +88,12 @@
                 data-bs-toggle="modal"
                 data-bs-target="#addToPolicyModal-{{this.procedureID}}"
                 class="btn btn-sm btn-secondary"
-              >Add to Policy</a></td>
+              >Add to Policy</a>
+              |
+              <a
+                href="/policies/procedures/procedureHistory/{{this.procedureID}}"
+                class="btn btn-sm btn-secondary"
+              >History</a></td>
           </tr>
           <!-- Modal -->
           <div
