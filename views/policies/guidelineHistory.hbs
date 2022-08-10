@@ -74,6 +74,10 @@
       <th>Scheduled Review Date</th>
       <th>Date Amended</th>
       <th>Status</th>
+      <th>Division</th>
+      <th>Authority</th>
+      <th>Administrator</th>
+      <th>Legislation Required</th>
       <th>Notes</th>
       <th>Last Modified</th>
       <th>Action</th>
@@ -88,6 +92,13 @@
         <td>{{this.scheduledReviewDate}}</td>
         <td>{{this.dateAmended}}</td>
         <td>{{this.status}}</td>
+        <td>{{this.division}}</td>
+        <td>{{this.authority}}</td>
+        <td>{{this.administrator}}</td>
+        <td>{{#ifCond this.legislationRequired "===" "Yes"}}
+            <input type="checkbox" onclick="return false;" checked />
+          {{else}}
+            <input type="checkbox" onclick="return false;" />{{/ifCond}}</td>
         <td>{{this.notes}}</td>
         <td>{{formatDate this.lastModified}}</td>
         <td>{{this.action}}</td>
