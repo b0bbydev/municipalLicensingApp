@@ -116,6 +116,129 @@
         />
       </div>
     </div>
+    <div class="row">
+      <!-- Division -->
+      <div class="col-sm-6">
+        <label for="Division" class="form-label">Division</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Division"
+          name="division"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="40"
+          value="{{formData.division}}"
+        />
+      </div>
+      <!-- Authority -->
+      <div class="col-sm-6">
+        <label for="Authority" class="form-label">Authority</label>
+        <select class="form-select" name="authority">
+          {{#if formData.authority}}
+            <option
+              value="{{formData.authority}}"
+              disabled
+              selected
+            >{{formData.authority}}</option>
+          {{else}}
+            <option disabled selected>Authority...</option>
+          {{/if}}
+          {{#each authorityDropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Administrator -->
+      <div class="col-sm-6">
+        <label for="Administrator" class="form-label">Administrator</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Administrator"
+          name="administrator"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="40"
+          value="{{formData.administrator}}"
+        />
+      </div>
+      <!-- Filehold URL -->
+      <div class="col">
+        <label for="Filehold URL" class="form-label">Filehold URL</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Filehold URL"
+          name="fileHoldURL"
+          maxlength="255"
+          value="{{formData.fileHoldURL}}"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Legislation Required -->
+      <label for="Legislation Required" class="form-label">Legislation Required</label>
+      <!-- Yes -->
+      <div class="col-sm-6">
+        <div class="form-check">
+          <label class="form-check-label" for="legislationRequired">
+            Yes
+          </label>
+          {{#ifCond formData.legislationRequired "===" "Yes"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="Yes"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="Yes"
+            />
+          {{/ifCond}}
+        </div>
+      </div>
+      <!-- No -->
+      <div class="col-sm-6">
+        <div class="form-check">
+          <label class="form-check-label" for="legislationRequired">
+            No
+          </label>
+          {{#ifCond formData.legislationRequired "===" "No"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="No"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="legislationRequired"
+              value="No"
+            />
+          {{/ifCond}}
+        </div>
+      </div>
+    </div>
     <!-- Notes -->
     <div class="row">
       <div class="col">

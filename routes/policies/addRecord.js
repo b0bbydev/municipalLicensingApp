@@ -69,6 +69,21 @@ router.post(
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Category Entry!")
     .trim(),
+  body("division")
+    .if(body("division").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Division Entry!")
+    .trim(),
+  body("authority")
+    .if(body("authority").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Authority Entry!")
+    .trim(),
+  body("administrator")
+    .if(body("administrator").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Administrator Entry!")
+    .trim(),
   body("notes")
     .if(body("notes").notEmpty())
     .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
@@ -121,6 +136,11 @@ router.post(
           req.body.scheduledReviewDate
         ),
         category: req.body.category,
+        division: req.body.division,
+        authority: req.body.authority,
+        administrator: req.body.administrator,
+        fileHoldURL: req.body.fileHoldURL,
+        legislationRequired: req.body.legislationRequired,
         notes: req.body.notes,
       })
         // redirect back to the policy they were viewing.
@@ -150,9 +170,24 @@ router.post(
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
+  body("division")
+    .if(body("division").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Division Entry!")
+    .trim(),
+  body("authority")
+    .if(body("authority").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Authority Entry!")
+    .trim(),
+  body("administrator")
+    .if(body("administrator").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Administrator Entry!")
+    .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[a-zA-Z0-9\/\-, ]*$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {
@@ -188,6 +223,11 @@ router.post(
           lastReviewDate: req.body.lastReviewDate,
           scheduledReviewDate: req.body.scheduledReviewDate,
           category: req.body.category,
+          division: req.body.division,
+          authority: req.body.authority,
+          administrator: req.body.administrator,
+          legislationRequired: req.body.legislationRequired,
+          fileHoldURL: req.body.fileHoldURL,
           notes: req.body.notes,
         },
       });
@@ -203,6 +243,11 @@ router.post(
           req.body.scheduledReviewDate
         ),
         category: req.body.category,
+        division: req.body.division,
+        authority: req.body.authority,
+        administrator: req.body.administrator,
+        fileHoldURL: req.body.fileHoldURL,
+        legislationRequired: req.body.legislationRequired,
         notes: req.body.notes,
       })
         // redirect back to the policy they were viewing.

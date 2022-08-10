@@ -63,6 +63,21 @@ router.post(
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
+  body("division")
+    .if(body("division").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Division Entry!")
+    .trim(),
+  body("authority")
+    .if(body("authority").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Authority Entry!")
+    .trim(),
+  body("administrator")
+    .if(body("administrator").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Administrator Entry!")
+    .trim(),
   body("notes")
     .if(body("notes").notEmpty())
     .matches(/^[a-zA-Z0-9\/\-, ]*$/)
@@ -99,6 +114,12 @@ router.post(
           dateAmended: req.body.dateAmended,
           lastReviewDate: req.body.lastReviewDate,
           scheduledReviewDate: req.body.scheduledReviewDate,
+          category: req.body.category,
+          division: req.body.division,
+          authority: req.body.authority,
+          administrator: req.body.administrator,
+          legislationRequired: req.body.legislationRequired,
+          fileHoldURL: req.body.fileHoldURL,
           notes: req.body.notes,
         },
       });
@@ -113,6 +134,12 @@ router.post(
         scheduledReviewDate: funcHelpers.fixEmptyValue(
           req.body.scheduledReviewDate
         ),
+        category: req.body.category,
+        division: req.body.division,
+        authority: req.body.authority,
+        administrator: req.body.administrator,
+        fileHoldURL: req.body.fileHoldURL,
+        legislationRequired: req.body.legislationRequired,
         notes: req.body.notes,
         policyID: req.session.policyID,
       })

@@ -53,12 +53,17 @@ router.get(
             // if the form submission is unsuccessful, save their values.
             guidelineInfo: {
               guidelineName: results.guidelineName,
+              status: results.status,
               dateApproved: results.dateApproved,
+              dateAmended: results.dateAmended,
               lastReviewDate: results.lastReviewDate,
               scheduledReviewDate: results.scheduledReviewDate,
-              dateAmended: results.dateAmended,
-              status: results.status,
               category: results.category,
+              division: results.division,
+              authority: results.authority,
+              administrator: results.administrator,
+              fileHoldURL: results.fileHoldURL,
+              legislationRequired: results.legislationRequired,
               notes: results.notes,
             },
           });
@@ -87,14 +92,24 @@ router.post(
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
-  body("category")
-    .if(body("category").notEmpty())
+  body("division")
+    .if(body("division").notEmpty())
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid Category Entry!")
+    .withMessage("Invalid Division Entry!")
+    .trim(),
+  body("authority")
+    .if(body("authority").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Authority Entry!")
+    .trim(),
+  body("administrator")
+    .if(body("administrator").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Administrator Entry!")
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[a-zA-Z0-9\/\-, ]*$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {
@@ -123,12 +138,17 @@ router.post(
         // if the form submission is unsuccessful, save their values.
         formData: {
           guidelineName: req.body.guidelineName,
+          status: req.body.status,
           dateApproved: req.body.dateApproved,
+          dateAmended: req.body.dateAmended,
           lastReviewDate: req.body.lastReviewDate,
           scheduledReviewDate: req.body.scheduledReviewDate,
-          dateAmended: req.body.dateAmended,
-          status: req.body.status,
           category: req.body.category,
+          division: req.body.division,
+          authority: req.body.authority,
+          administrator: req.body.administrator,
+          legislationRequired: req.body.legislationRequired,
+          fileHoldURL: req.body.fileHoldURL,
           notes: req.body.notes,
         },
       });
@@ -137,14 +157,19 @@ router.post(
       Guideline.update(
         {
           guidelineName: req.body.guidelineName,
+          status: req.body.status,
           dateApproved: funcHelpers.fixEmptyValue(req.body.dateApproved),
+          dateAmended: funcHelpers.fixEmptyValue(req.body.dateAmended),
           lastReviewDate: funcHelpers.fixEmptyValue(req.body.lastReviewDate),
           scheduledReviewDate: funcHelpers.fixEmptyValue(
             req.body.scheduledReviewDate
           ),
-          dateAmended: funcHelpers.fixEmptyValue(req.body.dateAmended),
-          status: req.body.status,
           category: req.body.category,
+          division: req.body.division,
+          authority: req.body.authority,
+          administrator: req.body.administrator,
+          fileHoldURL: req.body.fileHoldURL,
+          legislationRequired: req.body.legislationRequired,
           notes: req.body.notes,
         },
         {
