@@ -42,26 +42,33 @@ router.get(
         where: {
           guidelineID: req.params.id, // guidelineID is passed into URL.
         },
-      }).then((results) => {
-        return res.render("policies/editGuideline", {
-          title: "BWG | Edit Guideline",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          statusDropdownValues: statusDropdownValues,
-          // if the form submission is unsuccessful, save their values.
-          guidelineInfo: {
-            guidelineName: results.guidelineName,
-            dateApproved: results.dateApproved,
-            lastReviewDate: results.lastReviewDate,
-            scheduledReviewDate: results.scheduledReviewDate,
-            dateAmended: results.dateAmended,
-            status: results.status,
-            category: results.category,
-            notes: results.notes,
-          },
+      })
+        .then((results) => {
+          return res.render("policies/editGuideline", {
+            title: "BWG | Edit Guideline",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            statusDropdownValues: statusDropdownValues,
+            // if the form submission is unsuccessful, save their values.
+            guidelineInfo: {
+              guidelineName: results.guidelineName,
+              dateApproved: results.dateApproved,
+              lastReviewDate: results.lastReviewDate,
+              scheduledReviewDate: results.scheduledReviewDate,
+              dateAmended: results.dateAmended,
+              status: results.status,
+              category: results.category,
+              notes: results.notes,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("policies/editGuideline", {
+            title: "BWG | Edit Guideline",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );
@@ -146,7 +153,9 @@ router.post(
           },
         }
       )
-        .then(res.redirect("/policies"))
+        .then(() => {
+          return res.redirect("/policies");
+        })
         .catch((err) => {
           return res.render("policies/editGuideline", {
             title: "BWG | Edit Guideline",

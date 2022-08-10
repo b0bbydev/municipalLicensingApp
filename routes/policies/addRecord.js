@@ -124,7 +124,9 @@ router.post(
         notes: req.body.notes,
       })
         // redirect back to the policy they were viewing.
-        .then(res.redirect("/policies"))
+        .then(() => {
+          return res.redirect("/policies");
+        })
         .catch((err) => {
           return res.render("policies/addProcedure", {
             title: "BWG | Add Procedure",
@@ -204,7 +206,9 @@ router.post(
         notes: req.body.notes,
       })
         // redirect back to the policy they were viewing.
-        .then(res.redirect("/policies"))
+        .then(() => {
+          return res.redirect("/policies");
+        })
         .catch((err) => {
           return res.render("policies/addGuideline", {
             title: "BWG | Add Guideline",

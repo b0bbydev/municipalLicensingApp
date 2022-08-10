@@ -42,27 +42,35 @@ router.get("/", async (req, res, next) => {
           [Op.eq]: null, // where policyID is null.
         },
       },
-    }).then((results) => {
-      // for pagination.
-      const itemCount = results.count;
-      const pageCount = Math.ceil(results.count / req.query.limit);
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
 
-      return res.render("policies/guidelines", {
-        title: "BWG | Guidelines",
-        message: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        data: results.rows,
-        filterOptions: filterOptions,
-        policies: policies,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
+        return res.render("policies/guidelines", {
+          title: "BWG | Guidelines",
+          message: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterOptions: filterOptions,
+          policies: policies,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("policies/guidelines", {
+          title: "BWG | Guidelines",
+          message: "Page Error!",
+        });
       });
-    });
   } else {
     // format filterCategory to match column name in db - via handy dandy camelize() function.
     var filterCategory = funcHelpers.camelize(req.query.filterCategory);
@@ -105,12 +113,12 @@ router.get("/", async (req, res, next) => {
         });
       })
       // catch any scary errors and render page error.
-      .catch((err) =>
-        res.render("policies/guidelines", {
+      .catch((err) => {
+        return res.render("policies/guidelines", {
           title: "BWG | Guidelines",
           message: "Page Error!",
-        })
-      );
+        });
+      });
   }
 });
 
@@ -158,14 +166,15 @@ router.post(
           );
         })
         .then(() => {
-          res.redirect("/policies/guidelines");
+          return res.redirect("/policies/guidelines");
         })
-        .catch((err) =>
-          res.render("policies/guidelines", {
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("policies/guidelines", {
             title: "BWG | Guidelines",
             message: "Page Error!",
-          })
-        );
+          });
+        });
     }
   }
 );

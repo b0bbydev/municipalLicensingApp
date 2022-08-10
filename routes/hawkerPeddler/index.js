@@ -323,7 +323,8 @@ router.post("/", async (req, res, next) => {
     )
       .then(() => {
         return res.redirect("/hawkerPeddler");
-      }) // catch any scary errors and render page error.
+      })
+      // catch any scary errors and render page error.
       .catch((err) => {
         return res.render("hawkerPeddler/index", {
           title: "BWG | Hawker & Peddler Licensing",
@@ -366,13 +367,14 @@ router.post(
             "/hawkerPeddler/businessAddressHistory/" +
               results.hawkerPeddlerBusinessID
           );
-        }) // catch any scary errors and render page error.
-        .catch((err) =>
-          res.render("hawkerPeddler/index", {
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("hawkerPeddler/index", {
             title: "BWG | Hawker & Peddler Licensing",
             message: "Page Error!",
-          })
-        );
+          });
+        });
     }
   }
 );
@@ -412,31 +414,39 @@ router.get(
             model: HawkerPeddlerApplicant,
           },
         ],
-      }).then((results) => {
-        // return endpoint after passing validation.
-        return res.render("hawkerPeddler/printLicense", {
-          title: "BWG | Print License",
-          layout: "",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          // data to populate form with.
-          data: {
-            applicantName:
-              results.hawkerPeddlerApplicants[0].firstName +
-              " " +
-              results.hawkerPeddlerApplicants[0].lastName,
-            businessName: results.businessName,
-            streetNumber:
-              results.hawkerPeddlerBusinessAddresses[0].streetNumber,
-            streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
-            town: results.hawkerPeddlerBusinessAddresses[0].town,
-            issueDate: results.issueDate,
-            expiryDate: results.expiryDate,
-            licenseNumber: results.hawkerPeddlerApplicants[0].licenseNumber,
-          },
+      })
+        .then((results) => {
+          // return endpoint after passing validation.
+          return res.render("hawkerPeddler/printLicense", {
+            title: "BWG | Print License",
+            layout: "",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            // data to populate form with.
+            data: {
+              applicantName:
+                results.hawkerPeddlerApplicants[0].firstName +
+                " " +
+                results.hawkerPeddlerApplicants[0].lastName,
+              businessName: results.businessName,
+              streetNumber:
+                results.hawkerPeddlerBusinessAddresses[0].streetNumber,
+              streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
+              town: results.hawkerPeddlerBusinessAddresses[0].town,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              licenseNumber: results.hawkerPeddlerApplicants[0].licenseNumber,
+            },
+          });
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("hawkerPeddler/printLicense", {
+            title: "BWG | Print License",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

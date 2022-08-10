@@ -34,34 +34,41 @@ router.get(
         where: {
           streetClosurePermitID: req.params.id,
         },
-      }).then((results) => {
-        return res.render("streetClosurePermit/editPermit", {
-          title: "BWG | Edit Street Closure Permit",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          // get values for input fields.
-          permitInfo: {
-            coordinatorName: results.coordinatorName,
-            coordinatorPhone: results.coordinatorPhone,
-            coordinatorEmail: results.coordinatorEmail,
-            sponser: results.sponser,
-            everydayContactName: results.everydayContactName,
-            everydayContactPhone: results.everydayContactPhone,
-            everydayContactEmail: results.everydayContactEmail,
-            permitNumber: results.permitNumber,
-            issueDate: results.issueDate,
-            closureLocation: results.closureLocation,
-            closureDate: results.closureDate,
-            closureTime: results.closureTime,
-            estimatedAttendance: results.estimatedAttendance,
-            alcoholServed: results.alcoholServed,
-            noiseExemption: results.noiseExemption,
-            description: results.description,
-            cleanupPlan: results.cleanupPlan,
-          },
+      })
+        .then((results) => {
+          return res.render("streetClosurePermit/editPermit", {
+            title: "BWG | Edit Street Closure Permit",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            // get values for input fields.
+            permitInfo: {
+              coordinatorName: results.coordinatorName,
+              coordinatorPhone: results.coordinatorPhone,
+              coordinatorEmail: results.coordinatorEmail,
+              sponser: results.sponser,
+              everydayContactName: results.everydayContactName,
+              everydayContactPhone: results.everydayContactPhone,
+              everydayContactEmail: results.everydayContactEmail,
+              permitNumber: results.permitNumber,
+              issueDate: results.issueDate,
+              closureLocation: results.closureLocation,
+              closureDate: results.closureDate,
+              closureTime: results.closureTime,
+              estimatedAttendance: results.estimatedAttendance,
+              alcoholServed: results.alcoholServed,
+              noiseExemption: results.noiseExemption,
+              description: results.description,
+              cleanupPlan: results.cleanupPlan,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("streetClosurePermit/editPermit", {
+            title: "BWG | Edit Street Closure Permit",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );
@@ -179,7 +186,9 @@ router.post(
           },
         }
       )
-        .then(res.redirect("/streetClosurePermit"))
+        .then(() => {
+          return res.redirect("/streetClosurePermit");
+        })
         .catch((err) => {
           return res.render("streetClosurePermit/editPermit", {
             title: "BWG | Edit Street Closure Permit",

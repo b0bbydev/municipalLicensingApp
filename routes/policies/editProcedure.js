@@ -41,26 +41,33 @@ router.get(
         where: {
           procedureID: req.params.id, // procedureID is passed into URL.
         },
-      }).then((results) => {
-        return res.render("policies/editProcedure", {
-          title: "BWG | Edit Procedure",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          statusDropdownValues: statusDropdownValues,
-          // if the form submission is unsuccessful, save their values.
-          procedureInfo: {
-            procedureName: results.procedureName,
-            dateApproved: results.dateApproved,
-            lastReviewDate: results.lastReviewDate,
-            scheduledReviewDate: results.scheduledReviewDate,
-            dateAmended: results.dateAmended,
-            status: results.status,
-            category: results.category,
-            notes: results.notes,
-          },
+      })
+        .then((results) => {
+          return res.render("policies/editProcedure", {
+            title: "BWG | Edit Procedure",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            statusDropdownValues: statusDropdownValues,
+            // if the form submission is unsuccessful, save their values.
+            procedureInfo: {
+              procedureName: results.procedureName,
+              dateApproved: results.dateApproved,
+              lastReviewDate: results.lastReviewDate,
+              scheduledReviewDate: results.scheduledReviewDate,
+              dateAmended: results.dateAmended,
+              status: results.status,
+              category: results.category,
+              notes: results.notes,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("policies/editProcedure", {
+            title: "BWG | Edit Procedure",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );
@@ -145,7 +152,9 @@ router.post(
           },
         }
       )
-        .then(res.redirect("/policies"))
+        .then(() => {
+          return res.redirect("/policies");
+        })
         .catch((err) => {
           return res.render("policies/editProcedure", {
             title: "BWG | Edit Procedure",

@@ -25,7 +25,7 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  // get dropdown values.
+  // get filter options.
   var filterOptions = await Dropdown.findAll({
     where: {
       dropdownFormID: 29, // filtering options.
@@ -50,27 +50,34 @@ router.get("/", async (req, res, next) => {
     RefreshmentVehicle.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
-    }).then((results) => {
-      // for pagination.
-      const itemCount = results.count;
-      const pageCount = Math.ceil(results.count / req.query.limit);
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
 
-      return res.render("refreshmentVehicles/index", {
-        title: "BWG | Refreshment Vehicle Licensing",
-        message: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        data: results.rows,
-        filterOptions: filterOptions,
-        modalExpiryDate: modalExpiryDate,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
+        return res.render("refreshmentVehicles/index", {
+          title: "BWG | Refreshment Vehicle Licensing",
+          message: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      .catch((err) => {
+        return res.render("refreshmentVehicles/index", {
+          title: "BWG | Refreshment Vehicle Licensing",
+          message: "Page Error!",
+        });
       });
-    });
   } else if (req.query.filterCategory === "Vehicle Owner Name") {
     // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
     if (req.query.filterValue.trim().indexOf(" ") != -1) {
@@ -94,27 +101,34 @@ router.get("/", async (req, res, next) => {
             model: RefreshmentVehicleOwnerAddress,
           },
         ],
-      }).then((results) => {
-        // for pagination.
-        const itemCount = results.count;
-        const pageCount = Math.ceil(results.count / req.query.limit);
+      })
+        .then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
 
-        return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
-          title: "BWG | Refreshment Vehicle Licensing",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          data: results.rows,
-          filterOptions: filterOptions,
-          modalExpiryDate: modalExpiryDate,
-          pageCount,
-          itemCount,
-          queryCount: "Records returned: " + results.count,
-          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-          prev: paginate.href(req)(true),
-          hasMorePages: paginate.hasNextPages(req)(pageCount),
+          return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
+            title: "BWG | Refreshment Vehicle Licensing",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterOptions: filterOptions,
+            modalExpiryDate: modalExpiryDate,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        })
+        .catch((err) => {
+          return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
+            title: "BWG | Refreshment Vehicle Licensing",
+            message: "Page Error!",
+          });
         });
-      });
     } else {
       RefreshmentVehicleOwner.findAndCountAll({
         limit: req.query.limit,
@@ -160,12 +174,12 @@ router.get("/", async (req, res, next) => {
           });
         })
         // catch any scary errors and render page error.
-        .catch((err) =>
-          res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
+        .catch((err) => {
+          return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
             title: "BWG | Refreshment Vehicle Licensing",
             message: "Page Error!",
-          })
-        );
+          });
+        });
     }
   } else {
     // format filterCategory to match column name in db - via handy dandy camelize() function.
@@ -205,12 +219,12 @@ router.get("/", async (req, res, next) => {
         });
       })
       // catch any scary errors and render page error.
-      .catch((err) =>
-        res.render("refreshmentVehicles/index", {
+      .catch((err) => {
+        return res.render("refreshmentVehicles/index", {
           title: "BWG | Refreshment Vehicle Licensing",
           message: "Page Error!",
-        })
-      );
+        });
+      });
   }
 });
 
@@ -251,9 +265,17 @@ router.post("/", async (req, res, next) => {
           refreshmentVehicleID: req.body.refreshmentVehicleID,
         },
       }
-    ).then(() => {
-      return res.redirect("/refreshmentVehicles");
-    });
+    )
+      .then(() => {
+        return res.redirect("/refreshmentVehicles");
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("refreshmentVehicles/index", {
+          title: "BWG | Refreshment Vehicle Licensing",
+          message: "Page Error!",
+        });
+      });
   }
 });
 
@@ -300,35 +322,43 @@ router.get(
             ],
           },
         ],
-      }).then((results) => {
-        // return endpoint after passing validation.
-        return res.render("refreshmentVehicles/printLicense", {
-          title: "BWG | Print License",
-          layout: "",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          // data to populate form with.
-          data: {
-            refreshmentVehicleOperatorName:
-              results.refreshmentVehicleOperators[0].firstName +
-              " " +
-              results.refreshmentVehicleOperators[0].lastName,
-            operatingBusinessName: results.operatingBusinessName,
-            streetName:
-              results.refreshmentVehiclePropertyOwners[0]
-                .refreshmentVehiclePropertyOwnerAddresses[0].streetName,
-            streetNumber:
-              results.refreshmentVehiclePropertyOwners[0]
-                .refreshmentVehiclePropertyOwnerAddresses[0].streetNumber,
-            town: results.refreshmentVehiclePropertyOwners[0]
-              .refreshmentVehiclePropertyOwnerAddresses[0].town,
-            issueDate: results.issueDate,
-            expiryDate: results.expiryDate,
-            licenseNumber: results.refreshmentVehicleOwners[0].licenseNumber,
-          },
+      })
+        .then((results) => {
+          // return endpoint after passing validation.
+          return res.render("refreshmentVehicles/printLicense", {
+            title: "BWG | Print License",
+            layout: "",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            // data to populate form with.
+            data: {
+              refreshmentVehicleOperatorName:
+                results.refreshmentVehicleOperators[0].firstName +
+                " " +
+                results.refreshmentVehicleOperators[0].lastName,
+              operatingBusinessName: results.operatingBusinessName,
+              streetName:
+                results.refreshmentVehiclePropertyOwners[0]
+                  .refreshmentVehiclePropertyOwnerAddresses[0].streetName,
+              streetNumber:
+                results.refreshmentVehiclePropertyOwners[0]
+                  .refreshmentVehiclePropertyOwnerAddresses[0].streetNumber,
+              town: results.refreshmentVehiclePropertyOwners[0]
+                .refreshmentVehiclePropertyOwnerAddresses[0].town,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              licenseNumber: results.refreshmentVehicleOwners[0].licenseNumber,
+            },
+          });
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("refreshmentVehicles/printLicense", {
+            title: "BWG | Print License",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

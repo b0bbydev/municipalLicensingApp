@@ -128,7 +128,9 @@ router.post(
         description: req.body.description,
         cleanupPlan: req.body.cleanupPlan,
       })
-        .then(res.redirect("/streetClosurePermit"))
+        .then(() => {
+          return res.redirect("/streetClosurePermit");
+        })
         .catch((err) => {
           return res.render("streetClosurePermit/addPermit", {
             title: "BWG | Add Street Closure Permit",

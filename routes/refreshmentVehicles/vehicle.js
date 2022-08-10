@@ -7,13 +7,8 @@ const RefreshmentVehicleOwner = require("../../models/refreshmentVehicles/refres
 const RefreshmentVehicleOwnerAddress = require("../../models/refreshmentVehicles/refreshmentVehicleOwnerAddress");
 const RefreshmentVehicleOperator = require("../../models/refreshmentVehicles/refreshmentVehicleOperator");
 const RefreshmentVehicleOperatorAddress = require("../../models/refreshmentVehicles/refreshmentVehicleOperatorAddress");
-// sequelize.
-const Sequelize = require("sequelize");
-const Op = Sequelize.Op;
-// pagination lib.
-const paginate = require("express-paginate");
 // express-validate.
-const { body, param, validationResult } = require("express-validator");
+const { param, validationResult } = require("express-validator");
 
 /* GET /refreshmentVehicles/vehicle/:id */
 router.get(
@@ -77,20 +72,28 @@ router.get(
             refreshmentVehicleID: req.session.refreshmentVehicleID,
           },
         }),
-      ]).then((data) => {
-        return res.render("refreshmentVehicles/vehicle", {
-          title: "BWG | Refreshment Vehicle Licensing",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          propertyOwners: data[0].rows,
-          vehicleOwners: data[1].rows,
-          vehicleOperators: data[2].rows,
-          propertyOwnersCount: "Records returned: " + data[0].count,
-          vehicleOwnersCount: "Records returned: " + data[1].count,
-          vehicleOperatorsCount: "Records returned: " + data[2].count,
+      ])
+        .then((data) => {
+          return res.render("refreshmentVehicles/vehicle", {
+            title: "BWG | Refreshment Vehicle Licensing",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            propertyOwners: data[0].rows,
+            vehicleOwners: data[1].rows,
+            vehicleOperators: data[2].rows,
+            propertyOwnersCount: "Records returned: " + data[0].count,
+            vehicleOwnersCount: "Records returned: " + data[1].count,
+            vehicleOperatorsCount: "Records returned: " + data[2].count,
+          });
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("refreshmentVehicles/vehicle", {
+            title: "BWG | Refreshment Vehicle Licensing",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

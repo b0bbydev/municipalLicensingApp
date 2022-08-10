@@ -166,7 +166,9 @@ router.post(
           include: [LiquorBusinessAddress],
         }
       )
-        .then(res.redirect("/liquor"))
+        .then(() => {
+          return res.redirect("/liquor");
+        })
         .catch((err) => {
           return res.render("liquor/addBusiness", {
             title: "BWG | Add Business",

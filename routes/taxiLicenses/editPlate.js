@@ -32,40 +32,47 @@ router.get("/:id", async (req, res, next) => {
         model: TaxiPlateOwnerAddress,
       },
     ],
-  }).then((results) => {
-    return res.render("taxiLicenses/editPlate", {
-      title: "BWG | Edit Taxi Plate",
-      message: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      // populate input fields with existing values.
-      formData: {
-        firstName: results.firstName,
-        lastName: results.lastName,
-        phoneNumber: results.phoneNumber,
-        email: results.email,
-        townPlateNumber: results.townPlateNumber,
-        vehicleYearMakeModel: results.vehicleYearMakeModel,
-        provincialPlate: results.provincialPlate,
-        vin: results.vin,
-        issueDate: results.issueDate,
-        expiryDate: results.expiryDate,
-        policeVSC: results.policeVSC,
-        driversAbstract: results.driversAbstract,
-        photoID: results.photoID,
-        safetyCertificate: results.safetyCertificate,
-        byLawInspection: results.byLawInspection,
-        insurance: results.insurance,
-        vehicleOwnership: results.vehicleOwnership,
-        notes: results.notes,
-        streetNumber: results.taxiPlateOwnerAddresses[0].streetNumber,
-        streetName: results.taxiPlateOwnerAddresses[0].streetName,
-        town: results.taxiPlateOwnerAddresses[0].town,
-        postalCode: results.taxiPlateOwnerAddresses[0].postalCode,
-      },
+  })
+    .then((results) => {
+      return res.render("taxiLicenses/editPlate", {
+        title: "BWG | Edit Taxi Plate",
+        message: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        streets: streets,
+        // populate input fields with existing values.
+        formData: {
+          firstName: results.firstName,
+          lastName: results.lastName,
+          phoneNumber: results.phoneNumber,
+          email: results.email,
+          townPlateNumber: results.townPlateNumber,
+          vehicleYearMakeModel: results.vehicleYearMakeModel,
+          provincialPlate: results.provincialPlate,
+          vin: results.vin,
+          issueDate: results.issueDate,
+          expiryDate: results.expiryDate,
+          policeVSC: results.policeVSC,
+          driversAbstract: results.driversAbstract,
+          photoID: results.photoID,
+          safetyCertificate: results.safetyCertificate,
+          byLawInspection: results.byLawInspection,
+          insurance: results.insurance,
+          vehicleOwnership: results.vehicleOwnership,
+          notes: results.notes,
+          streetNumber: results.taxiPlateOwnerAddresses[0].streetNumber,
+          streetName: results.taxiPlateOwnerAddresses[0].streetName,
+          town: results.taxiPlateOwnerAddresses[0].town,
+          postalCode: results.taxiPlateOwnerAddresses[0].postalCode,
+        },
+      });
+    })
+    .catch((err) => {
+      return res.render("taxiLicenses/editPlate", {
+        title: "BWG | Edit Taxi Plate",
+        message: "Page Error!",
+      });
     });
-  });
 });
 
 /* POST /taxiLicenses/editPlate/:id */

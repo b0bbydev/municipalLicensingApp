@@ -47,29 +47,37 @@ router.get(
             model: RefreshmentVehiclePropertyOwnerAddress,
           },
         ],
-      }).then((results) => {
-        return res.render("refreshmentVehicles/editPropertyOwner", {
-          title: "BWG | Edit Property Owner",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          streets: streets,
-          // populate input fields with existing values.
-          formData: {
-            firstName: results.firstName,
-            lastName: results.lastName,
-            phoneNumber: results.phoneNumber,
-            email: results.email,
-            streetNumber:
-              results.refreshmentVehiclePropertyOwnerAddresses[0].streetNumber,
-            streetName:
-              results.refreshmentVehiclePropertyOwnerAddresses[0].streetName,
-            town: results.refreshmentVehiclePropertyOwnerAddresses[0].town,
-            postalCode:
-              results.refreshmentVehiclePropertyOwnerAddresses[0].postalCode,
-          },
+      })
+        .then((results) => {
+          return res.render("refreshmentVehicles/editPropertyOwner", {
+            title: "BWG | Edit Property Owner",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            streets: streets,
+            // populate input fields with existing values.
+            formData: {
+              firstName: results.firstName,
+              lastName: results.lastName,
+              phoneNumber: results.phoneNumber,
+              email: results.email,
+              streetNumber:
+                results.refreshmentVehiclePropertyOwnerAddresses[0]
+                  .streetNumber,
+              streetName:
+                results.refreshmentVehiclePropertyOwnerAddresses[0].streetName,
+              town: results.refreshmentVehiclePropertyOwnerAddresses[0].town,
+              postalCode:
+                results.refreshmentVehiclePropertyOwnerAddresses[0].postalCode,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("refreshmentVehicles/editPropertyOwner", {
+            title: "BWG | Edit Property Owner",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

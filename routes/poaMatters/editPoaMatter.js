@@ -60,37 +60,44 @@ router.get(
             model: POAMatterLocation,
           },
         ],
-      }).then((results) => {
-        return res.render("poaMatters/editPoaMatter", {
-          title: "BWG | Edit POA Matter",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          streets: streets,
-          officerNames: officerNames,
-          verdictOptions: verdictOptions,
-          // populate input fields with existing values.
-          formData: {
-            infoNumber: results.infoNumber,
-            dateOfOffence: results.dateOfOffence,
-            dateClosed: results.dateClosed,
-            poaType: results.poaType,
-            officerName: results.officerName,
-            defendantName: results.defendantName,
-            offence: results.offence,
-            comment: results.comment,
-            prosecutor: results.prosecutor,
-            verdict: results.verdict,
-            setFine: results.setFine,
-            fineAssessed: results.fineAssessed,
-            amountPaid: results.amountPaid,
-            streetNumber: results.poaMatterLocations[0].streetNumber,
-            streetName: results.poaMatterLocations[0].streetName,
-            town: results.poaMatterLocations[0].town,
-            postalCode: results.poaMatterLocations[0].postalCode,
-          },
+      })
+        .then((results) => {
+          return res.render("poaMatters/editPoaMatter", {
+            title: "BWG | Edit POA Matter",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            streets: streets,
+            officerNames: officerNames,
+            verdictOptions: verdictOptions,
+            // populate input fields with existing values.
+            formData: {
+              infoNumber: results.infoNumber,
+              dateOfOffence: results.dateOfOffence,
+              dateClosed: results.dateClosed,
+              poaType: results.poaType,
+              officerName: results.officerName,
+              defendantName: results.defendantName,
+              offence: results.offence,
+              comment: results.comment,
+              prosecutor: results.prosecutor,
+              verdict: results.verdict,
+              setFine: results.setFine,
+              fineAssessed: results.fineAssessed,
+              amountPaid: results.amountPaid,
+              streetNumber: results.poaMatterLocations[0].streetNumber,
+              streetName: results.poaMatterLocations[0].streetName,
+              town: results.poaMatterLocations[0].town,
+              postalCode: results.poaMatterLocations[0].postalCode,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("poaMatters/editPoaMatter", {
+            title: "BWG | Edit POA Matter",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

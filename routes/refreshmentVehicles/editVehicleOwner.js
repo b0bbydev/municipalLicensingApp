@@ -47,28 +47,37 @@ router.get(
             model: RefreshmentVehicleOwnerAddress,
           },
         ],
-      }).then((results) => {
-        return res.render("refreshmentVehicles/editVehicleOwner", {
-          title: "BWG | Edit Vehicle Owner",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          streets: streets,
-          // populate input fields with existing values.
-          formData: {
-            firstName: results.firstName,
-            lastName: results.lastName,
-            phoneNumber: results.phoneNumber,
-            email: results.email,
-            licenseNumber: results.licenseNumber,
-            streetNumber:
-              results.refreshmentVehicleOwnerAddresses[0].streetNumber,
-            streetName: results.refreshmentVehicleOwnerAddresses[0].streetName,
-            town: results.refreshmentVehicleOwnerAddresses[0].town,
-            postalCode: results.refreshmentVehicleOwnerAddresses[0].postalCode,
-          },
+      })
+        .then((results) => {
+          return res.render("refreshmentVehicles/editVehicleOwner", {
+            title: "BWG | Edit Vehicle Owner",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            streets: streets,
+            // populate input fields with existing values.
+            formData: {
+              firstName: results.firstName,
+              lastName: results.lastName,
+              phoneNumber: results.phoneNumber,
+              email: results.email,
+              licenseNumber: results.licenseNumber,
+              streetNumber:
+                results.refreshmentVehicleOwnerAddresses[0].streetNumber,
+              streetName:
+                results.refreshmentVehicleOwnerAddresses[0].streetName,
+              town: results.refreshmentVehicleOwnerAddresses[0].town,
+              postalCode:
+                results.refreshmentVehicleOwnerAddresses[0].postalCode,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("refreshmentVehicles/editVehicleOwner", {
+            title: "BWG | Edit Vehicle Owner",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

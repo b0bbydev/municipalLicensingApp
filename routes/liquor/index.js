@@ -58,26 +58,34 @@ router.get(
               model: LiquorBusinessAddress,
             },
           ],
-        }).then((results) => {
-          // for pagination.
-          const itemCount = results.count;
-          const pageCount = Math.ceil(results.count / req.query.limit);
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
 
-          return res.render("liquor/index", {
-            title: "BWG | Liquor Licensing",
-            message: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            data: results.rows,
-            filterOptions: filterOptions,
-            pageCount,
-            itemCount,
-            queryCount: "Records returned: " + results.count,
-            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-            prev: paginate.href(req)(true),
-            hasMorePages: paginate.hasNextPages(req)(pageCount),
+            return res.render("liquor/index", {
+              title: "BWG | Liquor Licensing",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterOptions: filterOptions,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) => {
+            return res.render("liquor/index", {
+              title: "BWG | Liquor Licensing",
+              message: "Page Error!",
+            });
           });
-        });
       } else if (req.query.filterCategory === "Business Address") {
         LiquorBusiness.findAndCountAll({
           limit: req.query.limit,
@@ -100,28 +108,36 @@ router.get(
               model: LiquorBusinessAddress,
             },
           ],
-        }).then((results) => {
-          // for pagination.
-          const itemCount = results.count;
-          const pageCount = Math.ceil(results.count / req.query.limit);
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
 
-          return res.render("liquor/index", {
-            title: "BWG | Liquor Licensing",
-            message: messages,
-            email: req.session.email,
-            auth: req.session.auth, // authorization.
-            data: results.rows,
-            filterCategory: req.query.filterCategory,
-            filterValue: req.query.filterValue,
-            filterOptions: filterOptions,
-            pageCount,
-            itemCount,
-            queryCount: "Records returned: " + results.count,
-            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-            prev: paginate.href(req)(true),
-            hasMorePages: paginate.hasNextPages(req)(pageCount),
+            return res.render("liquor/index", {
+              title: "BWG | Liquor Licensing",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              filterOptions: filterOptions,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) => {
+            return res.render("liquor/index", {
+              title: "BWG | Liquor Licensing",
+              message: "Page Error!",
+            });
           });
-        });
       } else {
         // format filterCategory to match column name in db - via handy dandy camelize() function.
         var filterCategory = funcHelpers.camelize(req.query.filterCategory);
@@ -164,12 +180,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("liquor/index", {
+          .catch((err) => {
+            return res.render("liquor/index", {
               title: "BWG | Liquor Licensing",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       }
     }
   }

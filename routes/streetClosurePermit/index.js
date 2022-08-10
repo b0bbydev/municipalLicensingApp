@@ -53,12 +53,12 @@ router.get("/", async (req, res, next) => {
         });
       })
       // catch any scary errors and render page error.
-      .catch((err) =>
-        res.render("streetClosurePermit/index", {
+      .catch((err) => {
+        return res.render("streetClosurePermit/index", {
           title: "BWG | Street Closure Permits",
           message: "Page Error!",
-        })
-      );
+        });
+      });
   } else {
     // format filterCategory to match column name in db - via handy dandy camelize() function.
     var filterCategory = funcHelpers.camelize(req.query.filterCategory);
@@ -71,28 +71,36 @@ router.get("/", async (req, res, next) => {
       },
       limit: req.query.limit,
       offset: req.skip,
-    }).then((results) => {
-      // for pagination.
-      const itemCount = results.count;
-      const pageCount = Math.ceil(results.count / req.query.limit);
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
 
-      return res.render("streetClosurePermit/index", {
-        title: "BWG | Street Closure Permits",
-        message: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        data: results.rows,
-        filterCategory: req.query.filterCategory,
-        filterValue: req.query.filterValue,
-        filterOptions: filterOptions,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
+        return res.render("streetClosurePermit/index", {
+          title: "BWG | Street Closure Permits",
+          message: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterCategory: req.query.filterCategory,
+          filterValue: req.query.filterValue,
+          filterOptions: filterOptions,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("streetClosurePermit/index", {
+          title: "BWG | Street Closure Permits",
+          message: "Page Error!",
+        });
       });
-    });
   }
 });
 

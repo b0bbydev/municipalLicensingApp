@@ -55,37 +55,44 @@ router.get(
         where: {
           policyID: req.params.id,
         },
-      }).then((results) => {
-        return res.render("policies/editPolicy", {
-          title: "BWG | Edit Policy",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          statusDropdownValues: statusDropdownValues,
-          categoryDropdownValues: categoryDropdownValues,
-          authorityDropdownValues: authorityDropdownValues,
-          // populate input fields with existing values.
-          policyInfo: {
-            policyNumber: results.policyNumber,
-            policyName: results.policyName,
-            cowDate: results.cowDate,
-            councilResolution: results.councilResolution,
-            dateApproved: results.dateApproved,
-            dateAmended: results.dateAmended,
-            dateEffective: results.dateEffective,
-            category: results.category,
-            lastReviewDate: results.lastReviewDate,
-            scheduledReviewDate: results.scheduledReviewDate,
-            division: results.division,
-            authority: results.authority,
-            administrator: results.administrator,
-            legislationRequired: results.legislationRequired,
-            status: results.status,
-            fileHoldURL: results.fileHoldURL,
-            notes: results.notes,
-          },
+      })
+        .then((results) => {
+          return res.render("policies/editPolicy", {
+            title: "BWG | Edit Policy",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            statusDropdownValues: statusDropdownValues,
+            categoryDropdownValues: categoryDropdownValues,
+            authorityDropdownValues: authorityDropdownValues,
+            // populate input fields with existing values.
+            policyInfo: {
+              policyNumber: results.policyNumber,
+              policyName: results.policyName,
+              cowDate: results.cowDate,
+              councilResolution: results.councilResolution,
+              dateApproved: results.dateApproved,
+              dateAmended: results.dateAmended,
+              dateEffective: results.dateEffective,
+              category: results.category,
+              lastReviewDate: results.lastReviewDate,
+              scheduledReviewDate: results.scheduledReviewDate,
+              division: results.division,
+              authority: results.authority,
+              administrator: results.administrator,
+              legislationRequired: results.legislationRequired,
+              status: results.status,
+              fileHoldURL: results.fileHoldURL,
+              notes: results.notes,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("policies/editPolicy", {
+            title: "BWG | Edit Policy",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );
@@ -230,7 +237,9 @@ router.post(
         }
       )
         // redirect back to policies.
-        .then(res.redirect("/policies"))
+        .then(() => {
+          return res.redirect("/policies");
+        })
         .catch((err) => {
           return res.render("policies/editPolicy", {
             title: "BWG | Edit Policy",

@@ -117,7 +117,9 @@ router.post(
         policyID: req.session.policyID,
       })
         // redirect back to the policy they were viewing.
-        .then(res.redirect("/policies"))
+        .then(() => {
+          return res.redirect("/policies");
+        })
         .catch((err) => {
           return res.render("policies/addGuideline", {
             title: "BWG | Add Guideline",

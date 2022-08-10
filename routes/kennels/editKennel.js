@@ -47,32 +47,39 @@ router.get(
             model: KennelAddress,
           },
         ],
-      }).then((results) => {
-        return res.render("kennels/editKennel", {
-          title: "BWG | Edit A Kennel",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          streets: streets,
-          // populate input fields with existing values.
-          formData: {
-            kennelName: results.kennelName,
-            phoneNumber: results.phoneNumber,
-            email: results.email,
-            issueDate: results.issueDate,
-            expiryDate: results.expiryDate,
-            policeCheck: results.policeCheck,
-            photoID: results.photoID,
-            acoInspection: results.acoInspection,
-            zoningClearance: results.zoningClearance,
-            notes: results.notes,
-            streetNumber: results.kennelAddresses[0].streetNumber,
-            streetName: results.kennelAddresses[0].streetName,
-            town: results.kennelAddresses[0].town,
-            postalCode: results.kennelAddresses[0].postalCode,
-          },
+      })
+        .then((results) => {
+          return res.render("kennels/editKennel", {
+            title: "BWG | Edit A Kennel",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            streets: streets,
+            // populate input fields with existing values.
+            formData: {
+              kennelName: results.kennelName,
+              phoneNumber: results.phoneNumber,
+              email: results.email,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              policeCheck: results.policeCheck,
+              photoID: results.photoID,
+              acoInspection: results.acoInspection,
+              zoningClearance: results.zoningClearance,
+              notes: results.notes,
+              streetNumber: results.kennelAddresses[0].streetNumber,
+              streetName: results.kennelAddresses[0].streetName,
+              town: results.kennelAddresses[0].town,
+              postalCode: results.kennelAddresses[0].postalCode,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("kennels/editKennel", {
+            title: "BWG | Edit A Kennel",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

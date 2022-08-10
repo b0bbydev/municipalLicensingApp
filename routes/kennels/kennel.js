@@ -6,7 +6,7 @@ const KennelPropertyOwnerAddress = require("../../models/kennel/kennelPropertyOw
 const KennelOwner = require("../../models/kennel/kennelOwner");
 const KennelOwnerAddress = require("../../models/kennel/kennelOwnerAddress");
 // express-validate.
-const { body, param, validationResult } = require("express-validator");
+const { param, validationResult } = require("express-validator");
 
 /* GET /kennels/kennel/:id page. */
 router.get(
@@ -58,18 +58,26 @@ router.get(
             kennelID: req.params.id,
           },
         }),
-      ]).then((data) => {
-        return res.render("kennels/kennel", {
-          title: "BWG | Kennel Licensing",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          propertyOwners: data[0].rows,
-          kennelOwners: data[1].rows,
-          propertyOwnersCount: "Records returned: " + data[0].count,
-          kennelOwnersCount: "Records returned: " + data[1].count,
+      ])
+        .then((data) => {
+          return res.render("kennels/kennel", {
+            title: "BWG | Kennel Licensing",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            propertyOwners: data[0].rows,
+            kennelOwners: data[1].rows,
+            propertyOwnersCount: "Records returned: " + data[0].count,
+            kennelOwnersCount: "Records returned: " + data[1].count,
+          });
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("kennels/kennel", {
+            title: "BWG | Kennel Licensing",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

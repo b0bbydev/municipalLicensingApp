@@ -38,34 +38,41 @@ router.get("/:id", async (req, res, next) => {
         model: TaxiDriverAddress,
       },
     ],
-  }).then((results) => {
-    return res.render("taxiLicenses/editDriver", {
-      title: "BWG | Edit Taxi Driver",
-      message: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      cabCompanies: cabCompanies,
-      // populate input fields with existing values.
-      formData: {
-        firstName: results.firstName,
-        lastName: results.lastName,
-        phoneNumber: results.phoneNumber,
-        cabCompany: results.cabCompany,
-        issueDate: results.issueDate,
-        expiryDate: results.expiryDate,
-        policeVSC: results.policeVSC,
-        citizenship: results.citizenship,
-        photoID: results.photoID,
-        driversAbstract: results.driversAbstract,
-        notes: results.notes,
-        streetNumber: results.taxiDriverAddresses[0].streetNumber,
-        streetName: results.taxiDriverAddresses[0].streetName,
-        town: results.taxiDriverAddresses[0].town,
-        postalCode: results.taxiDriverAddresses[0].postalCode,
-      },
+  })
+    .then((results) => {
+      return res.render("taxiLicenses/editDriver", {
+        title: "BWG | Edit Taxi Driver",
+        message: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        streets: streets,
+        cabCompanies: cabCompanies,
+        // populate input fields with existing values.
+        formData: {
+          firstName: results.firstName,
+          lastName: results.lastName,
+          phoneNumber: results.phoneNumber,
+          cabCompany: results.cabCompany,
+          issueDate: results.issueDate,
+          expiryDate: results.expiryDate,
+          policeVSC: results.policeVSC,
+          citizenship: results.citizenship,
+          photoID: results.photoID,
+          driversAbstract: results.driversAbstract,
+          notes: results.notes,
+          streetNumber: results.taxiDriverAddresses[0].streetNumber,
+          streetName: results.taxiDriverAddresses[0].streetName,
+          town: results.taxiDriverAddresses[0].town,
+          postalCode: results.taxiDriverAddresses[0].postalCode,
+        },
+      });
+    })
+    .catch((err) => {
+      return res.render("taxiLicenses/editDriver", {
+        title: "BWG | Edit Taxi Driver",
+        message: "Page Error!",
+      });
     });
-  });
 });
 
 /* POST /taxiLicenses/editDriver/:id */

@@ -51,27 +51,35 @@ router.get("/", async (req, res, next) => {
           model: KennelAddress,
         },
       ],
-    }).then((results) => {
-      // for pagination.
-      const itemCount = results.count;
-      const pageCount = Math.ceil(results.count / req.query.limit);
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
 
-      return res.render("kennels/index", {
-        title: "BWG | Kennel Licensing",
-        message: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        data: results.rows,
-        filterOptions: filterOptions,
-        modalExpiryDate: modalExpiryDate,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
+        return res.render("kennels/index", {
+          title: "BWG | Kennel Licensing",
+          message: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("kennels/index", {
+          title: "BWG | Kennel Licensing",
+          message: "Page Error!",
+        });
       });
-    });
   } else if (req.query.filterCategory === "Kennel Name") {
     Kennel.findAndCountAll({
       limit: req.query.limit,
@@ -86,27 +94,35 @@ router.get("/", async (req, res, next) => {
           model: KennelAddress,
         },
       ],
-    }).then((results) => {
-      // for pagination.
-      const itemCount = results.count;
-      const pageCount = Math.ceil(results.count / req.query.limit);
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
 
-      return res.render("kennels/index", {
-        title: "BWG | Kennel Licensing",
-        message: messages,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-        data: results.rows,
-        filterOptions: filterOptions,
-        modalExpiryDate: modalExpiryDate,
-        pageCount,
-        itemCount,
-        queryCount: "Records returned: " + results.count,
-        pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-        prev: paginate.href(req)(true),
-        hasMorePages: paginate.hasNextPages(req)(pageCount),
+        return res.render("kennels/index", {
+          title: "BWG | Kennel Licensing",
+          message: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("kennels/index", {
+          title: "BWG | Kennel Licensing",
+          message: "Page Error!",
+        });
       });
-    });
   } else if (req.query.filterCategory === "Kennel Address") {
     Kennel.findAndCountAll({
       limit: req.query.limit,
@@ -154,12 +170,12 @@ router.get("/", async (req, res, next) => {
         });
       })
       // catch any scary errors and render page error.
-      .catch((err) =>
-        res.render("kennels/index", {
+      .catch((err) => {
+        return res.render("kennels/index", {
           title: "BWG | Kennel Licensing",
           message: "Page Error!",
-        })
-      );
+        });
+      });
   } else if (req.query.filterCategory === "Kennel Owner Name") {
     // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
     if (req.query.filterValue.trim().indexOf(" ") != -1) {
@@ -183,29 +199,37 @@ router.get("/", async (req, res, next) => {
             model: KennelOwnerAddress,
           },
         ],
-      }).then((results) => {
-        // for pagination.
-        const itemCount = results.count;
-        const pageCount = Math.ceil(results.count / req.query.limit);
+      })
+        .then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
 
-        return res.render("kennels/search/kennelOwnerSearch", {
-          title: "BWG | Kennel Licensing",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          data: results.rows,
-          filterCategory: req.query.filterCategory,
-          filterValue: req.query.filterValue,
-          filterOptions: filterOptions,
-          modalExpiryDate: modalExpiryDate,
-          pageCount,
-          itemCount,
-          queryCount: "Records returned: " + results.count,
-          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-          prev: paginate.href(req)(true),
-          hasMorePages: paginate.hasNextPages(req)(pageCount),
+          return res.render("kennels/search/kennelOwnerSearch", {
+            title: "BWG | Kennel Licensing",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterCategory: req.query.filterCategory,
+            filterValue: req.query.filterValue,
+            filterOptions: filterOptions,
+            modalExpiryDate: modalExpiryDate,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("kennels/search/kennelOwnerSearch", {
+            title: "BWG | Kennel Licensing",
+            message: "Page Error!",
+          });
         });
-      });
     } else {
       KennelOwner.findAndCountAll({
         limit: req.query.limit,
@@ -226,29 +250,37 @@ router.get("/", async (req, res, next) => {
             model: KennelOwnerAddress,
           },
         ],
-      }).then((results) => {
-        // for pagination.
-        const itemCount = results.count;
-        const pageCount = Math.ceil(results.count / req.query.limit);
+      })
+        .then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
 
-        return res.render("kennels/search/kennelOwnerSearch", {
-          title: "BWG | Kennel Licensing",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          data: results.rows,
-          filterCategory: req.query.filterCategory,
-          filterValue: req.query.filterValue,
-          filterOptions: filterOptions,
-          modalExpiryDate: modalExpiryDate,
-          pageCount,
-          itemCount,
-          queryCount: "Records returned: " + results.count,
-          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-          prev: paginate.href(req)(true),
-          hasMorePages: paginate.hasNextPages(req)(pageCount),
+          return res.render("kennels/search/kennelOwnerSearch", {
+            title: "BWG | Kennel Licensing",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterCategory: req.query.filterCategory,
+            filterValue: req.query.filterValue,
+            filterOptions: filterOptions,
+            modalExpiryDate: modalExpiryDate,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("kennels/search/kennelOwnerSearch", {
+            title: "BWG | Kennel Licensing",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 });
@@ -290,9 +322,17 @@ router.post("/", async (req, res, next) => {
           kennelID: req.body.kennelID,
         },
       }
-    ).then(() => {
-      return res.redirect("/kennels");
-    });
+    )
+      .then(() => {
+        return res.redirect("/kennels");
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("kennels/index", {
+          title: "BWG | Kennel Licensing",
+          message: "Page Error!",
+        });
+      });
   }
 });
 
@@ -328,13 +368,14 @@ router.post(
           return res.redirect(
             "/kennels/kennelAddressHistory/" + results.kennelID
           );
-        }) // catch any scary errors and render page error.
-        .catch((err) =>
-          res.render("kennels/index", {
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("kennels/index", {
             title: "BWG | Kennel Licensing",
             message: "Page Error!",
-          })
-        );
+          });
+        });
     }
   }
 );
@@ -374,30 +415,38 @@ router.get(
             model: KennelOwner,
           },
         ],
-      }).then((results) => {
-        // return endpoint after passing validation.
-        return res.render("kennels/printLicense", {
-          title: "BWG | Print License",
-          layout: "",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          // data to populate form with.
-          data: {
-            kennelOwnerName:
-              results.kennelowners[0].firstName +
-              " " +
-              results.kennelowners[0].lastName,
-            kennelName: results.kennelName,
-            streetNumber: results.kennelAddresses[0].streetNumber,
-            streetName: results.kennelAddresses[0].streetName,
-            town: results.kennelAddresses[0].town,
-            issueDate: results.issueDate,
-            expiryDate: results.expiryDate,
-            licenseNumber: results.kennelowners[0].licenseNumber,
-          },
+      })
+        .then((results) => {
+          // return endpoint after passing validation.
+          return res.render("kennels/printLicense", {
+            title: "BWG | Print License",
+            layout: "",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            // data to populate form with.
+            data: {
+              kennelOwnerName:
+                results.kennelowners[0].firstName +
+                " " +
+                results.kennelowners[0].lastName,
+              kennelName: results.kennelName,
+              streetNumber: results.kennelAddresses[0].streetNumber,
+              streetName: results.kennelAddresses[0].streetName,
+              town: results.kennelAddresses[0].town,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              licenseNumber: results.kennelowners[0].licenseNumber,
+            },
+          });
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("kennels/printLicense", {
+            title: "BWG | Print License",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

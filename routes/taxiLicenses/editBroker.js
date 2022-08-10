@@ -33,33 +33,40 @@ router.get("/:id", async (req, res, next) => {
       },
     ],
   }).then((results) => {
-    return res.render("taxiLicenses/editBroker", {
-      title: "BWG | Edit Taxi Broker",
-      message: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      streets: streets,
-      // populate input fields with existing values.
-      formData: {
-        ownerName: results.ownerName,
-        companyName: results.companyName,
-        phoneNumber: results.phoneNumber,
-        licenseNumber: results.licenseNumber,
-        issueDate: results.issueDate,
-        expiryDate: results.expiryDate,
-        policeVSC: results.policeVSC,
-        citizenship: results.citizenship,
-        photoID: results.photoID,
-        driversAbstract: results.driversAbstract,
-        certificateOfInsurance: results.certificateOfInsurance,
-        zoningApproval: results.zoningApproval,
-        notes: results.notes,
-        streetNumber: results.taxiBrokerAddresses[0].streetNumber,
-        streetName: results.taxiBrokerAddresses[0].streetName,
-        town: results.taxiBrokerAddresses[0].town,
-        postalCode: results.taxiBrokerAddresses[0].postalCode,
-      },
-    });
+    return res
+      .render("taxiLicenses/editBroker", {
+        title: "BWG | Edit Taxi Broker",
+        message: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        streets: streets,
+        // populate input fields with existing values.
+        formData: {
+          ownerName: results.ownerName,
+          companyName: results.companyName,
+          phoneNumber: results.phoneNumber,
+          licenseNumber: results.licenseNumber,
+          issueDate: results.issueDate,
+          expiryDate: results.expiryDate,
+          policeVSC: results.policeVSC,
+          citizenship: results.citizenship,
+          photoID: results.photoID,
+          driversAbstract: results.driversAbstract,
+          certificateOfInsurance: results.certificateOfInsurance,
+          zoningApproval: results.zoningApproval,
+          notes: results.notes,
+          streetNumber: results.taxiBrokerAddresses[0].streetNumber,
+          streetName: results.taxiBrokerAddresses[0].streetName,
+          town: results.taxiBrokerAddresses[0].town,
+          postalCode: results.taxiBrokerAddresses[0].postalCode,
+        },
+      })
+      .catch((err) => {
+        return res.render("taxiLicenses/editBroker", {
+          title: "BWG | Edit Taxi Broker",
+          message: "Page Error!",
+        });
+      });
   });
 });
 

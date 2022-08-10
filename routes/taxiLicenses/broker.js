@@ -55,19 +55,26 @@ router.get("/:id", async (req, res, next) => {
         taxiBrokerID: req.params.id,
       },
     }),
-  ]).then((data) => {
-    return res.render("taxiLicenses/broker", {
-      title: "BWG | Taxi Licenses",
-      message: messages,
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-      modalExpiryDate: modalExpiryDate,
-      taxiDrivers: data[0].rows,
-      taxiPlates: data[1].rows,
-      taxiDriversCount: "Records returned: " + data[0].count,
-      taxiPlatesCount: "Records returned: " + data[1].count,
+  ])
+    .then((data) => {
+      return res.render("taxiLicenses/broker", {
+        title: "BWG | Taxi Licenses",
+        message: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        modalExpiryDate: modalExpiryDate,
+        taxiDrivers: data[0].rows,
+        taxiPlates: data[1].rows,
+        taxiDriversCount: "Records returned: " + data[0].count,
+        taxiPlatesCount: "Records returned: " + data[1].count,
+      });
+    })
+    .catch((err) => {
+      return res.render("taxiLicenses/broker", {
+        title: "BWG | Taxi Licenses",
+        message: "Page Error!",
+      });
     });
-  });
 });
 
 /* POST /taxiLicenses/broker/renewDriver - renews license. */
@@ -107,9 +114,16 @@ router.post("/renewDriver", async (req, res, next) => {
           taxiDriverID: req.body.taxiDriverID,
         },
       }
-    ).then(() => {
-      return res.redirect("/taxiLicenses/broker/" + req.session.brokerID);
-    });
+    )
+      .then(() => {
+        return res.redirect("/taxiLicenses/broker/" + req.session.brokerID);
+      })
+      .catch((err) => {
+        return res.render("taxiLicenses/broker", {
+          title: "BWG | Taxi Licenses",
+          message: "Page Error!",
+        });
+      });
   }
 });
 
@@ -150,9 +164,16 @@ router.post("/renewPlate", async (req, res, next) => {
           taxiPlateID: req.body.taxiPlateID,
         },
       }
-    ).then(() => {
-      return res.redirect("/taxiLicenses/broker/" + req.session.brokerID);
-    });
+    )
+      .then(() => {
+        return res.redirect("/taxiLicenses/broker/" + req.session.brokerID);
+      })
+      .catch((err) => {
+        return res.render("taxiLicenses/broker", {
+          title: "BWG | Taxi Licenses",
+          message: "Page Error!",
+        });
+      });
   }
 });
 

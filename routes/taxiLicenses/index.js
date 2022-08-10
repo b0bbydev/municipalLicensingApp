@@ -115,12 +115,12 @@ router.get("/", async (req, res, next) => {
         });
       })
       // catch any scary errors and render page error.
-      .catch((err) =>
-        res.render("taxiLicenses/index", {
+      .catch((err) => {
+        return res.render("taxiLicenses/index", {
           title: "BWG | Taxi Licenses",
           message: "Page Error!",
-        })
-      );
+        });
+      });
   }
 });
 
@@ -161,9 +161,17 @@ router.post("/", async (req, res, next) => {
           taxiBrokerID: req.body.taxiBrokerID,
         },
       }
-    ).then(() => {
-      return res.redirect("/taxiLicenses");
-    });
+    )
+      .then(() => {
+        return res.redirect("/taxiLicenses");
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("taxiLicenses/index", {
+          title: "BWG | Taxi Licenses",
+          message: "Page Error!",
+        });
+      });
   }
 });
 
@@ -199,13 +207,14 @@ router.post(
           return res.redirect(
             "/taxiLicenses/brokerAddressHistory/" + results.taxiBrokerID
           );
-        }) // catch any scary errors and render page error.
-        .catch((err) =>
-          res.render("taxiLicenses/index", {
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("taxiLicenses/index", {
             title: "BWG | Taxi Licenses",
             message: "Page Error!",
-          })
-        );
+          });
+        });
     }
   }
 );
@@ -242,27 +251,35 @@ router.get(
             model: TaxiBrokerAddress,
           },
         ],
-      }).then((results) => {
-        // return endpoint after passing validation.
-        return res.render("taxiLicenses/printLicense", {
-          title: "BWG | Print License",
-          layout: "",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          // data to populate form with.
-          data: {
-            ownerName: results.ownerName,
-            companyName: results.companyName,
-            streetNumber: results.taxiBrokerAddresses[0].streetNumber,
-            streetName: results.taxiBrokerAddresses[0].streetName,
-            town: results.taxiBrokerAddresses[0].town,
-            issueDate: results.issueDate,
-            expiryDate: results.expiryDate,
-            licenseNumber: results.licenseNumber,
-          },
+      })
+        .then((results) => {
+          // return endpoint after passing validation.
+          return res.render("taxiLicenses/printLicense", {
+            title: "BWG | Print License",
+            layout: "",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            // data to populate form with.
+            data: {
+              ownerName: results.ownerName,
+              companyName: results.companyName,
+              streetNumber: results.taxiBrokerAddresses[0].streetNumber,
+              streetName: results.taxiBrokerAddresses[0].streetName,
+              town: results.taxiBrokerAddresses[0].town,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              licenseNumber: results.licenseNumber,
+            },
+          });
+        })
+        // catch any scary errors and render page error.
+        .catch((err) => {
+          return res.render("taxiLicenses/printLicense", {
+            title: "BWG | Print License",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );

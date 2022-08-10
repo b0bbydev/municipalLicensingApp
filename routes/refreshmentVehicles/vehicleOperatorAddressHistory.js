@@ -59,21 +59,32 @@ router.get(
             refreshmentVehicleOperatorID: req.params.id,
           },
           order: [["lastModified", "DESC"]],
-        }).then((results) => {
-          return res.render(
-            "refreshmentVehicles/vehicleOperatorAddressHistory",
-            {
-              title: "BWG | Vehicle Operator Address History",
-              message: messages,
-              email: req.session.email,
-              auth: req.session.auth, // authorization.
-              monthDropdownValues: monthDropdownValues,
-              yearDropdownValues: yearDropdownValues,
-              data: results.rows,
-              refreshmentVehicleOperatorID: req.params.id,
-            }
-          );
-        });
+        })
+          .then((results) => {
+            return res.render(
+              "refreshmentVehicles/vehicleOperatorAddressHistory",
+              {
+                title: "BWG | Vehicle Operator Address History",
+                message: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                monthDropdownValues: monthDropdownValues,
+                yearDropdownValues: yearDropdownValues,
+                data: results.rows,
+                refreshmentVehicleOperatorID: req.params.id,
+              }
+            );
+          })
+          // catch any scary errors and render page error.
+          .catch((err) => {
+            return res.render(
+              "refreshmentVehicles/vehicleOperatorAddressHistory",
+              {
+                title: "BWG | Vehicle Operator Address History",
+                message: "Page Error!",
+              }
+            );
+          });
         // both year and month filter.
       } else if (req.query.filterMonth && req.query.filterYear) {
         VehicleOperatorAddressHistory.findAndCountAll({
@@ -91,23 +102,34 @@ router.get(
             ],
           },
           order: [["lastModified", "DESC"]],
-        }).then((results) => {
-          return res.render(
-            "refreshmentVehicles/vehicleOperatorAddressHistory",
-            {
-              title: "BWG | Vehicle Operator Address History",
-              message: messages,
-              email: req.session.email,
-              auth: req.session.auth, // authorization.
-              monthDropdownValues: monthDropdownValues,
-              yearDropdownValues: yearDropdownValues,
-              data: results.rows,
-              refreshmentVehicleOperatorID: req.params.id,
-              filterMonth: req.query.filterMonth,
-              filterYear: req.query.filterYear,
-            }
-          );
-        });
+        })
+          .then((results) => {
+            return res.render(
+              "refreshmentVehicles/vehicleOperatorAddressHistory",
+              {
+                title: "BWG | Vehicle Operator Address History",
+                message: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                monthDropdownValues: monthDropdownValues,
+                yearDropdownValues: yearDropdownValues,
+                data: results.rows,
+                refreshmentVehicleOperatorID: req.params.id,
+                filterMonth: req.query.filterMonth,
+                filterYear: req.query.filterYear,
+              }
+            );
+          })
+          // catch any scary errors and render page error.
+          .catch((err) => {
+            return res.render(
+              "refreshmentVehicles/vehicleOperatorAddressHistory",
+              {
+                title: "BWG | Vehicle Operator Address History",
+                message: "Page Error!",
+              }
+            );
+          });
         // if at least one filter exists.
       } else if (req.query.filterMonth || req.query.filterYear) {
         /* IF ONLY YEAR. */
@@ -124,23 +146,34 @@ router.get(
               ],
             },
             order: [["lastModified", "DESC"]],
-          }).then((results) => {
-            return res.render(
-              "refreshmentVehicles/vehicleOperatorAddressHistory",
-              {
-                title: "BWG | Vehicle Operator Address History",
-                message: messages,
-                email: req.session.email,
-                auth: req.session.auth, // authorization.
-                monthDropdownValues: monthDropdownValues,
-                yearDropdownValues: yearDropdownValues,
-                data: results.rows,
-                refreshmentVehicleOperatorID: req.params.id,
-                filterMonth: req.query.filterMonth,
-                filterYear: req.query.filterYear,
-              }
-            );
-          });
+          })
+            .then((results) => {
+              return res.render(
+                "refreshmentVehicles/vehicleOperatorAddressHistory",
+                {
+                  title: "BWG | Vehicle Operator Address History",
+                  message: messages,
+                  email: req.session.email,
+                  auth: req.session.auth, // authorization.
+                  monthDropdownValues: monthDropdownValues,
+                  yearDropdownValues: yearDropdownValues,
+                  data: results.rows,
+                  refreshmentVehicleOperatorID: req.params.id,
+                  filterMonth: req.query.filterMonth,
+                  filterYear: req.query.filterYear,
+                }
+              );
+            })
+            // catch any scary errors and render page error.
+            .catch((err) => {
+              return res.render(
+                "refreshmentVehicles/vehicleOperatorAddressHistory",
+                {
+                  title: "BWG | Vehicle Operator Address History",
+                  message: "Page Error!",
+                }
+              );
+            });
           /* IF ONLY MONTH. */
         } else if (!req.query.filterYear) {
           VehicleOperatorAddressHistory.findAndCountAll({
@@ -155,23 +188,34 @@ router.get(
               ],
             },
             order: [["lastModified", "DESC"]],
-          }).then((results) => {
-            return res.render(
-              "refreshmentVehicles/vehicleOperatorAddressHistory",
-              {
-                title: "BWG | Vehicle Operator Address History",
-                message: messages,
-                email: req.session.email,
-                auth: req.session.auth, // authorization.
-                monthDropdownValues: monthDropdownValues,
-                yearDropdownValues: yearDropdownValues,
-                data: results.rows,
-                refreshmentVehicleOperatorID: req.params.id,
-                filterMonth: req.query.filterMonth,
-                filterYear: req.query.filterYear,
-              }
-            );
-          });
+          })
+            .then((results) => {
+              return res.render(
+                "refreshmentVehicles/vehicleOperatorAddressHistory",
+                {
+                  title: "BWG | Vehicle Operator Address History",
+                  message: messages,
+                  email: req.session.email,
+                  auth: req.session.auth, // authorization.
+                  monthDropdownValues: monthDropdownValues,
+                  yearDropdownValues: yearDropdownValues,
+                  data: results.rows,
+                  refreshmentVehicleOperatorID: req.params.id,
+                  filterMonth: req.query.filterMonth,
+                  filterYear: req.query.filterYear,
+                }
+              );
+            })
+            // catch any scary errors and render page error.
+            .catch((err) => {
+              return res.render(
+                "refreshmentVehicles/vehicleOperatorAddressHistory",
+                {
+                  title: "BWG | Vehicle Operator Address History",
+                  message: "Page Error!",
+                }
+              );
+            });
         }
       }
     }

@@ -47,42 +47,49 @@ router.get(
             model: LiquorBusinessAddress,
           },
         ],
-      }).then((results) => {
-        return res.render("liquor/editBusiness", {
-          title: "BWG | Edit Business",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          streets: streets,
-          // populate input fields with existing values.
-          formData: {
-            businessName: results.businessName,
-            businessPhone: results.businessPhone,
-            streetNumber: results.liquorBusinessAddresses[0].streetNumber,
-            streetName: results.liquorBusinessAddresses[0].streetName,
-            town: results.liquorBusinessAddresses[0].town,
-            postalCode: results.liquorBusinessAddresses[0].postalCode,
-            contactName: results.contactName,
-            contactPhone: results.contactPhone,
-            dateStarted: results.dateStarted,
-            applicationType: results.applicationType,
-            feeReceived: results.feeReceived,
-            municipalInformationSigned: results.municipalInformationSigned,
-            municipalInformationSentToAGCO:
-              results.municipalInformationSentToAGCO,
-            fireApprovalReceived: results.fireApprovalReceived,
-            fireSentToAGCO: results.fireSentToAGCO,
-            planningApprovalReceived: results.planningApprovalReceived,
-            planningSentToAGCO: results.planningSentToAGCO,
-            smdhuApprovalReceived: results.smdhuApprovalReceived,
-            smdhuSentToAGCO: results.smdhuSentToAGCO,
-            buildingApprovalReceived: results.buildingApprovalReceived,
-            buildingSentToAGCO: results.buildingSentToAGCO,
-            licenseApproved: results.licenseApproved,
-            notes: results.notes,
-          },
+      })
+        .then((results) => {
+          return res.render("liquor/editBusiness", {
+            title: "BWG | Edit Business",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            streets: streets,
+            // populate input fields with existing values.
+            formData: {
+              businessName: results.businessName,
+              businessPhone: results.businessPhone,
+              streetNumber: results.liquorBusinessAddresses[0].streetNumber,
+              streetName: results.liquorBusinessAddresses[0].streetName,
+              town: results.liquorBusinessAddresses[0].town,
+              postalCode: results.liquorBusinessAddresses[0].postalCode,
+              contactName: results.contactName,
+              contactPhone: results.contactPhone,
+              dateStarted: results.dateStarted,
+              applicationType: results.applicationType,
+              feeReceived: results.feeReceived,
+              municipalInformationSigned: results.municipalInformationSigned,
+              municipalInformationSentToAGCO:
+                results.municipalInformationSentToAGCO,
+              fireApprovalReceived: results.fireApprovalReceived,
+              fireSentToAGCO: results.fireSentToAGCO,
+              planningApprovalReceived: results.planningApprovalReceived,
+              planningSentToAGCO: results.planningSentToAGCO,
+              smdhuApprovalReceived: results.smdhuApprovalReceived,
+              smdhuSentToAGCO: results.smdhuSentToAGCO,
+              buildingApprovalReceived: results.buildingApprovalReceived,
+              buildingSentToAGCO: results.buildingSentToAGCO,
+              licenseApproved: results.licenseApproved,
+              notes: results.notes,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("liquor/editBusiness", {
+            title: "BWG | Edit Business",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );
@@ -261,7 +268,9 @@ router.post(
             }
           });
         })
-        .then(res.redirect("/liquor"))
+        .then(() => {
+          return res.redirect("/liquor");
+        })
         .catch((err) => {
           return res.render("liquor/editBusiness", {
             title: "BWG | Edit Business",

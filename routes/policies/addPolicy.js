@@ -192,7 +192,9 @@ router.post(
         notes: req.body.notes,
       })
         // redirect to /policies.
-        .then(res.redirect("/policies"))
+        .then(() => {
+          return res.redirect("/policies");
+        })
         .catch((err) => {
           return res.render("policies/addPolicy", {
             title: "BWG | Add Policy",

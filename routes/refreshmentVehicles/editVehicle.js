@@ -33,34 +33,41 @@ router.get(
         where: {
           refreshmentVehicleID: req.params.id,
         },
-      }).then((results) => {
-        return res.render("refreshmentVehicles/editVehicle", {
-          title: "BWG | Edit Vehicle",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          // populate input fields with existing values.
-          formData: {
-            registeredBusinessName: results.registeredBusinessName,
-            operatingBusinessName: results.operatingBusinessName,
-            issueDate: results.issueDate,
-            expiryDate: results.expiryDate,
-            specialEvent: results.specialEvent,
-            policeVSC: results.policeVSC,
-            photoID: results.photoID,
-            driversAbstract: results.driversAbstract,
-            safetyCertificate: results.safetyCertificate,
-            vehicleOwnership: results.vehicleOwnership,
-            citizenship: results.citizenship,
-            insurance: results.insurance,
-            zoningClearance: results.zoningClearance,
-            fireApproval: results.fireApproval,
-            healthInspection: results.healthInspection,
-            itemsForSale: results.itemsForSale,
-            notes: results.notes,
-          },
+      })
+        .then((results) => {
+          return res.render("refreshmentVehicles/editVehicle", {
+            title: "BWG | Edit Vehicle",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            // populate input fields with existing values.
+            formData: {
+              registeredBusinessName: results.registeredBusinessName,
+              operatingBusinessName: results.operatingBusinessName,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              specialEvent: results.specialEvent,
+              policeVSC: results.policeVSC,
+              photoID: results.photoID,
+              driversAbstract: results.driversAbstract,
+              safetyCertificate: results.safetyCertificate,
+              vehicleOwnership: results.vehicleOwnership,
+              citizenship: results.citizenship,
+              insurance: results.insurance,
+              zoningClearance: results.zoningClearance,
+              fireApproval: results.fireApproval,
+              healthInspection: results.healthInspection,
+              itemsForSale: results.itemsForSale,
+              notes: results.notes,
+            },
+          });
+        })
+        .catch((err) => {
+          return res.render("refreshmentVehicles/editVehicle", {
+            title: "BWG | Edit Vehicle",
+            message: "Page Error!",
+          });
         });
-      });
     }
   }
 );
@@ -151,7 +158,9 @@ router.post(
           },
         }
       )
-        .then(res.redirect("/refreshmentVehicles"))
+        .then(() => {
+          return res.redirect("/refreshmentVehicles");
+        })
         .catch((err) => {
           return res.render("refreshmentVehicles/editVehicle", {
             title: "BWG | Edit Vehicle",

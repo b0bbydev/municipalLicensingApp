@@ -37,89 +37,96 @@
     </style>
   </head>
   <body>
-    <div class="row">
-      <div class="col-sm-6">
-        <img
-          src="/images/bwg-background.gif"
-          alt="bwg-logo"
-          class="mt-2"
-          height="65"
-          width="400"
-        />
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
       </div>
-      <!-- License Type -->
-      <div class="col-sm-5">
-        <p class="fs-2 mt-3">Refreshment Vehicle Licence</p>
+    {{else}}
+      <div class="row">
+        <div class="col-sm-6">
+          <img
+            src="/images/bwg-background.gif"
+            alt="bwg-logo"
+            class="mt-2"
+            height="65"
+            width="400"
+          />
+        </div>
+        <!-- License Type -->
+        <div class="col-sm-5">
+          <p class="fs-2 mt-3">Refreshment Vehicle Licence</p>
+        </div>
       </div>
-    </div>
-    <!-- License Info -->
-    <div class="row py-1">
-      <div class="col-sm-3 mt-1 ms-2">
-        <p class="fs-3">Granted To: </p>
+      <!-- License Info -->
+      <div class="row py-1">
+        <div class="col-sm-3 mt-1 ms-2">
+          <p class="fs-3">Granted To: </p>
+        </div>
+        <div class="col mt-1 ms-2">
+          <p
+            id="normal"
+            class="fs-4 mt-1"
+          >{{data.refreshmentVehicleOperatorName}},
+            {{data.operatingBusinessName}}</p>
+        </div>
       </div>
-      <div class="col mt-1 ms-2">
-        <p
-          id="normal"
-          class="fs-4 mt-1"
-        >{{data.refreshmentVehicleOperatorName}},
-          {{data.operatingBusinessName}}</p>
+      <div class="row py-1">
+        <div class="col-sm-5 mt-1 ms-2">
+          <p class="fs-3">To Conduct The Business Of: </p>
+        </div>
+        <div class="col mt-1 ms-2">
+          <p id="normal" class="fs-4 mt-1">Refreshment Vehicle</p>
+        </div>
       </div>
-    </div>
-    <div class="row py-1">
-      <div class="col-sm-5 mt-1 ms-2">
-        <p class="fs-3">To Conduct The Business Of: </p>
+      <div class="row py-1">
+        <div class="col-sm-2 mt-1 ms-2">
+          <p class="fs-3">From: </p>
+        </div>
+        <div class="col mt-1 ms-2">
+          <p id="normal" class="fs-4 mt-1">{{data.streetNumber}}
+            {{data.streetName}},
+            {{data.town}}</p>
+        </div>
       </div>
-      <div class="col mt-1 ms-2">
-        <p id="normal" class="fs-4 mt-1">Refreshment Vehicle</p>
+      <div class="row py-1">
+        <div class="col-sm-2 mt-1 ms-2">
+          <p class="fs-3">Issue Date: </p>
+        </div>
+        <div class="col mt-1 ms-2">
+          <p id="normal" class="fs-4 mt-1">{{data.issueDate}}</p>
+        </div>
       </div>
-    </div>
-    <div class="row py-1">
-      <div class="col-sm-2 mt-1 ms-2">
-        <p class="fs-3">From: </p>
+      <!-- specific by-law info -->
+      <div class="row py-1">
+        <div class="col">
+          <p id="normal" class="px-5">In accordance with the Town of Bradford
+            West Gwillimbury By-law 2014-70, this Licence is hereby granted to
+            operate the business referenced above.</p>
+        </div>
       </div>
-      <div class="col mt-1 ms-2">
-        <p id="normal" class="fs-4 mt-1">{{data.streetNumber}}
-          {{data.streetName}},
-          {{data.town}}</p>
+      <div class="row py-1">
+        <div class="col-sm-3 mt-1 ms-2 w-10 mb-5">
+          <p class="fs-3">Expiration Date: </p>
+        </div>
+        <div class="col mt-1 ms-2">
+          <p id="normal" class="fs-4 mt-1">{{data.expiryDate}}</p>
+        </div>
       </div>
-    </div>
-    <div class="row py-1">
-      <div class="col-sm-2 mt-1 ms-2">
-        <p class="fs-3">Issue Date: </p>
+      <div class="row ps-2 mt-4">
+        <div class="col">
+          <strong id="normal">____________________________</strong>
+          <p id="normal">Lauren Fortune, Licensing Officer</p>
+        </div>
       </div>
-      <div class="col mt-1 ms-2">
-        <p id="normal" class="fs-4 mt-1">{{data.issueDate}}</p>
+      <div class="row float-end pe-2 text-nowrap">
+        <div class="col">
+          <p class="fs-3">Licence Number:</p>
+        </div>
+        <div class="col">
+          <p id="normal" class="fs-4 mt-1">{{data.licenseNumber}}</p>
+        </div>
       </div>
-    </div>
-    <!-- specific by-law info -->
-    <div class="row py-1">
-      <div class="col">
-        <p id="normal" class="px-5">In accordance with the Town of Bradford West
-          Gwillimbury By-law 2014-70, this Licence is hereby granted to operate
-          the business referenced above.</p>
-      </div>
-    </div>
-    <div class="row py-1">
-      <div class="col-sm-3 mt-1 ms-2 w-10 mb-5">
-        <p class="fs-3">Expiration Date: </p>
-      </div>
-      <div class="col mt-1 ms-2">
-        <p id="normal" class="fs-4 mt-1">{{data.expiryDate}}</p>
-      </div>
-    </div>
-    <div class="row ps-2 mt-4">
-      <div class="col">
-        <strong id="normal">____________________________</strong>
-        <p id="normal">Lauren Fortune, Licensing Officer</p>
-      </div>
-    </div>
-    <div class="row float-end pe-2 text-nowrap">
-      <div class="col">
-        <p class="fs-3">Licence Number:</p>
-      </div>
-      <div class="col">
-        <p id="normal" class="fs-4 mt-1">{{data.licenseNumber}}</p>
-      </div>
-    </div>
+    {{/if}}
   </body>
 </html>

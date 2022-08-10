@@ -100,7 +100,9 @@ router.post(
         itemsForSale: req.body.itemsForSale,
         notes: req.body.notes,
       })
-        .then(res.redirect("/refreshmentVehicles"))
+        .then(() => {
+          return res.redirect("/refreshmentVehicles");
+        })
         .catch((err) => {
           return res.render("refreshmentVehicles/addVehicle", {
             title: "BWG | Add Vehicle",
