@@ -246,6 +246,117 @@ router.get(
               message: "Page Error!",
             });
           });
+        // both year and month filter.
+      } else if (req.query.filterMonth && req.query.filterYear) {
+        ProcedureHistory.findAndCountAll({
+          where: {
+            [Op.and]: [
+              { procedureID: req.params.id },
+              Sequelize.where(
+                Sequelize.fn("year", Sequelize.col("lastModified")),
+                [req.query.filterYear]
+              ),
+              Sequelize.where(
+                Sequelize.fn("month", Sequelize.col("lastModified")),
+                [funcHelpers.monthToNumber(req.query.filterMonth)]
+              ),
+            ],
+          },
+          order: [["lastModified", "DESC"]],
+        })
+          .then((results) => {
+            return res.render("policies/procedureHistory", {
+              title: "BWG | Procedure History",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
+              data: results.rows,
+              procedureID: req.params.id,
+              filterMonth: req.query.filterMonth,
+              filterYear: req.query.filterYear,
+            });
+          })
+          .catch((err) => {
+            return res.render("policies/procedureHistory", {
+              title: "BWG | Procedure History",
+              message: "Page Error!",
+            });
+          });
+        // if at least one filter exists.
+      } else if (req.query.filterMonth || req.query.filterYear) {
+        /* IF ONLY YEAR. */
+        if (!req.query.filterMonth) {
+          ProcedureHistory.findAndCountAll({
+            where: {
+              // where procedureID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              [Op.and]: [
+                { procedureID: req.params.id },
+                Sequelize.where(
+                  Sequelize.fn("year", Sequelize.col("lastModified")),
+                  [req.query.filterYear]
+                ),
+              ],
+            },
+            order: [["lastModified", "DESC"]],
+          })
+            .then((results) => {
+              return res.render("policies/procedureHistory", {
+                title: "BWG | Procedure History",
+                message: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                monthDropdownValues: monthDropdownValues,
+                yearDropdownValues: yearDropdownValues,
+                data: results.rows,
+                procedureID: req.params.id,
+                filterMonth: req.query.filterMonth,
+                filterYear: req.query.filterYear,
+              });
+            })
+            .catch((err) => {
+              return res.render("policies/procedureHistory", {
+                title: "BWG | Procedure History",
+                message: "Page Error!",
+              });
+            });
+          /* IF ONLY MONTH. */
+        } else if (!req.query.filterYear) {
+          ProcedureHistory.findAndCountAll({
+            where: {
+              // where procedureID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              [Op.and]: [
+                { procedureID: req.params.id },
+                Sequelize.where(
+                  Sequelize.fn("month", Sequelize.col("lastModified")),
+                  [funcHelpers.monthToNumber(req.query.filterMonth)]
+                ),
+              ],
+            },
+            order: [["lastModified", "DESC"]],
+          })
+            .then((results) => {
+              return res.render("policies/procedureHistory", {
+                title: "BWG | Procedure History",
+                message: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                monthDropdownValues: monthDropdownValues,
+                yearDropdownValues: yearDropdownValues,
+                data: results.rows,
+                procedureID: req.params.id,
+                filterMonth: req.query.filterMonth,
+                filterYear: req.query.filterYear,
+              });
+            })
+            .catch((err) => {
+              return res.render("policies/procedureHistory", {
+                title: "BWG | Procedure History",
+                message: "Page Error!",
+              });
+            });
+        }
       }
     }
   }

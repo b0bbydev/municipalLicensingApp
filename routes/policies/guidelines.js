@@ -246,6 +246,117 @@ router.get(
               message: "Page Error!",
             });
           });
+        // both year and month filter.
+      } else if (req.query.filterMonth && req.query.filterYear) {
+        GuidelineHistory.findAndCountAll({
+          where: {
+            [Op.and]: [
+              { guidelineID: req.params.id },
+              Sequelize.where(
+                Sequelize.fn("year", Sequelize.col("lastModified")),
+                [req.query.filterYear]
+              ),
+              Sequelize.where(
+                Sequelize.fn("month", Sequelize.col("lastModified")),
+                [funcHelpers.monthToNumber(req.query.filterMonth)]
+              ),
+            ],
+          },
+          order: [["lastModified", "DESC"]],
+        })
+          .then((results) => {
+            return res.render("policies/guidelineHistory", {
+              title: "BWG | Guideline History",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              monthDropdownValues: monthDropdownValues,
+              yearDropdownValues: yearDropdownValues,
+              data: results.rows,
+              guidelineID: req.params.id,
+              filterMonth: req.query.filterMonth,
+              filterYear: req.query.filterYear,
+            });
+          })
+          .catch((err) => {
+            return res.render("policies/guidelineHistory", {
+              title: "BWG | Guideline History",
+              message: "Page Error!",
+            });
+          });
+        // if at least one filter exists.
+      } else if (req.query.filterMonth || req.query.filterYear) {
+        /* IF ONLY YEAR. */
+        if (!req.query.filterMonth) {
+          GuidelineHistory.findAndCountAll({
+            where: {
+              // where guidelineID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              [Op.and]: [
+                { guidelineID: req.params.id },
+                Sequelize.where(
+                  Sequelize.fn("year", Sequelize.col("lastModified")),
+                  [req.query.filterYear]
+                ),
+              ],
+            },
+            order: [["lastModified", "DESC"]],
+          })
+            .then((results) => {
+              return res.render("policies/guidelineHistory", {
+                title: "BWG | Guideline History",
+                message: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                monthDropdownValues: monthDropdownValues,
+                yearDropdownValues: yearDropdownValues,
+                data: results.rows,
+                guidelineID: req.params.id,
+                filterMonth: req.query.filterMonth,
+                filterYear: req.query.filterYear,
+              });
+            })
+            .catch((err) => {
+              return res.render("policies/guidelineHistory", {
+                title: "BWG | Guideline History",
+                message: "Page Error!",
+              });
+            });
+          /* IF ONLY MONTH. */
+        } else if (!req.query.filterYear) {
+          GuidelineHistory.findAndCountAll({
+            where: {
+              // where guidelineID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              [Op.and]: [
+                { guidelineID: req.params.id },
+                Sequelize.where(
+                  Sequelize.fn("month", Sequelize.col("lastModified")),
+                  [funcHelpers.monthToNumber(req.query.filterMonth)]
+                ),
+              ],
+            },
+            order: [["lastModified", "DESC"]],
+          })
+            .then((results) => {
+              return res.render("policies/guidelineHistory", {
+                title: "BWG | Guideline History",
+                message: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                monthDropdownValues: monthDropdownValues,
+                yearDropdownValues: yearDropdownValues,
+                data: results.rows,
+                guidelineID: req.params.id,
+                filterMonth: req.query.filterMonth,
+                filterYear: req.query.filterYear,
+              });
+            })
+            .catch((err) => {
+              return res.render("policies/guidelineHistory", {
+                title: "BWG | Guideline History",
+                message: "Page Error!",
+              });
+            });
+        }
       }
     }
   }
