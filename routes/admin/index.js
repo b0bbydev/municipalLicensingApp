@@ -12,6 +12,7 @@ const dbHelpers = require("../../config/dbHelpers");
 const { body, validationResult } = require("express-validator");
 // pagination lib.
 const paginate = require("express-paginate");
+const e = require("express");
 
 /* GET /admin page. */
 router.get(
@@ -48,13 +49,19 @@ router.get(
       });
       // get active users.
       var activeUsersResponse = await dbHelpers.getActiveUsers();
+      let activeUsers = [];
 
-      console.log("");
-
-      // convert active users.
-      //let activeUsers = JSON.parse(activeUsersResponse);
-
-      //console.log(activeUsers.email);
+      // check if response is null or undefined.
+      if (activeUsersResponse === null || activeUsersResponse === undefined) {
+        return;
+      } else {
+        // loop through response, grab email and push to an array to use for rendering in HTML.
+        for (let i = 0; i < activeUsersResponse.length; i++) {
+          let data = JSON.parse(activeUsersResponse[i].data);
+          let user = data.email;
+          activeUsers.push(user);
+        }
+      }
 
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
@@ -75,6 +82,7 @@ router.get(
               auth: req.session.auth, // authorization.
               data: results.rows,
               filterOptions: filterOptions,
+              activeUsers: activeUsers,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
@@ -84,12 +92,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("admin/index", {
+          .catch((err) => {
+            return res.render("admin/index", {
               title: "BWG | Admin Panel",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       } else if (req.query.filterCategory === "Employee Name") {
         // get Users.
         User.findAndCountAll({
@@ -128,12 +136,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("admin/index", {
+          .catch((err) => {
+            return res.render("admin/index", {
               title: "BWG | Admin Panel",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       } else {
         // get Users.
         User.findAndCountAll({
@@ -167,12 +175,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("admin/index", {
+          .catch((err) => {
+            return res.render("admin/index", {
               title: "BWG | Admin Panel",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       }
     }
   }
