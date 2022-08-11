@@ -291,6 +291,7 @@ router.get(
             where: {
               policyID: req.params.id,
             },
+            order: [["lastModified", "DESC"]],
           }).then((guidelineHistory) => {
             ProcedureHistory.findAndCountAll({
               limit: req.query.limit,
@@ -298,6 +299,7 @@ router.get(
               where: {
                 policyID: req.params.id,
               },
+              order: [["lastModified", "DESC"]],
             })
               .then((procedureHistory) => {
                 // for pagination.
@@ -357,6 +359,7 @@ router.get(
             },
             limit: req.query.limit,
             offset: req.skip,
+            order: [["lastModified", "DESC"]],
           }).then((procedureHistory) => {
             // get guideline history.
             GuidelineHistory.findAndCountAll({
@@ -372,6 +375,7 @@ router.get(
               },
               limit: req.query.limit,
               offset: req.skip,
+              order: [["lastModified", "DESC"]],
             }).then((guidelineHistory) => {
               // get policy history.
               PolicyHistory.findAndCountAll({
@@ -387,6 +391,7 @@ router.get(
                 },
                 limit: req.query.limit,
                 offset: req.skip,
+                order: [["lastModified", "DESC"]],
               })
                 .then((policyHistory) => {
                   // for pagination.
@@ -446,6 +451,7 @@ router.get(
             },
             limit: req.query.limit,
             offset: req.skip,
+            order: [["lastModified", "DESC"]],
           }).then((procedureHistory) => {
             // get guideline history.
             GuidelineHistory.findAndCountAll({
@@ -461,6 +467,7 @@ router.get(
               },
               limit: req.query.limit,
               offset: req.skip,
+              order: [["lastModified", "DESC"]],
             }).then((guidelineHistory) => {
               // get policy history.
               PolicyHistory.findAndCountAll({
@@ -476,6 +483,7 @@ router.get(
                 },
                 limit: req.query.limit,
                 offset: req.skip,
+                order: [["lastModified", "DESC"]],
               })
                 .then((policyHistory) => {
                   // for pagination.
@@ -538,6 +546,7 @@ router.get(
             },
             limit: req.query.limit,
             offset: req.skip,
+            order: [["lastModified", "DESC"]],
           }).then((procedureHistory) => {
             // get guideline history.
             GuidelineHistory.findAndCountAll({
@@ -556,6 +565,7 @@ router.get(
               },
               limit: req.query.limit,
               offset: req.skip,
+              order: [["lastModified", "DESC"]],
             }).then((guidelineHistory) => {
               // get policy history.
               PolicyHistory.findAndCountAll({
@@ -574,6 +584,7 @@ router.get(
                 },
                 limit: req.query.limit,
                 offset: req.skip,
+                order: [["lastModified", "DESC"]],
               })
                 .then((policyHistory) => {
                   // for pagination.

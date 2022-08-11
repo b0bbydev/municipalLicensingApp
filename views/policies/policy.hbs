@@ -17,13 +17,19 @@
 {{/if}}
 
 <!-- Procedures Table -->
-<h4>Procedures</h4>
-<section class="row">
-  <div class="col-12">
+<div class="row">
+  <div class="col">
+    <h4>Procedures</h4>
+  </div>
+  <div class="col float-end">
     <a
-      class="btn btn-sm btn-primary mb-1"
+      class="btn btn-sm btn-primary mb-1 float-end"
       href="/policies/addProcedure/{{policyID}}"
     >Add Procedure</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
     <table
       class="table table-sm table-bordered table-striped table-hover sortable"
     >
@@ -65,80 +71,94 @@
                   onclick="return false;"
                 />{{/ifCond}}</td>
             <td>{{this.notes}}</td>
-            <td>
+            <td style="width: 8.5%;">
               <a
                 href="/policies/editProcedure/{{this.procedureID}}"
                 class="btn btn-sm btn-secondary"
-              >Edit</a></td>
+              >Edit</a>
+              |
+              <a
+                href="{{this.fileHoldURL}}"
+                target="_blank"
+                class="btn btn-sm btn-secondary"
+              >Filehold</a></td>
           </tr>
         {{/each}}
       </tbody>
     </table>
   </div>
-</section>
+</div>
 
+<!-- Guidelines Table -->
 <div class="row">
   <div class="col">
     <h4>Guidelines</h4>
-    <!-- Guidelines Table -->
-    <section class="row">
-      <div class="col-12">
-        <a
-          class="btn btn-sm btn-primary mb-1"
-          href="/policies/addGuideline/{{policyID}}"
-        >Add Guideline</a>
-        <table
-          class="sortable table table-sm table-bordered table-striped table-hover"
-        >
-          <thead>
-            <tr>
-              <th>Guideline ID</th>
-              <th>Guideline Name</th>
-              <th>Date Approved</th>
-              <th>Last Review Date</th>
-              <th>Scheduled Review Date</th>
-              <th>Date Amended</th>
-              <th>Status</th>
-              <th>Division</th>
-              <th>Authority</th>
-              <th>Administrator</th>
-              <th>Legislation Required</th>
-              <th>Notes</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each guidelines}}
-              <tr>
-                <td>{{this.guidelineID}}</td>
-                <td>{{this.guidelineName}}</td>
-                <td>{{this.dateApproved}}</td>
-                <td>{{this.lastReviewDate}}</td>
-                <td>{{this.scheduledReviewDate}}</td>
-                <td>{{this.dateAmended}}</td>
-                <td>{{this.status}}</td>
-                <td>{{this.division}}</td>
-                <td>{{this.authority}}</td>
-                <td>{{this.administrator}}</td>
-                <td>{{#ifCond this.legislationRequired "===" "Yes"}}
-                    <input type="checkbox" onclick="return false;" checked />
-                  {{else}}
-                    <input
-                      type="checkbox"
-                      onclick="return false;"
-                    />{{/ifCond}}</td>
-                <td>{{this.notes}}</td>
-                <td>
-                  <a
-                    href="/policies/editGuideline/{{this.guidelineID}}"
-                    class="btn btn-sm btn-secondary"
-                  >Edit</a></td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-    </section>
+  </div>
+  <div class="col float-end">
+    <a
+      class="btn btn-sm btn-primary mb-1 float-end"
+      href="/policies/addGuideline/{{policyID}}"
+    >Add Guideline</a>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <table
+      class="sortable table table-sm table-bordered table-striped table-hover"
+    >
+      <thead>
+        <tr>
+          <th>Guideline ID</th>
+          <th>Guideline Name</th>
+          <th>Date Approved</th>
+          <th>Last Review Date</th>
+          <th>Scheduled Review Date</th>
+          <th>Date Amended</th>
+          <th>Status</th>
+          <th>Division</th>
+          <th>Authority</th>
+          <th>Administrator</th>
+          <th>Legislation Required</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each guidelines}}
+          <tr>
+            <td>{{this.guidelineID}}</td>
+            <td>{{this.guidelineName}}</td>
+            <td>{{this.dateApproved}}</td>
+            <td>{{this.lastReviewDate}}</td>
+            <td>{{this.scheduledReviewDate}}</td>
+            <td>{{this.dateAmended}}</td>
+            <td>{{this.status}}</td>
+            <td>{{this.division}}</td>
+            <td>{{this.authority}}</td>
+            <td>{{this.administrator}}</td>
+            <td>{{#ifCond this.legislationRequired "===" "Yes"}}
+                <input type="checkbox" onclick="return false;" checked />
+              {{else}}
+                <input
+                  type="checkbox"
+                  onclick="return false;"
+                />{{/ifCond}}</td>
+            <td>{{this.notes}}</td>
+            <td style="width: 8.5%;">
+              <a
+                href="/policies/editGuideline/{{this.guidelineID}}"
+                class="btn btn-sm btn-secondary"
+              >Edit</a>
+              |
+              <a
+                href="{{this.fileHoldURL}}"
+                target="_blank"
+                class="btn btn-sm btn-secondary"
+              >Filehold</a></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
   </div>
 </div>
 <div class="row">

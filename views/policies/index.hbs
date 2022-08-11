@@ -1,4 +1,4 @@
-<h2 class="text-center mt-1">Policies</h2>
+<h2 class="text-center mt-1">Policies Management</h2>
 <h4>Filtering</h4>
 <form class="mb-0" method="GET">
   <select
@@ -65,6 +65,7 @@
 </div>
 <div class="row">
   <div class="col mb-1">
+    <h4 class="mb-0 mt-1">Policies</h4>
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
@@ -133,6 +134,7 @@
           |
           <a
             href="{{this.fileHoldURL}}"
+            target="_blank"
             class="btn btn-sm btn-secondary"
           >Filehold</a></td>
       </tr>
