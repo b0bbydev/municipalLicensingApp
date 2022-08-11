@@ -64,4 +64,15 @@ db.getTagNumberHistory = (dogID) => {
   });
 };
 
+db.getActiveUsers = () => {
+  return new Promise((resolve, reject) => {
+    pool.query("SELECT data FROM sessions", (error, result) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(result);
+    });
+  });
+};
+
 module.exports = db;

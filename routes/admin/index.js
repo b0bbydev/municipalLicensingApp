@@ -6,6 +6,8 @@ const Dropdown = require("../../models/dropdownManager/dropdown");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+// helper.
+const dbHelpers = require("../../config/dbHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // pagination lib.
@@ -44,6 +46,15 @@ router.get(
           dropdownTitle: "Admin User List Filtering Options",
         },
       });
+      // get active users.
+      var activeUsersResponse = await dbHelpers.getActiveUsers();
+
+      console.log("");
+
+      // convert active users.
+      //let activeUsers = JSON.parse(activeUsersResponse);
+
+      //console.log(activeUsers.email);
 
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
