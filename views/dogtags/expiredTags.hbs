@@ -62,16 +62,17 @@
 {{/if}}
 
 <!-- Table -->
-<table class="table table-bordered table-striped table-hover sortable">
+<table
+  class="table table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
       <th>Last Name</th>
       <th>Home Phone</th>
       <th>Email</th>
       <th>Address</th>
-      <th>POBox/Apt/RR</th>
-      <th>Town</th>
       <th>Postal Code</th>
+      <th>POBox/Apt/RR</th>
     </tr>
   </thead>
   <tbody>
@@ -86,10 +87,11 @@
         <td class="text-nowrap">{{this.homePhone}}</td>
         <td>{{this.email}}</td>
         {{#each addresses}}
-          <td>{{this.streetNumber}} {{this.streetName}}</td>
-          <td>{{this.poBoxAptRR}}</td>
-          <td>{{this.town}}</td>
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}</td>
           <td>{{this.postalCode}}</td>
+          <td>{{this.poBoxAptRR}}</td>
         {{/each}}
       </tr>
     {{/each}}
