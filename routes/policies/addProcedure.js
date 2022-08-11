@@ -19,7 +19,7 @@ router.get(
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
       return res.render("policies/addProcedure", {
-        title: "BWG | Add Guideline",
+        title: "BWG | Add Procedure",
         message: "Page Error!",
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -46,7 +46,7 @@ router.get(
       });
 
       return res.render("policies/addProcedure", {
-        title: "BWG | Add Guideline",
+        title: "BWG | Add Procedure",
         message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -61,6 +61,11 @@ router.get(
 router.post(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
+  body("procedureNumber")
+    .if(body("procedureNumber").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Procedure Number Entry!")
+    .trim(),
   body("procedureName")
     .if(body("procedureName").notEmpty())
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
@@ -129,6 +134,7 @@ router.post(
         authorityDropdownValues: authorityDropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {
+          procedureNumber: req.body.procedureNumber,
           procedureName: req.body.procedureName,
           status: req.body.status,
           dateApproved: req.body.dateApproved,
@@ -147,6 +153,7 @@ router.post(
     } else {
       // db stuff.
       Procedure.create({
+        procedureNumber: req.body.procedureNumber,
         procedureName: req.body.procedureName,
         status: req.body.status,
         dateApproved: funcHelpers.fixEmptyValue(req.body.dateApproved),

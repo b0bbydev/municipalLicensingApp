@@ -122,12 +122,17 @@
       >
         <thead>
           <tr>
+            <th>Procedure Number</th>
             <th>Procedure Name</th>
             <th>Date Approved</th>
             <th>Last Review Date</th>
             <th>Scheduled Review Date</th>
             <th>Date Amended</th>
             <th>Status</th>
+            <th>Division</th>
+            <th>Authority</th>
+            <th>Administrator</th>
+            <th>Legislation Required</th>
             <th>Notes</th>
             <th>Action</th>
             <th>Last Modified</th>
@@ -136,12 +141,23 @@
         <tbody>
           {{#each items}}
             <tr>
+              <td>{{this.procedureNumber}}</td>
               <td>{{this.procedureName}}</td>
               <td>{{this.dateApproved}}</td>
               <td>{{this.lastReviewDate}}</td>
               <td>{{this.scheduledReviewDate}}</td>
               <td>{{this.dateAmended}}</td>
               <td>{{this.status}}</td>
+              <td>{{this.division}}</td>
+              <td>{{this.authority}}</td>
+              <td>{{this.administrator}}</td>
+              <td>{{#ifCond this.legislationRequired "===" "Yes"}}
+                  <input type="checkbox" onclick="return false;" checked />
+                {{else}}
+                  <input
+                    type="checkbox"
+                    onclick="return false;"
+                  />{{/ifCond}}</td>
               <td>{{this.notes}}</td>
               <td>{{this.action}}</td>
               <td>{{formatDate this.lastModified}}</td>
@@ -163,12 +179,17 @@
       >
         <thead>
           <tr>
+            <th>Guideline Number</th>
             <th>Guideline Name</th>
             <th>Date Approved</th>
             <th>Last Review Date</th>
             <th>Scheduled Review Date</th>
             <th>Date Amended</th>
             <th>Status</th>
+            <th>Division</th>
+            <th>Authority</th>
+            <th>Administrator</th>
+            <th>Legislation Required</th>
             <th>Notes</th>
             <th>Action</th>
             <th>Last Modified</th>
@@ -177,12 +198,23 @@
         <tbody>
           {{#each items}}
             <tr>
+              <td>{{this.guidelineNumber}}</td>
               <td>{{this.guidelineName}}</td>
               <td>{{this.dateApproved}}</td>
               <td>{{this.lastReviewDate}}</td>
               <td>{{this.scheduledReviewDate}}</td>
               <td>{{this.dateAmended}}</td>
               <td>{{this.status}}</td>
+              <td>{{this.division}}</td>
+              <td>{{this.authority}}</td>
+              <td>{{this.administrator}}</td>
+              <td>{{#ifCond this.legislationRequired "===" "Yes"}}
+                  <input type="checkbox" onclick="return false;" checked />
+                {{else}}
+                  <input
+                    type="checkbox"
+                    onclick="return false;"
+                  />{{/ifCond}}</td>
               <td>{{this.notes}}</td>
               <td>{{this.action}}</td>
               <td>{{formatDate this.lastModified}}</td>

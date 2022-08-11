@@ -56,7 +56,7 @@
     >
       <thead>
         <tr>
-          <th>Guideline ID</th>
+          <th>Guideline Number</th>
           <th>Guideline Name</th>
           <th>Date Approved</th>
           <th>Last Review Date</th>
@@ -74,7 +74,7 @@
       <tbody>
         {{#each data}}
           <tr>
-            <td>{{this.guidelineID}}</td>
+            <td>{{this.guidelineNumber}}</td>
             <td><a id="ownerLink" href="/policies/editGuideline/{{this.guidelineID}}">{{this.guidelineName}}</a></td>
             <td>{{this.dateApproved}}</td>
             <td>{{this.lastReviewDate}}</td>

@@ -58,7 +58,8 @@ router.get(
             statusDropdownValues: statusDropdownValues,
             authorityDropdownValues: authorityDropdownValues,
             // if the form submission is unsuccessful, save their values.
-            procedureInfo: {
+            formData: {
+              procedureNumber: results.procedureNumber,
               procedureName: results.procedureName,
               status: results.status,
               dateApproved: results.dateApproved,
@@ -89,6 +90,11 @@ router.get(
 router.post(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
+  body("procedureNumber")
+    .if(body("procedureNumber").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Procedure Number Entry!")
+    .trim(),
   body("procedureName")
     .if(body("procedureName").notEmpty())
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
@@ -157,6 +163,7 @@ router.post(
         authorityDropdownValues: authorityDropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {
+          procedureNumber: req.body.procedureNumber,
           procedureName: req.body.procedureName,
           status: req.body.status,
           dateApproved: req.body.dateApproved,
@@ -176,6 +183,7 @@ router.post(
       // db stuff.
       Procedure.update(
         {
+          procedureNumber: req.body.procedureNumber,
           procedureName: req.body.procedureName,
           status: req.body.status,
           dateApproved: funcHelpers.fixEmptyValue(req.body.dateApproved),

@@ -70,6 +70,7 @@
 >
   <thead>
     <tr>
+      <th>Guideline Number</th>
       <th>Guideline Name</th>
       <th>Date Approved</th>
       <th>Last Review Date</th>
@@ -88,6 +89,7 @@
   <tbody>
     {{#each data}}
       <tr>
+        <td>{{this.guidelineNumber}}</td>
         <td>{{this.guidelineName}}</td>
         <td>{{this.dateApproved}}</td>
         <td>{{this.lastReviewDate}}</td>

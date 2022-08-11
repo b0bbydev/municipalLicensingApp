@@ -61,6 +61,11 @@ router.get(
 router.post(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
+  body("guidelineNumber")
+    .if(body("guidelineNumber").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Guideline Number Entry!")
+    .trim(),
   body("guidelineName")
     .if(body("guidelineName").notEmpty())
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
@@ -124,6 +129,7 @@ router.post(
         authorityDropdownValues: authorityDropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {
+          guidelineNumber: req.body.guidelineNumber,
           guidelineName: req.body.guidelineName,
           status: req.body.status,
           dateApproved: req.body.dateApproved,
@@ -142,6 +148,7 @@ router.post(
     } else {
       // db stuff.
       Guideline.create({
+        guidelineNumber: req.body.guidelineNumber,
         guidelineName: req.body.guidelineName,
         status: req.body.status,
         dateApproved: funcHelpers.fixEmptyValue(req.body.dateApproved),

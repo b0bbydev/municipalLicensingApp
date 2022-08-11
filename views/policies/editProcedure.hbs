@@ -10,9 +10,24 @@
     <h4>Procedure Information</h4>
     <hr />
     <div class="row">
+      <!-- Procedure Number -->
+      <div class="col-sm-6">
+        <label for="Procedure Number" class="form-label">Procedure Number*</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Procedure Number"
+          name="procedureNumber"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.procedureNumber}}"
+          maxlength="30"
+          required
+        />
+      </div>
       <!-- Procedure Name -->
       <div class="col-sm-6">
-        <label for="Procedure Name" class="form-label">Procedure Name*</label>
+        <label for="Procedure Name" class="form-label">Procedure Name</label>
         <input
           type="text"
           class="form-control"
@@ -20,11 +35,12 @@
           name="procedureName"
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{procedureInfo.procedureName}}"
+          value="{{formData.procedureName}}"
           maxlength="30"
-          required
         />
       </div>
+    </div>
+    <div class="row">
       <!-- Date Approved -->
       <div class="col-sm-6">
         <label for="Date Approved" class="form-label">Date Approved</label>
@@ -33,24 +49,35 @@
           class="form-control"
           placeholder="Date Approved"
           name="dateApproved"
-          value="{{procedureInfo.dateApproved}}"
+          value="{{formData.dateApproved}}"
+        />
+      </div>
+      <!-- Date Amended -->
+      <div class="col-sm-6">
+        <label for="Date Amended" class="form-label">Date Amended</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Amended"
+          name="dateAmended"
+          value="{{formData.dateAmended}}"
         />
       </div>
     </div>
     <div class="row">
       <!-- Last Review Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Last Review Date" class="form-label">Last Review Date</label>
         <input
           type="date"
           class="form-control"
           placeholder="Last Review Date"
           name="lastReviewDate"
-          value="{{procedureInfo.lastReviewDate}}"
+          value="{{formData.lastReviewDate}}"
         />
       </div>
       <!-- Scheduled Review Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Scheduled Review Date" class="form-label">Scheduled Review
           Date</label>
         <input
@@ -58,35 +85,54 @@
           class="form-control"
           placeholder="Scheduled Review Date"
           name="scheduledReviewDate"
-          value="{{procedureInfo.scheduledReviewDate}}"
+          value="{{formData.scheduledReviewDate}}"
+        />
+      </div>
+      <!-- Category -->
+      <div class="col-sm-4">
+        <label for="Category" class="form-label">Category</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Category"
+          name="category"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="Procedure"
+          maxlength="25"
+          required
         />
       </div>
     </div>
     <div class="row">
-      <!-- Date Amended -->
+      <!-- Division -->
       <div class="col-sm-4">
-        <label for="Date Amended" class="form-label">Date Amended</label>
+        <label for="Division" class="form-label">Division</label>
         <input
-          type="date"
+          type="text"
           class="form-control"
-          placeholder="Date Amended"
-          name="dateAmended"
-          value="{{procedureInfo.dateAmended}}"
+          placeholder="Division"
+          name="division"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="40"
+          value="{{formData.division}}"
         />
       </div>
-      <!-- Status -->
+      <!-- Authority -->
       <div class="col-sm-4">
-        <label for="Status" class="form-label">Status</label>
-        <select class="form-select" name="status">
-          <option disabled selected>Status...</option>
-          {{#if procedureInfo.status}}
+        <label for="Authority" class="form-label">Authority</label>
+        <select class="form-select" name="authority">
+          {{#if formData.authority}}
             <option
-              value="{{procedureInfo.status}}"
-              selected
+              value="{{formData.authority}}"
               disabled
-            >{{procedureInfo.status}}</option>
+              selected
+            >{{formData.authority}}</option>
+          {{else}}
+            <option disabled selected>Authority...</option>
           {{/if}}
-          {{#each statusDropdownValues}}
+          {{#each authorityDropdownValues}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"
@@ -100,50 +146,20 @@
           {{/each}}
         </select>
       </div>
+      <!-- Status -->
       <div class="col-sm-4">
-        <label for="Category" class="form-label">Category*</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Category"
-          name="category"
-          pattern="[^()/><\][\\\x22;|]+"
-          title="No special characters!"
-          value="{{procedureInfo.category}}"
-          maxlength="25"
-          required
-        />
-      </div>
-    </div>
-    <div class="row">
-      <!-- Division -->
-      <div class="col-sm-6">
-        <label for="Division" class="form-label">Division</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Division"
-          name="division"
-          pattern="[^()/><\][\\\x22;|]+"
-          title="No special characters!"
-          maxlength="40"
-          value="{{procedureInfo.division}}"
-        />
-      </div>
-      <!-- Authority -->
-      <div class="col-sm-6">
-        <label for="Authority" class="form-label">Authority</label>
-        <select class="form-select" name="authority">
-          {{#if procedureInfo.authority}}
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          {{#if formData.status}}
             <option
-              value="{{procedureInfo.authority}}"
+              value="{{formData.status}}"
               disabled
               selected
-            >{{procedureInfo.authority}}</option>
+            >{{formData.status}}</option>
           {{else}}
-            <option disabled selected>Authority...</option>
+            <option disabled selected>Status...</option>
           {{/if}}
-          {{#each authorityDropdownValues}}
+          {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"
@@ -170,7 +186,7 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="40"
-          value="{{procedureInfo.administrator}}"
+          value="{{formData.administrator}}"
         />
       </div>
       <!-- Filehold URL -->
@@ -182,7 +198,7 @@
           placeholder="Filehold URL"
           name="fileHoldURL"
           maxlength="255"
-          value="{{procedureInfo.fileHoldURL}}"
+          value="{{formData.fileHoldURL}}"
         />
       </div>
     </div>
@@ -195,7 +211,7 @@
           <label class="form-check-label" for="legislationRequired">
             Yes
           </label>
-          {{#ifCond procedureInfo.legislationRequired "===" "Yes"}}
+          {{#ifCond formData.legislationRequired "===" "Yes"}}
             <input
               class="form-check-input"
               type="radio"
@@ -219,7 +235,7 @@
           <label class="form-check-label" for="legislationRequired">
             No
           </label>
-          {{#ifCond procedureInfo.legislationRequired "===" "No"}}
+          {{#ifCond formData.legislationRequired "===" "No"}}
             <input
               class="form-check-input"
               type="radio"
@@ -238,8 +254,8 @@
         </div>
       </div>
     </div>
+    <!-- Notes -->
     <div class="row">
-      <!-- Notes -->
       <div class="col">
         <label for="Notes" class="form-label">Notes</label>
         <textarea
@@ -249,7 +265,7 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
-        >{{procedureInfo.notes}}</textarea>
+        >{{formData.notes}}</textarea>
       </div>
     </div>
     <div class="row">

@@ -70,6 +70,7 @@
 >
   <thead>
     <tr>
+      <th>Procedure Number</th>
       <th>Procedure Name</th>
       <th>Date Approved</th>
       <th>Last Review Date</th>
@@ -88,6 +89,7 @@
   <tbody>
     {{#each data}}
       <tr>
+        <td>{{this.procedureNumber}}</td>
         <td>{{this.procedureName}}</td>
         <td>{{this.dateApproved}}</td>
         <td>{{this.lastReviewDate}}</td>

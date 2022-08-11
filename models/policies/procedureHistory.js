@@ -25,6 +25,11 @@ const ProcedureHistory = sequelize.define(
       allowNull: true,
     },
 
+    procedureNumber: {
+      type: Sequelize.STRING(30),
+      allowNull: true,
+    },
+
     dateApproved: {
       type: Sequelize.DATEONLY,
       allowNull: true,

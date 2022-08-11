@@ -10,9 +10,24 @@
     <h4>Guideline Information</h4>
     <hr />
     <div class="row">
-      <!-- Guideline Name -->
+      <!-- Guideline Number -->
       <div class="col-sm-6">
-        <label for="Guideline Name" class="form-label">Guideline Name*</label>
+        <label for="Guideline Number" class="form-label">Guideline Number*</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Guideline Number"
+          name="guidelineNumber"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.guidelineNumber}}"
+          maxlength="30"
+          required
+        />
+      </div>
+      <!-- Guideline Number -->
+      <div class="col-sm-6">
+        <label for="Guideline Name" class="form-label">Guideline Name</label>
         <input
           type="text"
           class="form-control"
@@ -20,11 +35,12 @@
           name="guidelineName"
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{guidelineInfo.guidelineName}}"
+          value="{{formData.guidelineName}}"
           maxlength="30"
-          required
         />
       </div>
+    </div>
+    <div class="row">
       <!-- Date Approved -->
       <div class="col-sm-6">
         <label for="Date Approved" class="form-label">Date Approved</label>
@@ -33,24 +49,35 @@
           class="form-control"
           placeholder="Date Approved"
           name="dateApproved"
-          value="{{guidelineInfo.dateApproved}}"
+          value="{{formData.dateApproved}}"
+        />
+      </div>
+      <!-- Date Amended -->
+      <div class="col-sm-6">
+        <label for="Date Amended" class="form-label">Date Amended</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Amended"
+          name="dateAmended"
+          value="{{formData.dateAmended}}"
         />
       </div>
     </div>
     <div class="row">
       <!-- Last Review Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Last Review Date" class="form-label">Last Review Date</label>
         <input
           type="date"
           class="form-control"
           placeholder="Last Review Date"
           name="lastReviewDate"
-          value="{{guidelineInfo.lastReviewDate}}"
+          value="{{formData.lastReviewDate}}"
         />
       </div>
       <!-- Scheduled Review Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Scheduled Review Date" class="form-label">Scheduled Review
           Date</label>
         <input
@@ -58,35 +85,53 @@
           class="form-control"
           placeholder="Scheduled Review Date"
           name="scheduledReviewDate"
-          value="{{guidelineInfo.scheduledReviewDate}}"
+          value="{{formData.scheduledReviewDate}}"
+        />
+      </div>
+      <div class="col-sm-4">
+        <label for="Category" class="form-label">Category</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Category"
+          name="category"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="Guideline"
+          maxlength="25"
+          required
         />
       </div>
     </div>
     <div class="row">
-      <!-- Date Amended -->
+      <!-- Division -->
       <div class="col-sm-4">
-        <label for="Date Amended" class="form-label">Date Amended</label>
+        <label for="Division" class="form-label">Division</label>
         <input
-          type="date"
+          type="text"
           class="form-control"
-          placeholder="Date Amended"
-          name="dateAmended"
-          value="{{guidelineInfo.dateAmended}}"
+          placeholder="Division"
+          name="division"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="40"
+          value="{{formData.division}}"
         />
       </div>
-      <!-- Status -->
+      <!-- Authority -->
       <div class="col-sm-4">
-        <label for="Status" class="form-label">Status</label>
-        <select class="form-select" name="status">
-          <option disabled selected>Status...</option>
-          {{#if guidelineInfo.status}}
+        <label for="Authority" class="form-label">Authority</label>
+        <select class="form-select" name="authority">
+          {{#if formData.authority}}
             <option
-              value="{{guidelineInfo.status}}"
-              selected
+              value="{{formData.authority}}"
               disabled
-            >{{guidelineInfo.status}}</option>
+              selected
+            >{{formData.authority}}</option>
+          {{else}}
+            <option disabled selected>Authority...</option>
           {{/if}}
-          {{#each statusDropdownValues}}
+          {{#each authorityDropdownValues}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"
@@ -100,50 +145,20 @@
           {{/each}}
         </select>
       </div>
+      <!-- Status -->
       <div class="col-sm-4">
-        <label for="Category" class="form-label">Category*</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Category"
-          name="category"
-          pattern="[^()/><\][\\\x22;|]+"
-          title="No special characters!"
-          value="{{guidelineInfo.category}}"
-          maxlength="25"
-          required
-        />
-      </div>
-    </div>
-    <div class="row">
-      <!-- Division -->
-      <div class="col-sm-6">
-        <label for="Division" class="form-label">Division</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Division"
-          name="division"
-          pattern="[^()/><\][\\\x22;|]+"
-          title="No special characters!"
-          maxlength="40"
-          value="{{guidelineInfo.division}}"
-        />
-      </div>
-      <!-- Authority -->
-      <div class="col-sm-6">
-        <label for="Authority" class="form-label">Authority</label>
-        <select class="form-select" name="authority">
-          {{#if guidelineInfo.authority}}
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          {{#if formData.status}}
             <option
-              value="{{guidelineInfo.authority}}"
+              value="{{formData.status}}"
               disabled
               selected
-            >{{guidelineInfo.authority}}</option>
+            >{{formData.status}}</option>
           {{else}}
-            <option disabled selected>Authority...</option>
+            <option disabled selected>Status...</option>
           {{/if}}
-          {{#each authorityDropdownValues}}
+          {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"
@@ -170,7 +185,7 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="40"
-          value="{{guidelineInfo.administrator}}"
+          value="{{formData.administrator}}"
         />
       </div>
       <!-- Filehold URL -->
@@ -182,7 +197,7 @@
           placeholder="Filehold URL"
           name="fileHoldURL"
           maxlength="255"
-          value="{{guidelineInfo.fileHoldURL}}"
+          value="{{formData.fileHoldURL}}"
         />
       </div>
     </div>
@@ -195,7 +210,7 @@
           <label class="form-check-label" for="legislationRequired">
             Yes
           </label>
-          {{#ifCond guidelineInfo.legislationRequired "===" "Yes"}}
+          {{#ifCond formData.legislationRequired "===" "Yes"}}
             <input
               class="form-check-input"
               type="radio"
@@ -219,7 +234,7 @@
           <label class="form-check-label" for="legislationRequired">
             No
           </label>
-          {{#ifCond guidelineInfo.legislationRequired "===" "No"}}
+          {{#ifCond formData.legislationRequired "===" "No"}}
             <input
               class="form-check-input"
               type="radio"
@@ -238,8 +253,8 @@
         </div>
       </div>
     </div>
+    <!-- Notes -->
     <div class="row">
-      <!-- Notes -->
       <div class="col">
         <label for="Notes" class="form-label">Notes</label>
         <textarea
@@ -249,7 +264,7 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
-        >{{guidelineInfo.notes}}</textarea>
+        >{{formData.notes}}</textarea>
       </div>
     </div>
     <div class="row">

@@ -56,7 +56,7 @@
     >
       <thead>
         <tr>
-          <th>Procedure ID</th>
+          <th>Procedure Number</th>
           <th>Procedure Name</th>
           <th>Date Approved</th>
           <th>Last Review Date</th>
@@ -74,7 +74,7 @@
       <tbody>
         {{#each data}}
           <tr>
-            <td>{{this.procedureID}}</td>
+            <td>{{this.procedureNumber}}</td>
             <td><a id="ownerLink" href="/policies/editProcedure/{{this.procedureID}}">{{this.procedureName}}</a></td>
             <td>{{this.dateApproved}}</td>
             <td>{{this.lastReviewDate}}</td>

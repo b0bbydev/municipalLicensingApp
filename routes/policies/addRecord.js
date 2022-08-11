@@ -54,6 +54,11 @@ router.get("/", async (req, res, next) => {
 /* POST /addProcedure */
 router.post(
   "/addProcedure",
+  body("procedureNumber")
+    .if(body("procedureNumber").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Procedure Number Entry!")
+    .trim(),
   body("procedureName")
     .if(body("procedureName").notEmpty())
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
@@ -114,6 +119,7 @@ router.post(
         statusDropdownValues: statusDropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {
+          procedureNumber: req.body.procedureNumber,
           procedureName: req.body.procedureName,
           status: req.body.status,
           dateApproved: req.body.dateApproved,
@@ -127,6 +133,7 @@ router.post(
     } else {
       // db stuff.
       Procedure.create({
+        procedureNumber: req.body.procedureNumber,
         procedureName: req.body.procedureName,
         status: req.body.status,
         dateApproved: funcHelpers.fixEmptyValue(req.body.dateApproved),
@@ -160,6 +167,11 @@ router.post(
 /* POST /addGuideline */
 router.post(
   "/addGuideline",
+  body("guidelineNumber")
+    .if(body("guidelineNumber").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid Guideline Number Entry!")
+    .trim(),
   body("guidelineName")
     .if(body("guidelineName").notEmpty())
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
@@ -216,6 +228,7 @@ router.post(
         statusDropdownValues: statusDropdownValues,
         // if the form submission is unsuccessful, save their values.
         formData: {
+          guidelineNumber: req.body.guidelineNumber,
           guidelineName: req.body.guidelineName,
           status: req.body.status,
           dateApproved: req.body.dateApproved,
@@ -234,6 +247,7 @@ router.post(
     } else {
       // db stuff.
       Guideline.create({
+        guidelineNumber: req.body.guidelineNumber,
         guidelineName: req.body.guidelineName,
         status: req.body.status,
         dateApproved: funcHelpers.fixEmptyValue(req.body.dateApproved),

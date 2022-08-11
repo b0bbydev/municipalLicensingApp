@@ -20,6 +20,11 @@ const GuidelineHistory = sequelize.define(
       allowNull: false,
     },
 
+    guidelineNumber: {
+      type: Sequelize.STRING(30),
+      allowNull: true,
+    },
+
     guidelineName: {
       type: Sequelize.STRING(30),
       allowNull: true,

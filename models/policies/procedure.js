@@ -12,6 +12,11 @@ const Procedure = sequelize.define("procedure", {
     primaryKey: true,
   },
 
+  procedureNumber: {
+    type: Sequelize.STRING(30),
+    allowNull: true,
+  },
+
   procedureName: {
     type: Sequelize.STRING(30),
     allowNull: true,

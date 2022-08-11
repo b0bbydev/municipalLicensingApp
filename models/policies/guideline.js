@@ -12,6 +12,11 @@ const Guideline = sequelize.define("guideline", {
     primaryKey: true,
   },
 
+  guidelineNumber: {
+    type: Sequelize.STRING(30),
+    allowNull: true,
+  },
+
   guidelineName: {
     type: Sequelize.STRING(30),
     allowNull: true,

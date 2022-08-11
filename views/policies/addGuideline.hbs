@@ -10,8 +10,24 @@
     <h4>Guideline Information</h4>
     <hr />
     <div class="row">
+      <!-- Guideline Number -->
       <div class="col-sm-6">
-        <label for="Guideline Name" class="form-label">Guideline Name*</label>
+        <label for="Guideline Number" class="form-label">Guideline Number*</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Guideline Number"
+          name="guidelineNumber"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.guidelineNumber}}"
+          maxlength="30"
+          required
+        />
+      </div>
+      <!-- Guideline Number -->
+      <div class="col-sm-6">
+        <label for="Guideline Name" class="form-label">Guideline Name</label>
         <input
           type="text"
           class="form-control"
@@ -21,35 +37,7 @@
           title="No special characters!"
           value="{{formData.guidelineName}}"
           maxlength="30"
-          required
         />
-      </div>
-      <!-- Status -->
-      <div class="col-sm-6">
-        <label for="Status" class="form-label">Status</label>
-        <select class="form-select" name="status">
-          {{#if formData.status}}
-            <option
-              value="{{formData.status}}"
-              disabled
-              selected
-            >{{formData.status}}</option>
-          {{else}}
-            <option disabled selected>Status...</option>
-          {{/if}}
-          {{#each statusDropdownValues}}
-            {{#if this.isDisabled}}
-              <option
-                value="{{this.dropdownValue}}"
-                disabled
-              >{{this.dropdownValue}}</option>
-            {{else}}
-              <option
-                value="{{this.dropdownValue}}"
-              >{{this.dropdownValue}}</option>
-            {{/if}}
-          {{/each}}
-        </select>
       </div>
     </div>
     <div class="row">
@@ -100,9 +88,8 @@
           value="{{formData.scheduledReviewDate}}"
         />
       </div>
-      <!-- Category -->
       <div class="col-sm-4">
-        <label for="Category" class="form-label">Category*</label>
+        <label for="Category" class="form-label">Category</label>
         <input
           type="text"
           class="form-control"
@@ -118,7 +105,7 @@
     </div>
     <div class="row">
       <!-- Division -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Division" class="form-label">Division</label>
         <input
           type="text"
@@ -132,7 +119,7 @@
         />
       </div>
       <!-- Authority -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Authority" class="form-label">Authority</label>
         <select class="form-select" name="authority">
           {{#if formData.authority}}
@@ -145,6 +132,33 @@
             <option disabled selected>Authority...</option>
           {{/if}}
           {{#each authorityDropdownValues}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </select>
+      </div>
+      <!-- Status -->
+      <div class="col-sm-4">
+        <label for="Status" class="form-label">Status</label>
+        <select class="form-select" name="status">
+          {{#if formData.status}}
+            <option
+              value="{{formData.status}}"
+              disabled
+              selected
+            >{{formData.status}}</option>
+          {{else}}
+            <option disabled selected>Status...</option>
+          {{/if}}
+          {{#each statusDropdownValues}}
             {{#if this.isDisabled}}
               <option
                 value="{{this.dropdownValue}}"
