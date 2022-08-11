@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -53,7 +54,7 @@
             </p>
           {{/if}}
           <ul
-            class="nav nav-pills flex-column mb-auto align-items-center align-items-sm-start w-100"
+            class="nav nav-pills d-flex flex-column mb-auto align-items-center align-items-sm-start w-100 me-auto"
           >
             <!-- Back navigation -->
             {{#ifCond baseUrl "===" indexUrl}}
@@ -76,7 +77,7 @@
             </li>
             <div
               class="accordion accordion-flush w-100 nav-item"
-              id="accordionExample"
+              id="adminAccordion"
             >
               {{#includes auth "Admin"}}
                 <div class="accordion-item">
@@ -98,7 +99,7 @@
                     id="collapseOne"
                     class="accordion-collapse collapse"
                     aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample"
+                    data-bs-parent="#adminAccordion"
                   >
                     <ul
                       class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
@@ -151,7 +152,7 @@
                   id="collapseTwo"
                   class="accordion-collapse collapse"
                   aria-labelledby="headingTwo"
-                  data-bs-parent="#accordionExample"
+                  data-bs-parent="#adminAccordion"
                 >
                   <ul
                     class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
@@ -270,7 +271,7 @@
               </li>
             {{/includes}}
           </ul>
-          <div class="nav-item-logout w-100 p-1 mt-auto">
+          <div class="nav-item-logout w-100 p-1">
             <a href="/logout" class="nav-link align-middle ps-3">
               <i class="fs-4 icon-blue bi bi-box-arrow-in-left"></i>
               <span class="ms-1 d-none d-sm-inline">Logout</span>
