@@ -45,7 +45,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col pb-1">
+  <div class="col mb-1">
     {{#if queryCount}}
       <strong>{{queryCount}}</strong>
     {{/if}}
@@ -114,7 +114,7 @@
     <div class="col">
       <form method="POST">
         <div class="row">
-          <h4>Add a new dropdown menu</h4>
+          <h4>Dropdown Info</h4>
           <hr />
           <div class="col-sm-6">
             <label for="Dropdown Title" class="form-label title-text">Dropdown
@@ -155,5 +155,10 @@
         </div>
       </form>
     </div>
+    <p class="fst-italic fw-light">*Add to an existing dropdown by specifying
+      the same "dropdown title".</p>
+    <p class="fst-italic fw-light">*Keep in mind that if adding a new filtering
+      option, the "dropdown value" must be an existing field in the parent
+      table. (Not a relational table)</p>
   </div>
 {{/includes}}

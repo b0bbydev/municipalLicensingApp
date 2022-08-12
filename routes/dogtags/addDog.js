@@ -72,12 +72,12 @@ router.post(
     .trim(),
   body("breed")
     .if(body("breed").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Breed Entry!")
     .trim(),
   body("colour")
     .if(body("colour").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Colour Entry!")
     .trim(),
   body("gender")
@@ -112,7 +112,7 @@ router.post(
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[^%<>^\/\\;!{}?]+$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {

@@ -116,17 +116,17 @@ router.post(
     .trim(),
   body("pickupSchedule")
     .if(body("pickupSchedule").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[^%<>^\/\\;!{}?]+$/)
     .withMessage("Invalid Pickup Schedule Entry!")
     .trim(),
   body("itemsCollected")
     .if(body("itemsCollected").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[^%<>^\/\\;!{}?]+$/)
     .withMessage("Invalid Items Collected Entry!")
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[^%<>^\/\\;!{}?]+$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {

@@ -48,7 +48,16 @@ router.post("/", function (req, res, next) {
     .then(function (message_created) {
       console.log(message_created);
     })
-    .then(res.redirect("/sendSms"));
+    .then(res.redirect("/sendSms"))
+    // catch errors.
+    .catch((err) => {
+      return res.render("sendSms/index", {
+        title: "BWG | Send SMS",
+        message: "Page Error!" + err,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    });
 });
 
 module.exports = router;

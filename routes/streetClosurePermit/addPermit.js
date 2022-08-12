@@ -82,12 +82,12 @@ router.post(
     .trim(),
   body("description")
     .if(body("description").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[^%<>^\/\\;!{}?]+$/)
     .withMessage("Invalid Description Entry!")
     .trim(),
   body("cleanupPlan")
     .if(body("cleanupPlan").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[^%<>^\/\\;!{}?]+$/)
     .withMessage("Invalid Cleanup Plan Entry!")
     .trim(),
   async (req, res, next) => {

@@ -72,7 +72,7 @@ router.post(
     .trim(),
   body("offence")
     .if(body("offence").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[^%<>^\/\\;!{}?]+$/)
     .withMessage("Invalid Offence Entry!")
     .trim(),
   body("prosecutor")
@@ -87,7 +87,7 @@ router.post(
     .trim(),
   body("comment")
     .if(body("comment").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[^%<>^\/\\;!{}?]+$/)
     .withMessage("Invalid Comment Entry!")
     .trim(),
   body("streetNumber")

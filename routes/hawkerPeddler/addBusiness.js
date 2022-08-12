@@ -72,12 +72,12 @@ router.post(
     .trim(),
   body("itemsForSale")
     .if(body("itemsForSale").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[^%<>^\/\\;!{}?]+$/)
     .withMessage("Invalid Items For Sale Entry!")
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[\r\na-zA-Z0-9\/\-,.:"' ]+/)
+    .matches(/^[^%<>^\/\\;!{}?]+$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {

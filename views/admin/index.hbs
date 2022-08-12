@@ -76,7 +76,11 @@
       <tbody>
         {{#each data}}
           <tr>
-            <td><a id="ownerLink" href="/admin/editUser/{{this.id}}">
+            <td><a
+                id="ownerLink"
+                href="/admin/editUser/{{this.id}}"
+                title="Edit User"
+              >
                 {{this.firstName}}
                 {{this.lastName}}</a></td>
             <td>{{this.email}}</td>
@@ -134,7 +138,7 @@
         {{#each activeUsers}}
           <div class="row mb-3">
             <div class="col">
-              <strong>{{this}}</strong>
+              <strong>{{lowercase this}}</strong>
             </div>
           </div>
         {{/each}}

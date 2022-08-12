@@ -7,6 +7,7 @@
           <a
             id="additionalOwnerLinks"
             href="/dogtags/owner/{{this.ownerID}}/additionalOwner/{{this.additionalOwnerID}}"
+            title="View/Edit Additional Owner Info"
           >
             {{this.firstName}}
             {{this.lastName}}{{#unless @last}}, {{/unless}}
@@ -72,6 +73,7 @@
           <a
             id="ownerLink"
             href="/dogtags/owner/{{ownerID}}/tagHistory/{{this.dogID}}"
+            title="View Tag Number History"
           >{{this.tagNumber}}</a></td>
         <td>{{this.dogName}}</td>
         <td>{{this.breed}}</td>
@@ -178,10 +180,10 @@
 
 <div class="row">
   <div class="col-12">
-    <a id="dogHistory" onclick="toggleDogHistory()">See dog(s) history...</a>
+    <a class="user-select-none" id="dogHistory" title="Toggle History" onclick="toggleDogHistory()">See dog(s) history...</a>
   </div>
   <div class="col-12">
-    <a id="addressHistory" onclick="toggleAddressHistory()">See address
+    <a class="user-select-none" id="addressHistory" title="Toggle History" onclick="toggleAddressHistory()">See address
       history...</a>
   </div>
 </div>
