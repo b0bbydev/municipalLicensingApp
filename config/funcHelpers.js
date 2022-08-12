@@ -1,4 +1,5 @@
 module.exports = {
+  // this function should camelize any word that is made up of 2 or more words.
   camelize: function (str) {
     return str.replace(/(?:^\w|[A-Z]|\b\w|\s+)/g, function (match, index) {
       if (+match === 0) return ""; // or if (/\s+/.test(match)) for white spaces
@@ -6,6 +7,7 @@ module.exports = {
     });
   },
 
+  // will replace any value that is passed in as empty, blank or undefined to null.
   fixEmptyValue: function (str) {
     if (str === " " || str === "" || str === undefined) {
       str = null;
@@ -13,6 +15,7 @@ module.exports = {
     return str;
   },
 
+  // convert the month to it's corresponding number for SQL queries.
   monthToNumber: function (str) {
     switch (str) {
       case "January":
@@ -42,6 +45,8 @@ module.exports = {
     }
   },
 
+  // function to compare to Object's properties to check if they are equal.
+  // used to check if Object has changed before performing SQL query.
   areObjectsEqual: function (object1, object2) {
     const keys1 = Object.keys(object1);
     const keys2 = Object.keys(object2);
