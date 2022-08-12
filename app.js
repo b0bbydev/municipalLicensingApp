@@ -1,3 +1,7 @@
+/*
+ * @author Bobby Jonkman
+ */
+
 // dotenv.
 require("dotenv").config();
 // express related.

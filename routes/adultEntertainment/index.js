@@ -191,12 +191,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("adultEntertainment/index", {
+          .catch((err) => {
+            return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       }
     }
   }

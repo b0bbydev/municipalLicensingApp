@@ -1,3 +1,7 @@
+/*
+ * @author Bobby Jonkman
+ */
+
 a {
   color: #333 !important;
   text-decoration: none;
@@ -14,6 +18,14 @@ input {
 /* this folds/breaks words in a table, so that it can fit on the screen */
 td {
   word-break: break-word;
+}
+
+.btn-bwg {
+  background-color: #0096d6;
+}
+
+.btn-bwg:hover {
+  background-color: #0480b5;
 }
 
 .dropmenu-text {

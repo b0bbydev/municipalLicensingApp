@@ -9,6 +9,8 @@ const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawker
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
@@ -276,6 +278,54 @@ router.get("/", async (req, res, next) => {
       // catch any scary errors and render page error.
       .catch((err) => {
         return res.render("hawkerPeddler/search/applicantSearch", {
+          title: "BWG | Hawker & Peddler Licensing",
+          message: "Page Error!",
+        });
+      });
+  } else {
+    // format filterCategory to match column name in db - via handy dandy camelize() function.
+    var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+    // create filter query.
+    HawkerPeddlerBusiness.findAndCountAll({
+      limit: req.query.limit,
+      offset: req.skip,
+      where: {
+        [filterCategory]: {
+          [Op.like]: req.query.filterValue + "%",
+        },
+      },
+      include: [
+        {
+          model: HawkerPeddlerBusinessAddress,
+        },
+      ],
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
+        return res.render("hawkerPeddler/index", {
+          title: "BWG | Hawker & Peddler Licensing",
+          message: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterCategory: req.query.filterCategory,
+          filterValue: req.query.filterValue,
+          filterOptions: filterOptions,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("hawkerPeddler/index", {
           title: "BWG | Hawker & Peddler Licensing",
           message: "Page Error!",
         });

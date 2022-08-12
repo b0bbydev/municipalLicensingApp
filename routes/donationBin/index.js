@@ -10,6 +10,8 @@ const DonationBinCharity = require("../../models/donationBin/donationBinCharity"
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { param, validationResult } = require("express-validator");
 // pagination lib.
@@ -127,12 +129,12 @@ router.get("/", async (req, res, next) => {
         });
       })
       // catch any scary errors and render page error.
-      .catch((err) =>
-        res.render("donationBin/index", {
+      .catch((err) => {
+        return res.render("donationBin/index", {
           title: "BWG | Donation Bin Licenses",
           message: "Page Error!",
-        })
-      );
+        });
+      });
   } else if (req.query.filterCategory === "Bin Operator Name") {
     // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
     if (req.query.filterValue.trim().indexOf(" ") != -1) {
@@ -272,6 +274,49 @@ router.get("/", async (req, res, next) => {
       })
       .catch((err) => {
         return res.render("donationBin/search/donationBinCharitySearch", {
+          title: "BWG | Donation Bin Licenses",
+          message: "Page Error!",
+        });
+      });
+  } else {
+    // format filterCategory to match column name in db - via handy dandy camelize() function.
+    var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+    // create filter query.
+    DonationBin.findAndCountAll({
+      where: {
+        [filterCategory]: {
+          [Op.like]: req.query.filterValue + "%",
+        },
+      },
+      limit: req.query.limit,
+      offset: req.skip,
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
+        return res.render("donationBin/index", {
+          title: "BWG | Donation Bin Licenses",
+          message: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterCategory: req.query.filterCategory,
+          filterValue: req.query.filterValue,
+          filterOptions: filterOptions,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("donationBin/index", {
           title: "BWG | Donation Bin Licenses",
           message: "Page Error!",
         });

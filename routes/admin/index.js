@@ -8,11 +8,11 @@ const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 // helper.
 const dbHelpers = require("../../config/dbHelpers");
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 // pagination lib.
 const paginate = require("express-paginate");
-const e = require("express");
 
 /* GET /admin page. */
 router.get(
@@ -126,6 +126,7 @@ router.get(
               auth: req.session.auth, // authorization.
               data: results.rows,
               filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
               pageCount,
               itemCount,
@@ -143,15 +144,18 @@ router.get(
             });
           });
       } else {
-        // get Users.
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+        // create filter query.
         User.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
           where: {
-            email: {
-              [Op.like]: "%" + req.query.filterValue + "%",
+            [filterCategory]: {
+              [Op.like]: req.query.filterValue + "%",
             },
           },
+          limit: req.query.limit,
+          offset: req.skip,
         })
           .then((results) => {
             // for pagination.
@@ -164,8 +168,9 @@ router.get(
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
-              filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
+              filterOptions: filterOptions,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,

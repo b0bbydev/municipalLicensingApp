@@ -1,5 +1,5 @@
 /*
- * Public js.
+ * @author Bobby Jonkman
  */
 
 // create function to unhide the address history table.
