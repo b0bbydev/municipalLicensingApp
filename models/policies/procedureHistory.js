@@ -21,7 +21,7 @@ const ProcedureHistory = sequelize.define(
     },
 
     procedureName: {
-      type: Sequelize.STRING(30),
+      type: Sequelize.STRING(80),
       allowNull: true,
     },
 

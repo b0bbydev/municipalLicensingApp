@@ -18,7 +18,7 @@ const Guideline = sequelize.define("guideline", {
   },
 
   guidelineName: {
-    type: Sequelize.STRING(30),
+    type: Sequelize.STRING(80),
     allowNull: true,
   },
 
