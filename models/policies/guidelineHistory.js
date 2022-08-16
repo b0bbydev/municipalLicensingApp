@@ -61,7 +61,7 @@ const GuidelineHistory = sequelize.define(
     },
 
     division: {
-      type: Sequelize.STRING(30),
+      type: Sequelize.STRING(45),
       allowNull: true,
     },
 

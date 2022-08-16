@@ -62,7 +62,7 @@ const Policy = sequelize.define("policy", {
   },
 
   division: {
-    type: Sequelize.STRING(30),
+    type: Sequelize.STRING(45),
     allowNull: true,
   },
 
