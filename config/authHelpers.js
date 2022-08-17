@@ -4,7 +4,7 @@ var Role = require("../models/admin/role");
 
 module.exports = {
   // this method will redirect the user back to login page, if the session doesn't contain an email.
-  isLoggedIn: function (req, res, next) {
+  isLoggedIn: async (req, res, next) => {
     if (!req.session.email) {
       res.redirect("/login");
     } else {
@@ -43,7 +43,15 @@ module.exports = {
 
   /* create page specific middleware which will redirect the user to home page. */
   // force admin auth.
-  isAdmin: function (req, res, next) {
+  isAdmin: async (req, res, next) => {
+    if (
+      !req.session.auth ||
+      req.session.auth === undefined ||
+      req.session.auth === null
+    ) {
+      res.redirect("/");
+    }
+
     if (req.session.auth.includes("Admin")) {
       next();
     } else {
@@ -52,7 +60,15 @@ module.exports = {
   }, // end of isAdmin().
 
   // force policies auth.
-  isPolicy: function (req, res, next) {
+  isPolicy: async (req, res, next) => {
+    if (
+      !req.session.auth ||
+      req.session.auth === undefined ||
+      req.session.auth === null
+    ) {
+      res.redirect("/");
+    }
+
     if (req.session.auth.includes("Policies")) {
       next();
     } else {
@@ -61,7 +77,15 @@ module.exports = {
   },
 
   // force enforcement auth.
-  isEnforcement: function (req, res, next) {
+  isEnforcement: async (req, res, next) => {
+    if (
+      !req.session.auth ||
+      req.session.auth === undefined ||
+      req.session.auth === null
+    ) {
+      res.redirect("/");
+    }
+
     if (req.session.auth.includes("Enforcement")) {
       next();
     } else {

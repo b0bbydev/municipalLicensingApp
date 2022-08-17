@@ -8,7 +8,7 @@ var funcHelpers = require("../../config/funcHelpers");
 const { body, validationResult } = require("express-validator");
 
 /* GET /streetClosurePermit/addPermit */
-router.get("/", function (req, res, next) {
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages

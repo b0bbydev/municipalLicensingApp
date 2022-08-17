@@ -231,6 +231,7 @@ app.use(
     store: sessionStore, // use the sessionStore we created, this overrides the default "MemoryStore" for session saving, which isn't secure.
     resave: false, // set this to false so a new session isn't created every request. We can store it in the database instead, and update if we need to.
     saveUninitialized: false, // don't store anything about the user until there's data to store.
+    proxy: true, // trust reverse proxy -- newly added, need to test on prod.
     cookie: {
       httpOnly: true, // setting this to true means JavaScript can't access the cookies - essential for security.
       maxAge: parseInt(process.env.MAX_AGE),

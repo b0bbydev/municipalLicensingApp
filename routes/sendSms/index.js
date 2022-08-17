@@ -3,7 +3,7 @@ var router = express.Router();
 var plivo = require("plivo");
 
 /* GET /sendSms page. */
-router.get("/", function (req, res, next) {
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -37,7 +37,7 @@ router.get("/", function (req, res, next) {
 //     });
 // });
 
-router.post("/", function (req, res, next) {
+router.post("/", async (req, res, next) => {
   let client = new plivo.Client(process.env.AUTH_ID, process.env.AUTH_TOKEN);
   client.messages
     .create({

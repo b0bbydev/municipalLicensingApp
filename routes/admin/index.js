@@ -49,7 +49,8 @@ router.get(
       });
       // get active users.
       var activeUsersResponse = await dbHelpers.getActiveUsers();
-      let activeUsers = [];
+      // make activeUsers of type Set(). Set's only allow for unique values.
+      let activeUsers = new Set();
 
       // check if response is null or undefined.
       if (activeUsersResponse === null || activeUsersResponse === undefined) {
@@ -59,7 +60,10 @@ router.get(
         for (let i = 0; i < activeUsersResponse.length; i++) {
           let data = JSON.parse(activeUsersResponse[i].data);
           let user = data.email;
-          activeUsers.push(user);
+          // because a Set is used here, only unique values will get added.
+          // this may be unintuitive if a duplicate session for a user is created. i.e: they log in through 2 different browsers.
+          // however the 'active user' list shouldn't display duplicate values.
+          activeUsers.add(user);
         }
       }
 
