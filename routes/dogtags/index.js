@@ -815,6 +815,7 @@ router.get(
         Owner.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
           include: [
             {
               model: Address,
@@ -865,6 +866,7 @@ router.get(
         Owner.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
           include: [
             {
               model: Address,
@@ -928,6 +930,7 @@ router.get(
         Owner.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
           include: [
             {
               model: Address,
@@ -1013,7 +1016,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: "AdditionalOwner.firstName",
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1022,7 +1025,7 @@ router.get(
             const pageCount = Math.ceil(results.count.length / req.query.limit);
 
             // return endpoint after passing validation.
-            return res.render("dogtags/expiredTags", {
+            return res.render("dogtags/search/additionalOwnerSearch", {
               title: "BWG | Expired Tags",
               message: messages,
               email: req.session.email,
@@ -1186,6 +1189,62 @@ router.get(
               });
             });
         }
+      } else if (req.query.filterCategory === "Vendor") {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          where: {
+            $vendor$: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+          },
+          include: [
+            {
+              model: Dog,
+              where: {
+                expiryDate: {
+                  [Op.lte]: Date.now(),
+                },
+              },
+            },
+            {
+              model: Address,
+            },
+          ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
+          group: "firstName",
+          order: [["ownerID", "ASC"]],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Dog Tags",
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              filterOptions: filterOptions,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) => {
+            return res.render("dogtags/expiredTags", {
+              title: "BWG | Dog Tags",
+              message: "Page Error!",
+            });
+          });
       } else {
         // format filterCategory to match column name in db - via handy dandy camelize() function.
         var filterCategory = funcHelpers.camelize(req.query.filterCategory);
@@ -1193,6 +1252,7 @@ router.get(
         Owner.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
           where: {
             [filterCategory]: {
               [Op.like]: req.query.filterValue + "%",

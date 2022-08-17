@@ -68,7 +68,9 @@
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td><a
+        <td class="tableLink">
+          <a
+            class="stretched-link"
             id="ownerLink"
             href="/dogtags/owner/{{this.ownerID}}"
           >{{this.firstName}} {{this.lastName}}</a></td>

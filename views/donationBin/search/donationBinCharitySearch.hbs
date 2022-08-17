@@ -31,7 +31,12 @@
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td><a id="ownerLink" href="/donationBin/bins/{{this.donationBinID}}">
+        <td class="tableLink">
+          <a
+            class="stretched-link"
+            id="ownerLink"
+            href="/donationBin/bins/{{this.donationBinID}}"
+          >
             {{this.charityName}}</a></td>
         <td>{{this.registrationNumber}}</td>
         <td>{{this.phoneNumber}}</td>

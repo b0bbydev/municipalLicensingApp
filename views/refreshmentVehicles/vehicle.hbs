@@ -39,7 +39,8 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each refreshmentVehiclePropertyOwnerAddresses}}
-          <td><a
+          <td class="tableLink"><a
+              class="stretched-link"
               id="ownerLink"
               href="/refreshmentVehicles/vehiclePropertyOwnerAddressHistory/{{this.refreshmentVehiclePropertyOwnerID}}"
               title="View Address History"
@@ -90,7 +91,9 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each refreshmentVehicleOwnerAddresses}}
-          <td><a
+          <td class="tableLink">
+            <a
+              class="stretched-link"
               id="ownerLink"
               href="/refreshmentVehicles/vehicleOwnerAddressHistory/{{this.refreshmentVehicleOwnerID}}"
               title="View Address History"
@@ -142,7 +145,9 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each refreshmentVehicleOperatorAddresses}}
-          <td><a
+          <td class="tableLink">
+            <a
+              class="stretched-link"
               id="ownerLink"
               href="/refreshmentVehicles/vehicleOperatorAddressHistory/{{this.refreshmentVehicleOperatorID}}"
               title="View Address History"

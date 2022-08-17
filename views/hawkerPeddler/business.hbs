@@ -39,7 +39,9 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each hawkerPeddlerPropertyOwnerAddresses}}
-          <td><a
+          <td class="tableLink">
+            <a
+              class="stretched-link"
               id="ownerLink"
               href="/hawkerPeddler/propertyOwnerAddressHistory/{{this.hawkerPeddlerPropertyOwnerID}}"
               title="View Address History"
@@ -90,7 +92,9 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each hawkerPeddlerApplicantAddresses}}
-          <td><a
+          <td class="tableLink">
+            <a
+              class="stretched-link"
               id="ownerLink"
               href="/hawkerPeddler/applicantAddressHistory/{{this.hawkerPeddlerApplicantID}}"
               title="View Address History"
