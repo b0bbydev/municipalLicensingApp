@@ -292,7 +292,11 @@ hbs.registerHelper("formatDate", function (str) {
 
 // return lowercase string.
 hbs.registerHelper("lowercase", function (str) {
-  return str.toLowerCase();
+  if (!str || str === undefined || str === null) {
+    return;
+  } else {
+    return str.toLowerCase();
+  }
 });
 
 // check if session var 'auth' includes valid authLevel.

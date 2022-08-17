@@ -11,7 +11,7 @@ const config = {
 var ad = new ActiveDirectory(config);
 
 /* GET login page. */
-router.get("/", function (req, res, next) {
+router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages

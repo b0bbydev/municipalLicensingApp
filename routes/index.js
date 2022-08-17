@@ -4,7 +4,7 @@ var router = express.Router();
 const { auth, isLoggedIn } = require("../config/authHelpers");
 
 /* GET home page. */
-router.get("/", isLoggedIn, auth, function (req, res, next) {
+router.get("/", isLoggedIn, auth, async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
   // clear session messages
@@ -23,7 +23,7 @@ router.get("/", isLoggedIn, auth, function (req, res, next) {
 });
 
 /* GET logout page */
-router.get("/logout", function (req, res, next) {
+router.get("/logout", async (req, res, next) => {
   // destory the session.
   req.session.destroy();
   // clear cookies for session.
