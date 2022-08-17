@@ -84,7 +84,9 @@
     {{#each data}}
       <tr>
         {{#each donationBinAddresses}}
-          <td><a
+          <td class="tableLink">
+            <a
+              class="stretched-link"
               id="ownerLink"
               href="/donationBin/bins/{{this.donationBinID}}"
               title="View Donation Bin Information"

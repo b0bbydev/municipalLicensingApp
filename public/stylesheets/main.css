@@ -2,22 +2,18 @@
  * @author Bobby Jonkman
  */
 
-a {
+/* side nav links */
+li>a {
   color: #333 !important;
   text-decoration: none;
 }
 
 table {
-  font-size: 0.875rem;
+  font-size: 0.885rem;
 }
 
 input {
   border-width: thin;
-}
-
-/* this folds/breaks words in a table, so that it can fit on the screen */
-td {
-  word-break: break-word;
 }
 
 .btn-bwg {
@@ -104,10 +100,6 @@ td {
   color: white !important;
 }
 
-.side-nav {
-  height: 100%;
-}
-
 .form-label {
   font-weight: 500;
 }
@@ -142,9 +134,11 @@ td {
   cursor: pointer;
 }
 
-.usernameDiv {
-  font-size: 0.85rem;
-  text-align: center;
+/* this is only for the purpose of using Bootstrap 5.2 'stretched-link'
+   adding this to <td> element assumes it as parent to link
+   which is needed for 'stretched-link' to fill the proper cell entirely */
+.tableLink {
+  transform: rotate(0);
 }
 
 /* nav icons */

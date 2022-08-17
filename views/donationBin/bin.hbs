@@ -39,7 +39,9 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each donationBinPropertyOwnerAddresses}}
-          <td><a
+          <td class="tableLink">
+            <a
+              class="stretched-link"
               href="/donationBin/donationBinPropertyOwnerAddressHistory/{{this.donationBinPropertyOwnerID}}"
               id="ownerLink"
               title="Address History"
@@ -91,7 +93,9 @@
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each donationBinOperatorAddresses}}
-          <td><a
+          <td class="tableLink">
+            <a
+              class="stretched-link"
               href="/donationBin/donationBinOperatorAddressHistory/{{this.donationBinOperatorID}}"
               id="ownerLink"
               title="Address History"

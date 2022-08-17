@@ -81,7 +81,9 @@
       <tbody class="table-group-divider">
         {{#each data}}
           <tr>
-            <td><a
+            <td class="tableLink">
+              <a
+                class="stretched-link"
                 id="ownerLink"
                 href="/admin/editUser/{{this.id}}"
                 title="Edit User"
@@ -108,7 +110,8 @@
         {{/if}}
         {{#each pages}}
           <li class="page-item">
-            <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
+            <a class="page-link" href="{{this.url}}">{{this.number}}</a>
+          </li>
         {{/each}}
         {{#if hasMorePages}}
           <li class="page-item"><a

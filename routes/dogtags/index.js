@@ -828,12 +828,14 @@ router.get(
               },
             },
           ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
           group: "firstName",
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
             // for pagination.
-            const itemCount = results.count.length;
+            const itemCount = results.count;
             const pageCount = Math.ceil(results.count.length / req.query.limit);
 
             // return endpoint after passing validation.
@@ -887,6 +889,8 @@ router.get(
               },
             },
           ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
           group: "firstName",
           order: [["ownerID", "ASC"]],
         })
@@ -940,6 +944,8 @@ router.get(
               },
             },
           ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
           group: "firstName",
           order: [["ownerID", "ASC"]],
         })
@@ -977,33 +983,43 @@ router.get(
         Owner.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          where: {
+            [Op.or]: {
+              "$AdditionalOwner.firstName$": {
+                [Op.like]: "%" + req.query.filterValue + "%",
+              },
+              "$AdditionalOwner.lastName$": {
+                [Op.like]: "%" + req.query.filterValue + "%",
+              },
+            },
+          },
           include: [
+            {
+              model: AdditionalOwner,
+              as: "AdditionalOwner",
+            },
             {
               model: Address,
             },
             {
-              model: AdditionalOwner,
+              model: Dog,
               where: {
-                [Op.or]: {
-                  firstName: {
-                    [Op.like]: "%" + req.query.filterValue + "%",
-                  },
-                  lastName: {
-                    [Op.like]: "%" + req.query.filterValue + "%",
-                  },
+                expiryDate: {
+                  [Op.lte]: Date.now(),
                 },
               },
             },
-            {
-              model: Dog,
-            },
           ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
+          group: "firstName",
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
             // for pagination.
-            const itemCount = results.count;
-            const pageCount = Math.ceil(results.count / req.query.limit);
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
 
             // return endpoint after passing validation.
             return res.render("dogtags/expiredTags", {
@@ -1018,7 +1034,7 @@ router.get(
               filterValue: req.query.filterValue,
               pageCount,
               itemCount,
-              queryCount: "Records returned: " + results.count,
+              queryCount: "Records returned: " + results.count.length,
               pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
               prev: paginate.href(req)(true),
               hasMorePages: paginate.hasNextPages(req)(pageCount),
@@ -1052,12 +1068,26 @@ router.get(
               {
                 model: Address,
               },
+              {
+                model: Dog,
+                where: {
+                  expiryDate: {
+                    [Op.lte]: Date.now(),
+                  },
+                },
+              },
             ],
+            // group on first name because owners will appear more than once
+            // depending on if they have more than 1 dog that is expired.
+            group: "firstName",
+            order: [["ownerID", "ASC"]],
           })
             .then((results) => {
               // for pagination.
-              const itemCount = results.count;
-              const pageCount = Math.ceil(results.count / req.query.limit);
+              const itemCount = results.count.length;
+              const pageCount = Math.ceil(
+                results.count.length / req.query.limit
+              );
 
               return res.render("dogtags/expiredTags", {
                 title: "BWG | Dog Tags",
@@ -1070,7 +1100,7 @@ router.get(
                 filterOptions: filterOptions,
                 pageCount,
                 itemCount,
-                queryCount: "Records returned: " + results.count,
+                queryCount: "Records returned: " + results.count.length,
                 pages: paginate.getArrayPages(req)(
                   5,
                   pageCount,
@@ -1106,12 +1136,26 @@ router.get(
               {
                 model: Address,
               },
+              {
+                model: Dog,
+                where: {
+                  expiryDate: {
+                    [Op.lte]: Date.now(),
+                  },
+                },
+              },
             ],
+            // group on first name because owners will appear more than once
+            // depending on if they have more than 1 dog that is expired.
+            group: "firstName",
+            order: [["ownerID", "ASC"]],
           })
             .then((results) => {
               // for pagination.
-              const itemCount = results.count;
-              const pageCount = Math.ceil(results.count / req.query.limit);
+              const itemCount = results.count.length;
+              const pageCount = Math.ceil(
+                results.count.length / req.query.limit
+              );
 
               return res.render("dogtags/expiredTags", {
                 title: "BWG | Dog Tags",
@@ -1124,7 +1168,7 @@ router.get(
                 filterOptions: filterOptions,
                 pageCount,
                 itemCount,
-                queryCount: "Records returned: " + results.count,
+                queryCount: "Records returned: " + results.count.length,
                 pages: paginate.getArrayPages(req)(
                   5,
                   pageCount,
@@ -1167,6 +1211,8 @@ router.get(
               },
             },
           ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
           group: "firstName",
           order: [["ownerID", "ASC"]],
         })
