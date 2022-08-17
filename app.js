@@ -302,7 +302,7 @@ hbs.registerHelper("lowercase", function (str) {
 
 // check if session var 'auth' includes valid authLevel.
 hbs.registerHelper("includes", function (array, value, options) {
-  if (!array) {
+  if (!array || !value) {
     return;
   }
 
