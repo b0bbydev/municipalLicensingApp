@@ -17,6 +17,12 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
+  // if there user is logged in. (session var email is only set once authenticated).
+  if (req.session.email) {
+    // redirect to index page.
+    return res.redirect("/");
+  }
+
   return res.render("login", {
     title: "BWG | Login",
     message: messages,
@@ -56,7 +62,7 @@ router.post(
         password === process.env.BWG_PASS
       ) {
         req.session.email = email;
-        res.redirect("/");
+        return res.redirect("/");
       } else {
         ad.authenticate(email, password, function (err, auth) {
           // if there's an error with AD.
@@ -73,7 +79,7 @@ router.post(
           // if login is successful.
           if (auth) {
             req.session.email = email;
-            res.redirect("/");
+            return res.redirect("/");
           } else {
             // render login page with error message.
             return res.render("login", {
