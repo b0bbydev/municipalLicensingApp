@@ -16,6 +16,11 @@ input {
   border-width: thin;
 }
 
+.accordion-button:not(.collapsed) {
+  background-color: rgba(0, 150, 214, 0.15);
+  color: black;
+}
+
 .form-label {
   font-weight: 600;
 }

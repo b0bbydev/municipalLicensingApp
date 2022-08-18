@@ -41,7 +41,7 @@
         style="border-right: 1px solid #dedede;"
       >
         <div
-          class="d-flex flex-column align-items-center align-items-sm-center px-2 pt-2 min-vh-100"
+          class="d-flex flex-column align-items-center align-items-sm-center pt-2 min-vh-100"
         >
           <div class="nav-img text-center pt-3 pb-3 w-100">
             <a title="Home" href="/">
@@ -49,13 +49,13 @@
             </a>
           </div>
           {{#if email}}
-            <p class="text-center fs-6">
+            <p class="text-center fs-6 px-2">
               <i class="icon-blue icon-large bi bi-person-fill"></i>
               <span class="text-center">Current User: {{lowercase email}}</span>
             </p>
           {{/if}}
           <ul
-            class="nav nav-pills d-flex flex-column mb-auto align-items-center align-items-sm-start w-100 me-auto"
+            class="nav nav-pills d-flex flex-column align-items-center align-items-sm-start w-100 mb-auto"
           >
             <!-- Back navigation -->
             {{#ifCond baseUrl "===" indexUrl}}
