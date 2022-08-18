@@ -16,6 +16,14 @@ input {
   border-width: thin;
 }
 
+.form-label {
+  font-weight: 600;
+}
+
+.btn {
+  color: #fff !important;
+}
+
 .btn-bwg {
   background-color: #0096d6;
 }
@@ -82,7 +90,6 @@ input {
   border-bottom: none;
 }
 
-
 /* have to do all 3 elements separate */
 .nav-item-back:hover {
   transition: 0.2s ease-in;
@@ -100,35 +107,18 @@ input {
   color: white !important;
 }
 
-.form-label {
-  font-weight: 500;
-}
-
-.btn {
-  color: #fff !important;
-}
-
-/* have to do all 3 elements separate */
-.back:hover {
-  transition: 0.2s ease-in;
-  background-color: rgba(0, 150, 214, 0.75) !important;
-  color: white;
-}
-
-.back:hover .menu-text {
+.nav-item-back:hover span {
   transition: 0.2s ease-in;
   color: white;
 }
 
-.back:hover .menu-text .icon-large {
+.nav-item-back:hover i {
   transition: 0.2s ease-in;
-  color: white !important;
+  color: white;
 }
 
 /* this makes the entire table cell clickable for the anchor tag. */
 .table #ownerLink {
-  display: block;
-  width: 100%;
   color: #0096d6 !important;
   text-decoration: underline;
   cursor: pointer;
@@ -159,15 +149,6 @@ input {
 
 .panel-heading {
   padding: 10px 20px 5px 10px;
-}
-
-/* pagination */
-#pagJump {
-  font-size: 0.9rem;
-  padding-bottom: 10px;
-  color: #0096d6 !important;
-  cursor: pointer;
-  text-decoration: underline;
 }
 
 /* footer */
