@@ -289,7 +289,9 @@ router.post(
             }
           });
         })
-        .then(res.redirect("/dogtags"))
+        .then(() => {
+          return res.redirect("/dogtags");
+        })
         .catch((err) => {
           return res.render("dogtags/editOwner", {
             title: "BWG | Edit Owner",

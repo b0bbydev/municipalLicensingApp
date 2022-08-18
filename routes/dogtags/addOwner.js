@@ -149,7 +149,9 @@ router.post(
           include: [Address],
         }
       )
-        .then(res.redirect("/dogtags"))
+        .then(() => {
+          return res.redirect("/dogtags");
+        })
         .catch((err) => {
           return res.render("dogtags/addOwner", {
             title: "BWG | Add Owner",

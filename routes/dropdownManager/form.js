@@ -178,11 +178,11 @@ router.post(
         isDisabled: 0, // *enable* by default.
         dropdownFormID: req.session.formID,
       })
-        .then((results) => {
+        .then(() => {
           // save last entered dropdownTitle in the session.
           req.session.lastEnteredDropdownTitle = req.body.dropdownTitle;
           // redirect to same page if successful.
-          res.redirect("/dropdownManager/form/" + req.session.formID);
+          return res.redirect("/dropdownManager/form/" + req.session.formID);
         })
         .catch((err) => {
           return res.render("dropdownManager/form", {
@@ -223,7 +223,9 @@ router.get(
         }
       )
         // redirect to same page.
-        .then(res.redirect(req.headers.referer))
+        .then(() => {
+          return res.redirect(req.headers.referer);
+        })
         .catch((err) => {
           return res.render("dropdownManager/index", {
             title: "BWG | Dropdown Manager",
@@ -263,7 +265,9 @@ router.get(
         }
       )
         // redirect to same page.
-        .then(res.redirect(req.headers.referer))
+        .then(() => {
+          return res.redirect(req.headers.referer);
+        })
         .catch((err) => {
           return res.render("dropdownManager/form", {
             title: "BWG | Dropdown Manager",

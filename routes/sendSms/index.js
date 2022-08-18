@@ -48,7 +48,9 @@ router.post("/", async (req, res, next) => {
     .then(function (message_created) {
       console.log(message_created);
     })
-    .then(res.redirect("/sendSms"))
+    .then(() => {
+      return res.redirect("/sendSms");
+    })
     // catch errors.
     .catch((err) => {
       return res.render("sendSms/index", {

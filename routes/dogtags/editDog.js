@@ -222,7 +222,9 @@ router.post(
           },
         }
       )
-        .then(res.redirect("/dogtags/owner/" + req.session.ownerID))
+        .then(() => {
+          return res.redirect("/dogtags/owner/" + req.session.ownerID);
+        })
         .catch((err) => {
           return res.render("dogtags/editDog", {
             title: "BWG | Edit Dog",

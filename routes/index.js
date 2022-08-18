@@ -29,7 +29,7 @@ router.get("/logout", async (req, res, next) => {
   // clear cookies for session.
   res.clearCookie(process.env.SESSION_NAME);
   // redirect back to login.
-  res.redirect("/login");
+  return res.redirect("/login");
 });
 
 module.exports = router;

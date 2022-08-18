@@ -6,7 +6,7 @@ module.exports = {
   // this method will redirect the user back to login page, if the session doesn't contain an email.
   isLoggedIn: async (req, res, next) => {
     if (!req.session.email) {
-      res.redirect("/login");
+      return res.redirect("/login");
     } else {
       next();
     } // end of if-else.
@@ -49,13 +49,13 @@ module.exports = {
       req.session.auth === undefined ||
       req.session.auth === null
     ) {
-      res.redirect("/");
+      return res.redirect("/");
     }
 
     if (req.session.auth.includes("Admin")) {
       next();
     } else {
-      res.redirect("/");
+      return res.redirect("/");
     }
   }, // end of isAdmin().
 
@@ -66,13 +66,13 @@ module.exports = {
       req.session.auth === undefined ||
       req.session.auth === null
     ) {
-      res.redirect("/");
+      return res.redirect("/");
     }
 
     if (req.session.auth.includes("Policies")) {
       next();
     } else {
-      res.redirect("/");
+      return res.redirect("/");
     }
   },
 
@@ -83,13 +83,13 @@ module.exports = {
       req.session.auth === undefined ||
       req.session.auth === null
     ) {
-      res.redirect("/");
+      return res.redirect("/");
     }
 
     if (req.session.auth.includes("Enforcement")) {
       next();
     } else {
-      res.redirect("/");
+      return res.redirect("/");
     }
   },
 };

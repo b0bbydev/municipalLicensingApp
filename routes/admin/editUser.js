@@ -110,7 +110,9 @@ router.post(
           },
         }
       )
-        .then(res.redirect("/admin"))
+        .then(() => {
+          return res.redirect("/admin");
+        })
         .catch((err) => {
           return res.render("admin/editUser", {
             title: "BWG | Edit User",

@@ -73,7 +73,9 @@ router.post(
       DropdownForm.create({
         formName: req.body.formName,
       })
-        .then(res.redirect("/dropdownManager"))
+        .then(() => {
+          return res.redirect("/dropdownManager");
+        })
         .catch((err) => {
           return res.render("dropdownManager/index", {
             title: "BWG | Dropdown Manager",

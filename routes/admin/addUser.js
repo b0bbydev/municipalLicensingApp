@@ -65,7 +65,9 @@ router.post(
         lastName: req.body.lastName,
         email: req.body.email,
       })
-        .then(res.redirect("/admin"))
+        .then(() => {
+          return res.redirect("/admin");
+        })
         .catch((err) => {
           return res.render("admin/addUser", {
             title: "BWG | Add User",

@@ -127,7 +127,9 @@ router.get("/:userId/revoke/:roleId", (req, res, next) => {
       },
     })
       // redirect to same page.
-      .then(res.redirect(req.headers.referer))
+      .then(() => {
+        return res.redirect(req.headers.referer);
+      })
       .catch((err) => {
         return res.render("admin/manageAccess", {
           title: "BWG | Manage Access",
