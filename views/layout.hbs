@@ -2,7 +2,7 @@
   @author Bobby Jonkman
  -->
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -33,15 +33,14 @@
 
     <title>{{title}}</title>
   </head>
-  <div class="container-fluid">
-    <div class="row flex-nowrap">
+  <div class="container-fluid overflow-hidden">
+    <div class="row vh-100 overflow-auto">
       <div
-        id="nav"
-        class="col-auto col-md-3 col-xl-2 px-0"
+        class="col-12 col-sm-3 col-xl-2 px-0 d-flex sticky-top"
         style="border-right: 1px solid #dedede;"
       >
         <div
-          class="d-flex flex-column align-items-center align-items-sm-center pt-2 min-vh-100"
+          class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-0 pt-2"
         >
           <div class="nav-img text-center pt-3 pb-3 w-100">
             <a title="Home" href="/">
@@ -55,7 +54,8 @@
             </p>
           {{/if}}
           <ul
-            class="nav nav-pills d-flex flex-column align-items-center align-items-sm-start w-100 mb-auto"
+            class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start w-100"
+            id="menu"
           >
             <!-- Back navigation -->
             {{#ifCond baseUrl "===" indexUrl}}
@@ -284,20 +284,28 @@
               </li>
             {{/includes}}
           </ul>
-          <div class="nav-item-logout w-100 py-2 mb-2">
-            <a href="/logout" class="nav-link align-middle ps-3">
-              <i class="fs-4 icon-blue bi bi-box-arrow-in-left"></i>
-              <span class="ms-1 d-none d-sm-inline">Logout</span>
-            </a>
+          <div class="mt-sm-auto ms-auto ms-sm-0 flex-shrink-1 w-100">
+            <div class="nav-item-logout w-100 py-3">
+              <a href="/logout" class="nav-link align-middle ps-3">
+                <i class="fs-6 icon-blue bi bi-box-arrow-in-left"></i>
+                <span class="ms-1 d-none d-sm-inline">Logout</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col py-1">
-        {{{body}}}
-        {{! <!-- Footer -->
-        <footer class="footer py-3 text-center text-white footer-color mt-auto">
-          <small>Copyright &copy; Town of Bradford West Gwillimbury</small>
-        </footer> }}
+      <div class="col d-flex flex-column h-sm-100">
+        <main class="row overflow-auto mb-5">
+          <div class="col">
+            {{{body}}}
+          </div>
+        </main>
+        <footer class="row py-3 text-center text-white footer-color mt-auto">
+          <div class="col">
+            <small>Copyright &copy; Town of Bradford West
+              Gwillimbury</small>
+          </div>
+        </footer>
       </div>
     </div>
   </div>
