@@ -28,7 +28,7 @@ const TaxiPlate = sequelize.define("taxiPlate", {
   },
 
   email: {
-    type: Sequelize.STRING(15),
+    type: Sequelize.STRING(50),
     allowNull: true,
   },
 

@@ -22,7 +22,7 @@ const StreetClosurePermit = sequelize.define("streetClosurePermit", {
   },
 
   sponser: {
-    type: Sequelize.STRING(50),
+    type: Sequelize.STRING(75),
     allowNull: true,
   },
 
@@ -57,7 +57,7 @@ const StreetClosurePermit = sequelize.define("streetClosurePermit", {
   },
 
   closureLocation: {
-    type: Sequelize.STRING(50),
+    type: Sequelize.STRING(75),
     allowNull: true,
   },
 
