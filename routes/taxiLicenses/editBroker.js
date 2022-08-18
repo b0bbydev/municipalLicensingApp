@@ -32,9 +32,9 @@ router.get("/:id", async (req, res, next) => {
         model: TaxiBrokerAddress,
       },
     ],
-  }).then((results) => {
-    return res
-      .render("taxiLicenses/editBroker", {
+  })
+    .then((results) => {
+      return res.render("taxiLicenses/editBroker", {
         title: "BWG | Edit Taxi Broker",
         message: messages,
         email: req.session.email,
@@ -60,14 +60,14 @@ router.get("/:id", async (req, res, next) => {
           town: results.taxiBrokerAddresses[0].town,
           postalCode: results.taxiBrokerAddresses[0].postalCode,
         },
-      })
-      .catch((err) => {
-        return res.render("taxiLicenses/editBroker", {
-          title: "BWG | Edit Taxi Broker",
-          message: "Page Error!",
-        });
       });
-  });
+    })
+    .catch((err) => {
+      return res.render("taxiLicenses/editBroker", {
+        title: "BWG | Edit Taxi Broker",
+        message: "Page Error!",
+      });
+    });
 });
 
 /* POST /taxiLicenses/editBroker/:id */

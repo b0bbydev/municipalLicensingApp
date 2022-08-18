@@ -9,7 +9,7 @@
 
 <!-- Property Owners Table -->
 <div class="row">
-  <h4>Property Owners</h4>
+  <h4 class="mb-0">Property Owners</h4>
   <div class="col mb-1">
     {{#if propertyOwnersCount}}
       <strong class="float-start mt-1">{{propertyOwnersCount}}</strong>
@@ -21,7 +21,7 @@
   </div>
 </div>
 <table
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
@@ -61,7 +61,7 @@
 
 <!-- Operators Table -->
 <div class="row">
-  <h4>Operators</h4>
+  <h4 class="mb-0">Operators</h4>
   <div class="col mb-1">
     {{#if operatorsCount}}
       <strong class="float-start mt-1">{{operatorsCount}}</strong>
@@ -73,7 +73,7 @@
   </div>
 </div>
 <table
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
@@ -104,7 +104,7 @@
               {{this.town}}
               {{this.postalCode}}</a></td>
         {{/each}}
-        <td><a
+        <td style="width: 12%;"><a
             class="btn btn-sm btn-secondary my-1"
             href="/donationBin/editOperator/{{this.donationBinOperatorID}}"
           >Edit</a>
@@ -194,7 +194,7 @@
 
 <!-- Charity Table -->
 <div class="row">
-  <h4>Charity/Organization</h4>
+  <h4 class="mb-0">Charity/Organization</h4>
   <div class="col mb-1">
     {{#if charitiesCount}}
       <strong class="float-start mt-1">{{charitiesCount}}</strong>
@@ -206,7 +206,7 @@
   </div>
 </div>
 <table
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
