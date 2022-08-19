@@ -224,12 +224,12 @@ router.post(
             "/liquor/businessAddressHistory/" + results.liquorBusinessID
           );
         }) // catch any scary errors and render page error.
-        .catch((err) =>
-          res.render("liquor/index", {
+        .catch((err) => {
+          return res.render("liquor/index", {
             title: "BWG | Liquor Licensing",
             message: "Page Error!",
-          })
-        );
+          });
+        });
     }
   }
 );

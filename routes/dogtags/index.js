@@ -708,12 +708,12 @@ router.post(
         .then(() => {
           return res.redirect("/dogtags/owner/" + req.session.ownerID);
         })
-        .catch((err) =>
-          res.render("dogtags/additionalOwner", {
+        .catch((err) => {
+          return res.render("dogtags/additionalOwner", {
             title: "BWG | Additional Owner",
             message: "Page Error!",
-          })
-        );
+          });
+        });
     }
   }
 );

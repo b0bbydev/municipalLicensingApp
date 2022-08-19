@@ -142,12 +142,12 @@ router.get(
             });
           })
           // catch any scary errors and render page error.
-          .catch((err) =>
-            res.render("adultEntertainment/index", {
+          .catch((err) => {
+            return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               message: "Page Error!",
-            })
-          );
+            });
+          });
       } else {
         // format filterCategory to match column name in db - via handy dandy camelize() function.
         var filterCategory = funcHelpers.camelize(req.query.filterCategory);
@@ -243,12 +243,12 @@ router.post("/", async (req, res, next) => {
       .then(() => {
         return res.redirect("/adultEntertainment");
       })
-      .catch((err) =>
-        res.render("adultEntertainment/index", {
+      .catch((err) => {
+        return res.render("adultEntertainment/index", {
           title: "BWG | Adult Entertainment Licenses",
           message: "Page Error!",
-        })
-      );
+        });
+      });
   }
 });
 
@@ -285,12 +285,12 @@ router.post(
             "/adultEntertainment/history/" + results.businessID
           );
         }) // catch any scary errors and render page error.
-        .catch((err) =>
-          res.render("adultEntertainment/history", {
+        .catch((err) => {
+          return res.render("adultEntertainment/history", {
             title: "BWG | Adult Entertainment License History",
             message: "Page Error!",
-          })
-        );
+          });
+        });
     }
   }
 );
