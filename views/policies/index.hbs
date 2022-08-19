@@ -92,7 +92,7 @@
 
 <!-- Table -->
 <table
-  id="table"
+  id="policyTable"
   class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
@@ -126,12 +126,12 @@
             title="View Policy Related Information"
           >{{this.policyNumber}}</a></td>
         <td>{{this.policyName}}</td>
-        <td class="text-nowrap">{{this.cowDate}}</td>
+        <td>{{this.cowDate}}</td>
         <td>{{this.councilResolution}}</td>
         <td>{{this.dateApproved}}</td>
         <td>{{this.dateAmended}}</td>
         <td>{{this.dateEffective}}</td>
-        <td class="text-nowrap">{{this.category}}</td>
+        <td>{{this.category}}</td>
         <td>{{this.lastReviewDate}}</td>
         <td>{{this.scheduledReviewDate}}</td>
         <td>{{this.division}}</td>
@@ -141,10 +141,11 @@
             <input type="checkbox" onclick="return false;" checked />
           {{else}}
             <input type="checkbox" onclick="return false;" />{{/ifCond}}</td>
-        <td class="text-nowrap">{{this.status}}</td>
-        <td class="text-nowrap"><a
+        <td>{{this.status}}</td>
+        <td style="width: 8.5%;">
+          <a
             href="/policies/editPolicy/{{this.policyID}}"
-            class="btn btn-sm btn-secondary"
+            class="btn btn-sm btn-secondary my-1"
           >Edit</a>
           |
           <a

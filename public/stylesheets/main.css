@@ -16,6 +16,11 @@ input {
   border-width: thin;
 }
 
+#policyTable {
+  /* had to apply this to the policy table because of how much info was in table, was screwing up responsiveness on laptop screen */
+  word-break: break-word;
+}
+
 .accordion-button:not(.collapsed) {
   background-color: rgba(0, 150, 214, 0.15);
   color: black;
