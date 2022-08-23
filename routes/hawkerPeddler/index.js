@@ -31,18 +31,6 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  // get current date.
-  var issueDate = new Date();
-  // init expiryDate.
-  var modalExpiryDate = new Date();
-
-  // if issueDate is in November or December.
-  if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
-    modalExpiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
-  } else {
-    modalExpiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
-  }
-
   // if there are no filter parameters.
   if (!req.query.filterCategory || !req.query.filterValue) {
     HawkerPeddlerBusiness.findAndCountAll({
@@ -66,7 +54,6 @@ router.get("/", async (req, res, next) => {
           auth: req.session.auth, // authorization.
           data: results.rows,
           filterOptions: filterOptions,
-          modalExpiryDate: modalExpiryDate,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,
@@ -110,7 +97,6 @@ router.get("/", async (req, res, next) => {
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
           filterOptions: filterOptions,
-          modalExpiryDate: modalExpiryDate,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,
@@ -163,7 +149,6 @@ router.get("/", async (req, res, next) => {
             filterCategory: req.query.filterCategory,
             filterValue: req.query.filterValue,
             filterOptions: filterOptions,
-            modalExpiryDate: modalExpiryDate,
             pageCount,
             itemCount,
             queryCount: "Records returned: " + results.count,
@@ -213,7 +198,6 @@ router.get("/", async (req, res, next) => {
             filterCategory: req.query.filterCategory,
             filterValue: req.query.filterValue,
             filterOptions: filterOptions,
-            modalExpiryDate: modalExpiryDate,
             pageCount,
             itemCount,
             queryCount: "Records returned: " + results.count,
@@ -266,7 +250,6 @@ router.get("/", async (req, res, next) => {
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
           filterOptions: filterOptions,
-          modalExpiryDate: modalExpiryDate,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,
@@ -322,57 +305,6 @@ router.get("/", async (req, res, next) => {
           prev: paginate.href(req)(true),
           hasMorePages: paginate.hasNextPages(req)(pageCount),
         });
-      })
-      // catch any scary errors and render page error.
-      .catch((err) => {
-        return res.render("hawkerPeddler/index", {
-          title: "BWG | Hawker & Peddler Licensing",
-          message: "Page Error!",
-        });
-      });
-  }
-});
-
-/* POST /hawkerPeddler - renews license. */
-router.post("/", async (req, res, next) => {
-  // server side validation.
-  const errors = validationResult(req);
-
-  // if errors is NOT empty (if there are errors...).
-  if (!errors.isEmpty()) {
-    return res.render("hawkerPeddler/index", {
-      title: "BWG | Hawker & Peddler Licensing",
-      message: "Page Error!",
-      email: req.session.email,
-      auth: req.session.auth, // authorization.
-    });
-  } else {
-    // get current date for automatic population of license.
-    var issueDate = new Date();
-    // init expiryDate.
-    var expiryDate = new Date();
-
-    // if issueDate is in November or December.
-    if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
-      expiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
-    } else {
-      expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
-    }
-
-    // update license.
-    HawkerPeddlerBusiness.update(
-      {
-        issueDate: issueDate,
-        expiryDate: expiryDate,
-      },
-      {
-        where: {
-          hawkerPeddlerBusinessID: req.body.hawkerPeddlerBusinessID,
-        },
-      }
-    )
-      .then(() => {
-        return res.redirect("/hawkerPeddler");
       })
       // catch any scary errors and render page error.
       .catch((err) => {

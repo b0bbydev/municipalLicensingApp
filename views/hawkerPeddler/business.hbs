@@ -82,6 +82,8 @@
       <th>Email</th>
       <th>Address</th>
       <th>License #</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -104,11 +106,71 @@
               {{this.postalCode}}</a></td>
         {{/each}}
         <td>{{this.licenseNumber}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
         <td><a
+            class="btn btn-sm btn-secondary my-1"
+            data-bs-toggle="modal"
+            data-bs-target="#hawkerPeddlerRenewModal-{{this.hawkerPeddlerApplicantID}}"
+          >Renew</a>
+          |
+          <a
             class="btn btn-sm btn-secondary"
             href="/hawkerPeddler/editApplicant/{{this.hawkerPeddlerApplicantID}}"
           >Edit</a></td>
       </tr>
+      <!-- Renew Modal -->
+      <div
+        class="modal fade"
+        id="hawkerPeddlerRenewModal-{{this.hawkerPeddlerApplicantID}}"
+        tabindex="-1"
+        aria-labelledby="Hawker Peddler Renewal Modal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Renew Operator License</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <label
+                      for="Hawker Peddler Operator ID"
+                      class="form-label"
+                    >Hawker Peddler Operator ID</label>
+                    <input
+                      class="form-control"
+                      placeholder="Hawker Peddler Operator ID"
+                      value="{{this.hawkerPeddlerApplicantID}}"
+                      name="hawkerPeddlerApplicantID"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit Renewal</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     {{/each}}
   </tbody>
 </table>

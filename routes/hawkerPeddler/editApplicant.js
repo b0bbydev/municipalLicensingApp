@@ -38,6 +38,8 @@ router.get(
         },
       });
 
+      req.session.hawkerPeddlerApplicantID = req.params.id;
+
       HawkerPeddlerApplicant.findOne({
         where: {
           hawkerPeddlerApplicantID: req.params.id,
@@ -62,6 +64,8 @@ router.get(
               phoneNumber: results.phoneNumber,
               email: results.email,
               licenseNumber: results.licenseNumber,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
               streetNumber:
                 results.hawkerPeddlerApplicantAddresses[0].streetNumber,
               streetName: results.hawkerPeddlerApplicantAddresses[0].streetName,
@@ -158,6 +162,8 @@ router.post(
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
           town: req.body.town,
@@ -172,6 +178,8 @@ router.post(
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
         },
         {
           where: {
@@ -227,7 +235,7 @@ router.post(
         })
         .then(() => {
           return res.redirect(
-            "/hawkerPeddler/business/" + req.session.hawkerPeddlerBusinessID
+            "/hawkerPeddler/applicant/" + req.session.hawkerPeddlerApplicantID
           );
         })
         .catch((err) => {

@@ -489,6 +489,7 @@ app.use(
 );
 
 app.use("/hawkerPeddler/business", isEnforcement, hawkerPeddlerBusinessRoute);
+
 app.use(
   "/hawkerPeddler/addBusiness",
   isEnforcement,

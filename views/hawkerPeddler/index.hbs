@@ -77,12 +77,12 @@
 {{/if}}
 
 <!-- Table -->
-<table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
       <th>Business Name</th>
-      <th>Issue Date</th>
-      <th>Expiry Date</th>
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
@@ -101,8 +101,6 @@
             href="/hawkerPeddler/business/{{this.hawkerPeddlerBusinessID}}"
             title="View Business Information"
           >{{this.businessName}}</a></td>
-        <td>{{this.issueDate}}</td>
-        <td>{{this.expiryDate}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each hawkerPeddlerBusinessAddresses}}
@@ -113,12 +111,7 @@
         {{/each}}
         <td>{{this.itemsForSale}}</td>
         <td>{{this.notes}}</td>
-        <td style="width: 17.5%;"><a
-            class="btn btn-sm btn-secondary my-1"
-            data-bs-toggle="modal"
-            data-bs-target="#hawkerPeddlerRenewModal-{{this.hawkerPeddlerBusinessID}}"
-          >Renew</a>
-          |
+        <td style="width: 17.5%;">
           <a
             class="btn btn-sm btn-secondary"
             href="/hawkerPeddler/editBusiness/{{this.hawkerPeddlerBusinessID}}"
@@ -130,71 +123,12 @@
             data-bs-target="#hawkerPeddlerDocumentationModal-{{this.hawkerPeddlerBusinessID}}"
           >Documentation</a>
           <!-- Print to Filehold -->
-          <a href="/hawkerPeddler/printLicense/{{this.hawkerPeddlerBusinessID}}" title="Print License"><i class="icon-blue bi bi-printer-fill ms-1"></i></a>
+          <a
+            href="/hawkerPeddler/printLicense/{{this.hawkerPeddlerBusinessID}}"
+            title="Print License"
+          ><i class="icon-blue bi bi-printer-fill ms-1"></i></a>
         </td>
       </tr>
-      <!-- Renew Modal -->
-      <div
-        class="modal fade"
-        id="hawkerPeddlerRenewModal-{{this.hawkerPeddlerBusinessID}}"
-        tabindex="-1"
-        aria-labelledby="Hawker Peddler Renewal Modal"
-        aria-hidden="true"
-      >
-        <form method="POST">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Renew Business</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col">
-                    <label
-                      for="Hawker Peddler Business ID"
-                      class="form-label"
-                    >Hawker Peddler Business ID</label>
-                    <input
-                      class="form-control"
-                      placeholder="Hawker Peddler Business ID"
-                      value="{{this.hawkerPeddlerBusinessID}}"
-                      name="hawkerPeddlerBusinessID"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <label for="Business Name" class="form-label">Business Name</label>
-                    <input
-                      class="form-control"
-                      placeholder="Business Name"
-                      value="{{this.businessName}}"
-                      name="businessName"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >Close</button>
-                <button type="submit" class="btn btn-primary">Submit Renewal</button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
       <!-- Documentation Modal -->
       <div
         class="modal fade"

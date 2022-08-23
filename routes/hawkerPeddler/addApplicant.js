@@ -107,6 +107,8 @@ router.post(
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
           town: req.body.town,
@@ -121,6 +123,8 @@ router.post(
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
           hawkerPeddlerBusinessID: req.session.hawkerPeddlerBusinessID,
           hawkerPeddlerApplicantAddresses: [
             {

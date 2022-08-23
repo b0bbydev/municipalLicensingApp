@@ -16,16 +16,6 @@ const HawkerPeddlerBusiness = sequelize.define("hawkerPeddlerBusiness", {
     allowNull: true,
   },
 
-  issueDate: {
-    type: Sequelize.DATEONLY,
-    allowNull: true,
-  },
-
-  expiryDate: {
-    type: Sequelize.DATEONLY,
-    allowNull: true,
-  },
-
   phoneNumber: {
     type: Sequelize.STRING(20),
     allowNull: true,

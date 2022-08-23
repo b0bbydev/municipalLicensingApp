@@ -33,6 +33,18 @@ router.get(
       // send hawkerPeddlerBusinessID to session.
       req.session.hawkerPeddlerBusinessID = req.params.id;
 
+      // get current date.
+      var issueDate = new Date();
+      // init expiryDate.
+      var modalExpiryDate = new Date();
+
+      // if issueDate is in November or December.
+      if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+        modalExpiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+      } else {
+        modalExpiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+      }
+
       Promise.all([
         HawkerPeddlerPropertyOwner.findAndCountAll({
           limit: req.query.limit,
@@ -65,6 +77,7 @@ router.get(
             message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
+            modalExpiryDate: modalExpiryDate,
             propertyOwners: data[0].rows,
             applicants: data[1].rows,
             propertyOwnersCount: "Records returned: " + data[0].count,
@@ -80,5 +93,56 @@ router.get(
     }
   }
 );
+
+/* POST /hawkerPeddler/applicant - renews license. */
+router.post("/:id", async (req, res, next) => {
+  // server side validation.
+  const errors = validationResult(req);
+
+  // if errors is NOT empty (if there are errors...).
+  if (!errors.isEmpty()) {
+    return res.render("hawkerPeddler/business", {
+      title: "BWG | Hawker & Peddler Licensing",
+      message: "Page Error!",
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+    });
+  } else {
+    // get current date for automatic population of license.
+    var issueDate = new Date();
+    // init expiryDate.
+    var expiryDate = new Date();
+
+    // if issueDate is in November or December.
+    if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+      expiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+    } else {
+      expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+    }
+
+    // update license.
+    HawkerPeddlerApplicant.update(
+      {
+        issueDate: issueDate,
+        expiryDate: expiryDate,
+      },
+      {
+        where: {
+          hawkerPeddlerApplicantID: req.body.hawkerPeddlerApplicantID,
+        },
+      }
+    )
+      .then(() => {
+        return res.redirect("/hawkerPeddler/business/" + req.params.id);
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("hawkerPeddler/business", {
+          title: "BWG | Hawker & Peddler Licensing",
+          message: "Page Error!",
+        });
+      });
+  }
+});
 
 module.exports = router;
