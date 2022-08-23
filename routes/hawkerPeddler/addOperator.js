@@ -4,6 +4,8 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const HawkerPeddlerApplicant = require("../../models/hawkerPeddler/hawkerPeddlerApplicant");
 const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawkerPeddlerApplicantAddress");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -123,8 +125,8 @@ router.post(
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           licenseNumber: req.body.licenseNumber,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
+          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           hawkerPeddlerBusinessID: req.session.hawkerPeddlerBusinessID,
           hawkerPeddlerApplicantAddresses: [
             {

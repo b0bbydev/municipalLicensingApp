@@ -21,7 +21,7 @@
   </div>
 </div>
 <table
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
@@ -73,7 +73,7 @@
   </div>
 </div>
 <table
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
@@ -105,7 +105,12 @@
               {{this.town}}
               {{this.postalCode}}</a></td>
         {{/each}}
-        <td>{{this.licenseNumber}}</td>
+        <td class="tableLink"><a
+            class="stretched-link"
+            id="ownerLink"
+            href="/hawkerPeddler/operatorHistory/{{this.hawkerPeddlerApplicantID}}"
+            title="View Operator History"
+          >{{this.licenseNumber}}</a></td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td style="width: 10%;"><a
@@ -162,10 +167,8 @@
                 </div>
                 <div class="row">
                   <div class="col">
-                    <label
-                      for="New License Number"
-                      class="form-label"
-                    >New License Number</label>
+                    <label for="New License Number" class="form-label">New
+                      License Number</label>
                     <input
                       class="form-control"
                       placeholder="License Number..."
