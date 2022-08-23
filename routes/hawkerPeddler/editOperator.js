@@ -9,7 +9,7 @@ const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
-/* GET /hawkerPeddler/editApplicant/:id */
+/* GET /hawkerPeddler/editOperator/:id */
 router.get(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
@@ -19,8 +19,8 @@ router.get(
 
     // if errors is NOT empty (if there are errors...),
     if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/editApplicant", {
-        title: "BWG | Edit Applicant",
+      return res.render("hawkerPeddler/editOperator", {
+        title: "BWG | Edit Operator",
         message: "Page Error!",
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -38,8 +38,6 @@ router.get(
         },
       });
 
-      req.session.hawkerPeddlerApplicantID = req.params.id;
-
       HawkerPeddlerApplicant.findOne({
         where: {
           hawkerPeddlerApplicantID: req.params.id,
@@ -51,8 +49,8 @@ router.get(
         ],
       })
         .then((results) => {
-          return res.render("hawkerPeddler/editApplicant", {
-            title: "BWG | Edit Applicant",
+          return res.render("hawkerPeddler/editOperator", {
+            title: "BWG | Edit Operator",
             message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
@@ -75,8 +73,8 @@ router.get(
           });
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/editApplicant", {
-            title: "BWG | Edit Applicant",
+          return res.render("hawkerPeddler/editOperator", {
+            title: "BWG | Edit Operator",
             message: "Page Error!",
           });
         });
@@ -84,7 +82,7 @@ router.get(
   }
 );
 
-/* POST /hawkerPeddler/editApplicant/:id */
+/* POST /hawkerPeddler/editOperator/:id */
 router.post(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
@@ -149,8 +147,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/editApplicant", {
-        title: "BWG | Edit Applicant",
+      return res.render("hawkerPeddler/editOperator", {
+        title: "BWG | Edit Operator",
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -235,12 +233,12 @@ router.post(
         })
         .then(() => {
           return res.redirect(
-            "/hawkerPeddler/applicant/" + req.session.hawkerPeddlerApplicantID
+            "/hawkerPeddler/business/" + req.session.hawkerPeddlerBusinessID
           );
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/editApplicant", {
-            title: "BWG | Edit Applicant",
+          return res.render("hawkerPeddler/editOperator", {
+            title: "BWG | Edit Operator",
             message: "Page Error!",
           });
         });

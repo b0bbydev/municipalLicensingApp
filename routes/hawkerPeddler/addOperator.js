@@ -7,7 +7,7 @@ const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawker
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /hawkerPeddler/addApplicant */
+/* GET /hawkerPeddler/addOperator */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -21,8 +21,8 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  return res.render("hawkerPeddler/addApplicant", {
-    title: "BWG | Add Applicant",
+  return res.render("hawkerPeddler/addOperator", {
+    title: "BWG | Add Operator",
     message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
@@ -30,7 +30,7 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-/* POST /hawkerPeddler/addApplicant */
+/* POST /hawkerPeddler/addOperator */
 router.post(
   "/",
   body("firstName")
@@ -94,8 +94,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/addApplicant", {
-        title: "BWG | Add Applicant",
+      return res.render("hawkerPeddler/addOperator", {
+        title: "BWG | Add Operator",
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -145,8 +145,8 @@ router.post(
           );
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/addApplicant", {
-            title: "BWG | Add Applicant",
+          return res.render("hawkerPeddler/addOperator", {
+            title: "BWG | Add Operator",
             message: "Page Error!",
           });
         });

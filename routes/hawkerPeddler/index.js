@@ -111,7 +111,7 @@ router.get("/", async (req, res, next) => {
           message: "Page Error!",
         });
       });
-  } else if (req.query.filterCategory === "Applicant Name") {
+  } else if (req.query.filterCategory === "Operator Name") {
     // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
     if (req.query.filterValue.trim().indexOf(" ") != -1) {
       HawkerPeddlerApplicant.findAndCountAll({
@@ -140,7 +140,7 @@ router.get("/", async (req, res, next) => {
           const itemCount = results.count;
           const pageCount = Math.ceil(results.count / req.query.limit);
 
-          return res.render("hawkerPeddler/search/applicantSearch", {
+          return res.render("hawkerPeddler/search/operatorSearch", {
             title: "BWG | Hawker & Peddler Licensing",
             message: messages,
             email: req.session.email,
@@ -158,7 +158,7 @@ router.get("/", async (req, res, next) => {
           });
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/search/applicantSearch", {
+          return res.render("hawkerPeddler/search/operatorSearch", {
             title: "BWG | Hawker & Peddler Licensing",
             message: "Page Error!",
           });
@@ -189,7 +189,7 @@ router.get("/", async (req, res, next) => {
           const itemCount = results.count;
           const pageCount = Math.ceil(results.count / req.query.limit);
 
-          return res.render("hawkerPeddler/search/applicantSearch", {
+          return res.render("hawkerPeddler/search/operatorSearch", {
             title: "BWG | Hawker & Peddler Licensing",
             message: messages,
             email: req.session.email,
@@ -207,13 +207,13 @@ router.get("/", async (req, res, next) => {
           });
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/search/applicantSearch", {
+          return res.render("hawkerPeddler/search/operatorSearch", {
             title: "BWG | Hawker & Peddler Licensing",
             message: "Page Error!",
           });
         });
     }
-  } else if (req.query.filterCategory === "Applicant Address") {
+  } else if (req.query.filterCategory === "Operator Address") {
     HawkerPeddlerApplicant.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
@@ -241,7 +241,7 @@ router.get("/", async (req, res, next) => {
         const itemCount = results.count;
         const pageCount = Math.ceil(results.count / req.query.limit);
 
-        return res.render("hawkerPeddler/search/applicantSearch", {
+        return res.render("hawkerPeddler/search/operatorSearch", {
           title: "BWG | Hawker & Peddler Licensing",
           message: messages,
           email: req.session.email,
@@ -260,7 +260,7 @@ router.get("/", async (req, res, next) => {
       })
       // catch any scary errors and render page error.
       .catch((err) => {
-        return res.render("hawkerPeddler/search/applicantSearch", {
+        return res.render("hawkerPeddler/search/operatorSearch", {
           title: "BWG | Hawker & Peddler Licensing",
           message: "Page Error!",
         });

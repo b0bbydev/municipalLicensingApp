@@ -59,17 +59,17 @@
   </tbody>
 </table>
 
-<!-- Applicants Table -->
+<!-- Operators Table -->
 <div class="row">
-  <h4 class="mb-0">Applicants</h4>
+  <h4 class="mb-0">Operators</h4>
   <div class="col mb-1">
     {{#if applicantsCount}}
       <strong class="float-start mt-2">{{applicantsCount}}</strong>
     {{/if}}
     <a
-      href="/hawkerPeddler/addApplicant"
+      href="/hawkerPeddler/addOperator"
       class="btn btn-sm btn-primary float-end"
-    >Add An Applicant</a>
+    >Add An Operator</a>
   </div>
 </div>
 <table
@@ -77,7 +77,7 @@
 >
   <thead>
     <tr>
-      <th>Applicant Name</th>
+      <th>Operator Name</th>
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
@@ -108,7 +108,7 @@
         <td>{{this.licenseNumber}}</td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
-        <td><a
+        <td style="width: 10%;"><a
             class="btn btn-sm btn-secondary my-1"
             data-bs-toggle="modal"
             data-bs-target="#hawkerPeddlerRenewModal-{{this.hawkerPeddlerApplicantID}}"
@@ -116,8 +116,13 @@
           |
           <a
             class="btn btn-sm btn-secondary"
-            href="/hawkerPeddler/editApplicant/{{this.hawkerPeddlerApplicantID}}"
-          >Edit</a></td>
+            href="/hawkerPeddler/editOperator/{{this.hawkerPeddlerApplicantID}}"
+          >Edit</a>
+          <!-- Print to Filehold -->
+          <a
+            href="/hawkerPeddler/printLicense/{{this.hawkerPeddlerBusinessID}}"
+            title="Print License"
+          ><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
       </tr>
       <!-- Renew Modal -->
       <div
@@ -152,6 +157,19 @@
                       value="{{this.hawkerPeddlerApplicantID}}"
                       name="hawkerPeddlerApplicantID"
                       readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label
+                      for="New License Number"
+                      class="form-label"
+                    >New License Number</label>
+                    <input
+                      class="form-control"
+                      placeholder="License Number..."
+                      name="licenseNumber"
                     />
                   </div>
                 </div>

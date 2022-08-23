@@ -124,8 +124,8 @@ var hawkerPeddlerEditPropertyOwnerRoute = require("./routes/hawkerPeddler/editPr
 var hawkerPeddlerAddBusinessRoute = require("./routes/hawkerPeddler/addBusiness");
 var hawkerPeddlerEditBusinessRoute = require("./routes/hawkerPeddler/editBusiness");
 
-var hawkerPeddlerAddApplicantRoute = require("./routes/hawkerPeddler/addApplicant");
-var hawkerPeddlerEditApplicantRoute = require("./routes/hawkerPeddler/editApplicant");
+var hawkerPeddlerAddOperatorRoute = require("./routes/hawkerPeddler/addOperator");
+var hawkerPeddlerEditOperatorRoute = require("./routes/hawkerPeddler/editOperator");
 
 var hawkerPeddlerBusinessRoute = require("./routes/hawkerPeddler/business");
 
@@ -478,14 +478,14 @@ app.use(
 );
 
 app.use(
-  "/hawkerPeddler/addApplicant",
+  "/hawkerPeddler/addOperator",
   isEnforcement,
-  hawkerPeddlerAddApplicantRoute
+  hawkerPeddlerAddOperatorRoute
 );
 app.use(
-  "/hawkerPeddler/editApplicant",
+  "/hawkerPeddler/editOperator",
   isEnforcement,
-  hawkerPeddlerEditApplicantRoute
+  hawkerPeddlerEditOperatorRoute
 );
 
 app.use("/hawkerPeddler/business", isEnforcement, hawkerPeddlerBusinessRoute);
