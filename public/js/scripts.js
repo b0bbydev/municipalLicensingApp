@@ -47,3 +47,55 @@ function changeOptions(selectEl) {
     } // end of if-else
   } // end of for.
 }
+
+function insertAfter(referenceNode, newNode) {
+  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+
+function createTrialDateFields() {
+  // get value from input field.
+  let value = document.getElementById("numberOfNewTrialDates").value;
+
+  for (let i = 1; i <= value; i++) {
+    // get area to append to.
+    let firstRow = document.getElementById("firstRow");
+    // create new row.
+    let newRow = document.createElement("div");
+    newRow.className = "row";
+    // create date column.
+    var dateCol = document.createElement("div");
+    dateCol.className = "col-sm-6";
+    // create comment column.
+    var commentCol = document.createElement("div");
+    commentCol.className = "col-sm-6";
+    // create trial date label.
+    var trialLabel = document.createElement("label");
+    trialLabel.className = "form-label";
+    trialLabel.innerHTML = "Additional Trial Date";
+    // create trial comment label.
+    var commentLabel = document.createElement("label");
+    commentLabel.className = "form-label";
+    commentLabel.innerHTML = "Trial Comment";
+    // create trial date input field.
+    var trialDateField = document.createElement("input");
+    trialDateField.className = "form-control";
+    trialDateField.type = "date";
+    trialDateField.name = "trialDateField" + i;
+    // create trial comment input field.
+    var trialCommentField = document.createElement("input");
+    trialCommentField.className = "form-control";
+    trialCommentField.placeholder = "Trial Comment";
+    trialCommentField.type = "text";
+    trialCommentField.name = "trialCommentField" + i;
+    // append label and field to dateCol.
+    dateCol.appendChild(trialLabel);
+    dateCol.appendChild(trialDateField);
+    // append lable and field to commentCol.
+    commentCol.appendChild(commentLabel);
+    commentCol.appendChild(trialCommentField);
+    // append col's to row.
+    newRow.appendChild(dateCol);
+    newRow.appendChild(commentCol);
+    insertAfter(firstRow, newRow);
+  }
+}
