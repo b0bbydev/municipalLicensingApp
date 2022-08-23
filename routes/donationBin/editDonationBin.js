@@ -56,6 +56,7 @@ router.get(
             auth: req.session.auth, // authorization.
             streets: streets,
             formData: {
+              licenseNumber: results.licenseNumber,
               issueDate: results.issueDate,
               expiryDate: results.expiryDate,
               streetNumber: results.donationBinAddresses[0].streetNumber,
@@ -84,6 +85,11 @@ router.get(
 router.post(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
+  body("licenseNumber")
+    .if(body("licenseNumber").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid License Number Entry!")
+    .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
@@ -153,6 +159,7 @@ router.post(
         streets: streets,
         // save form values if submission is unsuccessful.
         formData: {
+          licenseNumber: req.body.licenseNumber,
           colour: req.body.colour,
           material: req.body.material,
           pickupSchedule: req.body.pickupSchedule,
@@ -163,6 +170,7 @@ router.post(
     } else {
       DonationBin.update(
         {
+          licenseNumber: req.body.licenseNumber,
           issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
           expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           colour: req.body.colour,

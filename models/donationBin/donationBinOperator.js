@@ -32,11 +32,6 @@ const DonationBinOperator = sequelize.define("donationBinOperator", {
     allowNull: true,
   },
 
-  licenseNumber: {
-    type: Sequelize.STRING(50),
-    allowNull: true,
-  },
-
   photoID: {
     type: Sequelize.ENUM("Yes", "No"),
     allowNull: true,

@@ -10,8 +10,22 @@
     <h4 class="mt-2">Donation Bin Information</h4>
     <hr />
     <div class="row">
+      <!-- License Number -->
+      <div class="col-sm-4">
+        <label for="License Number" class="form-label">License Number</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="License Number"
+          name="licenseNumber"
+          pattern="[^()/><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.licenseNumber}}"
+          maxlength="15"
+        />
+      </div>
       <!-- Street Number -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Street Number" class="form-label">Street Number*</label>
         <input
           type="number"
@@ -23,7 +37,7 @@
         />
       </div>
       <!-- Street Name -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Street Name" class="form-label">Street Name*</label>
         <input
           class="form-control"
@@ -136,7 +150,7 @@
     <div class="row">
       <!-- Pickup Schedule -->
       <div class="col">
-        <label for="Pickup Schedule" class="form-label">Pickup Schedule</label>
+        <label for="Pickup Schedule" class="form-label">Pickup Schedule*</label>
         <textarea
           type="text"
           name="pickupSchedule"
@@ -144,6 +158,7 @@
           pattern="[^()/><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
+          required
         >{{formData.pickupSchedule}}</textarea>
       </div>
     </div>

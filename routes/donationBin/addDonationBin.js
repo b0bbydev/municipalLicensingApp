@@ -35,6 +35,11 @@ router.get("/", async (req, res, next) => {
 /* POST /donationBin/addDonationBin */
 router.post(
   "/",
+  body("licenseNumber")
+    .if(body("licenseNumber").notEmpty())
+    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .withMessage("Invalid License Number Entry!")
+    .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
@@ -104,6 +109,7 @@ router.post(
         streets: streets,
         // save form values if submission is unsuccessful.
         formData: {
+          licenseNumber: req.body.licenseNumber,
           issueDate: req.body.issueDate,
           expiryDate: req.body.expiryDate,
           streetNumber: req.body.streetNumber,
@@ -120,6 +126,7 @@ router.post(
     } else {
       DonationBin.create(
         {
+          licenseNumber: req.body.licenseNumber,
           issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
           expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           colour: req.body.colour,

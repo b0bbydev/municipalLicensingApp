@@ -11,6 +11,11 @@ const DonationBin = sequelize.define("donationBin", {
     primaryKey: true,
   },
 
+  licenseNumber: {
+    type: Sequelize.STRING(15),
+    allowNull: true,
+  },
+
   issueDate: {
     type: Sequelize.DATEONLY,
     allowNull: true,

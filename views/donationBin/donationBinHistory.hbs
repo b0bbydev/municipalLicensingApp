@@ -1,4 +1,4 @@
-<h2 class="text-center mt-2">Donation Bin Address History</h2>
+<h2 class="text-center mt-2">Donation Bin History</h2>
 <h4>Filtering</h4>
 <form class="mb-1" method="GET">
   <select
@@ -52,7 +52,7 @@
   >Search</button>
   <a
     id="filterButton"
-    href="/donationBin/donationBinAddressHistory/{{donationBinID}}"
+    href="/donationBin/donationBinHistory/{{donationBinID}}"
     class="btn btn-sm btn-secondary"
     type="submit"
   >Reset</a>
@@ -65,12 +65,20 @@
   </div>
 {{/if}}
 
+<!-- Table -->
 <table
   class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
-      <th>Address</th>
+      <th>Pickup Schedule</th>
+      <th>Items Collected</th>
+      <th>Colour</th>
+      <th>Material</th>
+      <th>Notes</th>
+      <th>License Number</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
       <th>Action</th>
       <th>Last Modified</th>
     </tr>
@@ -78,10 +86,21 @@
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td>{{this.streetNumber}}
-          {{this.streetName}},
-          {{this.town}}
-          {{this.postalCode}}</td>
+        <td>{{this.pickupSchedule}}</td>
+        <td>{{this.itemsCollected}}</td>
+        <td>{{this.colour}}</td>
+        <td>{{this.material}}</td>
+        {{#each donationBinAddresses}}
+          <td>
+            {{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}</a></td>
+        {{/each}}
+        <td>{{this.notes}}</td>
+        <td>{{this.licenseNumber}}</a></td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
         <td class="fw-bold">{{this.action}}</td>
         <td class="fw-bold">{{formatDate this.lastModified}}</td>
       </tr>

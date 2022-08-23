@@ -66,43 +66,57 @@
 {{/if}}
 
 <!-- Table -->
-<table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
-      <th>Bin Address</th>
-      <th>Issue Date</th>
-      <th>Expiry Date</th>
-      <th>Items Collected</th>
       <th>Pickup Schedule</th>
+      <th>Items Collected</th>
       <th>Colour</th>
       <th>Material</th>
+      <th>Bin Address</th>
       <th>Notes</th>
+      <th>License Number</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
+        <td class="tableLink"><a
+            class="stretched-link"
+            id="ownerLink"
+            href="/donationBin/bins/{{this.donationBinID}}"
+            title="View Donation Bin Information"
+          >{{this.pickupSchedule}}</a></td>
+        <td>{{this.itemsCollected}}</td>
+        <td>{{this.colour}}</td>
+        <td>{{this.material}}</td>
         {{#each donationBinAddresses}}
           <td class="tableLink">
             <a
               class="stretched-link"
               id="ownerLink"
-              href="/donationBin/bins/{{this.donationBinID}}"
-              title="View Donation Bin Information"
+              href="/donationBin/donationBinAddressHistory/{{this.donationBinID}}"
+              title="View Donation Bin Address History"
             >{{this.streetNumber}}
               {{this.streetName}},
               {{this.town}}
               {{this.postalCode}}</a></td>
         {{/each}}
+        <td>{{this.notes}}</td>
+        <td class="tableLink"><a
+            class="stretched-link"
+            id="ownerLink"
+            href="/donationBin/donationBinHistory/{{this.donationBinID}}"
+            title="View Donation Bin History"
+          >{{this.licenseNumber}}</a></td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
-        <td>{{this.itemsCollected}}</td>
-        <td>{{this.pickupSchedule}}</td>
-        <td>{{this.colour}}</td>
-        <td>{{this.material}}</td>
-        <td>{{this.notes}}</td>
-        <td style="width: 17.5%;"><a
+        <td><a
             class="btn btn-sm btn-secondary my-1"
             data-bs-toggle="modal"
             data-bs-target="#donationBinRenewModal-{{this.donationBinID}}"
@@ -112,13 +126,11 @@
             class="btn btn-sm btn-secondary"
             href="/donationBin/editDonationBin/{{this.donationBinID}}"
           >Edit</a>
-          |
-          <a
-            class="btn btn-sm btn-secondary"
-            href="/donationBin/donationBinAddressHistory/{{this.donationBinID}}"
-          >Address History</a>
           <!-- Print to Filehold -->
-          <a href="/donationBin/printLicense/{{this.donationBinID}}" title="Print License"><i class="icon-blue bi bi-printer-fill ms-1"></i></a>
+          <a
+            href="/donationBin/printLicense/{{this.donationBinID}}"
+            title="Print License"
+          ><i class="icon-blue bi bi-printer-fill ms-1"></i></a>
         </td>
       </tr>
       <!-- Renewal Modal -->
@@ -168,7 +180,9 @@
                     {{/each}}
                   </div>
                 </div>
-                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
               </div>
               <div class="modal-footer">
                 <button
