@@ -1,19 +1,18 @@
-<h2 class="text-center mt-2">Adult Entertainment Licenses</h2>
+<h2 class="text-center mt-2">Adult Entertainment - Business History</h2>
 <h4>Filtering</h4>
-<form class="mb-0" method="GET">
+<form class="mb-1" method="GET">
   <select
     class="form-select-sm"
-    id="filterCategory"
-    title="Category To Filter By"
-    name="filterCategory"
-    required
+    id="filterMonth"
+    title="Month Filter"
+    name="filterMonth"
   >
-    {{#if filterCategory}}
-      <option value="{{filterCategory}}" selected>{{filterCategory}}</option>
+    {{#if filterMonth}}
+      <option value="{{filterMonth}}" selected>{{filterMonth}}</option>
     {{else}}
-      <option value="" disabled selected>Filter By...</option>
+      <option value="" disabled selected>Month...</option>
     {{/if}}
-    {{#each filterOptions}}
+    {{#each monthDropdownValues}}
       {{#if this.isDisabled}}
         <option
           value="{{this.dropdownValue}}"
@@ -24,16 +23,28 @@
       {{/if}}
     {{/each}}
   </select>
-  <!-- filterValue input -->
-  <input
-    name="filterValue"
-    id="filterValue"
-    class="form-control-sm"
-    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
-    title="No special characters!"
-    placeholder="Search..."
-    value="{{filterValue}}"
-  />
+  <select
+    class="form-select-sm"
+    id="filterYear"
+    title="Year Filter"
+    name="filterYear"
+  >
+    {{#if filterYear}}
+      <option value="{{filterYear}}" selected>{{filterYear}}</option>
+    {{else}}
+      <option value="" disabled selected>Year...</option>
+    {{/if}}
+    {{#each yearDropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
   <button
     id="filterButton"
     class="btn btn-sm btn-primary"
@@ -41,22 +52,11 @@
   >Search</button>
   <a
     id="filterButton"
-    href="/adultEntertainment"
+    href="/adultEntertainment/history/{{businessID}}"
     class="btn btn-sm btn-secondary"
     type="submit"
   >Reset</a>
 </form>
-<div class="row">
-  <div class="col mb-1">
-    {{#if queryCount}}
-      <strong class="float-start mt-2">{{queryCount}}</strong>
-    {{/if}}
-    <a
-      href="/adultEntertainment/addBusiness"
-      class="btn btn-sm btn-primary float-end"
-    >Add Business</a>
-  </div>
-</div>
 
 <!-- check for error messages in the session -->
 {{#if message}}
@@ -73,14 +73,15 @@
     <tr>
       <th>Business Name</th>
       <th>Owner Name</th>
-      <th>Address</th>
       <th>Contact Name</th>
       <th>Contact Phone</th>
       <th>License #</th>
       <th>Issue Date</th>
       <th>Expiry Date</th>
       <th>Notes</th>
-      <th id="actionsCell">Actions</th>
+      <th>Documentation</th>
+      <th>Action</th>
+      <th>Last Modified</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
@@ -88,50 +89,20 @@
       <tr>
         <td>{{this.businessName}}</td>
         <td>{{this.ownerName}}</td>
-        {{#each businessAddresses}}
-          <td class="tableLink"><a
-              class="stretched-link"
-              id="ownerLink"
-              href="/adultEntertainment/businessAddressHistory/{{this.businessID}}"
-              title="View Address History"
-            >{{this.streetNumber}}
-              {{this.streetName}},
-              {{this.town}}
-              {{this.postalCode}}
-              {{this.poBoxAptRR}}</a></td>
-        {{/each}}
         <td>{{this.contactName}}</td>
         <td>{{this.contactPhone}}</td>
-        <td class="tableLink"><a
-            class="stretched-link"
-            id="ownerLink"
-            href="/adultEntertainment/businessHistory/{{this.businessID}}"
-            title="View Business History"
-          >{{this.licenseNumber}}</a></td>
+        <td>{{this.licenseNumber}}</td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.notes}}</td>
-        <td style="width: 17.5%;"><a
-            class="btn btn-sm btn-secondary my-1"
-            data-bs-toggle="modal"
-            data-bs-target="#renewalModal-{{this.businessID}}"
-          >Renew</a>
-          |
-          <a
-            class="btn btn-sm btn-secondary"
-            href="/adultEntertainment/editBusiness/{{this.businessID}}"
-          >Edit</a>
-          |
+        <td>
           <a
             class="btn btn-sm btn-secondary"
             data-bs-toggle="modal"
             data-bs-target="#businessModal-{{this.businessID}}"
-          >Documentation</a>
-          <!-- Print to Filehold -->
-          <a
-            href="/adultEntertainment/printLicense/{{this.businessID}}"
-            title="Print License"
-          ><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
+          >Documentation</a></td>
+        <td class="fw-bold">{{this.action}}</td>
+        <td class="fw-bold">{{formatDate this.lastModified}}</td>
       </tr>
       <!-- Documentation Modal -->
       <div
@@ -209,60 +180,6 @@
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >Close</button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-      <!-- Renewal Modal -->
-      <div
-        class="modal fade"
-        id="renewalModal-{{this.businessID}}"
-        tabindex="-1"
-        aria-labelledby="Renewal Modal"
-        aria-hidden="true"
-      >
-        <form method="POST">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Renew Business License</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <label for="Business ID" class="form-label">Business ID</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  name="businessID"
-                  value="{{this.businessID}}"
-                  readonly
-                />
-                <label for="Business Name" class="form-label">Business Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Business Name"
-                  name="businessName"
-                  value="{{this.businessName}}"
-                  readonly
-                />
-                <p class="mt-4 mb-0 fst-italic">This license will expire on
-                  <strong>{{formatDate modalExpiryDate}}</strong>
-                  after renewal</p>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >Close</button>
-                <button type="submit" class="btn btn-primary">Submit Renewal</button>
               </div>
             </div>
           </div>

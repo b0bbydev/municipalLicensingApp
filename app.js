@@ -48,7 +48,8 @@ var adminManageAccessRouter = require("./routes/admin/manageAccess");
 var adultEntertainmentRouter = require("./routes/adultEntertainment/index");
 var adultEntertainmentAddBusinessRouter = require("./routes/adultEntertainment/addBusiness");
 var adultEntertainmentEditBusinessRouter = require("./routes/adultEntertainment/editBusiness");
-var adultEntertainmentHistoryRouter = require("./routes/adultEntertainment/history");
+var adultEntertainmentAddressHistoryRouter = require("./routes/adultEntertainment/businessAddressHistory");
+var adultEntertainmentBusinessHistoryRouter = require("./routes/adultEntertainment/businessHistory");
 
 /* policies related routes. */
 var policiesRouter = require("./routes/policies/index");
@@ -354,10 +355,17 @@ app.use(
   isEnforcement,
   adultEntertainmentEditBusinessRouter
 );
+
 app.use(
-  "/adultEntertainment/history",
+  "/adultEntertainment/businessAddressHistory",
   isEnforcement,
-  adultEntertainmentHistoryRouter
+  adultEntertainmentAddressHistoryRouter
+);
+
+app.use(
+  "/adultEntertainment/businessHistory",
+  isEnforcement,
+  adultEntertainmentBusinessHistoryRouter
 );
 
 /* policies related routes. */

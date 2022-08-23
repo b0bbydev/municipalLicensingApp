@@ -282,12 +282,12 @@ router.post(
         .then((results) => {
           // redirect to unique history page.
           return res.redirect(
-            "/adultEntertainment/history/" + results.businessID
+            "/adultEntertainment/businessAddressHistory/" + results.businessID
           );
         }) // catch any scary errors and render page error.
         .catch((err) => {
-          return res.render("adultEntertainment/history", {
-            title: "BWG | Adult Entertainment License History",
+          return res.render("adultEntertainment/businessAddressHistory", {
+            title: "BWG | Business Address History",
             message: "Page Error!",
           });
         });

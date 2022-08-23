@@ -72,8 +72,8 @@
     <tr>
       <th>Address</th>
       <th>POBox/Apt/RR</th>
-      <th>Last Modified</th>
       <th>Action</th>
+      <th>Last Modified</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
@@ -84,8 +84,8 @@
           {{this.town}}
           {{this.postalCode}}</td>
         <td>{{this.poBoxAptRR}}</td>
-        <td>{{formatDate this.lastModified}}</td>
-        <td>{{this.action}}</td>
+        <td class="fw-bold">{{this.action}}</td>
+        <td class="fw-bold">{{formatDate this.lastModified}}</td>
       </tr>
     {{/each}}
   </tbody>

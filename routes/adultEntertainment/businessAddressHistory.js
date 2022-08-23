@@ -11,7 +11,7 @@ const Op = Sequelize.Op;
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /adultEntertainment/history */
+/* GET /adultEntertainment/businessAddressHistory */
 router.get(
   "/:id",
   body("filterCategory")
@@ -41,8 +41,8 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("adultEntertainment/history", {
-        title: "BWG | Adult Entertainment License History",
+      return res.render("adultEntertainment/businessAddressHistory", {
+        title: "BWG | Business Address History",
         message: "Page Error!",
         auth: req.session.auth, // authorization.
       });
@@ -61,8 +61,8 @@ router.get(
           order: [["lastModified", "DESC"]],
         })
           .then((results) => {
-            return res.render("adultEntertainment/history", {
-              title: "BWG | Adult Entertainment License History",
+            return res.render("adultEntertainment/businessAddressHistory", {
+              title: "BWG | Business Address History",
               message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
@@ -73,8 +73,8 @@ router.get(
             });
           })
           .catch((err) => {
-            return res.render("adultEntertainment/history", {
-              title: "BWG | Adult Entertainment License History",
+            return res.render("adultEntertainment/businessAddressHistory", {
+              title: "BWG | Business Address History",
               message: "Page Error!",
             });
           });
@@ -97,8 +97,8 @@ router.get(
           order: [["lastModified", "DESC"]],
         })
           .then((results) => {
-            return res.render("adultEntertainment/history", {
-              title: "BWG | Adult Entertainment License History",
+            return res.render("adultEntertainment/businessAddressHistory", {
+              title: "BWG | Business Address History",
               message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
@@ -111,8 +111,8 @@ router.get(
             });
           })
           .catch((err) => {
-            return res.render("adultEntertainment/history", {
-              title: "BWG | Adult Entertainment License History",
+            return res.render("adultEntertainment/businessAddressHistory", {
+              title: "BWG | Business Address History",
               message: "Page Error!",
             });
           });
@@ -134,8 +134,8 @@ router.get(
             order: [["lastModified", "DESC"]],
           })
             .then((results) => {
-              return res.render("adultEntertainment/history", {
-                title: "BWG | Adult Entertainment License History",
+              return res.render("adultEntertainment/businessAddressHistory", {
+                title: "BWG | Business Address History",
                 message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
@@ -148,8 +148,8 @@ router.get(
               });
             })
             .catch((err) => {
-              return res.render("adultEntertainment/history", {
-                title: "BWG | Adult Entertainment License History",
+              return res.render("adultEntertainment/businessAddressHistory", {
+                title: "BWG | Business Address History",
                 message: "Page Error!",
               });
             });
@@ -169,8 +169,8 @@ router.get(
             order: [["lastModified", "DESC"]],
           })
             .then((results) => {
-              return res.render("adultEntertainment/history", {
-                title: "BWG | Adult Entertainment License History",
+              return res.render("adultEntertainment/businessAddressHistory", {
+                title: "BWG | Business Address History",
                 message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
@@ -183,8 +183,8 @@ router.get(
               });
             })
             .catch((err) => {
-              return res.render("adultEntertainment/history", {
-                title: "BWG | Adult Entertainment License History",
+              return res.render("adultEntertainment/businessAddressHistory", {
+                title: "BWG | Business Address History",
                 message: "Page Error!",
               });
             });
