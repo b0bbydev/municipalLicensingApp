@@ -135,7 +135,7 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          townPlateNumber: req.body.townPlateNumber,
+          townPlateNumber: funcHelpers.fixEmptyValue(req.body.townPlateNumber),
           vehicleYearMakeModel: req.body.vehicleYearMakeModel,
           provincialPlate: req.body.provincialPlate,
           vin: req.body.vin,

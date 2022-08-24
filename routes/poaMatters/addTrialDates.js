@@ -65,29 +65,43 @@ router.post(
         },
       });
     } else {
+      let trialDates = Object.entries(req.body);
+
+      //trialDates.splice(trialDates.indexOf(), 1);
+
+      console.log(trialDates);
+
+      // for (let i = 0; i <= req.body.numOfNewTrials.length; i++) {
+      //   POAMatterTrial.create({
+      //     //trialComment: req.body.trialCommentField + i,
+      //     trialDate: req.body.trialDateField + i,
+      //     //poaMatterID: req.params.id,
+      //   });
+      // }
+
       // create array for bulkCreate.
-      let trialDates = [
-        {
-          trialDate: funcHelpers.fixEmptyValue(req.body.trialDateOne),
-          poaMatterID: req.params.id,
-        },
-        {
-          trialDate: funcHelpers.fixEmptyValue(req.body.trialDateTwo),
-          poaMatterID: req.params.id,
-        },
-        {
-          trialDate: funcHelpers.fixEmptyValue(req.body.trialDateThree),
-          poaMatterID: req.params.id,
-        },
-      ];
+      // let trialDates = [
+      //   {
+      //     trialDate: funcHelpers.fixEmptyValue(req.body.trialDateOne),
+      //     poaMatterID: req.params.id,
+      //   },
+      //   {
+      //     trialDate: funcHelpers.fixEmptyValue(req.body.trialDateTwo),
+      //     poaMatterID: req.params.id,
+      //   },
+      //   {
+      //     trialDate: funcHelpers.fixEmptyValue(req.body.trialDateThree),
+      //     poaMatterID: req.params.id,
+      //   },
+      // ];
 
       // loops through trialDates and if trialDate is null, delete that whole specific object in the array.
-      for (const key in trialDates) {
-        if (trialDates[key].trialDate === null) {
-          // remove the key/object from the array.
-          trialDates.splice([key]);
-        }
-      }
+      // for (const key in trialDates) {
+      //   if (trialDates[key].trialDate === null) {
+      //     // remove the key/object from the array.
+      //     trialDates.splice([key]);
+      //   }
+      // }
 
       // insert the array.
       POAMatterTrial.bulkCreate(trialDates)
@@ -97,7 +111,7 @@ router.post(
         .catch((err) => {
           return res.render("poaMatters/addTrialDates", {
             title: "BWG | Add Trial Dates",
-            message: "Page Error!",
+            message: "Page Error!" + err,
           });
         });
     }
