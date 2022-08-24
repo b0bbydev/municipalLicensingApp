@@ -1,8 +1,12 @@
 var express = require("express");
 var router = express.Router();
 // models.
-const StreetClosurePermit = require("../../models/streetClosurePermits/streetClosurePermit");
 const Dropdown = require("../../models/dropdownManager/dropdown");
+const StreetClosurePermit = require("../../models/streetClosurePermits/streetClosurePermit");
+const StreetClosureContact = require("../../models/streetClosurePermits/streetClosureContact");
+const StreetClosureContactAddress = require("../../models/streetClosurePermits/streetClosureContactAddress");
+const StreetClosureCoordinator = require("../../models/streetClosurePermits/streetClosureCoordinator");
+const StreetClosureCoordinatorAddress = require("../../models/streetClosurePermits/streetClosureCoordinatorAddress");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -32,6 +36,16 @@ router.get("/", async (req, res, next) => {
     StreetClosurePermit.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
+      include: [
+        {
+          model: StreetClosureContact,
+          include: [StreetClosureContactAddress],
+        },
+        {
+          model: StreetClosureCoordinator,
+          include: [StreetClosureCoordinatorAddress],
+        },
+      ],
     })
       .then((results) => {
         // for pagination.

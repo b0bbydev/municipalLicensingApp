@@ -3,6 +3,7 @@ const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
 const StreetClosureContact = require("./streetClosureContact");
+const StreetClosurePermit = require("./streetClosurePermit");
 
 const StreetClosureContactAddress = sequelize.define(
   "streetClosureContactAddress",
@@ -38,6 +39,10 @@ const StreetClosureContactAddress = sequelize.define(
 
 StreetClosureContact.hasMany(StreetClosureContactAddress, {
   foreignKey: "streetClosureContactID",
+});
+
+StreetClosurePermit.hasMany(StreetClosureContactAddress, {
+  foreignKey: "streetClosurePermitID",
 });
 
 module.exports = StreetClosureContactAddress;

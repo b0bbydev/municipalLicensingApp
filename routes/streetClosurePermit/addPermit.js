@@ -1,7 +1,12 @@
 var express = require("express");
 var router = express.Router();
 // models.
+const Dropdown = require("../../models/dropdownManager/dropdown");
 const StreetClosurePermit = require("../../models/streetClosurePermits/streetClosurePermit");
+const StreetClosureContact = require("../../models/streetClosurePermits/streetClosureContact");
+const StreetClosureContactAddress = require("../../models/streetClosurePermits/streetClosureContactAddress");
+const StreetClosureCoordinator = require("../../models/streetClosurePermits/streetClosureCoordinator");
+const StreetClosureCoordinatorAddress = require("../../models/streetClosurePermits/streetClosureCoordinatorAddress");
 // helpers.
 var funcHelpers = require("../../config/funcHelpers");
 // express-validate.
@@ -14,51 +19,29 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
+  // get streets.
+  var streets = await Dropdown.findAll({
+    where: {
+      dropdownFormID: 13, // streets
+    },
+  });
+
   return res.render("streetClosurePermit/addPermit", {
     title: "BWG | Add Street Closure Permit",
     message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
+    streets: streets,
   });
 });
 
 /* POST /streetClosurePermit/addPermit */
 router.post(
   "/",
-  body("coordinatorName")
-    .notEmpty()
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid Coordinator Name Entry!")
-    .trim(),
-  body("coordinatorPhone")
-    .if(body("coordinatorPhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid Coordinator Phone Number Entry!")
-    .trim(),
-  body("coordinatorEmail")
-    .if(body("coordinatorEmail").notEmpty())
-    .isEmail()
-    .withMessage("Invalid Coordinator Email Entry!")
-    .trim(),
   body("sponser")
     .if(body("sponser").notEmpty())
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
     .withMessage("Invalid Event Sponser Entry!")
-    .trim(),
-  body("everydayContactName")
-    .if(body("everydayContactName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid Everyday Contact Name Entry!")
-    .trim(),
-  body("everydayContactPhone")
-    .if(body("everydayContactPhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid Everyday Contact Phone Number Entry!")
-    .trim(),
-  body("everydayContactEmail")
-    .if(body("everydayContactEmail").notEmpty())
-    .isEmail()
-    .withMessage("Invalid Everyday Contact Email Entry!")
     .trim(),
   body("permitNumber")
     .if(body("permitNumber").notEmpty())
@@ -106,15 +89,9 @@ router.post(
         auth: req.session.auth, // authorization.
       });
     } else {
-      // create dropdown form.
+      // insert streetClosurePermit info.
       StreetClosurePermit.create({
-        coordinatorName: req.body.coordinatorName,
-        coordinatorPhone: req.body.coordinatorPhone,
-        coordinatorEmail: req.body.coordinatorEmail,
         sponser: req.body.sponser,
-        everydayContactName: req.body.everydayContactName,
-        everydayContactPhone: req.body.everydayContactPhone,
-        everydayContactEmail: req.body.everydayContactEmail,
         permitNumber: req.body.permitNumber,
         issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
         closureLocation: req.body.closureLocation,
@@ -128,6 +105,58 @@ router.post(
         description: req.body.description,
         cleanupPlan: req.body.cleanupPlan,
       })
+        .then(() => {
+          StreetClosurePermit.findOne({
+            where: {
+              permitNumber: req.body.permitNumber,
+            },
+          }).then((results) => {
+            // insert streetClosureCoordinator info.
+            StreetClosureCoordinator.create(
+              {
+                coordinatorName: req.body.coordinatorName,
+                coordinatorPhone: req.body.coordinatorPhone,
+                coordinatorEmail: req.body.coordinatorEmail,
+                // use streetClosurePermitID from last insert.
+                streetClosurePermitID: results.streetClosurePermitID,
+                streetClosureCoordinatorAddresses: [
+                  {
+                    streetNumber: req.body.coordinatorStreetNumber,
+                    streetName: req.body.coordinatorStreetName,
+                    town: req.body.coordinatorTown,
+                    postalCode: req.body.coordinatorPostalCode,
+                    streetClosurePermitID: results.streetClosurePermitID,
+                  },
+                ],
+              },
+              {
+                include: [StreetClosureCoordinatorAddress],
+              }
+            );
+            // insert streetClosureContact info.
+            StreetClosureContact.create(
+              {
+                everydayContactName: req.body.everydayContactName,
+                everydayContactPhone: req.body.everydayContactPhone,
+                everydayContactEmail: req.body.everydayContactEmail,
+                // use streetClosurePermitID from last insert.
+                streetClosurePermitID: results.streetClosurePermitID,
+                streetClosureContactAddresses: [
+                  {
+                    streetNumber: req.body.contactStreetNumber,
+                    streetName: req.body.contactStreetName,
+                    town: req.body.contactTown,
+                    postalCode: req.body.contactPostalCode,
+                    streetClosurePermitID: results.streetClosurePermitID,
+                  },
+                ],
+              },
+              {
+                include: [StreetClosureContactAddress],
+              }
+            );
+          });
+        })
         .then(() => {
           return res.redirect("/streetClosurePermit");
         })

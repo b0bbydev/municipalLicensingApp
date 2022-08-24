@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
   // clear session messages
   req.session.messages = [];
 
-  // get dropdown values.
+  // get streets.
   var streets = await Dropdown.findAll({
     where: {
       dropdownFormID: 13, // streets

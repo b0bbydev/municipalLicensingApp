@@ -90,8 +90,12 @@
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td>{{this.coordinatorName}}</td>
-        <td>{{this.everydayContactName}}</td>
+        {{#each streetClosureCoordinators}}
+          <td>{{this.coordinatorName}}</td>
+        {{/each}}
+        {{#each streetClosureContacts}}
+          <td>{{this.everydayContactName}}</td>
+        {{/each}}
         <td>{{this.permitNumber}}</td>
         <td>{{this.issueDate}}</td>
         <td>{{this.sponser}}</td>
@@ -134,46 +138,76 @@
               ></button>
             </div>
             <div class="modal-body">
-              <div class="row">
-                <label
-                  for="Coordinator Name"
-                  class="form-label fw-bold"
-                >{{this.coordinatorName}} - Coordinator</label>
-                <div class="col">
-                  Phone Number:
+              {{#each streetClosureCoordinators}}
+                <div class="row">
+                  <label
+                    for="Coordinator Name"
+                    class="form-label fw-bold"
+                  >{{this.coordinatorName}} - Coordinator</label>
+                  <div class="col">
+                    Phone Number:
+                  </div>
+                  <div class="col float-end">
+                    {{this.coordinatorPhone}}
+                  </div>
                 </div>
-                <div class="col float-end">
-                  {{this.coordinatorPhone}}
+                <div class="row">
+                  <div class="col">
+                    Email:
+                  </div>
+                  <div class="col float-end">
+                    {{this.coordinatorEmail}}
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  Email:
+                {{#each streetClosureCoordinatorAddresses}}
+                  <div class="row">
+                    <div class="col">
+                      Address:
+                    </div>
+                    <div class="col float-end">
+                      {{this.streetNumber}}
+                      {{this.streetName}}
+                      {{this.town}}
+                      {{this.postalCode}}
+                    </div>
+                  </div>
+                {{/each}}
+              {{/each}}
+              {{#each streetClosureContacts}}
+                <div class="row">
+                  <label
+                    for="Everyday Contact Name"
+                    class="form-label mt-2 fw-bold"
+                  >{{this.everydayContactName}} - Everyday Contact</label>
+                  <div class="col">
+                    Phone Number:
+                  </div>
+                  <div class="col float-end">
+                    {{this.everydayContactPhone}}
+                  </div>
                 </div>
-                <div class="col float-end">
-                  {{this.coordinatorEmail}}
+                <div class="row">
+                  <div class="col">
+                    Email:
+                  </div>
+                  <div class="col float-end">
+                    {{this.everydayContactEmail}}
+                  </div>
                 </div>
-              </div>
-              <div class="row">
-                <label
-                  for="Everyday Contact Name"
-                  class="form-label mt-2 fw-bold"
-                >{{this.everydayContactName}} - Everyday Contact</label>
-                <div class="col">
-                  Phone Number:
-                </div>
-                <div class="col float-end">
-                  {{this.everydayContactPhone}}
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  Email:
-                </div>
-                <div class="col float-end">
-                  {{this.everydayContactEmail}}
-                </div>
-              </div>
+                {{#each streetClosureContactAddresses}}
+                  <div class="row">
+                    <div class="col">
+                      Address:
+                    </div>
+                    <div class="col float-end">
+                      {{this.streetNumber}}
+                      {{this.streetName}}
+                      {{this.town}}
+                      {{this.postalCode}}
+                    </div>
+                  </div>
+                {{/each}}
+              {{/each}}
             </div>
             <div class="modal-footer">
               <button
