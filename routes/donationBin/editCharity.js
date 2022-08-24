@@ -41,7 +41,7 @@ router.get(
         },
       })
         .then((results) => {
-          return res.render("donationBin/", {
+          return res.render("donationBin/editCharity", {
             title: "BWG | Edit Donation Bin Charity",
             message: messages,
             email: req.session.email,
