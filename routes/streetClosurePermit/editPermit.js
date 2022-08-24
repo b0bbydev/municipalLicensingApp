@@ -34,6 +34,13 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
+      // get streets.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
       // for populating input fields with existing values.
       StreetClosurePermit.findOne({
         include: [
@@ -56,6 +63,7 @@ router.get(
             message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
+            streets: streets,
             // get values for input fields.
             formData: {
               // coordinator.
@@ -297,7 +305,40 @@ router.post(
         .catch((err) => {
           return res.render("streetClosurePermit/editPermit", {
             title: "BWG | Edit Street Closure Permit",
-            message: "Page Error!",
+            message: "Page Error! Possible duplicate permit number.",
+            auth: req.session.auth, // authorization.
+            formData: {
+              // coordinator.
+              coordinatorName: req.body.coordinatorName,
+              coordinatorPhone: req.body.coordinatorPhone,
+              coordinatorEmail: req.body.coordinatorEmail,
+              // coordinator address.
+              coordinatorStreetNumber: req.body.streetNumber,
+              coordinatorStreetName: req.body.streetName,
+              coordinatorTown: req.body.town,
+              coordinatorPostalCode: req.body.postalCode,
+              // contact
+              everydayContactName: req.body.everydayContactName,
+              everydayContactPhone: req.body.everydayContactPhone,
+              everydayContactEmail: req.body.everydayContactEmail,
+              // contact address.
+              contactStreetNumber: req.body.streetNumber,
+              contactStreetName: req.body.streetName,
+              contactTown: req.body.town,
+              contactPostalCode: req.body.postalCode,
+              // permit info.
+              sponser: req.body.sponser,
+              permitNumber: req.body.permitNumber,
+              issueDate: req.body.issueDate,
+              closureLocation: req.body.closureLocation,
+              closureDate: req.body.closureDate,
+              closureTime: req.body.closureTime,
+              estimatedAttendance: req.body.estimatedAttendance,
+              alcoholServed: req.body.alcoholServed,
+              noiseExemption: req.body.noiseExemption,
+              description: req.body.description,
+              cleanupPlan: req.body.cleanupPlan,
+            },
           });
         });
     }
