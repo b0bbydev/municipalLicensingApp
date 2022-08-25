@@ -348,7 +348,7 @@ router.get(
                 .refreshmentVehiclePropertyOwnerAddresses[0].town,
               issueDate: results.issueDate,
               expiryDate: results.expiryDate,
-              licenseNumber: results.refreshmentVehicleOwners[0].licenseNumber,
+              licenseNumber: results.licenseNumber,
             },
           });
         })

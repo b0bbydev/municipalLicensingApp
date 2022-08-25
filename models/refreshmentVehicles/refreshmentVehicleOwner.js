@@ -31,11 +31,6 @@ const RefreshmentVehicleOwner = sequelize.define("refreshmentVehicleOwner", {
     type: Sequelize.STRING(50),
     allowNull: true,
   },
-
-  licenseNumber: {
-    type: Sequelize.STRING(50),
-    allowNull: true,
-  },
 });
 
 RefreshmentVehicle.hasMany(RefreshmentVehicleOwner, {

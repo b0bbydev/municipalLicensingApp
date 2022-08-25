@@ -63,6 +63,7 @@ router.post(
         formData: {
           registeredBusinessName: req.body.registeredBusinessName,
           operatingBusinessName: req.body.operatingBusinessName,
+          licenseNumber: req.body.licenseNumber,
           issueDate: req.body.issueDate,
           expiryDate: req.body.expiryDate,
           specialEvent: req.body.specialEvent,
@@ -84,6 +85,7 @@ router.post(
       RefreshmentVehicle.create({
         registeredBusinessName: req.body.registeredBusinessName,
         operatingBusinessName: req.body.operatingBusinessName,
+        licenseNumber: req.body.licenseNumber,
         issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
         expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
         specialEvent: req.body.specialEvent,

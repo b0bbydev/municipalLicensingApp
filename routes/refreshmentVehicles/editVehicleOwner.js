@@ -61,7 +61,6 @@ router.get(
               lastName: results.lastName,
               phoneNumber: results.phoneNumber,
               email: results.email,
-              licenseNumber: results.licenseNumber,
               streetNumber:
                 results.refreshmentVehicleOwnerAddresses[0].streetNumber,
               streetName:
@@ -105,11 +104,6 @@ router.post(
     .if(body("email").notEmpty())
     .isEmail()
     .withMessage("Invalid Email Entry!")
-    .trim(),
-  body("licenseNumber")
-    .if(body("licenseNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid License Number Entry!")
     .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
@@ -159,7 +153,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
           town: req.body.town,
@@ -173,7 +166,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
         },
         {
           where: {

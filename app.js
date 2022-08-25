@@ -176,6 +176,8 @@ var editRefreshmentVehicleRoute = require("./routes/refreshmentVehicles/editVehi
 
 var vehicleRoute = require("./routes/refreshmentVehicles/vehicle");
 
+var vehicleHistoryRoute = require("./routes/refreshmentVehicles/vehicleHistory");
+
 var addRefreshmentVehiclePropertyOwner = require("./routes/refreshmentVehicles/addPropertyOwner");
 var editRefreshmentVehiclePropertyOwner = require("./routes/refreshmentVehicles/editPropertyOwner");
 
@@ -578,6 +580,12 @@ app.use("/liquor/editBusiness", isEnforcement, editLiquorBusinessRoute);
 
 /* Refreshment Vehicle related routes */
 app.use("/refreshmentVehicles", isEnforcement, refreshmentVehicleRoute);
+
+app.use(
+  "/refreshmentVehicles/vehicleHistory",
+  isEnforcement,
+  vehicleHistoryRoute
+);
 
 app.use(
   "/refreshmentVehicles/vehicleOperatorAddressHistory",
