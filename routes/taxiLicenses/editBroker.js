@@ -66,6 +66,7 @@ router.get("/:id", async (req, res, next) => {
       return res.render("taxiLicenses/editBroker", {
         title: "BWG | Edit Taxi Broker",
         message: "Page Error!",
+        auth: req.session.auth, // authorization.
       });
     });
 });
@@ -236,6 +237,7 @@ router.post(
           return res.render("taxiLicenses/editBroker", {
             title: "BWG | Edit Taxi Broker",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

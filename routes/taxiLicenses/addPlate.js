@@ -170,6 +170,7 @@ router.post(
           return res.render("taxiLicenses/addPlate", {
             title: "BWG | Add Taxi Plate",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

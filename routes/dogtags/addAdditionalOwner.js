@@ -95,6 +95,7 @@ router.post(
           return res.render("dogtags/addAdditionalOwner", {
             title: "BWG | Add Additional Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

@@ -71,6 +71,7 @@ router.get("/", async (req, res, next) => {
         return res.render("streetClosurePermit/index", {
           title: "BWG | Street Closure Permits",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else {
@@ -113,6 +114,7 @@ router.get("/", async (req, res, next) => {
         return res.render("streetClosurePermit/index", {
           title: "BWG | Street Closure Permits",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }

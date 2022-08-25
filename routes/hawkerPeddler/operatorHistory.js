@@ -69,6 +69,7 @@ router.get("/:id", async (req, res, next) => {
           return res.render("hawkerPeddler/operatorHistory", {
             title: "BWG | Operator History",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
       // both year and month filter.
@@ -108,6 +109,7 @@ router.get("/:id", async (req, res, next) => {
           return res.render("hawkerPeddler/operatorHistory", {
             title: "BWG | Operator History",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
       // if at least one filter exists.
@@ -146,6 +148,7 @@ router.get("/:id", async (req, res, next) => {
             return res.render("hawkerPeddler/operatorHistory", {
               title: "BWG | Operator History",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
         /* IF ONLY MONTH. */
@@ -182,6 +185,7 @@ router.get("/:id", async (req, res, next) => {
             return res.render("hawkerPeddler/operatorHistory", {
               title: "BWG | Operator History",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }

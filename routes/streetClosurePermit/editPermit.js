@@ -125,6 +125,7 @@ router.get(
           return res.render("streetClosurePermit/editPermit", {
             title: "BWG | Edit Street Closure Permit",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

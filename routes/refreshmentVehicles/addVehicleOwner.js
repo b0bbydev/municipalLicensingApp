@@ -137,6 +137,7 @@ router.post(
           return res.render("refreshmentVehicles/addVehicleOwner", {
             title: "BWG | Add Vehicle Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

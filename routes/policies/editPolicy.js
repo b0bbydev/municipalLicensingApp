@@ -91,6 +91,7 @@ router.get(
           return res.render("policies/editPolicy", {
             title: "BWG | Edit Policy",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -244,6 +245,7 @@ router.post(
           return res.render("policies/editPolicy", {
             title: "BWG | Edit Policy",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

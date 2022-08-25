@@ -91,6 +91,7 @@ router.get(
             return res.render("poaMatters/index", {
               title: "BWG | POA Matters",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else {
@@ -141,6 +142,7 @@ router.get(
             return res.render("poaMatters/index", {
               title: "BWG | POA Matters",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }

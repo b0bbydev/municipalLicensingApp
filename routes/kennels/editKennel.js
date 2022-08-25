@@ -79,6 +79,7 @@ router.get(
           return res.render("kennels/editKennel", {
             title: "BWG | Edit A Kennel",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -244,6 +245,7 @@ router.post(
           return res.render("kennels/editKennel", {
             title: "BWG | Edit A Kennel",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

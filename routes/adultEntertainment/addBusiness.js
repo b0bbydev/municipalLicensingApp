@@ -157,6 +157,7 @@ router.post(
           return res.render("adultEntertainment/addBusiness", {
             title: "BWG | Add Business",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

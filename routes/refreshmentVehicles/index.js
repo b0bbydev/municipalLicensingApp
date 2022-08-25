@@ -76,6 +76,7 @@ router.get("/", async (req, res, next) => {
         return res.render("refreshmentVehicles/index", {
           title: "BWG | Refreshment Vehicle Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else if (req.query.filterCategory === "Vehicle Owner Name") {
@@ -127,6 +128,7 @@ router.get("/", async (req, res, next) => {
           return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
             title: "BWG | Refreshment Vehicle Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     } else {
@@ -178,6 +180,7 @@ router.get("/", async (req, res, next) => {
           return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
             title: "BWG | Refreshment Vehicle Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -223,6 +226,7 @@ router.get("/", async (req, res, next) => {
         return res.render("refreshmentVehicles/index", {
           title: "BWG | Refreshment Vehicle Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -274,6 +278,7 @@ router.post("/", async (req, res, next) => {
         return res.render("refreshmentVehicles/index", {
           title: "BWG | Refreshment Vehicle Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -357,6 +362,7 @@ router.get(
           return res.render("refreshmentVehicles/printLicense", {
             title: "BWG | Print License",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

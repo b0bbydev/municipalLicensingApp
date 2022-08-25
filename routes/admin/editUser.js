@@ -51,6 +51,7 @@ router.get(
           return res.render("admin/editUser", {
             title: "BWG | Edit User",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -117,6 +118,7 @@ router.post(
           return res.render("admin/editUser", {
             title: "BWG | Edit User",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

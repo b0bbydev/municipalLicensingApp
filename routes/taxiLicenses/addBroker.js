@@ -159,6 +159,7 @@ router.post(
           return res.render("taxiLicenses/addBroker", {
             title: "BWG | Add Taxi Broker",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

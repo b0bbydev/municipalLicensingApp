@@ -135,6 +135,7 @@ router.post(
           return res.render("kennels/addPropertyOwner", {
             title: "BWG | Add Property Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

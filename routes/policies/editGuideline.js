@@ -81,6 +81,7 @@ router.get(
           return res.render("policies/editGuideline", {
             title: "BWG | Edit Guideline",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -201,6 +202,7 @@ router.post(
           return res.render("policies/editGuideline", {
             title: "BWG | Edit Guideline",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

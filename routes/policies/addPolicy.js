@@ -199,6 +199,7 @@ router.post(
           return res.render("policies/addPolicy", {
             title: "BWG | Add Policy",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

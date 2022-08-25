@@ -100,6 +100,7 @@ router.get(
             return res.render("admin/index", {
               title: "BWG | Admin Panel",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Employee Name") {
@@ -145,6 +146,7 @@ router.get(
             return res.render("admin/index", {
               title: "BWG | Admin Panel",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else {
@@ -188,6 +190,7 @@ router.get(
             return res.render("admin/index", {
               title: "BWG | Admin Panel",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }

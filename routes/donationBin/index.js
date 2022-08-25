@@ -80,6 +80,7 @@ router.get("/", async (req, res, next) => {
         return res.render("donationBin/index", {
           title: "BWG | Donation Bin Licenses",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else if (req.query.filterCategory === "Address") {
@@ -133,6 +134,7 @@ router.get("/", async (req, res, next) => {
         return res.render("donationBin/index", {
           title: "BWG | Donation Bin Licenses",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else if (req.query.filterCategory === "Bin Operator Name") {
@@ -186,6 +188,7 @@ router.get("/", async (req, res, next) => {
           return res.render("donationBin/search/donationBinOperatorSearch", {
             title: "BWG | Donation Bin Licenses",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     } else {
@@ -236,6 +239,7 @@ router.get("/", async (req, res, next) => {
           return res.render("donationBin/search/donationBinOperatorSearch", {
             title: "BWG | Donation Bin Licenses",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -276,6 +280,7 @@ router.get("/", async (req, res, next) => {
         return res.render("donationBin/search/donationBinCharitySearch", {
           title: "BWG | Donation Bin Licenses",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else {
@@ -319,6 +324,7 @@ router.get("/", async (req, res, next) => {
         return res.render("donationBin/index", {
           title: "BWG | Donation Bin Licenses",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -370,6 +376,7 @@ router.post("/", async (req, res, next) => {
         return res.render("donationBin/index", {
           title: "BWG | Donation Bin Licenses",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -434,6 +441,7 @@ router.get(
           return res.render("donationBin/printLicense", {
             title: "BWG | Print License",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

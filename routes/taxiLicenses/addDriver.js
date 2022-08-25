@@ -165,6 +165,7 @@ router.post(
           return res.render("taxiLicenses/addDriver", {
             title: "BWG | Add Taxi Driver",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

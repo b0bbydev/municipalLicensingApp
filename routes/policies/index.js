@@ -84,6 +84,7 @@ router.get(
             return res.render("policies/index", {
               title: "BWG | Policies",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else {
@@ -126,6 +127,7 @@ router.get(
             return res.render("policies/index", {
               title: "BWG | Policies",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }
@@ -169,6 +171,7 @@ router.post(
           return res.render("policies/index", {
             title: "BWG | Policies",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -272,6 +275,7 @@ router.get(
           return res.render("policies/policyHistory", {
             title: "BWG | Policy History",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
 
@@ -337,6 +341,7 @@ router.get(
                 return res.render("policies/policyHistory", {
                   title: "BWG | Policy History",
                   message: "Page Error!",
+                  auth: req.session.auth, // authorization.
                 });
               });
           });
@@ -431,6 +436,7 @@ router.get(
                   return res.render("policies/policyHistory", {
                     title: "BWG | Policy History",
                     message: "Page Error!",
+                    auth: req.session.auth, // authorization.
                   });
                 });
             });
@@ -523,6 +529,7 @@ router.get(
                   return res.render("policies/policyHistory", {
                     title: "BWG | Policy History",
                     message: "Page Error!",
+                    auth: req.session.auth, // authorization.
                   });
                 });
             });
@@ -624,6 +631,7 @@ router.get(
                   return res.render("policies/policyHistory", {
                     title: "BWG | Policy History",
                     message: "Page Error!",
+                    auth: req.session.auth, // authorization.
                   });
                 });
             });

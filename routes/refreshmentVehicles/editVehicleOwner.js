@@ -75,6 +75,7 @@ router.get(
           return res.render("refreshmentVehicles/editVehicleOwner", {
             title: "BWG | Edit Vehicle Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -226,6 +227,7 @@ router.post(
           return res.render("refreshmentVehicles/editVehicleOwner", {
             title: "BWG | Edit Vehicle Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

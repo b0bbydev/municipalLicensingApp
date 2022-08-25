@@ -150,6 +150,7 @@ router.post(
           return res.render("hawkerPeddler/addOperator", {
             title: "BWG | Add Operator",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

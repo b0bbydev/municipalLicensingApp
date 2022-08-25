@@ -79,6 +79,7 @@ router.get(
           return res.render("dogtags/editOwner", {
             title: "BWG | Edit Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -296,6 +297,7 @@ router.post(
           return res.render("dogtags/editOwner", {
             title: "BWG | Edit Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

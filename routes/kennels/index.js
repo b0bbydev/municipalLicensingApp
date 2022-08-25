@@ -123,6 +123,7 @@ router.get("/", async (req, res, next) => {
         return res.render("kennels/index", {
           title: "BWG | Kennel Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else if (req.query.filterCategory === "Kennel Address") {
@@ -176,6 +177,7 @@ router.get("/", async (req, res, next) => {
         return res.render("kennels/index", {
           title: "BWG | Kennel Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else if (req.query.filterCategory === "Kennel Owner Name") {
@@ -230,6 +232,7 @@ router.get("/", async (req, res, next) => {
           return res.render("kennels/search/kennelOwnerSearch", {
             title: "BWG | Kennel Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     } else {
@@ -281,6 +284,7 @@ router.get("/", async (req, res, next) => {
           return res.render("kennels/search/kennelOwnerSearch", {
             title: "BWG | Kennel Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -330,6 +334,7 @@ router.get("/", async (req, res, next) => {
         return res.render("kennels/index", {
           title: "BWG | Kennel Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -381,6 +386,7 @@ router.post("/", async (req, res, next) => {
         return res.render("kennels/index", {
           title: "BWG | Kennel Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -451,6 +457,7 @@ router.get(
           return res.render("kennels/printLicense", {
             title: "BWG | Print License",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

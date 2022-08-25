@@ -147,6 +147,7 @@ router.post(
           return res.render("poaMatters/addTrialDates", {
             title: "BWG | Add Trial Dates",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

@@ -142,6 +142,7 @@ router.post(
           return res.render("refreshmentVehicles/addVehicleOperator", {
             title: "BWG | Add Vehicle Operator",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

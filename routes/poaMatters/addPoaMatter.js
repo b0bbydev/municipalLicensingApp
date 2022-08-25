@@ -232,6 +232,7 @@ router.post(
           return res.render("poaMatters/addPoaMatter", {
             title: "BWG | Add POA Matter",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

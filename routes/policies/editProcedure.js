@@ -80,6 +80,7 @@ router.get(
           return res.render("policies/editProcedure", {
             title: "BWG | Edit Procedure",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -213,6 +214,7 @@ router.post(
           return res.render("policies/editProcedure", {
             title: "BWG | Edit Procedure",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

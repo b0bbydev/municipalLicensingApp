@@ -158,6 +158,7 @@ router.post(
           return res.render("policies/addProcedure", {
             title: "BWG | Add Procedure",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -272,6 +273,7 @@ router.post(
           return res.render("policies/addGuideline", {
             title: "BWG | Add Guideline",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

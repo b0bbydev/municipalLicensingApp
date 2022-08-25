@@ -151,6 +151,7 @@ router.post(
           return res.render("kennels/addKennel", {
             title: "BWG | Add Kennel",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

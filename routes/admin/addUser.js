@@ -72,6 +72,7 @@ router.post(
           return res.render("admin/addUser", {
             title: "BWG | Add User",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

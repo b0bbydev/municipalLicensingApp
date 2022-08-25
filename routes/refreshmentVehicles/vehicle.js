@@ -92,6 +92,7 @@ router.get(
           return res.render("refreshmentVehicles/vehicle", {
             title: "BWG | Refreshment Vehicle Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

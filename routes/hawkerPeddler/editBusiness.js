@@ -78,6 +78,7 @@ router.get(
           return res.render("hawkerPeddler/editBusiness", {
             title: "BWG | Edit Business",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -245,6 +246,7 @@ router.post(
           return res.render("hawkerPeddler/editBusiness", {
             title: "BWG | Edit Business",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

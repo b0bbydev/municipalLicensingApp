@@ -84,6 +84,7 @@ router.get(
             return res.render("liquor/index", {
               title: "BWG | Liquor Licensing",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Business Address") {
@@ -136,6 +137,7 @@ router.get(
             return res.render("liquor/index", {
               title: "BWG | Liquor Licensing",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else {
@@ -184,6 +186,7 @@ router.get(
             return res.render("liquor/index", {
               title: "BWG | Liquor Licensing",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }
@@ -228,6 +231,7 @@ router.post(
           return res.render("liquor/index", {
             title: "BWG | Liquor Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

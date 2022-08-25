@@ -88,6 +88,7 @@ router.get(
           return res.render("liquor/editBusiness", {
             title: "BWG | Edit Business",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -275,6 +276,7 @@ router.post(
           return res.render("liquor/editBusiness", {
             title: "BWG | Edit Business",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

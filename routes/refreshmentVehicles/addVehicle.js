@@ -109,6 +109,7 @@ router.post(
           return res.render("refreshmentVehicles/addVehicle", {
             title: "BWG | Add Vehicle",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

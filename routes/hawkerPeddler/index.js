@@ -66,6 +66,7 @@ router.get("/", async (req, res, next) => {
         return res.render("hawkerPeddler/index", {
           title: "BWG | Hawker & Peddler Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else if (req.query.filterCategory === "Business Name") {
@@ -109,6 +110,7 @@ router.get("/", async (req, res, next) => {
         return res.render("hawkerPeddler/index", {
           title: "BWG | Hawker & Peddler Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else if (req.query.filterCategory === "Operator Name") {
@@ -161,6 +163,7 @@ router.get("/", async (req, res, next) => {
           return res.render("hawkerPeddler/search/operatorSearch", {
             title: "BWG | Hawker & Peddler Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     } else {
@@ -210,6 +213,7 @@ router.get("/", async (req, res, next) => {
           return res.render("hawkerPeddler/search/operatorSearch", {
             title: "BWG | Hawker & Peddler Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -263,6 +267,7 @@ router.get("/", async (req, res, next) => {
         return res.render("hawkerPeddler/search/operatorSearch", {
           title: "BWG | Hawker & Peddler Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else {
@@ -311,6 +316,7 @@ router.get("/", async (req, res, next) => {
         return res.render("hawkerPeddler/index", {
           title: "BWG | Hawker & Peddler Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -382,6 +388,7 @@ router.get(
           return res.render("hawkerPeddler/printLicense", {
             title: "BWG | Print License",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

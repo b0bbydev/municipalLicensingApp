@@ -150,6 +150,7 @@ router.post(
           return res.render("hawkerPeddler/addBusiness", {
             title: "BWG | Add Business",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

@@ -63,6 +63,7 @@ router.get(
           return res.render("admin/manageAccess", {
             title: "BWG | Manage Access",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -95,6 +96,7 @@ router.post("/:id", async (req, res, next) => {
         return res.render("admin/manageAccess", {
           title: "BWG | Manage Access",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -134,6 +136,7 @@ router.get("/:userId/revoke/:roleId", (req, res, next) => {
         return res.render("admin/manageAccess", {
           title: "BWG | Manage Access",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }

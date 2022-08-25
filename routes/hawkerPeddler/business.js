@@ -88,6 +88,7 @@ router.get(
           return res.render("hawkerPeddler/business", {
             title: "BWG | Hawker & Peddler Business",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -141,6 +142,7 @@ router.post("/:id", async (req, res, next) => {
         return res.render("hawkerPeddler/business", {
           title: "BWG | Hawker & Peddler Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }

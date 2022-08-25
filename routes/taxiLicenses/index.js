@@ -119,6 +119,7 @@ router.get("/", async (req, res, next) => {
         return res.render("taxiLicenses/index", {
           title: "BWG | Taxi Licenses",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -170,6 +171,7 @@ router.post("/", async (req, res, next) => {
         return res.render("taxiLicenses/index", {
           title: "BWG | Taxi Licenses",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -213,6 +215,7 @@ router.post(
           return res.render("taxiLicenses/index", {
             title: "BWG | Taxi Licenses",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -278,6 +281,7 @@ router.get(
           return res.render("taxiLicenses/printLicense", {
             title: "BWG | Print License",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

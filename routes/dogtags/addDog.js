@@ -196,6 +196,7 @@ router.post(
           return res.render("dogtags/addDog", {
             title: "BWG | Add Dog",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

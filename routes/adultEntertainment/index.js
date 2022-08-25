@@ -96,6 +96,7 @@ router.get(
             return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Address") {
@@ -146,6 +147,7 @@ router.get(
             return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else {
@@ -195,6 +197,7 @@ router.get(
             return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }
@@ -248,6 +251,7 @@ router.post("/", async (req, res, next) => {
         return res.render("adultEntertainment/index", {
           title: "BWG | Adult Entertainment Licenses",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -311,6 +315,7 @@ router.get(
           return res.render("adultEntertainment/printLicense", {
             title: "BWG | Print License",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

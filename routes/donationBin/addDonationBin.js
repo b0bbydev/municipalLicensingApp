@@ -154,6 +154,7 @@ router.post(
           return res.render("donationBin/addDonationBin", {
             title: "BWG | Add Donation Bin",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

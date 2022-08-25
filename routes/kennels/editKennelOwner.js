@@ -72,6 +72,7 @@ router.get(
           return res.render("kennels/editKennelOwner", {
             title: "BWG | Edit Kennel Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -222,6 +223,7 @@ router.post(
           return res.render("kennels/editKennelOwner", {
             title: "BWG | Edit Kennel Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

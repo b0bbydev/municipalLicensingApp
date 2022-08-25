@@ -75,6 +75,7 @@ router.get(
           return res.render("hawkerPeddler/editPropertyOwner", {
             title: "BWG | Edit Property Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -227,6 +228,7 @@ router.post(
           return res.render("hawkerPeddler/editPropertyOwner", {
             title: "BWG | Edit Property Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

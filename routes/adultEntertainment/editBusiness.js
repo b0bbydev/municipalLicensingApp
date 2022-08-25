@@ -84,6 +84,7 @@ router.get(
           return res.render("adultEntertainment/editBusiness", {
             title: "BWG | Edit Business",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -327,6 +328,7 @@ router.post(
           return res.render("adultEntertainment/editBusiness", {
             title: "BWG | Edit Business",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

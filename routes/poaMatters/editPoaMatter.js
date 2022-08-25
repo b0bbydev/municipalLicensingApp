@@ -96,6 +96,7 @@ router.get(
           return res.render("poaMatters/editPoaMatter", {
             title: "BWG | Edit POA Matter",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -295,6 +296,7 @@ router.post(
           return res.render("poaMatters/editPoaMatter", {
             title: "BWG | Edit POA Matter",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

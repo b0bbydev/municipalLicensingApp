@@ -174,6 +174,7 @@ router.post(
           return res.render("policies/addGuideline", {
             title: "BWG | Add Guideline",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

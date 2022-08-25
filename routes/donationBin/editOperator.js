@@ -78,6 +78,7 @@ router.get(
           return res.render("donationBin/editOperator", {
             title: "BWG | Edit Donation Bin Operator",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -237,6 +238,7 @@ router.post(
           return res.render("donationBin/editOperator", {
             title: "BWG | Edit Donation Bin Operator",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
