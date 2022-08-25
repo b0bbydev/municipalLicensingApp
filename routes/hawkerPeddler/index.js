@@ -316,51 +316,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-/* POST /hawkerPeddler/history - getting value to search by, then redirect */
-router.post(
-  "/history",
-  body("businessName")
-    .if(body("businessName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid Business Name Entry!")
-    .trim(),
-  async (req, res, next) => {
-    // server side validation.
-    const errors = validationResult(req);
-
-    // if errors is NOT empty (if there are errors...).
-    if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/index", {
-        title: "BWG | Hawker & Peddler Licensing",
-        message: "Page Error!",
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-      });
-    } else {
-      // get the specified business.
-      HawkerPeddlerBusiness.findOne({
-        where: {
-          businessName: req.body.businessName,
-        },
-      })
-        .then((results) => {
-          // redirect to unique history page.
-          return res.redirect(
-            "/hawkerPeddler/businessAddressHistory/" +
-              results.hawkerPeddlerBusinessID
-          );
-        })
-        // catch any scary errors and render page error.
-        .catch((err) => {
-          return res.render("hawkerPeddler/index", {
-            title: "BWG | Hawker & Peddler Licensing",
-            message: "Page Error!",
-          });
-        });
-    }
-  }
-);
-
 /* GET /hawkerPeddler/printLicense/:id */
 router.get(
   "/printLicense/:id",
@@ -416,8 +371,8 @@ router.get(
                 results.hawkerPeddlerBusinessAddresses[0].streetNumber,
               streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
               town: results.hawkerPeddlerBusinessAddresses[0].town,
-              issueDate: results.issueDate,
-              expiryDate: results.expiryDate,
+              issueDate: results.hawkerPeddlerApplicants[0].issueDate,
+              expiryDate: results.hawkerPeddlerApplicants[0].expiryDate,
               licenseNumber: results.hawkerPeddlerApplicants[0].licenseNumber,
             },
           });

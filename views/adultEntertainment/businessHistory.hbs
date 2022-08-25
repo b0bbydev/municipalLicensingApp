@@ -1,4 +1,4 @@
-<h2 class="text-center mt-2">Adult Entertainment - Business History</h2>
+<h2 class="text-center mt-2">Business History</h2>
 <h4>Filtering</h4>
 <form class="mb-1" method="GET">
   <select
@@ -52,7 +52,7 @@
   >Search</button>
   <a
     id="filterButton"
-    href="/adultEntertainment/history/{{businessID}}"
+    href="/adultEntertainment/businessHistory/{{businessID}}"
     class="btn btn-sm btn-secondary"
     type="submit"
   >Reset</a>
@@ -67,7 +67,7 @@
 
 <!-- Table -->
 <table
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
@@ -97,7 +97,7 @@
         <td>{{this.notes}}</td>
         <td>
           <a
-            class="btn btn-sm btn-secondary"
+            id="ownerLink"
             data-bs-toggle="modal"
             data-bs-target="#businessModal-{{this.businessID}}"
           >Documentation</a></td>
