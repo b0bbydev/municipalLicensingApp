@@ -61,7 +61,6 @@ router.get(
               lastName: results.lastName,
               phoneNumber: results.phoneNumber,
               email: results.email,
-              licenseNumber: results.licenseNumber,
               photoID: results.photoID,
               charityInformation: results.charityInformation,
               ownerConsent: results.ownerConsent,
@@ -108,11 +107,6 @@ router.post(
     .if(body("email").notEmpty())
     .isEmail()
     .withMessage("Invalid Email Entry!")
-    .trim(),
-  body("licenseNumber")
-    .if(body("licenseNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid License Number Entry!")
     .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
@@ -162,7 +156,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
           photoID: req.body.photoID,
           charityInformation: req.body.charityInformation,
           ownerConsent: req.body.ownerConsent,
@@ -181,7 +174,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
           photoID: req.body.photoID,
           charityInformation: req.body.charityInformation,
           ownerConsent: req.body.ownerConsent,

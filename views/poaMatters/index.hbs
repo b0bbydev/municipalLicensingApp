@@ -121,52 +121,6 @@
             data-bs-target="#poaMatterModal-{{this.poaMatterID}}"
           >View Trial Dates</a></td>
       </tr>
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="poaMatterModal-{{this.poaMatterID}}"
-        tabindex="-1"
-        aria-labelledby="POA Matter Modal"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Info Number:
-                {{this.infoNumber}}</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              {{#each poaMatterTrials}}
-                <div class="row">
-                  <div class="col">
-                    <strong>Trial Date {{incremented @index}}:</strong>
-                  </div>
-                  <div class="col float-end">
-                    <p>{{this.trialDate}}</p>
-                  </div>
-                </div>
-              {{/each}}
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >Close</button>
-              <a
-                class="btn btn-primary"
-                href="/poaMatters/addTrialDates/{{this.poaMatterID}}"
-              >Add Additional Trial Dates</a>
-            </div>
-          </div>
-        </div>
-      </div>
     {{/each}}
   </tbody>
 </table>
@@ -187,3 +141,63 @@
     {{/if}}
   </ul>
 </nav>
+{{#each data}}
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="poaMatterModal-{{this.poaMatterID}}"
+    tabindex="-1"
+    aria-labelledby="POA Matter Modal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Info Number:
+            {{this.infoNumber}}</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <!-- Table -->
+          <table
+            class="table table-responsive table-bordered table-hover sortable"
+          >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Trial Date</th>
+                <th>Trial Comment</th>
+                {{! <th>Actions</th> }}
+              </tr>
+            </thead>
+            <tbody>
+              {{#each poaMatterTrials}}
+                <tr>
+                  <th>{{incremented @index}}</th>
+                  <td>{{this.trialDate}}</td>
+                  <td>{{this.trialComment}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >Close</button>
+          <a
+            class="btn btn-primary"
+            href="/poaMatters/addTrialDates/{{this.poaMatterID}}"
+          >Add Additional Trial Dates</a>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/each}}

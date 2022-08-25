@@ -79,7 +79,7 @@ router.get("/", async (req, res, next) => {
       .catch((err) => {
         return res.render("kennels/index", {
           title: "BWG | Kennel Licensing",
-          message: "Page Error!",
+          message: "Page Error!" + err,
         });
       });
   } else if (req.query.filterCategory === "Kennel Name") {

@@ -77,7 +77,7 @@ router.get(
               filterOptions: filterOptions,
               pageCount,
               itemCount,
-              queryCount: "Records returned: " + results.count,
+              queryCount: "Records returned: " + results.rows.length,
               pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
               prev: paginate.href(req)(true),
               hasMorePages: paginate.hasNextPages(req)(pageCount),
