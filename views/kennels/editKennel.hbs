@@ -55,8 +55,22 @@
       </div>
     </div>
     <div class="row">
+      <!-- License Number -->
+      <div class="col-sm-4">
+        <label for="License Number" class="form-label">License Number</label>
+        <input
+          type="text"
+          placeholder="License Number"
+          class="form-control"
+          name="licenseNumber"
+          pattern="[^()/><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.licenseNumber}}"
+          maxlength="50"
+        />
+      </div>
       <!-- Issue Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Issue Date" class="form-label">Issue Date</label>
         <input
           type="date"
@@ -67,7 +81,7 @@
         />
       </div>
       <!-- Expiry Date -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Expiry Date" class="form-label">Expiry Date</label>
         <input
           type="date"

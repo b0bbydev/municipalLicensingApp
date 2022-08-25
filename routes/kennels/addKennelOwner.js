@@ -53,11 +53,6 @@ router.post(
     .isEmail()
     .withMessage("Invalid Email Entry!")
     .trim(),
-  body("licenseNumber")
-    .if(body("licenseNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid License Number Entry!")
-    .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
     .matches(/^[^%<>^$\/\\;!{}?]+$/)
@@ -106,7 +101,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
           town: req.body.town,
@@ -120,7 +114,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
           kennelID: req.session.kennelID,
           kennelOwnerAddresses: [
             {
