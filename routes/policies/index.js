@@ -138,7 +138,7 @@ router.post(
   "/",
   body("policyName")
     .if(body("policyName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Policy Name Entry!")
     .trim(),
   async (req, res, next) => {

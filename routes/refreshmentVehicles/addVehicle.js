@@ -27,12 +27,12 @@ router.post(
   "/",
   body("registeredBusinessName")
     .if(body("registeredBusinessName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Registered Business Name Entry!")
     .trim(),
   body("operatingBusinessName")
     .if(body("operatingBusinessName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Operating Business Name Entry!")
     .trim(),
   body("itemsForSale")

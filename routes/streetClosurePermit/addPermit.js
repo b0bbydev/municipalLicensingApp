@@ -40,27 +40,27 @@ router.post(
   "/",
   body("sponser")
     .if(body("sponser").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Event Sponser Entry!")
     .trim(),
   body("permitNumber")
     .if(body("permitNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Permit Number Entry!")
     .trim(),
   body("closureLocation")
     .if(body("closureLocation").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Closure Location Entry!")
     .trim(),
   body("closureTime")
     .if(body("closureTime").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Closure Time Entry!")
     .trim(),
   body("estimatedAttendance")
     .if(body("estimatedAttendance").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Estimated Attendance Entry!")
     .trim(),
   body("description")

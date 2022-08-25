@@ -180,7 +180,7 @@ router.post(
   "/history",
   body("companyName")
     .if(body("companyName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Company Name Entry!")
     .trim(),
   async (req, res, next) => {

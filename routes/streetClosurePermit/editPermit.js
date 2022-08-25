@@ -136,12 +136,12 @@ router.post(
   "/:id",
   body("coordinatorName")
     .notEmpty()
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Coordinator Name Entry!")
     .trim(),
   body("coordinatorPhone")
     .if(body("coordinatorPhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Coordinator Phone Number Entry!")
     .trim(),
   body("coordinatorEmail")
@@ -151,17 +151,17 @@ router.post(
     .trim(),
   body("sponser")
     .if(body("sponser").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Event Sponser Entry!")
     .trim(),
   body("everydayContactName")
     .if(body("everydayContactName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Everyday Contact Name Entry!")
     .trim(),
   body("everydayContactPhone")
     .if(body("everydayContactPhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Everyday Contact Phone Number Entry!")
     .trim(),
   body("everydayContactEmail")
@@ -171,22 +171,22 @@ router.post(
     .trim(),
   body("permitNumber")
     .if(body("permitNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Permit Number Entry!")
     .trim(),
   body("closureLocation")
     .if(body("closureLocation").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Closure Location Entry!")
     .trim(),
   body("closureTime")
     .if(body("closureTime").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Closure Time Entry!")
     .trim(),
   body("estimatedAttendance")
     .if(body("estimatedAttendance").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Estimated Attendance Entry!")
     .trim(),
   body("description")

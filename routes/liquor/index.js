@@ -196,7 +196,7 @@ router.post(
   "/",
   body("businessName")
     .if(body("businessName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Business Name Entry!")
     .trim(),
   async (req, res, next) => {
