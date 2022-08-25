@@ -47,16 +47,6 @@
   >Reset</a>
 </form>
 <div class="row">
-  <div class="col mt-1">
-    <a
-      class="user-select-none"
-      id="historyLink"
-      data-bs-toggle="modal"
-      data-bs-target="#historyModal"
-    >View Address History</a>
-  </div>
-</div>
-<div class="row">
   <div class="col mb-1">
     <h4 class="mb-0 mt-1">Brokers</h4>
     {{#if queryCount}}
@@ -77,11 +67,13 @@
 {{/if}}
 
 <!-- Table -->
-<table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
-      <th>Company Name</th>
       <th>Owner Name</th>
+      <th>Company Name</th>
       <th>Phone Number</th>
       <th>Address</th>
       <th>License Number</th>
@@ -99,14 +91,21 @@
             id="ownerLink"
             href="/taxiLicenses/broker/{{this.taxiBrokerID}}"
             title="View Taxi Broker Related Information"
-          >{{this.companyName}}</a></td>
-        <td>{{this.ownerName}}</td>
+          >{{this.ownerName}}</a></td>
+        <td>{{this.companyName}}</td>
         <td>{{this.phoneNumber}}</td>
         {{#each taxiBrokerAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}}
-            {{this.postalCode}}</td>
+          <td class="tableLink">
+            <a
+              class="stretched-link"
+              id="ownerLink"
+              href="/taxiLicenses/brokerAddressHistory/{{this.taxiBrokerID}}"
+              title="View Taxi Broker Address History"
+            >
+              {{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}</a></td>
         {{/each}}
         <td>{{this.licenseNumber}}</td>
         <td>{{this.issueDate}}</td>
@@ -128,7 +127,10 @@
             data-bs-target="#taxiLicenseDocumentationModal-{{this.taxiBrokerID}}"
           >Documentation</a>
           <!-- Print to Filehold -->
-          <a href="/taxiLicenses/printLicense/{{this.taxiBrokerID}}" title="Print License"><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
+          <a
+            href="/taxiLicenses/printLicense/{{this.taxiBrokerID}}"
+            title="Print License"
+          ><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
       </tr>
       <!-- Renew Modal -->
       <div
@@ -175,7 +177,20 @@
                     />
                   </div>
                 </div>
-                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
+                <div class="row">
+                  <div class="col">
+                    <label for="License Number" class="form-label">License
+                      Number</label>
+                    <input
+                      class="form-control"
+                      placeholder="New License Number"
+                      name="licenseNumber"
+                    />
+                  </div>
+                </div>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
               </div>
               <div class="modal-footer">
                 <button
@@ -288,52 +303,3 @@
     {{/if}}
   </ul>
 </nav>
-
-<!-- History Modal -->
-<div
-  class="modal fade"
-  id="historyModal"
-  tabindex="-1"
-  aria-labelledby="History Modal"
-  aria-hidden="true"
->
-  <form method="POST" action="/taxiLicenses/history">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">History Search</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <label for="Company Name" class="form-label">Enter the name of the
-            broker company</label>
-          <input
-            list="companies"
-            class="form-control"
-            placeholder="Company Name"
-            name="companyName"
-            required
-          />
-          <datalist id="companies">
-            {{#each data}}
-              <option value="{{this.companyName}}">{{this.companyName}}</option>
-            {{/each}}
-          </datalist>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >Close</button>
-          <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>

@@ -54,7 +54,7 @@
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.notes}}</td>
-        <td style="width: 16%;"><a
+        <td style="width: 22.5%;"><a
             class="btn btn-sm btn-secondary my-1"
             data-bs-toggle="modal"
             data-bs-target="#driverRenewModal-{{this.taxiDriverID}}"
@@ -212,8 +212,8 @@
 <table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
   <thead>
     <tr>
-      <th>Town Plate Number</th>
       <th>Vehicle Owner Name</th>
+      <th>Town Plate Number</th>
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
@@ -229,8 +229,8 @@
   <tbody class="table-group-divider">
     {{#each taxiPlates}}
       <tr>
-        <td>{{this.townPlateNumber}}</td>
         <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.townPlateNumber}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each taxiPlateOwnerAddresses}}
@@ -251,7 +251,7 @@
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.notes}}</td>
-        <td><a
+        <td style="width: 22.5%;"><a
             class="btn btn-sm btn-secondary my-1"
             data-bs-toggle="modal"
             data-bs-target="#plateRenewModal-{{this.taxiPlateID}}"

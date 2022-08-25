@@ -263,6 +263,7 @@ router.post("/", async (req, res, next) => {
       {
         issueDate: issueDate,
         expiryDate: expiryDate,
+        licenseNumber: req.body.licenseNumber,
       },
       {
         where: {

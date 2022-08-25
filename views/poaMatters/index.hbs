@@ -96,7 +96,7 @@
         <td>{{this.dateClosed}}</td>
         <td>{{this.defendantName}}</td>
         <td>{{this.poaType}}</td>
-        <td>{{this.offence}}</td>
+        <td style="width: 20%;">{{this.offence}}</td>
         {{#each poaMatterLocations}}
           <td>{{this.streetNumber}}
             {{this.streetName}}
@@ -110,7 +110,7 @@
         <td>{{#if this.amountPaid}} ${{this.amountPaid}} {{/if}}</td>
         <td>{{this.verdict}}</td>
         <td>{{this.prosecutor}}</td>
-        <td style="width: 12%;"><a
+        <td style="width: 11%;"><a
             class="btn btn-sm btn-secondary my-1"
             href="/poaMatters/editPoaMatter/{{this.poaMatterID}}"
           >Edit</a>
@@ -119,7 +119,7 @@
             class="btn btn-sm btn-secondary"
             data-bs-toggle="modal"
             data-bs-target="#poaMatterModal-{{this.poaMatterID}}"
-          >View Trial Dates</a></td>
+          >Trial Dates</a></td>
       </tr>
     {{/each}}
   </tbody>
