@@ -76,10 +76,10 @@
       <th>Colour</th>
       <th>Material</th>
       <th>Bin Address</th>
-      <th>Notes</th>
       <th>License Number</th>
       <th>Issue Date</th>
       <th>Expiry Date</th>
+      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -107,7 +107,6 @@
               {{this.town}}
               {{this.postalCode}}</a></td>
         {{/each}}
-        <td>{{this.notes}}</td>
         <td class="tableLink"><a
             class="stretched-link"
             id="ownerLink"
@@ -116,6 +115,7 @@
           >{{this.licenseNumber}}</a></td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
+        <td>{{this.notes}}</td>
         <td><a
             class="btn btn-sm btn-secondary my-1"
             data-bs-toggle="modal"
@@ -178,6 +178,17 @@
                         readonly
                       />
                     {{/each}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="License Number" class="form-label">License
+                      Number</label>
+                    <input
+                      class="form-control"
+                      placeholder="License Number"
+                      name="licenseNumber"
+                    />
                   </div>
                 </div>
                 <p class="mt-4 mb-0 fst-italic">This license will expire on
