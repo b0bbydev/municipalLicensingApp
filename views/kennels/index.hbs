@@ -47,16 +47,6 @@
   >Reset</a>
 </form>
 <div class="row">
-  <div class="col mt-1">
-    <a
-      class="user-select-none"
-      id="historyLink"
-      data-bs-toggle="modal"
-      data-bs-target="#historyModal"
-    >View Address History</a>
-  </div>
-</div>
-<div class="row">
   <div class="col mb-1">
     <h4 class="mb-0 mt-1">Kennels</h4>
     {{#if queryCount}}
@@ -75,7 +65,9 @@
 {{/if}}
 
 <!-- Table -->
-<table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
       <th>Kennel Name</th>
@@ -101,14 +93,26 @@
           >{{this.kennelName}}</a></td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
-        <td>{{this.licenseNumber}}</td>
+        <td class="tableLink">
+          <a
+            class="stretched-link"
+            id="ownerLink"
+            href="/kennels/kennelHistory/{{this.kennelID}}"
+            title="View Kennel History"
+          >{{this.licenseNumber}}</a></td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each kennelAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}}
-            {{this.postalCode}}</td>
+          <td class="tableLink">
+            <a
+              class="stretched-link"
+              id="ownerLink"
+              href="/kennels/kennelAddressHistory/{{this.kennelID}}"
+              title="View Kennel Address History"
+            >{{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}</a></td>
         {{/each}}
         <td>{{this.notes}}</td>
         <td style="width: 17.5%;"><a
@@ -128,7 +132,10 @@
             data-bs-target="#kennelDocumentationModal-{{this.kennelID}}"
           >Documentation</a>
           <!-- Print to Filehold -->
-          <a href="/kennels/printLicense/{{this.kennelID}}" title="Print License"><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
+          <a
+            href="/kennels/printLicense/{{this.kennelID}}"
+            title="Print License"
+          ><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
       </tr>
       <!-- Renew Modal -->
       <div
@@ -175,7 +182,9 @@
                     />
                   </div>
                 </div>
-                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
               </div>
               <div class="modal-footer">
                 <button
@@ -274,52 +283,3 @@
     {{/if}}
   </ul>
 </nav>
-
-<!-- History Modal -->
-<div
-  class="modal fade"
-  id="historyModal"
-  tabindex="-1"
-  aria-labelledby="History Modal"
-  aria-hidden="true"
->
-  <form method="POST" action="/kennels/history">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">History Search</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <label for="Kennel Name" class="form-label">Enter the name of the
-            kennel</label>
-          <input
-            list="kennels"
-            class="form-control"
-            placeholder="Kennel Name"
-            name="kennelName"
-            required
-          />
-          <datalist id="kennels">
-            {{#each data}}
-              <option value="{{this.kennelName}}">{{this.kennelName}}</option>
-            {{/each}}
-          </datalist>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >Close</button>
-          <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>

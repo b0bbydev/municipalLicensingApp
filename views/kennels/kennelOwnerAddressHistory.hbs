@@ -66,7 +66,7 @@
 {{/if}}
 
 <table
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
@@ -82,8 +82,8 @@
           {{this.streetName}},
           {{this.town}}
           {{this.postalCode}}</td>
-        <td>{{formatDate this.lastModified}}</td>
-        <td>{{this.action}}</td>
+        <td class="fw-bold">{{formatDate this.lastModified}}</td>
+        <td class="fw-bold">{{this.action}}</td>
       </tr>
     {{/each}}
   </tbody>

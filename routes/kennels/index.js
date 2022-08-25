@@ -386,50 +386,6 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-/* POST /kennels/history - getting value to search by, then redirect */
-router.post(
-  "/history",
-  body("kennelName")
-    .if(body("kennelName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid Kennel Name Entry!")
-    .trim(),
-  async (req, res, next) => {
-    // server side validation.
-    const errors = validationResult(req);
-
-    // if errors is NOT empty (if there are errors...).
-    if (!errors.isEmpty()) {
-      return res.render("kennels/index", {
-        title: "BWG | Kennel Licensing",
-        message: "Page Error!",
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-      });
-    } else {
-      // get the specified kennel.
-      Kennel.findOne({
-        where: {
-          kennelName: req.body.kennelName,
-        },
-      })
-        .then((results) => {
-          // redirect to unique history page.
-          return res.redirect(
-            "/kennels/kennelAddressHistory/" + results.kennelID
-          );
-        })
-        // catch any scary errors and render page error.
-        .catch((err) => {
-          return res.render("kennels/index", {
-            title: "BWG | Kennel Licensing",
-            message: "Page Error!",
-          });
-        });
-    }
-  }
-);
-
 /* GET /kennels/printLicense/:id */
 router.get(
   "/printLicense/:id",
@@ -486,7 +442,7 @@ router.get(
               town: results.kennelAddresses[0].town,
               issueDate: results.issueDate,
               expiryDate: results.expiryDate,
-              licenseNumber: results.kennelowners[0].licenseNumber,
+              licenseNumber: results.licenseNumber,
             },
           });
         })

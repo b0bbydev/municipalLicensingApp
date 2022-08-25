@@ -1,4 +1,4 @@
-<h2 class="text-center mt-2">Property Owner Address History</h2>
+<h2 class="text-center mt-2">Kennel History</h2>
 <h4>Filtering</h4>
 <form class="mb-1" method="GET">
   <select
@@ -52,7 +52,7 @@
   >Search</button>
   <a
     id="filterButton"
-    href="/kennels/kennelPropertyOwnerAddressHistory/{{kennelPropertyOwnerID}}"
+    href="/kennels/kennelHistory/{{kennelID}}"
     class="btn btn-sm btn-secondary"
     type="submit"
   >Reset</a>
@@ -70,20 +70,29 @@
 >
   <thead>
     <tr>
-      <th>Address</th>
-      <th>Last Modified</th>
+      <th>Kennel Name</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
+      <th>License Number</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Notes</th>
       <th>Action</th>
+      <th>Last Modified</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td>{{this.streetNumber}}
-          {{this.streetName}},
-          {{this.town}}
-          {{this.postalCode}}</td>
-        <td class="fw-bold">{{formatDate this.lastModified}}</td>
+        <td>{{this.kennelName}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td>{{this.licenseNumber}}</td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        <td>{{this.notes}}</td>
         <td class="fw-bold">{{this.action}}</td>
+        <td class="fw-bold">{{formatDate this.lastModified}}</td>
       </tr>
     {{/each}}
   </tbody>

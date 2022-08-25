@@ -144,6 +144,7 @@ var kennelOwnerAddressHistoryRoute = require("./routes/kennels/kennelOwnerAddres
 var kennelPropertyOwnerAddressHistoryRoute = require("./routes/kennels/kennelPropertyOwnerAddressHistory");
 
 var kennelRoute = require("./routes/kennels/kennel");
+var kennelHistoryRoute = require("./routes/kennels/kennelHistory");
 var addKennelRoute = require("./routes/kennels/addKennel");
 var editKennelRoute = require("./routes/kennels/editKennel");
 
@@ -524,6 +525,8 @@ app.use(
 
 /* kennel related routes */
 app.use("/kennels", isEnforcement, kennelsRoute);
+
+app.use("/kennels/kennelHistory", isEnforcement, kennelHistoryRoute);
 
 app.use(
   "/kennels/kennelAddressHistory",
