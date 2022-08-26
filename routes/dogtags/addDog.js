@@ -85,15 +85,15 @@ router.post(
     .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Gender Entry!")
     .trim(),
-  body("spade")
-    .if(body("spade").notEmpty())
-    .matches(/^[^%<>^$\\;!{}?]+$/)
-    .withMessage("Invalid Spade/Neutered Entry!")
-    .trim(),
   body("designation")
     .if(body("designation").notEmpty())
     .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Designation Entry!")
+    .trim(),
+  body("spade")
+    .if(body("spade").notEmpty())
+    .matches(/^[^%<>^$\\;!{}?]+$/)
+    .withMessage("Invalid Spade/Neutered Entry!")
     .trim(),
   body("rabiesTagNumber")
     .if(body("rabiesTagNumber").notEmpty())

@@ -45,6 +45,16 @@ router.post(
     .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Owner Name Entry!")
     .trim(),
+  body("contactName")
+    .if(body("contactName").notEmpty())
+    .matches(/^[^%<>^$\\;!{}?]+$/)
+    .withMessage("Invalid Contact Name Entry!")
+    .trim(),
+  body("licenseNumber")
+    .if(body("licenseNumber").notEmpty())
+    .matches(/^[^%<>^$\\;!{}?]+$/)
+    .withMessage("Invalid License Number Entry!")
+    .trim(),
   body("contactPhone")
     .if(body("contactPhone").notEmpty())
     .matches(/^[^%<>^$\\;!{}?]+$/)

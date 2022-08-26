@@ -37,6 +37,11 @@ router.post(
     .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Charity Name Entry!")
     .trim(),
+  body("registrationNumber")
+    .if(body("registrationNumber").notEmpty())
+    .matches(/^[^%<>^$\\;!{}?]+$/)
+    .withMessage("Invalid Registration Number Entry!")
+    .trim(),
   body("phoneNumber")
     .if(body("phoneNumber").notEmpty())
     .matches(/^[^%<>^$\\;!{}?]+$/)
@@ -46,11 +51,6 @@ router.post(
     .if(body("email").notEmpty())
     .isEmail()
     .withMessage("Invalid Email Entry!")
-    .trim(),
-  body("registrationNumber")
-    .if(body("registrationNumber").notEmpty())
-    .matches(/^[^%<>^$\\;!{}?]+$/)
-    .withMessage("Invalid Registration Number Entry!")
     .trim(),
   body("organizationType")
     .if(body("organizationType").notEmpty())

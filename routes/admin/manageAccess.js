@@ -8,7 +8,7 @@ const UserRole = require("../../models/admin/userRole");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 // express-validate.
-const { body, param, validationResult } = require("express-validator");
+const { param, validationResult } = require("express-validator");
 
 /* GET /admin/manageAccess */
 router.get(

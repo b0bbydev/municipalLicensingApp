@@ -61,8 +61,8 @@ router.get(
           let data = JSON.parse(activeUsersResponse[i].data);
           let user = data.email;
           // because a Set is used here, only unique values will get added.
-          // this may be unintuitive if a duplicate session for a user is created. i.e: they log in through 2 different browsers.
-          // however the 'active user' list shouldn't display duplicate values.
+          // this is used because a duplicate session can be created if logging in through multiple browsers, among other weird instances/glitches.
+          // by using a Set it won't display duplicate values in the list/modal it's shown in.
           activeUsers.add(user);
         }
       }
