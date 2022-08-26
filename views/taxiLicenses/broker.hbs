@@ -20,7 +20,9 @@
     >Add A Driver</a>
   </div>
 </div>
-<table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
       <th>Driver Name</th>
@@ -92,7 +94,8 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <div class="row">
+                <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                <div class="row" style="display: none;">
                   <div class="col">
                     <label for="Driver ID" class="form-label">Driver ID</label>
                     <input
@@ -115,7 +118,9 @@
                     />
                   </div>
                 </div>
-                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
               </div>
               <div class="modal-footer">
                 <button
@@ -209,7 +214,9 @@
     >Add A Plate</a>
   </div>
 </div>
-<table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
       <th>Vehicle Owner Name</th>
@@ -289,7 +296,8 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <div class="row">
+                <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                <div class="row" style="display: none;">
                   <div class="col">
                     <label for="Plate ID" class="form-label">Taxi Plate ID</label>
                     <input
@@ -313,7 +321,9 @@
                     />
                   </div>
                 </div>
-                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
               </div>
               <div class="modal-footer">
                 <button

@@ -235,30 +235,44 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <label for="Business ID" class="form-label">Business ID</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  name="businessID"
-                  value="{{this.businessID}}"
-                  readonly
-                />
-                <label for="Business Name" class="form-label">Business Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Business Name"
-                  name="businessName"
-                  value="{{this.businessName}}"
-                  readonly
-                />
-                <label for="License Number" class="form-label">License Number</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="New License Number"
-                  name="licenseNumber"
-                />
+                <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                <div class="row" style="display: none;">
+                  <div class="col">
+                    <label for="Business ID" class="form-label">Business ID</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="businessID"
+                      value="{{this.businessID}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Business Name" class="form-label">Business Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Business Name"
+                      name="businessName"
+                      value="{{this.businessName}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="License Number" class="form-label">License
+                      Number</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="New License Number"
+                      name="licenseNumber"
+                    />
+                  </div>
+                </div>
                 <p class="mt-4 mb-0 fst-italic">This license will expire on
                   <strong>{{formatDate ../modalExpiryDate}}</strong>
                   after renewal</p>

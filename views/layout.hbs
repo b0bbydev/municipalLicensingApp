@@ -1,8 +1,8 @@
 <!--
   @author Bobby Jonkman
  -->
- 
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -170,7 +170,7 @@
                   <ul
                     class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
                   >
-                    {{#includes auth "Admin"}}
+                    {{#includes auth "Enforcement"}}
                       <!-- Enforcement - Adult Entertainment -->
                       <li class="nav-item w-100 p-1">
                         <a
@@ -193,8 +193,6 @@
                             Licenses</span>
                         </a>
                       </li>
-                    {{/includes}}
-                    {{#includes auth "Enforcement"}}
                       <!-- Enforcement - Dogtag Licenses -->
                       <li class="nav-item-last w-100 p-1">
                         <a href="/dogtags" class="nav-link align-middle ps-3">
@@ -202,8 +200,6 @@
                           <span class="ms-1 d-none d-sm-inline">Dog Tag Licenses</span>
                         </a>
                       </li>
-                    {{/includes}}
-                    {{#includes auth "Admin"}}
                       <!-- Enforcement - Hawker & Peddler Licenses -->
                       <li class="nav-item w-100 p-1">
                         <a
@@ -229,6 +225,8 @@
                           <span class="ms-1 d-none d-sm-inline">Liquor Licenses</span>
                         </a>
                       </li>
+                    {{/includes}}
+                    {{#includes auth "Admin"}}
                       <!-- Enforcement - Refreshment Vehicle Licenses -->
                       <li class="nav-item-admin w-100 p-1">
                         <a
@@ -255,7 +253,7 @@
                 </div>
               </div>
             </div>
-            {{#includes auth "Admin"}}
+            {{#includes auth "Enforcement"}}
               <!-- Enforcement - Street Closure Permits -->
               <li class="nav-item w-100 p-1">
                 <a
