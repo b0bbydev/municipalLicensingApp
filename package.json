@@ -14,7 +14,7 @@
     "express": "~4.18.1",
     "express-mysql-session": "^2.1.8",
     "express-paginate": "^1.0.2",
-    "express-rate-limit": "^6.5.1",
+    "express-rate-limit": "^6.5.2",
     "express-session": "^1.17.3",
     "express-validator": "^6.14.2",
     "handlebars-group-by": "^1.0.1",
@@ -26,7 +26,7 @@
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.19",
     "plivo": "^4.34.0",
-    "sequelize": "^6.21.3",
+    "sequelize": "^6.21.4",
     "winston": "^3.8.1"
   }
 }

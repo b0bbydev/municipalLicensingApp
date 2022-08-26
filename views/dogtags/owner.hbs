@@ -44,7 +44,9 @@
   </div>
 {{/if}}
 
-<table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
       <th>Tag Number</th>
@@ -102,7 +104,9 @@
             href="/dogtags/editDog/{{this.dogID}}"
             class="btn btn-sm btn-secondary"
           >Edit Dog</a>
-          <a href="/dogtags/printDog/{{this.dogID}}" title="Print License"><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
+          <a href="/dogtags/printDog/{{this.dogID}}" title="Print License"><i
+              class="icon-blue bi bi-printer-fill ms-1"
+            ></i></a></td>
       </tr>
       <!-- Modal -->
       <div
@@ -125,24 +129,47 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <label for="Dog ID" class="form-label">Dog ID</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  name="dogID"
-                  value="{{this.dogID}}"
-                  readonly
-                />
-                <label for="Tag Number" class="form-label">Enter the new tag
-                  number</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  placeholder="Tag Number"
-                  name="tagNumber"
-                  required
-                />
-                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
+                <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                <div class="row" style="display: none;">
+                  <div class="col">
+                    <label for="Dog ID" class="form-label">Dog ID</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="dogID"
+                      value="{{this.dogID}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Dog Name" class="form-label">Dog Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="dogName"
+                      value="{{this.dogName}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Tag Number" class="form-label">Enter the new tag
+                      number</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      placeholder="Tag Number"
+                      name="tagNumber"
+                      required
+                    />
+                  </div>
+                </div>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
               </div>
               <div class="modal-footer">
                 <button
@@ -181,11 +208,20 @@
 
 <div class="row mb-3">
   <div class="col-12">
-    <a class="user-select-none" id="dogHistory" title="Toggle History" onclick="toggleDogHistory()">See dog(s) history...</a>
+    <a
+      class="user-select-none"
+      id="dogHistory"
+      title="Toggle History"
+      onclick="toggleDogHistory()"
+    >See dog(s) history...</a>
   </div>
   <div class="col-12">
-    <a class="user-select-none" id="addressHistory" title="Toggle History" onclick="toggleAddressHistory()">See address
-      history...</a>
+    <a
+      class="user-select-none"
+      id="addressHistory"
+      title="Toggle History"
+      onclick="toggleAddressHistory()"
+    >See address history...</a>
   </div>
 </div>
 
@@ -195,7 +231,7 @@
     {{#group addressHistory by="year"}}
       <strong>{{{value}}}</strong>
       <table
-        class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+        class="table table-responsive table-bordered table-striped table-hover sortable"
       >
         <thead>
           <tr>
@@ -213,8 +249,8 @@
                 {{this.town}}
                 {{this.postalCode}}</td>
               <td>{{this.poBoxAptRR}}</td>
-              <td>{{this.action}}</td>
-              <td>{{formatDate this.lastModified}}</td>
+              <td class="fw-bold">{{this.action}}</td>
+              <td class="fw-bold">{{formatDate this.lastModified}}</td>
             </tr>
           {{/each}}
         </tbody>
@@ -233,7 +269,6 @@
       >
         <thead>
           <tr>
-            <th>Tag Number</th>
             <th>Dog Name</th>
             <th>Dog Breed</th>
             <th>Colour</th>
@@ -248,7 +283,6 @@
             <th>License Issue Date</th>
             <th>License Expiry Date</th>
             <th>Vendor</th>
-            <th>Notes</th>
             <th>Last Modified</th>
             <th>Action</th>
           </tr>
@@ -256,7 +290,6 @@
         <tbody class="table-group-divider">
           {{#each items}}
             <tr>
-              <td>{{this.tagNumber}}</td>
               <td>{{this.dogName}}</td>
               <td>{{this.breed}}</td>
               <td>{{this.colour}}</td>
@@ -271,9 +304,8 @@
               <td>{{this.issueDate}}</td>
               <td>{{this.expiryDate}}</td>
               <td>{{this.vendor}}</td>
-              <td>{{this.notes}}</td>
-              <td>{{formatDate this.lastModified}}</td>
-              <td>{{this.action}}</td>
+              <td class="fw-bold">{{formatDate this.lastModified}}</td>
+              <td class="fw-bold">{{this.action}}</td>
             </tr>
           {{/each}}
         </tbody>

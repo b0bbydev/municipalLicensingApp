@@ -1,0 +1,109 @@
+<h2 class="text-center mt-2">Donation Bin History</h2>
+<h4>Filtering</h4>
+<form class="mb-1" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterMonth"
+    title="Month Filter"
+    name="filterMonth"
+  >
+    {{#if filterMonth}}
+      <option value="{{filterMonth}}" selected>{{filterMonth}}</option>
+    {{else}}
+      <option value="" disabled selected>Month...</option>
+    {{/if}}
+    {{#each monthDropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <select
+    class="form-select-sm"
+    id="filterYear"
+    title="Year Filter"
+    name="filterYear"
+  >
+    {{#if filterYear}}
+      <option value="{{filterYear}}" selected>{{filterYear}}</option>
+    {{else}}
+      <option value="" disabled selected>Year...</option>
+    {{/if}}
+    {{#each yearDropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/donationBin/donationBinHistory/{{donationBinID}}"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<!-- Table -->
+<table
+  class="table table-responsive table-bordered table-striped table-hover sortable"
+>
+  <thead>
+    <tr>
+      <th>Pickup Schedule</th>
+      <th>Items Collected</th>
+      <th>Colour</th>
+      <th>Material</th>
+      <th>Notes</th>
+      <th>License Number</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
+      <th>Action</th>
+      <th>Last Modified</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    {{#each data}}
+      <tr>
+        <td>{{this.pickupSchedule}}</td>
+        <td>{{this.itemsCollected}}</td>
+        <td>{{this.colour}}</td>
+        <td>{{this.material}}</td>
+        {{#each donationBinAddresses}}
+          <td>
+            {{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}</a></td>
+        {{/each}}
+        <td>{{this.notes}}</td>
+        <td>{{this.licenseNumber}}</a></td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td class="fw-bold">{{this.action}}</td>
+        <td class="fw-bold">{{formatDate this.lastModified}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -80,6 +80,7 @@ router.get(
           return res.render("policies/editProcedure", {
             title: "BWG | Edit Procedure",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -92,37 +93,37 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("procedureNumber")
     .if(body("procedureNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Procedure Number Entry!")
     .trim(),
   body("procedureName")
     .if(body("procedureName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Procedure Name Entry!")
     .trim(),
   body("status")
     .if(body("status").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
   body("category")
     .if(body("category").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Category Entry!")
     .trim(),
   body("division")
     .if(body("division").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Division Entry!")
     .trim(),
   body("authority")
     .if(body("authority").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Authority Entry!")
     .trim(),
   body("administrator")
     .if(body("administrator").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Administrator Entry!")
     .trim(),
   body("notes")
@@ -213,6 +214,7 @@ router.post(
           return res.render("policies/editProcedure", {
             title: "BWG | Edit Procedure",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

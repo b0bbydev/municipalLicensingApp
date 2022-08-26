@@ -19,7 +19,7 @@
           placeholder="First Name"
           class="form-control"
           name="firstName"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.firstName}}"
           maxlength="25"
@@ -35,7 +35,7 @@
           placeholder="Last Name"
           class="form-control"
           name="lastName"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.lastName}}"
           maxlength="25"
@@ -44,44 +44,31 @@
     </div>
     <div class="row">
       <!-- Phone Number -->
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <label for="Phone Number" class="form-label">Phone Number</label>
         <input
           type="text"
           class="form-control"
           placeholder="Phone Number"
           name="phoneNumber"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.phoneNumber}}"
           maxlength="15"
         />
       </div>
       <!-- Email -->
-      <div class="col-sm-4">
+      <div class="col-sm-6">
         <label for="Email" class="form-label">Email</label>
         <input
           type="email"
           class="form-control"
           placeholder="Email"
           name="email"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.email}}"
           maxlength="50"
-        />
-      </div>
-      <!-- License Number -->
-      <div class="col-sm-4">
-        <label for="License Number" class="form-label">License Number</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="License Number"
-          name="licenseNumber"
-          pattern="[^()/><\][\\\x22,;|]+"
-          title="No special characters!"
-          value="{{formData.licenseNumber}}"
         />
       </div>
     </div>
@@ -134,7 +121,7 @@
           class="form-control"
           placeholder="Town"
           name="town"
-          pattern="[^()/><\][\\\x22;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.town}}"
           maxlength="30"
@@ -148,7 +135,7 @@
           class="form-control"
           placeholder="Postal Code"
           name="postalCode"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.postalCode}}"
           maxlength="15"

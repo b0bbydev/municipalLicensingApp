@@ -35,34 +35,39 @@ router.get("/", async (req, res, next) => {
 /* POST /donationBin/addDonationBin */
 router.post(
   "/",
+  body("licenseNumber")
+    .if(body("licenseNumber").notEmpty())
+    .matches(/^[^%<>^$\\;!{}?]+$/)
+    .withMessage("Invalid License Number Entry!")
+    .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Number Entry!")
     .trim(),
   body("streetName")
     .if(body("streetName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   body("colour")
     .if(body("colour").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Colour Entry!")
     .trim(),
   body("material")
     .if(body("material").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Material Entry!")
     .trim(),
   body("pickupSchedule")
@@ -104,6 +109,7 @@ router.post(
         streets: streets,
         // save form values if submission is unsuccessful.
         formData: {
+          licenseNumber: req.body.licenseNumber,
           issueDate: req.body.issueDate,
           expiryDate: req.body.expiryDate,
           streetNumber: req.body.streetNumber,
@@ -120,6 +126,7 @@ router.post(
     } else {
       DonationBin.create(
         {
+          licenseNumber: req.body.licenseNumber,
           issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
           expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           colour: req.body.colour,
@@ -147,6 +154,7 @@ router.post(
           return res.render("donationBin/addDonationBin", {
             title: "BWG | Add Donation Bin",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

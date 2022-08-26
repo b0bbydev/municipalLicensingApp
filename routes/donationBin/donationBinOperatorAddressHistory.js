@@ -76,6 +76,7 @@ router.get(
             return res.render("donationBin/donationBinOperatorAddressHistory", {
               title: "BWG | Donation Bin Operator Address History",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
         // both year and month filter.
@@ -114,6 +115,7 @@ router.get(
             return res.render("donationBin/donationBinOperatorAddressHistory", {
               title: "BWG | Donation Bin Operator Address History",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
         // if at least one filter exists.
@@ -156,6 +158,7 @@ router.get(
                 {
                   title: "BWG | Donation Bin Operator Address History",
                   message: "Page Error!",
+                  auth: req.session.auth, // authorization.
                 }
               );
             });
@@ -197,6 +200,7 @@ router.get(
                 {
                   title: "BWG | Donation Bin Operator Address History",
                   message: "Page Error!",
+                  auth: req.session.auth, // authorization.
                 }
               );
             });

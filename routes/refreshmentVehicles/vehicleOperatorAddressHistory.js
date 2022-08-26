@@ -82,6 +82,7 @@ router.get(
               {
                 title: "BWG | Vehicle Operator Address History",
                 message: "Page Error!",
+                auth: req.session.auth, // authorization.
               }
             );
           });
@@ -127,6 +128,7 @@ router.get(
               {
                 title: "BWG | Vehicle Operator Address History",
                 message: "Page Error!",
+                auth: req.session.auth, // authorization.
               }
             );
           });
@@ -171,6 +173,7 @@ router.get(
                 {
                   title: "BWG | Vehicle Operator Address History",
                   message: "Page Error!",
+                  auth: req.session.auth, // authorization.
                 }
               );
             });
@@ -213,6 +216,7 @@ router.get(
                 {
                   title: "BWG | Vehicle Operator Address History",
                   message: "Page Error!",
+                  auth: req.session.auth, // authorization.
                 }
               );
             });

@@ -21,7 +21,7 @@
   </div>
 </div>
 <table
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
@@ -59,29 +59,31 @@
   </tbody>
 </table>
 
-<!-- Applicants Table -->
+<!-- Operators Table -->
 <div class="row">
-  <h4 class="mb-0">Applicants</h4>
+  <h4 class="mb-0">Operators</h4>
   <div class="col mb-1">
     {{#if applicantsCount}}
       <strong class="float-start mt-2">{{applicantsCount}}</strong>
     {{/if}}
     <a
-      href="/hawkerPeddler/addApplicant"
+      href="/hawkerPeddler/addOperator"
       class="btn btn-sm btn-primary float-end"
-    >Add An Applicant</a>
+    >Add An Operator</a>
   </div>
 </div>
 <table
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
-      <th>Applicant Name</th>
+      <th>Operator Name</th>
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
       <th>License #</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -103,12 +105,105 @@
               {{this.town}}
               {{this.postalCode}}</a></td>
         {{/each}}
-        <td>{{this.licenseNumber}}</td>
-        <td><a
+        <td class="tableLink"><a
+            class="stretched-link"
+            id="ownerLink"
+            href="/hawkerPeddler/operatorHistory/{{this.hawkerPeddlerApplicantID}}"
+            title="View Operator History"
+          >{{this.licenseNumber}}</a></td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td style="width: 14%;"><a
+            class="btn btn-sm btn-secondary my-1"
+            data-bs-toggle="modal"
+            data-bs-target="#hawkerPeddlerRenewModal-{{this.hawkerPeddlerApplicantID}}"
+          >Renew</a>
+          |
+          <a
             class="btn btn-sm btn-secondary"
-            href="/hawkerPeddler/editApplicant/{{this.hawkerPeddlerApplicantID}}"
-          >Edit</a></td>
+            href="/hawkerPeddler/editOperator/{{this.hawkerPeddlerApplicantID}}"
+          >Edit</a>
+          <!-- Print to Filehold -->
+          <a
+            href="/hawkerPeddler/printLicense/{{this.hawkerPeddlerBusinessID}}"
+            title="Print License"
+          ><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
       </tr>
+      <!-- Renew Modal -->
+      <div
+        class="modal fade"
+        id="hawkerPeddlerRenewModal-{{this.hawkerPeddlerApplicantID}}"
+        tabindex="-1"
+        aria-labelledby="Hawker Peddler Renewal Modal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Renew Operator License</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                <div class="row" style="display: none;">
+                  <div class="col">
+                    <label
+                      for="Hawker Peddler Operator ID"
+                      class="form-label"
+                    >Hawker Peddler Operator ID</label>
+                    <input
+                      class="form-control"
+                      placeholder="Hawker Peddler Operator ID"
+                      value="{{this.hawkerPeddlerApplicantID}}"
+                      name="hawkerPeddlerApplicantID"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Operator Name" class="form-label">Operator Name</label>
+                    <input
+                      class="form-control"
+                      placeholder="Operator Name"
+                      value="{{this.firstName}} {{this.lastName}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="License Number" class="form-label">License
+                      Number</label>
+                    <input
+                      class="form-control"
+                      placeholder="New License Number"
+                      name="licenseNumber"
+                    />
+                  </div>
+                </div>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit Renewal</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
     {{/each}}
   </tbody>
 </table>

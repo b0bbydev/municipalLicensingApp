@@ -1,0 +1,190 @@
+<h2 class="text-center mt-2">Business History</h2>
+<h4>Filtering</h4>
+<form class="mb-1" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterMonth"
+    title="Month Filter"
+    name="filterMonth"
+  >
+    {{#if filterMonth}}
+      <option value="{{filterMonth}}" selected>{{filterMonth}}</option>
+    {{else}}
+      <option value="" disabled selected>Month...</option>
+    {{/if}}
+    {{#each monthDropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <select
+    class="form-select-sm"
+    id="filterYear"
+    title="Year Filter"
+    name="filterYear"
+  >
+    {{#if filterYear}}
+      <option value="{{filterYear}}" selected>{{filterYear}}</option>
+    {{else}}
+      <option value="" disabled selected>Year...</option>
+    {{/if}}
+    {{#each yearDropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/adultEntertainment/businessHistory/{{businessID}}"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<!-- Table -->
+<table
+  class="table table-responsive table-bordered table-striped table-hover sortable"
+>
+  <thead>
+    <tr>
+      <th>Business Name</th>
+      <th>Owner Name</th>
+      <th>Contact Name</th>
+      <th>Contact Phone</th>
+      <th>License #</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
+      <th>Notes</th>
+      <th>Documentation</th>
+      <th>Action</th>
+      <th>Last Modified</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    {{#each data}}
+      <tr>
+        <td>{{this.businessName}}</td>
+        <td>{{this.ownerName}}</td>
+        <td>{{this.contactName}}</td>
+        <td>{{this.contactPhone}}</td>
+        <td>{{this.licenseNumber}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td>{{this.notes}}</td>
+        <td>
+          <a
+            id="ownerLink"
+            data-bs-toggle="modal"
+            data-bs-target="#businessModal-{{this.businessID}}"
+          >Documentation</a></td>
+        <td class="fw-bold">{{this.action}}</td>
+        <td class="fw-bold">{{formatDate this.lastModified}}</td>
+      </tr>
+      <!-- Documentation Modal -->
+      <div
+        class="modal fade"
+        id="businessModal-{{this.businessID}}"
+        tabindex="-1"
+        aria-labelledby="businessModal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Documentation</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <div class="row">
+                  <div class="col">
+                    <strong>Police VSC:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.policeVSC}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Certificate of Insurance:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.certificateOfInsurance}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Photo ID:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.photoID}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Health Inspection:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.healthInspection}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Zoning Clearance:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.zoningClearance}}</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <strong>Fee Paid:</strong>
+                  </div>
+                  <div class="col float-end">
+                    <p>{{this.feePaid}}</p>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    {{/each}}
+  </tbody>
+</table>

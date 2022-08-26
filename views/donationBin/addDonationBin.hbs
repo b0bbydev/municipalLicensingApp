@@ -10,8 +10,22 @@
     <h4 class="mt-2">Donation Bin Information</h4>
     <hr />
     <div class="row">
+      <!-- License Number -->
+      <div class="col-sm-4">
+        <label for="License Number" class="form-label">License Number</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="License Number"
+          name="licenseNumber"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.licenseNumber}}"
+          maxlength="50"
+        />
+      </div>
       <!-- Street Number -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Street Number" class="form-label">Street Number*</label>
         <input
           type="number"
@@ -23,7 +37,7 @@
         />
       </div>
       <!-- Street Name -->
-      <div class="col-sm-6">
+      <div class="col-sm-4">
         <label for="Street Name" class="form-label">Street Name*</label>
         <input
           class="form-control"
@@ -58,7 +72,7 @@
           class="form-control"
           placeholder="Town"
           name="town"
-          pattern="[^()/><\][\\\x22;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.town}}"
           maxlength="30"
@@ -72,7 +86,7 @@
           class="form-control"
           placeholder="Postal Code"
           name="postalCode"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.postalCode}}"
           maxlength="15"
@@ -112,7 +126,7 @@
           placeholder="Colour"
           class="form-control"
           name="colour"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{{formData.colour}}}"
           maxlength="25"
@@ -126,7 +140,7 @@
           placeholder="Material"
           class="form-control"
           name="material"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{{formData.material}}}"
           maxlength="25"
@@ -136,14 +150,15 @@
     <div class="row">
       <!-- Pickup Schedule -->
       <div class="col">
-        <label for="Pickup Schedule" class="form-label">Pickup Schedule</label>
+        <label for="Pickup Schedule" class="form-label">Pickup Schedule*</label>
         <textarea
           type="text"
           name="pickupSchedule"
           class="form-control"
-          pattern="[^()/><\][\\\x22;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
+          required
         >{{formData.pickupSchedule}}</textarea>
       </div>
     </div>
@@ -155,7 +170,7 @@
           type="text"
           name="itemsCollected"
           class="form-control"
-          pattern="[^()/><\][\\\x22;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
         >{{formData.itemCollected}}</textarea>
@@ -169,7 +184,7 @@
           type="text"
           name="notes"
           class="form-control"
-          pattern="[^()/><\][\\\x22;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
         >{{formData.notes}}</textarea>

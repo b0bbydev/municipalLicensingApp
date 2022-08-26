@@ -49,6 +49,9 @@ router.get(
         },
       });
 
+      // get count for POA Matters, results.count displays count including joined tables.
+      var poaMatterCount = await POAMatter.findAndCountAll({});
+
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
         POAMatter.findAndCountAll({
@@ -77,7 +80,7 @@ router.get(
               filterOptions: filterOptions,
               pageCount,
               itemCount,
-              queryCount: "Records returned: " + results.count,
+              queryCount: "Records returned: " + poaMatterCount.count,
               pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
               prev: paginate.href(req)(true),
               hasMorePages: paginate.hasNextPages(req)(pageCount),
@@ -88,6 +91,7 @@ router.get(
             return res.render("poaMatters/index", {
               title: "BWG | POA Matters",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else {
@@ -138,6 +142,7 @@ router.get(
             return res.render("poaMatters/index", {
               title: "BWG | POA Matters",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }

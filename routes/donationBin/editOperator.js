@@ -61,7 +61,6 @@ router.get(
               lastName: results.lastName,
               phoneNumber: results.phoneNumber,
               email: results.email,
-              licenseNumber: results.licenseNumber,
               photoID: results.photoID,
               charityInformation: results.charityInformation,
               ownerConsent: results.ownerConsent,
@@ -79,6 +78,7 @@ router.get(
           return res.render("donationBin/editOperator", {
             title: "BWG | Edit Donation Bin Operator",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -91,17 +91,17 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid First Name Entry!")
     .trim(),
   body("lastName")
     .if(body("lastName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Last Name Entry!")
     .trim(),
   body("phoneNumber")
     .if(body("phoneNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Phone Number Entry!")
     .trim(),
   body("email")
@@ -109,29 +109,24 @@ router.post(
     .isEmail()
     .withMessage("Invalid Email Entry!")
     .trim(),
-  body("licenseNumber")
-    .if(body("licenseNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid License Number Entry!")
-    .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Number Entry!")
     .trim(),
   body("streetName")
     .if(body("streetName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   async (req, res, next) => {
@@ -162,7 +157,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
           photoID: req.body.photoID,
           charityInformation: req.body.charityInformation,
           ownerConsent: req.body.ownerConsent,
@@ -181,7 +175,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
           photoID: req.body.photoID,
           charityInformation: req.body.charityInformation,
           ownerConsent: req.body.ownerConsent,
@@ -245,6 +238,7 @@ router.post(
           return res.render("donationBin/editOperator", {
             title: "BWG | Edit Donation Bin Operator",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

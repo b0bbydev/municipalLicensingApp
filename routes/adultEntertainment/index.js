@@ -96,6 +96,7 @@ router.get(
             return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Address") {
@@ -146,6 +147,7 @@ router.get(
             return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else {
@@ -195,6 +197,7 @@ router.get(
             return res.render("adultEntertainment/index", {
               title: "BWG | Adult Entertainment Licenses",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }
@@ -233,6 +236,7 @@ router.post("/", async (req, res, next) => {
       {
         issueDate: issueDate,
         expiryDate: expiryDate,
+        licenseNumber: req.body.licenseNumber,
       },
       {
         where: {
@@ -247,53 +251,11 @@ router.post("/", async (req, res, next) => {
         return res.render("adultEntertainment/index", {
           title: "BWG | Adult Entertainment Licenses",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
 });
-
-/* POST /adultEntertainment/history - getting value to search by, then redirect */
-router.post(
-  "/history",
-  body("businessName")
-    .if(body("businessName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid Business Name Entry!")
-    .trim(),
-  async (req, res, next) => {
-    // server side validation.
-    const errors = validationResult(req);
-
-    // if errors is NOT empty (if there are errors...).
-    if (!errors.isEmpty()) {
-      return res.render("adultEntertainment/index", {
-        title: "BWG | Adult Entertainment Licenses",
-        message: "Page Error!",
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-      });
-    } else {
-      // get the specified business.
-      Business.findOne({
-        where: {
-          businessName: req.body.businessName,
-        },
-      })
-        .then((results) => {
-          // redirect to unique history page.
-          return res.redirect(
-            "/adultEntertainment/history/" + results.businessID
-          );
-        }) // catch any scary errors and render page error.
-        .catch((err) => {
-          return res.render("adultEntertainment/history", {
-            title: "BWG | Adult Entertainment License History",
-            message: "Page Error!",
-          });
-        });
-    }
-  }
-);
 
 /* GET /adultEntertainment/printLicense/:id */
 router.get(
@@ -353,6 +315,7 @@ router.get(
           return res.render("adultEntertainment/printLicense", {
             title: "BWG | Print License",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

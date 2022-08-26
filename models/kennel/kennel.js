@@ -26,6 +26,11 @@ const Kennel = sequelize.define("kennel", {
     allowNull: true,
   },
 
+  licenseNumber: {
+    type: Sequelize.STRING(50),
+    allowNull: true,
+  },
+
   phoneNumber: {
     type: Sequelize.STRING(20),
     allowNull: true,

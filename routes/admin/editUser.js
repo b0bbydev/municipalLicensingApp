@@ -51,6 +51,7 @@ router.get(
           return res.render("admin/editUser", {
             title: "BWG | Edit User",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -63,12 +64,12 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid First Name Entry!")
     .trim(),
   body("lastName")
     .if(body("lastName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Last Name Entry!")
     .trim(),
   body("email")
@@ -117,6 +118,7 @@ router.post(
           return res.render("admin/editUser", {
             title: "BWG | Edit User",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

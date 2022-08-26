@@ -47,16 +47,6 @@
   >Reset</a>
 </form>
 <div class="row">
-  <div class="col mt-1">
-    <a
-      class="user-select-none"
-      id="historyLink"
-      data-bs-toggle="modal"
-      data-bs-target="#historyModal"
-    >View Address History</a>
-  </div>
-</div>
-<div class="row">
   <div class="col mb-1">
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
@@ -76,7 +66,9 @@
 {{/if}}
 
 <!-- Table -->
-<table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
       <th>Business Name</th>
@@ -88,7 +80,7 @@
       <th>Issue Date</th>
       <th>Expiry Date</th>
       <th>Notes</th>
-      <th id="actionsCell">Actions</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
@@ -97,14 +89,25 @@
         <td>{{this.businessName}}</td>
         <td>{{this.ownerName}}</td>
         {{#each businessAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}}
-            {{this.postalCode}}</td>
+          <td class="tableLink"><a
+              class="stretched-link"
+              id="ownerLink"
+              href="/adultEntertainment/businessAddressHistory/{{this.businessID}}"
+              title="View Address History"
+            >{{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}
+              {{this.poBoxAptRR}}</a></td>
         {{/each}}
         <td>{{this.contactName}}</td>
         <td>{{this.contactPhone}}</td>
-        <td>{{this.licenseNumber}}</td>
+        <td class="tableLink"><a
+            class="stretched-link"
+            id="ownerLink"
+            href="/adultEntertainment/businessHistory/{{this.businessID}}"
+            title="View Business History"
+          >{{this.licenseNumber}}</a></td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.notes}}</td>
@@ -125,7 +128,10 @@
             data-bs-target="#businessModal-{{this.businessID}}"
           >Documentation</a>
           <!-- Print to Filehold -->
-          <a href="/adultEntertainment/printLicense/{{this.businessID}}" title="Print License"><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
+          <a
+            href="/adultEntertainment/printLicense/{{this.businessID}}"
+            title="Print License"
+          ><i class="icon-blue bi bi-printer-fill ms-1"></i></a></td>
       </tr>
       <!-- Documentation Modal -->
       <div
@@ -229,24 +235,47 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <label for="Business ID" class="form-label">Business ID</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  name="businessID"
-                  value="{{this.businessID}}"
-                  readonly
-                />
-                <label for="Business Name" class="form-label">Business Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Business Name"
-                  name="businessName"
-                  value="{{this.businessName}}"
-                  readonly
-                />
-                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
+                <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                <div class="row" style="display: none;">
+                  <div class="col">
+                    <label for="Business ID" class="form-label">Business ID</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="businessID"
+                      value="{{this.businessID}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Business Name" class="form-label">Business Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Business Name"
+                      name="businessName"
+                      value="{{this.businessName}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="License Number" class="form-label">License
+                      Number</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="New License Number"
+                      name="licenseNumber"
+                    />
+                  </div>
+                </div>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
               </div>
               <div class="modal-footer">
                 <button
@@ -263,54 +292,3 @@
     {{/each}}
   </tbody>
 </table>
-
-<!-- History Modal -->
-<div
-  class="modal fade"
-  id="historyModal"
-  tabindex="-1"
-  aria-labelledby="History Modal"
-  aria-hidden="true"
->
-  <form method="POST" action="/adultEntertainment/history">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">History Search</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <label for="Business Name" class="form-label">Enter the name of the
-            business</label>
-          <input
-            list="businesses"
-            class="form-control"
-            placeholder="Business Name"
-            name="businessName"
-            required
-          />
-          <datalist id="businesses">
-            {{#each data}}
-              <option
-                value="{{this.businessName}}"
-              >{{this.businessName}}</option>
-            {{/each}}
-          </datalist>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >Close</button>
-          <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>

@@ -35,17 +35,17 @@ router.post(
   "/",
   body("firstName")
     .if(body("firstName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid First Name Entry!")
     .trim(),
   body("lastName")
     .if(body("lastName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Last Name Entry!")
     .trim(),
   body("phoneNumber")
     .if(body("phoneNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Phone Number Entry!")
     .trim(),
   body("email")
@@ -53,29 +53,24 @@ router.post(
     .isEmail()
     .withMessage("Invalid Email Entry!")
     .trim(),
-  body("licenseNumber")
-    .if(body("licenseNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
-    .withMessage("Invalid License Number Entry!")
-    .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Number Entry!")
     .trim(),
   body("streetName")
     .if(body("streetName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   async (req, res, next) => {
@@ -106,7 +101,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
           town: req.body.town,
@@ -120,7 +114,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
           kennelID: req.session.kennelID,
           kennelOwnerAddresses: [
             {
@@ -142,6 +135,7 @@ router.post(
           return res.render("kennels/addKennelOwner", {
             title: "BWG | Add Kennel Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

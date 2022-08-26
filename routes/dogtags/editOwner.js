@@ -79,6 +79,7 @@ router.get(
           return res.render("dogtags/editOwner", {
             title: "BWG | Edit Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -91,27 +92,27 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid First Name Entry!")
     .trim(),
   body("lastName")
     .if(body("lastName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Last Name Entry!")
     .trim(),
   body("homePhone")
     .if(body("homePhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Home Phone Number Entry!")
     .trim(),
   body("cellPhone")
     .if(body("cellPhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Cell Phone Number Entry!")
     .trim(),
   body("workPhone")
     .if(body("workPhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Work Phone Number Entry!")
     .trim(),
   body("email")
@@ -121,27 +122,27 @@ router.post(
     .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Number Entry!")
     .trim(),
   body("streetName")
     .if(body("streetName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("poBoxAptRR")
     .if(body("poBoxAptRR").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid PO Box/Apt/RR Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   async (req, res, next) => {
@@ -296,6 +297,7 @@ router.post(
           return res.render("dogtags/editOwner", {
             title: "BWG | Edit Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

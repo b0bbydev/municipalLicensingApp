@@ -41,6 +41,7 @@ router.get("/", async (req, res, next) => {
       return res.render("dropdownManager/index", {
         title: "BWG | Dropdown Manager",
         message: "Page Error!",
+        auth: req.session.auth, // authorization.
       });
     });
 });
@@ -50,7 +51,7 @@ router.post(
   "/",
   body("formName")
     .notEmpty()
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Dropdown Form Name Entry!")
     .trim(),
   async (req, res, next) => {
@@ -80,6 +81,7 @@ router.post(
           return res.render("dropdownManager/index", {
             title: "BWG | Dropdown Manager",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

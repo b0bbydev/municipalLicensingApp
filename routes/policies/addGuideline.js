@@ -63,32 +63,32 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("guidelineNumber")
     .if(body("guidelineNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Guideline Number Entry!")
     .trim(),
   body("guidelineName")
     .if(body("guidelineName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Guideline Name Entry!")
     .trim(),
   body("status")
     .if(body("status").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
   body("division")
     .if(body("division").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Division Entry!")
     .trim(),
   body("authority")
     .if(body("authority").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Authority Entry!")
     .trim(),
   body("administrator")
     .if(body("administrator").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Administrator Entry!")
     .trim(),
   body("notes")
@@ -174,6 +174,7 @@ router.post(
           return res.render("policies/addGuideline", {
             title: "BWG | Add Guideline",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

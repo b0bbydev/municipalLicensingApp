@@ -4,10 +4,12 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const HawkerPeddlerApplicant = require("../../models/hawkerPeddler/hawkerPeddlerApplicant");
 const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawkerPeddlerApplicantAddress");
+// helpers.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /hawkerPeddler/addApplicant */
+/* GET /hawkerPeddler/addOperator */
 router.get("/", async (req, res, next) => {
   // check if there's an error message in the session
   let messages = req.session.messages || [];
@@ -21,8 +23,8 @@ router.get("/", async (req, res, next) => {
     },
   });
 
-  return res.render("hawkerPeddler/addApplicant", {
-    title: "BWG | Add Applicant",
+  return res.render("hawkerPeddler/addOperator", {
+    title: "BWG | Add Operator",
     message: messages,
     email: req.session.email,
     auth: req.session.auth, // authorization.
@@ -30,22 +32,22 @@ router.get("/", async (req, res, next) => {
   });
 });
 
-/* POST /hawkerPeddler/addApplicant */
+/* POST /hawkerPeddler/addOperator */
 router.post(
   "/",
   body("firstName")
     .if(body("firstName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid First Name Entry!")
     .trim(),
   body("lastName")
     .if(body("lastName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Last Name Entry!")
     .trim(),
   body("phoneNumber")
     .if(body("phoneNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Phone Number Entry!")
     .trim(),
   body("email")
@@ -55,27 +57,27 @@ router.post(
     .trim(),
   body("licenseNumber")
     .if(body("licenseNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid License Number Entry!")
     .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Number Entry!")
     .trim(),
   body("streetName")
     .if(body("streetName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   async (req, res, next) => {
@@ -94,8 +96,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/addApplicant", {
-        title: "BWG | Add Applicant",
+      return res.render("hawkerPeddler/addOperator", {
+        title: "BWG | Add Operator",
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -107,6 +109,8 @@ router.post(
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
           town: req.body.town,
@@ -121,6 +125,8 @@ router.post(
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           licenseNumber: req.body.licenseNumber,
+          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           hawkerPeddlerBusinessID: req.session.hawkerPeddlerBusinessID,
           hawkerPeddlerApplicantAddresses: [
             {
@@ -141,9 +147,10 @@ router.post(
           );
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/addApplicant", {
-            title: "BWG | Add Applicant",
+          return res.render("hawkerPeddler/addOperator", {
+            title: "BWG | Add Operator",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

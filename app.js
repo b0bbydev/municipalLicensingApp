@@ -48,7 +48,8 @@ var adminManageAccessRouter = require("./routes/admin/manageAccess");
 var adultEntertainmentRouter = require("./routes/adultEntertainment/index");
 var adultEntertainmentAddBusinessRouter = require("./routes/adultEntertainment/addBusiness");
 var adultEntertainmentEditBusinessRouter = require("./routes/adultEntertainment/editBusiness");
-var adultEntertainmentHistoryRouter = require("./routes/adultEntertainment/history");
+var adultEntertainmentAddressHistoryRouter = require("./routes/adultEntertainment/businessAddressHistory");
+var adultEntertainmentBusinessHistoryRouter = require("./routes/adultEntertainment/businessHistory");
 
 /* policies related routes. */
 var policiesRouter = require("./routes/policies/index");
@@ -109,6 +110,8 @@ var editDonationBinRouter = require("./routes/donationBin/editDonationBin");
 
 var binsRoute = require("./routes/donationBin/bins");
 
+var donationBinHistoryRoute = require("./routes/donationBin/donationBinHistory");
+
 /* Hawker & Peddler related routes */
 var hawkerPeddlerRoute = require("./routes/hawkerPeddler/index");
 
@@ -124,10 +127,12 @@ var hawkerPeddlerEditPropertyOwnerRoute = require("./routes/hawkerPeddler/editPr
 var hawkerPeddlerAddBusinessRoute = require("./routes/hawkerPeddler/addBusiness");
 var hawkerPeddlerEditBusinessRoute = require("./routes/hawkerPeddler/editBusiness");
 
-var hawkerPeddlerAddApplicantRoute = require("./routes/hawkerPeddler/addApplicant");
-var hawkerPeddlerEditApplicantRoute = require("./routes/hawkerPeddler/editApplicant");
+var hawkerPeddlerAddOperatorRoute = require("./routes/hawkerPeddler/addOperator");
+var hawkerPeddlerEditOperatorRoute = require("./routes/hawkerPeddler/editOperator");
 
 var hawkerPeddlerBusinessRoute = require("./routes/hawkerPeddler/business");
+
+var hawkerPeddlerOperatorHistoryRoute = require("./routes/hawkerPeddler/operatorHistory");
 
 /* Kennel related routes */
 var kennelsRoute = require("./routes/kennels/index");
@@ -139,6 +144,7 @@ var kennelOwnerAddressHistoryRoute = require("./routes/kennels/kennelOwnerAddres
 var kennelPropertyOwnerAddressHistoryRoute = require("./routes/kennels/kennelPropertyOwnerAddressHistory");
 
 var kennelRoute = require("./routes/kennels/kennel");
+var kennelHistoryRoute = require("./routes/kennels/kennelHistory");
 var addKennelRoute = require("./routes/kennels/addKennel");
 var editKennelRoute = require("./routes/kennels/editKennel");
 
@@ -170,6 +176,8 @@ var editRefreshmentVehicleRoute = require("./routes/refreshmentVehicles/editVehi
 
 var vehicleRoute = require("./routes/refreshmentVehicles/vehicle");
 
+var vehicleHistoryRoute = require("./routes/refreshmentVehicles/vehicleHistory");
+
 var addRefreshmentVehiclePropertyOwner = require("./routes/refreshmentVehicles/addPropertyOwner");
 var editRefreshmentVehiclePropertyOwner = require("./routes/refreshmentVehicles/editPropertyOwner");
 
@@ -200,6 +208,10 @@ var addTaxiBrokerRoute = require("./routes/taxiLicenses/addBroker");
 var editTaxiBrokerRoute = require("./routes/taxiLicenses/editBroker");
 
 var taxiBrokerRoute = require("./routes/taxiLicenses/broker");
+
+var taxiBrokerHistoryRoute = require("./routes/taxiLicenses/brokerHistory");
+var taxiDriverHistoryRoute = require("./routes/taxiLicenses/driverHistory");
+var taxiPlateHistoryRoute = require("./routes/taxiLicenses/plateHistory");
 
 var addTaxiDriverRoute = require("./routes/taxiLicenses/addDriver");
 var editTaxiDriverRoute = require("./routes/taxiLicenses/editDriver");
@@ -352,10 +364,17 @@ app.use(
   isEnforcement,
   adultEntertainmentEditBusinessRouter
 );
+
 app.use(
-  "/adultEntertainment/history",
+  "/adultEntertainment/businessAddressHistory",
   isEnforcement,
-  adultEntertainmentHistoryRouter
+  adultEntertainmentAddressHistoryRouter
+);
+
+app.use(
+  "/adultEntertainment/businessHistory",
+  isEnforcement,
+  adultEntertainmentBusinessHistoryRouter
 );
 
 /* policies related routes. */
@@ -445,6 +464,8 @@ app.use("/donationBin/bins", isEnforcement, binsRoute);
 app.use("/donationBin/addDonationBin", isEnforcement, addDonationBinRouter);
 app.use("/donationBin/editDonationBin", isEnforcement, editDonationBinRouter);
 
+app.use("/donationBin/donationBinHistory", donationBinHistoryRoute);
+
 /* Hawker & Peddler related routes */
 app.use("/hawkerPeddler", isEnforcement, hawkerPeddlerRoute);
 
@@ -478,22 +499,30 @@ app.use(
 );
 
 app.use(
-  "/hawkerPeddler/addApplicant",
+  "/hawkerPeddler/addOperator",
   isEnforcement,
-  hawkerPeddlerAddApplicantRoute
+  hawkerPeddlerAddOperatorRoute
 );
 app.use(
-  "/hawkerPeddler/editApplicant",
+  "/hawkerPeddler/editOperator",
   isEnforcement,
-  hawkerPeddlerEditApplicantRoute
+  hawkerPeddlerEditOperatorRoute
 );
 
 app.use("/hawkerPeddler/business", isEnforcement, hawkerPeddlerBusinessRoute);
+
+app.use(
+  "/hawkerPeddler/operatorHistory",
+  isEnforcement,
+  hawkerPeddlerOperatorHistoryRoute
+);
+
 app.use(
   "/hawkerPeddler/addBusiness",
   isEnforcement,
   hawkerPeddlerAddBusinessRoute
 );
+
 app.use(
   "/hawkerPeddler/editBusiness",
   isEnforcement,
@@ -502,6 +531,8 @@ app.use(
 
 /* kennel related routes */
 app.use("/kennels", isEnforcement, kennelsRoute);
+
+app.use("/kennels/kennelHistory", isEnforcement, kennelHistoryRoute);
 
 app.use(
   "/kennels/kennelAddressHistory",
@@ -553,6 +584,12 @@ app.use("/liquor/editBusiness", isEnforcement, editLiquorBusinessRoute);
 
 /* Refreshment Vehicle related routes */
 app.use("/refreshmentVehicles", isEnforcement, refreshmentVehicleRoute);
+
+app.use(
+  "/refreshmentVehicles/vehicleHistory",
+  isEnforcement,
+  vehicleHistoryRoute
+);
 
 app.use(
   "/refreshmentVehicles/vehicleOperatorAddressHistory",
@@ -651,6 +688,10 @@ app.use("/taxiLicenses/addBroker", isEnforcement, addTaxiBrokerRoute);
 app.use("/taxiLicenses/editBroker", isEnforcement, editTaxiBrokerRoute);
 
 app.use("/taxiLicenses/broker", isEnforcement, taxiBrokerRoute);
+
+app.use("/taxiLicenses/brokerHistory", isEnforcement, taxiBrokerHistoryRoute);
+app.use("/taxiLicenses/driverHistory", isEnforcement, taxiDriverHistoryRoute);
+app.use("/taxiLicenses/plateHistory", isEnforcement, taxiPlateHistoryRoute);
 
 app.use("/taxiLicenses/addDriver", isEnforcement, addTaxiDriverRoute);
 app.use("/taxiLicenses/editDriver", isEnforcement, editTaxiDriverRoute);

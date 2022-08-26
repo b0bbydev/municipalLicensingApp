@@ -16,6 +16,11 @@ const POAMatterTrial = sequelize.define("poaMatterTrial", {
     type: Sequelize.DATEONLY,
     allowNull: true,
   },
+
+  trialComment: {
+    type: Sequelize.STRING(255),
+    allowNull: true,
+  },
 });
 
 POAMatter.hasMany(POAMatterTrial, {

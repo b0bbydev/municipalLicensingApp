@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 19, 2022 at 08:22 PM
+-- Generation Time: Aug 26, 2022 at 03:42 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `additionalowners` (
 DROP TABLE IF EXISTS `addresses`;
 CREATE TABLE IF NOT EXISTS `addresses` (
   `addressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `poBoxAptRR` varchar(25) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `addresshistory` (
 DROP TABLE IF EXISTS `businessaddresses`;
 CREATE TABLE IF NOT EXISTS `businessaddresses` (
   `businessAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `poBoxAptRR` varchar(25) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
@@ -192,6 +192,54 @@ CREATE TABLE IF NOT EXISTS `businesses` (
   PRIMARY KEY (`businessID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Triggers `businesses`
+--
+DROP TRIGGER IF EXISTS `adultEntertainmentBusinessHistoryInsert`;
+DELIMITER $$
+CREATE TRIGGER `adultEntertainmentBusinessHistoryInsert` AFTER INSERT ON `businesses` FOR EACH ROW INSERT INTO businessHistory
+ SET action = 'insert',
+     businessName = NEW.businessName,
+     ownerName = NEW.ownerName,
+     contactName = NEW.contactName,
+     contactPhone = NEW.contactPhone,
+     licenseNumber = NEW.licenseNumber,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     policeVSC = NEW.policeVSC,
+     certificateOfInsurance = NEW.certificateOfInsurance,
+     photoID = NEW.photoID,
+     healthInspection = NEW.healthInspection,
+     zoningClearance = NEW.zoningClearance,
+     feePaid = NEW.feePaid,
+     notes = NEW.notes,
+     lastModified = NOW(),
+     businessID = NEW.businessID
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `adultEntertainmentBusinessHistoryUpdate`;
+DELIMITER $$
+CREATE TRIGGER `adultEntertainmentBusinessHistoryUpdate` AFTER UPDATE ON `businesses` FOR EACH ROW INSERT INTO businessHistory
+ SET action = 'update',
+     businessName = NEW.businessName,
+     ownerName = NEW.ownerName,
+     contactName = NEW.contactName,
+     contactPhone = NEW.contactPhone,
+     licenseNumber = NEW.licenseNumber,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     policeVSC = NEW.policeVSC,
+     certificateOfInsurance = NEW.certificateOfInsurance,
+     photoID = NEW.photoID,
+     healthInspection = NEW.healthInspection,
+     zoningClearance = NEW.zoningClearance,
+     feePaid = NEW.feePaid,
+     notes = NEW.notes,
+     lastModified = NOW(),
+     businessID = NEW.businessID
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -202,7 +250,7 @@ DROP TABLE IF EXISTS `businessesaddresshistory`;
 CREATE TABLE IF NOT EXISTS `businessesaddresshistory` (
   `businessAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `poBoxAptRR` varchar(25) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
@@ -212,6 +260,36 @@ CREATE TABLE IF NOT EXISTS `businessesaddresshistory` (
   `businessID` int(11) DEFAULT NULL,
   PRIMARY KEY (`businessAddressHistoryID`),
   KEY `businessAddressID` (`businessAddressID`),
+  KEY `businessID` (`businessID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `businesshistory`
+--
+
+DROP TABLE IF EXISTS `businesshistory`;
+CREATE TABLE IF NOT EXISTS `businesshistory` (
+  `businessHistoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(20) NOT NULL,
+  `businessName` varchar(50) DEFAULT NULL,
+  `ownerName` varchar(50) DEFAULT NULL,
+  `contactName` varchar(50) DEFAULT NULL,
+  `contactPhone` varchar(15) DEFAULT NULL,
+  `licenseNumber` varchar(15) DEFAULT NULL,
+  `issueDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
+  `policeVSC` enum('Yes','No') DEFAULT NULL,
+  `certificateOfInsurance` enum('Yes','No') DEFAULT NULL,
+  `photoID` enum('Yes','No') DEFAULT NULL,
+  `healthInspection` enum('Yes','No') DEFAULT NULL,
+  `zoningClearance` enum('Yes','No') DEFAULT NULL,
+  `feePaid` enum('Yes','No') DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `lastModified` datetime DEFAULT NULL,
+  `businessID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`businessHistoryID`),
   KEY `businessID` (`businessID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -368,7 +446,7 @@ DELIMITER ;
 DROP TABLE IF EXISTS `donationbinaddresses`;
 CREATE TABLE IF NOT EXISTS `donationbinaddresses` (
   `donationBinAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -417,7 +495,7 @@ DROP TABLE IF EXISTS `donationbinaddresshistory`;
 CREATE TABLE IF NOT EXISTS `donationbinaddresshistory` (
   `donationBinAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -451,13 +529,37 @@ CREATE TABLE IF NOT EXISTS `donationbincharities` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `donationbinhistory`
+--
+
+DROP TABLE IF EXISTS `donationbinhistory`;
+CREATE TABLE IF NOT EXISTS `donationbinhistory` (
+  `donationBinHistoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(20) NOT NULL,
+  `licenseNumber` varchar(15) DEFAULT NULL,
+  `issueDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
+  `itemsCollected` varchar(255) DEFAULT NULL,
+  `pickupSchedule` varchar(255) DEFAULT NULL,
+  `colour` varchar(25) DEFAULT NULL,
+  `material` varchar(50) DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `lastModified` datetime DEFAULT NULL,
+  `donationBinID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`donationBinHistoryID`),
+  KEY `donationBinID` (`donationBinID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `donationbinoperatoraddresses`
 --
 
 DROP TABLE IF EXISTS `donationbinoperatoraddresses`;
 CREATE TABLE IF NOT EXISTS `donationbinoperatoraddresses` (
   `donationBinOperatorAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -506,7 +608,7 @@ DROP TABLE IF EXISTS `donationbinoperatoraddresshistory`;
 CREATE TABLE IF NOT EXISTS `donationbinoperatoraddresshistory` (
   `donationBinOperatorAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -531,7 +633,6 @@ CREATE TABLE IF NOT EXISTS `donationbinoperators` (
   `lastName` varchar(25) DEFAULT NULL,
   `phoneNumber` varchar(25) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `licenseNumber` varchar(50) DEFAULT NULL,
   `photoID` enum('Yes','No') DEFAULT NULL,
   `charityInformation` enum('Yes','No') DEFAULT NULL,
   `sitePlan` enum('Yes','No') DEFAULT NULL,
@@ -551,7 +652,7 @@ CREATE TABLE IF NOT EXISTS `donationbinoperators` (
 DROP TABLE IF EXISTS `donationbinpropertyowneraddresses`;
 CREATE TABLE IF NOT EXISTS `donationbinpropertyowneraddresses` (
   `donationBinPropertyOwnerAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -600,7 +701,7 @@ DROP TABLE IF EXISTS `donationbinpropertyowneraddresshistory`;
 CREATE TABLE IF NOT EXISTS `donationbinpropertyowneraddresshistory` (
   `donationBinPropertyOwnerAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -639,6 +740,7 @@ CREATE TABLE IF NOT EXISTS `donationbinpropertyowners` (
 DROP TABLE IF EXISTS `donationbins`;
 CREATE TABLE IF NOT EXISTS `donationbins` (
   `donationBinID` int(11) NOT NULL AUTO_INCREMENT,
+  `licenseNumber` varchar(15) DEFAULT NULL,
   `issueDate` date DEFAULT NULL,
   `expiryDate` date DEFAULT NULL,
   `itemsCollected` varchar(255) DEFAULT NULL,
@@ -648,6 +750,42 @@ CREATE TABLE IF NOT EXISTS `donationbins` (
   `notes` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`donationBinID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Triggers `donationbins`
+--
+DROP TRIGGER IF EXISTS `donationBinHistoryInsert`;
+DELIMITER $$
+CREATE TRIGGER `donationBinHistoryInsert` AFTER INSERT ON `donationbins` FOR EACH ROW INSERT INTO donationBinHistory
+ SET action = 'insert',
+     licenseNumber = NEW.licenseNumber,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     itemsCollected = NEW.itemsCollected,
+     pickupSchedule = NEW.pickupSchedule,
+     colour = NEW.colour,
+     material = NEW.material,
+     notes = NEW.notes,
+     lastModified = NOW(),
+     donationBinID = NEW.donationBinID
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `donationBinHistoryUpdate`;
+DELIMITER $$
+CREATE TRIGGER `donationBinHistoryUpdate` AFTER UPDATE ON `donationbins` FOR EACH ROW INSERT INTO donationBinHistory
+ SET action = 'update',
+     licenseNumber = NEW.licenseNumber,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     itemsCollected = NEW.itemsCollected,
+     pickupSchedule = NEW.pickupSchedule,
+     colour = NEW.colour,
+     material = NEW.material,
+     notes = NEW.notes,
+     lastModified = NOW(),
+     donationBinID = NEW.donationBinID
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -798,7 +936,7 @@ DELIMITER ;
 DROP TABLE IF EXISTS `hawkerpeddlerapplicantaddresses`;
 CREATE TABLE IF NOT EXISTS `hawkerpeddlerapplicantaddresses` (
   `hawkerPeddlerApplicantAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -847,7 +985,7 @@ DROP TABLE IF EXISTS `hawkerpeddlerapplicantaddresshistory`;
 CREATE TABLE IF NOT EXISTS `hawkerpeddlerapplicantaddresshistory` (
   `hawkerPeddlerApplicantAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -872,11 +1010,47 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerapplicants` (
   `lastName` varchar(50) DEFAULT NULL,
   `phoneNumber` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
+  `issueDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
   `licenseNumber` varchar(50) DEFAULT NULL,
   `hawkerPeddlerBusinessID` int(11) DEFAULT NULL,
   PRIMARY KEY (`hawkerPeddlerApplicantID`),
   KEY `hawkerPeddlerBusinessID` (`hawkerPeddlerBusinessID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Triggers `hawkerpeddlerapplicants`
+--
+DROP TRIGGER IF EXISTS `hawkerPeddlerOperatorHistoryInsert`;
+DELIMITER $$
+CREATE TRIGGER `hawkerPeddlerOperatorHistoryInsert` AFTER INSERT ON `hawkerpeddlerapplicants` FOR EACH ROW INSERT INTO hawkerPeddlerOperatorHistory
+ SET action = 'insert',
+     firstName = NEW.firstName,
+     lastName = NEW.lastName,
+     phoneNumber = NEW.phoneNumber,
+     email = NEW.email,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     licenseNumber = NEW.licenseNumber,
+     lastModified = NOW(),
+     hawkerPeddlerApplicantID = NEW.hawkerPeddlerApplicantID
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `hawkerPeddlerOperatorHistoryUpdate`;
+DELIMITER $$
+CREATE TRIGGER `hawkerPeddlerOperatorHistoryUpdate` AFTER UPDATE ON `hawkerpeddlerapplicants` FOR EACH ROW INSERT INTO hawkerPeddlerOperatorHistory
+ SET action = 'update',
+     firstName = NEW.firstName,
+     lastName = NEW.lastName,
+     phoneNumber = NEW.phoneNumber,
+     email = NEW.email,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     licenseNumber = NEW.licenseNumber,
+     lastModified = NOW(),
+     hawkerPeddlerApplicantID = NEW.hawkerPeddlerApplicantID
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -887,7 +1061,7 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerapplicants` (
 DROP TABLE IF EXISTS `hawkerpeddlerbusinessaddresses`;
 CREATE TABLE IF NOT EXISTS `hawkerpeddlerbusinessaddresses` (
   `hawkerPeddlerBusinessAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -936,7 +1110,7 @@ DROP TABLE IF EXISTS `hawkerpeddlerbusinessaddresshistory`;
 CREATE TABLE IF NOT EXISTS `hawkerpeddlerbusinessaddresshistory` (
   `hawkerPeddlerBusinessAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -958,8 +1132,6 @@ DROP TABLE IF EXISTS `hawkerpeddlerbusinesses`;
 CREATE TABLE IF NOT EXISTS `hawkerpeddlerbusinesses` (
   `hawkerPeddlerBusinessID` int(11) NOT NULL AUTO_INCREMENT,
   `businessName` varchar(50) DEFAULT NULL,
-  `issueDate` date DEFAULT NULL,
-  `expiryDate` date DEFAULT NULL,
   `phoneNumber` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `itemsForSale` varchar(255) DEFAULT NULL,
@@ -974,13 +1146,36 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerbusinesses` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `hawkerpeddleroperatorhistory`
+--
+
+DROP TABLE IF EXISTS `hawkerpeddleroperatorhistory`;
+CREATE TABLE IF NOT EXISTS `hawkerpeddleroperatorhistory` (
+  `hawkerPeddlerOperatorHistoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(20) NOT NULL,
+  `firstName` varchar(50) DEFAULT NULL,
+  `lastName` varchar(50) DEFAULT NULL,
+  `phoneNumber` varchar(20) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `issueDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
+  `licenseNumber` varchar(50) DEFAULT NULL,
+  `lastModified` datetime DEFAULT NULL,
+  `hawkerPeddlerApplicantID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`hawkerPeddlerOperatorHistoryID`),
+  KEY `hawkerPeddlerApplicantID` (`hawkerPeddlerApplicantID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `hawkerpeddlerpropertyowneraddresses`
 --
 
 DROP TABLE IF EXISTS `hawkerpeddlerpropertyowneraddresses`;
 CREATE TABLE IF NOT EXISTS `hawkerpeddlerpropertyowneraddresses` (
   `hawkerPeddlerPropertyOwnerAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1029,7 +1224,7 @@ DROP TABLE IF EXISTS `hawkerpeddlerpropertyowneraddresshistory`;
 CREATE TABLE IF NOT EXISTS `hawkerpeddlerpropertyowneraddresshistory` (
   `hawkerPeddlerPropertyOwnerAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1068,7 +1263,7 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerpropertyowners` (
 DROP TABLE IF EXISTS `kenneladdresses`;
 CREATE TABLE IF NOT EXISTS `kenneladdresses` (
   `kennelAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1117,7 +1312,7 @@ DROP TABLE IF EXISTS `kenneladdresshistory`;
 CREATE TABLE IF NOT EXISTS `kenneladdresshistory` (
   `kennelAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1132,13 +1327,40 @@ CREATE TABLE IF NOT EXISTS `kenneladdresshistory` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kennelhistory`
+--
+
+DROP TABLE IF EXISTS `kennelhistory`;
+CREATE TABLE IF NOT EXISTS `kennelhistory` (
+  `kennelHistoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(20) NOT NULL,
+  `kennelName` varchar(50) DEFAULT NULL,
+  `issueDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
+  `licenseNumber` varchar(50) DEFAULT NULL,
+  `phoneNumber` varchar(20) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `policeCheck` enum('Yes','No') DEFAULT NULL,
+  `photoID` enum('Yes','No') DEFAULT NULL,
+  `zoningClearance` enum('Yes','No') DEFAULT NULL,
+  `acoInspection` enum('Yes','No') DEFAULT NULL,
+  `lastModified` datetime DEFAULT NULL,
+  `kennelID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`kennelHistoryID`),
+  KEY `kennelID` (`kennelID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kennelowneraddresses`
 --
 
 DROP TABLE IF EXISTS `kennelowneraddresses`;
 CREATE TABLE IF NOT EXISTS `kennelowneraddresses` (
   `kennelOwnerAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1187,7 +1409,7 @@ DROP TABLE IF EXISTS `kennelowneraddresshistory`;
 CREATE TABLE IF NOT EXISTS `kennelowneraddresshistory` (
   `kennelOwnerAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1212,7 +1434,6 @@ CREATE TABLE IF NOT EXISTS `kennelowners` (
   `lastName` varchar(50) DEFAULT NULL,
   `phoneNumber` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `licenseNumber` varchar(50) DEFAULT NULL,
   `kennelID` int(11) DEFAULT NULL,
   PRIMARY KEY (`kennelOwnerID`),
   KEY `kennelID` (`kennelID`)
@@ -1227,7 +1448,7 @@ CREATE TABLE IF NOT EXISTS `kennelowners` (
 DROP TABLE IF EXISTS `kennelpropertyowneraddresses`;
 CREATE TABLE IF NOT EXISTS `kennelpropertyowneraddresses` (
   `kennelPropertyOwnerAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1276,7 +1497,7 @@ DROP TABLE IF EXISTS `kennelpropertyowneraddresshistory`;
 CREATE TABLE IF NOT EXISTS `kennelpropertyowneraddresshistory` (
   `kennelPropertyOwnerAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1318,6 +1539,7 @@ CREATE TABLE IF NOT EXISTS `kennels` (
   `kennelName` varchar(50) DEFAULT NULL,
   `issueDate` date DEFAULT NULL,
   `expiryDate` date DEFAULT NULL,
+  `licenseNumber` varchar(50) DEFAULT NULL,
   `phoneNumber` varchar(20) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
@@ -1328,6 +1550,48 @@ CREATE TABLE IF NOT EXISTS `kennels` (
   PRIMARY KEY (`kennelID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Triggers `kennels`
+--
+DROP TRIGGER IF EXISTS `kennelHistoryInsert`;
+DELIMITER $$
+CREATE TRIGGER `kennelHistoryInsert` AFTER INSERT ON `kennels` FOR EACH ROW INSERT INTO kennelHistory
+ SET action = 'insert',
+     kennelName = NEW.kennelName,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     licenseNumber = NEW.licenseNumber,
+     phoneNumber = NEW.phoneNumber,
+     email = NEW.email,
+     notes = NEW.notes,
+     policeCheck = NEW.policeCheck,
+     photoID = NEW.photoID,
+     zoningClearance = NEW.zoningClearance,
+     acoInspection = NEW.acoInspection,
+     lastModified = NOW(),
+     kennelID = NEW.kennelID
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `kennelHistoryUpdate`;
+DELIMITER $$
+CREATE TRIGGER `kennelHistoryUpdate` AFTER UPDATE ON `kennels` FOR EACH ROW INSERT INTO kennelHistory
+ SET action = 'update',
+     kennelName = NEW.kennelName,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     licenseNumber = NEW.licenseNumber,
+     phoneNumber = NEW.phoneNumber,
+     email = NEW.email,
+     notes = NEW.notes,
+     policeCheck = NEW.policeCheck,
+     photoID = NEW.photoID,
+     zoningClearance = NEW.zoningClearance,
+     acoInspection = NEW.acoInspection,
+     lastModified = NOW(),
+     kennelID = NEW.kennelID
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -1337,7 +1601,7 @@ CREATE TABLE IF NOT EXISTS `kennels` (
 DROP TABLE IF EXISTS `liquorbusinessaddresses`;
 CREATE TABLE IF NOT EXISTS `liquorbusinessaddresses` (
   `liquorBusinessAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1386,7 +1650,7 @@ DROP TABLE IF EXISTS `liquorbusinessaddresshistory`;
 CREATE TABLE IF NOT EXISTS `liquorbusinessaddresshistory` (
   `liquorBusinessAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1456,7 +1720,7 @@ CREATE TABLE IF NOT EXISTS `owners` (
 DROP TABLE IF EXISTS `poamatterlocations`;
 CREATE TABLE IF NOT EXISTS `poamatterlocations` (
   `poaMatterLocationID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1487,6 +1751,7 @@ CREATE TABLE IF NOT EXISTS `poamatters` (
   `prosecutor` varchar(50) DEFAULT NULL,
   `verdict` varchar(25) DEFAULT NULL,
   `comment` varchar(255) DEFAULT NULL,
+  `tmpCol` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`poaMatterID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -1500,6 +1765,7 @@ DROP TABLE IF EXISTS `poamattertrials`;
 CREATE TABLE IF NOT EXISTS `poamattertrials` (
   `poaMatterTrialID` int(11) NOT NULL AUTO_INCREMENT,
   `trialDate` date DEFAULT NULL,
+  `trialComment` varchar(255) DEFAULT NULL,
   `poaMatterID` int(11) DEFAULT NULL,
   PRIMARY KEY (`poaMatterTrialID`),
   KEY `poaMatterID` (`poaMatterID`)
@@ -1734,13 +2000,47 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `refreshmentvehiclehistory`
+--
+
+DROP TABLE IF EXISTS `refreshmentvehiclehistory`;
+CREATE TABLE IF NOT EXISTS `refreshmentvehiclehistory` (
+  `refreshmentVehicleHistoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(20) NOT NULL,
+  `registeredBusinessName` varchar(50) DEFAULT NULL,
+  `operatingBusinessName` varchar(50) DEFAULT NULL,
+  `licenseNumber` varchar(50) DEFAULT NULL,
+  `issueDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
+  `specialEvent` enum('Yes','No') DEFAULT NULL,
+  `itemsForSale` varchar(255) DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `policeVSC` enum('Yes','No') DEFAULT NULL,
+  `photoID` enum('Yes','No') DEFAULT NULL,
+  `driversAbstract` enum('Yes','No') DEFAULT NULL,
+  `safetyCertificate` enum('Yes','No') DEFAULT NULL,
+  `vehicleOwnership` enum('Yes','No') DEFAULT NULL,
+  `citizenship` enum('Yes','No') DEFAULT NULL,
+  `insurance` enum('Yes','No') DEFAULT NULL,
+  `fireApproval` enum('Yes','No') DEFAULT NULL,
+  `zoningClearance` enum('Yes','No') DEFAULT NULL,
+  `healthInspection` enum('Yes','No') DEFAULT NULL,
+  `lastModified` datetime DEFAULT NULL,
+  `refreshmentVehicleID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`refreshmentVehicleHistoryID`),
+  KEY `refreshmentVehicleID` (`refreshmentVehicleID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `refreshmentvehicleoperatoraddresses`
 --
 
 DROP TABLE IF EXISTS `refreshmentvehicleoperatoraddresses`;
 CREATE TABLE IF NOT EXISTS `refreshmentvehicleoperatoraddresses` (
   `refreshmentVehicleOperatorAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1789,7 +2089,7 @@ DROP TABLE IF EXISTS `refreshmentvehicleoperatoraddresshistory`;
 CREATE TABLE IF NOT EXISTS `refreshmentvehicleoperatoraddresshistory` (
   `refreshmentVehicleOperatorAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1828,7 +2128,7 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicleoperators` (
 DROP TABLE IF EXISTS `refreshmentvehicleowneraddresses`;
 CREATE TABLE IF NOT EXISTS `refreshmentvehicleowneraddresses` (
   `refreshmentVehicleOwnerAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1877,7 +2177,7 @@ DROP TABLE IF EXISTS `refreshmentvehicleowneraddresshistory`;
 CREATE TABLE IF NOT EXISTS `refreshmentvehicleowneraddresshistory` (
   `refreshmentVehicleOwnerAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1902,7 +2202,6 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicleowners` (
   `lastName` varchar(25) DEFAULT NULL,
   `phoneNumber` varchar(25) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
-  `licenseNumber` varchar(50) DEFAULT NULL,
   `refreshmentVehicleID` int(11) DEFAULT NULL,
   PRIMARY KEY (`refreshmentVehicleOwnerID`),
   KEY `refreshmentVehicleID` (`refreshmentVehicleID`)
@@ -1917,7 +2216,7 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicleowners` (
 DROP TABLE IF EXISTS `refreshmentvehiclepropertyowneraddresses`;
 CREATE TABLE IF NOT EXISTS `refreshmentvehiclepropertyowneraddresses` (
   `refreshmentVehiclePropertyOwnerAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -1966,7 +2265,7 @@ DROP TABLE IF EXISTS `refreshmentvehiclepropertyowneraddresshistory`;
 CREATE TABLE IF NOT EXISTS `refreshmentvehiclepropertyowneraddresshistory` (
   `refreshmentVehiclePropertyOwnerAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -2007,11 +2306,12 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicles` (
   `refreshmentVehicleID` int(11) NOT NULL AUTO_INCREMENT,
   `registeredBusinessName` varchar(50) DEFAULT NULL,
   `operatingBusinessName` varchar(50) DEFAULT NULL,
+  `licenseNumber` varchar(50) DEFAULT NULL,
   `issueDate` date DEFAULT NULL,
   `expiryDate` date DEFAULT NULL,
+  `specialEvent` enum('Yes','No') DEFAULT NULL,
   `itemsForSale` varchar(255) DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
-  `specialEvent` enum('Yes','No') DEFAULT NULL,
   `policeVSC` enum('Yes','No') DEFAULT NULL,
   `photoID` enum('Yes','No') DEFAULT NULL,
   `driversAbstract` enum('Yes','No') DEFAULT NULL,
@@ -2024,6 +2324,62 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicles` (
   `healthInspection` enum('Yes','No') DEFAULT NULL,
   PRIMARY KEY (`refreshmentVehicleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Triggers `refreshmentvehicles`
+--
+DROP TRIGGER IF EXISTS `refreshmentVehicleHistoryInsert`;
+DELIMITER $$
+CREATE TRIGGER `refreshmentVehicleHistoryInsert` AFTER INSERT ON `refreshmentvehicles` FOR EACH ROW INSERT INTO refreshmentVehicleHistory
+ SET action = 'insert',
+     registeredBusinessName = NEW.registeredBusinessName,
+     operatingBusinessName = NEW.operatingBusinessName,
+	 licenseNumber = NEW.licenseNumber,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     specialEvent = NEW.specialEvent,
+     itemsForSale = NEW.itemsForSale,
+     notes = NEW.notes,
+     policeVSC = NEW.policeVSC,
+     photoID = NEW.photoID,
+     driversAbstract = NEW.driversAbstract,
+     safetyCertificate = NEW.safetyCertificate,
+     vehicleOwnership = NEW.vehicleOwnership,
+     citizenship = NEW.citizenship,
+     insurance = NEW.insurance,
+     fireApproval = NEW.fireApproval,
+     zoningClearance = NEW.zoningClearance,
+     healthInspection = NEW.healthInspection,
+     lastModified = NOW(),
+     refreshmentVehicleID = NEW.refreshmentVehicleID
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `refreshmentVehicleHistoryUpdate`;
+DELIMITER $$
+CREATE TRIGGER `refreshmentVehicleHistoryUpdate` AFTER UPDATE ON `refreshmentvehicles` FOR EACH ROW INSERT INTO refreshmentVehicleHistory
+ SET action = 'update',
+     registeredBusinessName = NEW.registeredBusinessName,
+     operatingBusinessName = NEW.operatingBusinessName,
+	 licenseNumber = NEW.licenseNumber,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     specialEvent = NEW.specialEvent,
+     itemsForSale = NEW.itemsForSale,
+     notes = NEW.notes,
+     policeVSC = NEW.policeVSC,
+     photoID = NEW.photoID,
+     driversAbstract = NEW.driversAbstract,
+     safetyCertificate = NEW.safetyCertificate,
+     vehicleOwnership = NEW.vehicleOwnership,
+     citizenship = NEW.citizenship,
+     insurance = NEW.insurance,
+     fireApproval = NEW.fireApproval,
+     zoningClearance = NEW.zoningClearance,
+     healthInspection = NEW.healthInspection,
+     lastModified = NOW(),
+     refreshmentVehicleID = NEW.refreshmentVehicleID
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -2055,6 +2411,80 @@ CREATE TABLE IF NOT EXISTS `sessions` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `streetclosurecontactaddresses`
+--
+
+DROP TABLE IF EXISTS `streetclosurecontactaddresses`;
+CREATE TABLE IF NOT EXISTS `streetclosurecontactaddresses` (
+  `streetClosureContactAddressID` int(11) NOT NULL AUTO_INCREMENT,
+  `streetNumber` int(11) DEFAULT NULL,
+  `streetName` varchar(50) DEFAULT NULL,
+  `town` varchar(30) DEFAULT NULL,
+  `postalCode` varchar(15) DEFAULT NULL,
+  `streetClosureContactID` int(11) DEFAULT NULL,
+  `streetClosurePermitID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`streetClosureContactAddressID`),
+  KEY `streetClosureContactID` (`streetClosureContactID`),
+  KEY `streetClosurePermitID` (`streetClosurePermitID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `streetclosurecontacts`
+--
+
+DROP TABLE IF EXISTS `streetclosurecontacts`;
+CREATE TABLE IF NOT EXISTS `streetclosurecontacts` (
+  `streetClosureContactID` int(11) NOT NULL AUTO_INCREMENT,
+  `everydayContactName` varchar(50) DEFAULT NULL,
+  `everydayContactPhone` varchar(20) DEFAULT NULL,
+  `everydayContactEmail` varchar(50) DEFAULT NULL,
+  `streetClosurePermitID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`streetClosureContactID`),
+  KEY `streetClosurePermitID` (`streetClosurePermitID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `streetclosurecoordinatoraddresses`
+--
+
+DROP TABLE IF EXISTS `streetclosurecoordinatoraddresses`;
+CREATE TABLE IF NOT EXISTS `streetclosurecoordinatoraddresses` (
+  `streetClosureCoordinatorAddressID` int(11) NOT NULL AUTO_INCREMENT,
+  `streetNumber` int(11) DEFAULT NULL,
+  `streetName` varchar(50) DEFAULT NULL,
+  `town` varchar(30) DEFAULT NULL,
+  `postalCode` varchar(15) DEFAULT NULL,
+  `streetClosureCoordinatorID` int(11) DEFAULT NULL,
+  `streetClosurePermitID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`streetClosureCoordinatorAddressID`),
+  KEY `streetClosureCoordinatorID` (`streetClosureCoordinatorID`),
+  KEY `streetClosurePermitID` (`streetClosurePermitID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `streetclosurecoordinators`
+--
+
+DROP TABLE IF EXISTS `streetclosurecoordinators`;
+CREATE TABLE IF NOT EXISTS `streetclosurecoordinators` (
+  `streetClosureCoordinatorID` int(11) NOT NULL AUTO_INCREMENT,
+  `coordinatorName` varchar(50) DEFAULT NULL,
+  `coordinatorPhone` varchar(20) DEFAULT NULL,
+  `coordinatorEmail` varchar(50) DEFAULT NULL,
+  `streetClosurePermitID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`streetClosureCoordinatorID`),
+  KEY `streetClosurePermitID` (`streetClosurePermitID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `streetclosurepermits`
 --
 
@@ -2064,12 +2494,6 @@ CREATE TABLE IF NOT EXISTS `streetclosurepermits` (
   `permitNumber` varchar(15) DEFAULT NULL,
   `issueDate` date DEFAULT NULL,
   `sponser` varchar(75) DEFAULT NULL,
-  `coordinatorName` varchar(50) DEFAULT NULL,
-  `coordinatorPhone` varchar(20) DEFAULT NULL,
-  `coordinatorEmail` varchar(50) DEFAULT NULL,
-  `everydayContactName` varchar(50) DEFAULT NULL,
-  `everydayContactPhone` varchar(20) DEFAULT NULL,
-  `everydayContactEmail` varchar(50) DEFAULT NULL,
   `closureLocation` varchar(75) DEFAULT NULL,
   `closureDate` date DEFAULT NULL,
   `closureTime` varchar(50) DEFAULT NULL,
@@ -2078,20 +2502,8 @@ CREATE TABLE IF NOT EXISTS `streetclosurepermits` (
   `alcoholServed` enum('Yes','No') DEFAULT NULL,
   `estimatedAttendance` int(11) DEFAULT NULL,
   `cleanupPlan` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`streetClosurePermitID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `streetsnotused`
---
-
-DROP TABLE IF EXISTS `streetsnotused`;
-CREATE TABLE IF NOT EXISTS `streetsnotused` (
-  `streetID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetName` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`streetID`)
+  PRIMARY KEY (`streetClosurePermitID`),
+  UNIQUE KEY `permitNumber` (`permitNumber`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2123,7 +2535,7 @@ CREATE TABLE IF NOT EXISTS `tagnumberhistory` (
 DROP TABLE IF EXISTS `taxibrokeraddresses`;
 CREATE TABLE IF NOT EXISTS `taxibrokeraddresses` (
   `taxiBrokerAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -2172,7 +2584,7 @@ DROP TABLE IF EXISTS `taxibrokeraddresshistory`;
 CREATE TABLE IF NOT EXISTS `taxibrokeraddresshistory` (
   `taxiBrokerAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -2182,6 +2594,35 @@ CREATE TABLE IF NOT EXISTS `taxibrokeraddresshistory` (
   PRIMARY KEY (`taxiBrokerAddressHistoryID`),
   KEY `taxiBrokerID` (`taxiBrokerID`),
   KEY `taxiBrokerAddressID` (`taxiBrokerAddressID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `taxibrokerhistory`
+--
+
+DROP TABLE IF EXISTS `taxibrokerhistory`;
+CREATE TABLE IF NOT EXISTS `taxibrokerhistory` (
+  `taxiBrokerHistoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(20) NOT NULL,
+  `ownerName` varchar(50) DEFAULT NULL,
+  `companyName` varchar(75) DEFAULT NULL,
+  `phoneNumber` varchar(15) DEFAULT NULL,
+  `licenseNumber` varchar(50) DEFAULT NULL,
+  `issueDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
+  `policeVSC` enum('Yes','No') DEFAULT NULL,
+  `citizenship` enum('Yes','No') DEFAULT NULL,
+  `photoID` enum('Yes','No') DEFAULT NULL,
+  `driversAbstract` enum('Yes','No') DEFAULT NULL,
+  `certificateOfInsurance` enum('Yes','No') DEFAULT NULL,
+  `zoningApproval` enum('Yes','No') DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `lastModified` datetime DEFAULT NULL,
+  `taxiBrokerID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`taxiBrokerHistoryID`),
+  KEY `taxiBrokerID` (`taxiBrokerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2209,6 +2650,52 @@ CREATE TABLE IF NOT EXISTS `taxibrokers` (
   PRIMARY KEY (`taxiBrokerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Triggers `taxibrokers`
+--
+DROP TRIGGER IF EXISTS `taxiBrokerHistoryInsert`;
+DELIMITER $$
+CREATE TRIGGER `taxiBrokerHistoryInsert` AFTER INSERT ON `taxibrokers` FOR EACH ROW INSERT INTO taxiBrokerHistory
+ SET action = 'insert',
+     ownerName = NEW.ownerName,
+     companyName = NEW.companyName,
+     phoneNumber = NEW.phoneNumber,
+     licenseNumber = NEW.licenseNumber,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     policeVSC = NEW.policeVSC,
+     citizenship = NEW.citizenship,
+     photoID = NEW.photoID,
+     driversAbstract = NEW.driversAbstract,
+     certificateOfInsurance = NEW.certificateOfInsurance,
+     zoningApproval = NEW.zoningApproval,
+     notes = NEW.notes,
+     lastModified = NOW(),
+     taxiBrokerID = NEW.taxiBrokerID
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `taxiBrokerHistoryUpdate`;
+DELIMITER $$
+CREATE TRIGGER `taxiBrokerHistoryUpdate` AFTER UPDATE ON `taxibrokers` FOR EACH ROW INSERT INTO taxiBrokerHistory
+ SET action = 'update',
+     ownerName = NEW.ownerName,
+     companyName = NEW.companyName,
+     phoneNumber = NEW.phoneNumber,
+     licenseNumber = NEW.licenseNumber,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     policeVSC = NEW.policeVSC,
+     citizenship = NEW.citizenship,
+     photoID = NEW.photoID,
+     driversAbstract = NEW.driversAbstract,
+     certificateOfInsurance = NEW.certificateOfInsurance,
+     zoningApproval = NEW.zoningApproval,
+     notes = NEW.notes,
+     lastModified = NOW(),
+     taxiBrokerID = NEW.taxiBrokerID
+$$
+DELIMITER ;
+
 -- --------------------------------------------------------
 
 --
@@ -2218,7 +2705,7 @@ CREATE TABLE IF NOT EXISTS `taxibrokers` (
 DROP TABLE IF EXISTS `taxidriveraddresses`;
 CREATE TABLE IF NOT EXISTS `taxidriveraddresses` (
   `taxiDriverAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -2267,7 +2754,7 @@ DROP TABLE IF EXISTS `taxidriveraddresshistory`;
 CREATE TABLE IF NOT EXISTS `taxidriveraddresshistory` (
   `taxiDriverAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -2277,6 +2764,33 @@ CREATE TABLE IF NOT EXISTS `taxidriveraddresshistory` (
   PRIMARY KEY (`taxiDriverAddressHistoryID`),
   KEY `taxiDriverID` (`taxiDriverID`),
   KEY `taxiDriverAddressID` (`taxiDriverAddressID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `taxidriverhistory`
+--
+
+DROP TABLE IF EXISTS `taxidriverhistory`;
+CREATE TABLE IF NOT EXISTS `taxidriverhistory` (
+  `taxiDriverHistoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(20) NOT NULL,
+  `firstName` varchar(25) DEFAULT NULL,
+  `lastName` varchar(25) DEFAULT NULL,
+  `phoneNumber` varchar(15) DEFAULT NULL,
+  `cabCompany` varchar(50) DEFAULT NULL,
+  `issueDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
+  `policeVSC` enum('Yes','No') DEFAULT NULL,
+  `citizenship` enum('Yes','No') DEFAULT NULL,
+  `photoID` enum('Yes','No') DEFAULT NULL,
+  `driversAbstract` enum('Yes','No') DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `lastModified` datetime DEFAULT NULL,
+  `taxiDriverID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`taxiDriverHistoryID`),
+  KEY `taxiDriverID` (`taxiDriverID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -2304,6 +2818,82 @@ CREATE TABLE IF NOT EXISTS `taxidrivers` (
   KEY `taxiBrokerID` (`taxiBrokerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Triggers `taxidrivers`
+--
+DROP TRIGGER IF EXISTS `taxiDriverHistoryInsert`;
+DELIMITER $$
+CREATE TRIGGER `taxiDriverHistoryInsert` AFTER INSERT ON `taxidrivers` FOR EACH ROW INSERT INTO taxiDriverHistory
+ SET action = 'insert',
+     firstName = NEW.firstName,
+     lastName = NEW.lastName,
+     phoneNumber = NEW.phoneNumber,
+     cabCompany = NEW.cabCompany,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     policeVSC = NEW.policeVSC,
+     citizenship = NEW.citizenship,
+     photoID = NEW.photoID,
+     driversAbstract = NEW.driversAbstract,
+     notes = NEW.notes,
+     lastModified = NOW(),
+     taxiDriverID = NEW.taxiDriverID
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `taxiDriverHistoryUpdate`;
+DELIMITER $$
+CREATE TRIGGER `taxiDriverHistoryUpdate` AFTER UPDATE ON `taxidrivers` FOR EACH ROW INSERT INTO taxiDriverHistory
+ SET action = 'update',
+     firstName = NEW.firstName,
+     lastName = NEW.lastName,
+     phoneNumber = NEW.phoneNumber,
+     cabCompany = NEW.cabCompany,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     policeVSC = NEW.policeVSC,
+     citizenship = NEW.citizenship,
+     photoID = NEW.photoID,
+     driversAbstract = NEW.driversAbstract,
+     notes = NEW.notes,
+     lastModified = NOW(),
+     taxiDriverID = NEW.taxiDriverID
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `taxiplatehistory`
+--
+
+DROP TABLE IF EXISTS `taxiplatehistory`;
+CREATE TABLE IF NOT EXISTS `taxiplatehistory` (
+  `taxiPlateHistoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(20) NOT NULL,
+  `firstName` varchar(25) DEFAULT NULL,
+  `lastName` varchar(25) DEFAULT NULL,
+  `phoneNumber` varchar(15) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `townPlateNumber` int(11) DEFAULT NULL,
+  `vehicleYearMakeModel` varchar(40) DEFAULT NULL,
+  `provincialPlate` varchar(20) DEFAULT NULL,
+  `vin` varchar(40) DEFAULT NULL,
+  `issueDate` date DEFAULT NULL,
+  `expiryDate` date DEFAULT NULL,
+  `policeVSC` enum('Yes','No') DEFAULT NULL,
+  `driversAbstract` enum('Yes','No') DEFAULT NULL,
+  `photoID` enum('Yes','No') DEFAULT NULL,
+  `safetyCertificate` enum('Yes','No') DEFAULT NULL,
+  `byLawInspection` enum('Yes','No') DEFAULT NULL,
+  `insurance` enum('Yes','No') DEFAULT NULL,
+  `vehicleOwnership` enum('Yes','No') DEFAULT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `lastModified` datetime DEFAULT NULL,
+  `taxiPlateID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`taxiPlateHistoryID`),
+  KEY `taxiPlateID` (`taxiPlateID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- --------------------------------------------------------
 
 --
@@ -2313,7 +2903,7 @@ CREATE TABLE IF NOT EXISTS `taxidrivers` (
 DROP TABLE IF EXISTS `taxiplateowneraddresses`;
 CREATE TABLE IF NOT EXISTS `taxiplateowneraddresses` (
   `taxiPlateOwnerAddressID` int(11) NOT NULL AUTO_INCREMENT,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -2362,7 +2952,7 @@ DROP TABLE IF EXISTS `taxiplateowneraddresshistory`;
 CREATE TABLE IF NOT EXISTS `taxiplateowneraddresshistory` (
   `taxiPlateOwnerAddressHistoryID` int(11) NOT NULL AUTO_INCREMENT,
   `action` varchar(20) NOT NULL,
-  `streetNumber` int(10) DEFAULT NULL,
+  `streetNumber` int(11) DEFAULT NULL,
   `streetName` varchar(50) DEFAULT NULL,
   `town` varchar(30) DEFAULT NULL,
   `postalCode` varchar(15) DEFAULT NULL,
@@ -2405,6 +2995,62 @@ CREATE TABLE IF NOT EXISTS `taxiplates` (
   PRIMARY KEY (`taxiPlateID`),
   KEY `taxiBrokerID` (`taxiBrokerID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Triggers `taxiplates`
+--
+DROP TRIGGER IF EXISTS `taxiPlateHistoryInsert`;
+DELIMITER $$
+CREATE TRIGGER `taxiPlateHistoryInsert` AFTER INSERT ON `taxiplates` FOR EACH ROW INSERT INTO taxiPlateHistory
+ SET action = 'insert',
+     firstName = NEW.firstName,
+     lastName = NEW.lastName,
+     phoneNumber = NEW.phoneNumber,
+     email = NEW.email,
+     townPlateNumber = NEW.townPlateNumber,
+     vehicleYearMakeModel = NEW.vehicleYearMakeModel,
+     provincialPlate = NEW.provincialPlate,
+     vin = NEW.vin,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     policeVSC = NEW.policeVSC,
+	 driversAbstract = NEW.driversAbstract,
+     photoID = NEW.photoID,
+     safetyCertificate = NEW.safetyCertificate,
+     byLawInspection = NEW.byLawInspection,
+     insurance = NEW.insurance,
+     vehicleOwnership = NEW.vehicleOwnership,
+     notes = NEW.notes,
+     lastModified = NOW(),
+     taxiPlateID = NEW.taxiPlateID
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `taxiPlateHistoryUpdate`;
+DELIMITER $$
+CREATE TRIGGER `taxiPlateHistoryUpdate` AFTER UPDATE ON `taxiplates` FOR EACH ROW INSERT INTO taxiPlateHistory
+ SET action = 'update',
+     firstName = NEW.firstName,
+     lastName = NEW.lastName,
+     phoneNumber = NEW.phoneNumber,
+     email = NEW.email,
+     townPlateNumber = NEW.townPlateNumber,
+     vehicleYearMakeModel = NEW.vehicleYearMakeModel,
+     provincialPlate = NEW.provincialPlate,
+     vin = NEW.vin,
+     issueDate = NEW.issueDate,
+     expiryDate = NEW.expiryDate,
+     policeVSC = NEW.policeVSC,
+	 driversAbstract = NEW.driversAbstract,
+     photoID = NEW.photoID,
+     safetyCertificate = NEW.safetyCertificate,
+     byLawInspection = NEW.byLawInspection,
+     insurance = NEW.insurance,
+     vehicleOwnership = NEW.vehicleOwnership,
+     notes = NEW.notes,
+     lastModified = NOW(),
+     taxiPlateID = NEW.taxiPlateID
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -2474,10 +3120,22 @@ ALTER TABLE `businessesaddresshistory`
   ADD CONSTRAINT `businessesaddresshistory_ibfk_2` FOREIGN KEY (`businessID`) REFERENCES `businesses` (`businessID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
+-- Constraints for table `businesshistory`
+--
+ALTER TABLE `businesshistory`
+  ADD CONSTRAINT `businesshistory_ibfk_1` FOREIGN KEY (`businessID`) REFERENCES `businesses` (`businessID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
 -- Constraints for table `doghistory`
 --
 ALTER TABLE `doghistory`
   ADD CONSTRAINT `FK_dogID` FOREIGN KEY (`dogID`) REFERENCES `dogs` (`dogID`);
+
+--
+-- Constraints for table `dogs`
+--
+ALTER TABLE `dogs`
+  ADD CONSTRAINT `dogs_ibfk_1` FOREIGN KEY (`ownerID`) REFERENCES `owners` (`ownerID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `donationbinaddresses`
@@ -2497,6 +3155,12 @@ ALTER TABLE `donationbinaddresshistory`
 --
 ALTER TABLE `donationbincharities`
   ADD CONSTRAINT `donationbincharities_ibfk_1` FOREIGN KEY (`donationBinID`) REFERENCES `donationbins` (`donationBinID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `donationbinhistory`
+--
+ALTER TABLE `donationbinhistory`
+  ADD CONSTRAINT `donationbinhistory_ibfk_1` FOREIGN KEY (`donationBinID`) REFERENCES `donationbins` (`donationBinID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `donationbinoperatoraddresses`
@@ -2649,6 +3313,12 @@ ALTER TABLE `hawkerpeddlerbusinessaddresshistory`
   ADD CONSTRAINT `hawkerpeddlerbusinessaddresshistory_ibfk_2` FOREIGN KEY (`hawkerPeddlerBusinessAddressID`) REFERENCES `hawkerpeddlerbusinessaddresses` (`hawkerPeddlerBusinessAddressID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
+-- Constraints for table `hawkerpeddleroperatorhistory`
+--
+ALTER TABLE `hawkerpeddleroperatorhistory`
+  ADD CONSTRAINT `hawkerpeddleroperatorhistory_ibfk_1` FOREIGN KEY (`hawkerPeddlerApplicantID`) REFERENCES `hawkerpeddlerapplicants` (`hawkerPeddlerApplicantID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
 -- Constraints for table `hawkerpeddlerpropertyowneraddresses`
 --
 ALTER TABLE `hawkerpeddlerpropertyowneraddresses`
@@ -2679,6 +3349,12 @@ ALTER TABLE `kenneladdresses`
 ALTER TABLE `kenneladdresshistory`
   ADD CONSTRAINT `kenneladdresshistory_ibfk_1` FOREIGN KEY (`kennelID`) REFERENCES `kennels` (`kennelID`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `kenneladdresshistory_ibfk_2` FOREIGN KEY (`kennelAddressID`) REFERENCES `kenneladdresses` (`kennelAddressID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `kennelhistory`
+--
+ALTER TABLE `kennelhistory`
+  ADD CONSTRAINT `kennelhistory_ibfk_1` FOREIGN KEY (`kennelID`) REFERENCES `kennels` (`kennelID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `kennelowneraddresses`
@@ -2763,6 +3439,12 @@ ALTER TABLE `procedures`
   ADD CONSTRAINT `procedures_ibfk_1` FOREIGN KEY (`policyID`) REFERENCES `policies` (`policyID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
+-- Constraints for table `refreshmentvehiclehistory`
+--
+ALTER TABLE `refreshmentvehiclehistory`
+  ADD CONSTRAINT `refreshmentvehiclehistory_ibfk_1` FOREIGN KEY (`refreshmentVehicleID`) REFERENCES `refreshmentvehicles` (`refreshmentVehicleID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
 -- Constraints for table `refreshmentvehicleoperatoraddresses`
 --
 ALTER TABLE `refreshmentvehicleoperatoraddresses`
@@ -2820,6 +3502,32 @@ ALTER TABLE `refreshmentvehiclepropertyowners`
   ADD CONSTRAINT `refreshmentvehiclepropertyowners_ibfk_1` FOREIGN KEY (`refreshmentVehicleID`) REFERENCES `refreshmentvehicles` (`refreshmentVehicleID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
+-- Constraints for table `streetclosurecontactaddresses`
+--
+ALTER TABLE `streetclosurecontactaddresses`
+  ADD CONSTRAINT `streetclosurecontactaddresses_ibfk_1` FOREIGN KEY (`streetClosureContactID`) REFERENCES `streetclosurecontacts` (`streetClosureContactID`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `streetclosurecontactaddresses_ibfk_2` FOREIGN KEY (`streetClosurePermitID`) REFERENCES `streetclosurepermits` (`streetClosurePermitID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `streetclosurecontacts`
+--
+ALTER TABLE `streetclosurecontacts`
+  ADD CONSTRAINT `streetclosurecontacts_ibfk_1` FOREIGN KEY (`streetClosurePermitID`) REFERENCES `streetclosurepermits` (`streetClosurePermitID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `streetclosurecoordinatoraddresses`
+--
+ALTER TABLE `streetclosurecoordinatoraddresses`
+  ADD CONSTRAINT `streetclosurecoordinatoraddresses_ibfk_1` FOREIGN KEY (`streetClosureCoordinatorID`) REFERENCES `streetclosurecoordinators` (`streetClosureCoordinatorID`) ON DELETE SET NULL ON UPDATE CASCADE,
+  ADD CONSTRAINT `streetclosurecoordinatoraddresses_ibfk_2` FOREIGN KEY (`streetClosurePermitID`) REFERENCES `streetclosurepermits` (`streetClosurePermitID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `streetclosurecoordinators`
+--
+ALTER TABLE `streetclosurecoordinators`
+  ADD CONSTRAINT `streetclosurecoordinators_ibfk_1` FOREIGN KEY (`streetClosurePermitID`) REFERENCES `streetclosurepermits` (`streetClosurePermitID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
 -- Constraints for table `taxibrokeraddresses`
 --
 ALTER TABLE `taxibrokeraddresses`
@@ -2831,6 +3539,12 @@ ALTER TABLE `taxibrokeraddresses`
 ALTER TABLE `taxibrokeraddresshistory`
   ADD CONSTRAINT `taxibrokeraddresshistory_ibfk_1` FOREIGN KEY (`taxiBrokerID`) REFERENCES `taxibrokers` (`taxiBrokerID`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `taxibrokeraddresshistory_ibfk_2` FOREIGN KEY (`taxiBrokerAddressID`) REFERENCES `taxibrokeraddresses` (`taxiBrokerAddressID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `taxibrokerhistory`
+--
+ALTER TABLE `taxibrokerhistory`
+  ADD CONSTRAINT `taxibrokerhistory_ibfk_1` FOREIGN KEY (`taxiBrokerID`) REFERENCES `taxibrokers` (`taxiBrokerID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `taxidriveraddresses`
@@ -2846,10 +3560,22 @@ ALTER TABLE `taxidriveraddresshistory`
   ADD CONSTRAINT `taxidriveraddresshistory_ibfk_2` FOREIGN KEY (`taxiDriverAddressID`) REFERENCES `taxidriveraddresses` (`taxiDriverAddressID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
+-- Constraints for table `taxidriverhistory`
+--
+ALTER TABLE `taxidriverhistory`
+  ADD CONSTRAINT `taxidriverhistory_ibfk_1` FOREIGN KEY (`taxiDriverID`) REFERENCES `taxidrivers` (`taxiDriverID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
 -- Constraints for table `taxidrivers`
 --
 ALTER TABLE `taxidrivers`
   ADD CONSTRAINT `taxidrivers_ibfk_1` FOREIGN KEY (`taxiBrokerID`) REFERENCES `taxibrokers` (`taxiBrokerID`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `taxiplatehistory`
+--
+ALTER TABLE `taxiplatehistory`
+  ADD CONSTRAINT `taxiplatehistory_ibfk_1` FOREIGN KEY (`taxiPlateID`) REFERENCES `taxiplates` (`taxiPlateID`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `taxiplateowneraddresses`

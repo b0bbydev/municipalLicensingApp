@@ -76,6 +76,7 @@ router.get(
           return res.render("kennels/kennel", {
             title: "BWG | Kennel Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

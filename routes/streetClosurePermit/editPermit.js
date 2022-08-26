@@ -1,7 +1,12 @@
 var express = require("express");
 var router = express.Router();
 // models.
+const Dropdown = require("../../models/dropdownManager/dropdown");
 const StreetClosurePermit = require("../../models/streetClosurePermits/streetClosurePermit");
+const StreetClosureContact = require("../../models/streetClosurePermits/streetClosureContact");
+const StreetClosureContactAddress = require("../../models/streetClosurePermits/streetClosureContactAddress");
+const StreetClosureCoordinator = require("../../models/streetClosurePermits/streetClosureCoordinator");
+const StreetClosureCoordinatorAddress = require("../../models/streetClosurePermits/streetClosureCoordinatorAddress");
 // helpers.
 var funcHelpers = require("../../config/funcHelpers");
 // express-validate.
@@ -29,8 +34,25 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
+      // get streets.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
       // for populating input fields with existing values.
       StreetClosurePermit.findOne({
+        include: [
+          {
+            model: StreetClosureContact,
+            include: [StreetClosureContactAddress],
+          },
+          {
+            model: StreetClosureCoordinator,
+            include: [StreetClosureCoordinatorAddress],
+          },
+        ],
         where: {
           streetClosurePermitID: req.params.id,
         },
@@ -41,15 +63,51 @@ router.get(
             message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
+            streets: streets,
             // get values for input fields.
-            permitInfo: {
-              coordinatorName: results.coordinatorName,
-              coordinatorPhone: results.coordinatorPhone,
-              coordinatorEmail: results.coordinatorEmail,
+            formData: {
+              // coordinator.
+              coordinatorName:
+                results.streetClosureCoordinators[0].coordinatorName,
+              coordinatorPhone:
+                results.streetClosureCoordinators[0].coordinatorPhone,
+              coordinatorEmail:
+                results.streetClosureCoordinators[0].coordinatorEmail,
+              // coordinator address.
+              coordinatorStreetNumber:
+                results.streetClosureCoordinators[0]
+                  .streetClosureCoordinatorAddresses[0].streetNumber,
+              coordinatorStreetName:
+                results.streetClosureCoordinators[0]
+                  .streetClosureCoordinatorAddresses[0].streetName,
+              coordinatorTown:
+                results.streetClosureCoordinators[0]
+                  .streetClosureCoordinatorAddresses[0].town,
+              coordinatorPostalCode:
+                results.streetClosureCoordinators[0]
+                  .streetClosureCoordinatorAddresses[0].postalCode,
+              // contact
+              everydayContactName:
+                results.streetClosureContacts[0].everydayContactName,
+              everydayContactPhone:
+                results.streetClosureContacts[0].everydayContactPhone,
+              everydayContactEmail:
+                results.streetClosureContacts[0].everydayContactEmail,
+              // contact address.
+              contactStreetNumber:
+                results.streetClosureContacts[0]
+                  .streetClosureContactAddresses[0].streetNumber,
+              contactStreetName:
+                results.streetClosureContacts[0]
+                  .streetClosureContactAddresses[0].streetName,
+              contactTown:
+                results.streetClosureContacts[0]
+                  .streetClosureContactAddresses[0].town,
+              contactPostalCode:
+                results.streetClosureContacts[0]
+                  .streetClosureContactAddresses[0].postalCode,
+              // permit info.
               sponser: results.sponser,
-              everydayContactName: results.everydayContactName,
-              everydayContactPhone: results.everydayContactPhone,
-              everydayContactEmail: results.everydayContactEmail,
               permitNumber: results.permitNumber,
               issueDate: results.issueDate,
               closureLocation: results.closureLocation,
@@ -67,6 +125,7 @@ router.get(
           return res.render("streetClosurePermit/editPermit", {
             title: "BWG | Edit Street Closure Permit",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -78,12 +137,12 @@ router.post(
   "/:id",
   body("coordinatorName")
     .notEmpty()
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Coordinator Name Entry!")
     .trim(),
   body("coordinatorPhone")
     .if(body("coordinatorPhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Coordinator Phone Number Entry!")
     .trim(),
   body("coordinatorEmail")
@@ -93,17 +152,17 @@ router.post(
     .trim(),
   body("sponser")
     .if(body("sponser").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Event Sponser Entry!")
     .trim(),
   body("everydayContactName")
     .if(body("everydayContactName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Everyday Contact Name Entry!")
     .trim(),
   body("everydayContactPhone")
     .if(body("everydayContactPhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Everyday Contact Phone Number Entry!")
     .trim(),
   body("everydayContactEmail")
@@ -113,22 +172,22 @@ router.post(
     .trim(),
   body("permitNumber")
     .if(body("permitNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Permit Number Entry!")
     .trim(),
   body("closureLocation")
     .if(body("closureLocation").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Closure Location Entry!")
     .trim(),
   body("closureTime")
     .if(body("closureTime").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Closure Time Entry!")
     .trim(),
   body("estimatedAttendance")
     .if(body("estimatedAttendance").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Estimated Attendance Entry!")
     .trim(),
   body("description")
@@ -157,16 +216,9 @@ router.post(
         auth: req.session.auth, // authorization.
       });
     } else {
-      // create dropdown form.
       StreetClosurePermit.update(
         {
-          coordinatorName: req.body.coordinatorName,
-          coordinatorPhone: req.body.coordinatorPhone,
-          coordinatorEmail: req.body.coordinatorEmail,
           sponser: req.body.sponser,
-          everydayContactName: req.body.everydayContactName,
-          everydayContactPhone: req.body.everydayContactPhone,
-          everydayContactEmail: req.body.everydayContactEmail,
           permitNumber: req.body.permitNumber,
           issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
           closureLocation: req.body.closureLocation,
@@ -187,12 +239,107 @@ router.post(
         }
       )
         .then(() => {
+          StreetClosureCoordinator.update(
+            {
+              coordinatorName: req.body.coordinatorName,
+              coordinatorPhone: req.body.coordinatorPhone,
+              coordinatorEmail: req.body.coordinatorEmail,
+              streetNumber: req.body.coordinatorStreetNumber,
+              streetName: req.body.coordinatorStreetName,
+              town: req.body.coordinatorTown,
+              postalCode: req.body.coordinatorPostalCode,
+            },
+            {
+              where: {
+                streetClosurePermitID: req.params.id,
+              },
+            }
+          );
+        })
+        .then(() => {
+          StreetClosureCoordinatorAddress.update(
+            {
+              streetNumber: req.body.coordinatorStreetNumber,
+              streetName: req.body.coordinatorStreetName,
+              town: req.body.coordinatorTown,
+              postalCode: req.body.coordinatorPostalCode,
+            },
+            {
+              where: {
+                streetClosurePermitID: req.params.id,
+              },
+            }
+          );
+        })
+        .then(() => {
+          StreetClosureContact.update(
+            {
+              everydayContactName: req.body.everydayContactName,
+              everydayContactPhone: req.body.everydayContactPhone,
+              everydayContactEmail: req.body.everydayContactEmail,
+            },
+            {
+              where: {
+                streetClosurePermitID: req.params.id,
+              },
+            }
+          );
+        })
+        .then(() => {
+          StreetClosureContactAddress.update(
+            {
+              streetNumber: req.body.contactStreetNumber,
+              streetName: req.body.contactStreetName,
+              town: req.body.contactTown,
+              postalCode: req.body.contactPostalCode,
+            },
+            {
+              where: {
+                streetClosurePermitID: req.params.id,
+              },
+            }
+          );
+        })
+        .then(() => {
           return res.redirect("/streetClosurePermit");
         })
         .catch((err) => {
           return res.render("streetClosurePermit/editPermit", {
             title: "BWG | Edit Street Closure Permit",
-            message: "Page Error!",
+            message: "Page Error! Possible duplicate permit number.",
+            auth: req.session.auth, // authorization.
+            formData: {
+              // coordinator.
+              coordinatorName: req.body.coordinatorName,
+              coordinatorPhone: req.body.coordinatorPhone,
+              coordinatorEmail: req.body.coordinatorEmail,
+              // coordinator address.
+              coordinatorStreetNumber: req.body.streetNumber,
+              coordinatorStreetName: req.body.streetName,
+              coordinatorTown: req.body.town,
+              coordinatorPostalCode: req.body.postalCode,
+              // contact
+              everydayContactName: req.body.everydayContactName,
+              everydayContactPhone: req.body.everydayContactPhone,
+              everydayContactEmail: req.body.everydayContactEmail,
+              // contact address.
+              contactStreetNumber: req.body.streetNumber,
+              contactStreetName: req.body.streetName,
+              contactTown: req.body.town,
+              contactPostalCode: req.body.postalCode,
+              // permit info.
+              sponser: req.body.sponser,
+              permitNumber: req.body.permitNumber,
+              issueDate: req.body.issueDate,
+              closureLocation: req.body.closureLocation,
+              closureDate: req.body.closureDate,
+              closureTime: req.body.closureTime,
+              estimatedAttendance: req.body.estimatedAttendance,
+              alcoholServed: req.body.alcoholServed,
+              noiseExemption: req.body.noiseExemption,
+              description: req.body.description,
+              cleanupPlan: req.body.cleanupPlan,
+            },
           });
         });
     }

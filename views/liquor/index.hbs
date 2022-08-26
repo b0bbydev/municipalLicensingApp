@@ -47,16 +47,6 @@
   >Reset</a>
 </form>
 <div class="row">
-  <div class="col mt-1">
-    <a
-      class="user-select-none"
-      id="historyLink"
-      data-bs-toggle="modal"
-      data-bs-target="#historyModal"
-    >View Address History</a>
-  </div>
-</div>
-<div class="row">
   <div class="col mb-1">
     <h4 class="mb-0 mt-1">Businesses</h4>
     {{#if queryCount}}
@@ -96,16 +86,23 @@
         <td>{{this.businessName}}</td>
         <td>{{this.businessPhone}}</td>
         {{#each liquorBusinessAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}}
-            {{this.postalCode}}</td>
+          <td class="tableLink">
+            <a
+              class="stretched-link"
+              id="ownerLink"
+              href="/liquor/businessAddressHistory/{{this.liquorBusinessID}}"
+              title="View Address History"
+            >
+              {{this.streetNumber}}
+              {{this.streetName}},
+              {{this.town}}
+              {{this.postalCode}}</a></td>
         {{/each}}
         <td>{{this.contactName}}</td>
         <td>{{this.contactPhone}}</td>
         <td>{{this.dateStarted}}</td>
         <td>{{this.notes}}</td>
-        <td style="width: 12%;"><a
+        <td style="width: 16.5%;"><a
             class="btn btn-sm btn-secondary my-1"
             href="/liquor/editBusiness/{{this.liquorBusinessID}}"
           >Edit</a>
@@ -256,53 +253,20 @@
     {{/each}}
   </tbody>
 </table>
-<!-- History Modal -->
-<div
-  class="modal fade"
-  id="historyModal"
-  tabindex="-1"
-  aria-labelledby="History Modal"
-  aria-hidden="true"
->
-  <form method="POST">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">History Search</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <label for="Business Name" class="form-label">Enter the name of the
-            business</label>
-          <input
-            list="businesses"
-            class="form-control"
-            placeholder="Business Name"
-            name="businessName"
-            required
-          />
-          <datalist id="businesses">
-            {{#each data}}
-              <option
-                value="{{this.businessName}}"
-              >{{this.businessName}}</option>
-            {{/each}}
-          </datalist>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >Close</button>
-          <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-      </div>
-    </div>
-  </form>
-</div>
+<nav id="pagination">
+  <ul class="pagination pagination-sm">
+    {{#if paginate.hasPreviousPages}}
+      <li class="page-item"><a class="page-link" href="{{prev}}">Prev</a></li>
+    {{/if}}
+    {{#each pages}}
+      <li class="page-item">
+        <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
+    {{/each}}
+    {{#if hasMorePages}}
+      <li class="page-item"><a
+          class="page-link"
+          href="{{paginate.href}}"
+        >Next</a></li>
+    {{/if}}
+  </ul>
+</nav>

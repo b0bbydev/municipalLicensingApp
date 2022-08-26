@@ -85,6 +85,7 @@ router.get(
               {
                 title: "BWG | Property Owner Address History",
                 message: "Page Error!",
+                auth: req.session.auth, // authorization.
               }
             );
           });
@@ -130,6 +131,7 @@ router.get(
               {
                 title: "BWG | Property Owner Address History",
                 message: "Page Error!",
+                auth: req.session.auth, // authorization.
               }
             );
           });
@@ -174,6 +176,7 @@ router.get(
                 {
                   title: "BWG | Property Owner Address History",
                   message: "Page Error!",
+                  auth: req.session.auth, // authorization.
                 }
               );
             });
@@ -216,6 +219,7 @@ router.get(
                 {
                   title: "BWG | Property Owner Address History",
                   message: "Page Error!",
+                  auth: req.session.auth, // authorization.
                 }
               );
             });

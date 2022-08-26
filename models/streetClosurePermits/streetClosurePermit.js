@@ -26,36 +26,6 @@ const StreetClosurePermit = sequelize.define("streetClosurePermit", {
     allowNull: true,
   },
 
-  coordinatorName: {
-    type: Sequelize.STRING(50),
-    allowNull: true,
-  },
-
-  coordinatorPhone: {
-    type: Sequelize.STRING(20),
-    allowNull: true,
-  },
-
-  coordinatorEmail: {
-    type: Sequelize.STRING(50),
-    allowNull: true,
-  },
-
-  everydayContactName: {
-    type: Sequelize.STRING(50),
-    allowNull: true,
-  },
-
-  everydayContactPhone: {
-    type: Sequelize.STRING(20),
-    allowNull: true,
-  },
-
-  everydayContactEmail: {
-    type: Sequelize.STRING(50),
-    allowNull: true,
-  },
-
   closureLocation: {
     type: Sequelize.STRING(75),
     allowNull: true,

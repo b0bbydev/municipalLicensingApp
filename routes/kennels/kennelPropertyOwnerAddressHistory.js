@@ -77,6 +77,7 @@ router.get(
             return res.render("kennels/kennelPropertyOwnerAddressHistory", {
               title: "BWG | Property Owner Address History",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
         // both year and month filter.
@@ -116,6 +117,7 @@ router.get(
             return res.render("kennels/kennelPropertyOwnerAddressHistory", {
               title: "BWG | Property Owner Address History",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
         // if at least one filter exists.
@@ -154,6 +156,7 @@ router.get(
               return res.render("kennels/kennelPropertyOwnerAddressHistory", {
                 title: "BWG | Property Owner Address History",
                 message: "Page Error!",
+                auth: req.session.auth, // authorization.
               });
             });
           /* IF ONLY MONTH. */
@@ -190,6 +193,7 @@ router.get(
               return res.render("kennels/kennelPropertyOwnerAddressHistory", {
                 title: "BWG | Property Owner Address History",
                 message: "Page Error!",
+                auth: req.session.auth, // authorization.
               });
             });
         }

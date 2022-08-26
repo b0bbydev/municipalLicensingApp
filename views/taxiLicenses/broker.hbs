@@ -20,7 +20,9 @@
     >Add A Driver</a>
   </div>
 </div>
-<table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
       <th>Driver Name</th>
@@ -36,7 +38,13 @@
   <tbody class="table-group-divider">
     {{#each taxiDrivers}}
       <tr>
-        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td class="tableLink">
+          <a
+            class="stretched-link"
+            id="ownerLink"
+            href="/taxiLicenses/driverHistory/{{this.taxiDriverID}}"
+            title="View Taxi Driver History"
+          >{{this.firstName}} {{this.lastName}}</a></td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.cabCompany}}</td>
         {{#each taxiDriverAddresses}}
@@ -54,7 +62,7 @@
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.notes}}</td>
-        <td style="width: 16%;"><a
+        <td style="width: 22.5%;"><a
             class="btn btn-sm btn-secondary my-1"
             data-bs-toggle="modal"
             data-bs-target="#driverRenewModal-{{this.taxiDriverID}}"
@@ -92,7 +100,8 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <div class="row">
+                <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                <div class="row" style="display: none;">
                   <div class="col">
                     <label for="Driver ID" class="form-label">Driver ID</label>
                     <input
@@ -115,7 +124,9 @@
                     />
                   </div>
                 </div>
-                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
               </div>
               <div class="modal-footer">
                 <button
@@ -209,11 +220,13 @@
     >Add A Plate</a>
   </div>
 </div>
-<table class="table table-sm table-responsive table-bordered table-striped table-hover sortable">
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
   <thead>
     <tr>
-      <th>Town Plate Number</th>
       <th>Vehicle Owner Name</th>
+      <th>Town Plate Number</th>
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
@@ -229,8 +242,14 @@
   <tbody class="table-group-divider">
     {{#each taxiPlates}}
       <tr>
+        <td class="tableLink">
+          <a
+            class="stretched-link"
+            id="ownerLink"
+            href="/taxiLicenses/plateHistory/{{this.taxiPlateID}}"
+            title="View Taxi Plate History"
+          >{{this.firstName}} {{this.lastName}}</a></td>
         <td>{{this.townPlateNumber}}</td>
-        <td>{{this.firstName}} {{this.lastName}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each taxiPlateOwnerAddresses}}
@@ -251,7 +270,7 @@
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.notes}}</td>
-        <td><a
+        <td style="width: 22.5%;"><a
             class="btn btn-sm btn-secondary my-1"
             data-bs-toggle="modal"
             data-bs-target="#plateRenewModal-{{this.taxiPlateID}}"
@@ -289,7 +308,8 @@
                 ></button>
               </div>
               <div class="modal-body">
-                <div class="row">
+                <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                <div class="row" style="display: none;">
                   <div class="col">
                     <label for="Plate ID" class="form-label">Taxi Plate ID</label>
                     <input
@@ -313,7 +333,9 @@
                     />
                   </div>
                 </div>
-                <p class="mt-4 mb-0 fst-italic">This license will expire on <strong>{{formatDate ../modalExpiryDate}}</strong> after renewal</p>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
               </div>
               <div class="modal-footer">
                 <button

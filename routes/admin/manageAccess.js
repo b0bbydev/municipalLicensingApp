@@ -8,7 +8,7 @@ const UserRole = require("../../models/admin/userRole");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 // express-validate.
-const { body, param, validationResult } = require("express-validator");
+const { param, validationResult } = require("express-validator");
 
 /* GET /admin/manageAccess */
 router.get(
@@ -63,6 +63,7 @@ router.get(
           return res.render("admin/manageAccess", {
             title: "BWG | Manage Access",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -95,6 +96,7 @@ router.post("/:id", async (req, res, next) => {
         return res.render("admin/manageAccess", {
           title: "BWG | Manage Access",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -134,6 +136,7 @@ router.get("/:userId/revoke/:roleId", (req, res, next) => {
         return res.render("admin/manageAccess", {
           title: "BWG | Manage Access",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }

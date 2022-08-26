@@ -76,6 +76,7 @@ router.get("/", async (req, res, next) => {
         return res.render("refreshmentVehicles/index", {
           title: "BWG | Refreshment Vehicle Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   } else if (req.query.filterCategory === "Vehicle Owner Name") {
@@ -127,6 +128,7 @@ router.get("/", async (req, res, next) => {
           return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
             title: "BWG | Refreshment Vehicle Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     } else {
@@ -178,6 +180,7 @@ router.get("/", async (req, res, next) => {
           return res.render("refreshmentVehicles/search/vehicleOwnerSearch", {
             title: "BWG | Refreshment Vehicle Licensing",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -223,6 +226,7 @@ router.get("/", async (req, res, next) => {
         return res.render("refreshmentVehicles/index", {
           title: "BWG | Refreshment Vehicle Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -259,6 +263,7 @@ router.post("/", async (req, res, next) => {
       {
         issueDate: issueDate,
         expiryDate: expiryDate,
+        licenseNumber: req.body.licenseNumber,
       },
       {
         where: {
@@ -274,6 +279,7 @@ router.post("/", async (req, res, next) => {
         return res.render("refreshmentVehicles/index", {
           title: "BWG | Refreshment Vehicle Licensing",
           message: "Page Error!",
+          auth: req.session.auth, // authorization.
         });
       });
   }
@@ -348,7 +354,7 @@ router.get(
                 .refreshmentVehiclePropertyOwnerAddresses[0].town,
               issueDate: results.issueDate,
               expiryDate: results.expiryDate,
-              licenseNumber: results.refreshmentVehicleOwners[0].licenseNumber,
+              licenseNumber: results.licenseNumber,
             },
           });
         })
@@ -357,6 +363,7 @@ router.get(
           return res.render("refreshmentVehicles/printLicense", {
             title: "BWG | Print License",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

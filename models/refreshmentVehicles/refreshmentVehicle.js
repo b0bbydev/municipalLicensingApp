@@ -21,6 +21,11 @@ const RefreshmentVehicle = sequelize.define("refreshmentVehicle", {
     allowNull: true,
   },
 
+  licenseNumber: {
+    type: Sequelize.STRING(50),
+    allowNull: true,
+  },
+
   issueDate: {
     type: Sequelize.DATEONLY,
     allowNull: true,

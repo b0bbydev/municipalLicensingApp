@@ -84,6 +84,7 @@ router.get(
           return res.render("dogtags/editDog", {
             title: "BWG | Edit Dog",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -96,12 +97,12 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("tagNumber")
     .if(body("tagNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Tag Number Entry!")
     .trim(),
   body("dogName")
     .if(body("dogName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Dog Name Entry!")
     .trim(),
   body("breed")
@@ -116,32 +117,32 @@ router.post(
     .trim(),
   body("gender")
     .if(body("gender").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Gender Entry!")
     .trim(),
   body("spade")
     .if(body("spade").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Spade/Neutered Entry!")
     .trim(),
   body("designation")
     .if(body("designation").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Designation Entry!")
     .trim(),
   body("rabiesTagNumber")
     .if(body("rabiesTagNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Rabies Tag Number Entry!")
     .trim(),
   body("vetOffice")
     .if(body("vetOffice").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Vet Office Entry!")
     .trim(),
   body("vendor")
     .if(body("vendor").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Vendor Entry!")
     .trim(),
   body("notes")
@@ -229,6 +230,7 @@ router.post(
           return res.render("dogtags/editDog", {
             title: "BWG | Edit Dog",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

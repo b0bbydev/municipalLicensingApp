@@ -89,6 +89,7 @@ router.get(
             return res.render("dropdownManager/form", {
               title: "BWG | Dropdown Manager",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else {
@@ -133,6 +134,7 @@ router.get(
             return res.render("dropdownManager/form", {
               title: "BWG | Dropdown Manager",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }
@@ -146,12 +148,12 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("dropdownValue")
     .notEmpty()
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Dropdown Value Entry!")
     .trim(),
   body("dropdownTitle")
     .notEmpty()
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Dropdown Title Entry!")
     .trim(),
   function (req, res, next) {
@@ -188,6 +190,7 @@ router.post(
           return res.render("dropdownManager/form", {
             title: "BWG | Dropdown Manager",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -230,6 +233,7 @@ router.get(
           return res.render("dropdownManager/index", {
             title: "BWG | Dropdown Manager",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -272,6 +276,7 @@ router.get(
           return res.render("dropdownManager/form", {
             title: "BWG | Dropdown Manager",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

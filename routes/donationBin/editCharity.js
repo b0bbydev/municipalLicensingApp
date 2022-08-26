@@ -41,7 +41,7 @@ router.get(
         },
       })
         .then((results) => {
-          return res.render("donationBin/", {
+          return res.render("donationBin/editCharity", {
             title: "BWG | Edit Donation Bin Charity",
             message: messages,
             email: req.session.email,
@@ -61,6 +61,7 @@ router.get(
           return res.render("donationBin/editCharity", {
             title: "BWG | Edit Donation Bin Charity",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -73,12 +74,12 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("charityName")
     .if(body("charityName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Charity Name Entry!")
     .trim(),
   body("phoneNumber")
     .if(body("phoneNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Phone Number Entry!")
     .trim(),
   body("email")
@@ -88,12 +89,12 @@ router.post(
     .trim(),
   body("registrationNumber")
     .if(body("registrationNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Registration Number Entry!")
     .trim(),
   body("organizationType")
     .if(body("organizationType").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Organization Type Entry!")
     .trim(),
   async (req, res, next) => {
@@ -149,6 +150,7 @@ router.post(
           return res.render("donationBin/editCharity", {
             title: "BWG | Edit Donation Bin Charity",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

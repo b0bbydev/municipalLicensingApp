@@ -80,6 +80,7 @@ router.get(
           return res.render("donationBin/bin", {
             title: "BWG | Donation Bin",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

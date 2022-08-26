@@ -1,4 +1,4 @@
-<h2 class="text-center mt-2">Adult Entertainment - Business Address History</h2>
+<h2 class="text-center mt-2">Broker History</h2>
 <h4>Filtering</h4>
 <form class="mb-1" method="GET">
   <select
@@ -52,7 +52,7 @@
   >Search</button>
   <a
     id="filterButton"
-    href="/adultEntertainment/history/{{businessID}}"
+    href="/taxiLicenses/brokerHistory/{{taxiBrokerID}}"
     class="btn btn-sm btn-secondary"
     type="submit"
   >Reset</a>
@@ -70,22 +70,27 @@
 >
   <thead>
     <tr>
-      <th>Address</th>
-      <th>POBox/Apt/RR</th>
-      <th>Last Modified</th>
+      <th>Owner Name</th>
+      <th>Company Name</th>
+      <th>Phone Number</th>
+      <th>License Number</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
       <th>Action</th>
+      <th>Last Modified</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td>{{this.streetNumber}}
-          {{this.streetName}},
-          {{this.town}}
-          {{this.postalCode}}</td>
-        <td>{{this.poBoxAptRR}}</td>
-        <td>{{formatDate this.lastModified}}</td>
-        <td>{{this.action}}</td>
+        <td>{{this.ownerName}}</a></td>
+        <td>{{this.companyName}}</td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.licenseNumber}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td class="fw-bold">{{this.action}}</td>
+        <td class="fw-bold">{{formatDate this.lastModified}}</td>
       </tr>
     {{/each}}
   </tbody>

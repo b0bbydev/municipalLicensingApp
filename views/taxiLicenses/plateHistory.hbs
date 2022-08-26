@@ -1,0 +1,105 @@
+<h2 class="text-center mt-2">Plate History</h2>
+<h4>Filtering</h4>
+<form class="mb-1" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterMonth"
+    title="Month Filter"
+    name="filterMonth"
+  >
+    {{#if filterMonth}}
+      <option value="{{filterMonth}}" selected>{{filterMonth}}</option>
+    {{else}}
+      <option value="" disabled selected>Month...</option>
+    {{/if}}
+    {{#each monthDropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <select
+    class="form-select-sm"
+    id="filterYear"
+    title="Year Filter"
+    name="filterYear"
+  >
+    {{#if filterYear}}
+      <option value="{{filterYear}}" selected>{{filterYear}}</option>
+    {{else}}
+      <option value="" disabled selected>Year...</option>
+    {{/if}}
+    {{#each yearDropdownValues}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/taxiLicenses/plateHistory/{{taxiPlateID}}"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<table
+  class="table table-responsive table-bordered table-striped table-hover sortable"
+>
+  <thead>
+    <tr>
+      <th>Vehicle Owner Name</th>
+      <th>Town Plate Number</th>
+      <th>Phone Number</th>
+      <th>Email</th>
+      <th>Year, Make & Model</th>
+      <th>Provincial Plate</th>
+      <th>VIN</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
+      <th>Notes</th>
+      <th>Action</th>
+      <th>Last Modified</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    {{#each data}}
+      <tr>
+        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.townPlateNumber}}</td>
+        <td>{{this.phoneNumber}}</td>
+        <td>{{this.email}}</td>
+        <td>{{this.vehicleYearMakeModel}}</td>
+        <td>{{this.provincialPlate}}</td>
+        <td>{{this.vin}}</td>
+        <td>{{this.issueDate}}</td>
+        <td>{{this.expiryDate}}</td>
+        <td>{{this.notes}}</td>
+        <td class="fw-bold">{{this.action}}</td>
+        <td class="fw-bold">{{formatDate this.lastModified}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

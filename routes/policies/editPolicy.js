@@ -91,6 +91,7 @@ router.get(
           return res.render("policies/editPolicy", {
             title: "BWG | Edit Policy",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -103,42 +104,42 @@ router.post(
   param("id").matches(/^\d+$/).trim(),
   body("policyNumber")
     .if(body("policyNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Policy Number Entry!")
     .trim(),
   body("policyName")
     .if(body("policyName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Policy Name Entry!")
     .trim(),
   body("councilResolution")
     .if(body("councilResolution").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Council Resolution Entry!")
     .trim(),
   body("category")
     .if(body("category").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Category Entry!")
     .trim(),
   body("division")
     .if(body("division").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Division Entry!")
     .trim(),
   body("authority")
     .if(body("authority").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Authority Entry!")
     .trim(),
   body("administrator")
     .if(body("administrator").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Administrator Entry!")
     .trim(),
   body("status")
     .if(body("status").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Status Entry!")
     .trim(),
   body("notes")
@@ -244,6 +245,7 @@ router.post(
           return res.render("policies/editPolicy", {
             title: "BWG | Edit Policy",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

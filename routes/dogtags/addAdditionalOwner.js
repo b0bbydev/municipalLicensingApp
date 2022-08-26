@@ -25,27 +25,27 @@ router.post(
   "/",
   body("firstName")
     .if(body("firstName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid First Name Entry!")
     .trim(),
   body("lastName")
     .if(body("lastName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Last Name Entry!")
     .trim(),
   body("homePhone")
     .if(body("homePhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Home Phone Number Entry!")
     .trim(),
   body("cellPhone")
     .if(body("cellPhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Cell Phone Number Entry!")
     .trim(),
   body("workPhone")
     .if(body("workPhone").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Work Phone Number Entry!")
     .trim(),
   body("email")
@@ -95,6 +95,7 @@ router.post(
           return res.render("dogtags/addAdditionalOwner", {
             title: "BWG | Add Additional Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

@@ -31,7 +31,7 @@
           class="form-control"
           placeholder="Phone Number"
           name="coordinatorPhone"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.coordinatorPhone}}"
           maxlength="15"
@@ -45,10 +45,81 @@
           class="form-control"
           placeholder="Email"
           name="coordinatorEmail"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.coordinatorEmail}}"
           maxlength="50"
+        />
+      </div>
+    </div>
+    <!-- Address -->
+    <div class="row">
+      <!-- Street Number -->
+      <div class="col-sm-6">
+        <label for="Street Number" class="form-label">Street Number*</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Street Number"
+          name="coordinatorStreetNumber"
+          value="{{formData.streetNumber}}"
+          required
+        />
+      </div>
+      <!-- Street Name -->
+      <div class="col-sm-6">
+        <label for="Street Name" class="form-label">Street Name*</label>
+        <input
+          class="form-control"
+          name="coordinatorStreetName"
+          list="streets"
+          placeholder="Street Name..."
+          value="{{formData.streetName}}"
+          required
+        />
+        <datalist id="streets">
+          {{#each streets}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </datalist>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Town -->
+      <div class="col-sm-6">
+        <label for="Town" class="form-label">Town</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Town"
+          name="coordinatorTown"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.poBoxAptRR}}"
+          maxlength="30"
+        />
+      </div>
+      <!-- Postal Code -->
+      <div class="col-sm-6">
+        <label for="Postal Code" class="form-label">Postal Code</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Postal Code"
+          name="coordinatorPostalCode"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.postalCode}}"
+          maxlength="15"
         />
       </div>
     </div>
@@ -61,7 +132,7 @@
           class="form-control"
           placeholder="Event Sponser"
           name="sponser"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.sponser}}"
           maxlength="75"
@@ -91,7 +162,7 @@
           class="form-control"
           placeholder="Phone Number"
           name="everydayContactPhone"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.phoneNumber}}"
           maxlength="15"
@@ -105,10 +176,81 @@
           class="form-control"
           placeholder="Email"
           name="everydayContactEmail"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.everydayContactEmail}}"
           maxlength="50"
+        />
+      </div>
+    </div>
+    <!-- Address -->
+    <div class="row">
+      <!-- Street Number -->
+      <div class="col-sm-6">
+        <label for="Street Number" class="form-label">Street Number*</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Street Number"
+          name="contactStreetNumber"
+          value="{{formData.streetNumber}}"
+          required
+        />
+      </div>
+      <!-- Street Name -->
+      <div class="col-sm-6">
+        <label for="Street Name" class="form-label">Street Name*</label>
+        <input
+          class="form-control"
+          name="contactStreetName"
+          list="streets"
+          placeholder="Street Name..."
+          value="{{formData.streetName}}"
+          required
+        />
+        <datalist id="streets">
+          {{#each streets}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </datalist>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Town -->
+      <div class="col-sm-6">
+        <label for="Town" class="form-label">Town</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Town"
+          name="contactTown"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.poBoxAptRR}}"
+          maxlength="30"
+        />
+      </div>
+      <!-- Postal Code -->
+      <div class="col-sm-6">
+        <label for="Postal Code" class="form-label">Postal Code</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Postal Code"
+          name="contactPostalCode"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.postalCode}}"
+          maxlength="15"
         />
       </div>
     </div>
@@ -119,11 +261,11 @@
       <div class="col-sm-6">
         <label for="Permit Number" class="form-label">Permit Number*</label>
         <input
-          type="number"
+          type="text"
           class="form-control"
           placeholder="Permit Number"
           name="permitNumber"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.permitNumber}}"
           required
@@ -137,7 +279,7 @@
           class="form-control"
           placeholder="Issue Date"
           name="issueDate"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.issueDate}}"
         />
@@ -152,7 +294,7 @@
           class="form-control"
           placeholder="Closure Location"
           name="closureLocation"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.closureLocation}}"
           maxlength="75"
@@ -166,7 +308,7 @@
           class="form-control"
           placeholder="Closure Date"
           name="closureDate"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.closureDate}}"
         />
@@ -179,7 +321,7 @@
           class="form-control"
           placeholder="Closure Time"
           name="closureTime"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.closureTime}}"
           maxlength="50"
@@ -196,7 +338,7 @@
           class="form-control"
           placeholder="Estimated Attendance"
           name="estimatedAttendance"
-          pattern="[^()/><\][\\\x22,;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           value="{{formData.estimatedAttendance}}"
         />
@@ -318,7 +460,7 @@
           type="text"
           name="description"
           class="form-control"
-          pattern="[^()/><\][\\\x22;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
         >{{formData.description}}</textarea>
@@ -332,7 +474,7 @@
           type="text"
           name="cleanupPlan"
           class="form-control"
-          pattern="[^()/><\][\\\x22;|]+"
+          pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
           maxlength="255"
         >{{formData.cleanupPlan}}</textarea>

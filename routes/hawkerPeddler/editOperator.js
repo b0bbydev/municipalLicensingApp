@@ -9,7 +9,7 @@ const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
-/* GET /hawkerPeddler/editApplicant/:id */
+/* GET /hawkerPeddler/editOperator/:id */
 router.get(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
@@ -19,8 +19,8 @@ router.get(
 
     // if errors is NOT empty (if there are errors...),
     if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/editApplicant", {
-        title: "BWG | Edit Applicant",
+      return res.render("hawkerPeddler/editOperator", {
+        title: "BWG | Edit Operator",
         message: "Page Error!",
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -49,8 +49,8 @@ router.get(
         ],
       })
         .then((results) => {
-          return res.render("hawkerPeddler/editApplicant", {
-            title: "BWG | Edit Applicant",
+          return res.render("hawkerPeddler/editOperator", {
+            title: "BWG | Edit Operator",
             message: messages,
             email: req.session.email,
             auth: req.session.auth, // authorization.
@@ -62,6 +62,8 @@ router.get(
               phoneNumber: results.phoneNumber,
               email: results.email,
               licenseNumber: results.licenseNumber,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
               streetNumber:
                 results.hawkerPeddlerApplicantAddresses[0].streetNumber,
               streetName: results.hawkerPeddlerApplicantAddresses[0].streetName,
@@ -71,32 +73,33 @@ router.get(
           });
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/editApplicant", {
-            title: "BWG | Edit Applicant",
+          return res.render("hawkerPeddler/editOperator", {
+            title: "BWG | Edit Operator",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
   }
 );
 
-/* POST /hawkerPeddler/editApplicant/:id */
+/* POST /hawkerPeddler/editOperator/:id */
 router.post(
   "/:id",
   param("id").matches(/^\d+$/).trim(),
   body("firstName")
     .if(body("firstName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid First Name Entry!")
     .trim(),
   body("lastName")
     .if(body("lastName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Last Name Entry!")
     .trim(),
   body("phoneNumber")
     .if(body("phoneNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Phone Number Entry!")
     .trim(),
   body("email")
@@ -106,27 +109,27 @@ router.post(
     .trim(),
   body("licenseNumber")
     .if(body("licenseNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid License Number Entry!")
     .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Number Entry!")
     .trim(),
   body("streetName")
     .if(body("streetName").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Street Name Entry!")
     .trim(),
   body("town")
     .if(body("town").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Town Entry!")
     .trim(),
   body("postalCode")
     .if(body("postalCode").notEmpty())
-    .matches(/^[^%<>^$\/\\;!{}?]+$/)
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Postal Code Entry!")
     .trim(),
   async (req, res, next) => {
@@ -145,8 +148,8 @@ router.post(
 
     // if errors is NOT empty (if there are errors...).
     if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/editApplicant", {
-        title: "BWG | Edit Applicant",
+      return res.render("hawkerPeddler/editOperator", {
+        title: "BWG | Edit Operator",
         message: errorArray[0].msg,
         email: req.session.email,
         auth: req.session.auth, // authorization.
@@ -158,6 +161,8 @@ router.post(
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
           town: req.body.town,
@@ -172,6 +177,8 @@ router.post(
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
         },
         {
           where: {
@@ -231,9 +238,10 @@ router.post(
           );
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/editApplicant", {
-            title: "BWG | Edit Applicant",
+          return res.render("hawkerPeddler/editOperator", {
+            title: "BWG | Edit Operator",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }

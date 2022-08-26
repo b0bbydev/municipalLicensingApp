@@ -91,6 +91,7 @@ router.get(
             return res.render("dogtags/index", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Address") {
@@ -143,6 +144,7 @@ router.get(
             return res.render("dogtags/index", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
         // use a different function (SQL query) if filtering by tagNumber.
@@ -186,6 +188,7 @@ router.get(
             return res.render("dogtags/search/dogTagNumberSearch", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Additional Owner Name") {
@@ -233,6 +236,7 @@ router.get(
             return res.render("dogtags/search/additionalOwnerSearch", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Vendor") {
@@ -280,6 +284,7 @@ router.get(
             return res.render("dogtags/index", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Owner Name") {
@@ -337,6 +342,7 @@ router.get(
               return res.render("dogtags/index", {
                 title: "BWG | Dog Tags",
                 message: "Page Error!",
+                auth: req.session.auth, // authorization.
               });
             });
         } else {
@@ -391,6 +397,7 @@ router.get(
               return res.render("dogtags/index", {
                 title: "BWG | Dog Tags",
                 message: "Page Error!",
+                auth: req.session.auth, // authorization.
               });
             });
         }
@@ -440,6 +447,7 @@ router.get(
             return res.render("dogtags/index", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }
@@ -551,6 +559,7 @@ router.get(
             return res.render("dogtags/owner", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       });
@@ -607,6 +616,7 @@ router.post(
           return res.render("dogtags/owner", {
             title: "BWG | Dog Tags",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -664,6 +674,7 @@ router.get(
           return res.render("dogtags/additionalOwner", {
             title: "BWG | Additional Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -712,6 +723,7 @@ router.post(
           return res.render("dogtags/additionalOwner", {
             title: "BWG | Additional Owner",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
@@ -860,6 +872,7 @@ router.get(
             return res.render("dogtags/expiredTags", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Address") {
@@ -924,6 +937,7 @@ router.get(
             return res.render("dogtags/expiredTags", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Dog Tag Number") {
@@ -980,6 +994,7 @@ router.get(
             return res.render("dogtags/expiredTags", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Additional Owner Name") {
@@ -1047,6 +1062,7 @@ router.get(
             return res.render("dogtags/expiredTags", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else if (req.query.filterCategory === "Owner Name") {
@@ -1118,6 +1134,7 @@ router.get(
               return res.render("dogtags/expiredTags", {
                 title: "BWG | Dog Tags",
                 message: "Page Error!",
+                auth: req.session.auth, // authorization.
               });
             });
         } else {
@@ -1186,6 +1203,7 @@ router.get(
               return res.render("dogtags/expiredTags", {
                 title: "BWG | Dog Tags",
                 message: "Page Error!",
+                auth: req.session.auth, // authorization.
               });
             });
         }
@@ -1243,6 +1261,7 @@ router.get(
             return res.render("dogtags/expiredTags", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       } else {
@@ -1304,6 +1323,7 @@ router.get(
             return res.render("dogtags/expiredTags", {
               title: "BWG | Dog Tags",
               message: "Page Error!",
+              auth: req.session.auth, // authorization.
             });
           });
       }
@@ -1387,6 +1407,7 @@ router.get(
           return res.render("dogtags/printDog", {
             title: "BWG | Print Dog",
             message: "Page Error!",
+            auth: req.session.auth, // authorization.
           });
         });
     }
