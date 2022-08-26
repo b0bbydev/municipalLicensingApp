@@ -209,6 +209,10 @@ var editTaxiBrokerRoute = require("./routes/taxiLicenses/editBroker");
 
 var taxiBrokerRoute = require("./routes/taxiLicenses/broker");
 
+var taxiBrokerHistoryRoute = require("./routes/taxiLicenses/brokerHistory");
+var taxiDriverHistoryRoute = require("./routes/taxiLicenses/driverHistory");
+var taxiPlateHistoryRoute = require("./routes/taxiLicenses/plateHistory");
+
 var addTaxiDriverRoute = require("./routes/taxiLicenses/addDriver");
 var editTaxiDriverRoute = require("./routes/taxiLicenses/editDriver");
 
@@ -684,6 +688,10 @@ app.use("/taxiLicenses/addBroker", isEnforcement, addTaxiBrokerRoute);
 app.use("/taxiLicenses/editBroker", isEnforcement, editTaxiBrokerRoute);
 
 app.use("/taxiLicenses/broker", isEnforcement, taxiBrokerRoute);
+
+app.use("/taxiLicenses/brokerHistory", isEnforcement, taxiBrokerHistoryRoute);
+app.use("/taxiLicenses/driverHistory", isEnforcement, taxiDriverHistoryRoute);
+app.use("/taxiLicenses/plateHistory", isEnforcement, taxiPlateHistoryRoute);
 
 app.use("/taxiLicenses/addDriver", isEnforcement, addTaxiDriverRoute);
 app.use("/taxiLicenses/editDriver", isEnforcement, editTaxiDriverRoute);

@@ -38,7 +38,13 @@
   <tbody class="table-group-divider">
     {{#each taxiDrivers}}
       <tr>
-        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td class="tableLink">
+          <a
+            class="stretched-link"
+            id="ownerLink"
+            href="/taxiLicenses/driverHistory/{{this.taxiDriverID}}"
+            title="View Taxi Driver History"
+          >{{this.firstName}} {{this.lastName}}</a></td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.cabCompany}}</td>
         {{#each taxiDriverAddresses}}
@@ -236,7 +242,13 @@
   <tbody class="table-group-divider">
     {{#each taxiPlates}}
       <tr>
-        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td class="tableLink">
+          <a
+            class="stretched-link"
+            id="ownerLink"
+            href="/taxiLicenses/plateHistory/{{this.taxiPlateID}}"
+            title="View Taxi Plate History"
+          >{{this.firstName}} {{this.lastName}}</a></td>
         <td>{{this.townPlateNumber}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
