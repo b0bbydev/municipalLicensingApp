@@ -71,13 +71,6 @@ input {
   border-bottom: 1px solid #dedede;
 }
 
-.nav-item-admin {
-  text-align: left;
-  font-size: 0.9rem;
-  cursor: pointer;
-  border-bottom: 1px solid #dedede;
-}
-
 .nav-item-logout {
   text-align: left;
   font-size: 0.9rem;
@@ -125,6 +118,11 @@ input {
 .nav-item-back:hover i {
   transition: 0.2s ease-in;
   color: white;
+}
+
+.nav-item-child:hover .icon-green {
+  transition: 0.2s ease-in;
+  color: #78a22f !important;
 }
 
 /* this makes the entire table cell clickable for the anchor tag. */
