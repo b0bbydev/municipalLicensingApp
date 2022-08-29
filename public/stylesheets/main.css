@@ -122,7 +122,7 @@ input {
 
 .nav-item-child:hover .icon-green {
   transition: 0.2s ease-in;
-  color: #78a22f !important;
+  color: #82bf15 !important;
 }
 
 /* this makes the entire table cell clickable for the anchor tag. */
