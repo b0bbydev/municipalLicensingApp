@@ -142,24 +142,33 @@
                     ></button>
                   </div>
                   <div class="modal-body">
-                    <label for="Procedure ID" class="form-label">Procedure ID</label>
-                    <input
-                      list="policies"
-                      class="form-control"
-                      placeholder="Procedure ID"
-                      name="procedureID"
-                      value="{{this.procedureID}}"
-                      readonly
-                    />
-                    <label for="Policy Name" class="form-label">Enter the name
-                      of the policy</label>
-                    <input
-                      list="policies"
-                      class="form-control"
-                      placeholder="Policy Name"
-                      name="policyName"
-                      required
-                    />
+                    <div class="row" style="display: none;">
+                      <div class="col">
+                        <label for="Procedure ID" class="form-label">Procedure
+                          ID</label>
+                        <input
+                          list="policies"
+                          class="form-control"
+                          placeholder="Procedure ID"
+                          name="procedureID"
+                          value="{{this.procedureID}}"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="Policy Name" class="form-label">Enter the
+                          name of the policy</label>
+                        <input
+                          list="policies"
+                          class="form-control"
+                          placeholder="Policy Name"
+                          name="policyName"
+                          required
+                        />
+                      </div>
+                    </div>
                     <datalist id="policies">
                       {{#each ../policies}}
                         <option

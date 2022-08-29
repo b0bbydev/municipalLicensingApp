@@ -104,7 +104,6 @@
                 />{{/ifCond}}</td>
             <td style="width: 17%;">
               <a
-                {{!-- href="/policies/guidelines/guidelineHistory/{{this.guidelineID}}" --}}
                 href="/policies/editGuideline/{{this.guidelineID}}"
                 class="btn btn-sm btn-secondary my-1"
               >Edit</a>
@@ -142,31 +141,40 @@
                     ></button>
                   </div>
                   <div class="modal-body">
-                    <label for="Guideline ID" class="form-label">Guideline ID</label>
-                    <input
-                      list="policies"
-                      class="form-control"
-                      placeholder="Guideline ID"
-                      name="guidelineID"
-                      value="{{this.guidelineID}}"
-                      readonly
-                    />
-                    <label for="Policy Name" class="form-label">Enter the name
-                      of the policy</label>
-                    <input
-                      list="policies"
-                      class="form-control"
-                      placeholder="Policy Name"
-                      name="policyName"
-                      required
-                    />
-                    <datalist id="policies">
-                      {{#each ../policies}}
-                        <option
-                          value="{{this.policyName}}"
-                        >{{this.policyName}}</option>
-                      {{/each}}
-                    </datalist>
+                    <div class="row" style="display: none;">
+                      <div class="col">
+                        <label for="Guideline ID" class="form-label">Guideline
+                          ID</label>
+                        <input
+                          list="policies"
+                          class="form-control"
+                          placeholder="Guideline ID"
+                          name="guidelineID"
+                          value="{{this.guidelineID}}"
+                          readonly
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="Policy Name" class="form-label">Enter the
+                          name of the policy</label>
+                        <input
+                          list="policies"
+                          class="form-control"
+                          placeholder="Policy Name"
+                          name="policyName"
+                          required
+                        />
+                        <datalist id="policies">
+                          {{#each ../policies}}
+                            <option
+                              value="{{this.policyName}}"
+                            >{{this.policyName}}</option>
+                          {{/each}}
+                        </datalist>
+                      </div>
+                    </div>
                   </div>
                   <div class="modal-footer">
                     <button

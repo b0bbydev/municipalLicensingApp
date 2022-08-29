@@ -49,10 +49,9 @@
   </div>
 {{/if}}
 
-<h4>Policy History</h4>
 <table
   id="policyTable"
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable mt-1"
 >
   <thead>
     <tr>
@@ -68,9 +67,8 @@
       <th>Scheduled Review Date</th>
       <th class="text-nowrap">Division</th>
       <th class="text-nowrap">Authority</th>
-      <th>Administrator</th>
+      <th class="text-nowrap">Administrator</th>
       <th class="text-nowrap">Status</th>
-      <th>Filehold URL</th>
       <th>Last Modified</th>
       <th class="text-nowrap">Action</th>
     </tr>
@@ -99,7 +97,6 @@
         <td>{{this.authority}}</td>
         <td>{{this.administrator}}</td>
         <td>{{this.status}}</td>
-        <td>{{this.fileHoldURL}}</td>
         <td class="fw-bold">{{formatDate this.lastModified}}</td>
         <td class="fw-bold">{{this.action}}</td>
       </tr>
@@ -140,10 +137,10 @@
             <th>Last Review Date</th>
             <th>Scheduled Review Date</th>
             <th>Date Amended</th>
-            <th>Status</th>
             <th>Division</th>
             <th>Authority</th>
             <th>Administrator</th>
+            <th>Status</th>
             <th>Legislation Required</th>
             <th>Last Modified</th>
             <th>Action</th>
@@ -165,10 +162,10 @@
               <td>{{this.lastReviewDate}}</td>
               <td>{{this.scheduledReviewDate}}</td>
               <td>{{this.dateAmended}}</td>
-              <td>{{this.status}}</td>
               <td>{{this.division}}</td>
               <td>{{this.authority}}</td>
               <td>{{this.administrator}}</td>
+              <td>{{this.status}}</td>
               <td>{{#ifCond this.legislationRequired "===" "Yes"}}
                   <input type="checkbox" onclick="return false;" checked />
                 {{else}}
@@ -176,8 +173,8 @@
                     type="checkbox"
                     onclick="return false;"
                   />{{/ifCond}}</td>
-              <td>{{formatDate this.lastModified}}</td>
-              <td>{{this.action}}</td>
+              <td class="fw-bold">{{formatDate this.lastModified}}</td>
+              <td class="fw-bold">{{this.action}}</td>
             </tr>
           {{/each}}
         </tbody>
@@ -202,10 +199,10 @@
             <th>Last Review Date</th>
             <th>Scheduled Review Date</th>
             <th>Date Amended</th>
-            <th>Status</th>
             <th>Division</th>
             <th>Authority</th>
             <th>Administrator</th>
+            <th>Status</th>
             <th>Legislation Required</th>
             <th>Last Modified</th>
             <th>Action</th>
@@ -227,10 +224,10 @@
               <td>{{this.lastReviewDate}}</td>
               <td>{{this.scheduledReviewDate}}</td>
               <td>{{this.dateAmended}}</td>
-              <td>{{this.status}}</td>
               <td>{{this.division}}</td>
               <td>{{this.authority}}</td>
               <td>{{this.administrator}}</td>
+              <td>{{this.status}}</td>
               <td>{{#ifCond this.legislationRequired "===" "Yes"}}
                   <input type="checkbox" onclick="return false;" checked />
                 {{else}}
@@ -238,8 +235,8 @@
                     type="checkbox"
                     onclick="return false;"
                   />{{/ifCond}}</td>
-              <td>{{formatDate this.lastModified}}</td>
-              <td>{{this.action}}</td>
+              <td class="fw-bold">{{formatDate this.lastModified}}</td>
+              <td class="fw-bold">{{this.action}}</td>
             </tr>
           {{/each}}
         </tbody>
