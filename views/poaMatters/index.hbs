@@ -79,7 +79,6 @@
       <th>Offence</th>
       <th>Offence Location</th>
       <th>Officer</th>
-      <th>Comments</th>
       <th>Set Fine</th>
       <th>Fine Assessed</th>
       <th>Amount Paid</th>
@@ -91,7 +90,14 @@
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td>{{this.infoNumber}}</td>
+        <td
+          data-bs-toggle="popover"
+          data-bs-trigger="hover"
+          data-bs-placement="right"
+          data-bs-custom-class="custom-popover"
+          data-bs-title="Comments"
+          data-bs-content="{{this.comment}}"
+        >{{this.infoNumber}}</td>
         <td>{{this.dateOfOffence}}</td>
         <td>{{this.dateClosed}}</td>
         <td>{{this.defendantName}}</td>
@@ -104,7 +110,6 @@
             {{this.postalCode}}</td>
         {{/each}}
         <td>{{this.officerName}}</td>
-        <td>{{this.comment}}</td>
         <td>{{#if this.setFine}} ${{this.setFine}} {{/if}}</td>
         <td>{{#if this.fineAssessed}} ${{this.fineAssessed}} {{/if}}</td>
         <td>{{#if this.amountPaid}} ${{this.amountPaid}} {{/if}}</td>
@@ -201,3 +206,16 @@
     </div>
   </div>
 {{/each}}
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+  crossorigin="anonymous"
+></script>
+<script>
+  /* enable Bootstrap popovers. */
+  const popoverTriggerList =
+  document.querySelectorAll('[data-bs-toggle="popover"]')
+  const popoverList =
+  [...popoverTriggerList].map(popoverTriggerEl => new
+  bootstrap.Popover(popoverTriggerEl))
+</script>

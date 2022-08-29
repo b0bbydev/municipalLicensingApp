@@ -65,6 +65,7 @@ router.get(
               model: POAMatterTrial,
             },
           ],
+          order: [["poaMatterID", "DESC"]],
         })
           .then((results) => {
             // for pagination.
