@@ -32,8 +32,6 @@ router.get("/:id", async (req, res, next) => {
 
   Promise.all([
     TaxiDriver.findAndCountAll({
-      limit: req.query.limit,
-      offset: req.skip,
       include: [
         {
           model: TaxiDriverAddress,
@@ -44,8 +42,6 @@ router.get("/:id", async (req, res, next) => {
       },
     }),
     TaxiPlate.findAndCountAll({
-      limit: req.query.limit,
-      offset: req.skip,
       include: [
         {
           model: TaxiPlateOwnerAddress,

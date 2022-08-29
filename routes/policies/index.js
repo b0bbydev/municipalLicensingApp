@@ -94,13 +94,14 @@ router.get(
 
         // create filter query.
         Policy.findAndCountAll({
+          subQuery: false, // fixes column not found error when paginating a join.
+          limit: req.query.limit,
+          offset: req.skip,
           where: {
             [filterCategory]: {
               [Op.like]: "%" + req.query.filterValue + "%",
             },
           },
-          limit: req.query.limit,
-          offset: req.skip,
         })
           .then((results) => {
             // for pagination.
@@ -284,24 +285,18 @@ router.get(
       // if there are no filter parameters.
       if (!req.query.filterMonth && !req.query.filterYear) {
         PolicyHistory.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
           where: {
             policyID: req.params.id,
           },
           order: [["lastModified", "DESC"]],
         }).then((policyHistory) => {
           GuidelineHistory.findAndCountAll({
-            limit: req.query.limit,
-            offset: req.skip,
             where: {
               policyID: req.params.id,
             },
             order: [["lastModified", "DESC"]],
           }).then((guidelineHistory) => {
             ProcedureHistory.findAndCountAll({
-              limit: req.query.limit,
-              offset: req.skip,
               where: {
                 policyID: req.params.id,
               },
@@ -364,8 +359,6 @@ router.get(
                 ),
               ],
             },
-            limit: req.query.limit,
-            offset: req.skip,
             order: [["lastModified", "DESC"]],
           }).then((procedureHistory) => {
             // get guideline history.
@@ -380,8 +373,6 @@ router.get(
                   ),
                 ],
               },
-              limit: req.query.limit,
-              offset: req.skip,
               order: [["lastModified", "DESC"]],
             }).then((guidelineHistory) => {
               // get policy history.
@@ -396,8 +387,6 @@ router.get(
                     ),
                   ],
                 },
-                limit: req.query.limit,
-                offset: req.skip,
                 order: [["lastModified", "DESC"]],
               })
                 .then((policyHistory) => {
@@ -457,8 +446,6 @@ router.get(
                 ),
               ],
             },
-            limit: req.query.limit,
-            offset: req.skip,
             order: [["lastModified", "DESC"]],
           }).then((procedureHistory) => {
             // get guideline history.
@@ -473,8 +460,6 @@ router.get(
                   ),
                 ],
               },
-              limit: req.query.limit,
-              offset: req.skip,
               order: [["lastModified", "DESC"]],
             }).then((guidelineHistory) => {
               // get policy history.
@@ -489,8 +474,6 @@ router.get(
                     ),
                   ],
                 },
-                limit: req.query.limit,
-                offset: req.skip,
                 order: [["lastModified", "DESC"]],
               })
                 .then((policyHistory) => {
@@ -553,8 +536,6 @@ router.get(
                 ),
               ],
             },
-            limit: req.query.limit,
-            offset: req.skip,
             order: [["lastModified", "DESC"]],
           }).then((procedureHistory) => {
             // get guideline history.
@@ -572,8 +553,6 @@ router.get(
                   ),
                 ],
               },
-              limit: req.query.limit,
-              offset: req.skip,
               order: [["lastModified", "DESC"]],
             }).then((guidelineHistory) => {
               // get policy history.
@@ -591,8 +570,6 @@ router.get(
                     ),
                   ],
                 },
-                limit: req.query.limit,
-                offset: req.skip,
                 order: [["lastModified", "DESC"]],
               })
                 .then((policyHistory) => {

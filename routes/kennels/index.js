@@ -85,6 +85,7 @@ router.get("/", async (req, res, next) => {
       });
   } else if (req.query.filterCategory === "Kennel Name") {
     Kennel.findAndCountAll({
+      subQuery: false, // fixes column not found error when paginating a join.
       limit: req.query.limit,
       offset: req.skip,
       where: {
@@ -299,6 +300,7 @@ router.get("/", async (req, res, next) => {
 
     // create filter query.
     Kennel.findAndCountAll({
+      subQuery: false, // fixes column not found error when paginating a join.
       limit: req.query.limit,
       offset: req.skip,
       where: {

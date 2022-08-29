@@ -47,8 +47,6 @@ router.get(
 
       Promise.all([
         HawkerPeddlerPropertyOwner.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
           include: [
             {
               model: HawkerPeddlerPropertyOwnerAddress,
@@ -59,8 +57,6 @@ router.get(
           },
         }),
         HawkerPeddlerApplicant.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
           include: [
             {
               model: HawkerPeddlerApplicantAddress,

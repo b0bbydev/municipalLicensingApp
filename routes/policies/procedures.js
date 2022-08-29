@@ -80,6 +80,9 @@ router.get("/", async (req, res, next) => {
 
     // create filter query.
     Procedure.findAndCountAll({
+      subQuery: false, // fixes column not found error when paginating a join.
+      limit: req.query.limit,
+      offset: req.skip,
       where: {
         [filterCategory]: {
           [Op.like]: "%" + req.query.filterValue + "%",

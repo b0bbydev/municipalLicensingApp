@@ -35,8 +35,6 @@ router.get(
 
       Promise.all([
         KennelPropertyOwner.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
           include: [
             {
               model: KennelPropertyOwnerAddress,
@@ -47,8 +45,6 @@ router.get(
           },
         }),
         KennelOwner.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
           include: [
             {
               model: KennelOwnerAddress,

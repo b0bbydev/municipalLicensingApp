@@ -152,6 +152,9 @@ router.get(
         // use a different function (SQL query) if filtering by tagNumber.
       } else if (req.query.filterCategory === "Dog Tag Number") {
         Owner.findAndCountAll({
+          subQuery: false, // fixes column not found error when paginating a join.
+          limit: req.query.limit,
+          offset: req.skip,
           where: {
             $tagNumber$: req.query.filterValue,
           },
@@ -196,6 +199,9 @@ router.get(
           });
       } else if (req.query.filterCategory === "Additional Owner Name") {
         Owner.findAndCountAll({
+          subQuery: false, // fixes column not found error when paginating a join.
+          limit: req.query.limit,
+          offset: req.skip,
           where: {
             [Op.or]: {
               "$AdditionalOwner.firstName$": {
@@ -245,9 +251,9 @@ router.get(
           });
       } else if (req.query.filterCategory === "Vendor") {
         Owner.findAndCountAll({
+          subQuery: false, // fixes column not found error when paginating a join.
           limit: req.query.limit,
           offset: req.skip,
-          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
           where: {
             $vendor$: {
               [Op.like]: "%" + req.query.filterValue + "%",
@@ -296,9 +302,9 @@ router.get(
         // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
         if (req.query.filterValue.trim().indexOf(" ") != -1) {
           Owner.findAndCountAll({
+            subQuery: false, // fixes column not found error when paginating a join.
             limit: req.query.limit,
             offset: req.skip,
-            subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
             where: Sequelize.where(
               Sequelize.fn(
                 "concat",
@@ -353,9 +359,9 @@ router.get(
             });
         } else {
           Owner.findAndCountAll({
+            subQuery: false, // fixes column not found error when paginating a join.
             limit: req.query.limit,
             offset: req.skip,
-            subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
             where: {
               [Op.or]: {
                 firstName: {
@@ -414,13 +420,14 @@ router.get(
 
         // create filter query.
         Owner.findAndCountAll({
+          subQuery: false, // fixes column not found error when paginating a join.
+          limit: req.query.limit,
+          offset: req.skip,
           where: {
             [filterCategory]: {
               [Op.like]: "%" + req.query.filterValue + "%",
             },
           },
-          limit: req.query.limit,
-          offset: req.skip,
           include: [
             {
               model: Address,
@@ -523,15 +530,11 @@ router.get(
       });
 
       AdditionalOwner.findAndCountAll({
-        limit: req.query.limit,
-        offset: req.skip,
         where: {
           ownerID: req.session.ownerID,
         },
       }).then((additionalOwners) => {
         Dog.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
           where: {
             ownerID: req.session.ownerID,
           },

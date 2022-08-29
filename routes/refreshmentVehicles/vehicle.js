@@ -37,8 +37,6 @@ router.get(
 
       Promise.all([
         RefreshmentVehiclePropertyOwner.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
           include: [
             {
               model: RefreshmentVehiclePropertyOwnerAddress,
@@ -49,8 +47,6 @@ router.get(
           },
         }),
         RefreshmentVehicleOwner.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
           include: [
             {
               model: RefreshmentVehicleOwnerAddress,
@@ -61,8 +57,6 @@ router.get(
           },
         }),
         RefreshmentVehicleOperator.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
           include: [
             {
               model: RefreshmentVehicleOperatorAddress,

@@ -85,19 +85,19 @@
 <nav id="pagination">
   <ul class="pagination pagination-sm">
     {{#if paginate.hasPreviousPages}}
-      <li class="page-item"><a class="page-link" href="{{prev}}">Prev</a></li>
+      <li class="page-item">
+        <a class="page-link" href="{{prev}}">Prev</a>
+      </li>
     {{/if}}
     {{#each pages}}
-      <li class="page-item"><a
-          class="page-link"
-          href="{{this.url}}"
-        >{{this.number}}</a></li>
+      <li class="page-item">
+        <a class="page-link {{#contains this.url ../currentPage}}active pagination-color {{/contains}}" href="{{this.url}}">{{this.number}}</a>
+      </li>
     {{/each}}
     {{#if hasMorePages}}
-      <li class="page-item"><a
-          class="page-link"
-          href="{{paginate.href}}"
-        >Next</a></li>
+      <li class="page-item">
+        <a class="page-link" href="{{paginate.href}}">Next</a>
+      </li>
     {{/if}}
   </ul>
 </nav>

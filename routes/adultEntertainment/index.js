@@ -102,6 +102,9 @@ router.get(
           });
       } else if (req.query.filterCategory === "Address") {
         Business.findAndCountAll({
+          subQuery: false, // fixes column not found error when paginating a join.
+          limit: req.query.limit,
+          offset: req.skip,
           // functions in where clause, fancy.
           where: Sequelize.where(
             Sequelize.fn(
@@ -158,13 +161,14 @@ router.get(
 
         // create filter query.
         Business.findAndCountAll({
+          subQuery: false, // fixes column not found error when paginating a join.
+          limit: req.query.limit,
+          offset: req.skip,
           where: {
             [filterCategory]: {
               [Op.like]: req.query.filterValue + "%",
             },
           },
-          limit: req.query.limit,
-          offset: req.skip,
           include: [
             {
               model: BusinessAddress,

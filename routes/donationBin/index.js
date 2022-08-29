@@ -249,6 +249,7 @@ router.get("/", async (req, res, next) => {
     }
   } else if (req.query.filterCategory === "Charity/Organization") {
     DonationBinCharity.findAndCountAll({
+      subQuery: false, // fixes column not found error when paginating a join.
       limit: req.query.limit,
       offset: req.skip,
       where: {
@@ -294,13 +295,14 @@ router.get("/", async (req, res, next) => {
 
     // create filter query.
     DonationBin.findAndCountAll({
+      subQuery: false, // fixes column not found error when paginating a join.
+      limit: req.query.limit,
+      offset: req.skip,
       where: {
         [filterCategory]: {
           [Op.like]: req.query.filterValue + "%",
         },
       },
-      limit: req.query.limit,
-      offset: req.skip,
     })
       .then((results) => {
         // for pagination.
