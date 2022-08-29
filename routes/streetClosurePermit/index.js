@@ -88,6 +88,16 @@ router.get("/", async (req, res, next) => {
           [Op.like]: req.query.filterValue + "%",
         },
       },
+      include: [
+        {
+          model: StreetClosureContact,
+          include: [StreetClosureContactAddress],
+        },
+        {
+          model: StreetClosureCoordinator,
+          include: [StreetClosureCoordinatorAddress],
+        },
+      ],
     })
       .then((results) => {
         // for pagination.

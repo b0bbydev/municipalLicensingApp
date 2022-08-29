@@ -1,4 +1,51 @@
 <h2 class="text-center mt-2">Hawker & Peddler Licensing</h2>
+<h4>Filtering</h4>
+<form class="mb-0" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterCategory"
+    title="Category To Filter By"
+    name="filterCategory"
+    required
+  >
+    {{#if filterCategory}}
+      <option value="{{filterCategory}}" selected>{{filterCategory}}</option>
+    {{else}}
+      <option value="" disabled selected>Filter By...</option>
+    {{/if}}
+    {{#each filterOptions}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <!-- filterValue input -->
+  <input
+    name="filterValue"
+    id="filterValue"
+    class="form-control-sm"
+    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+    title="No special characters!"
+    placeholder="Search..."
+    value="{{filterValue}}"
+  />
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/hawkerPeddler"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
 <div class="row">
   <div class="col mb-1">
     {{#if queryCount}}
