@@ -196,7 +196,8 @@
     {{/if}}
     {{#each pages}}
       <li class="page-item">
-        <a class="page-link" href="{{this.url}}">{{this.number}}</a></li>
+        <a class="page-link {{#contains this.url ../currentPage}}active pagination-color {{/contains}}" href="{{this.url}}">{{this.number}}</a>
+      </li>
     {{/each}}
     {{#if hasMorePages}}
       <li class="page-item"><a

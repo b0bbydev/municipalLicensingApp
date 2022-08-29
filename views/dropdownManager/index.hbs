@@ -41,7 +41,7 @@
     {{/if}}
     {{#each pages}}
       <li class="page-item">
-        <a class="page-link" href="{{this.url}}">{{this.number}}</a>
+        <a class="page-link {{#contains this.url ../currentPage}}active pagination-color {{/contains}}" href="{{this.url}}">{{this.number}}</a>
       </li>
     {{/each}}
     {{#if hasMorePages}}
@@ -51,30 +51,3 @@
     {{/if}}
   </ul>
 </nav>
-{{! <!-- Add new dropdown form -->
-<div class="row newDropdownForm">
-  <div class="col-sm-4">
-    <form method="POST">
-      <label for="Dropdown Form" class="form-label title-text">Add Dropdown
-        Form*</label>
-      <input
-        name="formName"
-        class="form-control"
-        placeholder="New Form/Dropdown Name..."
-        type="text"
-        pattern="[^><\][\\\x22;|]+"
-        title="No special characters!"
-        required
-      />
-      <div class="row pt-1">
-        <div class="col">
-          <button
-            id="submitButton"
-            class="btn btn-primary"
-            type="submit"
-          >Submit</button>
-        </div>
-      </div>
-    </form>
-  </div>
-</div> }}

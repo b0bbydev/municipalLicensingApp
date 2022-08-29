@@ -58,6 +58,7 @@ router.get("/", async (req, res, next) => {
           auth: req.session.auth, // authorization.
           data: results.rows,
           filterOptions: filterOptions,
+          currentPage: req.query.page,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,
@@ -101,6 +102,7 @@ router.get("/", async (req, res, next) => {
           filterCategory: req.query.filterCategory,
           filterValue: req.query.filterValue,
           filterOptions: filterOptions,
+          currentPage: req.query.page,
           pageCount,
           itemCount,
           queryCount: "Records returned: " + results.count,

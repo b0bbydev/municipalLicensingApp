@@ -159,6 +159,17 @@ input {
   padding: 10px 20px 5px 10px;
 }
 
+/* overriding Bootstrap .active class for pagination. */
+.active {
+  color: white !important;
+  background-color: #0096d6 !important;
+}
+
+.active:hover {
+  transition: 0.2s ease-in;
+  background-color: #0275a6 !important;
+}
+
 /* footer */
 .footer-color {
   background-color: #78a22f;

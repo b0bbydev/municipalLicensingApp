@@ -332,6 +332,17 @@ hbs.registerHelper("incremented", function (index) {
   return index;
 });
 
+hbs.registerHelper("contains", function (string, value, options) {
+  if (!string || string === undefined || string === null) {
+    return;
+  }
+  if (string.includes("page=" + value)) {
+    return options.fn(this);
+  } else {
+    return options.inverse(this);
+  }
+});
+
 // use routes here.
 app.use("/login", loginRouter);
 app.use("/", indexRouter);

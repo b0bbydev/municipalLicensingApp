@@ -29,6 +29,7 @@ router.get("/", async (req, res, next) => {
         email: req.session.email,
         auth: req.session.auth, // authorization.
         data: results.rows,
+        currentPage: req.query.page,
         pageCount,
         itemCount,
         queryCount: "Records returned: " + results.count,

@@ -79,6 +79,7 @@ router.get(
               auth: req.session.auth, // authorization.
               data: results.rows,
               filterOptions: filterOptions,
+              currentPage: req.query.page,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + poaMatterCount.count,
@@ -130,6 +131,7 @@ router.get(
               filterOptions: filterOptions,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
+              currentPage: req.query.page,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,
