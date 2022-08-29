@@ -66,7 +66,7 @@
 {{/if}}
 
 <table
-  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+  class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
@@ -81,7 +81,6 @@
       <th>Authority</th>
       <th>Administrator</th>
       <th>Legislation Required</th>
-      <th>Notes</th>
       <th>Last Modified</th>
       <th>Action</th>
     </tr>
@@ -89,7 +88,14 @@
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td>{{this.guidelineNumber}}</td>
+        <td
+          data-bs-toggle="popover"
+          data-bs-trigger="hover"
+          data-bs-placement="right"
+          data-bs-custom-class="custom-popover"
+          data-bs-title="Notes"
+          data-bs-content="{{this.notes}}"
+        >{{this.guidelineNumber}}</td>
         <td>{{this.guidelineName}}</td>
         <td>{{this.dateApproved}}</td>
         <td>{{this.lastReviewDate}}</td>
@@ -103,10 +109,22 @@
             <input type="checkbox" onclick="return false;" checked />
           {{else}}
             <input type="checkbox" onclick="return false;" />{{/ifCond}}</td>
-        <td>{{this.notes}}</td>
-        <td>{{formatDate this.lastModified}}</td>
-        <td>{{this.action}}</td>
+        <td class="fw-bold">{{formatDate this.lastModified}}</td>
+        <td class="fw-bold">{{this.action}}</td>
       </tr>
     {{/each}}
   </tbody>
 </table>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+  crossorigin="anonymous"
+></script>
+<script>
+  /* enable Bootstrap popovers. */
+  const popoverTriggerList =
+  document.querySelectorAll('[data-bs-toggle="popover"]')
+  const popoverList =
+  [...popoverTriggerList].map(popoverTriggerEl => new
+  bootstrap.Popover(popoverTriggerEl))
+</script>

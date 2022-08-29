@@ -225,8 +225,6 @@
                           <span class="ms-1 d-none d-sm-inline">Liquor Licenses</span>
                         </a>
                       </li>
-                    {{/includes}}
-                    {{#includes auth "Admin"}}
                       <!-- Enforcement - Refreshment Vehicle Licenses -->
                       <li class="nav-item-admin w-100 p-1">
                         <a
@@ -238,6 +236,8 @@
                             Vehicle Licenses</span>
                         </a>
                       </li>
+                    {{/includes}}
+                    {{#includes auth "Admin"}}
                       <!-- Enforcement - Taxi Licenses -->
                       <li class="nav-item-admin w-100 p-1">
                         <a

@@ -107,23 +107,30 @@
       <th>Category</th>
       <th>Last Review Date</th>
       <th>Scheduled Review Date</th>
-      <th>Division</th>
-      <th>Authority</th>
+      <th class="text-nowrap">Division</th>
+      <th class="text-nowrap">Authority</th>
       <th>Administrator</th>
       <th>Legislation Required</th>
-      <th>Status</th>
+      <th class="text-nowrap">Status</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td class="tableLink">
+        <td
+          class="tableLink"
+          data-bs-toggle="popover"
+          data-bs-trigger="hover"
+          data-bs-placement="right"
+          data-bs-custom-class="custom-popover"
+          data-bs-title="Notes"
+          data-bs-content="{{this.notes}}"
+        >
           <a
             class="stretched-link"
             id="ownerLink"
             href="/policies/policy/{{this.policyID}}"
-            title="View Policy Related Information"
           >{{this.policyNumber}}</a></td>
         <td>{{this.policyName}}</td>
         <td>{{this.cowDate}}</td>
@@ -148,11 +155,15 @@
             class="btn btn-sm btn-secondary my-1"
           >Edit</a>
           |
-          <a
-            href="{{this.fileHoldURL}}"
-            target="_blank"
-            class="btn btn-sm btn-secondary"
-          >Filehold</a></td>
+          {{#ifCond this.fileHoldURL "===" ""}}
+            <a href="#" class="btn btn-sm btn-secondary">Filehold</a>
+          {{else}}
+            <a
+              href="{{this.fileHoldURL}}"
+              target="_blank"
+              class="btn btn-sm btn-secondary"
+            >Filehold</a>
+          {{/ifCond}}</td>
       </tr>
     {{/each}}
   </tbody>
@@ -223,3 +234,16 @@
     </div>
   </form>
 </div>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+  crossorigin="anonymous"
+></script>
+<script>
+  /* enable Bootstrap popovers. */
+  const popoverTriggerList =
+  document.querySelectorAll('[data-bs-toggle="popover"]')
+  const popoverList =
+  [...popoverTriggerList].map(popoverTriggerEl => new
+  bootstrap.Popover(popoverTriggerEl))
+</script>

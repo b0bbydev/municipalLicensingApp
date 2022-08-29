@@ -67,15 +67,26 @@
           <th>Authority</th>
           <th>Administrator</th>
           <th>Legislation Required</th>
-          <th>Notes</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
         {{#each data}}
           <tr>
-            <td>{{this.guidelineNumber}}</td>
-            <td class="tableLink"><a class="stretched-link" id="ownerLink" href="/policies/editGuideline/{{this.guidelineID}}" title="Edit Guideline">{{this.guidelineName}}</a></td>
+            <td
+              data-bs-toggle="popover"
+              data-bs-trigger="hover"
+              data-bs-placement="right"
+              data-bs-custom-class="custom-popover"
+              data-bs-title="Notes"
+              data-bs-content="{{this.notes}}"
+            >{{this.guidelineNumber}}</td>
+            <td class="tableLink"><a
+                class="stretched-link"
+                id="ownerLink"
+                href="/policies/guidelines/guidelineHistory/{{this.guidelineID}}"
+                title="View Guideline History"
+              >{{this.guidelineName}}</a></td>
             <td>{{this.dateApproved}}</td>
             <td>{{this.lastReviewDate}}</td>
             <td>{{this.scheduledReviewDate}}</td>
@@ -85,21 +96,24 @@
             <td>{{this.authority}}</td>
             <td>{{this.administrator}}</td>
             <td>{{#ifCond this.legislationRequired "===" "Yes"}}
-            <input type="checkbox" onclick="return false;" checked />
+                <input type="checkbox" onclick="return false;" checked />
               {{else}}
-            <input type="checkbox" onclick="return false;" />{{/ifCond}}</td>
-            <td>{{this.notes}}</td>
+                <input
+                  type="checkbox"
+                  onclick="return false;"
+                />{{/ifCond}}</td>
             <td style="width: 17%;">
+              <a
+                {{!-- href="/policies/guidelines/guidelineHistory/{{this.guidelineID}}" --}}
+                href="/policies/editGuideline/{{this.guidelineID}}"
+                class="btn btn-sm btn-secondary my-1"
+              >Edit</a>
+              |
               <a
                 data-bs-toggle="modal"
                 data-bs-target="#addToPolicyModal-{{this.guidelineID}}"
                 class="btn btn-sm btn-secondary"
               >Add to Policy</a>
-              |
-              <a
-                href="/policies/guidelines/guidelineHistory/{{this.guidelineID}}"
-                class="btn btn-sm btn-secondary"
-              >History</a>
               |
               <a
                 href="{{this.fileHoldURL}}"
@@ -194,3 +208,16 @@
     </nav>
   </div>
 </section>
+<script
+  src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+  crossorigin="anonymous"
+></script>
+<script>
+  /* enable Bootstrap popovers. */
+  const popoverTriggerList =
+  document.querySelectorAll('[data-bs-toggle="popover"]')
+  const popoverList =
+  [...popoverTriggerList].map(popoverTriggerEl => new
+  bootstrap.Popover(popoverTriggerEl))
+</script>
