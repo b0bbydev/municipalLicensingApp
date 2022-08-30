@@ -169,23 +169,66 @@ router.post(
         },
       });
     } else {
-      DonationBin.update(
-        {
-          licenseNumber: req.body.licenseNumber,
-          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
-          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
-          colour: req.body.colour,
-          material: req.body.material,
-          pickupSchedule: req.body.pickupSchedule,
-          itemsCollected: req.body.itemsCollected,
-          notes: req.body.notes,
+      /* begin check for ONLY updating data when a value has changed. */
+      // create empty objects to hold data.
+      let currentData = {};
+      let newData = {};
+
+      // get current data.
+      DonationBin.findOne({
+        where: {
+          donationBinID: req.params.id,
         },
-        {
-          where: {
-            donationBinID: req.params.id,
-          },
-        }
-      )
+      })
+        .then((results) => {
+          // put the CURRENT data into an object.
+          currentData = {
+            licenseNumber: results.dataValues.licenseNumber,
+            issueDate: results.dataValues.issueDate,
+            expiryDate: results.dataValues.expiryDate,
+            itemsCollected: results.dataValues.itemsCollected,
+            pickupSchedule: results.dataValues.pickupSchedule,
+            colour: results.dataValues.colour,
+            material: results.dataValues.material,
+            notes: results.dataValues.notes,
+          };
+
+          // put the NEW data into an object.
+          // fixEmptyValue() in this case will replace any 'undefined' values with null.
+          // which is required when comparing objects as null != defined, making them techinically different.
+          newData = {
+            licenseNumber: req.body.licenseNumber,
+            issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+            expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+            colour: req.body.colour,
+            material: req.body.material,
+            pickupSchedule: req.body.pickupSchedule,
+            itemsCollected: req.body.itemsCollected,
+            notes: req.body.notes,
+          };
+
+          // compare the two objects to check if they contain equal properties. If NOT (false), then proceed with update.
+          // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
+          if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+            DonationBin.update(
+              {
+                licenseNumber: req.body.licenseNumber,
+                issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+                expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+                colour: req.body.colour,
+                material: req.body.material,
+                pickupSchedule: req.body.pickupSchedule,
+                itemsCollected: req.body.itemsCollected,
+                notes: req.body.notes,
+              },
+              {
+                where: {
+                  donationBinID: req.params.id,
+                },
+              }
+            );
+          }
+        })
         .then(() => {
           /* begin check for ONLY updating data when a value has changed. */
           // create empty objects to hold data.

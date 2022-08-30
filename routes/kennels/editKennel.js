@@ -172,26 +172,76 @@ router.post(
         },
       });
     } else {
-      Kennel.update(
-        {
-          kennelName: req.body.kennelName,
-          phoneNumber: req.body.phoneNumber,
-          email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
-          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
-          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
-          policeCheck: req.body.policeCheck,
-          photoID: req.body.photoID,
-          acoInspection: req.body.acoInspection,
-          zoningClearance: req.body.zoningClearance,
-          notes: req.body.notes,
+      /* begin check for ONLY updating data when a value has changed. */
+      // create empty objects to hold data.
+      let currentData = {};
+      let newData = {};
+
+      // get current data.
+      Kennel.findOne({
+        where: {
+          kennelID: req.params.id,
         },
-        {
-          where: {
-            kennelID: req.params.id,
-          },
-        }
-      )
+      })
+        .then((results) => {
+          // put the CURRENT data into an object.
+          currentData = {
+            kennelName: results.dataValues.kennelName,
+            phoneNumber: results.dataValues.phoneNumber,
+            email: results.dataValues.email,
+            licenseNumber: results.dataValues.licenseNumber,
+            issueDate: results.dataValues.issueDate,
+            expiryDate: results.dataValues.expiryDate,
+            policeCheck: results.dataValues.policeCheck,
+            photoID: results.dataValues.photoID,
+            acoInspection: results.dataValues.acoInspection,
+            zoningClearance: results.dataValues.zoningClearance,
+            notes: results.dataValues.notes,
+          };
+
+          // put the NEW data into an object.
+          // fixEmptyValue() in this case will replace any 'undefined' values with null.
+          // which is required when comparing objects as null != defined, making them techinically different.
+          newData = {
+            kennelName: req.body.kennelName,
+            phoneNumber: req.body.phoneNumber,
+            email: req.body.email,
+            licenseNumber: req.body.licenseNumber,
+            issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+            expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+            policeCheck: funcHelpers.fixEmptyValue(req.body.policeCheck),
+            photoID: funcHelpers.fixEmptyValue(req.body.photoID),
+            acoInspection: funcHelpers.fixEmptyValue(req.body.acoInspection),
+            zoningClearance: funcHelpers.fixEmptyValue(
+              req.body.zoningClearance
+            ),
+            notes: req.body.notes,
+          };
+
+          // compare the two objects to check if they contain equal properties. If NOT (false), then proceed with update.
+          if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+            Kennel.update(
+              {
+                kennelName: req.body.kennelName,
+                phoneNumber: req.body.phoneNumber,
+                email: req.body.email,
+                licenseNumber: req.body.licenseNumber,
+                issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+                expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+                policeCheck: req.body.policeCheck,
+                photoID: req.body.photoID,
+                acoInspection: req.body.acoInspection,
+                zoningClearance: req.body.zoningClearance,
+                notes: req.body.notes,
+              },
+              {
+                where: {
+                  kennelID: req.params.id,
+                },
+              }
+            );
+          }
+        })
         .then(() => {
           /* begin check for ONLY updating data when a value has changed. */
           // create empty objects to hold data.

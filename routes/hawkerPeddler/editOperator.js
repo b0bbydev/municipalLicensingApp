@@ -170,22 +170,61 @@ router.post(
         },
       });
     } else {
-      HawkerPeddlerApplicant.update(
-        {
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          phoneNumber: req.body.phoneNumber,
-          email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
+      /* begin check for ONLY updating data when a value has changed. */
+      // create empty objects to hold data.
+      let currentData = {};
+      let newData = {};
+
+      // get current data.
+      HawkerPeddlerApplicant.findOne({
+        where: {
+          hawkerPeddlerApplicantID: req.params.id,
         },
-        {
-          where: {
-            hawkerPeddlerApplicantID: req.params.id,
-          },
-        }
-      )
+      })
+        .then((results) => {
+          // put the CURRENT data into an object.
+          currentData = {
+            firstName: results.dataValues.firstName,
+            lastName: results.dataValues.lastName,
+            phoneNumber: results.dataValues.phoneNumber,
+            email: results.dataValues.email,
+            licenseNumber: results.dataValues.licenseNumber,
+            issueDate: results.dataValues.issueDate,
+            expiryDate: results.dataValues.expiryDate,
+          };
+          // put the NEW data into an object.
+          // fixEmptyValue() in this case will replace any 'undefined' values with null.
+          // which is required when comparing objects as null != defined, making them techinically different.
+          newData = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            phoneNumber: req.body.phoneNumber,
+            email: req.body.email,
+            licenseNumber: req.body.licenseNumber,
+            issueDate: req.body.issueDate,
+            expiryDate: req.body.expiryDate,
+          };
+
+          // compare the two objects to check if they contain equal properties. If NOT (false), then proceed with update.
+          if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+            HawkerPeddlerApplicant.update(
+              {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                phoneNumber: req.body.phoneNumber,
+                email: req.body.email,
+                licenseNumber: req.body.licenseNumber,
+                issueDate: req.body.issueDate,
+                expiryDate: req.body.expiryDate,
+              },
+              {
+                where: {
+                  hawkerPeddlerApplicantID: req.params.id,
+                },
+              }
+            );
+          }
+        })
         .then(() => {
           /* begin check for ONLY updating data when a value has changed. */
           // create empty objects to hold data.
