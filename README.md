@@ -1,8 +1,8 @@
 # Municipal Licensing Application
 
-I designed this application at a co-op during my time at college. The project was to redesign an old and outdated PHP web application. I was tasked to convert the current 'flat' data to a relational model as well as implement user authentication to protect Personal Identifiable Information (PII).
+I designed this application at a co-op during my time at college. The project was to redesign an old and outdated PHP web application. I was tasked to convert the current 'flat' data to a relational model as well as implement user authentication via ActiveDirectory to protect Personal Identifiable Information (PII).
 
-The web application is designed to handle the issuing and renewing of licenses required by the municipality. These range from dog tags to liquor licenses to street closure permits just to mention a few.
+The web application is designed to handle the issuing and renewing of licenses required by the municipality. These range from dog tags to liquor licenses to street closure permits just to mention a few. It also tracks history of records and displays it in table format, with the purpose of providing reports where needed.
 
 ## :computer: Tech Stack
 
