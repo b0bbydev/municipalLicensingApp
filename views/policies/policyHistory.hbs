@@ -69,6 +69,7 @@
       <th class="text-nowrap">Authority</th>
       <th class="text-nowrap">Administrator</th>
       <th class="text-nowrap">Status</th>
+      <th>Legislation Required</th>
       <th>Last Modified</th>
       <th class="text-nowrap">Action</th>
     </tr>
@@ -97,6 +98,13 @@
         <td>{{this.authority}}</td>
         <td>{{this.administrator}}</td>
         <td>{{this.status}}</td>
+        <td>{{#ifCond this.legislationRequired "===" "Yes"}}
+          <input type="checkbox" onclick="return false;" checked />
+            {{else}}
+           <input
+              type="checkbox"
+              onclick="return false;"
+            />{{/ifCond}}</td>
         <td class="fw-bold">{{formatDate this.lastModified}}</td>
         <td class="fw-bold">{{this.action}}</td>
       </tr>
