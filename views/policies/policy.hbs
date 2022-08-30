@@ -75,11 +75,15 @@
                 class="btn btn-sm btn-secondary my-1"
               >Edit</a>
               |
-              <a
-                href="{{this.fileHoldURL}}"
-                target="_blank"
-                class="btn btn-sm btn-secondary"
-              >Filehold</a></td>
+              {{#ifCond this.fileHoldURL "===" ""}}
+                <a href="#" class="btn btn-sm btn-secondary">Filehold</a>
+              {{else}}
+                <a
+                  href="{{this.fileHoldURL}}"
+                  target="_blank"
+                  class="btn btn-sm btn-secondary"
+                >Filehold</a>
+              {{/ifCond}}</td>
           </tr>
         {{/each}}
       </tbody>
@@ -155,11 +159,15 @@
                 class="btn btn-sm btn-secondary my-1"
               >Edit</a>
               |
-              <a
-                href="{{this.fileHoldURL}}"
-                target="_blank"
-                class="btn btn-sm btn-secondary"
-              >Filehold</a></td>
+              {{#ifCond this.fileHoldURL "===" ""}}
+                <a href="#" class="btn btn-sm btn-secondary">Filehold</a>
+              {{else}}
+                <a
+                  href="{{this.fileHoldURL}}"
+                  target="_blank"
+                  class="btn btn-sm btn-secondary"
+                >Filehold</a>
+              {{/ifCond}}</td>
           </tr>
         {{/each}}
       </tbody>

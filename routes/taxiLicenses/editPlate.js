@@ -173,33 +173,105 @@ router.post(
         },
       });
     } else {
-      TaxiPlate.update(
-        {
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          phoneNumber: req.body.phoneNumber,
-          email: req.body.email,
-          townPlateNumber: funcHelpers.fixEmptyValue(req.body.townPlateNumber),
-          vehicleYearMakeModel: req.body.vehicleYearMakeModel,
-          provincialPlate: req.body.provincialPlate,
-          vin: req.body.vin,
-          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
-          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
-          policeVSC: req.body.policeVSC,
-          driversAbstract: req.body.driversAbstract,
-          photoID: req.body.photoID,
-          safetyCertificate: req.body.safetyCertificate,
-          byLawInspection: req.body.byLawInspection,
-          insurance: req.body.insurance,
-          vehicleOwnership: req.body.vehicleOwnership,
-          notes: req.body.notes,
+      /* begin check for ONLY updating data when a value has changed. */
+      // create empty objects to hold data.
+      let currentData = {};
+      let newData = {};
+
+      // get current data.
+      TaxiPlate.findOne({
+        where: {
+          taxiPlateID: req.params.id,
         },
-        {
-          where: {
-            taxiPlateID: req.params.id,
-          },
-        }
-      )
+      })
+        .then((results) => {
+          // put the CURRENT data into an object.
+          currentData = {
+            firstName: results.dataValues.firstName,
+            lastName: results.dataValues.lastName,
+            phoneNumber: results.dataValues.phoneNumber,
+            email: results.dataValues.email,
+            townPlateNumber: results.dataValues.townPlateNumber,
+            vehicleYearMakeModel: results.dataValues.vehicleYearMakeModel,
+            provincialPlate: results.dataValues.provincialPlate,
+            vin: results.dataValues.vin,
+            issueDate: results.dataValues.issueDate,
+            expiryDate: results.dataValues.expiryDate,
+            policeVSC: results.dataValues.policeVSC,
+            driversAbstract: results.dataValues.driversAbstract,
+            photoID: results.dataValues.photoID,
+            safetyCertificate: results.dataValues.safetyCertificate,
+            byLawInspection: results.dataValues.byLawInspection,
+            insurance: results.dataValues.insurance,
+            vehicleOwnership: results.dataValues.vehicleOwnership,
+            notes: results.dataValues.notes,
+          };
+
+          // put the NEW data into an object.
+          // fixEmptyValue() in this case will replace any 'undefined' values with null.
+          // which is required when comparing objects as null != defined, making them techinically different.
+          newData = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            phoneNumber: req.body.phoneNumber,
+            email: req.body.email,
+            townPlateNumber: parseInt(req.body.townPlateNumber),
+            vehicleYearMakeModel: req.body.vehicleYearMakeModel,
+            provincialPlate: req.body.provincialPlate,
+            vin: req.body.vin,
+            issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+            expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+            policeVSC: funcHelpers.fixEmptyValue(req.body.policeVSC),
+            driversAbstract: funcHelpers.fixEmptyValue(
+              req.body.driversAbstract
+            ),
+            photoID: funcHelpers.fixEmptyValue(req.body.photoID),
+            safetyCertificate: funcHelpers.fixEmptyValue(
+              req.body.safetyCertificate
+            ),
+            byLawInspection: funcHelpers.fixEmptyValue(
+              req.body.byLawInspection
+            ),
+            insurance: funcHelpers.fixEmptyValue(req.body.insurance),
+            vehicleOwnership: funcHelpers.fixEmptyValue(
+              req.body.vehicleOwnership
+            ),
+            notes: req.body.notes,
+          };
+
+          // compare the two objects to check if they contain equal properties. If NOT (false), then proceed with update.
+          if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+            TaxiPlate.update(
+              {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                phoneNumber: req.body.phoneNumber,
+                email: req.body.email,
+                townPlateNumber: funcHelpers.fixEmptyValue(
+                  req.body.townPlateNumber
+                ),
+                vehicleYearMakeModel: req.body.vehicleYearMakeModel,
+                provincialPlate: req.body.provincialPlate,
+                vin: req.body.vin,
+                issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+                expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
+                policeVSC: req.body.policeVSC,
+                driversAbstract: req.body.driversAbstract,
+                photoID: req.body.photoID,
+                safetyCertificate: req.body.safetyCertificate,
+                byLawInspection: req.body.byLawInspection,
+                insurance: req.body.insurance,
+                vehicleOwnership: req.body.vehicleOwnership,
+                notes: req.body.notes,
+              },
+              {
+                where: {
+                  taxiPlateID: req.params.id,
+                },
+              }
+            );
+          }
+        })
         .then(() => {
           // create empty objects to hold data.
           let currentData = {};
