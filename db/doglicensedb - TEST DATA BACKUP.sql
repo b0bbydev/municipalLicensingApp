@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 26, 2022 at 03:42 PM
+-- Generation Time: Aug 30, 2022 at 06:25 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -39,7 +39,14 @@ CREATE TABLE IF NOT EXISTS `additionalowners` (
   `ownerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`additionalOwnerID`),
   KEY `ownerID` (`ownerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `additionalowners`
+--
+
+INSERT INTO `additionalowners` (`additionalOwnerID`, `firstName`, `lastName`, `homePhone`, `cellPhone`, `workPhone`, `email`, `ownerID`) VALUES
+(1, 'Additional', 'Owner', '123-123-1234', '', '', 'additional@owner.com', 1);
 
 -- --------------------------------------------------------
 
@@ -58,7 +65,14 @@ CREATE TABLE IF NOT EXISTS `addresses` (
   `ownerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`addressID`),
   KEY `ownerID` (`ownerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `addresses`
+--
+
+INSERT INTO `addresses` (`addressID`, `streetNumber`, `streetName`, `poBoxAptRR`, `town`, `postalCode`, `ownerID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'PO Box 1', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `addresses`
@@ -113,7 +127,14 @@ CREATE TABLE IF NOT EXISTS `addresshistory` (
   PRIMARY KEY (`addressHistoryID`),
   KEY `FK_ownerID` (`ownerID`),
   KEY `FK_addressID` (`addressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `addresshistory`
+--
+
+INSERT INTO `addresshistory` (`addressHistoryID`, `action`, `streetNumber`, `streetName`, `poBoxAptRR`, `town`, `postalCode`, `lastModified`, `ownerID`, `addressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'PO Box 1', 'Bradford', 'L9S 2E5', '2022-08-30 14:02:45', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -132,7 +153,14 @@ CREATE TABLE IF NOT EXISTS `businessaddresses` (
   `businessID` int(11) DEFAULT NULL,
   PRIMARY KEY (`businessAddressID`),
   KEY `businessID` (`businessID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `businessaddresses`
+--
+
+INSERT INTO `businessaddresses` (`businessAddressID`, `streetNumber`, `streetName`, `poBoxAptRR`, `town`, `postalCode`, `businessID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'PO Box 1', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `businessaddresses`
@@ -190,7 +218,14 @@ CREATE TABLE IF NOT EXISTS `businesses` (
   `feePaid` enum('Yes','No') DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`businessID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `businesses`
+--
+
+INSERT INTO `businesses` (`businessID`, `businessName`, `ownerName`, `contactName`, `contactPhone`, `licenseNumber`, `issueDate`, `expiryDate`, `policeVSC`, `certificateOfInsurance`, `photoID`, `healthInspection`, `zoningClearance`, `feePaid`, `notes`) VALUES
+(1, 'Business Name', 'Owner Name', 'Contact Name', '123-123-1234', 'ABC-123', '2022-08-01', '2022-08-02', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '- Test Notes');
 
 --
 -- Triggers `businesses`
@@ -261,7 +296,14 @@ CREATE TABLE IF NOT EXISTS `businessesaddresshistory` (
   PRIMARY KEY (`businessAddressHistoryID`),
   KEY `businessAddressID` (`businessAddressID`),
   KEY `businessID` (`businessID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `businessesaddresshistory`
+--
+
+INSERT INTO `businessesaddresshistory` (`businessAddressHistoryID`, `action`, `streetNumber`, `streetName`, `poBoxAptRR`, `town`, `postalCode`, `lastModified`, `businessAddressID`, `businessID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'PO Box 1', 'Bradford', 'L9S 2E5', '2022-08-30 13:59:22', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -291,7 +333,14 @@ CREATE TABLE IF NOT EXISTS `businesshistory` (
   `businessID` int(11) DEFAULT NULL,
   PRIMARY KEY (`businessHistoryID`),
   KEY `businessID` (`businessID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `businesshistory`
+--
+
+INSERT INTO `businesshistory` (`businessHistoryID`, `action`, `businessName`, `ownerName`, `contactName`, `contactPhone`, `licenseNumber`, `issueDate`, `expiryDate`, `policeVSC`, `certificateOfInsurance`, `photoID`, `healthInspection`, `zoningClearance`, `feePaid`, `notes`, `lastModified`, `businessID`) VALUES
+(1, 'insert', 'Business Name', 'Owner Name', 'Contact Name', '123-123-1234', 'ABC-123', '2022-08-01', '2022-08-02', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '- Test Notes', '2022-08-30 13:59:22', 1);
 
 -- --------------------------------------------------------
 
@@ -325,7 +374,14 @@ CREATE TABLE IF NOT EXISTS `doghistory` (
   PRIMARY KEY (`dogHistoryID`),
   KEY `ownerID` (`ownerID`),
   KEY `dogID` (`dogID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `doghistory`
+--
+
+INSERT INTO `doghistory` (`dogHistoryID`, `action`, `tagNumber`, `dogName`, `breed`, `colour`, `gender`, `dateOfBirth`, `designation`, `spade`, `rabiesTagNumber`, `rabiesExpiry`, `vetOffice`, `tagRequired`, `issueDate`, `expiryDate`, `vendor`, `notes`, `lastModified`, `dogID`, `ownerID`) VALUES
+(1, 'insert', '1', 'Greenlee', 'Golden Retriever', 'Golden', 'F', NULL, 'None', 'Spade', 'XYZ-123', '2022-08-01', 'Test Office', NULL, '2022-08-30', '2023-01-31', 'Online', '- Test Notes', '2022-08-30 14:04:02', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -355,7 +411,14 @@ CREATE TABLE IF NOT EXISTS `dogs` (
   `ownerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`dogID`),
   KEY `ownerID` (`ownerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `dogs`
+--
+
+INSERT INTO `dogs` (`dogID`, `tagNumber`, `dogName`, `breed`, `colour`, `gender`, `dateOfBirth`, `designation`, `spade`, `rabiesTagNumber`, `rabiesExpiry`, `vetOffice`, `tagRequired`, `issueDate`, `expiryDate`, `vendor`, `notes`, `ownerID`) VALUES
+(1, '1', 'Greenlee', 'Golden Retriever', 'Golden', 'F', NULL, 'None', 'Spade', 'XYZ-123', '2022-08-01', 'Test Office', NULL, '2022-08-30', '2023-01-31', 'Online', '- Test Notes', 1);
 
 --
 -- Triggers `dogs`
@@ -453,7 +516,14 @@ CREATE TABLE IF NOT EXISTS `donationbinaddresses` (
   `donationBinID` int(11) DEFAULT NULL,
   PRIMARY KEY (`donationBinAddressID`),
   KEY `donationBinID` (`donationBinID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbinaddresses`
+--
+
+INSERT INTO `donationbinaddresses` (`donationBinAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `donationBinID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `donationbinaddresses`
@@ -505,7 +575,14 @@ CREATE TABLE IF NOT EXISTS `donationbinaddresshistory` (
   PRIMARY KEY (`donationBinAddressHistoryID`),
   KEY `donationBinID` (`donationBinID`),
   KEY `donationBinAddressID` (`donationBinAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbinaddresshistory`
+--
+
+INSERT INTO `donationbinaddresshistory` (`donationBinAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `donationBinID`, `donationBinAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:00:35', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -524,7 +601,14 @@ CREATE TABLE IF NOT EXISTS `donationbincharities` (
   `donationBinID` int(11) DEFAULT NULL,
   PRIMARY KEY (`donationBinCharityID`),
   KEY `donationBinID` (`donationBinID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbincharities`
+--
+
+INSERT INTO `donationbincharities` (`donationBinCharityID`, `charityName`, `registrationNumber`, `phoneNumber`, `email`, `organizationType`, `donationBinID`) VALUES
+(1, 'Charity Name', 'ABC-123', '123-123-1234', 'charity@name.com', 'Not-For-Profit', 1);
 
 -- --------------------------------------------------------
 
@@ -548,7 +632,14 @@ CREATE TABLE IF NOT EXISTS `donationbinhistory` (
   `donationBinID` int(11) DEFAULT NULL,
   PRIMARY KEY (`donationBinHistoryID`),
   KEY `donationBinID` (`donationBinID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbinhistory`
+--
+
+INSERT INTO `donationbinhistory` (`donationBinHistoryID`, `action`, `licenseNumber`, `issueDate`, `expiryDate`, `itemsCollected`, `pickupSchedule`, `colour`, `material`, `notes`, `lastModified`, `donationBinID`) VALUES
+(1, 'insert', 'ABC-123', '2022-08-01', '2022-08-02', '- Items Collected', 'Mon-Fri', 'Metal', 'Steel', '- Test Notes', '2022-08-30 14:00:35', 1);
 
 -- --------------------------------------------------------
 
@@ -566,7 +657,14 @@ CREATE TABLE IF NOT EXISTS `donationbinoperatoraddresses` (
   `donationBinOperatorID` int(11) DEFAULT NULL,
   PRIMARY KEY (`donationBinOperatorAddressID`),
   KEY `donationBinOperatorID` (`donationBinOperatorID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbinoperatoraddresses`
+--
+
+INSERT INTO `donationbinoperatoraddresses` (`donationBinOperatorAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `donationBinOperatorID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `donationbinoperatoraddresses`
@@ -618,7 +716,14 @@ CREATE TABLE IF NOT EXISTS `donationbinoperatoraddresshistory` (
   PRIMARY KEY (`donationBinOperatorAddressHistoryID`),
   KEY `donationBinOperatorID` (`donationBinOperatorID`),
   KEY `donationBinOperatorAddressID` (`donationBinOperatorAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbinoperatoraddresshistory`
+--
+
+INSERT INTO `donationbinoperatoraddresshistory` (`donationBinOperatorAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `donationBinOperatorID`, `donationBinOperatorAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:01:42', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -641,7 +746,14 @@ CREATE TABLE IF NOT EXISTS `donationbinoperators` (
   `donationBinID` int(11) DEFAULT NULL,
   PRIMARY KEY (`donationBinOperatorID`),
   KEY `donationBinID` (`donationBinID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbinoperators`
+--
+
+INSERT INTO `donationbinoperators` (`donationBinOperatorID`, `firstName`, `lastName`, `phoneNumber`, `email`, `photoID`, `charityInformation`, `sitePlan`, `certificateOfInsurance`, `ownerConsent`, `donationBinID`) VALUES
+(1, 'Bin', 'Operator', '123-123-1234', 'bin@operator.com', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 1);
 
 -- --------------------------------------------------------
 
@@ -659,7 +771,14 @@ CREATE TABLE IF NOT EXISTS `donationbinpropertyowneraddresses` (
   `donationBinPropertyOwnerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`donationBinPropertyOwnerAddressID`),
   KEY `donationBinPropertyOwnerID` (`donationBinPropertyOwnerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbinpropertyowneraddresses`
+--
+
+INSERT INTO `donationbinpropertyowneraddresses` (`donationBinPropertyOwnerAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `donationBinPropertyOwnerID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `donationbinpropertyowneraddresses`
@@ -711,7 +830,14 @@ CREATE TABLE IF NOT EXISTS `donationbinpropertyowneraddresshistory` (
   PRIMARY KEY (`donationBinPropertyOwnerAddressHistoryID`),
   KEY `donationBinPropertyOwnerID` (`donationBinPropertyOwnerID`),
   KEY `donationBinPropertyOwnerAddressID` (`donationBinPropertyOwnerAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbinpropertyowneraddresshistory`
+--
+
+INSERT INTO `donationbinpropertyowneraddresshistory` (`donationBinPropertyOwnerAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `donationBinPropertyOwnerID`, `donationBinPropertyOwnerAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:01:06', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -729,7 +855,14 @@ CREATE TABLE IF NOT EXISTS `donationbinpropertyowners` (
   `donationBinID` int(11) DEFAULT NULL,
   PRIMARY KEY (`donationBinPropertyOwnerID`),
   KEY `donationBinID` (`donationBinID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbinpropertyowners`
+--
+
+INSERT INTO `donationbinpropertyowners` (`donationBinPropertyOwnerID`, `firstName`, `lastName`, `phoneNumber`, `email`, `donationBinID`) VALUES
+(1, 'Property', 'Owner', '123-123-1234', 'property@owner.com', 1);
 
 -- --------------------------------------------------------
 
@@ -749,7 +882,14 @@ CREATE TABLE IF NOT EXISTS `donationbins` (
   `material` varchar(50) DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`donationBinID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `donationbins`
+--
+
+INSERT INTO `donationbins` (`donationBinID`, `licenseNumber`, `issueDate`, `expiryDate`, `itemsCollected`, `pickupSchedule`, `colour`, `material`, `notes`) VALUES
+(1, 'ABC-123', '2022-08-01', '2022-08-02', '- Items Collected', 'Mon-Fri', 'Metal', 'Steel', '- Test Notes');
 
 --
 -- Triggers `donationbins`
@@ -798,7 +938,22 @@ CREATE TABLE IF NOT EXISTS `dropdownforms` (
   `dropdownFormID` int(11) NOT NULL AUTO_INCREMENT,
   `formName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`dropdownFormID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `dropdownforms`
+--
+
+INSERT INTO `dropdownforms` (`dropdownFormID`, `formName`) VALUES
+(10, 'Add Dog Form'),
+(11, 'Edit Dog Form'),
+(12, 'Edit Policy Form'),
+(13, 'Street Names'),
+(21, 'Add Donation Bin Operator Form'),
+(27, 'Enforcement Officer Names'),
+(29, 'Filtering Options'),
+(30, 'Add Driver Taxi License Form'),
+(31, 'POA Matters Form');
 
 -- --------------------------------------------------------
 
@@ -815,7 +970,487 @@ CREATE TABLE IF NOT EXISTS `dropdowns` (
   `dropdownFormID` int(11) DEFAULT NULL,
   PRIMARY KEY (`dropdownID`),
   KEY `dropdownFormID` (`dropdownFormID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1201 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `dropdowns`
+--
+
+INSERT INTO `dropdowns` (`dropdownID`, `dropdownTitle`, `dropdownValue`, `isDisabled`, `dropdownFormID`) VALUES
+(7, 'Policy Filtering Options', 'Policy Name', 0, NULL),
+(8, 'Policy Filtering Options', 'Policy Number', 0, NULL),
+(10, 'Tag Required Options', 'Deceased', 0, 11),
+(11, 'Tag Required Options', 'Moved', 0, 11),
+(12, 'Tag Required Options', 'Mail Returned', 0, 11),
+(13, 'Status Options', 'Active', 0, 12),
+(14, 'Status Options', 'Archive', 0, 12),
+(15, 'Status Options', 'Draft', 0, 12),
+(17, 'Category Options', 'Administrative Policy', 0, 12),
+(18, 'Category Options', 'Corporate Policy', 0, 12),
+(22, 'Authority Options', 'Council', 0, 12),
+(23, 'Authority Options', 'Staff', 0, 12),
+(24, 'Authority Options', 'CAO', 0, 12),
+(25, 'Authority Options', 'Department Head', 0, 12),
+(538, 'Street Names', 'ACORN LANE', 0, 13),
+(539, 'Street Names', 'ADAMS STREET', 0, 13),
+(540, 'Street Names', 'AGAR AVENUE', 0, 13),
+(541, 'Street Names', 'AISHFORD ROAD', 0, 13),
+(542, 'Street Names', 'ALLAN LANE', 0, 13),
+(543, 'Street Names', 'AMBERWING LANDING', 0, 13),
+(544, 'Street Names', 'ANDREWS DRIVE', 0, 13),
+(545, 'Street Names', 'ANGELA STREET', 0, 13),
+(546, 'Street Names', 'ARCHER AVENUE', 0, 13),
+(547, 'Street Names', 'ARMSTRONG CRESCENT', 0, 13),
+(548, 'Street Names', 'ARTESIAN INDUSTRIAL PARKWAY', 0, 13),
+(549, 'Street Names', 'ARTHUR EVANS CRESCENT', 0, 13),
+(550, 'Street Names', 'AVERILL COURT', 0, 13),
+(551, 'Street Names', 'BACK STREET', 0, 13),
+(552, 'Street Names', 'BALES LANE', 0, 13),
+(553, 'Street Names', 'BANNERMAN DRIVE', 0, 13),
+(554, 'Street Names', 'BARRIE STREET', 0, 13),
+(555, 'Street Names', 'BARTRAM CRESCENT', 0, 13),
+(556, 'Street Names', 'BEARSFIELD DRIVE', 0, 13),
+(557, 'Street Names', 'BELFRY DRIVE', 0, 13),
+(558, 'Street Names', 'BINGHAM STREET', 0, 13),
+(559, 'Street Names', 'BLUE DASHER BOULEVARD', 0, 13),
+(560, 'Street Names', 'BOOTH STREET', 0, 13),
+(561, 'Street Names', 'BRADFORD STREET', 0, 13),
+(562, 'Street Names', 'BREEZE DRIVE', 0, 13),
+(563, 'Street Names', 'BRIDGE STREET', 0, 13),
+(564, 'Street Names', 'BRITANNIA AVENUE', 0, 13),
+(565, 'Street Names', 'BRONZE CRESCENT', 0, 13),
+(566, 'Street Names', 'BROWNLEE DRIVE', 0, 13),
+(567, 'Street Names', 'BROWN\'S LANE', 0, 13),
+(568, 'Street Names', 'BUCE AVENUE', 0, 13),
+(569, 'Street Names', 'CAMBRIDGE CRESCENT', 0, 13),
+(570, 'Street Names', 'CANAL ROAD', 0, 13),
+(571, 'Street Names', 'CARRINGTON PLACE', 0, 13),
+(572, 'Street Names', 'CARTER STREET', 0, 13),
+(573, 'Street Names', 'CASSELLS DRIVE', 0, 13),
+(574, 'Street Names', 'CATANIA AVENUE', 0, 13),
+(575, 'Street Names', 'CENTRE STREET', 0, 13),
+(576, 'Street Names', 'CERSWELL DRIVE', 0, 13),
+(577, 'Street Names', 'CHELSEA CRESCENT', 0, 13),
+(578, 'Street Names', 'CHRISTINA CRESCENT', 0, 13),
+(579, 'Street Names', 'CHURCH STREET', 0, 13),
+(580, 'Street Names', 'CITRINE DRIVE', 0, 13),
+(581, 'Street Names', 'COFFEY ROAD', 0, 13),
+(582, 'Street Names', 'COLBORNE STREET', 0, 13),
+(583, 'Street Names', 'COLLINGS AVENUE', 0, 13),
+(584, 'Street Names', 'COMPTON CRESCENT', 0, 13),
+(585, 'Street Names', 'CORWIN DRIVE', 0, 13),
+(586, 'Street Names', 'COUNTRYSIDE COURT', 0, 13),
+(587, 'Street Names', 'COUNTY ROAD 1', 0, 13),
+(588, 'Street Names', 'COUNTY ROAD 27', 0, 13),
+(589, 'Street Names', 'COUNTY ROAD 88', 0, 13),
+(590, 'Street Names', 'COUSINS COURT', 0, 13),
+(591, 'Street Names', 'COUSTEAU DRIVE', 0, 13),
+(592, 'Street Names', 'CROOKED CREEK DRIVE', 0, 13),
+(593, 'Street Names', 'CROSSLAND BOULEVARD', 0, 13),
+(594, 'Street Names', 'CROWN CRESCENT', 0, 13),
+(595, 'Street Names', 'CUMMINGS ROAD', 0, 13),
+(596, 'Street Names', 'DANUBE LANE', 0, 13),
+(597, 'Street Names', 'DAVEY BOULEVARD', 0, 13),
+(598, 'Street Names', 'DAVID STREET', 0, 13),
+(599, 'Street Names', 'DAVIS ROAD', 0, 13),
+(600, 'Street Names', 'DAY STREET', 0, 13),
+(601, 'Street Names', 'DEER RUN CRESCENT', 0, 13),
+(602, 'Street Names', 'DEPEUTER CRESCENT', 0, 13),
+(603, 'Street Names', 'DEVALD ROAD', 0, 13),
+(604, 'Street Names', 'DISSETTE STREET', 0, 13),
+(605, 'Street Names', 'DIXON ROAD', 0, 13),
+(606, 'Street Names', 'DOCTOR\'S LANE', 0, 13),
+(607, 'Street Names', 'DOWNY EMERALD DRIVE', 0, 13),
+(608, 'Street Names', 'DRURY STREET', 0, 13),
+(609, 'Street Names', 'EDWARD STREET', 0, 13),
+(610, 'Street Names', 'ELDRIDGE STREET', 0, 13),
+(611, 'Street Names', 'ELIZABETH STREET', 0, 13),
+(612, 'Street Names', 'EMPIRE DRIVE', 0, 13),
+(613, 'Street Names', 'END OF ROAD', 0, 13),
+(614, 'Street Names', 'ESSA STREET', 0, 13),
+(615, 'Street Names', 'EVANS AVENUE', 0, 13),
+(616, 'Street Names', 'EVE COURT', 0, 13),
+(617, 'Street Names', 'FAIRSIDE DRIVE', 0, 13),
+(618, 'Street Names', 'FARIS STREET', 0, 13),
+(619, 'Street Names', 'FLETCHER STREET', 0, 13),
+(620, 'Street Names', 'FOX RUN LANE', 0, 13),
+(621, 'Street Names', 'FRASER STREET', 0, 13),
+(622, 'Street Names', 'FRED COOK DRIVE', 0, 13),
+(623, 'Street Names', 'FREDERICK STREET', 0, 13),
+(624, 'Street Names', 'GAPP LANE', 0, 13),
+(625, 'Street Names', 'GARDINER DRIVE', 0, 13),
+(626, 'Street Names', 'GEDDES STREET', 0, 13),
+(627, 'Street Names', 'GIVEN ROAD', 0, 13),
+(628, 'Street Names', 'GOLFVIEW BOULEVARD', 0, 13),
+(629, 'Street Names', 'GORDON COURT', 0, 13),
+(630, 'Street Names', 'GOSNEL CIRCLE', 0, 13),
+(631, 'Street Names', 'GRANDVIEW CRESCENT', 0, 13),
+(632, 'Street Names', 'GREEN DARNER TRAIL', 0, 13),
+(633, 'Street Names', 'GRENCER ROAD', 0, 13),
+(634, 'Street Names', 'GRES COURT', 0, 13),
+(635, 'Street Names', 'GWILLIMBURY DRIVE', 0, 13),
+(636, 'Street Names', 'HARMONY CIRCLE', 0, 13),
+(637, 'Street Names', 'HAZEL STREET', 0, 13),
+(638, 'Street Names', 'HEARN STREET', 0, 13),
+(639, 'Street Names', 'HIGHLAND TERRACE', 0, 13),
+(640, 'Street Names', 'HIGHWAY 400', 0, 13),
+(641, 'Street Names', 'HIGHWAY 9', 0, 13),
+(642, 'Street Names', 'HILLSVIEW ROAD', 0, 13),
+(643, 'Street Names', 'HODGSON ROAD', 0, 13),
+(644, 'Street Names', 'HOLLAND COURT', 0, 13),
+(645, 'Street Names', 'HOLLAND STREET EAST', 0, 13),
+(646, 'Street Names', 'HOLLAND STREET WEST', 0, 13),
+(647, 'Street Names', 'HUDSON CRESCENT', 0, 13),
+(648, 'Street Names', 'HULST DRIVE', 0, 13),
+(649, 'Street Names', 'HURD STREET', 0, 13),
+(650, 'Street Names', 'HURON LANE', 0, 13),
+(651, 'Street Names', 'HWY 400 RAMP', 0, 13),
+(652, 'Street Names', 'IMPERIAL CRESCENT', 0, 13),
+(653, 'Street Names', 'INDUSTRIAL COURT', 0, 13),
+(654, 'Street Names', 'INDUSTRIAL ROAD', 0, 13),
+(655, 'Street Names', 'IRWIN PLACE', 0, 13),
+(656, 'Street Names', 'JAMES STREET', 0, 13),
+(657, 'Street Names', 'JANE STREET', 0, 13),
+(658, 'Street Names', 'JAY STREET', 0, 13),
+(659, 'Street Names', 'JENNIFER COURT', 0, 13),
+(660, 'Street Names', 'JOHN STREET EAST', 0, 13),
+(661, 'Street Names', 'JOHN STREET WEST', 0, 13),
+(662, 'Street Names', 'JOSEPH STREET', 0, 13),
+(663, 'Street Names', 'JULIE COURT', 0, 13),
+(664, 'Street Names', 'KATHRYN COURT', 0, 13),
+(665, 'Street Names', 'KEELE LANE', 0, 13),
+(666, 'Street Names', 'KIDD STREET', 0, 13),
+(667, 'Street Names', 'KILKENNY TRAIL', 0, 13),
+(668, 'Street Names', 'KNEESHAW PLACE', 0, 13),
+(669, 'Street Names', 'KULPIN AVENUE', 0, 13),
+(670, 'Street Names', 'LALLIEN DRIVE', 0, 13),
+(671, 'Street Names', 'LANGFORD BOULEVARD', 0, 13),
+(672, 'Street Names', 'LAWNDALE COURT', 0, 13),
+(673, 'Street Names', 'LEE AVENUE', 0, 13),
+(674, 'Street Names', 'LEITH DRIVE', 0, 13),
+(675, 'Street Names', 'LEONARD ROAD', 0, 13),
+(676, 'Street Names', 'LINE 10', 0, 13),
+(677, 'Street Names', 'LINE 11', 0, 13),
+(678, 'Street Names', 'LINE 12', 0, 13),
+(679, 'Street Names', 'LINE 13', 0, 13),
+(680, 'Street Names', 'LINE 2', 0, 13),
+(681, 'Street Names', 'LINE 3', 0, 13),
+(682, 'Street Names', 'LINE 4', 0, 13),
+(683, 'Street Names', 'LINE 5', 0, 13),
+(684, 'Street Names', 'LINE 6', 0, 13),
+(685, 'Street Names', 'LINE 7', 0, 13),
+(686, 'Street Names', 'LINE 8', 0, 13),
+(687, 'Street Names', 'LINE 9', 0, 13),
+(688, 'Street Names', 'LONGVIEW DRIVE', 0, 13),
+(689, 'Street Names', 'LOTTO LANE', 0, 13),
+(690, 'Street Names', 'LOWES GATE', 0, 13),
+(691, 'Street Names', 'LUXURY AVENUE', 0, 13),
+(692, 'Street Names', 'LYNN STREET', 0, 13),
+(693, 'Street Names', 'MAGANI AVENUE', 0, 13),
+(694, 'Street Names', 'MANDALANE DRIVE', 0, 13),
+(695, 'Street Names', 'MAPLE COURT', 0, 13),
+(696, 'Street Names', 'MAPLEGROVE AVENUE', 0, 13),
+(697, 'Street Names', 'MARTIN STREET', 0, 13),
+(698, 'Street Names', 'MARY STREET', 0, 13),
+(699, 'Street Names', 'MASON AVENUE', 0, 13),
+(700, 'Street Names', 'MAURINO COURT', 0, 13),
+(701, 'Street Names', 'MC CANN CRESCENT', 0, 13),
+(702, 'Street Names', 'MC DONALD LANE', 0, 13),
+(703, 'Street Names', 'MC KENZIE WAY', 0, 13),
+(704, 'Street Names', 'MC KINSTRY ROAD', 0, 13),
+(705, 'Street Names', 'MEADOWHAWK TRAIL', 0, 13),
+(706, 'Street Names', 'MEADOWVIEW DRIVE', 0, 13),
+(707, 'Street Names', 'MELBOURNE DRIVE', 0, 13),
+(708, 'Street Names', 'METCALFE DRIVE', 0, 13),
+(709, 'Street Names', 'MILLER PARK AVENUE', 0, 13),
+(710, 'Street Names', 'MILLIGAN STREET', 0, 13),
+(711, 'Street Names', 'MILLS COURT', 0, 13),
+(712, 'Street Names', 'MOONEY STREET', 0, 13),
+(713, 'Street Names', 'MOORE STREET', 0, 13),
+(714, 'Street Names', 'MORO STREET', 0, 13),
+(715, 'Street Names', 'MORRIS ROAD', 0, 13),
+(716, 'Street Names', 'MULOCK DRIVE', 0, 13),
+(717, 'Street Names', 'NATALE COURT', 0, 13),
+(718, 'Street Names', 'NEILLY TERRACE', 0, 13),
+(719, 'Street Names', 'NELSON STREET', 0, 13),
+(720, 'Street Names', 'NOBLE DRIVE', 0, 13),
+(721, 'Street Names', 'NORTHGATE DRIVE', 0, 13),
+(722, 'Street Names', 'NOTTINGHAM FOREST ROAD', 0, 13),
+(723, 'Street Names', 'ONDREY STREET', 0, 13),
+(724, 'Street Names', 'ORR DRIVE', 0, 13),
+(725, 'Street Names', 'ORSI AVENUE', 0, 13),
+(726, 'Street Names', 'ORVILLE HAND COURT', 0, 13),
+(727, 'Street Names', 'OSLER COURT', 0, 13),
+(728, 'Street Names', 'OUTLOOK AVENUE', 0, 13),
+(729, 'Street Names', 'PACE CRESCENT', 0, 13),
+(730, 'Street Names', 'PARK ROAD', 0, 13),
+(731, 'Street Names', 'PARKSIDE COURT', 0, 13),
+(732, 'Street Names', 'PARKWOOD AVENUE', 0, 13),
+(733, 'Street Names', 'PATRICIAN COURT', 0, 13),
+(734, 'Street Names', 'PETERMAN LANE', 0, 13),
+(735, 'Street Names', 'PINE HILL ROAD', 0, 13),
+(736, 'Street Names', 'PORTER STREET', 0, 13),
+(737, 'Street Names', 'PRINCE DRIVE', 0, 13),
+(738, 'Street Names', 'PRIVATE DRIVE', 0, 13),
+(739, 'Street Names', 'PRIVATE ENTRANCE', 0, 13),
+(740, 'Street Names', 'PROFESSOR DAY DRIVE', 0, 13),
+(741, 'Street Names', 'PUMPHOUSE ROAD', 0, 13),
+(742, 'Street Names', 'QUEEN STREET', 0, 13),
+(743, 'Street Names', 'RAK COURT', 0, 13),
+(744, 'Street Names', 'REAGENS INDUSTRIAL PARKWAY', 0, 13),
+(745, 'Street Names', 'REBECCA STREET', 0, 13),
+(746, 'Street Names', 'REGENCY COURT', 0, 13),
+(747, 'Street Names', 'REID ROAD', 0, 13),
+(748, 'Street Names', 'RIVER ROAD', 0, 13),
+(749, 'Street Names', 'ROGERS TRAIL', 0, 13),
+(750, 'Street Names', 'ROUGHLEY STREET', 0, 13),
+(751, 'Street Names', 'ROYAL COURT', 0, 13),
+(752, 'Street Names', 'RUSSEL DRIVE', 0, 13),
+(753, 'Street Names', 'RUTHERFORD ROAD', 0, 13),
+(754, 'Street Names', 'SAINT AVENUE', 0, 13),
+(755, 'Street Names', 'SCANLON AVENUE', 0, 13),
+(756, 'Street Names', 'SCARLETT WAY', 0, 13),
+(757, 'Street Names', 'SELBY CRESCENT', 0, 13),
+(758, 'Street Names', 'SIDEROAD 10', 0, 13),
+(759, 'Street Names', 'SIDEROAD 20', 0, 13),
+(760, 'Street Names', 'SIDEROAD 5', 0, 13),
+(761, 'Street Names', 'SIMCOE ROAD', 0, 13),
+(762, 'Street Names', 'SMITH STREET', 0, 13),
+(763, 'Street Names', 'SOUTHFIELD GATE', 0, 13),
+(764, 'Street Names', 'SPENCE LANE', 0, 13),
+(765, 'Street Names', 'STEWART CRESCENT', 0, 13),
+(766, 'Street Names', 'STODDART COURT', 0, 13),
+(767, 'Street Names', 'SUMMERLYN TRAIL', 0, 13),
+(768, 'Street Names', 'SUNDRAGON TRAIL', 0, 13),
+(769, 'Street Names', 'SUNRISE CIRCLE', 0, 13),
+(770, 'Street Names', 'SUTHERLAND AVENUE', 0, 13),
+(771, 'Street Names', 'TAYLOR COURT', 0, 13),
+(772, 'Street Names', 'TECUMSETH CRESCENT', 0, 13),
+(773, 'Street Names', 'TEMPORARY CONNECTION STREET', 0, 13),
+(774, 'Street Names', 'THOMAS STREET', 0, 13),
+(775, 'Street Names', 'THORNTON AVENUE', 0, 13),
+(776, 'Street Names', 'TIGERTAIL CRESCENT', 0, 13),
+(777, 'Street Names', 'TOLL ROAD', 0, 13),
+(778, 'Street Names', 'TORNADO DRIVE', 0, 13),
+(779, 'Street Names', 'TORONTO STREET', 0, 13),
+(780, 'Street Names', 'TOWER COURT', 0, 13),
+(781, 'Street Names', 'TOWNSEND AVENUE', 0, 13),
+(782, 'Street Names', 'TRAILSIDE DRIVE', 0, 13),
+(783, 'Street Names', 'TURNER COURT', 0, 13),
+(784, 'Street Names', 'VALLEYVIEW CRESCENT', 0, 13),
+(785, 'Street Names', 'VESELI COURT', 0, 13),
+(786, 'Street Names', 'VILLAGE GREEN LANE', 0, 13),
+(787, 'Street Names', 'VIPOND WAY', 0, 13),
+(788, 'Street Names', 'VISTA DRIVE', 0, 13),
+(789, 'Street Names', 'WALKER AVENUE', 0, 13),
+(790, 'Street Names', 'WANDA STREET', 0, 13),
+(791, 'Street Names', 'WATERTON WAY', 0, 13),
+(792, 'Street Names', 'WEBBER ROAD', 0, 13),
+(793, 'Street Names', 'WEIR STREET', 0, 13),
+(794, 'Street Names', 'WEST PARK AVENUE', 0, 13),
+(795, 'Street Names', 'WILLIAM STREET', 0, 13),
+(796, 'Street Names', 'WIST ROAD', 0, 13),
+(797, 'Street Names', 'WOOD CRESCENT', 0, 13),
+(798, 'Street Names', 'WYMAN CRESCENT', 0, 13),
+(799, 'Street Names', 'YONGE STREET', 0, 13),
+(800, 'Street Names', 'ZIMA CRESCENT', 0, 13),
+(801, 'Street Names', 'ZIMA PARKWAY', 0, 13),
+(802, 'Street Names', 'DALE CRESCENT', 0, 13),
+(803, 'Street Names', 'WEBB STREET', 0, 13),
+(804, 'Street Names', 'BROUGHTON TERRACE', 0, 13),
+(805, 'Street Names', 'NAYLOR DRIVE', 0, 13),
+(806, 'Street Names', 'RICHARDSON CRESCENT', 0, 13),
+(807, 'Street Names', 'LONG STREET', 0, 13),
+(808, 'Street Names', 'WILSON DRIVE', 0, 13),
+(809, 'Street Names', 'HOPKINS CRESCENT', 0, 13),
+(810, 'Street Names', 'SLACK STREET', 0, 13),
+(811, 'Street Names', 'BROOKVIEW DRIVE', 0, 13),
+(812, 'Street Names', 'RIDGEVIEW COURT', 0, 13),
+(813, 'Street Names', 'LIBERTY CRESCENT', 0, 13),
+(814, 'Street Names', 'HERITAGE STREET', 0, 13),
+(815, 'Street Names', 'ROMANELLI CRESCENT', 0, 13),
+(816, 'Street Names', 'JEWELWING COURT', 0, 13),
+(817, 'Street Names', 'WALLACE GATE', 0, 13),
+(818, 'Street Names', 'MATTHEWSON AVENUE', 0, 13),
+(819, 'Street Names', 'LUISA STREET', 0, 13),
+(820, 'Street Names', 'WANDERING GLIDER TRAIL', 0, 13),
+(821, 'Street Names', 'TYNDALL DRIVE', 0, 13),
+(822, 'Street Names', 'STEVENSON CRESCENT', 0, 13),
+(823, 'Street Names', 'AELICK COURT', 0, 13),
+(824, 'Street Names', 'COLLIS DRIVE', 0, 13),
+(825, 'Street Names', 'WILKE TRAIL', 0, 13),
+(826, 'Street Names', 'MC DONNELL CRESCENT', 0, 13),
+(827, 'Street Names', 'EASEMENT', 0, 13),
+(828, 'Street Names', 'WALKWAY', 0, 13),
+(829, 'Street Names', 'W.DYKIE COURT', 0, 13),
+(830, 'Street Names', 'MILBY CRESCENT', 0, 13),
+(831, 'Street Names', 'BOYD LANE', 0, 13),
+(832, 'Street Names', 'TAUCAR GATE', 0, 13),
+(833, 'Street Names', 'DANIELE CRESCENT', 0, 13),
+(834, 'Street Names', 'ALGEO WAY', 0, 13),
+(835, 'Street Names', 'CAYTON CRESCENT', 0, 13),
+(836, 'Street Names', 'TUPLING STREET', 0, 13),
+(837, 'Street Names', 'FORTIS CRESCENT', 0, 13),
+(838, 'Street Names', 'BARROW AVENUE', 0, 13),
+(839, 'Street Names', 'GIBSON CIRCLE', 0, 13),
+(840, 'Street Names', 'INVERNESS WAY', 0, 13),
+(841, 'Street Names', 'TAY STREET', 0, 13),
+(842, 'Street Names', 'LANARK STREET', 0, 13),
+(843, 'Street Names', 'LEWIS AVENUE', 0, 13),
+(844, 'Street Names', 'ARMSON COURT', 0, 13),
+(845, 'Street Names', 'JONKMAN BOULEVARD', 0, 13),
+(846, 'Street Names', 'FERRAGINE CRESCENT', 0, 13),
+(847, 'Street Names', 'TIBERINI WAY', 0, 13),
+(848, 'Street Names', 'DIMORK COURT', 0, 13),
+(849, 'Street Names', 'STEVENS GATE', 0, 13),
+(850, 'Street Names', 'MEMORIAL COURT', 0, 13),
+(851, 'Street Names', 'VETERANS STREET', 0, 13),
+(852, 'Street Names', 'WESTLAKE CRESCENT', 0, 13),
+(853, 'Street Names', 'MARSHVIEW BOULEVARD', 0, 13),
+(1049, 'Months', 'January', 0, NULL),
+(1050, 'Months', 'February', 0, NULL),
+(1051, 'Months', 'March', 0, NULL),
+(1052, 'Months', 'April', 0, NULL),
+(1053, 'Months', 'May', 0, NULL),
+(1054, 'Months', 'June', 0, NULL),
+(1055, 'Months', 'July', 0, NULL),
+(1056, 'Months', 'August', 0, NULL),
+(1057, 'Months', 'September', 0, NULL),
+(1058, 'Months', 'October', 0, NULL),
+(1059, 'Months', 'November', 0, NULL),
+(1060, 'Months', 'December', 0, NULL),
+(1061, 'Years', '2015', 0, NULL),
+(1062, 'Years', '2016', 0, NULL),
+(1063, 'Years', '2017', 0, NULL),
+(1064, 'Years', '2018', 0, NULL),
+(1065, 'Years', '2019', 0, NULL),
+(1066, 'Years', '2020', 0, NULL),
+(1067, 'Years', '2021', 0, NULL),
+(1068, 'Years', '2022', 0, NULL),
+(1069, 'Years', '2023', 0, NULL),
+(1076, 'Owner Filtering Options', 'Owner Name', 0, NULL),
+(1078, 'Owner Filtering Options', 'Address', 0, NULL),
+(1079, 'Owner Filtering Options', 'Email', 0, NULL),
+(1080, 'Owner Filtering Options', 'Dog Tag Number', 0, NULL),
+(1081, 'Owner Filtering Options', 'Additional Owner Name', 0, NULL),
+(1082, 'Policy Filtering Options', 'Division', 0, NULL),
+(1083, 'Adult Entertainment Filtering Options', 'Business Name', 0, NULL),
+(1084, 'Adult Entertainment Filtering Options', 'Owner Name', 0, NULL),
+(1085, 'Adult Entertainment Filtering Options', 'Contact Name', 0, NULL),
+(1086, 'Adult Entertainment Filtering Options', 'Address', 0, NULL),
+(1088, 'User Filtering Options', 'Employee Name', 0, NULL),
+(1089, 'User Filtering Options', 'Email', 0, NULL),
+(1090, 'Owner Filtering Options', 'Vendor', 0, NULL),
+(1091, 'Procedure Filtering Options', 'Procedure Name', 0, NULL),
+(1092, 'Guideline Filtering Options', 'Guideline Name', 0, NULL),
+(1093, 'Vendor Options', 'Administration Office', 0, 10),
+(1094, 'Vendor Options', 'BWG Leisure Centre', 0, 10),
+(1095, 'Vendor Options', 'Online', 0, 10),
+(1096, 'Vendor Options', 'Dissette Animal Hospital', 0, 10),
+(1097, 'Vendor Options', 'Pet Valu', 0, 10),
+(1098, 'Vendor Options', 'Roman Kennels', 0, 10),
+(1099, 'Vendor Options', 'Summerlyn Pet Hospital', 0, 10),
+(1100, 'Street Closure Permit Filtering Options', 'Sponser', 0, NULL),
+(1101, 'Street Closure Permit Filtering Options', 'Closure Location', 0, NULL),
+(1102, 'Organization Types', 'Charity', 0, 21),
+(1103, 'Organization Types', 'Not-For-Profit', 0, 21),
+(1104, 'Organization Types', 'For-Profit', 0, 21),
+(1105, 'Donation Bin Filtering Options', 'Address', 0, NULL),
+(1106, 'Donation Bin Filtering Options', 'Bin Operator Name', 0, NULL),
+(1107, 'Donation Bin Filtering Options', 'Charity/Organization', 0, NULL),
+(1108, 'Hawker & Peddler Filtering Options', 'Business Name', 0, NULL),
+(1109, 'Hawker & Peddler Filtering Options', 'Applicant Name', 0, NULL),
+(1110, 'Hawker & Peddler Filtering Options', 'Applicant Address', 0, NULL),
+(1111, 'Kennel Filtering Options', 'Kennel Name', 0, NULL),
+(1112, 'Kennel Filtering Options', 'Kennel Address', 0, NULL),
+(1113, 'Kennel Filtering Options', 'Kennel Owner Name', 0, NULL),
+(1114, 'Liquor Licensing Filtering Options', 'Business Name', 0, NULL),
+(1115, 'Liquor Licensing Filtering Options', 'Business Address', 0, NULL),
+(1116, 'Liquor Licensing Filtering Options', 'Contact Name', 0, NULL),
+(1117, 'Refreshment Vehicle Filtering Options', 'Registered Business Name', 0, NULL),
+(1118, 'Refreshment Vehicle Filtering Options', 'Operating Business Name', 0, NULL),
+(1119, 'Refreshment Vehicle Filtering Options', 'Vehicle Owner Name', 0, NULL),
+(1120, 'Officer Name', 'Brent Lee', 0, 27),
+(1121, 'Officer Name', 'Lauren Fortune', 0, 27),
+(1122, 'Officer Name', 'Igor Pogacevski', 0, 27),
+(1123, 'Officer Name', 'Andrew Richardson', 0, 27),
+(1124, 'Officer Name', 'Aneta Prytula', 0, 27),
+(1125, 'Officer Name', 'Bryan McDonald', 0, 27),
+(1126, 'Officer Name', 'Joey Furgiuele', 0, 27),
+(1127, 'Officer Name', 'Marie Duquette', 0, 27),
+(1128, 'Officer Name', 'Robert Belsey', 0, 27),
+(1129, 'Officer Name', 'Spencer Smith', 0, 27),
+(1130, 'POA Matters Filtering Options', 'Officer', 0, NULL),
+(1131, 'Dog Owner Filtering Options', 'Owner Name', 0, NULL),
+(1132, 'Dog Owner Filtering Options', 'Owner Name', 0, 29),
+(1133, 'Dog Owner Filtering Options', 'Address', 0, 29),
+(1134, 'Dog Owner Filtering Options', 'Email', 0, 29),
+(1135, 'Dog Owner Filtering Options', 'Dog Tag Number', 0, 29),
+(1136, 'Dog Owner Filtering Options', 'Additional Owner Name', 0, 29),
+(1137, 'Dog Owner Filtering Options', 'Vendor', 0, 29),
+(1138, 'Policy Filtering Options', 'Policy Name', 0, 29),
+(1139, 'Policy Filtering Options', 'Policy Number', 0, 29),
+(1140, 'Policy Filtering Options', 'Division', 0, 29),
+(1141, 'Policy History Filtering Options - Months', 'January', 0, 29),
+(1142, 'Policy History Filtering Options - Months', 'February', 0, 29),
+(1143, 'Policy History Filtering Options - Months', 'March', 0, 29),
+(1144, 'Policy History Filtering Options - Months', 'April', 0, 29),
+(1145, 'Policy History Filtering Options - Months', 'May', 0, 29),
+(1146, 'Policy History Filtering Options - Months', 'June', 0, 29),
+(1147, 'Policy History Filtering Options - Months', 'July', 0, 29),
+(1148, 'Policy History Filtering Options - Months', 'August', 0, 29),
+(1149, 'Policy History Filtering Options - Months', 'September', 0, 29),
+(1150, 'Policy History Filtering Options - Months', 'October', 0, 29),
+(1151, 'Policy History Filtering Options - Months', 'November', 0, 29),
+(1152, 'Policy History Filtering Options - Months', 'December', 0, 29),
+(1153, 'Policy History Filtering Options - Years', '2015', 0, 29),
+(1154, 'Policy History Filtering Options - Years', '2016', 0, 29),
+(1155, 'Policy History Filtering Options - Years', '2017', 0, 29),
+(1156, 'Policy History Filtering Options - Years', '2018', 0, 29),
+(1157, 'Policy History Filtering Options - Years', '2019', 0, 29),
+(1158, 'Policy History Filtering Options - Years', '2020', 0, 29),
+(1159, 'Policy History Filtering Options - Years', '2021', 0, 29),
+(1160, 'Policy History Filtering Options - Years', '2022', 0, 29),
+(1161, 'Policy History Filtering Options - Years', '2023', 0, 29),
+(1162, 'Policy History Filtering Options - Years', '2024', 0, 29),
+(1163, 'Adult Entertainment Filtering Options', 'Business Name', 0, 29),
+(1164, 'Adult Entertainment Filtering Options', 'Owner Name', 0, 29),
+(1165, 'Adult Entertainment Filtering Options', 'Contact Name', 0, 29),
+(1166, 'Adult Entertainment Filtering Options', 'Address', 0, 29),
+(1167, 'Admin User List Filtering Options', 'Email', 0, 29),
+(1168, 'Admin User List Filtering Options', 'Employee Name', 0, 29),
+(1169, 'Procedure Filtering Options', 'Procedure Name', 0, 29),
+(1170, 'Guideline Filtering Options', 'Guideline Name', 0, 29),
+(1171, 'Street Closure Permit Filtering Options', 'Closure Location', 0, 29),
+(1172, 'Street Closure Permit Filtering Options', 'Sponser', 0, 29),
+(1173, 'Donation Bin Filtering Options', 'Charity/Organization', 0, 29),
+(1174, 'Donation Bin Filtering Options', 'Bin Operator Name', 0, 29),
+(1175, 'Donation Bin Filtering Options', 'Address', 0, 29),
+(1176, 'Hawker & Peddler Filtering Options', 'Operator Address', 0, 29),
+(1177, 'Hawker & Peddler Filtering Options', 'Operator Name', 0, 29),
+(1178, 'Hawker & Peddler Filtering Options', 'Business Name', 0, 29),
+(1179, 'Kennel Filtering Options', 'Kennel Owner Name', 0, 29),
+(1180, 'Kennel Filtering Options', 'Kennel Address', 0, 29),
+(1181, 'Kennel Filtering Options', 'Kennel Name', 0, 29),
+(1182, 'Liquor Licensing Filtering Options', 'Contact Name', 0, 29),
+(1183, 'Liquor Licensing Filtering Options', 'Business Address', 0, 29),
+(1184, 'Liquor Licensing Filtering Options', 'Business Name', 0, 29),
+(1185, 'Refreshment Vehicle Filtering Options', 'Vehicle Owner Name', 0, 29),
+(1186, 'Refreshment Vehicle Filtering Options', 'Operating Business Name', 0, 29),
+(1187, 'Refreshment Vehicle Filtering Options', 'Registered Business Name', 0, 29),
+(1188, 'POA Matters Filtering Options', 'Officer Name', 0, 29),
+(1189, 'POA Matters Filtering Options', 'Defendant Name', 0, 29),
+(1190, 'POA Matters Filtering Options', 'Info Number', 0, 29),
+(1191, 'POA Matters Filtering Options', 'Offence', 0, 29),
+(1192, 'Cab Companies', 'Astro Taxi Inc.', 0, 30),
+(1193, 'Cab Companies', 'BB Taxi', 0, 30),
+(1194, 'Cab Companies', 'Newmarket Solo Taxi', 0, 30),
+(1195, 'Cab Companies', 'Singh Taxi', 0, 30),
+(1196, 'Cab Companies', 'Town Taxi', 0, 30),
+(1197, 'Verdict Options', 'Guilty', 0, 31),
+(1198, 'Verdict Options', 'Not-Guilty', 0, 31),
+(1199, 'Taxi Filtering Options', 'Company Name', 0, 29),
+(1200, 'Taxi Filtering Options', 'Owner Name', 0, 29);
 
 -- --------------------------------------------------------
 
@@ -847,7 +1482,15 @@ CREATE TABLE IF NOT EXISTS `guidelinehistory` (
   PRIMARY KEY (`guidelineHistoryID`),
   KEY `policyID` (`policyID`),
   KEY `guidelineID` (`guidelineID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `guidelinehistory`
+--
+
+INSERT INTO `guidelinehistory` (`guidelineHistoryID`, `action`, `guidelineNumber`, `guidelineName`, `dateApproved`, `lastReviewDate`, `scheduledReviewDate`, `dateAmended`, `status`, `category`, `division`, `authority`, `administrator`, `legislationRequired`, `fileHoldURL`, `notes`, `lastModified`, `policyID`, `guidelineID`) VALUES
+(1, 'insert', 'ABC-123', 'Guideline Name', '2022-08-01', '2022-08-03', '2022-08-04', '2022-08-02', 'Active', 'Guideline', 'Test Division', 'Council', 'Test Administrator', 'Yes', '', '- Test Notes', '2022-08-30 14:21:40', 1, 1),
+(2, 'insert', 'XYZ-123', 'Guideline Name Two', '2022-08-01', '2022-08-03', '2022-08-04', '2022-08-02', 'Active', 'Guideline', 'Test Division', 'Council', 'Test Administrator', 'Yes', '', '- Test Notes', '2022-08-30 14:24:10', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -875,7 +1518,15 @@ CREATE TABLE IF NOT EXISTS `guidelines` (
   `policyID` int(11) DEFAULT NULL,
   PRIMARY KEY (`guidelineID`),
   KEY `policyID` (`policyID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `guidelines`
+--
+
+INSERT INTO `guidelines` (`guidelineID`, `guidelineNumber`, `guidelineName`, `dateApproved`, `lastReviewDate`, `scheduledReviewDate`, `dateAmended`, `status`, `category`, `division`, `authority`, `administrator`, `legislationRequired`, `fileHoldURL`, `notes`, `policyID`) VALUES
+(1, 'ABC-123', 'Guideline Name', '2022-08-01', '2022-08-03', '2022-08-04', '2022-08-02', 'Active', 'Guideline', 'Test Division', 'Council', 'Test Administrator', 'Yes', '', '- Test Notes', 1),
+(2, 'XYZ-123', 'Guideline Name Two', '2022-08-01', '2022-08-03', '2022-08-04', '2022-08-02', 'Active', 'Guideline', 'Test Division', 'Council', 'Test Administrator', 'Yes', '', '- Test Notes', NULL);
 
 --
 -- Triggers `guidelines`
@@ -943,7 +1594,14 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerapplicantaddresses` (
   `hawkerPeddlerApplicantID` int(11) DEFAULT NULL,
   PRIMARY KEY (`hawkerPeddlerApplicantAddressID`),
   KEY `hawkerPeddlerApplicantID` (`hawkerPeddlerApplicantID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hawkerpeddlerapplicantaddresses`
+--
+
+INSERT INTO `hawkerpeddlerapplicantaddresses` (`hawkerPeddlerApplicantAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `hawkerPeddlerApplicantID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `hawkerpeddlerapplicantaddresses`
@@ -995,7 +1653,14 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerapplicantaddresshistory` (
   PRIMARY KEY (`hawkerPeddlerApplicantAddressHistoryID`),
   KEY `hawkerPeddlerApplicantID` (`hawkerPeddlerApplicantID`),
   KEY `hawkerPeddlerApplicantAddressID` (`hawkerPeddlerApplicantAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hawkerpeddlerapplicantaddresshistory`
+--
+
+INSERT INTO `hawkerpeddlerapplicantaddresshistory` (`hawkerPeddlerApplicantAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `hawkerPeddlerApplicantID`, `hawkerPeddlerApplicantAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:06:48', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1016,7 +1681,14 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerapplicants` (
   `hawkerPeddlerBusinessID` int(11) DEFAULT NULL,
   PRIMARY KEY (`hawkerPeddlerApplicantID`),
   KEY `hawkerPeddlerBusinessID` (`hawkerPeddlerBusinessID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hawkerpeddlerapplicants`
+--
+
+INSERT INTO `hawkerpeddlerapplicants` (`hawkerPeddlerApplicantID`, `firstName`, `lastName`, `phoneNumber`, `email`, `issueDate`, `expiryDate`, `licenseNumber`, `hawkerPeddlerBusinessID`) VALUES
+(1, 'Test', 'Operator', '123-123-1234', 'test@operator.com', '2022-08-01', '2022-08-02', 'ABC-123', 1);
 
 --
 -- Triggers `hawkerpeddlerapplicants`
@@ -1068,7 +1740,14 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerbusinessaddresses` (
   `hawkerPeddlerBusinessID` int(11) DEFAULT NULL,
   PRIMARY KEY (`hawkerPeddlerBusinessAddressID`),
   KEY `hawkerPeddlerBusinessID` (`hawkerPeddlerBusinessID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hawkerpeddlerbusinessaddresses`
+--
+
+INSERT INTO `hawkerpeddlerbusinessaddresses` (`hawkerPeddlerBusinessAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `hawkerPeddlerBusinessID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `hawkerpeddlerbusinessaddresses`
@@ -1120,7 +1799,14 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerbusinessaddresshistory` (
   PRIMARY KEY (`hawkerPeddlerBusinessAddressHistoryID`),
   KEY `hawkerPeddlerBusinessID` (`hawkerPeddlerBusinessID`),
   KEY `hawkerPeddlerBusinessAddressID` (`hawkerPeddlerBusinessAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hawkerpeddlerbusinessaddresshistory`
+--
+
+INSERT INTO `hawkerpeddlerbusinessaddresshistory` (`hawkerPeddlerBusinessAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `hawkerPeddlerBusinessID`, `hawkerPeddlerBusinessAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:05:35', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1141,7 +1827,14 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerbusinesses` (
   `sitePlan` enum('Yes','No') DEFAULT NULL,
   `zoningClearance` enum('Yes','No') DEFAULT NULL,
   PRIMARY KEY (`hawkerPeddlerBusinessID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hawkerpeddlerbusinesses`
+--
+
+INSERT INTO `hawkerpeddlerbusinesses` (`hawkerPeddlerBusinessID`, `businessName`, `phoneNumber`, `email`, `itemsForSale`, `notes`, `policeVSC`, `photoID`, `sitePlan`, `zoningClearance`) VALUES
+(1, 'Business Name', '123-123-1234', 'business@name.com', '- Items for sale', '- Test Notes', 'Yes', 'Yes', 'Yes', 'Yes');
 
 -- --------------------------------------------------------
 
@@ -1164,7 +1857,14 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddleroperatorhistory` (
   `hawkerPeddlerApplicantID` int(11) DEFAULT NULL,
   PRIMARY KEY (`hawkerPeddlerOperatorHistoryID`),
   KEY `hawkerPeddlerApplicantID` (`hawkerPeddlerApplicantID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hawkerpeddleroperatorhistory`
+--
+
+INSERT INTO `hawkerpeddleroperatorhistory` (`hawkerPeddlerOperatorHistoryID`, `action`, `firstName`, `lastName`, `phoneNumber`, `email`, `issueDate`, `expiryDate`, `licenseNumber`, `lastModified`, `hawkerPeddlerApplicantID`) VALUES
+(1, 'insert', 'Test', 'Operator', '123-123-1234', 'test@operator.com', '2022-08-01', '2022-08-02', 'ABC-123', '2022-08-30 14:06:48', 1);
 
 -- --------------------------------------------------------
 
@@ -1182,7 +1882,14 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerpropertyowneraddresses` (
   `hawkerPeddlerPropertyOwnerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`hawkerPeddlerPropertyOwnerAddressID`),
   KEY `hawkerPeddlerPropertyOwnerID` (`hawkerPeddlerPropertyOwnerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hawkerpeddlerpropertyowneraddresses`
+--
+
+INSERT INTO `hawkerpeddlerpropertyowneraddresses` (`hawkerPeddlerPropertyOwnerAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `hawkerPeddlerPropertyOwnerID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `hawkerpeddlerpropertyowneraddresses`
@@ -1234,7 +1941,14 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerpropertyowneraddresshistory` (
   PRIMARY KEY (`hawkerPeddlerPropertyOwnerAddressHistoryID`),
   KEY `hawkerPeddlerPropertyOwnerID` (`hawkerPeddlerPropertyOwnerID`),
   KEY `hawkerPeddlerPropertyOwnerAddressID` (`hawkerPeddlerPropertyOwnerAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hawkerpeddlerpropertyowneraddresshistory`
+--
+
+INSERT INTO `hawkerpeddlerpropertyowneraddresshistory` (`hawkerPeddlerPropertyOwnerAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `hawkerPeddlerPropertyOwnerID`, `hawkerPeddlerPropertyOwnerAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:06:09', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1252,7 +1966,14 @@ CREATE TABLE IF NOT EXISTS `hawkerpeddlerpropertyowners` (
   `hawkerPeddlerBusinessID` int(11) DEFAULT NULL,
   PRIMARY KEY (`hawkerPeddlerPropertyOwnerID`),
   KEY `hawkerPeddlerBusinessID` (`hawkerPeddlerBusinessID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `hawkerpeddlerpropertyowners`
+--
+
+INSERT INTO `hawkerpeddlerpropertyowners` (`hawkerPeddlerPropertyOwnerID`, `firstName`, `lastName`, `phoneNumber`, `email`, `hawkerPeddlerBusinessID`) VALUES
+(1, 'Property', 'Owner', '123-123-1234', 'property@owner.com', 1);
 
 -- --------------------------------------------------------
 
@@ -1270,7 +1991,14 @@ CREATE TABLE IF NOT EXISTS `kenneladdresses` (
   `kennelID` int(11) DEFAULT NULL,
   PRIMARY KEY (`kennelAddressID`),
   KEY `kennelID` (`kennelID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kenneladdresses`
+--
+
+INSERT INTO `kenneladdresses` (`kennelAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `kennelID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `kenneladdresses`
@@ -1322,7 +2050,14 @@ CREATE TABLE IF NOT EXISTS `kenneladdresshistory` (
   PRIMARY KEY (`kennelAddressHistoryID`),
   KEY `kennelID` (`kennelID`),
   KEY `kennelAddressID` (`kennelAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kenneladdresshistory`
+--
+
+INSERT INTO `kenneladdresshistory` (`kennelAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `kennelID`, `kennelAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:08:21', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1349,7 +2084,14 @@ CREATE TABLE IF NOT EXISTS `kennelhistory` (
   `kennelID` int(11) DEFAULT NULL,
   PRIMARY KEY (`kennelHistoryID`),
   KEY `kennelID` (`kennelID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kennelhistory`
+--
+
+INSERT INTO `kennelhistory` (`kennelHistoryID`, `action`, `kennelName`, `issueDate`, `expiryDate`, `licenseNumber`, `phoneNumber`, `email`, `notes`, `policeCheck`, `photoID`, `zoningClearance`, `acoInspection`, `lastModified`, `kennelID`) VALUES
+(1, 'insert', 'Kennel Name', '2022-08-01', '2022-08-02', 'ABC-123', '123-123-1234', 'kennel@name.com', '- Test Notes', 'Yes', 'Yes', 'Yes', 'Yes', '2022-08-30 14:08:21', 1);
 
 -- --------------------------------------------------------
 
@@ -1367,7 +2109,14 @@ CREATE TABLE IF NOT EXISTS `kennelowneraddresses` (
   `kennelOwnerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`kennelOwnerAddressID`),
   KEY `kennelOwnerID` (`kennelOwnerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kennelowneraddresses`
+--
+
+INSERT INTO `kennelowneraddresses` (`kennelOwnerAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `kennelOwnerID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `kennelowneraddresses`
@@ -1419,7 +2168,14 @@ CREATE TABLE IF NOT EXISTS `kennelowneraddresshistory` (
   PRIMARY KEY (`kennelOwnerAddressHistoryID`),
   KEY `kennelOwnerID` (`kennelOwnerID`),
   KEY `kennelOwnerAddressID` (`kennelOwnerAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kennelowneraddresshistory`
+--
+
+INSERT INTO `kennelowneraddresshistory` (`kennelOwnerAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `kennelOwnerID`, `kennelOwnerAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:09:20', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1437,7 +2193,14 @@ CREATE TABLE IF NOT EXISTS `kennelowners` (
   `kennelID` int(11) DEFAULT NULL,
   PRIMARY KEY (`kennelOwnerID`),
   KEY `kennelID` (`kennelID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kennelowners`
+--
+
+INSERT INTO `kennelowners` (`kennelOwnerID`, `firstName`, `lastName`, `phoneNumber`, `email`, `kennelID`) VALUES
+(1, 'Kennel', 'Owner', '123-123-1234', 'kennel@owner.com', 1);
 
 -- --------------------------------------------------------
 
@@ -1455,7 +2218,14 @@ CREATE TABLE IF NOT EXISTS `kennelpropertyowneraddresses` (
   `kennelPropertyOwnerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`kennelPropertyOwnerAddressID`),
   KEY `kennelPropertyOwnerID` (`kennelPropertyOwnerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kennelpropertyowneraddresses`
+--
+
+INSERT INTO `kennelpropertyowneraddresses` (`kennelPropertyOwnerAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `kennelPropertyOwnerID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `kennelpropertyowneraddresses`
@@ -1507,7 +2277,14 @@ CREATE TABLE IF NOT EXISTS `kennelpropertyowneraddresshistory` (
   PRIMARY KEY (`kennelPropertyOwnerAddressHistoryID`),
   KEY `kennelPropertyOwnerID` (`kennelPropertyOwnerID`),
   KEY `kennelPropertyOwnerAddressID` (`kennelPropertyOwnerAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kennelpropertyowneraddresshistory`
+--
+
+INSERT INTO `kennelpropertyowneraddresshistory` (`kennelPropertyOwnerAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `kennelPropertyOwnerID`, `kennelPropertyOwnerAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:08:53', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1525,7 +2302,14 @@ CREATE TABLE IF NOT EXISTS `kennelpropertyowners` (
   `kennelID` int(11) DEFAULT NULL,
   PRIMARY KEY (`kennelPropertyOwnerID`),
   KEY `kennelID` (`kennelID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kennelpropertyowners`
+--
+
+INSERT INTO `kennelpropertyowners` (`kennelPropertyOwnerID`, `firstName`, `lastName`, `phoneNumber`, `email`, `kennelID`) VALUES
+(1, 'Property', 'Owner', '123-123-1234', 'property@owner.com', 1);
 
 -- --------------------------------------------------------
 
@@ -1548,7 +2332,14 @@ CREATE TABLE IF NOT EXISTS `kennels` (
   `zoningClearance` enum('Yes','No') DEFAULT NULL,
   `acoInspection` enum('Yes','No') DEFAULT NULL,
   PRIMARY KEY (`kennelID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `kennels`
+--
+
+INSERT INTO `kennels` (`kennelID`, `kennelName`, `issueDate`, `expiryDate`, `licenseNumber`, `phoneNumber`, `email`, `notes`, `policeCheck`, `photoID`, `zoningClearance`, `acoInspection`) VALUES
+(1, 'Kennel Name', '2022-08-01', '2022-08-02', 'ABC-123', '123-123-1234', 'kennel@name.com', '- Test Notes', 'Yes', 'Yes', 'Yes', 'Yes');
 
 --
 -- Triggers `kennels`
@@ -1608,7 +2399,14 @@ CREATE TABLE IF NOT EXISTS `liquorbusinessaddresses` (
   `liquorBusinessID` int(11) DEFAULT NULL,
   PRIMARY KEY (`liquorBusinessAddressID`),
   KEY `liquorBusinessID` (`liquorBusinessID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liquorbusinessaddresses`
+--
+
+INSERT INTO `liquorbusinessaddresses` (`liquorBusinessAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `liquorBusinessID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `liquorbusinessaddresses`
@@ -1660,7 +2458,14 @@ CREATE TABLE IF NOT EXISTS `liquorbusinessaddresshistory` (
   PRIMARY KEY (`liquorBusinessAddressHistoryID`),
   KEY `liquorBusinessID` (`liquorBusinessID`),
   KEY `liquorBusinessAddressID` (`liquorBusinessAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liquorbusinessaddresshistory`
+--
+
+INSERT INTO `liquorbusinessaddresshistory` (`liquorBusinessAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `liquorBusinessID`, `liquorBusinessAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:10:08', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1691,7 +2496,14 @@ CREATE TABLE IF NOT EXISTS `liquorbusinesses` (
   `licenseApproved` enum('Yes','No') DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`liquorBusinessID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `liquorbusinesses`
+--
+
+INSERT INTO `liquorbusinesses` (`liquorBusinessID`, `businessName`, `businessPhone`, `contactName`, `contactPhone`, `dateStarted`, `applicationType`, `feeReceived`, `municipalInformationSigned`, `municipalInformationSentToAGCO`, `fireApprovalReceived`, `fireSentToAGCO`, `planningApprovalReceived`, `planningSentToAGCO`, `smdhuApprovalReceived`, `smdhuSentToAGCO`, `buildingApprovalReceived`, `buildingSentToAGCO`, `licenseApproved`, `notes`) VALUES
+(1, 'Business Name', '123-123-1234', 'Contact Name', '123-123-1234', '2022-08-01', 'New', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '- Test Notes');
 
 -- --------------------------------------------------------
 
@@ -1709,7 +2521,14 @@ CREATE TABLE IF NOT EXISTS `owners` (
   `workPhone` varchar(15) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`ownerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `owners`
+--
+
+INSERT INTO `owners` (`ownerID`, `firstName`, `lastName`, `homePhone`, `cellPhone`, `workPhone`, `email`) VALUES
+(1, 'Owner', 'Name', '', '123-123-1234', '', 'owner@name.com');
 
 -- --------------------------------------------------------
 
@@ -1727,7 +2546,14 @@ CREATE TABLE IF NOT EXISTS `poamatterlocations` (
   `poaMatterID` int(11) DEFAULT NULL,
   PRIMARY KEY (`poaMatterLocationID`),
   KEY `poaMatterID` (`poaMatterID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `poamatterlocations`
+--
+
+INSERT INTO `poamatterlocations` (`poaMatterLocationID`, `streetNumber`, `streetName`, `town`, `postalCode`, `poaMatterID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 -- --------------------------------------------------------
 
@@ -1753,7 +2579,14 @@ CREATE TABLE IF NOT EXISTS `poamatters` (
   `comment` varchar(255) DEFAULT NULL,
   `tmpCol` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`poaMatterID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `poamatters`
+--
+
+INSERT INTO `poamatters` (`poaMatterID`, `infoNumber`, `dateOfOffence`, `dateClosed`, `officerName`, `defendantName`, `poaType`, `offence`, `setFine`, `fineAssessed`, `amountPaid`, `prosecutor`, `verdict`, `comment`, `tmpCol`) VALUES
+(1, 'ABC-123', '2022-08-01', '2022-08-02', 'Officer Name', 'Defendant Name', 'Part 1', 'Offence description here', 250, 350, 350, 'Test Prosecutor', 'Guilty', '- Comments about the POA Matter', NULL);
 
 -- --------------------------------------------------------
 
@@ -1769,7 +2602,15 @@ CREATE TABLE IF NOT EXISTS `poamattertrials` (
   `poaMatterID` int(11) DEFAULT NULL,
   PRIMARY KEY (`poaMatterTrialID`),
   KEY `poaMatterID` (`poaMatterID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `poamattertrials`
+--
+
+INSERT INTO `poamattertrials` (`poaMatterTrialID`, `trialDate`, `trialComment`, `poaMatterID`) VALUES
+(1, '2022-08-01', 'Date One', 1),
+(2, '2022-08-02', 'Date Two', 1);
 
 -- --------------------------------------------------------
 
@@ -1798,7 +2639,14 @@ CREATE TABLE IF NOT EXISTS `policies` (
   `fileHoldURL` varchar(255) DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`policyID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `policies`
+--
+
+INSERT INTO `policies` (`policyID`, `policyNumber`, `policyName`, `cowDate`, `councilResolution`, `dateApproved`, `dateAmended`, `dateEffective`, `category`, `lastReviewDate`, `scheduledReviewDate`, `division`, `authority`, `administrator`, `legislationRequired`, `status`, `fileHoldURL`, `notes`) VALUES
+(1, 'ABC-123', 'Policy Name', '2022-08-01', 'Council Resolution', '2022-08-01', '2022-08-02', '2022-08-03', 'Administrative Policy', '2022-08-04', '2022-08-05', 'Test Division', 'Staff', 'Test Administrator', 'No', 'Active', '', '- Test Notes');
 
 --
 -- Triggers `policies`
@@ -1885,7 +2733,14 @@ CREATE TABLE IF NOT EXISTS `policyhistory` (
   `policyID` int(11) DEFAULT NULL,
   PRIMARY KEY (`policyHistoryID`),
   KEY `policyID` (`policyID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `policyhistory`
+--
+
+INSERT INTO `policyhistory` (`policyHistoryID`, `action`, `policyNumber`, `policyName`, `cowDate`, `councilResolution`, `dateApproved`, `dateAmended`, `dateEffective`, `category`, `lastReviewDate`, `scheduledReviewDate`, `division`, `authority`, `administrator`, `legislationRequired`, `status`, `fileHoldURL`, `notes`, `lastModified`, `policyID`) VALUES
+(1, 'insert', 'ABC-123', 'Policy Name', '2022-08-01', 'Council Resolution', '2022-08-01', '2022-08-02', '2022-08-03', 'Administrative Policy', '2022-08-04', '2022-08-05', 'Test Division', 'Staff', 'Test Administrator', 'No', 'Active', '', '- Test Notes', '2022-08-30 14:19:18', 1);
 
 -- --------------------------------------------------------
 
@@ -1917,7 +2772,15 @@ CREATE TABLE IF NOT EXISTS `procedurehistory` (
   PRIMARY KEY (`procedureHistoryID`),
   KEY `policyID` (`policyID`),
   KEY `procedureID` (`procedureID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `procedurehistory`
+--
+
+INSERT INTO `procedurehistory` (`procedureHistoryID`, `action`, `procedureName`, `procedureNumber`, `dateApproved`, `lastReviewDate`, `scheduledReviewDate`, `dateAmended`, `status`, `category`, `division`, `authority`, `administrator`, `legislationRequired`, `fileHoldURL`, `notes`, `lastModified`, `policyID`, `procedureID`) VALUES
+(1, 'insert', 'Procedure Name', 'ABC-123', '2022-08-01', '2022-08-03', '2022-08-04', '2022-08-02', 'Active', 'Procedure', 'Test Division', 'Staff', 'Test Administrator', 'Yes', '', '- Test Notes', '2022-08-30 14:21:04', 1, 1),
+(2, 'insert', 'Procedure Name Two', 'XYZ-123', '2022-08-01', '2022-08-03', '2022-08-04', '2022-08-02', 'Active', 'Procedure', 'Test Division', 'Council', 'Test Administrator', 'Yes', '', '- Test Notes', '2022-08-30 14:23:00', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -1945,7 +2808,15 @@ CREATE TABLE IF NOT EXISTS `procedures` (
   `policyID` int(11) DEFAULT NULL,
   PRIMARY KEY (`procedureID`),
   KEY `policyID` (`policyID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `procedures`
+--
+
+INSERT INTO `procedures` (`procedureID`, `procedureNumber`, `procedureName`, `dateApproved`, `lastReviewDate`, `scheduledReviewDate`, `dateAmended`, `status`, `category`, `division`, `authority`, `administrator`, `legislationRequired`, `fileHoldURL`, `notes`, `policyID`) VALUES
+(1, 'ABC-123', 'Procedure Name', '2022-08-01', '2022-08-03', '2022-08-04', '2022-08-02', 'Active', 'Procedure', 'Test Division', 'Staff', 'Test Administrator', 'Yes', '', '- Test Notes', 1),
+(2, 'XYZ-123', 'Procedure Name Two', '2022-08-01', '2022-08-03', '2022-08-04', '2022-08-02', 'Active', 'Procedure', 'Test Division', 'Council', 'Test Administrator', 'Yes', '', '- Test Notes', NULL);
 
 --
 -- Triggers `procedures`
@@ -2029,7 +2900,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehiclehistory` (
   `refreshmentVehicleID` int(11) DEFAULT NULL,
   PRIMARY KEY (`refreshmentVehicleHistoryID`),
   KEY `refreshmentVehicleID` (`refreshmentVehicleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `refreshmentvehiclehistory`
+--
+
+INSERT INTO `refreshmentvehiclehistory` (`refreshmentVehicleHistoryID`, `action`, `registeredBusinessName`, `operatingBusinessName`, `licenseNumber`, `issueDate`, `expiryDate`, `specialEvent`, `itemsForSale`, `notes`, `policeVSC`, `photoID`, `driversAbstract`, `safetyCertificate`, `vehicleOwnership`, `citizenship`, `insurance`, `fireApproval`, `zoningClearance`, `healthInspection`, `lastModified`, `refreshmentVehicleID`) VALUES
+(1, 'insert', 'Registered Name', 'Operating Name', 'ABC-123', '2022-08-01', '2022-08-02', 'Yes', '- Items for sale', '- Test Notes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '2022-08-30 14:10:48', 1);
 
 -- --------------------------------------------------------
 
@@ -2047,7 +2925,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicleoperatoraddresses` (
   `refreshmentVehicleOperatorID` int(11) DEFAULT NULL,
   PRIMARY KEY (`refreshmentVehicleOperatorAddressID`),
   KEY `refreshmentVehicleOperatorID` (`refreshmentVehicleOperatorID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refreshmentvehicleoperatoraddresses`
+--
+
+INSERT INTO `refreshmentvehicleoperatoraddresses` (`refreshmentVehicleOperatorAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `refreshmentVehicleOperatorID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `refreshmentvehicleoperatoraddresses`
@@ -2099,7 +2984,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicleoperatoraddresshistory` (
   PRIMARY KEY (`refreshmentVehicleOperatorAddressHistoryID`),
   KEY `refreshmentVehicleOperatorID` (`refreshmentVehicleOperatorID`),
   KEY `refreshmentVehicleOperatorAddressID` (`refreshmentVehicleOperatorAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refreshmentvehicleoperatoraddresshistory`
+--
+
+INSERT INTO `refreshmentvehicleoperatoraddresshistory` (`refreshmentVehicleOperatorAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `refreshmentVehicleOperatorID`, `refreshmentVehicleOperatorAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:12:14', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2117,7 +3009,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicleoperators` (
   `refreshmentVehicleID` int(11) DEFAULT NULL,
   PRIMARY KEY (`refreshmentVehicleOperatorID`),
   KEY `refreshmentVehicleID` (`refreshmentVehicleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refreshmentvehicleoperators`
+--
+
+INSERT INTO `refreshmentvehicleoperators` (`refreshmentVehicleOperatorID`, `firstName`, `lastName`, `phoneNumber`, `email`, `refreshmentVehicleID`) VALUES
+(1, 'Vehicle', 'Operator', '123-123-1234', 'vehicle@operator.com', 1);
 
 -- --------------------------------------------------------
 
@@ -2135,7 +3034,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicleowneraddresses` (
   `refreshmentVehicleOwnerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`refreshmentVehicleOwnerAddressID`),
   KEY `refreshmentVehicleOwnerID` (`refreshmentVehicleOwnerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refreshmentvehicleowneraddresses`
+--
+
+INSERT INTO `refreshmentvehicleowneraddresses` (`refreshmentVehicleOwnerAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `refreshmentVehicleOwnerID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `refreshmentvehicleowneraddresses`
@@ -2187,7 +3093,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicleowneraddresshistory` (
   PRIMARY KEY (`refreshmentVehicleOwnerAddressHistoryID`),
   KEY `refreshmentVehicleOwnerID` (`refreshmentVehicleOwnerID`),
   KEY `refreshmentVehicleOwnerAddressID` (`refreshmentVehicleOwnerAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refreshmentvehicleowneraddresshistory`
+--
+
+INSERT INTO `refreshmentvehicleowneraddresshistory` (`refreshmentVehicleOwnerAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `refreshmentVehicleOwnerID`, `refreshmentVehicleOwnerAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:11:44', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2205,7 +3118,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicleowners` (
   `refreshmentVehicleID` int(11) DEFAULT NULL,
   PRIMARY KEY (`refreshmentVehicleOwnerID`),
   KEY `refreshmentVehicleID` (`refreshmentVehicleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refreshmentvehicleowners`
+--
+
+INSERT INTO `refreshmentvehicleowners` (`refreshmentVehicleOwnerID`, `firstName`, `lastName`, `phoneNumber`, `email`, `refreshmentVehicleID`) VALUES
+(1, 'Vehicle', 'Owner', '123-123-1234', 'vehicle@owner.com', 1);
 
 -- --------------------------------------------------------
 
@@ -2223,7 +3143,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehiclepropertyowneraddresses` (
   `refreshmentVehiclePropertyOwnerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`refreshmentVehiclePropertyOwnerAddressID`),
   KEY `refreshmentVehiclePropertyOwnerID` (`refreshmentVehiclePropertyOwnerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refreshmentvehiclepropertyowneraddresses`
+--
+
+INSERT INTO `refreshmentvehiclepropertyowneraddresses` (`refreshmentVehiclePropertyOwnerAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `refreshmentVehiclePropertyOwnerID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `refreshmentvehiclepropertyowneraddresses`
@@ -2275,7 +3202,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehiclepropertyowneraddresshistory` (
   PRIMARY KEY (`refreshmentVehiclePropertyOwnerAddressHistoryID`),
   KEY `refreshmentVehiclePropertyOwnerID` (`refreshmentVehiclePropertyOwnerID`),
   KEY `refreshmentVehiclePropertyOwnerAddressID` (`refreshmentVehiclePropertyOwnerAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refreshmentvehiclepropertyowneraddresshistory`
+--
+
+INSERT INTO `refreshmentvehiclepropertyowneraddresshistory` (`refreshmentVehiclePropertyOwnerAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `refreshmentVehiclePropertyOwnerID`, `refreshmentVehiclePropertyOwnerAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:11:16', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2293,7 +3227,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehiclepropertyowners` (
   `refreshmentVehicleID` int(11) DEFAULT NULL,
   PRIMARY KEY (`refreshmentVehiclePropertyOwnerID`),
   KEY `refreshmentVehicleID` (`refreshmentVehicleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refreshmentvehiclepropertyowners`
+--
+
+INSERT INTO `refreshmentvehiclepropertyowners` (`refreshmentVehiclePropertyOwnerID`, `firstName`, `lastName`, `phoneNumber`, `email`, `refreshmentVehicleID`) VALUES
+(1, 'Property', 'Owner', '123-123-1234', 'property@owner.com', 1);
 
 -- --------------------------------------------------------
 
@@ -2323,7 +3264,14 @@ CREATE TABLE IF NOT EXISTS `refreshmentvehicles` (
   `zoningClearance` enum('Yes','No') DEFAULT NULL,
   `healthInspection` enum('Yes','No') DEFAULT NULL,
   PRIMARY KEY (`refreshmentVehicleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `refreshmentvehicles`
+--
+
+INSERT INTO `refreshmentvehicles` (`refreshmentVehicleID`, `registeredBusinessName`, `operatingBusinessName`, `licenseNumber`, `issueDate`, `expiryDate`, `specialEvent`, `itemsForSale`, `notes`, `policeVSC`, `photoID`, `driversAbstract`, `safetyCertificate`, `vehicleOwnership`, `citizenship`, `insurance`, `fireApproval`, `zoningClearance`, `healthInspection`) VALUES
+(1, 'Registered Name', 'Operating Name', 'ABC-123', '2022-08-01', '2022-08-02', 'Yes', '- Items for sale', '- Test Notes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes');
 
 --
 -- Triggers `refreshmentvehicles`
@@ -2392,7 +3340,16 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `roleName` varchar(25) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `roleName`) VALUES
+(1, 'Admin'),
+(2, 'Policies'),
+(3, 'Enforcement');
 
 -- --------------------------------------------------------
 
@@ -2407,6 +3364,14 @@ CREATE TABLE IF NOT EXISTS `sessions` (
   `data` mediumtext,
   PRIMARY KEY (`session_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `sessions`
+--
+
+INSERT INTO `sessions` (`session_id`, `expires`, `data`) VALUES
+('Pmo7vcFOSsZ7jEUJZasp9sugCUieo4MR', 1661912670, '{\"cookie\":{\"originalMaxAge\":28800000,\"expires\":\"2022-08-31T02:22:14.669Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":true},\"messages\":[],\"email\":\"bjonkman@townofbwg.com\",\"auth\":\"Admin,Policies,Enforcement\",\"donationBinID\":\"1\",\"ownerID\":\"1\",\"dogID\":\"1\",\"hawkerPeddlerBusinessID\":\"1\",\"kennelID\":\"1\",\"refreshmentVehicleID\":\"1\",\"brokerID\":\"1\"}'),
+('ViBumqMhqMToXlLu4SG-C2gBxTWaJB-C', 1661891580, '{\"cookie\":{\"originalMaxAge\":28800000,\"expires\":\"2022-08-30T20:31:36.991Z\",\"httpOnly\":true,\"path\":\"/\",\"sameSite\":true},\"messages\":[],\"email\":\"BJonkman@townofbwg.com\",\"auth\":\"Admin,Policies,Enforcement\"}');
 
 -- --------------------------------------------------------
 
@@ -2426,7 +3391,14 @@ CREATE TABLE IF NOT EXISTS `streetclosurecontactaddresses` (
   PRIMARY KEY (`streetClosureContactAddressID`),
   KEY `streetClosureContactID` (`streetClosureContactID`),
   KEY `streetClosurePermitID` (`streetClosurePermitID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `streetclosurecontactaddresses`
+--
+
+INSERT INTO `streetclosurecontactaddresses` (`streetClosureContactAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `streetClosureContactID`, `streetClosurePermitID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2443,7 +3415,14 @@ CREATE TABLE IF NOT EXISTS `streetclosurecontacts` (
   `streetClosurePermitID` int(11) DEFAULT NULL,
   PRIMARY KEY (`streetClosureContactID`),
   KEY `streetClosurePermitID` (`streetClosurePermitID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `streetclosurecontacts`
+--
+
+INSERT INTO `streetclosurecontacts` (`streetClosureContactID`, `everydayContactName`, `everydayContactPhone`, `everydayContactEmail`, `streetClosurePermitID`) VALUES
+(1, 'Everyday Contact Name', '123-123-1234', 'everyday@name.com', 1);
 
 -- --------------------------------------------------------
 
@@ -2463,7 +3442,14 @@ CREATE TABLE IF NOT EXISTS `streetclosurecoordinatoraddresses` (
   PRIMARY KEY (`streetClosureCoordinatorAddressID`),
   KEY `streetClosureCoordinatorID` (`streetClosureCoordinatorID`),
   KEY `streetClosurePermitID` (`streetClosurePermitID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `streetclosurecoordinatoraddresses`
+--
+
+INSERT INTO `streetclosurecoordinatoraddresses` (`streetClosureCoordinatorAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `streetClosureCoordinatorID`, `streetClosurePermitID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2480,7 +3466,14 @@ CREATE TABLE IF NOT EXISTS `streetclosurecoordinators` (
   `streetClosurePermitID` int(11) DEFAULT NULL,
   PRIMARY KEY (`streetClosureCoordinatorID`),
   KEY `streetClosurePermitID` (`streetClosurePermitID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `streetclosurecoordinators`
+--
+
+INSERT INTO `streetclosurecoordinators` (`streetClosureCoordinatorID`, `coordinatorName`, `coordinatorPhone`, `coordinatorEmail`, `streetClosurePermitID`) VALUES
+(1, 'Coordinator Name', '123-123-1234', 'cooridinator@name.com', 1);
 
 -- --------------------------------------------------------
 
@@ -2504,7 +3497,14 @@ CREATE TABLE IF NOT EXISTS `streetclosurepermits` (
   `cleanupPlan` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`streetClosurePermitID`),
   UNIQUE KEY `permitNumber` (`permitNumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `streetclosurepermits`
+--
+
+INSERT INTO `streetclosurepermits` (`streetClosurePermitID`, `permitNumber`, `issueDate`, `sponser`, `closureLocation`, `closureDate`, `closureTime`, `description`, `noiseExemption`, `alcoholServed`, `estimatedAttendance`, `cleanupPlan`) VALUES
+(1, 'ABC-123', '2022-08-01', 'Test Sponser', 'Closure Location', '2022-08-01', 'Closure Time', '- Test Description', 'No', 'No', 50, '- Cleanup Plan');
 
 -- --------------------------------------------------------
 
@@ -2524,7 +3524,14 @@ CREATE TABLE IF NOT EXISTS `tagnumberhistory` (
   PRIMARY KEY (`tagNumberHistoryID`),
   KEY `ownerID` (`ownerID`),
   KEY `dogID` (`dogID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `tagnumberhistory`
+--
+
+INSERT INTO `tagnumberhistory` (`tagNumberHistoryID`, `action`, `tagNumber`, `dogName`, `lastModified`, `dogID`, `ownerID`) VALUES
+(1, 'insert', '1', 'Greenlee', '2022-08-30 14:04:02', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2542,7 +3549,14 @@ CREATE TABLE IF NOT EXISTS `taxibrokeraddresses` (
   `taxiBrokerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`taxiBrokerAddressID`),
   KEY `taxiBrokerID` (`taxiBrokerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxibrokeraddresses`
+--
+
+INSERT INTO `taxibrokeraddresses` (`taxiBrokerAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `taxiBrokerID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `taxibrokeraddresses`
@@ -2594,7 +3608,14 @@ CREATE TABLE IF NOT EXISTS `taxibrokeraddresshistory` (
   PRIMARY KEY (`taxiBrokerAddressHistoryID`),
   KEY `taxiBrokerID` (`taxiBrokerID`),
   KEY `taxiBrokerAddressID` (`taxiBrokerAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxibrokeraddresshistory`
+--
+
+INSERT INTO `taxibrokeraddresshistory` (`taxiBrokerAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `taxiBrokerID`, `taxiBrokerAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:12:57', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2623,7 +3644,14 @@ CREATE TABLE IF NOT EXISTS `taxibrokerhistory` (
   `taxiBrokerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`taxiBrokerHistoryID`),
   KEY `taxiBrokerID` (`taxiBrokerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxibrokerhistory`
+--
+
+INSERT INTO `taxibrokerhistory` (`taxiBrokerHistoryID`, `action`, `ownerName`, `companyName`, `phoneNumber`, `licenseNumber`, `issueDate`, `expiryDate`, `policeVSC`, `citizenship`, `photoID`, `driversAbstract`, `certificateOfInsurance`, `zoningApproval`, `notes`, `lastModified`, `taxiBrokerID`) VALUES
+(1, 'insert', 'Owner Name', 'Company Name', '123-123-1234', 'ABC-123', '2022-08-01', '2022-08-02', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '- Test Notes', '2022-08-30 14:12:57', 1);
 
 -- --------------------------------------------------------
 
@@ -2648,7 +3676,14 @@ CREATE TABLE IF NOT EXISTS `taxibrokers` (
   `zoningApproval` enum('Yes','No') DEFAULT NULL,
   `notes` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`taxiBrokerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxibrokers`
+--
+
+INSERT INTO `taxibrokers` (`taxiBrokerID`, `ownerName`, `companyName`, `phoneNumber`, `licenseNumber`, `issueDate`, `expiryDate`, `policeVSC`, `citizenship`, `photoID`, `driversAbstract`, `certificateOfInsurance`, `zoningApproval`, `notes`) VALUES
+(1, 'Owner Name', 'Company Name', '123-123-1234', 'ABC-123', '2022-08-01', '2022-08-02', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '- Test Notes');
 
 --
 -- Triggers `taxibrokers`
@@ -2712,7 +3747,14 @@ CREATE TABLE IF NOT EXISTS `taxidriveraddresses` (
   `taxiDriverID` int(11) DEFAULT NULL,
   PRIMARY KEY (`taxiDriverAddressID`),
   KEY `taxiDriverID` (`taxiDriverID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxidriveraddresses`
+--
+
+INSERT INTO `taxidriveraddresses` (`taxiDriverAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `taxiDriverID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `taxidriveraddresses`
@@ -2764,7 +3806,14 @@ CREATE TABLE IF NOT EXISTS `taxidriveraddresshistory` (
   PRIMARY KEY (`taxiDriverAddressHistoryID`),
   KEY `taxiDriverID` (`taxiDriverID`),
   KEY `taxiDriverAddressID` (`taxiDriverAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxidriveraddresshistory`
+--
+
+INSERT INTO `taxidriveraddresshistory` (`taxiDriverAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `taxiDriverID`, `taxiDriverAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:13:40', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2791,7 +3840,14 @@ CREATE TABLE IF NOT EXISTS `taxidriverhistory` (
   `taxiDriverID` int(11) DEFAULT NULL,
   PRIMARY KEY (`taxiDriverHistoryID`),
   KEY `taxiDriverID` (`taxiDriverID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxidriverhistory`
+--
+
+INSERT INTO `taxidriverhistory` (`taxiDriverHistoryID`, `action`, `firstName`, `lastName`, `phoneNumber`, `cabCompany`, `issueDate`, `expiryDate`, `policeVSC`, `citizenship`, `photoID`, `driversAbstract`, `notes`, `lastModified`, `taxiDriverID`) VALUES
+(1, 'insert', 'Driver', 'Name', '123-123-1234', 'Astro Taxi Inc.', '2022-08-01', '2022-08-02', 'Yes', 'Yes', 'Yes', 'Yes', '- Test Notes', '2022-08-30 14:13:40', 1);
 
 -- --------------------------------------------------------
 
@@ -2816,7 +3872,14 @@ CREATE TABLE IF NOT EXISTS `taxidrivers` (
   `taxiBrokerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`taxiDriverID`),
   KEY `taxiBrokerID` (`taxiBrokerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxidrivers`
+--
+
+INSERT INTO `taxidrivers` (`taxiDriverID`, `firstName`, `lastName`, `phoneNumber`, `cabCompany`, `issueDate`, `expiryDate`, `policeVSC`, `citizenship`, `photoID`, `driversAbstract`, `notes`, `taxiBrokerID`) VALUES
+(1, 'Driver', 'Name', '123-123-1234', 'Astro Taxi Inc.', '2022-08-01', '2022-08-02', 'Yes', 'Yes', 'Yes', 'Yes', '- Test Notes', 1);
 
 --
 -- Triggers `taxidrivers`
@@ -2892,7 +3955,14 @@ CREATE TABLE IF NOT EXISTS `taxiplatehistory` (
   `taxiPlateID` int(11) DEFAULT NULL,
   PRIMARY KEY (`taxiPlateHistoryID`),
   KEY `taxiPlateID` (`taxiPlateID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxiplatehistory`
+--
+
+INSERT INTO `taxiplatehistory` (`taxiPlateHistoryID`, `action`, `firstName`, `lastName`, `phoneNumber`, `email`, `townPlateNumber`, `vehicleYearMakeModel`, `provincialPlate`, `vin`, `issueDate`, `expiryDate`, `policeVSC`, `driversAbstract`, `photoID`, `safetyCertificate`, `byLawInspection`, `insurance`, `vehicleOwnership`, `notes`, `lastModified`, `taxiPlateID`) VALUES
+(1, 'insert', 'Vehicle', 'Owner', '123-123-1234', 'vehicle@owner.com', 1, '2022 Test Car', 'ABCD-1234', 'XYZ-123', '2022-08-01', '2022-08-02', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '- Test Notes', '2022-08-30 14:15:08', 1);
 
 -- --------------------------------------------------------
 
@@ -2910,7 +3980,14 @@ CREATE TABLE IF NOT EXISTS `taxiplateowneraddresses` (
   `taxiPlateID` int(11) DEFAULT NULL,
   PRIMARY KEY (`taxiPlateOwnerAddressID`),
   KEY `taxiPlateID` (`taxiPlateID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxiplateowneraddresses`
+--
+
+INSERT INTO `taxiplateowneraddresses` (`taxiPlateOwnerAddressID`, `streetNumber`, `streetName`, `town`, `postalCode`, `taxiPlateID`) VALUES
+(1, 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', 1);
 
 --
 -- Triggers `taxiplateowneraddresses`
@@ -2962,7 +4039,14 @@ CREATE TABLE IF NOT EXISTS `taxiplateowneraddresshistory` (
   PRIMARY KEY (`taxiPlateOwnerAddressHistoryID`),
   KEY `taxiPlateID` (`taxiPlateID`),
   KEY `taxiPlateOwnerAddressID` (`taxiPlateOwnerAddressID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxiplateowneraddresshistory`
+--
+
+INSERT INTO `taxiplateowneraddresshistory` (`taxiPlateOwnerAddressHistoryID`, `action`, `streetNumber`, `streetName`, `town`, `postalCode`, `lastModified`, `taxiPlateID`, `taxiPlateOwnerAddressID`) VALUES
+(1, 'insert', 1, 'JONKMAN BOULEVARD', 'Bradford', 'L9S 2E5', '2022-08-30 14:15:08', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2994,7 +4078,14 @@ CREATE TABLE IF NOT EXISTS `taxiplates` (
   `taxiBrokerID` int(11) DEFAULT NULL,
   PRIMARY KEY (`taxiPlateID`),
   KEY `taxiBrokerID` (`taxiBrokerID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `taxiplates`
+--
+
+INSERT INTO `taxiplates` (`taxiPlateID`, `firstName`, `lastName`, `phoneNumber`, `email`, `townPlateNumber`, `vehicleYearMakeModel`, `provincialPlate`, `vin`, `issueDate`, `expiryDate`, `policeVSC`, `driversAbstract`, `photoID`, `safetyCertificate`, `byLawInspection`, `insurance`, `vehicleOwnership`, `notes`, `taxiBrokerID`) VALUES
+(1, 'Vehicle', 'Owner', '123-123-1234', 'vehicle@owner.com', 1, '2022 Test Car', 'ABCD-1234', 'XYZ-123', '2022-08-01', '2022-08-02', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', 'Yes', '- Test Notes', 1);
 
 --
 -- Triggers `taxiplates`
@@ -3066,7 +4157,46 @@ CREATE TABLE IF NOT EXISTS `userroles` (
   PRIMARY KEY (`userRoleID`),
   UNIQUE KEY `userroles_roleId_userId_unique` (`userId`,`roleId`),
   KEY `roleId` (`roleId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `userroles`
+--
+
+INSERT INTO `userroles` (`userRoleID`, `userId`, `roleId`) VALUES
+(62, 1, 1),
+(70, 1, 2),
+(60, 1, 3),
+(35, 2, 1),
+(39, 2, 2),
+(40, 2, 3),
+(36, 3, 3),
+(37, 4, 3),
+(41, 5, 3),
+(42, 6, 3),
+(71, 7, 1),
+(43, 7, 3),
+(44, 8, 3),
+(45, 9, 3),
+(46, 10, 2),
+(47, 11, 1),
+(48, 11, 2),
+(49, 11, 3),
+(50, 12, 1),
+(51, 12, 2),
+(52, 12, 3),
+(53, 13, 3),
+(54, 14, 3),
+(55, 15, 3),
+(56, 16, 3),
+(57, 17, 3),
+(58, 18, 3),
+(59, 19, 3),
+(64, 20, 1),
+(65, 20, 2),
+(66, 20, 3),
+(67, 21, 1),
+(69, 21, 3);
 
 -- --------------------------------------------------------
 
@@ -3081,7 +4211,34 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastName` varchar(25) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `firstName`, `lastName`, `email`) VALUES
+(1, 'Bobby', 'Jonkman', 'bjonkman@townofbwg.com'),
+(2, 'Chris', 'Harbour', 'charbour@townofbwg.com'),
+(3, 'Elena', 'Chisholm', 'echisholm@townofbwg.com'),
+(4, 'Monica', 'Marques', 'momarques@townofbwg.com'),
+(5, 'Brent', 'Lee', 'blee@townofbwg.com'),
+(6, 'Tara', 'Reynolds', 'treynolds@townofbwg.com'),
+(7, 'Lauren', 'Fortune', 'lfortune@townofbwg.com'),
+(8, 'Rebecca', 'Murphy', 'rmurphy@townofbwg.com'),
+(9, 'Igor', 'Pogacevski', 'ipogacevski@townofbwg.com'),
+(10, 'Jen', 'Kinsella', 'jkinsella@townofbwg.com'),
+(11, 'Kyle', 'Vlaming', 'kvlaming@townofbwg.com'),
+(12, 'Alex', 'Ioannidis', 'aioannidis@townofbwg.com'),
+(13, 'Andrew', 'Richardson', 'arichardson@townofbwg.com'),
+(14, 'Aneta', 'Prytula', 'aprytula@townofbwg.com'),
+(15, 'Bryan', 'McDonald', 'bmcdonald@townofbwg.com'),
+(16, 'Joey', 'Furgiuele', 'jfurgiuele@townofbwg.com'),
+(17, 'Marie', 'Duquette', 'mduquette@townofbwg.com'),
+(18, 'Robert', 'Belsey', 'rbelsey@townofbwg.com'),
+(19, 'Spencer', 'Smith', 'ssmith@townofbwg.com'),
+(20, 'Marc', 'Soukup', 'msoukup@townofbwg.com'),
+(21, 'Admin', 'Backup', 'it@townofbwg.com');
 
 --
 -- Constraints for dumped tables
