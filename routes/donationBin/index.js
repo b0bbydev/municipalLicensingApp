@@ -439,7 +439,7 @@ router.get(
               streetName: results.donationBinAddresses[0].streetName,
               streetNumber: results.donationBinAddresses[0].streetNumber,
               town: results.donationBinAddresses[0].town,
-              licenseNumber: results.donationBinOperators[0].licenseNumber,
+              licenseNumber: results.licenseNumber,
               issueDate: results.issueDate,
               expiryDate: results.expiryDate,
             },

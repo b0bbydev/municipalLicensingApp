@@ -367,7 +367,8 @@ router.get(
         .catch((err) => {
           return res.render("refreshmentVehicles/printLicense", {
             title: "BWG | Print License",
-            message: "Page Error!",
+            message:
+              "Page Error! Ensure that vehicle, property owner & operator information is complete.",
             auth: req.session.auth, // authorization.
           });
         });

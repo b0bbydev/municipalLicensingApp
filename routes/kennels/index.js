@@ -465,7 +465,8 @@ router.get(
         .catch((err) => {
           return res.render("kennels/printLicense", {
             title: "BWG | Print License",
-            message: "Page Error!",
+            message:
+              "Page Error! Ensure kennel owner, and kennel information is complete.",
             auth: req.session.auth, // authorization.
           });
         });

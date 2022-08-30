@@ -4,7 +4,6 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const POAMatter = require("../../models/poaMatters/poaMatter");
 const POAMatterLocation = require("../../models/poaMatters/poaMatterLocation");
-const POAMatterTrial = require("../../models/poaMatters/poaMatterTrial");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
@@ -261,33 +260,6 @@ router.post(
               },
             }
           );
-        })
-        .then(() => {
-          // create array for bulkCreate.
-          let trialDates = [
-            {
-              trialDate: funcHelpers.fixEmptyValue(req.body.trialDateOne),
-              poaMatterID: req.params.id,
-            },
-            {
-              trialDate: funcHelpers.fixEmptyValue(req.body.trialDateTwo),
-              poaMatterID: req.params.id,
-            },
-            {
-              trialDate: funcHelpers.fixEmptyValue(req.body.trialDateThree),
-              poaMatterID: req.params.id,
-            },
-          ];
-
-          // loops through trialDates and if trialDate is null, delete that whole specific object in the array.
-          for (const key in trialDates) {
-            if (trialDates[key].trialDate === null) {
-              // remove the key/object from the array.
-              trialDates.splice([key]);
-            }
-          }
-          // insert the array,
-          POAMatterTrial.bulkCreate(trialDates);
         })
         .then(() => {
           return res.redirect("/poaMatters");

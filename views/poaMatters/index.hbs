@@ -181,9 +181,11 @@
             </thead>
             <tbody>
               {{#each poaMatterTrials}}
-                <th>{{incremented @index}}</th>
-                <td>{{this.trialDate}}</td>
-                <td>{{this.trialComment}}</td>
+                <tr>
+                  <th>{{incremented @index}}</th>
+                  <td>{{this.trialDate}}</td>
+                  <td>{{this.trialComment}}</td>
+                </tr>
               {{/each}}
             </tbody>
           </table>

@@ -202,14 +202,19 @@ router.post(
           let trialDates = [
             {
               trialDate: funcHelpers.fixEmptyValue(req.body.trialDateOne),
+              trialComment: funcHelpers.fixEmptyValue(req.body.trialCommentOne),
               poaMatterID: results.poaMatterID,
             },
             {
               trialDate: funcHelpers.fixEmptyValue(req.body.trialDateTwo),
+              trialComment: funcHelpers.fixEmptyValue(req.body.trialCommentTwo),
               poaMatterID: results.poaMatterID,
             },
             {
               trialDate: funcHelpers.fixEmptyValue(req.body.trialDateThree),
+              trialComment: funcHelpers.fixEmptyValue(
+                req.body.trialCommentThree
+              ),
               poaMatterID: results.poaMatterID,
             },
           ];

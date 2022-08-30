@@ -63,9 +63,9 @@ router.get(
             },
             {
               model: POAMatterTrial,
+              order: [["poaMatterTrialID", "ASC"]],
             },
           ],
-          order: [["poaMatterID", "DESC"]],
         })
           .then((results) => {
             // for pagination.
@@ -109,14 +109,13 @@ router.get(
               [Op.like]: "%" + req.query.filterValue + "%",
             },
           },
-          limit: req.query.limit,
-          offset: req.skip,
           include: [
             {
               model: POAMatterLocation,
             },
             {
               model: POAMatterTrial,
+              order: [["poaMatterTrialID", "ASC"]],
             },
           ],
         })
