@@ -61,11 +61,19 @@ router.get(
             {
               model: POAMatterLocation,
             },
+            // this is crazy.
+            // multiple 'order by' statements across 3 joined tables.
+            // the key was adding the 'separate' option and setting it 'true'
+            // so that the ordering of POAMatters table ordering doesn't affect
+            // the POAMatterTrials table's ordering.
             {
               model: POAMatterTrial,
+              as: "poaMatterTrials",
+              separate: true,
               order: [["poaMatterTrialID", "ASC"]],
             },
           ],
+          order: [["poaMatterID", "DESC"]],
         })
           .then((results) => {
             // for pagination.
