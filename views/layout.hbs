@@ -46,10 +46,17 @@
             </a>
           </div>
           {{#if email}}
-            <p class="text-center fs-6 px-2">
-              <i class="icon-blue icon-large bi bi-person-fill"></i>
-              <span class="text-center">Current User: {{lowercase email}}</span>
-            </p>
+              <div class="row text-center w-100">
+                <div class="col">
+                    <i class="icon-blue icon-large bi bi-person-fill"></i>
+                    <span>Current User:</span>
+                </div>
+              </div>
+              <div class="row text-center w-100 mb-3">
+                <div class="col">
+                  <span>{{lowercase email}}</span>
+                </div>
+              </div>
           {{/if}}
           <ul
             class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start w-100"
