@@ -90,14 +90,18 @@
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td
-          data-bs-toggle="popover"
-          data-bs-trigger="hover"
-          data-bs-placement="right"
-          data-bs-custom-class="custom-popover"
-          data-bs-title="Comments"
-          data-bs-content="{{this.comment}}"
-        >{{this.infoNumber}}</td>
+        {{#if this.comment}}
+          <td
+            data-bs-toggle="popover"
+            data-bs-trigger="hover"
+            data-bs-placement="right"
+            data-bs-custom-class="custom-popover"
+            data-bs-title="Comments"
+            data-bs-content="{{this.comment}}"
+          >{{this.infoNumber}}</td>
+        {{else}}
+          <td>{{this.infoNumber}}</td>
+        {{/if}}
         <td>{{this.dateOfOffence}}</td>
         <td>{{this.dateClosed}}</td>
         <td>{{this.defendantName}}</td>
@@ -136,7 +140,8 @@
     {{/if}}
     {{#each pages}}
       <li class="page-item">
-        <a class="page-link {{#contains this.url ../currentPage}}active pagination-color {{/contains}}" href="{{this.url}}">{{this.number}}</a></li>
+        <a class="page-link {{#contains this.url ../currentPage}}active pagination-color {{/contains}}" href="{{this.url}}">{{this.number}}</a>
+      </li>
     {{/each}}
     {{#if hasMorePages}}
       <li class="page-item"><a

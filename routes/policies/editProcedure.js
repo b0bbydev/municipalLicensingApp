@@ -208,7 +208,21 @@ router.post(
         }
       )
         .then(() => {
-          return res.redirect("/policies");
+          Procedure.findOne({
+            where: {
+              procedureID: req.params.id,
+            },
+          }).then((results) => {
+            // decide where to redirect after update.
+            var policyID = results.policyID;
+
+            // is it a standalone procedure? (policyID === null) or related (policy !== null)
+            if (!policyID) {
+              return res.redirect("/policies/procedures");
+            } else {
+              return res.redirect("/policies/policy/" + req.session.policyID);
+            }
+          });
         })
         .catch((err) => {
           return res.render("policies/editProcedure", {

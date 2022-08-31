@@ -196,7 +196,21 @@ router.post(
         }
       )
         .then(() => {
-          return res.redirect("/policies");
+          // decide where to redirect after update.
+          Guideline.findOne({
+            where: {
+              guidelineID: req.params.id,
+            },
+          }).then((results) => {
+            var policyID = results.policyID;
+
+            // is it a standalone procedure? (policyID === null) or related (policy !== null)
+            if (!policyID) {
+              return res.redirect("/policies/guidelines");
+            } else {
+              return res.redirect("/policies/policy/" + req.session.policyID);
+            }
+          });
         })
         .catch((err) => {
           return res.render("policies/editGuideline", {

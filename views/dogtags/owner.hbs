@@ -271,14 +271,18 @@
         <tbody class="table-group-divider">
           {{#each items}}
             <tr>
-              <td
-                data-bs-toggle="popover"
-                data-bs-trigger="hover"
-                data-bs-placement="right"
-                data-bs-custom-class="custom-popover"
-                data-bs-title="Notes"
-                data-bs-content="{{this.notes}}"
-              >{{this.dogName}}</td>
+              {{#if this.notes}}
+                <td
+                  data-bs-toggle="popover"
+                  data-bs-trigger="hover"
+                  data-bs-placement="right"
+                  data-bs-custom-class="custom-popover"
+                  data-bs-title="Notes"
+                  data-bs-content="{{this.notes}}"
+                >{{this.dogName}}</td>
+              {{else}}
+                <td>{{this.dogName}}</td>
+              {{/if}}
               <td>{{this.breed}}</td>
               <td>{{this.colour}}</td>
               <td>{{this.gender}}</td>

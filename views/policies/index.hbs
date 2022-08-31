@@ -110,20 +110,28 @@
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td
-          class="tableLink"
-          data-bs-toggle="popover"
-          data-bs-trigger="hover"
-          data-bs-placement="right"
-          data-bs-custom-class="custom-popover"
-          data-bs-title="Notes"
-          data-bs-content="{{this.notes}}"
-        >
-          <a
-            class="stretched-link"
-            id="ownerLink"
-            href="/policies/policy/{{this.policyID}}"
-          >{{this.policyNumber}}</a></td>
+        {{#if this.notes}}
+         <td
+           class="tableLink"
+           data-bs-toggle="popover"
+           data-bs-trigger="hover"
+           data-bs-placement="right"
+           data-bs-custom-class="custom-popover"
+           data-bs-title="Notes"
+           data-bs-content="{{this.notes}}"
+         >
+           <a
+             class="stretched-link"
+             id="ownerLink"
+             href="/policies/policy/{{this.policyID}}"
+           >{{this.policyNumber}}</a></td>
+        {{else}}
+          <td class="tableLink"><a
+             class="stretched-link"
+             id="ownerLink"
+             href="/policies/policy/{{this.policyID}}"
+           >{{this.policyNumber}}</a></td>
+        {{/if}}
         <td>{{this.policyName}}</td>
         <td>{{this.cowDate}}</td>
         <td>{{this.councilResolution}}</td>
