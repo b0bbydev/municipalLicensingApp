@@ -1,7 +1,7 @@
 <!--
   @author Bobby Jonkman
  -->
- 
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -156,31 +156,31 @@
                   </div>
                 </div>
               {{/includes}}
-              <div class="accordion-item">
-                <h2 class="accordion-header" id="headingTwo">
-                  <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo"
-                    aria-expanded="false"
-                    aria-controls="collapseTwo"
+              {{#includes auth "Enforcement"}}
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button
+                      class="accordion-button collapsed"
+                      type="button"
+                      data-bs-toggle="collapse"
+                      data-bs-target="#collapseTwo"
+                      aria-expanded="false"
+                      aria-controls="collapseTwo"
+                    >
+                      <i class="fs-4 icon-blue bi bi-grid"></i>
+                      <span class="dropmenu-text ms-2 d-none d-sm-inline">
+                        Licensing Apps</span>
+                    </button>
+                  </h2>
+                  <div
+                    id="collapseTwo"
+                    class="accordion-collapse collapse"
+                    aria-labelledby="headingTwo"
+                    data-bs-parent="#adminAccordion"
                   >
-                    <i class="fs-4 icon-blue bi bi-grid"></i>
-                    <span class="dropmenu-text ms-2 d-none d-sm-inline">
-                      Licensing Apps</span>
-                  </button>
-                </h2>
-                <div
-                  id="collapseTwo"
-                  class="accordion-collapse collapse"
-                  aria-labelledby="headingTwo"
-                  data-bs-parent="#adminAccordion"
-                >
-                  <ul
-                    class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
-                  >
-                    {{#includes auth "Enforcement"}}
+                    <ul
+                      class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start w-100"
+                    >
                       <!-- Enforcement - Adult Entertainment -->
                       <li class="nav-item nav-item-child w-100 p-1">
                         <a
@@ -280,10 +280,10 @@
                           ></i>
                         </a>
                       </li>
-                    {{/includes}}
-                  </ul>
+                    </ul>
+                  </div>
                 </div>
-              </div>
+              {{/includes}}
             </div>
             {{#includes auth "Enforcement"}}
               <!-- Enforcement - Street Closure Permits -->
