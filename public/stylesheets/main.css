@@ -21,6 +21,10 @@ input {
   word-break: break-word;
 }
 
+thead {
+  word-break: keep-all;
+}
+
 .accordion-button:not(.collapsed) {
   background-color: rgba(0, 150, 214, 0.15);
   color: black;
