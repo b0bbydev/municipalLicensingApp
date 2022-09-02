@@ -1,13 +1,15 @@
-const { createLogger, transports, format } = require("winston");
+const winston = require("winston");
 
-const logger = createLogger({
-  format: format.combine(
-    format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
-    format.printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
+const logger = winston.createLogger({
+  format: winston.format.combine(
+    winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
+    winston.format.printf(
+      (info) => `${info.timestamp} ${info.level}: ${info.message}`
+    )
   ),
   level: "debug",
   transports: [
-    new transports.File({
+    new winston.transports.File({
       filename: "./logs/errors.log",
       maxsize: 5242880,
       maxFiles: 5,
