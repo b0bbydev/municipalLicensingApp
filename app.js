@@ -730,8 +730,8 @@ var job = new CronJob(
         var date = new Date();
 
         const msg = {
-          to: process.env.SEND_GRID_TO, // Change to your recipient
-          from: process.env.SEND_GRID_FROM, // Change to your verified sender
+          to: process.env.SEND_GRID_TO,
+          from: process.env.SEND_GRID_FROM,
           subject: "Weekly Log File - " + date.toDateString(),
           text: "Weekly log file for BWG-Licenses app",
           html: "<strong>Weekly log file for BWG-Licenses app</strong>",
