@@ -6,9 +6,11 @@
     "start": "set NODE_ENV=production && node ./bin/www"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.7.0",
     "activedirectory2": "^2.1.0",
     "bcrypt": "^5.0.1",
     "cookie-parser": "~1.4.4",
+    "cron": "^2.1.0",
     "debug": "~4.3.4",
     "dotenv": "^16.0.1",
     "express": "~4.18.1",
