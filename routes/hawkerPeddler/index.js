@@ -40,6 +40,9 @@ router.get("/", async (req, res, next) => {
         {
           model: HawkerPeddlerBusinessAddress,
         },
+        {
+          model: HawkerPeddlerApplicant,
+        },
       ],
     })
       .then((results) => {
