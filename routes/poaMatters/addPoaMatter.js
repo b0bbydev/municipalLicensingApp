@@ -72,7 +72,7 @@ router.post(
     .trim(),
   body("offence")
     .if(body("offence").notEmpty())
-    .matches(/^[^%<>^\/\\;!{}?]+$/)
+    .matches(/^[^%<>^\\;!{}?]+$/)
     .withMessage("Invalid Offence Entry!")
     .trim(),
   body("prosecutor")
