@@ -87,7 +87,7 @@ router.post(
     .trim(),
   body("comment")
     .if(body("comment").notEmpty())
-    .matches(/^[^%<>^\/\\;!{}?]+$/)
+    .matches(/^[^%<>^\\;!{}?]+$/)
     .withMessage("Invalid Comment Entry!")
     .trim(),
   body("streetNumber")
