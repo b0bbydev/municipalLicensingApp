@@ -28,7 +28,8 @@
     "mysql2": "^2.3.3",
     "plivo": "^4.34.1",
     "nodemon": "^2.0.20",
-    "sequelize": "^6.21.6",
+    "plivo": "^4.34.0",
+    "sequelize": "^6.25.3",
     "winston": "^3.8.2"
   }
 }
