@@ -78,6 +78,8 @@
       <th>Address</th>
       <th>Items For Sale</th>
       <th>Notes</th>
+      <th>Operator Issue Date</th>
+      <th>Operator Expiry Date</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -108,6 +110,15 @@
         {{/each}}
         <td>{{this.itemsForSale}}</td>
         <td>{{this.notes}}</td>
+        {{#if hawkerPeddlerApplicants}}
+          {{#each hawkerPeddlerApplicants}}
+            <td>{{this.issueDate}}</td>
+            <td>{{this.expiryDate}}</td>
+          {{/each}}
+        {{else}}
+            <td>N/A</td>
+            <td>N/A</td>
+        {{/if}}
         <td style="width: 17.5%;">
           <a
             class="btn btn-sm btn-secondary"

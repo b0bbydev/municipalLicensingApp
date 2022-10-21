@@ -9,8 +9,9 @@ router.get("/", isLoggedIn, auth, async (req, res, next) => {
   let messages = req.session.messages || [];
   // clear session messages
   req.session.messages = [];
-  // delete session lastEnteredDropdownTitle.
+  // delete temp session variables.
   delete req.session.lastEnteredDropdownTitle;
+  delete req.session.dogtagUrl;
 
   return res.render("index", {
     title: "BWG | Home",

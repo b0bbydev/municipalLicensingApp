@@ -71,7 +71,6 @@
       <th>Home Phone</th>
       <th>Email</th>
       <th>Address</th>
-      <th>Postal Code</th>
       <th>POBox/Apt/RR</th>
     </tr>
   </thead>
@@ -90,8 +89,7 @@
         {{#each addresses}}
           <td>{{this.streetNumber}}
             {{this.streetName}},
-            {{this.town}}</td>
-          <td>{{this.postalCode}}</td>
+            {{this.town}} {{this.postalCode}}</td>
           <td>{{this.poBoxAptRR}}</td>
         {{/each}}
       </tr>

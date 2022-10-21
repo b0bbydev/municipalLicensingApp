@@ -12,11 +12,11 @@
     "cookie-parser": "~1.4.4",
     "cron": "^2.1.0",
     "debug": "~4.3.4",
-    "dotenv": "^16.0.1",
+    "dotenv": "^16.0.3",
     "express": "~4.18.1",
     "express-mysql-session": "^2.1.8",
     "express-paginate": "^1.0.2",
-    "express-rate-limit": "^6.5.2",
+    "express-rate-limit": "^6.6.0",
     "express-session": "^1.17.3",
     "express-validator": "^6.14.2",
     "handlebars-group-by": "^1.0.1",
@@ -26,9 +26,9 @@
     "moment": "^2.29.4",
     "morgan": "~1.10.0",
     "mysql2": "^2.3.3",
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.20",
     "plivo": "^4.34.0",
     "sequelize": "^6.21.6",
-    "winston": "^3.8.1"
+    "winston": "^3.8.2"
   }
 }

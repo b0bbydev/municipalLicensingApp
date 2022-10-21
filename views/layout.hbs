@@ -65,10 +65,16 @@
             <!-- Back navigation -->
             {{#ifCond baseUrl "===" indexUrl}}
               <li class="nav-item-back w-100 p-1">
-                <a
-                  onclick="window.history.back()"
-                  class="nav-link align-middle ps-3"
-                >
+                {{#if dogtagUrl}}
+                  <a
+                    href="/dogtags"
+                    class="nav-link align-middle ps-3"
+                  >
+                {{else}}
+                    <a
+                      onclick="window.history.back()"
+                      class="nav-link align-middle ps-3">
+                {{/if}}
                   <i class="fs-4 icon-blue bi bi-arrow-return-left"></i>
                   <span class="ms-1 d-none d-sm-inline">Back</span>
                 </a>
