@@ -110,7 +110,7 @@
     </div>
     <!-- Date of Birth -->
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-sm-6">
         <label for="Date Of Birth" class="form-label">Date Of Birth</label>
         <input
           type="date"
@@ -118,6 +118,18 @@
           placeholder="Date Of Birth"
           name="dateOfBirth"
           value="{{formData.dateOfBirth}}"
+        />
+      </div>
+      <!-- License Expiry -->
+      <div class="col-sm-6">
+        <label for="License Expiry" class="form-label">License Expiry (manual
+          override)</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="License Expiry"
+          name="expiryDate"
+          value="{{formData.expiryDate}}"
         />
       </div>
     </div>
