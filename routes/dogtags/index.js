@@ -298,6 +298,55 @@ router.get(
               auth: req.session.auth, // authorization.
             });
           });
+      } else if (req.query.filterCategory === "Dog Name") {
+        Owner.findAndCountAll({
+          subQuery: false, // fixes column not found error when paginating a join.
+          limit: req.query.limit,
+          offset: req.skip,
+          where: {
+            $dogName$: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+          },
+          include: [
+            {
+              model: Dog,
+            },
+            {
+              model: Address,
+            },
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogtags/search/vendorSearch", {
+              title: "BWG | Dog Tags",
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              filterOptions: filterOptions,
+              currentPage: req.query.page,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) => {
+            return res.render("dogtags/index", {
+              title: "BWG | Dog Tags",
+              message: "Page Error!",
+              auth: req.session.auth, // authorization.
+            });
+          });
       } else if (req.query.filterCategory === "Owner Name") {
         // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
         if (req.query.filterValue.trim().indexOf(" ") != -1) {
