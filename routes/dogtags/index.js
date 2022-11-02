@@ -322,7 +322,7 @@ router.get(
             const itemCount = results.count;
             const pageCount = Math.ceil(results.count / req.query.limit);
 
-            return res.render("dogtags/search/vendorSearch", {
+            return res.render("dogtags/search/dogNameSearch", {
               title: "BWG | Dog Tags",
               email: req.session.email,
               auth: req.session.auth, // authorization.
