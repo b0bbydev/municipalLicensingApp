@@ -667,6 +667,7 @@ router.post(
       Dog.update(
         {
           tagNumber: req.body.tagNumber,
+          vendor: req.body.vendor,
           issueDate: issueDate,
           expiryDate: expiryDate,
         },
