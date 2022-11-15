@@ -717,44 +717,44 @@ app.use("/taxiLicenses/addPlate", isEnforcement, addTaxiPlateRoute);
 app.use("/taxiLicenses/editPlate", isEnforcement, editTaxiPlateRoute);
 
 // setup a CRON job to email me the log file weekly, on Friday at 4:30pm.
-var job = new CronJob(
-  "16 30 * * * 5",
-  function () {
-    fs.readFile("logs/errors.log", (err, data) => {
-      if (err) {
-        console.log("Error!");
-      }
+// var job = new CronJob(
+//   "16 30 * * * 5",
+//   function () {
+//     fs.readFile("logs/errors.log", (err, data) => {
+//       if (err) {
+//         console.log("Error!");
+//       }
 
-      if (data) {
-        // get current date.
-        var date = new Date();
+//       if (data) {
+//         // get current date.
+//         var date = new Date();
 
-        const msg = {
-          to: process.env.SEND_GRID_TO,
-          from: process.env.SEND_GRID_FROM,
-          subject: "Weekly Log File - " + date.toDateString(),
-          text: "Weekly log file for BWG-Licenses app",
-          html: "<strong>Weekly log file for BWG-Licenses app</strong>",
-          attachments: [
-            {
-              content: data.toString("base64"),
-              filename: "errors.log",
-              type: "text",
-              disposition: "attachment",
-              content_id: "logfile",
-            },
-          ],
-        };
-        sgMail.send(msg).catch((error) => {
-          console.error(error);
-        });
-      }
-    });
-  },
-  null,
-  true,
-  "America/Toronto"
-);
+//         const msg = {
+//           to: process.env.SEND_GRID_TO,
+//           from: process.env.SEND_GRID_FROM,
+//           subject: "Weekly Log File - " + date.toDateString(),
+//           text: "Weekly log file for BWG-Licenses app",
+//           html: "<strong>Weekly log file for BWG-Licenses app</strong>",
+//           attachments: [
+//             {
+//               content: data.toString("base64"),
+//               filename: "errors.log",
+//               type: "text",
+//               disposition: "attachment",
+//               content_id: "logfile",
+//             },
+//           ],
+//         };
+//         sgMail.send(msg).catch((error) => {
+//           console.error(error);
+//         });
+//       }
+//     });
+//   },
+//   null,
+//   true,
+//   "America/Toronto"
+// );
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
