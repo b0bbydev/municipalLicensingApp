@@ -172,11 +172,12 @@ router.post(
 
       // if no expiryDate is specified.
       if (!req.body.expiryDate) {
-        // expiryDate should always be the following year, jan.31.
-        expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
-      } else {
-        // set the manually overrided expiryDate value.
-        expiryDate = funcHelpers.fixEmptyValue(req.body.expiryDate);
+        // if issueDate is in November or December.
+        if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+          expiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+        } else {
+          expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+        }
       }
 
       // create dog.
