@@ -1,4 +1,5 @@
 const winston = require("winston");
+require("winston-mail").Mail;
 
 const logger = winston.createLogger({
   format: winston.format.combine(
