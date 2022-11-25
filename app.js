@@ -732,9 +732,10 @@ var job = new CronJob(
         const msg = {
           to: process.env.SEND_GRID_TO,
           from: process.env.SEND_GRID_FROM,
-          subject: "Weekly Log File - " + date.toDateString(),
-          text: "Weekly log file for BWG-Licenses app",
-          html: "<strong>Weekly log file for BWG-Licenses app</strong>",
+          subject: "Daily Log File - " + date.toDateString(),
+          text: "Daily log file for BWG-Licenses app",
+          text: "Daily log file for BWG-Licenses app",
+          html: "<strong>Daily log file for BWG-Licenses app</strong>",
           attachments: [
             {
               content: data.toString("base64"),
