@@ -718,7 +718,7 @@ app.use("/taxiLicenses/editPlate", isEnforcement, editTaxiPlateRoute);
 
 // setup a CRON job to email me the log file daily at 4:30pm.
 var job = new CronJob(
-  "0 0 2 * * *",
+  "0 2 * * *",
   function () {
     fs.readFile("logs/errors.log", (err, data) => {
       if (err) {
@@ -734,8 +734,7 @@ var job = new CronJob(
           from: process.env.SEND_GRID_FROM,
           subject: "Daily Log File - " + date.toDateString(),
           text: "Daily log file for BWG-Licenses app",
-          text: "Daily log file for BWG-Licenses app",
-          html: "<strong>Daily log file for BWG-Licenses app</strong>",
+          html: "<br><strong>Log Report for BWG-Licenses</strong><br>",
           attachments: [
             {
               content: data.toString("base64"),
