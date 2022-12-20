@@ -31,8 +31,8 @@ var moment = require("moment");
 const logger = require("./config/logger");
 // using Twilio SendGrid's v3 Node.js Library
 // https://github.com/sendgrid/sendgrid-nodejs
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SEND_GRID_KEY);
+// const sgMail = require("@sendgrid/mail");
+// sgMail.setApiKey(process.env.SEND_GRID_KEY);
 const fs = require("fs");
 var CronJob = require("cron").CronJob;
 // authHelper middleware.
