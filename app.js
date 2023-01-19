@@ -338,6 +338,7 @@ hbs.registerHelper("incremented", function (index) {
   return index;
 });
 
+// this helper is used for pagination.
 hbs.registerHelper("contains", function (string, value, options) {
   if (!string || string === undefined || string === null) {
     return;
