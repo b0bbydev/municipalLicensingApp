@@ -42,8 +42,10 @@ router.get("/", async (req, res, next) => {
         },
         {
           model: HawkerPeddlerApplicant,
+          as: "hawkerPeddlerApplicants",
         },
       ],
+      order: [["hawkerPeddlerApplicants", "issueDate", "DESC"]], // needed to split this into 3 parts.
     })
       .then((results) => {
         // for pagination.
@@ -69,7 +71,7 @@ router.get("/", async (req, res, next) => {
       .catch((err) => {
         return res.render("hawkerPeddler/index", {
           title: "BWG | Hawker & Peddler Licensing",
-          message: "Page Error!",
+          message: "Page Error!" + err,
           auth: req.session.auth, // authorization.
         });
       });

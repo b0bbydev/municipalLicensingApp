@@ -49,6 +49,7 @@ router.get("/", async (req, res, next) => {
     DonationBin.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
+      order: [["issueDate", "DESC"]],
       include: [
         {
           model: DonationBinAddress,
@@ -88,6 +89,7 @@ router.get("/", async (req, res, next) => {
     DonationBin.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
+      order: [["issueDate", "DESC"]],
       subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
       // functions in where clause, fancy.
       where: Sequelize.where(
@@ -298,6 +300,7 @@ router.get("/", async (req, res, next) => {
       subQuery: false, // fixes column not found error when paginating a join.
       limit: req.query.limit,
       offset: req.skip,
+      order: [["issueDate", "DESC"]],
       where: {
         [filterCategory]: {
           [Op.like]: req.query.filterValue + "%",

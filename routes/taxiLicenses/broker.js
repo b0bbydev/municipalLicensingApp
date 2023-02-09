@@ -5,6 +5,9 @@ const TaxiDriver = require("../../models/taxiLicenses/taxiDriver");
 const TaxiDriverAddress = require("../../models/taxiLicenses/taxiDriverAddress");
 const TaxiPlate = require("../../models/taxiLicenses/taxiPlate");
 const TaxiPlateOwnerAddress = require("../../models/taxiLicenses/taxiPlateOwnerAddress");
+// sequelize.
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -32,6 +35,10 @@ router.get("/:id", async (req, res, next) => {
 
   Promise.all([
     TaxiDriver.findAndCountAll({
+      order: [
+        ["issueDate", "DESC"],
+        //["firstName", "ASC"],
+      ],
       include: [
         {
           model: TaxiDriverAddress,
@@ -42,6 +49,7 @@ router.get("/:id", async (req, res, next) => {
       },
     }),
     TaxiPlate.findAndCountAll({
+      order: [["issueDate", "DESC"]],
       include: [
         {
           model: TaxiPlateOwnerAddress,
