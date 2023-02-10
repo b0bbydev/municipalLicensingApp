@@ -93,13 +93,13 @@
             href="/hawkerPeddler/business/{{this.hawkerPeddlerBusinessID}}"
             title="View Business Information"
           >{{this.businessName}}</a></td>
-        <td>{{this.phoneNumber}}</td>
+        <td style="width: 7.5%;">{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each hawkerPeddlerBusinessAddresses}}
-          <td class="tableLink">
+          <td class="tableLink" style="width: 17.5%;">
             <a
               class="stretched-link"
-              id="ownerLink"
+              id="historyLink"
               href="/hawkerPeddler/businessAddressHistory/{{this.hawkerPeddlerBusinessID}}"
               title="View Kennel Address History"
             >
