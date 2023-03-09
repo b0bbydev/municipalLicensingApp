@@ -27,7 +27,7 @@
     "morgan": "~1.10.0",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.20",
-    "plivo": "^4.34.0",
+    "plivo": "^4.42.0",
     "sequelize": "^6.25.3",
     "winston": "^3.8.2",
     "winston-mail": "^2.0.0"
