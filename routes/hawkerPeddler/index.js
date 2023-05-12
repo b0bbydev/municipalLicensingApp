@@ -43,9 +43,10 @@ router.get("/", async (req, res, next) => {
         {
           model: HawkerPeddlerApplicant,
           as: "hawkerPeddlerApplicants",
+          order: [["issueDate", "DESC"]],
+          limit: 1,
         },
       ],
-      order: [["hawkerPeddlerApplicants", "issueDate", "DESC"]], // needed to split this into 3 parts.
     })
       .then((results) => {
         // for pagination.
