@@ -4,8 +4,6 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const HawkerPeddlerApplicant = require("../../models/hawkerPeddler/hawkerPeddlerApplicant");
 const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawkerPeddlerApplicantAddress");
-// helpers.
-const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -56,11 +54,6 @@ router.post(
     .isEmail()
     .withMessage("Invalid Email Entry!")
     .trim(),
-  body("licenseNumber")
-    .if(body("licenseNumber").notEmpty())
-    .matches(/^[^%<>^$\\;!{}?]+$/)
-    .withMessage("Invalid License Number Entry!")
-    .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
     .matches(/^[^%<>^$\\;!{}?]+$/)
@@ -110,9 +103,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
           town: req.body.town,
@@ -126,9 +116,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
-          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
-          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           hawkerPeddlerBusinessID: req.session.hawkerPeddlerBusinessID,
           hawkerPeddlerApplicantAddresses: [
             {

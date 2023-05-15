@@ -62,9 +62,6 @@ router.get(
               lastName: results.lastName,
               phoneNumber: results.phoneNumber,
               email: results.email,
-              licenseNumber: results.licenseNumber,
-              issueDate: results.issueDate,
-              expiryDate: results.expiryDate,
               streetNumber:
                 results.hawkerPeddlerApplicantAddresses[0].streetNumber,
               streetName: results.hawkerPeddlerApplicantAddresses[0].streetName,
@@ -107,11 +104,6 @@ router.post(
     .if(body("email").notEmpty())
     .isEmail()
     .withMessage("Invalid Email Entry!")
-    .trim(),
-  body("licenseNumber")
-    .if(body("licenseNumber").notEmpty())
-    .matches(/^[^%<>^$\\;!{}?]+$/)
-    .withMessage("Invalid License Number Entry!")
     .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
@@ -162,9 +154,6 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          licenseNumber: req.body.licenseNumber,
-          issueDate: req.body.issueDate,
-          expiryDate: req.body.expiryDate,
           streetNumber: req.body.streetNumber,
           streetName: req.body.streetName,
           town: req.body.town,
@@ -190,9 +179,6 @@ router.post(
             lastName: results.dataValues.lastName,
             phoneNumber: results.dataValues.phoneNumber,
             email: results.dataValues.email,
-            licenseNumber: results.dataValues.licenseNumber,
-            issueDate: results.dataValues.issueDate,
-            expiryDate: results.dataValues.expiryDate,
           };
           // put the NEW data into an object.
           // fixEmptyValue() in this case will replace any 'undefined' values with null.
@@ -202,9 +188,6 @@ router.post(
             lastName: req.body.lastName,
             phoneNumber: req.body.phoneNumber,
             email: req.body.email,
-            licenseNumber: req.body.licenseNumber,
-            issueDate: req.body.issueDate,
-            expiryDate: req.body.expiryDate,
           };
 
           // compare the two objects to check if they contain equal properties. If NOT (false), then proceed with update.
@@ -215,9 +198,6 @@ router.post(
                 lastName: req.body.lastName,
                 phoneNumber: req.body.phoneNumber,
                 email: req.body.email,
-                licenseNumber: req.body.licenseNumber,
-                issueDate: req.body.issueDate,
-                expiryDate: req.body.expiryDate,
               },
               {
                 where: {

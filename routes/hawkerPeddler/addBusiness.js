@@ -49,6 +49,11 @@ router.post(
     .isEmail()
     .withMessage("Invalid Email Entry!")
     .trim(),
+  body("licenseNumber")
+    .if(body("licenseNumber").notEmpty())
+    .matches(/^[^%<>^$\\;!{}?]+$/)
+    .withMessage("Invalid License Number Entry!")
+    .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
     .matches(/^[^%<>^$\\;!{}?]+$/)
@@ -107,6 +112,9 @@ router.post(
           businessName: req.body.businessName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
+          licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
           policeVSC: req.body.policeVSC,
           photoID: req.body.photoID,
           sitePlan: req.body.sitePlan,
@@ -126,6 +134,9 @@ router.post(
           businessName: req.body.businessName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
+          licenseNumber: req.body.licenseNumber,
+          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           policeVSC: req.body.policeVSC,
           photoID: req.body.photoID,
           sitePlan: req.body.sitePlan,
