@@ -386,9 +386,9 @@ router.get(
                 results.hawkerPeddlerBusinessAddresses[0].streetNumber,
               streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
               town: results.hawkerPeddlerBusinessAddresses[0].town,
-              issueDate: results.hawkerPeddlerApplicants[0].issueDate,
-              expiryDate: results.hawkerPeddlerApplicants[0].expiryDate,
-              licenseNumber: results.hawkerPeddlerApplicants[0].licenseNumber,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              licenseNumber: results.licenseNumber,
             },
           });
         })
