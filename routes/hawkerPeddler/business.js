@@ -57,7 +57,6 @@ router.get(
           },
         }),
         HawkerPeddlerApplicant.findAndCountAll({
-          order: [["issueDate", "DESC"]],
           include: [
             {
               model: HawkerPeddlerApplicantAddress,
@@ -84,7 +83,7 @@ router.get(
         .catch((err) => {
           return res.render("hawkerPeddler/business", {
             title: "BWG | Hawker & Peddler Business",
-            message: "Page Error!" + err,
+            message: "Page Error!",
             auth: req.session.auth, // authorization.
           });
         });

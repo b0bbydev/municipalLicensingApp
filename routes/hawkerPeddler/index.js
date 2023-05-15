@@ -36,15 +36,10 @@ router.get("/", async (req, res, next) => {
     HawkerPeddlerBusiness.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
+      order: [["issueDate", "DESC"]],
       include: [
         {
           model: HawkerPeddlerBusinessAddress,
-        },
-        {
-          model: HawkerPeddlerApplicant,
-          as: "hawkerPeddlerApplicants",
-          order: [["issueDate", "DESC"]],
-          limit: 1,
         },
       ],
     })

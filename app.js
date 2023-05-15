@@ -138,8 +138,6 @@ var hawkerPeddlerEditOperatorRoute = require("./routes/hawkerPeddler/editOperato
 
 var hawkerPeddlerBusinessRoute = require("./routes/hawkerPeddler/business");
 
-var hawkerPeddlerOperatorHistoryRoute = require("./routes/hawkerPeddler/operatorHistory");
-
 /* Kennel related routes */
 var kennelsRoute = require("./routes/kennels/index");
 
@@ -528,12 +526,6 @@ app.use(
 );
 
 app.use("/hawkerPeddler/business", isEnforcement, hawkerPeddlerBusinessRoute);
-
-app.use(
-  "/hawkerPeddler/operatorHistory",
-  isEnforcement,
-  hawkerPeddlerOperatorHistoryRoute
-);
 
 app.use(
   "/hawkerPeddler/addBusiness",
