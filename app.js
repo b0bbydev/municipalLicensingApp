@@ -121,6 +121,7 @@ var donationBinHistoryRoute = require("./routes/donationBin/donationBinHistory")
 /* Hawker & Peddler related routes */
 var hawkerPeddlerRoute = require("./routes/hawkerPeddler/index");
 
+var hawkerPeddlerBusinessHistoryRoute = require("./routes/hawkerPeddler/businessHistory");
 var hawkerPeddlerBusinessAddressHistoryRoute = require("./routes/hawkerPeddler/businessAddressHistory");
 
 var hawkerPeddlerPropertyOwnerAddressHistoryRoute = require("./routes/hawkerPeddler/propertyOwnerAddressHistory");
@@ -489,6 +490,12 @@ app.use(
   "/hawkerPeddler/businessAddressHistory",
   isEnforcement,
   hawkerPeddlerBusinessAddressHistoryRoute
+);
+
+app.use(
+  "/hawkerPeddler/businessHistory",
+  isEnforcement,
+  hawkerPeddlerBusinessHistoryRoute
 );
 
 app.use(

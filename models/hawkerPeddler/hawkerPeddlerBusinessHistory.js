@@ -93,4 +93,4 @@ HawkerPeddlerBusiness.hasMany(HawkerPeddlerBusinessHistory, {
   foreignKey: "hawkerPeddlerBusinessID",
 });
 
-module.exports = HawkerPeddlerBusiness;
+module.exports = HawkerPeddlerBusinessHistory;
