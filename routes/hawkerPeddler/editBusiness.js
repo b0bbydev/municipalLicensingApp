@@ -209,6 +209,10 @@ router.post(
             licenseNumber: results.dataValues.licenseNumber,
             issueDate: results.dataValues.issueDate,
             expiryDate: results.dataValues.expiryDate,
+            policeVSC: results.dataValues.policeVSC,
+            photoID: results.dataValues.photoID,
+            sitePlan: results.dataValues.sitePlan,
+            zoningClearance: results.dataValues.zoningClearance,
           };
           // put the NEW data into an object.
           // fixEmptyValue() in this case will replace any 'undefined' values with null.
@@ -222,6 +226,10 @@ router.post(
             licenseNumber: req.body.licenseNumber,
             issueDate: req.body.issueDate,
             expiryDate: req.body.expiryDate,
+            policeVSC: req.body.policeVSC,
+            photoID: req.body.photoID,
+            sitePlan: req.body.sitePlan,
+            zoningClearance: req.body.zoningClearance,
           };
 
           // compare the two objects to check if they contain equal properties. If NOT (false), then proceed with update.
@@ -236,6 +244,10 @@ router.post(
                 licenseNumber: req.body.licenseNumber,
                 issueDate: req.body.issueDate,
                 expiryDate: req.body.expiryDate,
+                policeVSC: req.body.policeVSC,
+                photoID: req.body.photoID,
+                sitePlan: req.body.sitePlan,
+                zoningClearance: req.body.zoningClearance,
               },
               {
                 where: {
