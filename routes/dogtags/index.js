@@ -463,6 +463,56 @@ router.get(
               });
             });
         }
+      } else if (req.query.filterCategory === "Dangerous Dogs") {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          include: [
+            {
+              model: Dog,
+            },
+            {
+              model: Address,
+            },
+          ],
+          where: {
+            $designation$: {
+              [Op.like]: "Dangerous",
+            },
+          },
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogtags", {
+              title: "BWG | Dog Tags",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              filterOptions: filterOptions,
+              currentPage: req.query.page,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) => {
+            return res.render("dogtags/index", {
+              title: "BWG | Dog Tags",
+              message: "Page Error!",
+              auth: req.session.auth, // authorization.
+            });
+          });
       } else {
         // format filterCategory to match column name in db - via handy dandy camelize() function.
         var filterCategory = funcHelpers.camelize(req.query.filterCategory);
@@ -1398,6 +1448,558 @@ router.get(
           .catch((err) => {
             return res.render("dogtags/expiredTags", {
               title: "BWG | Dog Tags",
+              message: "Page Error!",
+              auth: req.session.auth, // authorization.
+            });
+          });
+      }
+    }
+  }
+);
+
+/* GET /dogtags/dangerousDogs */
+router.get(
+  "/dangerousDogs",
+  body("filterCategory")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  body("filterValue")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogtags/dangerousDogs", {
+        title: "BWG | Dangerous Dogs",
+        message: "Error!",
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
+
+      // get dropdown values.
+      var filterOptions = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 29, // filtering options.
+          dropdownTitle: "Dog Owner Filtering Options",
+        },
+      });
+
+      // if there are no filter parameters.
+      if (!req.query.filterCategory || !req.query.filterValue) {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          include: [
+            {
+              model: Address,
+            },
+            {
+              model: Dog,
+              where: {
+                designation: {
+                  [Op.like]: "Dangerous",
+                },
+              },
+            },
+          ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
+          group: "firstName",
+          order: [["ownerID", "ASC"]],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+            // return endpoint after passing validation.
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              ownerID: req.session.ownerID,
+              data: results.rows,
+              filterOptions: filterOptions,
+              currentPage: req.query.page,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
+              message: "Page Error!",
+              auth: req.session.auth, // authorization.
+            });
+          });
+      } else if (req.query.filterCategory === "Address") {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          include: [
+            {
+              model: Address,
+              where: Sequelize.where(
+                Sequelize.fn(
+                  "concat",
+                  Sequelize.col("streetNumber"),
+                  " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+                  Sequelize.col("streetName")
+                ),
+                {
+                  [Op.like]: "%" + req.query.filterValue + "%",
+                }
+              ),
+            },
+            {
+              model: Dog,
+              where: {
+                designation: {
+                  [Op.like]: "Dangerous",
+                },
+              },
+            },
+          ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
+          group: "firstName",
+          order: [["ownerID", "ASC"]],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+            // return endpoint after passing validation.
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              ownerID: req.session.ownerID,
+              data: results.rows,
+              filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              currentPage: req.query.page,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
+              message: "Page Error!",
+              auth: req.session.auth, // authorization.
+            });
+          });
+      } else if (req.query.filterCategory === "Dog Tag Number") {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          include: [
+            {
+              model: Address,
+            },
+            {
+              model: Dog,
+              where: {
+                designation: {
+                  [Op.like]: "Dangerous",
+                },
+                [Op.and]: {
+                  tagNumber: req.query.filterValue,
+                },
+              },
+            },
+          ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
+          group: "firstName",
+          order: [["ownerID", "ASC"]],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+            // return endpoint after passing validation.
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              ownerID: req.session.ownerID,
+              data: results.rows,
+              filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              currentPage: req.query.page,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
+              message: "Page Error!",
+              auth: req.session.auth, // authorization.
+            });
+          });
+      } else if (req.query.filterCategory === "Additional Owner Name") {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          where: {
+            [Op.or]: {
+              "$AdditionalOwner.firstName$": {
+                [Op.like]: "%" + req.query.filterValue + "%",
+              },
+              "$AdditionalOwner.lastName$": {
+                [Op.like]: "%" + req.query.filterValue + "%",
+              },
+            },
+          },
+          include: [
+            {
+              model: AdditionalOwner,
+              as: "AdditionalOwner",
+            },
+            {
+              model: Address,
+            },
+            {
+              model: Dog,
+              where: {
+                designation: {
+                  [Op.like]: "Dangerous",
+                },
+              },
+            },
+          ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
+          group: "AdditionalOwner.firstName",
+          order: [["ownerID", "ASC"]],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+            // return endpoint after passing validation.
+            return res.render("dogtags/search/additionalOwnerSearch", {
+              title: "BWG | Dog Tags",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              ownerID: req.session.ownerID,
+              data: results.rows,
+              filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              currentPage: req.query.page,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
+              message: "Page Error!",
+              auth: req.session.auth, // authorization.
+            });
+          });
+      } else if (req.query.filterCategory === "Owner Name") {
+        // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
+        if (req.query.filterValue.trim().indexOf(" ") != -1) {
+          Owner.findAndCountAll({
+            limit: req.query.limit,
+            offset: req.skip,
+            subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+            where: Sequelize.where(
+              Sequelize.fn(
+                "concat",
+                Sequelize.col("firstName"),
+                " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+                Sequelize.col("lastName")
+              ),
+              {
+                [Op.like]: "%" + req.query.filterValue + "%",
+              }
+            ),
+            include: [
+              {
+                model: Address,
+              },
+              {
+                model: Dog,
+                where: {
+                  designation: {
+                    [Op.like]: "Dangerous",
+                  },
+                },
+              },
+            ],
+            // group on first name because owners will appear more than once
+            // depending on if they have more than 1 dog that is expired.
+            group: "firstName",
+            order: [["ownerID", "ASC"]],
+          })
+            .then((results) => {
+              // for pagination.
+              const itemCount = results.count.length;
+              const pageCount = Math.ceil(
+                results.count.length / req.query.limit
+              );
+
+              return res.render("dogtags/dangerousDogs", {
+                title: "BWG | Dangerous Dogs",
+                message: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                data: results.rows,
+                filterCategory: req.query.filterCategory,
+                filterValue: req.query.filterValue,
+                filterOptions: filterOptions,
+                currentPage: req.query.page,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + results.count.length,
+                pages: paginate.getArrayPages(req)(
+                  5,
+                  pageCount,
+                  req.query.page
+                ),
+                prev: paginate.href(req)(true),
+                hasMorePages: paginate.hasNextPages(req)(pageCount),
+              });
+            })
+            // catch any scary errors and render page error.
+            .catch((err) => {
+              return res.render("dogtags/dangerousDogs", {
+                title: "BWG | Dangerous Dogs",
+                message: "Page Error!",
+                auth: req.session.auth, // authorization.
+              });
+            });
+        } else {
+          Owner.findAndCountAll({
+            limit: req.query.limit,
+            offset: req.skip,
+            subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+            where: {
+              [Op.or]: {
+                firstName: {
+                  [Op.like]: "%" + req.query.filterValue + "%",
+                },
+                lastName: {
+                  [Op.like]: "%" + req.query.filterValue + "%",
+                },
+              },
+            },
+            include: [
+              {
+                model: Address,
+              },
+              {
+                model: Dog,
+                where: {
+                  designation: {
+                    [Op.like]: "Dangerous",
+                  },
+                },
+              },
+            ],
+            // group on first name because owners will appear more than once
+            // depending on if they have more than 1 dog that is expired.
+            group: "firstName",
+            order: [["ownerID", "ASC"]],
+          })
+            .then((results) => {
+              // for pagination.
+              const itemCount = results.count.length;
+              const pageCount = Math.ceil(
+                results.count.length / req.query.limit
+              );
+
+              return res.render("dogtags/dangerousDogs", {
+                title: "BWG | Dangerous Dogs",
+                message: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                data: results.rows,
+                filterCategory: req.query.filterCategory,
+                filterValue: req.query.filterValue,
+                filterOptions: filterOptions,
+                currentPage: req.query.page,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + results.count.length,
+                pages: paginate.getArrayPages(req)(
+                  5,
+                  pageCount,
+                  req.query.page
+                ),
+                prev: paginate.href(req)(true),
+                hasMorePages: paginate.hasNextPages(req)(pageCount),
+              });
+            })
+            // catch any scary errors and render page error.
+            .catch((err) => {
+              return res.render("dogtags/expiredTags", {
+                title: "BWG | Dangerous Dogs",
+                message: "Page Error!",
+                auth: req.session.auth, // authorization.
+              });
+            });
+        }
+      } else if (req.query.filterCategory === "Vendor") {
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          where: {
+            $vendor$: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+          },
+          include: [
+            {
+              model: Dog,
+              where: {
+                designation: {
+                  [Op.like]: "Dangerous",
+                },
+              },
+            },
+            {
+              model: Address,
+            },
+          ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
+          group: "firstName",
+          order: [["ownerID", "ASC"]],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              filterOptions: filterOptions,
+              currentPage: req.query.page,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) => {
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
+              message: "Page Error!",
+              auth: req.session.auth, // authorization.
+            });
+          });
+      } else {
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+        Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          where: {
+            [filterCategory]: {
+              [Op.like]: req.query.filterValue + "%",
+            },
+          },
+          include: [
+            {
+              model: Address,
+            },
+            {
+              model: Dog,
+              where: {
+                designation: {
+                  [Op.like]: "Dangerous",
+                },
+              },
+            },
+          ],
+          // group on first name because owners will appear more than once
+          // depending on if they have more than 1 dog that is expired.
+          group: "firstName",
+          order: [["ownerID", "ASC"]],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count.length;
+            const pageCount = Math.ceil(results.count.length / req.query.limit);
+
+            // return endpoint after passing validation.
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              ownerID: req.session.ownerID,
+              data: results.rows,
+              filterOptions: filterOptions,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              currentPage: req.query.page,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count.length,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          .catch((err) => {
+            return res.render("dogtags/dangerousDogs", {
+              title: "BWG | Dangerous Dogs",
               message: "Page Error!",
               auth: req.session.auth, // authorization.
             });
