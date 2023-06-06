@@ -1,4 +1,4 @@
-<h2 class="text-center mt-2">Edit An Operator</h2>
+<h2 class="text-center mt-2">Add Adopter</h2>
 <form class="row g-5 m-auto" method="POST">
   <div class="col-md-7 m-auto mt-5">
     <!-- check for error messages in the session -->
@@ -7,30 +7,28 @@
         {{message}}
       </div>
     {{/if}}
-    <h4>Operator Information</h4>
+    <h4>Adopter Information</h4>
     <hr />
     <div class="row">
       <!-- First Name -->
       <div class="col-sm-6">
         <label for="First Name" class="form-label">First Name*</label>
         <input
-          id="firstName"
           type="text"
           placeholder="First Name"
           class="form-control"
           name="firstName"
           pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{{formData.firstName}}}"
+          value="{{formData.firstName}}"
           maxlength="25"
           required
         />
       </div>
       <!-- Last Name -->
       <div class="col-sm-6">
-        <label for="Last Name" class="form-label">Last Name</label>
+        <label for="Last Name" class="form-label">Last Name*</label>
         <input
-          id="lastName"
           type="text"
           placeholder="Last Name"
           class="form-control"
@@ -39,42 +37,13 @@
           title="No special characters!"
           value="{{formData.lastName}}"
           maxlength="25"
-        />
-      </div>
-    </div>
-    <div class="row">
-      <!-- Phone Number -->
-      <div class="col-sm-6">
-        <label for="Phone Number" class="form-label">Phone Number</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Phone Number"
-          name="phoneNumber"
-          pattern="[^><\][\\\x22;|]+"
-          title="No special characters!"
-          value="{{formData.phoneNumber}}"
-          maxlength="15"
-        />
-      </div>
-      <!-- Email -->
-      <div class="col-sm-6">
-        <label for="Email" class="form-label">Email</label>
-        <input
-          type="email"
-          class="form-control"
-          placeholder="Email"
-          name="email"
-          pattern="[^><\][\\\x22;|]+"
-          title="No special characters!"
-          value="{{formData.email}}"
-          maxlength="50"
+          required
         />
       </div>
     </div>
     <div class="row">
       <!-- Street Number -->
-      <div class="col-sm-6">
+      <div class="col-sm-3">
         <label for="Street Number" class="form-label">Street Number*</label>
         <input
           type="number"
@@ -86,7 +55,7 @@
         />
       </div>
       <!-- Street Name -->
-      <div class="col-sm-6">
+      <div class="col-sm-3">
         <label for="Street Name" class="form-label">Street Name*</label>
         <input
           class="form-control"
@@ -111,12 +80,26 @@
           {{/each}}
         </datalist>
       </div>
-    </div>
-    <div class="row">
+      <!-- Postal Code -->
+      <div class="col-sm-3">
+        <label for="Postal Code" class="form-label">Postal Code</label>
+        <input
+          id="postalCode"
+          type="text"
+          class="form-control"
+          placeholder="Postal Code"
+          name="postalCode"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.postalCode}}"
+          maxlength="15"
+        />
+      </div>
       <!-- Town -->
-      <div class="col-sm-6">
+      <div class="col-sm-3">
         <label for="Town" class="form-label">Town</label>
         <input
+          id="town"
           type="text"
           class="form-control"
           placeholder="Town"
@@ -127,18 +110,36 @@
           maxlength="30"
         />
       </div>
-      <!-- Postal Code -->
+    </div>
+    <div class="row">
+      <!-- Phone Number -->
       <div class="col-sm-6">
-        <label for="Postal Code" class="form-label">Postal Code</label>
+        <label for="Phone Number" class="form-label">Phone Number</label>
         <input
+          id="phoneNumber"
           type="text"
           class="form-control"
-          placeholder="Postal Code"
-          name="postalCode"
+          placeholder="Phone Number"
+          name="phoneNumber"
           pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{formData.postalCode}}"
+          value="{{formData.phoneNumber}}"
           maxlength="15"
+        />
+      </div>
+      <!-- Email -->
+      <div class="col-sm-6">
+        <label for="Email" class="form-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          placeholder="Email"
+          name="email"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.email}}"
+          maxlength="50"
         />
       </div>
     </div>

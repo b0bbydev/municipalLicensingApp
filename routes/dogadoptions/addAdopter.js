@@ -1,37 +1,46 @@
 var express = require("express");
 var router = express.Router();
-// models.
-const Dropdown = require("../../models/dropdownManager/dropdown");
-const HawkerPeddlerPropertyOwner = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwner");
-const HawkerPeddlerPropertyOwnerAddress = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwnerAddress");
 // express-validate.
-const { body, validationResult } = require("express-validator");
+const { body, param, validationResult } = require("express-validator");
 
-/* GET /hawkerPeddler/addPropertyOwner */
-router.get("/", async (req, res, next) => {
-  // check if there's an error message in the session
-  let messages = req.session.messages || [];
-  // clear session messages
-  req.session.messages = [];
+/* GET /dogAdoptions/addAdopter */
+router.get(
+  "/",
+  body("filterCategory")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  body("filterValue")
+    .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
 
-  // get streets.
-  var streets = await Dropdown.findAll({
-    where: {
-      dropdownFormID: 13, // streets
-    },
-    order: [["dropdownValue", "ASC"]],
-  });
+    // if errors is NOT empty (if there are errors...)
+    if (!errors.isEmpty()) {
+      return res.render("dogAdoptions/addAdopter", {
+        title: "BWG | Add Adopter",
+        message: "Page Error!",
+        auth: req.session.auth, // authorization.
+      });
+    } else {
+      // check if there's an error message in the session
+      let messages = req.session.messages || [];
+      // clear session messages
+      req.session.messages = [];
 
-  return res.render("hawkerPeddler/addPropertyOwner", {
-    title: "BWG | Add Property Owner",
-    message: messages,
-    email: req.session.email,
-    auth: req.session.auth, // authorization.
-    streets: streets,
-  });
-});
+      return res.render("dogAdoptions/addAdopter", {
+        title: "BWG | Dog Adoptions",
+        message: messages,
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        currentPage: req.query.page,
+      });
+    }
+  }
+);
 
-/* POST /hawkerPeddler/addPropertyOwner */
+/* POST /dogAdoptions/addAdopter */
 router.post(
   "/",
   body("firstName")
@@ -81,23 +90,22 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
-    // get streets.
+    // get dropdown values.
     var streets = await Dropdown.findAll({
       where: {
         dropdownFormID: 13, // streets
       },
-      order: [["dropdownValue", "ASC"]],
     });
 
-    // if errors is NOT empty (if there are errors...).
+    // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/addPropertyOwner", {
-        title: "BWG | Add Property Owner",
-        message: errorArray[0].msg,
+      return res.render("dogAdoptions/addAdopter", {
+        title: "BWG | Add Adopter",
+        message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
         email: req.session.email,
         auth: req.session.auth, // authorization.
         streets: streets,
-        // save form values if submission is unsuccessful.
+        // if the form submission is unsuccessful, save their values.
         formData: {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
@@ -110,14 +118,14 @@ router.post(
         },
       });
     } else {
-      HawkerPeddlerPropertyOwner.create(
+      // create Owner with Address - able to as they are 'associated'/related to one another.
+      Owner.create(
         {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          hawkerPeddlerBusinessID: req.session.hawkerPeddlerBusinessID,
-          hawkerPeddlerPropertyOwnerAddresses: [
+          addresses: [
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
@@ -127,17 +135,15 @@ router.post(
           ],
         },
         {
-          include: [HawkerPeddlerPropertyOwnerAddress],
+          include: [Address],
         }
       )
         .then(() => {
-          return res.redirect(
-            "/hawkerPeddler/business/" + req.session.hawkerPeddlerBusinessID
-          );
+          return res.redirect("/dogAdoptions");
         })
         .catch((err) => {
-          return res.render("hawkerPeddler/addPropertyOwner", {
-            title: "BWG | Add Property Owner",
+          return res.render("dogAdoptions/addAdopter", {
+            title: "BWG | Add Adopter",
             message: "Page Error!",
             auth: req.session.auth, // authorization.
           });

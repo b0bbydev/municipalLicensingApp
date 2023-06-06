@@ -112,7 +112,7 @@ router.post(
     .trim(),
   body("notes")
     .if(body("notes").notEmpty())
-    .matches(/^[^%<>^\/\\;!{}?]+$/)
+    .matches(/^[^%<>^\\;!{}?]+$/)
     .withMessage("Invalid Notes Entry!")
     .trim(),
   async (req, res, next) => {

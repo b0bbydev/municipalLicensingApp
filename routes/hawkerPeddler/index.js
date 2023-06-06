@@ -36,16 +36,12 @@ router.get("/", async (req, res, next) => {
     HawkerPeddlerBusiness.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
+      order: [["issueDate", "DESC"]],
       include: [
         {
           model: HawkerPeddlerBusinessAddress,
         },
-        {
-          model: HawkerPeddlerApplicant,
-          as: "hawkerPeddlerApplicants",
-        },
       ],
-      order: [["hawkerPeddlerApplicants", "issueDate", "DESC"]], // needed to split this into 3 parts.
     })
       .then((results) => {
         // for pagination.
@@ -390,9 +386,9 @@ router.get(
                 results.hawkerPeddlerBusinessAddresses[0].streetNumber,
               streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
               town: results.hawkerPeddlerBusinessAddresses[0].town,
-              issueDate: results.hawkerPeddlerApplicants[0].issueDate,
-              expiryDate: results.hawkerPeddlerApplicants[0].expiryDate,
-              licenseNumber: results.hawkerPeddlerApplicants[0].licenseNumber,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              licenseNumber: results.licenseNumber,
             },
           });
         })

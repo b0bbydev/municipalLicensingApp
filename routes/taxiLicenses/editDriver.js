@@ -21,6 +21,7 @@ router.get("/:id", async (req, res, next) => {
     where: {
       dropdownFormID: 13, // streets
     },
+    order: [["dropdownValue", "ASC"]],
   });
   // get cab companies.
   var cabCompanies = await Dropdown.findAll({
@@ -131,6 +132,7 @@ router.post(
       where: {
         dropdownFormID: 13, // streets
       },
+      order: [["dropdownValue", "ASC"]],
     });
     // get cab companies.
     var cabCompanies = await Dropdown.findAll({

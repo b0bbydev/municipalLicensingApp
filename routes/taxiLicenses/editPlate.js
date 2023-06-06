@@ -21,6 +21,7 @@ router.get("/:id", async (req, res, next) => {
     where: {
       dropdownFormID: 13, // streets
     },
+    order: [["dropdownValue", "ASC"]],
   });
 
   TaxiPlate.findOne({
@@ -136,6 +137,7 @@ router.post(
       where: {
         dropdownFormID: 13, // streets
       },
+      order: [["dropdownValue", "ASC"]],
     });
 
     // if errors is NOT empty (if there are errors...).

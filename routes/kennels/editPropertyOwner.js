@@ -36,6 +36,7 @@ router.get(
         where: {
           dropdownFormID: 13, // streets
         },
+        order: [["dropdownValue", "ASC"]],
       });
 
       KennelPropertyOwner.findOne({
@@ -136,6 +137,7 @@ router.post(
       where: {
         dropdownFormID: 13, // streets
       },
+      order: [["dropdownValue", "ASC"]],
     });
 
     // if errors is NOT empty (if there are errors...).
