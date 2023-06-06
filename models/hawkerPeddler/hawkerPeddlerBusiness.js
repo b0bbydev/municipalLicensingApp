@@ -31,6 +31,21 @@ const HawkerPeddlerBusiness = sequelize.define("hawkerPeddlerBusiness", {
     allowNull: true,
   },
 
+  licenseNumber: {
+    type: Sequelize.STRING(50),
+    allowNull: true,
+  },
+
+  issueDate: {
+    type: Sequelize.DATEONLY,
+    allowNull: true,
+  },
+
+  expiryDate: {
+    type: Sequelize.DATEONLY,
+    allowNull: true,
+  },
+
   notes: {
     type: Sequelize.STRING(255),
     allowNull: true,

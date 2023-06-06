@@ -46,53 +46,9 @@ router.get("/", async (req, res, next) => {
   // if there are no filter parameters.
   if (!req.query.filterCategory || !req.query.filterValue) {
     Kennel.findAndCountAll({
+      order: [["issueDate", "DESC"]],
       limit: req.query.limit,
       offset: req.skip,
-      include: [
-        {
-          model: KennelAddress,
-        },
-      ],
-    })
-      .then((results) => {
-        // for pagination.
-        const itemCount = results.count;
-        const pageCount = Math.ceil(results.count / req.query.limit);
-
-        return res.render("kennels/index", {
-          title: "BWG | Kennel Licensing",
-          message: messages,
-          email: req.session.email,
-          auth: req.session.auth, // authorization.
-          data: results.rows,
-          filterOptions: filterOptions,
-          modalExpiryDate: modalExpiryDate,
-          currentPage: req.query.page,
-          pageCount,
-          itemCount,
-          queryCount: "Records returned: " + results.count,
-          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
-          prev: paginate.href(req)(true),
-          hasMorePages: paginate.hasNextPages(req)(pageCount),
-        });
-      })
-      // catch any scary errors and render page error.
-      .catch((err) => {
-        return res.render("kennels/index", {
-          title: "BWG | Kennel Licensing",
-          message: "Page Error!" + err,
-        });
-      });
-  } else if (req.query.filterCategory === "Kennel Name") {
-    Kennel.findAndCountAll({
-      subQuery: false, // fixes column not found error when paginating a join.
-      limit: req.query.limit,
-      offset: req.skip,
-      where: {
-        kennelName: {
-          [Op.like]: "%" + req.query.filterValue + "%",
-        },
-      },
       include: [
         {
           model: KennelAddress,
@@ -126,6 +82,54 @@ router.get("/", async (req, res, next) => {
         return res.render("kennels/index", {
           title: "BWG | Kennel Licensing",
           message: "Page Error!",
+        });
+      });
+  } else if (req.query.filterCategory === "Kennel Name") {
+    Kennel.findAndCountAll({
+      subQuery: false, // fixes column not found error when paginating a join.
+      limit: req.query.limit,
+      offset: req.skip,
+      order: [["issueDate", "DESC"]],
+      where: {
+        kennelName: {
+          [Op.like]: "%" + req.query.filterValue + "%",
+        },
+      },
+      include: [
+        {
+          model: KennelAddress,
+        },
+      ],
+    })
+      .then((results) => {
+        // for pagination.
+        const itemCount = results.count;
+        const pageCount = Math.ceil(results.count / req.query.limit);
+
+        return res.render("kennels/index", {
+          title: "BWG | Kennel Licensing",
+          message: messages,
+          email: req.session.email,
+          auth: req.session.auth, // authorization.
+          data: results.rows,
+          filterCategory: req.query.filterCategory,
+          filterValue: req.query.filterValue,
+          filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
+          currentPage: req.query.page,
+          pageCount,
+          itemCount,
+          queryCount: "Records returned: " + results.count,
+          pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+          prev: paginate.href(req)(true),
+          hasMorePages: paginate.hasNextPages(req)(pageCount),
+        });
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("kennels/index", {
+          title: "BWG | Kennel Licensing",
+          message: "Page Error!",
           auth: req.session.auth, // authorization.
         });
       });
@@ -135,6 +139,7 @@ router.get("/", async (req, res, next) => {
       offset: req.skip,
       subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
       // functions in where clause, fancy.
+      order: [["issueDate", "DESC"]],
       where: Sequelize.where(
         Sequelize.fn(
           "concat",

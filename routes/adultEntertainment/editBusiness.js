@@ -36,6 +36,7 @@ router.get(
         where: {
           dropdownFormID: 13, // streets
         },
+        order: [["dropdownValue", "ASC"]],
       });
 
       // used to populate edit form fields.
@@ -157,6 +158,7 @@ router.post(
       where: {
         dropdownFormID: 13, // streets
       },
+      order: [["dropdownValue", "ASC"]],
     });
 
     // if ERRORS in form EXIST.
