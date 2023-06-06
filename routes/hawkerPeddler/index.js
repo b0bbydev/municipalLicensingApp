@@ -36,12 +36,10 @@ router.get("/", async (req, res, next) => {
     HawkerPeddlerBusiness.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
+      order: [["issueDate", "DESC"]],
       include: [
         {
           model: HawkerPeddlerBusinessAddress,
-        },
-        {
-          model: HawkerPeddlerApplicant,
         },
       ],
     })
@@ -69,7 +67,7 @@ router.get("/", async (req, res, next) => {
       .catch((err) => {
         return res.render("hawkerPeddler/index", {
           title: "BWG | Hawker & Peddler Licensing",
-          message: "Page Error!",
+          message: "Page Error!" + err,
           auth: req.session.auth, // authorization.
         });
       });
@@ -388,9 +386,9 @@ router.get(
                 results.hawkerPeddlerBusinessAddresses[0].streetNumber,
               streetName: results.hawkerPeddlerBusinessAddresses[0].streetName,
               town: results.hawkerPeddlerBusinessAddresses[0].town,
-              issueDate: results.hawkerPeddlerApplicants[0].issueDate,
-              expiryDate: results.hawkerPeddlerApplicants[0].expiryDate,
-              licenseNumber: results.hawkerPeddlerApplicants[0].licenseNumber,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
+              licenseNumber: results.licenseNumber,
             },
           });
         })

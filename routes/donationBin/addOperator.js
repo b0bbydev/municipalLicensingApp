@@ -19,6 +19,7 @@ router.get("/", async (req, res, next) => {
     where: {
       dropdownFormID: 13, // streets
     },
+    order: [["dropdownValue", "Asc"]],
   });
 
   return res.render("donationBin/addOperator", {
@@ -85,6 +86,8 @@ router.post(
       where: {
         dropdownFormID: 13, // streets
       },
+
+      order: [["dropdownValue", "ASC"]],
     });
 
     // if errors is NOT empty (if there are errors...).

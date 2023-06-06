@@ -31,8 +31,8 @@ var moment = require("moment");
 const logger = require("./config/logger");
 // using Twilio SendGrid's v3 Node.js Library
 // https://github.com/sendgrid/sendgrid-nodejs
-const sgMail = require("@sendgrid/mail");
-sgMail.setApiKey(process.env.SEND_GRID_KEY);
+// const sgMail = require("@sendgrid/mail");
+// sgMail.setApiKey(process.env.SEND_GRID_KEY);
 const fs = require("fs");
 var CronJob = require("cron").CronJob;
 // authHelper middleware.
@@ -74,6 +74,10 @@ var editGuidelineRouter = require("./routes/policies/editGuideline");
 /* dropdown related routes. */
 var dropdownRouter = require("./routes/dropdownManager/index");
 var dropdownFormRouter = require("./routes/dropdownManager/form");
+
+/* dog adoption related routes. */
+var dogAdoptionsRouter = require("./routes/dogAdoptions/index");
+var addDogAdopterRouter = require("./routes/dogAdoptions/addAdopter");
 
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
@@ -121,6 +125,7 @@ var donationBinHistoryRoute = require("./routes/donationBin/donationBinHistory")
 /* Hawker & Peddler related routes */
 var hawkerPeddlerRoute = require("./routes/hawkerPeddler/index");
 
+var hawkerPeddlerBusinessHistoryRoute = require("./routes/hawkerPeddler/businessHistory");
 var hawkerPeddlerBusinessAddressHistoryRoute = require("./routes/hawkerPeddler/businessAddressHistory");
 
 var hawkerPeddlerPropertyOwnerAddressHistoryRoute = require("./routes/hawkerPeddler/propertyOwnerAddressHistory");
@@ -137,8 +142,6 @@ var hawkerPeddlerAddOperatorRoute = require("./routes/hawkerPeddler/addOperator"
 var hawkerPeddlerEditOperatorRoute = require("./routes/hawkerPeddler/editOperator");
 
 var hawkerPeddlerBusinessRoute = require("./routes/hawkerPeddler/business");
-
-var hawkerPeddlerOperatorHistoryRoute = require("./routes/hawkerPeddler/operatorHistory");
 
 /* Kennel related routes */
 var kennelsRoute = require("./routes/kennels/index");
@@ -338,6 +341,7 @@ hbs.registerHelper("incremented", function (index) {
   return index;
 });
 
+// this helper is used for pagination.
 hbs.registerHelper("contains", function (string, value, options) {
   if (!string || string === undefined || string === null) {
     return;
@@ -407,6 +411,10 @@ app.use("/policies/editProcedure", isPolicy, editProcedureRouter);
 app.use("/policies/guidelines", isPolicy, guidelinesRouter);
 app.use("/policies/addGuideline", isPolicy, addGuidelineRouter);
 app.use("/policies/editGuideline", isPolicy, editGuidelineRouter);
+
+/* dog adoption related routes. */
+app.use("/dogAdoptions", isEnforcement, dogAdoptionsRouter);
+app.use("/dogAdoptions/addAdopter", isEnforcement, addDogAdopterRouter);
 
 /* dogtag related routes. */
 app.use("/dogtags", isEnforcement, dogTagRouter);
@@ -493,6 +501,12 @@ app.use(
 );
 
 app.use(
+  "/hawkerPeddler/businessHistory",
+  isEnforcement,
+  hawkerPeddlerBusinessHistoryRoute
+);
+
+app.use(
   "/hawkerPeddler/propertyOwnerAddressHistory",
   isEnforcement,
   hawkerPeddlerPropertyOwnerAddressHistoryRoute
@@ -527,12 +541,6 @@ app.use(
 );
 
 app.use("/hawkerPeddler/business", isEnforcement, hawkerPeddlerBusinessRoute);
-
-app.use(
-  "/hawkerPeddler/operatorHistory",
-  isEnforcement,
-  hawkerPeddlerOperatorHistoryRoute
-);
 
 app.use(
   "/hawkerPeddler/addBusiness",
@@ -716,45 +724,45 @@ app.use("/taxiLicenses/editDriver", isEnforcement, editTaxiDriverRoute);
 app.use("/taxiLicenses/addPlate", isEnforcement, addTaxiPlateRoute);
 app.use("/taxiLicenses/editPlate", isEnforcement, editTaxiPlateRoute);
 
-// setup a CRON job to email me the log file weekly, on Friday at 4:30pm.
-var job = new CronJob(
-  "16 30 * * * 5",
-  function () {
-    fs.readFile("logs/errors.log", (err, data) => {
-      if (err) {
-        console.log("Error!");
-      }
+// setup a CRON job to email me the log file daily at 4:30pm.
+// var job = new CronJob(
+//   "0 2 * * *",
+//   function () {
+//     fs.readFile("logs/errors.log", (err, data) => {
+//       if (err) {
+//         console.log("Error!");
+//       }
 
-      if (data) {
-        // get current date.
-        var date = new Date();
+//       if (data) {
+//         // get current date.
+//         var date = new Date();
 
-        const msg = {
-          to: process.env.SEND_GRID_TO,
-          from: process.env.SEND_GRID_FROM,
-          subject: "Weekly Log File - " + date.toDateString(),
-          text: "Weekly log file for BWG-Licenses app",
-          html: "<strong>Weekly log file for BWG-Licenses app</strong>",
-          attachments: [
-            {
-              content: data.toString("base64"),
-              filename: "errors.log",
-              type: "text",
-              disposition: "attachment",
-              content_id: "logfile",
-            },
-          ],
-        };
-        sgMail.send(msg).catch((error) => {
-          console.error(error);
-        });
-      }
-    });
-  },
-  null,
-  true,
-  "America/Toronto"
-);
+//         const msg = {
+//           to: process.env.SEND_GRID_TO,
+//           from: process.env.SEND_GRID_FROM,
+//           subject: "Daily Log File - " + date.toDateString(),
+//           text: "Daily log file for BWG-Licenses app",
+//           html: "<br><strong>Log Report for BWG-Licenses</strong><br>",
+//           attachments: [
+//             {
+//               content: data.toString("base64"),
+//               filename: "errors.log",
+//               type: "text",
+//               disposition: "attachment",
+//               content_id: "logfile",
+//             },
+//           ],
+//         };
+//         sgMail.send(msg).catch((error) => {
+//           console.error(error);
+//         });
+//       }
+//     });
+//   },
+//   null,
+//   true,
+//   "America/Toronto"
+// );
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -773,3 +781,6 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+function newFunction() {
+  return "./routes/dogAdoptions/addAdopter";
+}

@@ -53,6 +53,7 @@ router.get(
         LiquorBusiness.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
+          order: [["dateStarted", "DESC"]],
           include: [
             {
               model: LiquorBusinessAddress,

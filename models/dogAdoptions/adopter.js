@@ -2,10 +2,9 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
-const HawkerPeddlerBusiness = require("./hawkerPeddlerBusiness");
 
-const HawkerPeddlerApplicant = sequelize.define("hawkerPeddlerApplicant", {
-  hawkerPeddlerApplicantID: {
+const Adopter = sequelize.define("adopter", {
+  adopterID: {
     type: Sequelize.INTEGER,
     autoIncrement: true,
     allowNull: false,
@@ -13,17 +12,17 @@ const HawkerPeddlerApplicant = sequelize.define("hawkerPeddlerApplicant", {
   },
 
   firstName: {
-    type: Sequelize.STRING(50),
+    type: Sequelize.STRING(25),
     allowNull: true,
   },
 
   lastName: {
-    type: Sequelize.STRING(50),
+    type: Sequelize.STRING(25),
     allowNull: true,
   },
 
   phoneNumber: {
-    type: Sequelize.STRING(20),
+    type: Sequelize.STRING(15),
     allowNull: true,
   },
 
@@ -33,8 +32,4 @@ const HawkerPeddlerApplicant = sequelize.define("hawkerPeddlerApplicant", {
   },
 });
 
-HawkerPeddlerBusiness.hasMany(HawkerPeddlerApplicant, {
-  foreignKey: "hawkerPeddlerBusinessID",
-});
-
-module.exports = HawkerPeddlerApplicant;
+module.exports = Adopter;

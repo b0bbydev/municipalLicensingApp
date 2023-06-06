@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 // models.
 const User = require("../../models/admin/user");
+const UserRole = require("../../models/admin/userRole");
 const Dropdown = require("../../models/dropdownManager/dropdown");
 // sequelize.
 const Sequelize = require("sequelize");
@@ -200,5 +201,27 @@ router.get(
     }
   }
 );
+
+/* GET /admin/removeUser/:id */
+router.get("/removeUser/:id", async (req, res, next) => {
+  // delete user.
+  User.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then(() => {
+      // delete role.
+      UserRole.destroy({
+        where: {
+          userId: req.params.id,
+        },
+      });
+    })
+    // redirect to admin home.
+    .then(() => {
+      return res.redirect("/admin");
+    });
+});
 
 module.exports = router;
