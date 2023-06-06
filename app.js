@@ -76,7 +76,8 @@ var dropdownRouter = require("./routes/dropdownManager/index");
 var dropdownFormRouter = require("./routes/dropdownManager/form");
 
 /* dog adoption related routes. */
-var dogAdoptionsRouter = require("./routes/dogadoptions/index");
+var dogAdoptionsRouter = require("./routes/dogAdoptions/index");
+var addDogAdopterRouter = require("./routes/dogAdoptions/addAdopter");
 
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
@@ -412,7 +413,8 @@ app.use("/policies/addGuideline", isPolicy, addGuidelineRouter);
 app.use("/policies/editGuideline", isPolicy, editGuidelineRouter);
 
 /* dog adoption related routes. */
-app.use("/dogadoptions", isEnforcement, dogAdoptionsRouter);
+app.use("/dogAdoptions", isEnforcement, dogAdoptionsRouter);
+app.use("/dogAdoptions/addAdopter", isEnforcement, addDogAdopterRouter);
 
 /* dogtag related routes. */
 app.use("/dogtags", isEnforcement, dogTagRouter);
@@ -779,3 +781,6 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+function newFunction() {
+  return "./routes/dogAdoptions/addAdopter";
+}

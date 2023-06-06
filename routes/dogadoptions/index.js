@@ -7,7 +7,7 @@ const paginate = require("express-paginate");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
-/* GET /dogtags */
+/* GET /dogAdoptions */
 router.get(
   "/",
   body("filterCategory")
@@ -22,7 +22,7 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("dogadoptions", {
+      return res.render("dogAdoptions", {
         title: "BWG | Dog Adoptions",
         message: "Page Error!",
         auth: req.session.auth, // authorization.
@@ -41,7 +41,7 @@ router.get(
         },
       });
 
-      return res.render("dogadoptions", {
+      return res.render("dogAdoptions", {
         title: "BWG | Dog Adoptions",
         message: messages,
         email: req.session.email,
