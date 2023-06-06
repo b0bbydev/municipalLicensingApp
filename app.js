@@ -75,6 +75,10 @@ var editGuidelineRouter = require("./routes/policies/editGuideline");
 var dropdownRouter = require("./routes/dropdownManager/index");
 var dropdownFormRouter = require("./routes/dropdownManager/form");
 
+/* dog adoption related routes. */
+var dogAdoptionsRouter = require("./routes/dogAdoptions/index");
+var addDogAdopterRouter = require("./routes/dogAdoptions/addAdopter");
+
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
 // owners.
@@ -121,6 +125,7 @@ var donationBinHistoryRoute = require("./routes/donationBin/donationBinHistory")
 /* Hawker & Peddler related routes */
 var hawkerPeddlerRoute = require("./routes/hawkerPeddler/index");
 
+var hawkerPeddlerBusinessHistoryRoute = require("./routes/hawkerPeddler/businessHistory");
 var hawkerPeddlerBusinessAddressHistoryRoute = require("./routes/hawkerPeddler/businessAddressHistory");
 
 var hawkerPeddlerPropertyOwnerAddressHistoryRoute = require("./routes/hawkerPeddler/propertyOwnerAddressHistory");
@@ -137,8 +142,6 @@ var hawkerPeddlerAddOperatorRoute = require("./routes/hawkerPeddler/addOperator"
 var hawkerPeddlerEditOperatorRoute = require("./routes/hawkerPeddler/editOperator");
 
 var hawkerPeddlerBusinessRoute = require("./routes/hawkerPeddler/business");
-
-var hawkerPeddlerOperatorHistoryRoute = require("./routes/hawkerPeddler/operatorHistory");
 
 /* Kennel related routes */
 var kennelsRoute = require("./routes/kennels/index");
@@ -409,6 +412,10 @@ app.use("/policies/guidelines", isPolicy, guidelinesRouter);
 app.use("/policies/addGuideline", isPolicy, addGuidelineRouter);
 app.use("/policies/editGuideline", isPolicy, editGuidelineRouter);
 
+/* dog adoption related routes. */
+app.use("/dogAdoptions", isEnforcement, dogAdoptionsRouter);
+app.use("/dogAdoptions/addAdopter", isEnforcement, addDogAdopterRouter);
+
 /* dogtag related routes. */
 app.use("/dogtags", isEnforcement, dogTagRouter);
 // owner.
@@ -494,6 +501,12 @@ app.use(
 );
 
 app.use(
+  "/hawkerPeddler/businessHistory",
+  isEnforcement,
+  hawkerPeddlerBusinessHistoryRoute
+);
+
+app.use(
   "/hawkerPeddler/propertyOwnerAddressHistory",
   isEnforcement,
   hawkerPeddlerPropertyOwnerAddressHistoryRoute
@@ -528,12 +541,6 @@ app.use(
 );
 
 app.use("/hawkerPeddler/business", isEnforcement, hawkerPeddlerBusinessRoute);
-
-app.use(
-  "/hawkerPeddler/operatorHistory",
-  isEnforcement,
-  hawkerPeddlerOperatorHistoryRoute
-);
 
 app.use(
   "/hawkerPeddler/addBusiness",
@@ -774,3 +781,6 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
+function newFunction() {
+  return "./routes/dogAdoptions/addAdopter";
+}

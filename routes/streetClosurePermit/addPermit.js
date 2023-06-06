@@ -24,6 +24,7 @@ router.get("/", async (req, res, next) => {
     where: {
       dropdownFormID: 13, // streets
     },
+    order: [["dropdownValue", "ASC"]],
   });
 
   return res.render("streetClosurePermit/addPermit", {

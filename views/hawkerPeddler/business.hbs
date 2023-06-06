@@ -81,16 +81,13 @@
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
-      <th>License #</th>
-      <th>Issue Date</th>
-      <th>Expiry Date</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
     {{#each applicants}}
       <tr>
-        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.firstName}} {{this.lastName}}</a></td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each hawkerPeddlerApplicantAddresses}}
@@ -105,15 +102,7 @@
               {{this.town}}
               {{this.postalCode}}</a></td>
         {{/each}}
-        <td class="tableLink"><a
-            class="stretched-link"
-            id="historyLink"
-            href="/hawkerPeddler/operatorHistory/{{this.hawkerPeddlerApplicantID}}"
-            title="View Operator History"
-          >{{this.licenseNumber}}</a></td>
-        <td>{{this.issueDate}}</td>
-        <td>{{this.expiryDate}}</td>
-        <td style="width: 14%;"><a
+        <td style="width: 10%;"><a
             class="btn btn-sm btn-secondary my-1"
             data-bs-toggle="modal"
             data-bs-target="#hawkerPeddlerRenewModal-{{this.hawkerPeddlerApplicantID}}"

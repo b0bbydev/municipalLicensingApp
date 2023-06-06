@@ -36,6 +36,7 @@ router.get(
         where: {
           dropdownFormID: 13, // streets
         },
+        order: [["dropdownValue", "ASC"]],
       });
 
       HawkerPeddlerBusiness.findOne({
@@ -60,6 +61,9 @@ router.get(
               businessName: results.businessName,
               phoneNumber: results.phoneNumber,
               email: results.email,
+              licenseNumber: results.licenseNumber,
+              issueDate: results.issueDate,
+              expiryDate: results.expiryDate,
               policeVSC: results.policeVSC,
               photoID: results.photoID,
               sitePlan: results.sitePlan,
@@ -104,6 +108,11 @@ router.post(
     .isEmail()
     .withMessage("Invalid Email Entry!")
     .trim(),
+  body("licenseNumber")
+    .if(body("licenseNumber").notEmpty())
+    .matches(/^[^%<>^$\\;!{}?]+$/)
+    .withMessage("Invalid License Number Entry!")
+    .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
     .matches(/^[^%<>^$\\;!{}?]+$/)
@@ -146,6 +155,7 @@ router.post(
       where: {
         dropdownFormID: 13, // streets
       },
+      order: [["dropdownValue", "ASC"]],
     });
 
     // if errors is NOT empty (if there are errors...)
@@ -161,6 +171,9 @@ router.post(
           businessName: req.body.businessName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
+          licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
           policeVSC: req.body.policeVSC,
           photoID: req.body.photoID,
           sitePlan: req.body.sitePlan,
@@ -174,25 +187,76 @@ router.post(
         },
       });
     } else {
-      // create business.
-      HawkerPeddlerBusiness.update(
-        {
-          businessName: req.body.businessName,
-          phoneNumber: req.body.phoneNumber,
-          email: req.body.email,
-          policeVSC: req.body.policeVSC,
-          photoID: req.body.photoID,
-          sitePlan: req.body.sitePlan,
-          zoningClearance: req.body.zoningClearance,
-          itemsForSale: req.body.itemsForSale,
-          notes: req.body.notes,
+      /* begin check for ONLY updating data when a value has changed. */
+      // create empty objects to hold data.
+      let currentData = {};
+      let newData = {};
+
+      // get current data.
+      HawkerPeddlerBusiness.findOne({
+        where: {
+          hawkerPeddlerBusinessID: req.params.id,
         },
-        {
-          where: {
-            hawkerPeddlerBusinessID: req.params.id,
-          },
-        }
-      )
+      })
+        .then((results) => {
+          // put the CURRENT data into an object.
+          currentData = {
+            businessName: results.dataValues.businessName,
+            phoneNumber: results.dataValues.phoneNumber,
+            email: results.dataValues.email,
+            itemsForSale: results.dataValues.itemsForSale,
+            notes: results.dataValues.notes,
+            licenseNumber: results.dataValues.licenseNumber,
+            issueDate: results.dataValues.issueDate,
+            expiryDate: results.dataValues.expiryDate,
+            policeVSC: results.dataValues.policeVSC,
+            photoID: results.dataValues.photoID,
+            sitePlan: results.dataValues.sitePlan,
+            zoningClearance: results.dataValues.zoningClearance,
+          };
+          // put the NEW data into an object.
+          // fixEmptyValue() in this case will replace any 'undefined' values with null.
+          // which is required when comparing objects as null != defined, making them techinically different.
+          newData = {
+            businessName: req.body.businessName,
+            phoneNumber: req.body.phoneNumber,
+            email: req.body.email,
+            itemsForSale: req.body.itemsForSale,
+            notes: req.body.notes,
+            licenseNumber: req.body.licenseNumber,
+            issueDate: req.body.issueDate,
+            expiryDate: req.body.expiryDate,
+            policeVSC: req.body.policeVSC,
+            photoID: req.body.photoID,
+            sitePlan: req.body.sitePlan,
+            zoningClearance: req.body.zoningClearance,
+          };
+
+          // compare the two objects to check if they contain equal properties. If NOT (false), then proceed with update.
+          if (!funcHelpers.areObjectsEqual(currentData, newData)) {
+            HawkerPeddlerBusiness.update(
+              {
+                businessName: req.body.businessName,
+                phoneNumber: req.body.phoneNumber,
+                email: req.body.email,
+                itemsForSale: req.body.itemsForSale,
+                notes: req.body.notes,
+                licenseNumber: req.body.licenseNumber,
+                issueDate: req.body.issueDate,
+                expiryDate: req.body.expiryDate,
+                policeVSC: req.body.policeVSC,
+                photoID: req.body.photoID,
+                sitePlan: req.body.sitePlan,
+                zoningClearance: req.body.zoningClearance,
+              },
+              {
+                where: {
+                  hawkerPeddlerBusinessID: req.params.id,
+                },
+              }
+            );
+          }
+        })
         .then(() => {
           /* begin check for ONLY updating data when a value has changed. */
           // create empty objects to hold data.
@@ -241,13 +305,6 @@ router.post(
         })
         .then(() => {
           return res.redirect("/hawkerPeddler");
-        })
-        .catch((err) => {
-          return res.render("hawkerPeddler/editBusiness", {
-            title: "BWG | Edit Business",
-            message: "Page Error!",
-            auth: req.session.auth, // authorization.
-          });
         });
     }
   }
