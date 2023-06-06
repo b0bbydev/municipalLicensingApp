@@ -1,5 +1,4 @@
-<h2 class="text-center mt-2">Operator History</h2>
-
+<h2 class="text-center mt-2">Business History</h2>
 <h4>Filtering</h4>
 <form class="mb-1" method="GET">
   <select
@@ -53,7 +52,7 @@
   >Search</button>
   <a
     id="filterButton"
-    href="/hawkerPeddler/operatorHistory/{{hawkerPeddlerApplicantID}}"
+    href="/hawkerPeddler/businessHistory/{{hawkerPeddlerBusinessID}}"
     class="btn btn-sm btn-secondary"
     type="submit"
   >Reset</a>
@@ -66,23 +65,17 @@
   </div>
 {{/if}}
 
-<!-- Operators Table -->
-<div class="row">
-  <div class="col mb-1">
-    {{#if queryCount}}
-      <strong class="float-start mt-2">{{queryCount}}</strong>
-    {{/if}}
-  </div>
-</div>
 <table
   class="table table-responsive table-bordered table-striped table-hover sortable"
 >
   <thead>
     <tr>
-      <th>Operator Name</th>
+      <th>Business Name</th>
       <th>Phone Number</th>
       <th>Email</th>
-      <th>License #</th>
+      <th>Items For Sale</th>
+      <th>Notes</th>
+      <th>License Number</th>
       <th>Issue Date</th>
       <th>Expiry Date</th>
       <th>Last Modified</th>
@@ -92,9 +85,11 @@
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td>{{this.businessName}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
+        <td>{{this.itemsForSale}}</td>
+        <td>{{this.notes}}</td>
         <td>{{this.licenseNumber}}</td>
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>

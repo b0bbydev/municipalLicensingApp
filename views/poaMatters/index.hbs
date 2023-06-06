@@ -98,28 +98,29 @@
             data-bs-custom-class="custom-popover"
             data-bs-title="Comments"
             data-bs-content="{{this.comment}}"
+            style="width: 6.5%;"
           >{{this.infoNumber}}</td>
         {{else}}
-          <td>{{this.infoNumber}}</td>
+          <td style="width: 6.5%;">{{this.infoNumber}}</td>
         {{/if}}
-        <td>{{this.dateOfOffence}}</td>
+        <td style="width: 6%;">{{this.dateOfOffence}}</td>
         <td>{{this.dateClosed}}</td>
         <td>{{this.defendantName}}</td>
         <td>{{this.poaType}}</td>
         <td style="width: 20%;">{{this.offence}}</td>
         {{#each poaMatterLocations}}
-          <td>{{this.streetNumber}}
+          <td style="width: 15%;">{{this.streetNumber}}
             {{this.streetName}}
             {{this.town}}
             {{this.postalCode}}</td>
         {{/each}}
-        <td>{{this.officerName}}</td>
+        <td style="width: 7%;">{{this.officerName}}</td>
         <td>{{#if this.setFine}} ${{this.setFine}} {{/if}}</td>
         <td>{{#if this.fineAssessed}} ${{this.fineAssessed}} {{/if}}</td>
         <td>{{#if this.amountPaid}} ${{this.amountPaid}} {{/if}}</td>
         <td>{{this.verdict}}</td>
         <td>{{this.prosecutor}}</td>
-        <td style="width: 11%;"><a
+        <td style="width: 9.5%;"><a
             class="btn btn-sm btn-secondary my-1"
             href="/poaMatters/editPoaMatter/{{this.poaMatterID}}"
           >Edit</a>

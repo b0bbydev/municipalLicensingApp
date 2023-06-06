@@ -39,6 +39,7 @@ router.get(
         where: {
           dropdownFormID: 13, // streets
         },
+        order: [["dropdownValue", "ASC"]],
       });
 
       // for populating input fields with existing values.

@@ -50,7 +50,7 @@ router.get("/", async (req, res, next) => {
     RefreshmentVehicle.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
-      order: [["refreshmentvehicleID", "DESC"]],
+      order: [["issueDate", "DESC"]],
     })
       .then((results) => {
         // for pagination.
@@ -87,7 +87,7 @@ router.get("/", async (req, res, next) => {
       RefreshmentVehicleOwner.findAndCountAll({
         limit: req.query.limit,
         offset: req.skip,
-        order: [["refreshmentvehicleID", "DESC"]],
+        order: [["issueDate", "DESC"]],
         subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
         where: Sequelize.where(
           Sequelize.fn(
@@ -139,7 +139,6 @@ router.get("/", async (req, res, next) => {
       RefreshmentVehicleOwner.findAndCountAll({
         limit: req.query.limit,
         offset: req.skip,
-        order: [["refreshmentvehicleID", "DESC"]],
         subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
         where: {
           [Op.or]: {
@@ -199,7 +198,7 @@ router.get("/", async (req, res, next) => {
       subQuery: false, // fixes column not found error when paginating a join.
       limit: req.query.limit,
       offset: req.skip,
-      order: [["refreshmentvehicleID", "DESC"]],
+      order: [["issueDate", "DESC"]],
       where: {
         [filterCategory]: {
           [Op.like]: "%" + req.query.filterValue + "%",

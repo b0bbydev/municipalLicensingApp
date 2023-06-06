@@ -5,7 +5,8 @@ const logger = winston.createLogger({
     winston.format.timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
     winston.format.printf(
       (info) => `${info.timestamp} ${info.level}: ${info.message}`
-    )
+    ),
+    winston.format.prettyPrint()
   ),
   level: "debug",
   transports: [

@@ -74,7 +74,7 @@
         <td class="tableLink">
           <a
             class="stretched-link"
-            id="ownerLink"
+            id="historyLink"
             href="/dogtags/owner/{{ownerID}}/tagHistory/{{this.dogID}}"
             title="View Tag Number History"
           >{{this.tagNumber}}</a></td>
@@ -151,6 +151,19 @@
                       name="dogName"
                       value="{{this.dogName}}"
                       readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Vendor" class="form-label">Vendor</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Vendor"
+                      name="vendor"
+                      value="{{this.vendor}}"
+                      required
                     />
                   </div>
                 </div>

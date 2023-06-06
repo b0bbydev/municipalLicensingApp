@@ -78,8 +78,9 @@
       <th>Address</th>
       <th>Items For Sale</th>
       <th>Notes</th>
-      <th>Operator Issue Date</th>
-      <th>Operator Expiry Date</th>
+      <th>License Number</th>
+      <th>Issue Date</th>
+      <th>Expiry Date</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -93,13 +94,13 @@
             href="/hawkerPeddler/business/{{this.hawkerPeddlerBusinessID}}"
             title="View Business Information"
           >{{this.businessName}}</a></td>
-        <td>{{this.phoneNumber}}</td>
+        <td style="width: 7.5%;">{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each hawkerPeddlerBusinessAddresses}}
-          <td class="tableLink">
+          <td class="tableLink" style="width: 17.5%;">
             <a
               class="stretched-link"
-              id="ownerLink"
+              id="historyLink"
               href="/hawkerPeddler/businessAddressHistory/{{this.hawkerPeddlerBusinessID}}"
               title="View Kennel Address History"
             >
@@ -110,16 +111,15 @@
         {{/each}}
         <td>{{this.itemsForSale}}</td>
         <td>{{this.notes}}</td>
-        {{#if hawkerPeddlerApplicants}}
-          {{#each hawkerPeddlerApplicants}}
-            <td>{{this.issueDate}}</td>
-            <td>{{this.expiryDate}}</td>
-          {{/each}}
-        {{else}}
-            <td>N/A</td>
-            <td>N/A</td>
-        {{/if}}
-        <td style="width: 17.5%;">
+        <td class="tableLink"><a
+            class="stretched-link"
+            id="historyLink"
+            href="/hawkerPeddler/businessHistory/{{this.hawkerPeddlerBusinessID}}"
+            title="View Business History"
+          >{{this.licenseNumber}}</a></td>
+        <td style="width: 6%;">{{this.issueDate}}</td>
+        <td style="width: 6.1%;">{{this.expiryDate}}</td>
+        <td style="width: 12.5%;">
           <a
             class="btn btn-sm btn-secondary"
             href="/hawkerPeddler/editBusiness/{{this.hawkerPeddlerBusinessID}}"

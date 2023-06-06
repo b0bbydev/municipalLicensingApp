@@ -91,11 +91,16 @@
                 {{this.firstName}}
                 {{this.lastName}}</a></td>
             <td>{{this.email}}</td>
-            <td>
+            <td style="width: 13%;">
               <a
-                class="btn btn-sm btn-secondary"
+                class="btn btn-sm btn-secondary mt-1"
                 href="/admin/manageAccess/{{this.id}}"
-              >Manage Access</a></td>
+              >Manage Access</a>
+              <a
+                class="btn btn-sm btn-danger mt-1"
+                href="/admin/removeUser/{{this.id}}"
+              >Delete</a>
+            </td>
           </tr>
         {{/each}}
       </tbody>

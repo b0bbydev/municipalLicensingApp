@@ -65,6 +65,7 @@ router.get(
         Business.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
+          order: [["issueDate", "DESC"]],
           include: [
             {
               model: BusinessAddress,
@@ -105,6 +106,7 @@ router.get(
           subQuery: false, // fixes column not found error when paginating a join.
           limit: req.query.limit,
           offset: req.skip,
+          order: [["issueDate", "DESC"]],
           // functions in where clause, fancy.
           where: Sequelize.where(
             Sequelize.fn(
@@ -164,6 +166,7 @@ router.get(
           subQuery: false, // fixes column not found error when paginating a join.
           limit: req.query.limit,
           offset: req.skip,
+          order: [["issueDate", "DESC"]],
           where: {
             [filterCategory]: {
               [Op.like]: req.query.filterValue + "%",

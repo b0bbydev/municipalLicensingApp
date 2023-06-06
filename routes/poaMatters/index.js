@@ -61,11 +61,6 @@ router.get(
             {
               model: POAMatterLocation,
             },
-            // this is crazy.
-            // multiple 'order by' statements across 3 joined tables.
-            // the key was adding the 'separate' option and setting it 'true'
-            // so that the ordering of POAMatters table ordering doesn't affect
-            // the POAMatterTrials table's ordering.
             {
               model: POAMatterTrial,
               as: "poaMatterTrials",
@@ -73,7 +68,7 @@ router.get(
               order: [["poaMatterTrialID", "ASC"]],
             },
           ],
-          order: [["poaMatterID", "DESC"]],
+          order: [["dateOfOffence", "DESC"]],
         })
           .then((results) => {
             // for pagination.
@@ -110,6 +105,7 @@ router.get(
           offset: req.skip,
           subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
           // functions in where clause, fancy.
+          order: [["dateOfOffence", "DESC"]],
           where: Sequelize.where(
             Sequelize.fn(
               "concat",
@@ -166,6 +162,7 @@ router.get(
           subQuery: false, // fixes column not found error when paginating a join.
           limit: req.query.limit,
           offset: req.skip,
+          order: [["dateOfOffence", "DESC"]],
           where: {
             [filterCategory]: {
               [Op.like]: "%" + req.query.filterValue + "%",

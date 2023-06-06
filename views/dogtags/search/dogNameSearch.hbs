@@ -1,0 +1,110 @@
+<h2 class="text-center mt-2">Dog Tag Licenses</h2>
+<h4>Filtering</h4>
+<form class="mb-1" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterCategory"
+    title="Category To Filter By"
+    name="filterCategory"
+  >
+    {{#if filterCategory}}
+      <option value="{{filterCategory}}" selected>{{filterCategory}}</option>
+    {{else}}
+      <option value="" disabled selected>Filter By...</option>
+    {{/if}}
+    {{#each filterOptions}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <!-- filterValue input -->
+  <input
+    name="filterValue"
+    id="filterValue"
+    class="form-control-sm"
+    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+    title="No special characters!"
+    placeholder="Search..."
+    value="{{filterValue}}"
+  />
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/dogtags"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+
+<div class="row">
+  <div class="col mb-1">
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
+  </div>
+</div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<table class="sortable table table-bordered table-striped table-hover">
+  <thead>
+    <tr>
+      <th>Owner Name</th>
+      <th>Address</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    {{#each data}}
+      <tr>
+        <td class="tableLink">
+          <a
+            class="stretched-link"
+            id="ownerLink"
+            href="/dogtags/owner/{{this.ownerID}}"
+          >{{this.firstName}} {{this.lastName}}</a></td>
+        {{#each addresses}}
+          <td>{{this.streetNumber}}
+            {{this.streetName}},
+            {{this.town}}
+            {{this.postalCode}}</td>
+        {{/each}}
+        <td>{{this.email}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+<nav id="pagination">
+  <ul class="pagination pagination-sm">
+    {{#if paginate.hasPreviousPages}}
+      <li class="page-item">
+        <a class="page-link" href="{{prev}}">Prev</a>
+      </li>
+    {{/if}}
+    {{#each pages}}
+      <li class="page-item">
+        <a class="page-link {{#contains this.url ../currentPage}}active pagination-color {{/contains}}" href="{{this.url}}">{{this.number}}</a>
+      </li>
+    {{/each}}
+    {{#if hasMorePages}}
+      <li class="page-item">
+        <a class="page-link" href="{{paginate.href}}">Next</a>
+      </li>
+    {{/if}}
+  </ul>
+</nav>

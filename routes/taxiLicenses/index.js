@@ -46,6 +46,7 @@ router.get("/", async (req, res, next) => {
     TaxiBroker.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
+      order: [["issueDate", "DESC"]],
       include: [
         {
           model: TaxiBrokerAddress,
@@ -82,6 +83,7 @@ router.get("/", async (req, res, next) => {
       subQuery: false, // fixes column not found error when paginating a join.
       limit: req.query.limit,
       offset: req.skip,
+      order: [["issueDate", "DESC"]],
       where: {
         [filterCategory]: {
           [Op.like]: "%" + req.query.filterValue + "%",
