@@ -4,6 +4,8 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const HawkerPeddlerBusiness = require("../../models/hawkerPeddler/hawkerPeddlerBusiness");
 const HawkerPeddlerBusinessAddress = require("../../models/hawkerPeddler/hawkerPeddlerBusinessAddress");
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -19,6 +21,7 @@ router.get("/", async (req, res, next) => {
     where: {
       dropdownFormID: 13, // streets
     },
+    order: [["dropdownValue", "ASC"]],
   });
 
   return res.render("hawkerPeddler/addBusiness", {
@@ -47,6 +50,11 @@ router.post(
     .if(body("email").notEmpty())
     .isEmail()
     .withMessage("Invalid Email Entry!")
+    .trim(),
+  body("licenseNumber")
+    .if(body("licenseNumber").notEmpty())
+    .matches(/^[^%<>^$\\;!{}?]+$/)
+    .withMessage("Invalid License Number Entry!")
     .trim(),
   body("streetNumber")
     .if(body("streetNumber").notEmpty())
@@ -90,6 +98,7 @@ router.post(
       where: {
         dropdownFormID: 13, // streets
       },
+      order: [["dropdownValue", "ASC"]],
     });
 
     // if errors is NOT empty (if there are errors...)
@@ -105,6 +114,9 @@ router.post(
           businessName: req.body.businessName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
+          licenseNumber: req.body.licenseNumber,
+          issueDate: req.body.issueDate,
+          expiryDate: req.body.expiryDate,
           policeVSC: req.body.policeVSC,
           photoID: req.body.photoID,
           sitePlan: req.body.sitePlan,
@@ -124,6 +136,9 @@ router.post(
           businessName: req.body.businessName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
+          licenseNumber: req.body.licenseNumber,
+          issueDate: funcHelpers.fixEmptyValue(req.body.issueDate),
+          expiryDate: funcHelpers.fixEmptyValue(req.body.expiryDate),
           policeVSC: req.body.policeVSC,
           photoID: req.body.photoID,
           sitePlan: req.body.sitePlan,

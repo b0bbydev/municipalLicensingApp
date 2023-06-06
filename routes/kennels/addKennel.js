@@ -21,6 +21,7 @@ router.get("/", async (req, res, next) => {
     where: {
       dropdownFormID: 13, // streets
     },
+    order: [["dropdownValue", "ASC"]],
   });
 
   return res.render("kennels/addKennel", {
@@ -87,6 +88,7 @@ router.post(
       where: {
         dropdownFormID: 13, // streets
       },
+      order: [["dropdownValue", "ASC"]],
     });
 
     // if errors is NOT empty (if there are errors...)

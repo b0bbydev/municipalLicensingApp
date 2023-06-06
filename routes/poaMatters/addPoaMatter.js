@@ -22,6 +22,7 @@ router.get("/", async (req, res, next) => {
     where: {
       dropdownFormID: 13, // streets
     },
+    order: [["dropdownValue", "ASC"]],
   });
   // get officer names.
   var officerNames = await Dropdown.findAll({
@@ -122,6 +123,7 @@ router.post(
       where: {
         dropdownFormID: 13, // streets
       },
+      order: [["dropdownValue", "ASC"]],
     });
     // get officer names.
     var officerNames = await Dropdown.findAll({
