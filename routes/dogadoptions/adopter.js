@@ -3,7 +3,6 @@ var router = express.Router();
 // models.
 const Adopter = require("../../models/dogAdoptions/adopter");
 const AdopterAddress = require("../../models/dogAdoptions/adopterAddress");
-const Dropdown = require("../../models/dropdownManager/dropdown");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -12,9 +11,9 @@ const paginate = require("express-paginate");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
-/* GET /dogAdoptions */
+/* GET /dogAdoptions/adopter */
 router.get(
-  "/",
+  "/:id",
   body("filterCategory")
     .matches(/^[^'";=_()*&%$#!<>\/\^\\]*$/)
     .trim(),
@@ -27,7 +26,7 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("dogAdoptions", {
+      return res.render("dogAdoptions/adopter", {
         title: "BWG | Dog Adoptions",
         message: "Page Error!",
         auth: req.session.auth, // authorization.
@@ -37,14 +36,6 @@ router.get(
       let messages = req.session.messages || [];
       // clear session messages
       req.session.messages = [];
-
-      // get filtering options.
-      var filterOptions = await Dropdown.findAll({
-        where: {
-          dropdownFormID: 29, // filtering options.
-          dropdownTitle: "Dog Adopter Filtering Options",
-        },
-      });
 
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
@@ -64,13 +55,12 @@ router.get(
             const itemCount = results.count;
             const pageCount = Math.ceil(results.count / req.query.limit);
 
-            return res.render("dogAdoptions/index", {
+            return res.render("dogAdoptions/adopter", {
               title: "BWG | Dog Adoptions",
               message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
-              filterOptions: filterOptions,
               currentPage: req.query.page,
               pageCount,
               itemCount,
@@ -82,7 +72,7 @@ router.get(
           })
           // catch any scary errors and render page error.
           .catch((err) => {
-            return res.render("dogAdoptions/index", {
+            return res.render("dogAdoptions/adopter", {
               title: "BWG | Dog Adoptions",
               message: "Page Error!",
               auth: req.session.auth, // authorization.
@@ -116,7 +106,7 @@ router.get(
             const itemCount = results.count;
             const pageCount = Math.ceil(results.count / req.query.limit);
 
-            return res.render("dogAdoptions", {
+            return res.render("dogAdoptions/adopter", {
               title: "BWG | Dog Adoptions",
               message: messages,
               email: req.session.email,
@@ -124,7 +114,6 @@ router.get(
               data: results.rows,
               filterCategory: req.query.filterCategory,
               filterValue: req.query.filterValue,
-              filterOptions: filterOptions,
               currentPage: req.query.page,
               pageCount,
               itemCount,
@@ -136,7 +125,7 @@ router.get(
           })
           // catch any scary errors and render page error.
           .catch((err) => {
-            return res.render("dogAdoptions/index", {
+            return res.render("dogAdoptions/adopter", {
               title: "BWG | Dog Adoptions",
               message: "Page Error!",
               auth: req.session.auth, // authorization.

@@ -1,6 +1,6 @@
 <h2 class="text-center mt-2">Dog Adoptions</h2>
 <h4>Filtering</h4>
-<div class="row mb-1">
+<div class="row">
   <div class="col">
     <form class="mb-0" method="GET">
       <select
@@ -54,7 +54,9 @@
       >Reset</a>
     </form>
   </div>
-  <div class="col">
+</div>
+<div class="row mb-1">
+    <div class="col">
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
@@ -79,12 +81,6 @@
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
-      <th>Date of Adoption</th>
-      <th>Dog Name</th>
-      <th>Dog Breed</th>
-      <th>Colour</th>
-      <th>Gender</th>
-      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -95,25 +91,20 @@
           <a
             class="stretched-link"
             id="ownerLink"
-            href="#"
-            title="View Owner Profile"
+            href="/dogAdoptions/adopter/{{this.adopterID}}"
+            title="View Adopter Profile"
           >{{this.firstName}} {{this.lastName}}</a></td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
-        {{#each addresses}}
+        {{#each adopterAddresses}}
           <td>{{this.streetNumber}}
             {{this.streetName}},
             {{this.town}}
             {{this.postalCode}}</td>
-          <td>{{this.dogName}}</td>
-          <td>{{this.dogBreed}}</td>
-          <td>{{this.colour}}</td>
-          <td>{{this.gender}}</td>
-          <td>{{this.notes}}</td>
         {{/each}}
         <td>
           <a
-            href="/dogtags/editOwner/{{this.ownerID}}"
+            href="/dogAdoptions/editAdopter/{{this.adopterID}}"
             class="btn btn-sm btn-secondary"
           >Edit</a>
         </td>
