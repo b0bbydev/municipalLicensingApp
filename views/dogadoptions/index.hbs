@@ -60,7 +60,7 @@
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
-    <a href="/dogAdoptions/addAdopter" class="btn btn-sm btn-primary float-end">Add Adopter</a>
+    <a href="/dogAdoptions/addDog" class="btn btn-sm btn-primary float-end">Add Dog</a>
   </div>
 </div>
 
@@ -77,31 +77,24 @@
 >
   <thead>
     <tr>
-      <th>Adopter Name</th>
-      <th>Phone Number</th>
-      <th>Email</th>
-      <th>Address</th>
+      <th>Dog Name</th>
+      <th>Date Of Adoption</th>
+      <th>Dog Breed</th>
+      <th>Colour</th>
+      <th>Gender</th>
+      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td class="tableLink">
-          <a
-            class="stretched-link"
-            id="ownerLink"
-            href="/dogAdoptions/adopter/{{this.adopterID}}"
-            title="View Adopter Profile"
-          >{{this.firstName}} {{this.lastName}}</a></td>
-        <td>{{this.phoneNumber}}</td>
-        <td>{{this.email}}</td>
-        {{#each adopterAddresses}}
-          <td>{{this.streetNumber}}
-            {{this.streetName}},
-            {{this.town}}
-            {{this.postalCode}}</td>
-        {{/each}}
+        <td class="tableLink">{{this.dogName}}</td>
+        <td>{{this.dateOfAdoption}}</td>
+        <td>{{this.breed}}</td>
+        <td>{{this.colour}}</td>
+        <td>{{this.gender}}</td>
+        <td>{{this.notes}}</td>
         <td>
           <a
             href="/dogAdoptions/editAdopter/{{this.adopterID}}"

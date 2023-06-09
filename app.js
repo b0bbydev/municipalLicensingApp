@@ -79,6 +79,7 @@ var dropdownFormRouter = require("./routes/dropdownManager/form");
 var dogAdoptionsRouter = require("./routes/dogAdoptions/index");
 var addDogAdopterRouter = require("./routes/dogAdoptions/addAdopter");
 var dogAdopterRouter = require("./routes/dogAdoptions/adopter");
+var addAdoptedDogRouter = require("./routes/dogAdoptions/addDog");
 
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
@@ -417,6 +418,7 @@ app.use("/policies/editGuideline", isPolicy, editGuidelineRouter);
 app.use("/dogAdoptions", isEnforcement, dogAdoptionsRouter);
 app.use("/dogAdoptions/addAdopter", isEnforcement, addDogAdopterRouter);
 app.use("/dogAdoptions/adopter", isEnforcement, dogAdopterRouter);
+app.use("/dogAdoptions/addDog", isEnforcement, addAdoptedDogRouter);
 
 /* dogtag related routes. */
 app.use("/dogtags", isEnforcement, dogTagRouter);
