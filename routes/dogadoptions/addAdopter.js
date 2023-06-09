@@ -1,5 +1,9 @@
 var express = require("express");
 var router = express.Router();
+// models.
+const Dropdown = require("../../models/dropdownManager/dropdown");
+const Adopter = require("../../models/dogAdoptions/adopter");
+const AdopterAddress = require("../../models/dogAdoptions/adopterAddress");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -29,12 +33,20 @@ router.get(
       // clear session messages
       req.session.messages = [];
 
+      // get dropdown values.
+      var streets = await Dropdown.findAll({
+        where: {
+          dropdownFormID: 13, // streets
+        },
+      });
+
       return res.render("dogAdoptions/addAdopter", {
         title: "BWG | Dog Adoptions",
         message: messages,
         email: req.session.email,
         auth: req.session.auth, // authorization.
         currentPage: req.query.page,
+        streets: streets,
       });
     }
   }
@@ -90,11 +102,12 @@ router.post(
     // use built-in array() to convert Result object to array for custom error messages.
     var errorArray = errors.array();
 
-    // get dropdown values.
+    // get streets.
     var streets = await Dropdown.findAll({
       where: {
         dropdownFormID: 13, // streets
       },
+      order: [["dropdownValue", "ASC"]],
     });
 
     // if errors is NOT empty (if there are errors...)
@@ -118,14 +131,14 @@ router.post(
         },
       });
     } else {
-      // create Owner with Address - able to as they are 'associated'/related to one another.
-      Owner.create(
+      // create Adopter with Address - able to as they are 'associated'/related to one another.
+      Adopter.create(
         {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          addresses: [
+          adopterAddresses: [
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
@@ -135,7 +148,7 @@ router.post(
           ],
         },
         {
-          include: [Address],
+          include: [AdopterAddress],
         }
       )
         .then(() => {
