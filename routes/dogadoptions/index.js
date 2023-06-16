@@ -9,7 +9,8 @@ const Op = Sequelize.Op;
 // pagination lib.
 const paginate = require("express-paginate");
 // express-validate.
-const { body, param, validationResult } = require("express-validator");
+const { body, validationResult } = require("express-validator");
+const Adopter = require("../../models/dogAdoptions/adopter");
 
 /* GET /dogAdoptions */
 router.get(
@@ -45,6 +46,9 @@ router.get(
         },
       });
 
+      // get adopters.
+      var adopters = await Adopter.findAll({});
+
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
         // get all owners & addresses.
@@ -65,6 +69,7 @@ router.get(
               auth: req.session.auth, // authorization.
               data: results.rows,
               filterOptions: filterOptions,
+              adopters: adopters,
               currentPage: req.query.page,
               pageCount,
               itemCount,
@@ -83,6 +88,65 @@ router.get(
             });
           });
       }
+    }
+  }
+);
+
+/* POST /dogAdoptions */
+router.post(
+  "/",
+  body("dogName")
+    .if(body("dogName").notEmpty())
+    .matches(/^[^%<>^$\\;!{}?]+$/)
+    .withMessage("Invalid Dog Name Entry!")
+    .trim(),
+  body("adopterName")
+    .if(body("adopterName").notEmpty())
+    .matches(/^[^%<>^$\\;!{}?]+$/)
+    .withMessage("Invalid Adopter Name Entry!")
+    .trim(),
+  async (req, res, next) => {
+    // server side validation.
+    const errors = validationResult(req);
+
+    // use built-in array() to convert Result object to array for custom error messages.
+    var errorArray = errors.array();
+
+    // if errors is NOT empty (if there are errors...).
+    if (!errors.isEmpty()) {
+      return res.render("dogAdoptions/index", {
+        title: "BWG | Dog Adoptions",
+        message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
+        email: req.session.email,
+        auth: req.session.auth, // authorization.
+        // if the form submission is unsuccessful, save their values.
+        formData: {
+          dogName: req.body.dogName,
+          adopterName: req.body.adopterName,
+        },
+      });
+    } else {
+      // update dog.
+      AdoptedDog.update(
+        {
+          ownerID: req.session.ownerID,
+        },
+        {
+          where: {
+            adoptedDogID: req.body.adoptedDogID,
+          },
+        }
+      )
+        .then(() => {
+          return res.redirect("/dogAdoptions");
+        })
+        .catch((err) => {
+          return res.render("dogAdoptions/index", {
+            title: "BWG | Dog Adoptions",
+            message: "Page Error!",
+            auth: req.session.auth, // authorization.
+          });
+        });
     }
   }
 );
