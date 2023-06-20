@@ -86,37 +86,50 @@
 >
   <thead>
     <tr>
-      <th>Adopter Name</th>
-      <th>Phone Number</th>
-      <th>Email</th>
+      <th>Dog Name</th>
+      <th>Date Of Adoption</th>
+      <th>Dog Breed</th>
+      <th>Colour</th>
+      <th>Gender</th>
+      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td>{{this.firstName}} {{this.lastName}}</td>
-        <td>{{this.phoneNumber}}</td>
-        <td>{{this.email}}</td>
+        <td class="tableLink">{{this.dogName}}</td>
+        <td>{{this.dateOfAdoption}}</td>
+        <td>{{this.breed}}</td>
+        <td>{{this.colour}}</td>
+        <td>{{this.gender}}</td>
+        <td>{{this.notes}}</td>
         <td style="width: 16%;">
-          <a
-            href="/dogAdoptions/editAdopter/{{this.adopterID}}"
-            class="btn btn-sm btn-secondary"
-          >Edit</a>
-          |
-          <button
-            data-bs-toggle="modal"
-            data-bs-target="#adopterModal-{{this.adopterID}}"
-            class="btn btn-sm btn-primary"
-          >Register Dog to Adopter</button>
+          {{#if this.adopterID}}
+            <a
+              href="/dogAdoptions/editAdopter/{{this.adoptedDogID}}"
+              class="btn btn-sm btn-secondary"
+            >Edit</a>
+            {{else}}
+            <a
+              href="/dogAdoptions/editAdopter/{{this.adoptedDogID}}"
+              class="btn btn-sm btn-secondary"
+            >Edit</a>
+            |
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#adoptedDog-{{this.adoptedDogID}}"
+              class="btn btn-sm btn-primary"
+            >Register Dog to Adopter</button>
+          {{/if}}
         </td>
       </tr>
       <!-- Modal -->
       <div
         class="modal fade"
-        id="adopterModal-{{this.adopterID}}"
+        id="adoptedDog-{{this.adoptedDogID}}"
         tabindex="-1"
-        aria-labelledby="adopterModal"
+        aria-labelledby="registerDogModal"
         aria-hidden="true"
       >
         <form method="POST">
@@ -135,38 +148,46 @@
                 <!-- Need to get adopterID from form to update, but don't need user to see it - set display: none; -->
                 <div class="row" style="display: none;">
                   <div class="col">
-                    <label for="Adopter ID" class="form-label">Adopter
+                    <label for="Adopted Dog ID" class="form-label">Adopted Dog
                       ID</label>
                     <input
                       type="number"
                       class="form-control"
                       name="adoptedDogID"
-                      value="{{this.adopterID}}"
+                      value="{{this.adoptedDogID}}"
                       readonly
                     />
                   </div>
                 </div>
                 <div class="row">
                   <div class="col">
-                    <label for="Adopter Name" class="form-label">Adopter Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="adopterName"
-                      value="{{this.firstName}} {{this.lastName}}"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                   <label for="Adopted Dog" class="form-label">Adopted Dog</label>
+                    <label for="Dog Name" class="form-label">Dog Name</label>
                     <input
                       type="text"
                       class="form-control"
                       name="dogName"
-                      placeholder="Dog Name"
+                      value="{{this.dogName}}"
+                      readonly
                     />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Adopters" class="form-label">Adopters</label>
+                    <input
+                      list="adopters"
+                      class="form-control"
+                      placeholder="Adopter List"
+                      name="adopterName"
+                      required
+                    />
+                    <datalist id="adopters">
+                      {{#each ../adopters}}
+                        <option
+                          value="{{this.firstName}} {{this.lastName}}"
+                        >{{this.firstName}} {{this.lastName}}</option>
+                      {{/each}}
+                    </datalist>
                   </div>
                 </div>
               </div>

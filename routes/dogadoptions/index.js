@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 // models.
+const Adopter = require("../../models/dogAdoptions/adopter");
+const AdopterAddress = require("../../models/dogAdoptions/adopterAddress");
 const AdoptedDog = require("../../models/dogAdoptions/adoptedDog");
 const Dropdown = require("../../models/dropdownManager/dropdown");
 // sequelize.
@@ -10,7 +12,6 @@ const Op = Sequelize.Op;
 const paginate = require("express-paginate");
 // express-validate.
 const { body, validationResult } = require("express-validator");
-const Adopter = require("../../models/dogAdoptions/adopter");
 
 /* GET /dogAdoptions */
 router.get(
@@ -52,10 +53,10 @@ router.get(
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
         // get all owners & addresses.
-        AdoptedDog.findAndCountAll({
+        Adopter.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
-          order: [["adoptedDogID", "DESC"]],
+          order: [["adopterID", "DESC"]],
         })
           .then((results) => {
             // for pagination.

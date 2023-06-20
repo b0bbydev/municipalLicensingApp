@@ -1,0 +1,156 @@
+<h2 class="text-center mt-2">Edit Adopter</h2>
+<form class="row g-5 m-auto" method="POST">
+  <div class="col-md-7 m-auto mt-5">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Adopter Information</h4>
+    <hr />
+    <div class="row">
+      <!-- First Name -->
+      <div class="col-sm-6">
+        <label for="First Name" class="form-label">First Name*</label>
+        <input
+          type="text"
+          placeholder="First Name"
+          class="form-control"
+          name="firstName"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{adopterInfo.firstName}}"
+          maxlength="25"
+          required
+        />
+      </div>
+      <!-- Last Name -->
+      <div class="col-sm-6">
+        <label for="Last Name" class="form-label">Last Name*</label>
+        <input
+          type="text"
+          placeholder="Last Name"
+          class="form-control"
+          name="lastName"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{adopterInfo.lastName}}"
+          maxlength="25"
+          required
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Street Number -->
+      <div class="col-sm-3">
+        <label for="Street Number" class="form-label">Street Number*</label>
+        <input
+          type="number"
+          class="form-control"
+          placeholder="Street Number"
+          name="streetNumber"
+          value="{{adopterInfo.streetNumber}}"
+          required
+        />
+      </div>
+      <!-- Street Name -->
+      <div class="col-sm-3">
+        <label for="Street Name" class="form-label">Street Name*</label>
+        <input
+          class="form-control"
+          name="streetName"
+          list="streets"
+          placeholder="Street Name..."
+          value="{{adopterInfo.streetName}}"
+          required
+        />
+        <datalist id="streets">
+          {{#each streets}}
+            {{#if this.isDisabled}}
+              <option
+                value="{{this.dropdownValue}}"
+                disabled
+              >{{this.dropdownValue}}</option>
+            {{else}}
+              <option
+                value="{{this.dropdownValue}}"
+              >{{this.dropdownValue}}</option>
+            {{/if}}
+          {{/each}}
+        </datalist>
+      </div>
+      <!-- Postal Code -->
+      <div class="col-sm-3">
+        <label for="Postal Code" class="form-label">Postal Code</label>
+        <input
+          id="postalCode"
+          type="text"
+          class="form-control"
+          placeholder="Postal Code"
+          name="postalCode"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{adopterInfo.postalCode}}"
+          maxlength="15"
+        />
+      </div>
+      <!-- Town -->
+      <div class="col-sm-3">
+        <label for="Town" class="form-label">Town</label>
+        <input
+          id="town"
+          type="text"
+          class="form-control"
+          placeholder="Town"
+          name="town"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{adopterInfo.town}}"
+          maxlength="30"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Phone Number -->
+      <div class="col-sm-6">
+        <label for="Phone Number" class="form-label">Phone Number</label>
+        <input
+          id="phoneNumber"
+          type="text"
+          class="form-control"
+          placeholder="Phone Number"
+          name="phoneNumber"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{adopterInfo.phoneNumber}}"
+          maxlength="15"
+        />
+      </div>
+      <!-- Email -->
+      <div class="col-sm-6">
+        <label for="Email" class="form-label">Email</label>
+        <input
+          id="email"
+          type="email"
+          class="form-control"
+          placeholder="Email"
+          name="email"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{adopterInfo.email}}"
+          maxlength="50"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
