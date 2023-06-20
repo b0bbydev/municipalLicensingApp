@@ -126,17 +126,44 @@ router.post(
         },
       });
     } else {
-      // update dog.
-      AdoptedDog.update(
-        {
-          ownerID: req.session.ownerID,
+      // get the adopterID by selecting first name and last name.
+      // have to get the name from the form and then split based on whitespace.
+      var name = req.body.adopterName;
+      var fullName = name.split(" ");
+      var firstName = fullName[0];
+      var lastName = fullName[1];
+      var adopterID;
+
+      // select Adopter based on name.
+      Adopter.findOne({
+        where: {
+          [Op.and]: [
+            {
+              firstName: firstName,
+            },
+            {
+              lastName: lastName,
+            },
+          ],
         },
-        {
-          where: {
-            adoptedDogID: req.body.adoptedDogID,
-          },
-        }
-      )
+      })
+        // save the adopterID to use in db.
+        .then((result) => {
+          adopterID = result.dataValues.adopterID;
+        })
+        // update dog.
+        .then(() => {
+          AdoptedDog.update(
+            {
+              adopterID: adopterID,
+            },
+            {
+              where: {
+                adoptedDogID: req.body.adoptedDogID,
+              },
+            }
+          );
+        })
         .then(() => {
           return res.redirect("/dogAdoptions");
         })
