@@ -47,8 +47,8 @@ router.get(
         },
       });
 
-      // get adopters.
-      var adopters = await Adopter.findAll({});
+      // get adoptedDogs.
+      var adoptedDogs = await AdoptedDog.findAll({});
 
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
@@ -57,6 +57,11 @@ router.get(
           limit: req.query.limit,
           offset: req.skip,
           order: [["adopterID", "DESC"]],
+          include: [
+            {
+              model: AdopterAddress,
+            },
+          ],
         })
           .then((results) => {
             // for pagination.
@@ -70,7 +75,7 @@ router.get(
               auth: req.session.auth, // authorization.
               data: results.rows,
               filterOptions: filterOptions,
-              adopters: adopters,
+              adoptedDogs: adoptedDogs,
               currentPage: req.query.page,
               pageCount,
               itemCount,
@@ -127,44 +132,16 @@ router.post(
         },
       });
     } else {
-      // get the adopterID by selecting first name and last name.
-      // have to get the name from the form and then split based on whitespace.
-      var name = req.body.adopterName;
-      var fullName = name.split(" ");
-      var firstName = fullName[0];
-      var lastName = fullName[1];
-      var adopterID;
-
-      // select Adopter based on name.
-      Adopter.findOne({
-        where: {
-          [Op.and]: [
-            {
-              firstName: firstName,
-            },
-            {
-              lastName: lastName,
-            },
-          ],
+      AdoptedDog.update(
+        {
+          adopterID: adopterID,
         },
-      })
-        // save the adopterID to use in db.
-        .then((result) => {
-          adopterID = result.dataValues.adopterID;
-        })
-        // update dog.
-        .then(() => {
-          AdoptedDog.update(
-            {
-              adopterID: adopterID,
-            },
-            {
-              where: {
-                adoptedDogID: req.body.adoptedDogID,
-              },
-            }
-          );
-        })
+        {
+          where: {
+            adoptedDogID: req.body.adoptedDogID,
+          },
+        }
+      )
         .then(() => {
           return res.redirect("/dogAdoptions");
         })
