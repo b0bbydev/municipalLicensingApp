@@ -132,6 +132,7 @@ router.post(
         },
       });
     } else {
+      console.log(req.body.selection);
       AdoptedDog.update(
         {
           adopterID: adopterID,
