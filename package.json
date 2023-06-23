@@ -26,7 +26,7 @@
     "moment": "^2.29.4",
     "morgan": "~1.10.0",
     "mysql2": "^3.4.0",
-    "nodemon": "^1.14.9",
+    "nodemon": "^2.0.17",
     "plivo": "^4.49.0",
     "sequelize": "^6.29.2",
     "winston": "^3.8.2",
