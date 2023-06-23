@@ -770,6 +770,29 @@ app.use("/taxiLicenses/editPlate", isEnforcement, editTaxiPlateRoute);
 //   "America/Toronto"
 // );
 
+/* function to load all models from models folder */
+// Load models from subdirectories
+// const modelsDir = path.join(__dirname, 'models');
+
+// function loadModels(dir) {
+//   fs.readdirSync(dir).forEach((file) => {
+//     const filePath = path.join(dir, file);
+//     const stat = fs.statSync(filePath);
+
+//     if (stat.isDirectory()) {
+//       // If it's a directory, recursively load models from it
+//       loadModels(filePath);
+//     } else if (file.endsWith('.js')) {
+//       // If it's a JavaScript file, require and initialize the model
+//       const model = require(filePath);
+//       model.initialize(db.sequelize);
+//     }
+//   });
+// }
+
+// // Start loading models from the models directory
+// loadModels(modelsDir);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
