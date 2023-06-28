@@ -161,6 +161,19 @@
                       </tr>
                     </thead>
                     <tbody class="table-group-divider">
+                      <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                      <div class="row" style="display: none;">
+                        <div class="col">
+                          <label for="Adopter ID" class="form-label">Adopter ID</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            name="adopterID"
+                            value="{{this.adopterID}}"
+                            readonly
+                          />
+                        </div>
+                      </div>
                       {{#each ../adoptedDogs}}
                         {{#unless this.adopterID}}
                           <tr>

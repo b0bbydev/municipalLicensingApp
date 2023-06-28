@@ -132,14 +132,13 @@ router.post(
         },
       });
     } else {
-      console.log(req.body.selection);
       AdoptedDog.update(
         {
-          adopterID: adopterID,
+          adopterID: req.body.adopterID,
         },
         {
           where: {
-            adoptedDogID: req.body.adoptedDogID,
+            adoptedDogID: req.body.selection,
           },
         }
       )

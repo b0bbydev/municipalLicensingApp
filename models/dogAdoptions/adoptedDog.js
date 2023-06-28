@@ -2,6 +2,7 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
+const Adopter = require("./adopter");
 
 const AdoptedDog = sequelize.define("adoptedDog", {
   adoptedDogID: {
@@ -40,6 +41,11 @@ const AdoptedDog = sequelize.define("adoptedDog", {
     type: Sequelize.STRING,
     allowNull: true,
   },
+});
+
+// create relationship with adopters table.
+Adopter.hasMany(AdoptedDog, {
+  foreignKey: "adopterID",
 });
 
 module.exports = AdoptedDog;
