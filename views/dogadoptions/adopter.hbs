@@ -1,0 +1,49 @@
+<h2 class="text-center mt-2">Adopter Profile</h2>
+<div class="row mb-1">
+  <div id="registerDogButton" class="col-sm-4">
+    <a
+      href="/dogAdoptions/addDog/{{adopterID}}"
+      class="btn btn-sm btn-primary float-end"
+    >Register Dog to Adopter</a>
+  </div>
+</div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<table
+  class="table table-sm table-responsive table-bordered table-striped table-hover sortable"
+>
+  <thead>
+    <tr>
+      <th>Dog Name</th>
+      <th>Date Of Adoption</th>
+      <th>Dog Breed</th>
+      <th>Colour</th>
+      <th>Gender</th>
+      <th>Notes</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    {{#each data}}
+      <tr>
+        <td class="tableLink">{{this.dogName}}</td>
+        <td>{{this.dateOfAdoption}}</td>
+        <td>{{this.breed}}</td>
+        <td>{{this.colour}}</td>
+        <td>{{this.gender}}</td>
+        <td>{{this.notes}}</td>
+        <td style="width: 11.5%;">
+          <a
+            href="/dogAdoptions/editDog/{{this.adoptedDogID}}"
+            class="btn btn-sm btn-secondary"
+          >Edit Dog</a></td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
