@@ -1,0 +1,227 @@
+<h2 class="text-center mt-2">Dog Adoptions</h2>
+<h4>Filtering</h4>
+<div class="row">
+  <div class="col">
+    <form class="mb-0" method="GET">
+      <select
+        class="form-select-sm"
+        id="filterCategory"
+        title="Category To Filter By"
+        name="filterCategory"
+        required
+      >
+        {{#if filterCategory}}
+          <option
+            value="{{filterCategory}}"
+            selected
+          >{{filterCategory}}</option>
+        {{else}}
+          <option value="" disabled selected>Filter By...</option>
+        {{/if}}
+        {{#each filterOptions}}
+          {{#if this.isDisabled}}
+            <option
+              value="{{this.dropdownValue}}"
+              disabled
+            >{{this.dropdownValue}}</option>
+          {{else}}
+            <option
+              value="{{this.dropdownValue}}"
+            >{{this.dropdownValue}}</option>
+          {{/if}}
+        {{/each}}
+      </select>
+      <!-- filterValue input -->
+      <input
+        name="filterValue"
+        id="filterValue"
+        class="form-control-sm"
+        pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+        title="No special characters!"
+        placeholder="Search..."
+        value="{{filterValue}}"
+      />
+      <button
+        id="filterButton"
+        class="btn btn-sm btn-primary"
+        type="submit"
+      >Search</button>
+      <a
+        id="filterButton"
+        href="/dogAdoptions"
+        class="btn btn-sm btn-secondary"
+        type="submit"
+      >Reset</a>
+    </form>
+  </div>
+</div>
+<div class="row mb-1">
+  <div class="col">
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
+  </div>
+  <div class="col-md-auto pe-0">
+    <a href="/dogAdoptions/addDog" class="btn btn-sm btn-primary float-end">Add
+      Dog</a>
+  </div>
+  <div class="col-md-auto">
+    <a
+      href="/dogAdoptions/addAdopter"
+      class="btn btn-sm btn-primary float-end"
+    >Add Adopter</a>
+  </div>
+</div>
+
+<!-- check for error messages in the session -->
+{{#if message}}
+  <div class="alert alert-danger">
+    {{message}}
+  </div>
+{{/if}}
+
+<!-- Table -->
+<table
+  class="table table-responsive table-bordered table-striped table-hover sortable"
+>
+  <thead>
+    <tr>
+      <th>Dog Name</th>
+      <th>Date Of Adoption</th>
+      <th>Dog Breed</th>
+      <th>Colour</th>
+      <th>Gender</th>
+      <th>Notes</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    {{#each data}}
+      <tr>
+        <td class="tableLink">{{this.dogName}}</td>
+        <td>{{this.dateOfAdoption}}</td>
+        <td>{{this.breed}}</td>
+        <td>{{this.colour}}</td>
+        <td>{{this.gender}}</td>
+        <td>{{this.notes}}</td>
+        <td style="width: 16%;">
+          {{#if this.adopterID}}
+            <a
+              href="/dogAdoptions/editAdopter/{{this.adoptedDogID}}"
+              class="btn btn-sm btn-secondary"
+            >Edit</a>
+            {{else}}
+            <a
+              href="/dogAdoptions/editAdopter/{{this.adoptedDogID}}"
+              class="btn btn-sm btn-secondary"
+            >Edit</a>
+            |
+            <button
+              data-bs-toggle="modal"
+              data-bs-target="#adoptedDog-{{this.adoptedDogID}}"
+              class="btn btn-sm btn-primary"
+            >Register Dog to Adopter</button>
+          {{/if}}
+        </td>
+      </tr>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="adoptedDog-{{this.adoptedDogID}}"
+        tabindex="-1"
+        aria-labelledby="registerDogModal"
+        aria-hidden="true"
+      >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Register Dog to Adopter</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <!-- Need to get adopterID from form to update, but don't need user to see it - set display: none; -->
+                <div class="row" style="display: none;">
+                  <div class="col">
+                    <label for="Adopted Dog ID" class="form-label">Adopted Dog
+                      ID</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="adoptedDogID"
+                      value="{{this.adoptedDogID}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Dog Name" class="form-label">Dog Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="dogName"
+                      value="{{this.dogName}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Adopters" class="form-label">Adopters</label>
+                    <input
+                      list="adopters"
+                      class="form-control"
+                      placeholder="Adopter List"
+                      name="adopterName"
+                      required
+                    />
+                    <datalist id="adopters">
+                      {{#each ../adopters}}
+                        <option
+                          value="{{this.firstName}} {{this.lastName}}"
+                        >{{this.firstName}} {{this.lastName}}</option>
+                      {{/each}}
+                    </datalist>
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit Renewal</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    {{/each}}
+  </tbody>
+</table>
+<nav id="pagination">
+  <ul class="pagination pagination-sm">
+    {{#if paginate.hasPreviousPages}}
+      <li class="page-item">
+        <a class="page-link" href="{{prev}}">Prev</a>
+      </li>
+    {{/if}}
+    {{#each pages}}
+      <li class="page-item">
+        <a class="page-link {{#contains this.url ../currentPage}}active pagination-color {{/contains}}" href="{{this.url}}">{{this.number}}</a>
+      </li>
+    {{/each}}
+    {{#if hasMorePages}}
+      <li class="page-item">
+        <a class="page-link" href="{{paginate.href}}">Next</a>
+      </li>
+    {{/if}}
+  </ul>
+</nav>

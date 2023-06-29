@@ -1,0 +1,145 @@
+<h2 class="text-center mt-2">Add Dog</h2>
+<form class="row g-5 m-auto" method="POST">
+  <div class="col-md-7 m-auto mt-4">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Dog Information</h4>
+    <hr />
+    <div class="row">
+      <!-- Dog Name -->
+      <div class="col-sm-6">
+        <label for="Dog Name" class="form-label">Dog Name</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Dog Name"
+          name="dogName"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.dogName}}"
+          maxlength="20"
+        />
+      </div>
+      <!-- Breed -->
+      <div class="col-sm-6">
+        <label for="Breed" class="form-label">Breed</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Breed"
+          name="breed"
+          pattern="[^()><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.breed}}"
+          maxlength="25"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <!-- Colour -->
+      <div class="col-sm-6">
+        <label for="Colour" class="form-label">Colour</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Colour"
+          name="colour"
+          pattern="[^()><\][\\\x22,;|]+"
+          title="No special characters!"
+          value="{{formData.colour}}"
+          maxlength="25"
+        />
+      </div>
+      <!-- Date of Adoption -->
+      <div class="col-sm-6">
+        <label for="Date Of Adoption" class="form-label">Date Of Adoption</label>
+        <input
+          type="date"
+          class="form-control"
+          placeholder="Date Of Adoption"
+          name="dateOfAdoption"
+          value="{{formData.dateOfAdoption}}"
+        />
+      </div>
+    </div>
+    <!-- Gender -->
+    <div class="row">
+      <label for="Gender" class="form-label">Gender</label>
+      <!-- Male -->
+      <div class="col-sm-6">
+        <div class="form-check">
+          <label class="form-check-label" for="Male">
+            Male
+          </label>
+          {{#ifCond formData.gender "===" "M"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              value="M"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              value="M"
+            />
+          {{/ifCond}}
+        </div>
+      </div>
+      <!-- Female -->
+      <div class="col-sm-6">
+        <div class="form-check">
+          <label class="form-check-label" for="Female">
+            Female
+          </label>
+          {{#ifCond formData.gender "===" "F"}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              value="F"
+              checked
+            />
+          {{else}}
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              value="F"
+            />
+          {{/ifCond}}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Notes -->
+      <div class="col">
+        <label for="Notes" class="form-label">Notes</label>
+        <textarea
+          type="text"
+          name="notes"
+          class="form-control"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          maxlength="255"
+        >{{formData.notes}}</textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>

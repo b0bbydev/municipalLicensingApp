@@ -78,6 +78,10 @@ var dropdownFormRouter = require("./routes/dropdownManager/form");
 /* dog adoption related routes. */
 var dogAdoptionsRouter = require("./routes/dogAdoptions/index");
 var addDogAdopterRouter = require("./routes/dogAdoptions/addAdopter");
+var editDogAdopterRouter = require("./routes/dogAdoptions/editAdopter");
+var dogAdopterRouter = require("./routes/dogAdoptions/adopter");
+var addAdoptedDogRouter = require("./routes/dogAdoptions/addDog");
+var editAdoptedDogRouter = require("./routes/dogAdoptions/editDog");
 
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
@@ -415,6 +419,10 @@ app.use("/policies/editGuideline", isPolicy, editGuidelineRouter);
 /* dog adoption related routes. */
 app.use("/dogAdoptions", isEnforcement, dogAdoptionsRouter);
 app.use("/dogAdoptions/addAdopter", isEnforcement, addDogAdopterRouter);
+app.use("/dogAdoptions/editAdopter", isEnforcement, editDogAdopterRouter);
+app.use("/dogAdoptions/adopter", isEnforcement, dogAdopterRouter);
+app.use("/dogAdoptions/addDog", isEnforcement, addAdoptedDogRouter);
+app.use("/dogAdoptions/editDog", isEnforcement, editAdoptedDogRouter);
 
 /* dogtag related routes. */
 app.use("/dogtags", isEnforcement, dogTagRouter);
@@ -763,6 +771,29 @@ app.use("/taxiLicenses/editPlate", isEnforcement, editTaxiPlateRoute);
 //   true,
 //   "America/Toronto"
 // );
+
+/* function to load all models from models folder */
+// Load models from subdirectories
+// const modelsDir = path.join(__dirname, 'models');
+
+// function loadModels(dir) {
+//   fs.readdirSync(dir).forEach((file) => {
+//     const filePath = path.join(dir, file);
+//     const stat = fs.statSync(filePath);
+
+//     if (stat.isDirectory()) {
+//       // If it's a directory, recursively load models from it
+//       loadModels(filePath);
+//     } else if (file.endsWith('.js')) {
+//       // If it's a JavaScript file, require and initialize the model
+//       const model = require(filePath);
+//       model.initialize(db.sequelize);
+//     }
+//   });
+// }
+
+// // Start loading models from the models directory
+// loadModels(modelsDir);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

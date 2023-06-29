@@ -1,6 +1,6 @@
 <h2 class="text-center mt-2">Dog Adoptions</h2>
 <h4>Filtering</h4>
-<div class="row mb-1">
+<div class="row">
   <div class="col">
     <form class="mb-0" method="GET">
       <select
@@ -54,11 +54,22 @@
       >Reset</a>
     </form>
   </div>
+</div>
+<div class="row mb-1">
   <div class="col">
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
-    <a href="/dogAdoptions/addAdopter" class="btn btn-sm btn-primary float-end">Add Adopter</a>
+  </div>
+  <div class="col-md-auto pe-0">
+    <a href="/dogAdoptions/addDog" class="btn btn-sm btn-primary float-end">Add
+      Dog</a>
+  </div>
+  <div class="col-md-auto">
+    <a
+      href="/dogAdoptions/addAdopter"
+      class="btn btn-sm btn-primary float-end"
+    >Add Adopter</a>
   </div>
 </div>
 
@@ -79,48 +90,135 @@
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
-      <th>Date of Adoption</th>
-      <th>Dog Name</th>
-      <th>Dog Breed</th>
-      <th>Colour</th>
-      <th>Gender</th>
-      <th>Notes</th>
       <th>Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td class="tableLink">
-          <a
-            class="stretched-link"
-            id="ownerLink"
-            href="#"
-            title="View Owner Profile"
-          >{{this.firstName}} {{this.lastName}}</a></td>
+        <td>{{this.firstName}} {{this.lastName}}</td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
-        {{#each addresses}}
+        {{#each adopterAddresses}}
           <td>{{this.streetNumber}}
             {{this.streetName}},
             {{this.town}}
             {{this.postalCode}}</td>
-          <td>{{this.dogName}}</td>
-          <td>{{this.dogBreed}}</td>
-          <td>{{this.colour}}</td>
-          <td>{{this.gender}}</td>
-          <td>{{this.notes}}</td>
         {{/each}}
-        <td>
+        <td style="width: 16%;">
           <a
-            href="/dogtags/editOwner/{{this.ownerID}}"
+            href="/dogAdoptions/editAdopter/{{this.adopterID}}"
             class="btn btn-sm btn-secondary"
           >Edit</a>
+          |
+          <button
+            data-bs-toggle="modal"
+            data-bs-target="#adoptionModal-{{this.adopterID}}"
+            class="btn btn-sm btn-primary"
+          >Register Dog to Adopter</button>
         </td>
       </tr>
     {{/each}}
   </tbody>
 </table>
+<!-- Modal -->
+{{#each data}}
+  <div
+    class="modal fade"
+    id="adoptionModal-{{this.adopterID}}"
+    tabindex="-1"
+    aria-labelledby="adopterModal"
+    aria-hidden="true"
+  >
+    <form method="POST">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Register Dog to <strong>{{this.firstName}} {{this.lastName}}</strong></h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col">
+                <!-- Table -->
+                <div class="table-container">
+                  <table
+                    class="table table-responsive table-bordered table-striped table-hover sortable"
+                  >
+                    <thead>
+                      <tr>
+                        <th></th>
+                        <th>Dog Name</th>
+                        <th>Date Of Adoption</th>
+                        <th>Dog Breed</th>
+                        <th>Colour</th>
+                        <th>Gender</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                      <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                      <div class="row" style="display: none;">
+                        <div class="col">
+                          <label for="Adopter ID" class="form-label">Adopter ID</label>
+                          <input
+                            type="number"
+                            class="form-control"
+                            name="adopterID"
+                            value="{{this.adopterID}}"
+                            readonly
+                          />
+                        </div>
+                      </div>
+                      {{#each ../adoptedDogs}}
+                        {{#unless this.adopterID}}
+                          <tr>
+                            <td>
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="selection"
+                                  id="selection-{{this.adoptedDogID}}"
+                                  value="{{this.adoptedDogID}}"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="selection-{{this.adoptedDogID}}"
+                                ></label>
+                              </div>
+                            </td>
+                            <td>{{this.dogName}}</td>
+                            <td>{{this.dateOfAdoption}}</td>
+                            <td>{{this.breed}}</td>
+                            <td>{{this.colour}}</td>
+                            <td>{{this.gender}}</td>
+                          </tr>
+                        {{/unless}}
+                      {{/each}}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Close</button>
+            <button type="submit" class="btn btn-primary">Submit Adoption</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+{{/each}}
 <nav id="pagination">
   <ul class="pagination pagination-sm">
     {{#if paginate.hasPreviousPages}}
