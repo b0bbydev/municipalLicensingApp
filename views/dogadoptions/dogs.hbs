@@ -94,12 +94,22 @@
         <td>{{this.colour}}</td>
         <td>{{this.gender}}</td>
         <td>{{this.notes}}</td>
-        <td style="width: 16%;">
-          <a
-            href="/dogAdoptions/editDog/{{this.adoptedDogID}}"
-            class="btn btn-sm btn-secondary"
-          >Edit</a>
-        </td>
+        {{#if this.adopterID}}
+          <td style="width: 16%;">
+            <a
+              href="/dogAdoptions/editDog/{{this.adoptedDogID}}"
+              class="btn btn-sm btn-secondary"
+            >Edit</a>
+            <button class="btn btn-sm btn-primary">View Adopter</button>
+          </td>
+        {{else}}
+          <td style="width: 16%;">
+            <a
+              href="/dogAdoptions/editDog/{{this.adoptedDogID}}"
+              class="btn btn-sm btn-secondary"
+            >Edit</a>
+          </td>
+        {{/if}}
       </tr>
     {{/each}}
   </tbody>
@@ -113,7 +123,7 @@
     {{/if}}
     {{#each pages}}
       <li class="page-item">
-        <a class="page-link {{#contains this.url ../currentPage}}active pagination-color {{/contains}}" href="{{this.url}}">{{this.number}}</a>
+       <a class="page-link {{#contains this.url ../currentPage}}active pagination-color {{/contains}}" href="{{this.url}}">{{this.number}}</a>
       </li>
     {{/each}}
     {{#if hasMorePages}}
