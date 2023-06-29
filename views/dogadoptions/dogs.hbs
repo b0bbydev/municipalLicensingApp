@@ -48,7 +48,7 @@
       >Search</button>
       <a
         id="filterButton"
-        href="/dogAdoptions"
+        href="/dogAdoptions/dogs"
         class="btn btn-sm btn-secondary"
         type="submit"
       >Reset</a>
@@ -60,16 +60,6 @@
     {{#if queryCount}}
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
-  </div>
-  <div class="col-md-auto pe-0">
-    <a href="/dogAdoptions/addDog" class="btn btn-sm btn-primary float-end">Add
-      Dog</a>
-  </div>
-  <div class="col-md-auto">
-    <a
-      href="/dogAdoptions/addAdopter"
-      class="btn btn-sm btn-primary float-end"
-    >Add Adopter</a>
   </div>
 </div>
 
@@ -105,104 +95,12 @@
         <td>{{this.gender}}</td>
         <td>{{this.notes}}</td>
         <td style="width: 16%;">
-          {{#if this.adopterID}}
-            <a
-              href="/dogAdoptions/editAdopter/{{this.adoptedDogID}}"
-              class="btn btn-sm btn-secondary"
-            >Edit</a>
-            {{else}}
-            <a
-              href="/dogAdoptions/editAdopter/{{this.adoptedDogID}}"
-              class="btn btn-sm btn-secondary"
-            >Edit</a>
-            |
-            <button
-              data-bs-toggle="modal"
-              data-bs-target="#adoptedDog-{{this.adoptedDogID}}"
-              class="btn btn-sm btn-primary"
-            >Register Dog to Adopter</button>
-          {{/if}}
+          <a
+            href="/dogAdoptions/editDog/{{this.adoptedDogID}}"
+            class="btn btn-sm btn-secondary"
+          >Edit</a>
         </td>
       </tr>
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="adoptedDog-{{this.adoptedDogID}}"
-        tabindex="-1"
-        aria-labelledby="registerDogModal"
-        aria-hidden="true"
-      >
-        <form method="POST">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Register Dog to Adopter</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <!-- Need to get adopterID from form to update, but don't need user to see it - set display: none; -->
-                <div class="row" style="display: none;">
-                  <div class="col">
-                    <label for="Adopted Dog ID" class="form-label">Adopted Dog
-                      ID</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="adoptedDogID"
-                      value="{{this.adoptedDogID}}"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <label for="Dog Name" class="form-label">Dog Name</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      name="dogName"
-                      value="{{this.dogName}}"
-                      readonly
-                    />
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col">
-                    <label for="Adopters" class="form-label">Adopters</label>
-                    <input
-                      list="adopters"
-                      class="form-control"
-                      placeholder="Adopter List"
-                      name="adopterName"
-                      required
-                    />
-                    <datalist id="adopters">
-                      {{#each ../adopters}}
-                        <option
-                          value="{{this.firstName}} {{this.lastName}}"
-                        >{{this.firstName}} {{this.lastName}}</option>
-                      {{/each}}
-                    </datalist>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >Close</button>
-                <button type="submit" class="btn btn-primary">Submit Renewal</button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
     {{/each}}
   </tbody>
 </table>

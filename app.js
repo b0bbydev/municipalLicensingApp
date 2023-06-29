@@ -82,6 +82,7 @@ var editDogAdopterRouter = require("./routes/dogAdoptions/editAdopter");
 var dogAdopterRouter = require("./routes/dogAdoptions/adopter");
 var addAdoptedDogRouter = require("./routes/dogAdoptions/addDog");
 var editAdoptedDogRouter = require("./routes/dogAdoptions/editDog");
+var adoptedDogsRouter = require("./routes/dogAdoptions/dogs");
 
 /* dogtag related routes. */
 var dogTagRouter = require("./routes/dogtags/index");
@@ -423,6 +424,7 @@ app.use("/dogAdoptions/editAdopter", isEnforcement, editDogAdopterRouter);
 app.use("/dogAdoptions/adopter", isEnforcement, dogAdopterRouter);
 app.use("/dogAdoptions/addDog", isEnforcement, addAdoptedDogRouter);
 app.use("/dogAdoptions/editDog", isEnforcement, editAdoptedDogRouter);
+app.use("/dogAdoptions/dogs", isEnforcement, adoptedDogsRouter);
 
 /* dogtag related routes. */
 app.use("/dogtags", isEnforcement, dogTagRouter);

@@ -80,7 +80,7 @@ router.post(
     .trim(),
   body("colour")
     .if(body("colour").notEmpty())
-    .isEmail()
+    .matches(/^[^%<>^$\\;!{}?]+$/)
     .withMessage("Invalid Colour Entry!")
     .trim(),
   body("gender")
@@ -134,7 +134,7 @@ router.post(
         }
       )
         .then(() => {
-          return res.redirect("/dogAdoptions");
+          return res.redirect("/dogAdoptions/dogs");
         })
         .catch((err) => {
           return res.render("dogAdoptions/editDog", {

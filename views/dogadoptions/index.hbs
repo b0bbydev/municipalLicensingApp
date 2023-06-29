@@ -55,6 +55,16 @@
     </form>
   </div>
 </div>
+<div class="row">
+  <div class="col-1 pe-0 me-0" style="width: 15%">
+    <span id="quickLinks">Quick Links:</span>
+    <a
+      class="user-select-none"
+      id="getExpiredTags"
+      href="/dogAdoptions/dogs"
+    >View Dogs</a>
+  </div>
+</div>
 <div class="row mb-1">
   <div class="col">
     {{#if queryCount}}
@@ -105,7 +115,7 @@
             {{this.town}}
             {{this.postalCode}}</td>
         {{/each}}
-        <td style="width: 16%;">
+        <td style="width: 19%;">
           <a
             href="/dogAdoptions/editAdopter/{{this.adopterID}}"
             class="btn btn-sm btn-secondary"
