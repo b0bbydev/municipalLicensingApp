@@ -29,7 +29,7 @@
     "plivo": "^4.34.2",
     "nodemon": "^2.0.20",
     "plivo": "^4.34.0",
-    "sequelize": "^6.31.1",
+    "sequelize": "^6.32.0",
     "winston": "^3.8.2",
     "winston-mail": "^2.0.0"
   }
