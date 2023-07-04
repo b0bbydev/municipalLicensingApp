@@ -44,8 +44,7 @@ const AdoptedDog = sequelize.define("adoptedDog", {
 });
 
 // create relationship with adopters table.
-Adopter.hasMany(AdoptedDog, {
-  foreignKey: "adopterID",
-});
+Adopter.hasMany(AdoptedDog, { as: "dogs" });
+AdoptedDog.belongsTo(Adopter, { as: "adopter" });
 
 module.exports = AdoptedDog;

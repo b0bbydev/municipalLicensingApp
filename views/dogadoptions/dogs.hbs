@@ -94,7 +94,7 @@
         <td>{{this.colour}}</td>
         <td>{{this.gender}}</td>
         <td>{{this.notes}}</td>
-        {{#if this.adopterID}}
+        {{#if this.adopterAdopterID}}
           <td style="width: 16%;">
             <a
               href="/dogAdoptions/editDog/{{this.adoptedDogID}}"
@@ -103,7 +103,7 @@
             <button
               class="btn btn-sm btn-primary"
               data-bs-toggle="modal"
-              data-bs-target="#adopterModal-{{this.adopterID}}"
+              data-bs-target="#adopterModal-{{this.adopterAdopterID}}"
             >View Adopter</button>
           </td>
         {{else}}
@@ -115,88 +115,6 @@
           </td>
         {{/if}}
       </tr>
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="adopterModal-{{this.adopterID}}"
-        tabindex="-1"
-        aria-labelledby="adoptedDogModal"
-        aria-hidden="true"
-      >
-        <form method="POST">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title">Register Dog to
-                  <strong>{{this.firstName}} {{this.lastName}}</strong></h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
-              </div>
-              <div class="modal-body">
-                <div class="row">
-                  <div class="col">
-                    <!-- Table -->
-                    <div class="table-container">
-                      <table
-                        class="table table-responsive table-bordered table-striped table-hover sortable"
-                      >
-                        <thead>
-                          <tr>
-                            <th></th>
-                            <th>Dog Name</th>
-                            <th>Date Of Adoption</th>
-                            <th>Dog Breed</th>
-                            <th>Colour</th>
-                            <th>Gender</th>
-                          </tr>
-                        </thead>
-                        <tbody class="table-group-divider">
-                          {{#each adopters}}
-                            <tr>
-                              <td>
-                                <div class="form-check">
-                                  <input
-                                    class="form-check-input"
-                                    type="radio"
-                                    name="selection"
-                                    id="selection-{{this.adopterID}}"
-                                    value="{{this.adopterID}}"
-                                  />
-                                  <label
-                                    class="form-check-label"
-                                    for="selection-{{this.adopterID}}"
-                                  ></label>
-                                </div>
-                              </td>
-                              <td>{{this.dogName}}</td>
-                              <td>{{this.dateOfAdoption}}</td>
-                              <td>{{this.breed}}</td>
-                              <td>{{this.colour}}</td>
-                              <td>{{this.gender}}</td>
-                            </tr>
-                          {{/each}}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                >Close</button>
-                <button type="submit" class="btn btn-primary">Submit Adoption</button>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
     {{/each}}
   </tbody>
 </table>
@@ -219,3 +137,48 @@
     {{/if}}
   </ul>
 </nav>
+
+{{#each data}}
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="adopterModal-{{this.adopterAdopterID}}"
+    tabindex="-1"
+    aria-labelledby="adoptedDogModal"
+    aria-hidden="true"
+  >
+    <form method="POST">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Adopter Info</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col">
+                Full Name:
+              </div>
+              <div class="col float-end">
+                <p>{{this.policeVSC}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >Close</button>
+          <button type="submit" class="btn btn-primary">Submit Adoption</button>
+        </div>
+      </div>
+    </form>
+  </div>
+{{/each}}

@@ -46,17 +46,17 @@ router.get(
         },
       });
 
-      // get adopters.
-      var adopters = await Adopter.findAll({});
-
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
         // get all owners & addresses.
-        Adopter.findAndCountAll({
+        AdoptedDog.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
-          order: [["adoptedDogID", "DESC"]],
-          include: AdoptedDog,
+          order: [["adopterAdopterID", "DESC"]],
+          include: {
+            model: Adopter,
+            as: "adopter",
+          },
         })
           .then((results) => {
             // for pagination.
@@ -69,7 +69,6 @@ router.get(
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
-              adopters: adopters,
               filterOptions: filterOptions,
               currentPage: req.query.page,
               pageCount,

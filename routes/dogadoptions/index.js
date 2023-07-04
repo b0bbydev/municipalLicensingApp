@@ -134,7 +134,7 @@ router.post(
     } else {
       AdoptedDog.update(
         {
-          adopterID: req.body.adopterID,
+          adopterAdopterID: req.body.adopterID,
         },
         {
           where: {

@@ -72,14 +72,15 @@
     {{/if}}
   </div>
   <div class="col-md-auto pe-0">
-    <a href="/dogAdoptions/addDog" class="btn btn-sm btn-primary float-end">Add
-      Dog</a>
-  </div>
-  <div class="col-md-auto">
     <a
       href="/dogAdoptions/addAdopter"
       class="btn btn-sm btn-primary float-end"
     >Add Adopter</a>
+  </div>
+  <div class="col-md-auto">
+
+    <a href="/dogAdoptions/addDog" class="btn btn-sm btn-primary float-end">Add
+      Dog</a>
   </div>
 </div>
 
@@ -144,7 +145,8 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Register Dog to <strong>{{this.firstName}} {{this.lastName}}</strong></h5>
+            <h5 class="modal-title">Register Dog to
+              <strong>{{this.firstName}} {{this.lastName}}</strong></h5>
             <button
               type="button"
               class="btn-close"
@@ -185,7 +187,7 @@
                         </div>
                       </div>
                       {{#each ../adoptedDogs}}
-                        {{#unless this.adopterID}}
+                        {{#unless this.adopterAdopterID}}
                           <tr>
                             <td>
                               <div class="form-check">
