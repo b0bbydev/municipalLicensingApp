@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 // models.
+const Adopter = require("../../models/dogAdoptions/adopter");
 const AdoptedDog = require("../../models/dogAdoptions/adoptedDog");
 const Dropdown = require("../../models/dropdownManager/dropdown");
 // sequelize.
@@ -11,7 +12,7 @@ const paginate = require("express-paginate");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /dogAdoptions */
+/* GET /dogAdoptions/dogs */
 router.get(
   "/",
   body("filterCategory")
@@ -45,13 +46,17 @@ router.get(
         },
       });
 
+      // get adopters.
+      var adopters = await Adopter.findAll({});
+
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
         // get all owners & addresses.
-        AdoptedDog.findAndCountAll({
+        Adopter.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
           order: [["adoptedDogID", "DESC"]],
+          include: AdoptedDog,
         })
           .then((results) => {
             // for pagination.
@@ -64,6 +69,7 @@ router.get(
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
+              adopters: adopters,
               filterOptions: filterOptions,
               currentPage: req.query.page,
               pageCount,
@@ -78,7 +84,7 @@ router.get(
           .catch((err) => {
             return res.render("dogAdoptions/dogs", {
               title: "BWG | Dog Adoptions",
-              message: "Page Error!",
+              message: "Page Error!" + err,
               auth: req.session.auth, // authorization.
             });
           });
