@@ -42,7 +42,7 @@ router.get(
       var filterOptions = await Dropdown.findAll({
         where: {
           dropdownFormID: 29, // filtering options.
-          dropdownTitle: "Dog Adopter Filtering Options",
+          dropdownTitle: "Adopted Dog Filtering Options",
         },
       });
 

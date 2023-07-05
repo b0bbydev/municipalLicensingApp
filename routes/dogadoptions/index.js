@@ -5,6 +5,8 @@ const Adopter = require("../../models/dogAdoptions/adopter");
 const AdopterAddress = require("../../models/dogAdoptions/adopterAddress");
 const AdoptedDog = require("../../models/dogAdoptions/adoptedDog");
 const Dropdown = require("../../models/dropdownManager/dropdown");
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -63,6 +65,170 @@ router.get(
               as: "addresses",
             },
           ],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
+
+          return res.render("dogAdoptions/index", {
+            title: "BWG | Dog Adoptions",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterOptions: filterOptions,
+            adoptedDogs: adoptedDogs,
+            currentPage: req.query.page,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        });
+        // Adopter Name
+      } else if (req.query.filterCategory === "Adopter Name") {
+        // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
+        if (req.query.filterValue.trim().indexOf(" ") != -1) {
+          Adopter.findAndCountAll({
+            subQuery: false, // fixes column not found error when paginating a join.
+            limit: req.query.limit,
+            offset: req.skip,
+            where: Sequelize.where(
+              Sequelize.fn(
+                "concat",
+                Sequelize.col("firstName"),
+                " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+                Sequelize.col("lastName")
+              ),
+              {
+                [Op.like]: "%" + req.query.filterValue + "%",
+              }
+            ),
+            include: [
+              {
+                model: AdopterAddress,
+                as: "addresses",
+              },
+            ],
+          })
+            .then((results) => {
+              // for pagination.
+              const itemCount = results.count;
+              const pageCount = Math.ceil(results.count / req.query.limit);
+
+              return res.render("dogAdoptions/index", {
+                title: "BWG | Dog Adoptions",
+                message: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                data: results.rows,
+                filterCategory: req.query.filterCategory,
+                filterValue: req.query.filterValue,
+                filterOptions: filterOptions,
+                currentPage: req.query.page,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + results.count,
+                pages: paginate.getArrayPages(req)(
+                  5,
+                  pageCount,
+                  req.query.page
+                ),
+                prev: paginate.href(req)(true),
+                hasMorePages: paginate.hasNextPages(req)(pageCount),
+              });
+            })
+            // catch any scary errors and render page error.
+            .catch((err) => {
+              return res.render("dogAdoptions/index", {
+                title: "BWG | Dog Adoptions",
+                message: "Page Error!",
+                auth: req.session.auth, // authorization.
+              });
+            });
+        } else {
+          Adopter.findAndCountAll({
+            subQuery: false, // fixes column not found error when paginating a join.
+            limit: req.query.limit,
+            offset: req.skip,
+            where: {
+              [Op.or]: {
+                firstName: {
+                  [Op.like]: "%" + req.query.filterValue + "%",
+                },
+                lastName: {
+                  [Op.like]: "%" + req.query.filterValue + "%",
+                },
+              },
+            },
+            include: [
+              {
+                model: AdopterAddress,
+                as: "addresses",
+              },
+            ],
+          })
+            .then((results) => {
+              // for pagination.
+              const itemCount = results.count;
+              const pageCount = Math.ceil(results.count / req.query.limit);
+
+              return res.render("dogAdoptions/index", {
+                title: "BWG | Dog Adoptions",
+                message: messages,
+                email: req.session.email,
+                auth: req.session.auth, // authorization.
+                data: results.rows,
+                filterCategory: req.query.filterCategory,
+                filterValue: req.query.filterValue,
+                filterOptions: filterOptions,
+                currentPage: req.query.page,
+                pageCount,
+                itemCount,
+                queryCount: "Records returned: " + results.count,
+                pages: paginate.getArrayPages(req)(
+                  5,
+                  pageCount,
+                  req.query.page
+                ),
+                prev: paginate.href(req)(true),
+                hasMorePages: paginate.hasNextPages(req)(pageCount),
+              });
+            })
+            // catch any scary errors and render page error.
+            .catch((err) => {
+              return res.render("dogAdoptions/index", {
+                title: "BWG | Dog Adoptions",
+                message: "Page Error!",
+                auth: req.session.auth, // authorization.
+              });
+            });
+        }
+      } else if (req.query.filterCategory === "Address") {
+        Adopter.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          // functions in where clause, fancy.
+          where: Sequelize.where(
+            Sequelize.fn(
+              "concat",
+              Sequelize.col("streetNumber"),
+              " ", // have to include the whitespace between. i.e: JohnDoe != John Doe.
+              Sequelize.col("streetName")
+            ),
+            {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            }
+          ),
+          include: [
+            {
+              model: AdopterAddress,
+              as: "addresses",
+            },
+          ],
         })
           .then((results) => {
             // for pagination.
@@ -75,8 +241,61 @@ router.get(
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
               filterOptions: filterOptions,
-              adoptedDogs: adoptedDogs,
+              currentPage: req.query.page,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) => {
+            return res.render("dogAdoptions/index", {
+              title: "BWG | Dog Adoptions",
+              message: "Page Error!",
+              auth: req.session.auth, // authorization.
+            });
+          });
+      } else {
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+        // create filter query.
+        Adopter.findAndCountAll({
+          subQuery: false, // fixes column not found error when paginating a join.
+          limit: req.query.limit,
+          offset: req.skip,
+          where: {
+            [filterCategory]: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+          },
+          include: [
+            {
+              model: AdopterAddress,
+              as: "addresses",
+            },
+          ],
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogAdoptions/index", {
+              title: "BWG | Dog Adoptions",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
+              filterOptions: filterOptions,
               currentPage: req.query.page,
               pageCount,
               itemCount,
