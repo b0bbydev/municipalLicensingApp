@@ -53,10 +53,7 @@ router.get(
           limit: req.query.limit,
           offset: req.skip,
           order: [["adopterAdopterID", "DESC"]],
-          include: {
-            model: Adopter,
-            as: "adopter",
-          },
+          include: { model: Adopter, as: "adopter", include: "addresses" },
         })
           .then((results) => {
             // for pagination.
@@ -83,7 +80,7 @@ router.get(
           .catch((err) => {
             return res.render("dogAdoptions/dogs", {
               title: "BWG | Dog Adoptions",
-              message: "Page Error!" + err,
+              message: "Page Error!",
               auth: req.session.auth, // authorization.
             });
           });

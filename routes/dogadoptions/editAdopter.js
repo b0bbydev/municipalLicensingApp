@@ -48,6 +48,7 @@ router.get(
         include: [
           {
             model: AdopterAddress,
+            as: "addresses",
           },
         ],
       })
@@ -64,17 +65,17 @@ router.get(
               lastName: results.lastName,
               phoneNumber: results.phoneNumber,
               email: results.email,
-              streetNumber: results.adopterAddresses[0].streetNumber,
-              streetName: results.adopterAddresses[0].streetName,
-              town: results.adopterAddresses[0].town,
-              postalCode: results.adopterAddresses[0].postalCode,
+              streetNumber: results.addresses[0].streetNumber,
+              streetName: results.addresses[0].streetName,
+              town: results.addresses[0].town,
+              postalCode: results.addresses[0].postalCode,
             },
           });
         })
         .catch((err) => {
           return res.render("dogAdoptions/editAdopter", {
             title: "BWG | Edit Adopter",
-            message: "Page Error!",
+            message: "Page Error!" + err,
             auth: req.session.auth, // authorization.
           });
         });

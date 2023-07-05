@@ -60,6 +60,7 @@ router.get(
           include: [
             {
               model: AdopterAddress,
+              as: "addresses",
             },
           ],
         })

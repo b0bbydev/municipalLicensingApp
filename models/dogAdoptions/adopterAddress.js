@@ -35,6 +35,7 @@ const AdopterAddress = sequelize.define("adopterAddress", {
 
 // create relationship with adopters table.
 Adopter.hasMany(AdopterAddress, {
+  as: "addresses",
   foreignKey: "adopterID",
 });
 

@@ -162,21 +162,49 @@
           <div class="modal-body">
             <div class="row">
               <div class="col">
-                Full Name:
+                <strong>Full Name:</strong>
               </div>
               <div class="col float-end">
-                <p>{{this.policeVSC}}</p>
+                <p>{{this.adopter.firstName}} {{this.adopter.lastName}}</p>
               </div>
             </div>
+            <div class="row">
+              <div class="col">
+                <strong>Phone Number:</strong>
+              </div>
+              <div class="col float-end">
+                <p>{{this.adopter.phoneNumber}}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <strong>Email:</strong>
+              </div>
+              <div class="col float-end">
+                <p>{{this.adopter.email}}</p>
+              </div>
+            </div>
+            {{#each this.adopter.addresses}}
+              <div class="row">
+                <div class="col">
+                  <strong>Address:</strong>
+                </div>
+                <div class="col float-end">
+                  <p>{{this.streetNumber}}
+                    {{this.streetName}},
+                    {{this.town}}
+                    {{this.postalCode}}</p>
+                </div>
+              </div>
+            {{/each}}
           </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >Close</button>
-          <button type="submit" class="btn btn-primary">Submit Adoption</button>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Close</button>
+          </div>
         </div>
       </div>
     </form>
