@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 // models.
-const Adopter = require("../../models/dogAdoptions/adopter");
+const AdoptedDog = require("../../models/dogAdoptions/adoptedDog");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -39,10 +39,13 @@ router.get(
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
         // get all owners & addresses.
-        Adopter.findAndCountAll({
+        AdoptedDog.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
-          order: [["adopterID", "DESC"]],
+          where: {
+            adopterAdopterID: req.params.id,
+          },
+          order: [["adopterAdopterID", "DESC"]],
         })
           .then((results) => {
             // for pagination.
@@ -68,7 +71,7 @@ router.get(
           .catch((err) => {
             return res.render("dogAdoptions/adopter", {
               title: "BWG | Dog Adoptions",
-              message: "Page Error!",
+              message: "Page Error!" + err,
               auth: req.session.auth, // authorization.
             });
           });
@@ -76,5 +79,45 @@ router.get(
     }
   }
 );
+
+/* POST /dogAdoptions/adopter */
+router.post("/:id", async (req, res, next) => {
+  // server side validation.
+  const errors = validationResult(req);
+
+  // use built-in array() to convert Result object to array for custom error messages.
+  var errorArray = errors.array();
+
+  // if errors is NOT empty (if there are errors...).
+  if (!errors.isEmpty()) {
+    return res.render("dogAdoptions/index", {
+      title: "BWG | Dog Adoptions",
+      message: errorArray[0].msg, // custom error message. (should indicate which field has the error.)
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+    });
+  } else {
+    AdoptedDog.update(
+      {
+        adopterAdopterID: null,
+      },
+      {
+        where: {
+          adoptedDogID: req.body.adoptedDogID,
+        },
+      }
+    )
+      .then(() => {
+        return res.redirect("/dogAdoptions");
+      })
+      .catch((err) => {
+        return res.render("dogAdoptions/index", {
+          title: "BWG | Dog Adoptions",
+          message: "Page Error!",
+          auth: req.session.auth, // authorization.
+        });
+      });
+  }
+});
 
 module.exports = router;

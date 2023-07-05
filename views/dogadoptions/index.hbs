@@ -107,7 +107,13 @@
   <tbody class="table-group-divider">
     {{#each data}}
       <tr>
-        <td>{{this.firstName}} {{this.lastName}}</td>
+        <td class="tableLink">
+          <a
+            class="stretched-link"
+            id="ownerLink"
+            href="/dogAdoptions/adopter/{{this.adopterID}}"
+            title="View Adopter Profile"
+          >{{this.firstName}} {{this.lastName}}</a></td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
         {{#each addresses}}

@@ -1,10 +1,10 @@
 <h2 class="text-center mt-2">Adopter Profile</h2>
+
 <div class="row mb-1">
-  <div id="registerDogButton" class="col-sm-4">
-    <a
-      href="/dogAdoptions/addDog/{{adopterID}}"
-      class="btn btn-sm btn-primary float-end"
-    >Register Dog to Adopter</a>
+  <div class="col">
+    {{#if queryCount}}
+      <strong class="float-start mt-2">{{queryCount}}</strong>
+    {{/if}}
   </div>
 </div>
 
@@ -39,10 +39,17 @@
         <td>{{this.gender}}</td>
         <td>{{this.notes}}</td>
         <td style="width: 11.5%;">
-          <a
-            href="/dogAdoptions/editDog/{{this.adoptedDogID}}"
-            class="btn btn-sm btn-secondary"
-          >Edit Dog</a></td>
+          <form method="POST">
+            <input
+              style="display: none;"
+              type="number"
+              class="form-control"
+              name="adoptedDogID"
+              value="{{this.adoptedDogID}}"
+              readonly
+            />
+            <button type="submit" class="btn btn-sm btn-danger">Remove Dog</button>
+          </form></td>
       </tr>
     {{/each}}
   </tbody>
