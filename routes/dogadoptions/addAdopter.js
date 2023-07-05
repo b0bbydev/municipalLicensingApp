@@ -138,7 +138,7 @@ router.post(
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
-          adopterAddresses: [
+          addresses: [
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
@@ -148,7 +148,12 @@ router.post(
           ],
         },
         {
-          include: [AdopterAddress],
+          include: [
+            {
+              model: AdopterAddress,
+              as: "addresses",
+            },
+          ],
         }
       )
         .then(() => {

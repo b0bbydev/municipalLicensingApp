@@ -4,6 +4,8 @@ var router = express.Router();
 const Adopter = require("../../models/dogAdoptions/adopter");
 const AdoptedDog = require("../../models/dogAdoptions/adoptedDog");
 const Dropdown = require("../../models/dropdownManager/dropdown");
+// helper.
+const funcHelpers = require("../../config/funcHelpers");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -66,6 +68,54 @@ router.get(
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
+              filterOptions: filterOptions,
+              currentPage: req.query.page,
+              pageCount,
+              itemCount,
+              queryCount: "Records returned: " + results.count,
+              pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+              prev: paginate.href(req)(true),
+              hasMorePages: paginate.hasNextPages(req)(pageCount),
+            });
+          })
+          // catch any scary errors and render page error.
+          .catch((err) => {
+            return res.render("dogAdoptions/dogs", {
+              title: "BWG | Dog Adoptions",
+              message: "Page Error!",
+              auth: req.session.auth, // authorization.
+            });
+          });
+      } else {
+        // format filterCategory to match column name in db - via handy dandy camelize() function.
+        var filterCategory = funcHelpers.camelize(req.query.filterCategory);
+
+        // create filter query.
+        AdoptedDog.findAndCountAll({
+          subQuery: false, // fixes column not found error when paginating a join.
+          limit: req.query.limit,
+          offset: req.skip,
+          order: [["adopterAdopterID", "DESC"]],
+          where: {
+            [filterCategory]: {
+              [Op.like]: "%" + req.query.filterValue + "%",
+            },
+          },
+          include: { model: Adopter, as: "adopter", include: "addresses" },
+        })
+          .then((results) => {
+            // for pagination.
+            const itemCount = results.count;
+            const pageCount = Math.ceil(results.count / req.query.limit);
+
+            return res.render("dogAdoptions/dogs", {
+              title: "BWG | Dog Adoptions",
+              message: messages,
+              email: req.session.email,
+              auth: req.session.auth, // authorization.
+              data: results.rows,
+              filterCategory: req.query.filterCategory,
+              filterValue: req.query.filterValue,
               filterOptions: filterOptions,
               currentPage: req.query.page,
               pageCount,
