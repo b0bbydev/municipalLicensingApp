@@ -8,7 +8,7 @@
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "activedirectory2": "^2.2.0",
-    "bcrypt": "^5.1.0",
+    "bcrypt": "^5.0.1",
     "cookie-parser": "~1.4.4",
     "cron": "^2.3.1",
     "debug": "~4.3.4",
@@ -26,11 +26,8 @@
     "moment": "^2.29.4",
     "morgan": "~1.10.0",
     "mysql2": "^3.4.3",
-    "plivo": "^4.34.2",
-    "nodemon": "^2.0.20",
-    "plivo": "^4.34.0",
+    "nodemon": "^1.14.9",
     "sequelize": "^6.32.1",
-    "winston": "^3.8.2",
-    "winston-mail": "^2.0.0"
+    "winston": "^3.8.2"
   }
 }
