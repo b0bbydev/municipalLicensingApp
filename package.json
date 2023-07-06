@@ -8,8 +8,8 @@
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "activedirectory2": "^2.2.0",
-    "bcrypt": "^5.0.1",
-    "cookie-parser": "~1.4.4",
+    "bcrypt": "^5.1.0",
+    "cookie-parser": "~1.4.6",
     "cron": "^2.3.1",
     "debug": "~4.3.4",
     "dotenv": "^16.3.1",
@@ -21,13 +21,14 @@
     "express-validator": "^7.0.1",
     "handlebars-group-by": "^1.0.1",
     "hbs": "^4.2.0",
-    "helmet": "^6.2.0",
+    "helmet": "^7.0.0",
     "http-errors": "~2.0.0",
     "moment": "^2.29.4",
     "morgan": "~1.10.0",
-    "mysql2": "^3.4.3",
-    "nodemon": "^1.14.9",
+    "mysql2": "^3.5.0",
+    "nodemon": "^2.0.22",
+    "npm-check-updates": "^16.10.13",
     "sequelize": "^6.32.1",
-    "winston": "^3.8.2"
+    "winston": "^3.9.0"
   }
 }
