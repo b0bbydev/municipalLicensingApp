@@ -25,6 +25,7 @@
     "http-errors": "~2.0.0",
     "moment": "^2.29.4",
     "morgan": "~1.10.0",
+    "mysql": "^2.18.1",
     "mysql2": "^3.5.0",
     "nodemon": "^2.0.22",
     "npm-check-updates": "^16.10.13",

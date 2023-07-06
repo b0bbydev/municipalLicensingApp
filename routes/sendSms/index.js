@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var plivo = require("plivo");
+//var plivo = require("plivo");
 
 /* GET /sendSms page. */
 router.get("/", async (req, res, next) => {
@@ -37,29 +37,29 @@ router.get("/", async (req, res, next) => {
 //     });
 // });
 
-router.post("/", async (req, res, next) => {
-  let client = new plivo.Client(process.env.AUTH_ID, process.env.AUTH_TOKEN);
-  client.messages
-    .create({
-      src: process.env.SRC_NUMBER, // rented number from Plivo.
-      dst: "+" + req.body.recipient,
-      text: req.body.textMessage,
-    })
-    .then(function (message_created) {
-      console.log(message_created);
-    })
-    .then(() => {
-      return res.redirect("/sendSms");
-    })
-    // catch errors.
-    .catch((err) => {
-      return res.render("sendSms/index", {
-        title: "BWG | Send SMS",
-        message: "Page Error!" + err,
-        email: req.session.email,
-        auth: req.session.auth, // authorization.
-      });
-    });
-});
+// router.post("/", async (req, res, next) => {
+//   let client = new plivo.Client(process.env.AUTH_ID, process.env.AUTH_TOKEN);
+//   client.messages
+//     .create({
+//       src: process.env.SRC_NUMBER, // rented number from Plivo.
+//       dst: "+" + req.body.recipient,
+//       text: req.body.textMessage,
+//     })
+//     .then(function (message_created) {
+//       console.log(message_created);
+//     })
+//     .then(() => {
+//       return res.redirect("/sendSms");
+//     })
+//     // catch errors.
+//     .catch((err) => {
+//       return res.render("sendSms/index", {
+//         title: "BWG | Send SMS",
+//         message: "Page Error!" + err,
+//         email: req.session.email,
+//         auth: req.session.auth, // authorization.
+//       });
+//     });
+// });
 
 module.exports = router;
