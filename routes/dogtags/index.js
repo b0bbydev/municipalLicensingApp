@@ -586,11 +586,6 @@ router.get(
         auth: req.session.auth, // authorization.
       });
     } else {
-      // this is used to tell the .hbs pages that we've accessed the /owner page - and if we hit back we ALWAYS want to be taken back to the main list.
-      if (req.url.substring(0, 7).match("/owner/")) {
-        req.session.dogtagUrl = "true";
-      }
-
       // check if there's an error message in the session
       let messages = req.session.messages || [];
       // clear session messages

@@ -70,6 +70,7 @@ router.get(
               data: results.rows,
               filterOptions: filterOptions,
               currentPage: req.query.page,
+              dogAdoptionUrl: req.session.dogAdoptionUrl,
               pageCount,
               itemCount,
               queryCount: "Records returned: " + results.count,

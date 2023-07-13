@@ -33,8 +33,8 @@ const logger = require("./config/logger");
 // https://github.com/sendgrid/sendgrid-nodejs
 // const sgMail = require("@sendgrid/mail");
 // sgMail.setApiKey(process.env.SEND_GRID_KEY);
-const fs = require("fs");
-var CronJob = require("cron").CronJob;
+// const fs = require("fs");
+// var CronJob = require("cron").CronJob;
 // authHelper middleware.
 const { isAdmin, isEnforcement, isPolicy } = require("./config/authHelpers");
 
@@ -272,6 +272,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 // static() used for serving static files like images, css etc..
 app.use(express.static(path.join(__dirname, "/public")));
+
+// local vars. (for back button logic)
+app.use((req, res, next) => {
+  const currentURL = req.url;
+  // extract the base route for dogtag url.
+  const baseRoute = currentURL.split("/")[1];
+  res.locals.isDogAdoptionsDogsPage = currentURL === "/dogAdoptions/dogs";
+  res.locals.isDogTagsOwnerPage =
+    baseRoute === "dogtags" && req.url.includes("/owner");
+  next();
+});
 
 // connection to db.
 try {
