@@ -96,7 +96,7 @@ router.post(
         notes: req.body.notes,
       })
         .then(() => {
-          return res.redirect("/dogAdoptions");
+          return res.redirect("/dogAdoptions/dogs");
         })
         .catch((err) => {
           return res.render("dogAdoptions/addDog", {
