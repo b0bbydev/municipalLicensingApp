@@ -50,6 +50,10 @@ thead {
   font-size: 0.9rem;
 }
 
+.border-grey {
+  color: #dedede;
+}
+
 .nav-item:hover,
 .nav-item-home:hover,
 .nav-item-admin:hover,

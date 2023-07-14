@@ -1,7 +1,7 @@
 <!--
   @author Bobby Jonkman
  -->
-
+ 
 <!doctype html>
 <html lang="en">
   <head>
@@ -33,12 +33,12 @@
   </head>
   <div class="container-fluid overflow-hidden">
     <div class="row vh-100 overflow-auto">
+      <!-- side nav start -->
       <div
-        class="col-12 col-sm-3 col-xl-2 px-0 d-flex sticky-top"
-        style="border-right: 1px solid #dedede;"
+        class="col-2 px-0 d-flex d-none d-lg-block sticky-top border-end border-grey"
       >
         <div
-          class="d-flex flex-sm-column flex-row flex-grow-1 align-items-center align-items-sm-start px-0 pt-2"
+          class="d-flex flex-column flex-row flex-grow-1 align-items-center align-items-start px-0 pt-2 text-dark mb-auto"
         >
           <div class="nav-img text-center py-3 w-100">
             <a title="Home" href="/">
@@ -46,20 +46,29 @@
             </a>
           </div>
           {{#if email}}
-            <div class="row text-center w-100">
-              <div class="col">
+            <div class="row text-center w-100 d-none d-sm-block">
+              <div class="col-auto">
                 <i class="icon-blue icon-large bi bi-person-fill"></i>
                 <span>Current User:</span>
               </div>
-            </div>
-            <div class="row text-center w-100 mb-3">
-              <div class="col">
+              <div class="col-auto mb-3">
                 <span>{{lowercase email}}</span>
+                <span
+                  class="dropdown-toggle"
+                  type="button"
+                  id="dropdownMenu"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                </span>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu">
+                  <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                </ul>
               </div>
             </div>
           {{/if}}
           <ul
-            class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-sm-auto mb-0 justify-content-center align-items-center align-items-sm-start w-100"
+            class="nav nav-pills flex-sm-column flex-row flex-nowrap flex-shrink-1 flex-sm-grow-0 flex-grow-1 mb-auto justify-content-center align-items-center align-items-sm-start w-100"
             id="menu"
           >
             <!-- Back navigation -->
@@ -182,7 +191,8 @@
                     >
                       <i class="fs-4 icon-blue bi bi-grid"></i>
                       <span class="dropmenu-text ms-2 d-none d-sm-inline">
-                        Licensing Apps</span>
+                        Licensing Apps
+                      </span>
                     </button>
                   </h2>
                   <div
@@ -337,16 +347,53 @@
               </li>
             {{/includes}}
           </ul>
-          <div class="mt-sm-auto ms-auto ms-sm-0 flex-shrink-1 w-100">
-            <div class="nav-item-logout w-100 py-3">
-              <a href="/logout" class="nav-link align-middle ps-3">
-                <i class="fs-6 icon-blue bi bi-box-arrow-in-left"></i>
-                <span class="ms-1 d-none d-sm-inline">Logout</span>
-              </a>
-            </div>
-          </div>
         </div>
       </div>
+      <!-- side nav end -->
+      <!-- top nav start -->
+      <div class="col px-0 d-flex d-lg-none sticky-top">
+        <nav
+          class="navbar navbar-expand navbar-white bg-white w-100 border-bottom pb-1"
+        >
+          <div class="container">
+            <div class="nav-img">
+              <a title="Home" href="/">
+                <img
+                  src="/images/bwg-logo.webp"
+                  alt="bwg-logo"
+                  height="45px"
+                  width="65px"
+                />
+              </a>
+            </div>
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarCollapse"
+              aria-controls="navbarCollapse"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link 1</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link 2</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Link 3</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+      <!-- top nav end -->
       <div class="col d-flex flex-column h-sm-100">
         <main class="row overflow-auto mb-5">
           <div class="col">

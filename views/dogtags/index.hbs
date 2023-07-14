@@ -46,16 +46,16 @@
     type="submit"
   >Reset</a>
 </form>
-<div class="row">
-  <div class="col-1 pe-0 me-0" style="width: 10.95%">
+<div class="row align-items-center">
+  <div class="col-auto pe-0">
     <span id="quickLinks">Quick Links:</span>
     <a
       class="user-select-none"
       id="getExpiredTags"
       href="/dogtags/expiredTags"
-    >Expired Tags, </a>
+    >Expired Tags,</a>
   </div>
-  <div class="col px-0">
+  <div class="col-auto ps-1">
     <a
       class="user-select-none"
       id="getExpiredTags"
@@ -127,6 +127,7 @@
     {{/each}}
   </tbody>
 </table>
+
 <nav id="pagination">
   <ul class="pagination pagination-sm">
     {{#if paginate.hasPreviousPages}}
