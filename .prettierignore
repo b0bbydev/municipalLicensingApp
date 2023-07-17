@@ -1,4 +1,4 @@
 views/hideLayout.hbs
-views/layout.hbs
+
 views/policies/*.hbs
 views/poaMatters/index.hbs

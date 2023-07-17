@@ -1,8 +1,7 @@
 <!--
   @author Bobby Jonkman
  -->
- 
-<!doctype html>
+
 <html lang="en">
   <head>
     <!-- Required meta tags -->
@@ -351,48 +350,80 @@
       </div>
       <!-- side nav end -->
       <!-- top nav start -->
-      <div class="col px-0 d-flex d-lg-none sticky-top">
-        <nav
-          class="navbar navbar-expand navbar-white bg-white w-100 border-bottom pb-1"
-        >
-          <div class="container">
-            <div class="nav-img">
-              <a title="Home" href="/">
-                <img
-                  src="/images/bwg-logo.webp"
-                  alt="bwg-logo"
-                  height="45px"
-                  width="65px"
-                />
-              </a>
-            </div>
-            <button
-              class="navbar-toggler"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarCollapse"
-              aria-controls="navbarCollapse"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-              <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link 1</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link 2</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#">Link 3</a>
-                </li>
-              </ul>
-            </div>
+      <nav
+        class="navbar navbar-expand-lg bg-body-tertiary d-flex d-lg-none border-bottom pb-1"
+      >
+        <div class="container-fluid">
+          <div class="nav-img">
+            <a title="Home" href="/">
+              <img
+                src="/images/bwg-logo.webp"
+                alt="bwg-logo"
+                height="45px"
+                width="65px"
+              />
+            </a>
           </div>
-        </nav>
-      </div>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div
+            class="collapse navbar-collapse mt-1"
+            id="navbarSupportedContent"
+          >
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 border-top mt-1">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i class="fs-4 icon-blue bi bi-grid"></i>
+                  Admin Apps
+                </a>
+                <ul class="dropdown-menu">
+
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Licensing Apps
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Street Closures</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">POA Matters</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
       <!-- top nav end -->
       <div class="col d-flex flex-column h-sm-100">
         <main class="row overflow-auto mb-5">
