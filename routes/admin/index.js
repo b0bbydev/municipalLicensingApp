@@ -65,6 +65,8 @@ router.get(
           // this is used because a duplicate session can be created if logging in through multiple browsers, among other weird instances/glitches.
           // by using a Set it won't display duplicate values in the list/modal it's shown in.
           activeUsers.add(user);
+          // delete any undefined values. This can happen if someone is on the site but not logged in.
+          activeUsers.delete(undefined);
         }
       }
 
