@@ -23,8 +23,6 @@ var sessionStore = new MySQLStore(sessionStoreConfig);
 const sequelize = require("./config/sequelizeConfig");
 // groupBy helper.
 var groupBy = require("handlebars-group-by");
-// request limiter.
-// const limiter = require("./config/limiter");
 // moment.js
 var moment = require("moment");
 // logger.
