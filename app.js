@@ -26,7 +26,7 @@ var groupBy = require("handlebars-group-by");
 // moment.js
 var moment = require("moment");
 // logger.
-const logger = require("./config/logger");
+//const logger = require("./config/logger");
 // using Twilio SendGrid's v3 Node.js Library
 // https://github.com/sendgrid/sendgrid-nodejs
 // const sgMail = require("@sendgrid/mail");
@@ -381,7 +381,7 @@ app.use("/admin/addUser", isAdmin, adminAddUserRouter);
 app.use("/admin/editUser", isAdmin, adminEditUserRouter);
 app.use("/admin/manageAccess", isAdmin, adminManageAccessRouter);
 
-app.use("/dellLookup", isAdmin, dellLookupRouter);
+app.use("/dellLookup", dellLookupRouter);
 
 /* dropdownManager related routes */
 app.use("/dropdownManager", isAdmin, dropdownRouter);

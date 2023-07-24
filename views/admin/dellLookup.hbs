@@ -1,1 +1,59 @@
 <h2 class="text-center mt-2">Dell Lookup</h2>
+<form class="row g-5 m-auto" method="POST">
+  <div class="col-md-7 m-auto mt-4">
+    <!-- check for error messages in the session -->
+    {{#if message}}
+      <div class="alert alert-danger">
+        {{message}}
+      </div>
+    {{/if}}
+    <h4>Computer Information</h4>
+    <hr />
+    <div class="row">
+      <!-- Service Tag -->
+      <div class="col-sm-12">
+        <label for="Service Tag" class="form-label">Service Tag</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Service Tag"
+          name="serviceTag"
+          pattern="[^><\][\\\x22;|]+"
+          title="No special characters!"
+          value="{{formData.serviceTag}}"
+          maxlength="20"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <button
+          id="submitButton"
+          class="btn btn-primary mt-2"
+          type="submit"
+        >Submit</button>
+      </div>
+    </div>
+  </div>
+</form>
+<!-- Warranty Info Table -->
+<div class="container mt-5">
+  <h4>Warranty Information</h4>
+  <!-- Table -->
+  <table
+    class="table table-responsive table-bordered table-striped table-hover sortable"
+  >
+    <thead>
+      <tr>
+        <th>Purchase Date</th>
+        <th>Warranty End Date</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr>
+        <td>{{purchaseDate}}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

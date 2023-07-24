@@ -8,6 +8,8 @@
   "dependencies": {
     "@sendgrid/mail": "^7.7.0",
     "activedirectory2": "^2.2.0",
+    "axios": "^1.4.0",
+    "axios-auth-refresh": "^3.3.6",
     "bcrypt": "^5.1.0",
     "cookie-parser": "~1.4.6",
     "cron": "^2.3.1",
@@ -22,6 +24,7 @@
     "hbs": "^4.2.0",
     "helmet": "^7.0.0",
     "http-errors": "~2.0.0",
+    "https": "^1.0.0",
     "moment": "^2.29.4",
     "morgan": "~1.10.0",
     "mysql": "^2.18.1",
