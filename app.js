@@ -47,6 +47,7 @@ var adminRouter = require("./routes/admin/index");
 var adminAddUserRouter = require("./routes/admin/addUser");
 var adminEditUserRouter = require("./routes/admin/editUser");
 var adminManageAccessRouter = require("./routes/admin/manageAccess");
+var dellLookupRouter = require("./routes/admin/dellLookup");
 
 /* adult entertainment related routes */
 var adultEntertainmentRouter = require("./routes/adultEntertainment/index");
@@ -379,6 +380,8 @@ app.use("/admin", isAdmin, adminRouter);
 app.use("/admin/addUser", isAdmin, adminAddUserRouter);
 app.use("/admin/editUser", isAdmin, adminEditUserRouter);
 app.use("/admin/manageAccess", isAdmin, adminManageAccessRouter);
+
+app.use("/dellLookup", isAdmin, dellLookupRouter);
 
 /* dropdownManager related routes */
 app.use("/dropdownManager", isAdmin, dropdownRouter);
