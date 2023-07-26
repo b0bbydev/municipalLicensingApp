@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const axios = require("axios");
-const { AuthTokenRefresher } = require("axios-auth-refresh");
 
 /* GET /dellLookup page. */
 router.get("/", async (req, res, next) => {
@@ -26,20 +25,21 @@ router.post("/", async (req, res, next) => {
   req.session.messages = [];
 
   // gather info for request to get auth_token
-  const authUrl = "https://apigtwb2c.us.dell.com/auth/oauth/v2/token"; // Replace with the actual token endpoint URL
-  let authToken = ""; // Global variable to store the current auth token
+  const authUrl = "https://apigtwb2c.us.dell.com/auth/oauth/v2/token";
+  let authToken = "";
   const tokenRequestData = {
     client_id: process.env.DELL_CLIENT_ID,
     client_secret: process.env.DELL_CLIENT_SECRET,
     grant_type: process.env.DELL_GRANT_TYPE,
   };
+  // Dell API requires request to be sent with this Content-Type.
   const config = {
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
   };
 
-  // gather info for request to get warranty info.
+  // get serviceTag from form and append to API endpoint that contains warranty info.
   const apiUrl =
     "https://apigtwb2c.us.dell.com/PROD/sbil/eapi/v5/asset-entitlements?servicetags=" +
     req.body.serviceTag;
@@ -48,7 +48,8 @@ router.post("/", async (req, res, next) => {
   try {
     // auth_token.
     const auth_response = await axios.post(authUrl, tokenRequestData, config);
-    authToken = auth_response.data.access_token; // Update the global auth token variable
+    // update the global auth token variable.
+    authToken = auth_response.data.access_token;
 
     // api data.
     const options = {
@@ -57,58 +58,35 @@ router.post("/", async (req, res, next) => {
       },
     };
 
+    // make the GET request to API.
     const api_response = await axios.get(apiUrl, options);
-    const data = api_response.data; // Retrieved information from the API
+    // retrieved information from the API.
+    const data = api_response.data;
 
     // extract purchase date and warranty expiration date.
     const purchaseDate = data[0].shipDate;
-    console.log(data);
+    // break this down to it's own array for the line below it.
+    const warrantyExpiration = data[0].entitlements;
+    // grab the last object in warrantyExpiration array as it should contain the final warranty expiration.
+    const warrantyExpirationDate =
+      warrantyExpiration[warrantyExpiration.length - 1].endDate;
 
     return res.render("admin/dellLookup", {
       title: "BWG | Dell Lookup",
       message: messages,
       email: req.session.email,
       auth: req.session.auth,
+      serviceTag: req.body.serviceTag,
       purchaseDate: purchaseDate,
+      warrantyExpirationDate: warrantyExpirationDate,
     });
-  } catch (error) {
+  } catch (err) {
     return res.render("admin/dellLookup", {
       title: "BWG | Dell Lookup",
       message: "Page Error!",
       auth: req.session.auth, // authorization.
     });
   }
-
-  // try {
-  //   const apiUrl =
-  //     "https://apigtwb2c.us.dell.com/PROD/sbil/eapi/v5/asset-entitlements?servicetags=" +
-  //     req.body.serviceTag;
-  //   // BHYFND3
-  //   const authToken = "f69adee4-f0be-4086-96a4-03fd1d7e2bde";
-
-  //   const options = {
-  //     headers: {
-  //       Authorization: `Bearer ${authToken}`,
-  //     },
-  //   };
-
-  //   const response = await axios.get(apiUrl, options);
-  //   const data = response.data; // Retrieved information from the API
-
-  //   return res.render("admin/dellLookup", {
-  //     title: "BWG | Dell Lookup",
-  //     message: messages,
-  //     email: req.session.email,
-  //     auth: req.session.auth,
-  //     data: data, // Pass the retrieved data to the view template
-  //   });
-  // } catch (error) {
-  //   return res.render("admin/dellLookup", {
-  //     title: "BWG | Dell Lookup",
-  //     message: "Page Error!",
-  //     auth: req.session.auth, // authorization.
-  //   });
-  // }
 });
 
 module.exports = router;

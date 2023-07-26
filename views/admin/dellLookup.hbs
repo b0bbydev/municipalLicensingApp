@@ -20,7 +20,7 @@
           name="serviceTag"
           pattern="[^><\][\\\x22;|]+"
           title="No special characters!"
-          value="{{formData.serviceTag}}"
+          value="{{serviceTag}}"
           maxlength="20"
         />
       </div>
@@ -47,12 +47,14 @@
       <tr>
         <th>Purchase Date</th>
         <th>Warranty End Date</th>
+        <th>Replacement Year</th>
       </tr>
     </thead>
     <tbody class="table-group-divider">
       <tr>
-        <td>{{purchaseDate}}</td>
-        <td></td>
+        <td>{{formatDate purchaseDate}}</td>
+        <td>{{formatDate warrantyExpirationDate}}</td>
+        <td>{{replaceYear warrantyExpirationDate}}</td>
       </tr>
     </tbody>
   </table>

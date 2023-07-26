@@ -326,7 +326,21 @@ hbs.registerHelper("ifCond", function (v1, operator, v2, options) {
 
 // formats dates, mostly used for lastModifed columns.
 hbs.registerHelper("formatDate", function (str) {
-  return moment(str).format("YYYY-MM-DD h:mm:ss A");
+  if (!str) {
+    return "";
+  }
+  const formattedDate = new Date(str).toLocaleDateString("en-US");
+  return formattedDate;
+});
+
+// add 1 year to warrantyDate for Dell Lookup.
+hbs.registerHelper("replaceYear", function (warrantyExpirationDate) {
+  if (!warrantyExpirationDate) {
+    return "";
+  }
+
+  const year = new Date(warrantyExpirationDate).getFullYear() + 1;
+  return year;
 });
 
 // return lowercase string.
