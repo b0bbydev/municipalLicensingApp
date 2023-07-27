@@ -80,7 +80,7 @@
       <th>Issue Date</th>
       <th>Expiry Date</th>
       <th>Notes</th>
-      <th>Actions</th>
+      <th style="width: 22%;">Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
@@ -111,7 +111,7 @@
         <td>{{this.issueDate}}</td>
         <td>{{this.expiryDate}}</td>
         <td>{{this.notes}}</td>
-        <td style="width: 17.5%;"><a
+        <td><a
             class="btn btn-sm btn-secondary my-1"
             data-bs-toggle="modal"
             data-bs-target="#renewalModal-{{this.businessID}}"
@@ -162,6 +162,7 @@
                     <p>{{this.policeVSC}}</p>
                   </div>
                 </div>
+                <hr class="mt-0">
                 <div class="row">
                   <div class="col">
                     <strong>Certificate of Insurance:</strong>
@@ -170,6 +171,7 @@
                     <p>{{this.certificateOfInsurance}}</p>
                   </div>
                 </div>
+                <hr class="mt-0">
                 <div class="row">
                   <div class="col">
                     <strong>Photo ID:</strong>
@@ -178,6 +180,7 @@
                     <p>{{this.photoID}}</p>
                   </div>
                 </div>
+                <hr class="mt-0">
                 <div class="row">
                   <div class="col">
                     <strong>Health Inspection:</strong>
@@ -186,6 +189,7 @@
                     <p>{{this.healthInspection}}</p>
                   </div>
                 </div>
+                <hr class="mt-0">
                 <div class="row">
                   <div class="col">
                     <strong>Zoning Clearance:</strong>
@@ -194,6 +198,7 @@
                     <p>{{this.zoningClearance}}</p>
                   </div>
                 </div>
+                <hr class="mt-0">
                 <div class="row">
                   <div class="col">
                     <strong>Fee Paid:</strong>
