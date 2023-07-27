@@ -133,6 +133,13 @@ thead {
   color: #82bf15 !important;
 }
 
+.accordion-button:hover,
+.nav-item-home:hover,
+.nav-item-child:hover span {
+  transition: 0.2s ease-in;
+  font-weight: 610;
+}
+
 /* this makes the entire table cell clickable for the anchor tag. */
 .table #ownerLink {
   color: #0096d6 !important;

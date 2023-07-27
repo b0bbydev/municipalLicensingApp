@@ -1,62 +1,53 @@
 <h2 class="text-center mt-2">Dog Adoptions</h2>
 <h4>Filtering</h4>
-<div class="row">
-  <div class="col">
-    <form class="mb-0" method="GET">
-      <select
-        class="form-select-sm"
-        id="filterCategory"
-        title="Category To Filter By"
-        name="filterCategory"
-        required
-      >
-        {{#if filterCategory}}
-          <option
-            value="{{filterCategory}}"
-            selected
-          >{{filterCategory}}</option>
-        {{else}}
-          <option value="" disabled selected>Filter By...</option>
-        {{/if}}
-        {{#each filterOptions}}
-          {{#if this.isDisabled}}
-            <option
-              value="{{this.dropdownValue}}"
-              disabled
-            >{{this.dropdownValue}}</option>
-          {{else}}
-            <option
-              value="{{this.dropdownValue}}"
-            >{{this.dropdownValue}}</option>
-          {{/if}}
-        {{/each}}
-      </select>
-      <!-- filterValue input -->
-      <input
-        name="filterValue"
-        id="filterValue"
-        class="form-control-sm"
-        pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
-        title="No special characters!"
-        placeholder="Search..."
-        value="{{filterValue}}"
-      />
-      <button
-        id="filterButton"
-        class="btn btn-sm btn-primary"
-        type="submit"
-      >Search</button>
-      <a
-        id="filterButton"
-        href="/dogAdoptions"
-        class="btn btn-sm btn-secondary"
-        type="submit"
-      >Reset</a>
-    </form>
-  </div>
-</div>
-<div class="row">
-  <div class="col-1 pe-0 me-0" style="width: 15%">
+<form class="mb-0" method="GET">
+  <select
+    class="form-select-sm"
+    id="filterCategory"
+    title="Category To Filter By"
+    name="filterCategory"
+    required
+  >
+    {{#if filterCategory}}
+      <option value="{{filterCategory}}" selected>{{filterCategory}}</option>
+    {{else}}
+      <option value="" disabled selected>Filter By...</option>
+    {{/if}}
+    {{#each filterOptions}}
+      {{#if this.isDisabled}}
+        <option
+          value="{{this.dropdownValue}}"
+          disabled
+        >{{this.dropdownValue}}</option>
+      {{else}}
+        <option value="{{this.dropdownValue}}">{{this.dropdownValue}}</option>
+      {{/if}}
+    {{/each}}
+  </select>
+  <!-- filterValue input -->
+  <input
+    name="filterValue"
+    id="filterValue"
+    class="form-control-sm"
+    pattern="^[^\x27\x22;=_()*&%$#!<>\/\^\\]*$"
+    title="No special characters!"
+    placeholder="Search..."
+    value="{{filterValue}}"
+  />
+  <button
+    id="filterButton"
+    class="btn btn-sm btn-primary"
+    type="submit"
+  >Search</button>
+  <a
+    id="filterButton"
+    href="/dogAdoptions"
+    class="btn btn-sm btn-secondary"
+    type="submit"
+  >Reset</a>
+</form>
+<div class="row align-items-center">
+  <div class="col-auto pe-0">
     <span id="quickLinks">Quick Links:</span>
     <a
       class="user-select-none"
@@ -71,13 +62,13 @@
       <strong class="float-start mt-2">{{queryCount}}</strong>
     {{/if}}
   </div>
-  <div class="col-md-auto pe-0">
+  <div class="col-auto pe-0">
     <a
       href="/dogAdoptions/addAdopter"
       class="btn btn-sm btn-primary float-end"
     >Add Adopter</a>
   </div>
-  <div class="col-md-auto">
+  <div class="col-auto">
     <a href="/dogAdoptions/addDog" class="btn btn-sm btn-primary float-end">Add
       Dog</a>
   </div>
@@ -100,7 +91,7 @@
       <th>Phone Number</th>
       <th>Email</th>
       <th>Address</th>
-      <th>Actions</th>
+      <th style="width: 20%;">Actions</th>
     </tr>
   </thead>
   <tbody class="table-group-divider">
@@ -121,7 +112,7 @@
             {{this.town}}
             {{this.postalCode}}</td>
         {{/each}}
-        <td style="width: 19%;">
+        <td>
           <a
             href="/dogAdoptions/editAdopter/{{this.adopterID}}"
             class="btn btn-sm btn-secondary"
@@ -130,7 +121,7 @@
           <button
             data-bs-toggle="modal"
             data-bs-target="#adoptionModal-{{this.adopterID}}"
-            class="btn btn-sm btn-primary"
+            class="btn btn-sm btn-primary my-1"
           >Register Dog to Adopter</button>
         </td>
       </tr>
