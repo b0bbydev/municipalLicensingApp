@@ -149,12 +149,22 @@ router.post("/", upload.single("csvFile"), async (req, res, next) => {
             (response) => response !== null
           );
 
+          // Pagination parameters
+          const itemCount = responseData.length;
+          const pageCount = Math.ceil(itemCount / req.query.limit);
+
+          // Slice the responseData based on the current page and limit
+          const startIndex = req.skip;
+          const endIndex = startIndex + req.query.limit;
+          const paginatedData = responseData.slice(startIndex, endIndex);
+
           // return page with data.
           return res.render("admin/dellLookup", {
             title: "BWG | Dell Lookup",
             message: messages,
             auth: req.session.auth,
-            csvWarrantyInfo: responseData,
+            csvWarrantyInfo: paginatedData,
+            pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
           });
         } catch (err) {
           // return page with error message if error is found.

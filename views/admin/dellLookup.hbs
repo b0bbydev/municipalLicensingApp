@@ -1,9 +1,4 @@
 <h2 class="text-center mt-2">Dell Lookup</h2>
-<div class="loading-spinner">
-  <div class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
-</div>
 <form class="row g-5 m-auto" method="POST" enctype="multipart/form-data">
   <div class="col-md-7 m-auto mt-4">
     <!-- check for error messages in the session -->
@@ -87,6 +82,7 @@
     >
       <thead>
         <tr>
+          <th>#</th>
           <th>Service Tag</th>
           <th>Purchase Date</th>
           <th>Warranty End Date</th>
@@ -95,6 +91,7 @@
       <tbody class="table-group-divider">
         {{#each csvWarrantyInfo}}
           <tr>
+            <td>{{incremented @index}}</td>
             <td>{{computerServiceTag}}</td>
             <td>{{formatDate shipDate}}</td>
             <td>{{formatDate endDate}}</td>
