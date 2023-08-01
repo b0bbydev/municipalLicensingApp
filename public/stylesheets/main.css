@@ -252,3 +252,13 @@ thead {
   max-height: 250px;
   overflow-y: auto;
 }
+
+.loading-spinner {
+  display: none;
+  /* Initially hide the spinner */
+}
+
+.loading-spinner.active {
+  display: inline-block;
+  /* Show the spinner when 'active' class is added */
+}

@@ -1,5 +1,10 @@
 <h2 class="text-center mt-2">Dell Lookup</h2>
-<form class="row g-5 m-auto" method="POST">
+<div class="loading-spinner">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+<form class="row g-5 m-auto" method="POST" enctype="multipart/form-data">
   <div class="col-md-7 m-auto mt-4">
     <!-- check for error messages in the session -->
     {{#if message}}
@@ -9,7 +14,7 @@
     {{/if}}
     <h4>Computer Information</h4>
     <hr />
-    <div class="row">
+    <div class="row mb-1">
       <!-- Service Tag -->
       <div class="col-sm-12">
         <label for="Service Tag" class="form-label">Service Tag</label>
@@ -26,6 +31,19 @@
       </div>
     </div>
     <div class="row">
+      <!-- File Upload -->
+      <div class="col-sm-12">
+        <label for="csvFile" class="form-label">Upload CSV File</label>
+        <input
+          type="file"
+          class="form-control"
+          id="csvFile"
+          name="csvFile"
+          accept=".csv"
+        />
+      </div>
+    </div>
+    <div class="row">
       <div class="col">
         <button
           id="submitButton"
@@ -36,26 +54,53 @@
     </div>
   </div>
 </form>
-<!-- Warranty Info Table -->
-<div class="container mt-5">
-  <h4>Warranty Information</h4>
-  <!-- Table -->
-  <table
-    class="table table-responsive table-bordered table-striped table-hover sortable"
-  >
-    <thead>
-      <tr>
-        <th>Purchase Date</th>
-        <th>Warranty End Date</th>
-        <th>Replacement Year</th>
-      </tr>
-    </thead>
-    <tbody class="table-group-divider">
-      <tr>
-        <td>{{formatDate purchaseDate}}</td>
-        <td>{{formatDate warrantyExpirationDate}}</td>
-        <td>{{replaceYear warrantyExpirationDate}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+{{#if serviceTag}}
+  <!-- Warranty Info Table -->
+  <div class="container mt-5">
+    <h4>Warranty Information</h4>
+    <!-- Table -->
+    <table
+      class="table table-responsive table-bordered table-striped table-hover sortable"
+    >
+      <thead>
+        <tr>
+          <th>Purchase Date</th>
+          <th>Warranty End Date</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr>
+          <td>{{formatDate purchaseDate}}</td>
+          <td>{{formatDate warrantyExpirationDate}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{{/if}}
+{{#if csvWarrantyInfo}}
+  <!-- Warranty Info Table -->
+  <div class="container mt-5">
+    <h4>Warranty Information</h4>
+    <!-- Table -->
+    <table
+      class="table table-responsive table-bordered table-striped table-hover sortable"
+    >
+      <thead>
+        <tr>
+          <th>Service Tag</th>
+          <th>Purchase Date</th>
+          <th>Warranty End Date</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {{#each csvWarrantyInfo}}
+          <tr>
+            <td>{{computerServiceTag}}</td>
+            <td>{{formatDate shipDate}}</td>
+            <td>{{formatDate endDate}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+{{/if}}
