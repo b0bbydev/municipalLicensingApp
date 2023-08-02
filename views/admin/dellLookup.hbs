@@ -83,6 +83,7 @@
       <thead>
         <tr>
           <th>#</th>
+          <th>Computer Name</th>
           <th>Service Tag</th>
           <th>Purchase Date</th>
           <th>Warranty End Date</th>
@@ -92,7 +93,8 @@
         {{#each csvWarrantyInfo}}
           <tr>
             <td>{{incremented @index}}</td>
-            <td>{{computerServiceTag}}</td>
+            <td>{{computerName}}</td>
+            <td>{{serviceTag}}</td>
             <td>{{formatDate shipDate}}</td>
             <td>{{formatDate endDate}}</td>
           </tr>

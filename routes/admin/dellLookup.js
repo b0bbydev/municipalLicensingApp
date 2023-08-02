@@ -10,6 +10,9 @@ const upload = multer({
 });
 // pagination lib.
 const paginate = require("express-paginate");
+const pLimit = require("p-limit");
+// number of concurrent requests to limit to.
+const limit = pLimit(8);
 
 /* get auth_token */
 // gather info for request to get auth_token
@@ -108,28 +111,34 @@ router.post("/", upload.single("csvFile"), async (req, res, next) => {
       .pipe(csv())
       .on("data", (data) => results.push(data))
       .on("end", async () => {
-        const serviceTags = results.map((row) => row.serviceTag);
+        // this will create an array of Promises to use for Promise.all().
+        const promises = results.map(async (row) => {
+          // save the computerName & serviceTag to append as apart of the resposne.
+          const { computerName, serviceTag } = row;
 
-        // cleanup uploaded file.
-        fs.unlinkSync(req.file.path);
-
-        // Create an array of promises for each serviceTag request
-        const requestPromises = serviceTags.map(async (serviceTag) => {
           try {
-            const response = await axios.get(
-              `https://apigtwb2c.us.dell.com/PROD/sbil/eapi/v5/asset-entitlements?servicetags=${encodeURIComponent(
-                serviceTag
-              )}`,
-              options
+            // make the GET request using p-limit.
+            const response = await limit(() =>
+              axios.get(
+                `https://apigtwb2c.us.dell.com/PROD/sbil/eapi/v5/asset-entitlements?servicetags=${encodeURIComponent(
+                  serviceTag
+                )}`,
+                options
+              )
             );
-            // get the required data from the response.
+            // extract info from the API.
             const entitlements = response.data[0].entitlements;
             const lastEntitlement = entitlements[entitlements.length - 1];
             const shipDate = response.data[0].shipDate;
-            const computerServiceTag = response.data[0].serviceTag;
             const endDate = lastEntitlement.endDate;
 
-            return { shipDate, endDate, computerServiceTag };
+            // return the Promise.
+            return {
+              shipDate,
+              endDate,
+              serviceTag,
+              computerName,
+            };
           } catch (err) {
             // return page with error message if error is found.
             return res.render("admin/dellLookup", {
@@ -141,30 +150,15 @@ router.post("/", upload.single("csvFile"), async (req, res, next) => {
         });
 
         try {
-          // using Promise.all() greatly improves the speed of the requests as they are being sent simultaneously, rather than individually.
-          const responses = await Promise.all(requestPromises);
-
-          // filter out null responses.
-          const responseData = responses.filter(
-            (response) => response !== null
-          );
-
-          // Pagination parameters
-          const itemCount = responseData.length;
-          const pageCount = Math.ceil(itemCount / req.query.limit);
-
-          // Slice the responseData based on the current page and limit
-          const startIndex = req.skip;
-          const endIndex = startIndex + req.query.limit;
-          const paginatedData = responseData.slice(startIndex, endIndex);
+          // this will actually send all of the requests to the API limiting the concurrent requests to what was specified above.
+          const responseData = await Promise.all(promises);
 
           // return page with data.
           return res.render("admin/dellLookup", {
             title: "BWG | Dell Lookup",
             message: messages,
             auth: req.session.auth,
-            csvWarrantyInfo: paginatedData,
-            pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+            csvWarrantyInfo: responseData,
           });
         } catch (err) {
           // return page with error message if error is found.
