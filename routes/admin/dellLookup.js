@@ -8,8 +8,7 @@ const fs = require("fs");
 const upload = multer({
   dest: "../uploads",
 });
-// pagination lib.
-const paginate = require("express-paginate");
+// p-limit. library to limit number of concurrent requests in a Promise.
 const pLimit = require("p-limit");
 // number of concurrent requests to limit to.
 const limit = pLimit(8);

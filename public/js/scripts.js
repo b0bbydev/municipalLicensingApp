@@ -99,3 +99,13 @@ function createTrialDateFields() {
     insertAfter(firstRow, newRow);
   }
 }
+
+// function for download .csv file.
+function downloadCSV(csv, filename) {
+  const csvBlob = new Blob([csv], { type: "text/csv" });
+  const csvURL = URL.createObjectURL(csvBlob);
+  const link = document.createElement("a");
+  link.href = csvURL;
+  link.download = filename;
+  link.click();
+}

@@ -72,13 +72,21 @@
     </table>
   </div>
 {{/if}}
+
 {{#if csvWarrantyInfo}}
-  <!-- Warranty Info Table -->
   <div class="container mt-5">
-    <h4>Warranty Information</h4>
-    <!-- Table -->
+    <div class="row mb-1">
+      <div class="col">
+        <h4>Warranty Information</h4>
+      </div>
+      <div class="col">
+        <a id="export-btn" class="btn btn-sm btn-success float-end">Export to CSV</a>
+      </div>
+    </div>
+    <!-- Warranty Info Table -->
     <table
       class="table table-responsive table-bordered table-striped table-hover sortable"
+      id="warrantyTable"
     >
       <thead>
         <tr>
@@ -103,3 +111,30 @@
     </table>
   </div>
 {{/if}}
+<!-- code for download table to csv. -->
+<script>
+  // if the export-btn exists (a .csv search was requested)
+  if (document.getElementById("export-btn")) {
+    // add a listener to the export button.
+    document.getElementById("export-btn").addEventListener("click", () => {
+      // get the table and create an of the table rows.
+      const table = document.getElementById("warrantyTable");
+      const rows = Array.from(table.querySelectorAll("tr"));
+
+      // extract cell data from each row.
+      const csvContent = rows
+        .map((row) =>
+          Array.from(row.querySelectorAll("td, th"))
+            .map((cell) => cell.innerText)
+            .join(",")
+        )
+        .join("\n");
+
+      // filename for the download.
+      const exportFilename = "dell-warranty-info.csv";
+
+      // call the downloadCSV function the public js.
+      downloadCSV(csvContent, exportFilename);
+    });
+  }
+</script>

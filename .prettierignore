@@ -1,4 +1,5 @@
 views/hideLayout.hbs
 views/layout.hbs
+views/admin/dellLookup.hbs
 views/policies/*.hbs
 views/poaMatters/index.hbs
