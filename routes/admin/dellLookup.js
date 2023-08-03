@@ -6,7 +6,7 @@ const multer = require("multer");
 const fs = require("fs");
 // create middleware for uploads.
 const upload = multer({
-  dest: "../uploads",
+  dest: "./uploads",
 });
 // p-limit. library to limit number of concurrent requests in a Promise.
 const pLimit = require("p-limit");
