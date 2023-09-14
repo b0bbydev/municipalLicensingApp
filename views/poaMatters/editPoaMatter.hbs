@@ -61,6 +61,9 @@
           name="poaType"
           placeholder="POA Type..."
         >
+          {{#if formData.poaType}}
+            <option value="{{formData.poaType}}">{{formData.poaType}}</option>
+          {{/if}}
           <option value="Part 1">Part 1</option>
           <option value="Part 3">Part 3</option>
         </select>

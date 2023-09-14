@@ -52,8 +52,83 @@ router.get(
       // get count for POA Matters, results.count displays count including joined tables.
       var poaMatterCount = await POAMatter.findAndCountAll({});
 
-      // if there are no filter parameters.
-      if (!req.query.filterCategory || !req.query.filterValue) {
+      if (req.query.filterCategory === "Part 1") {
+        POAMatter.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          // functions in where clause, fancy.
+          order: [["dateOfOffence", "DESC"]],
+          where: {
+            poaType: "Part 1",
+          },
+          include: [
+            {
+              model: POAMatterLocation,
+            },
+          ],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
+
+          return res.render("poaMatters/index", {
+            title: "BWG | POA Matters",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterCategory: req.query.filterCategory,
+            filterValue: req.query.filterValue,
+            filterOptions: filterOptions,
+            currentPage: req.query.page,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        });
+      } else if (req.query.filterCategory === "Part 3") {
+        POAMatter.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
+          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
+          // functions in where clause, fancy.
+          order: [["dateOfOffence", "DESC"]],
+          where: {
+            poaType: "Part 3",
+          },
+          include: [
+            {
+              model: POAMatterLocation,
+            },
+          ],
+        }).then((results) => {
+          // for pagination.
+          const itemCount = results.count;
+          const pageCount = Math.ceil(results.count / req.query.limit);
+
+          return res.render("poaMatters/index", {
+            title: "BWG | POA Matters",
+            message: messages,
+            email: req.session.email,
+            auth: req.session.auth, // authorization.
+            data: results.rows,
+            filterCategory: req.query.filterCategory,
+            filterValue: req.query.filterValue,
+            filterOptions: filterOptions,
+            currentPage: req.query.page,
+            pageCount,
+            itemCount,
+            queryCount: "Records returned: " + results.count,
+            pages: paginate.getArrayPages(req)(5, pageCount, req.query.page),
+            prev: paginate.href(req)(true),
+            hasMorePages: paginate.hasNextPages(req)(pageCount),
+          });
+        });
+      } else if (!req.query.filterCategory || !req.query.filterValue) {
         POAMatter.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
