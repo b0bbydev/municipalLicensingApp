@@ -172,9 +172,10 @@
                     <label for="Tag Number" class="form-label">Enter the new tag
                       number</label>
                     <input
-                      type="number"
+                      type="text"
                       class="form-control"
                       placeholder="Tag Number"
+                      pattern="[^><\][\\\x22;|]+"
                       name="tagNumber"
                       required
                     />
