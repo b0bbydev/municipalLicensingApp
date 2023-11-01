@@ -14,10 +14,11 @@
       <div class="col-sm-6">
         <label for="Tag Number" class="form-label">Tag Number*</label>
         <input
-          type="number"
+          type="text"
           class="form-control"
           placeholder="Tag Number"
           name="tagNumber"
+          pattern="[^><\][\\\x22;|]+"
           value="{{dogInfo.tagNumber}}"
           required
         />
