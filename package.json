@@ -6,7 +6,7 @@
     "start": "set NODE_ENV=production && node ./bin/www"
   },
   "dependencies": {
-    "@sendgrid/mail": "^7.7.0",
+    "@sendgrid/mail": "^8.1.0",
     "activedirectory2": "^2.2.0",
     "axios": "^1.4.0",
     "axios-auth-refresh": "^3.3.6",
