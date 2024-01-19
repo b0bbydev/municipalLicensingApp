@@ -94,7 +94,8 @@
             <td>
               <a
                 class="btn btn-sm btn-secondary mt-1"
-                href="/admin/manageAccess/{{this.id}}"
+                data-bs-toggle="modal"
+                data-bs-target="#manageAccessModal-{{this.id}}"
               >Manage Access</a>
               <a
                 class="btn btn-sm btn-danger mt-1"
@@ -128,7 +129,7 @@
     </nav>
   </div>
 </div>
-<!-- Modal -->
+<!-- Active Users Modal -->
 <div
   class="modal fade"
   id="activeUsersModal"
@@ -167,3 +168,89 @@
     </div>
   </div>
 </div>
+<!-- Manage Access Modal -->
+{{#each data}}
+  <div
+    class="modal fade"
+    id="manageAccessModal-{{this.id}}"
+    tabindex="-1"
+    aria-labelledby="Manage Access Modal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <form method="POST">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{this.firstName}} {{this.lastName}}</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <!-- Table -->
+            <table
+              class="table table-responsive table-bordered table-hover sortable"
+            >
+              <thead>
+                <tr>
+                  <th>Role Name</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each roles}}
+                  <tr>
+                    <td>{{this.roleName}}</td>
+                    <td><a
+                            class="btn btn-sm btn-danger"
+                            href="/admin/manageAccess/{{../this.id}}/revoke/{{this.id}}"
+                          >Revoke</a></td>
+                  </tr>
+                {{/each}}
+              </tbody>
+            </table>
+              <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+              <div class="row" style="display: none;">
+                <div class="col">
+                  <label for="User ID" class="form-label">User ID</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="id"
+                    value="{{this.id}}"
+                    readonly
+                  />
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="Select A Role" class="form-label title-text">Select
+                    A Role</label>
+                  <select class="form-select" name="roleId" required>
+                    <option value="" selected disabled>Select a role...</option>
+                    {{#each ../roleList}}
+                        <option
+                          value="{{incremented @index}}"
+                        >{{this.roleName}}</option>
+                      {{/each}}
+                  </select>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >Close</button>
+            <button type="submit" class="btn btn-primary">Submit Changes</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{{/each}}
