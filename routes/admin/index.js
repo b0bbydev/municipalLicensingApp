@@ -268,4 +268,44 @@ router.get("/removeUser/:id", async (req, res, next) => {
     });
 });
 
+/* REVOKE /admin/:userId/revoke/:roleId */
+router.get("/:userId/revoke/:roleId", (req, res, next) => {
+  // server side validation.
+  const errors = validationResult(req);
+
+  // if errors is NOT empty (if there are errors...)
+  if (!errors.isEmpty()) {
+    return res.render("admin/index", {
+      title: "BWG | Admin Panel",
+      message: messages,
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+    });
+  } else {
+    UserRole.destroy({
+      where: {
+        [Op.and]: [
+          {
+            userId: req.params.userId,
+          },
+          {
+            roleId: req.params.roleId,
+          },
+        ],
+      },
+    })
+      // redirect to same page.
+      .then(() => {
+        return res.redirect(req.headers.referer);
+      })
+      .catch((err) => {
+        return res.render("admin/index", {
+          title: "BWG | Admin Panel",
+          message: "Page Error!",
+          auth: req.session.auth, // authorization.
+        });
+      });
+  }
+});
+
 module.exports = router;
