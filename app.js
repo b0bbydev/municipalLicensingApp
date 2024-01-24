@@ -46,7 +46,6 @@ var iisReset = require("./routes/iisreset/index");
 var adminRouter = require("./routes/admin/index");
 var adminAddUserRouter = require("./routes/admin/addUser");
 var adminEditUserRouter = require("./routes/admin/editUser");
-var adminManageAccessRouter = require("./routes/admin/manageAccess");
 var dellLookupRouter = require("./routes/admin/dellLookup");
 
 /* adult entertainment related routes */
@@ -393,8 +392,8 @@ app.use("/iisreset", isAdmin, iisReset);
 app.use("/admin", isAdmin, adminRouter);
 app.use("/admin/addUser", isAdmin, adminAddUserRouter);
 app.use("/admin/editUser", isAdmin, adminEditUserRouter);
-app.use("/admin/manageAccess", isAdmin, adminManageAccessRouter);
 
+/* for Dell Warranty Lookup. */
 app.use("/dellLookup", isAdmin, dellLookupRouter);
 
 /* dropdownManager related routes */
