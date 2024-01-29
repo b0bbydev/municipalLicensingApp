@@ -938,25 +938,32 @@ router.get(
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
         Owner.findAndCountAll({
-          limit: req.query.limit,
-          offset: req.skip,
-          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
           include: [
-            {
-              model: Address,
-            },
             {
               model: Dog,
               where: {
                 expiryDate: {
-                  [Op.lte]: Date.now(),
+                  [Op.gt]: "2019-01-01",
+                  [Op.lte]: "2024-01-31",
                 },
+                [Op.or]: [
+                  { tagRequired: null },
+                  {
+                    [Op.and]: [
+                      { tagRequired: { [Op.notLike]: "%deceased%" } },
+                      { tagRequired: { [Op.notLike]: "%moved%" } },
+                    ],
+                  },
+                ],
               },
+              required: true, // INNER JOIN
+            },
+            {
+              model: Address,
+              required: true, // INNER JOIN
             },
           ],
-          // group on first name because owners will appear more than once
-          // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
