@@ -935,28 +935,55 @@ router.get(
         },
       });
 
+      /* logic for getting expired tags between x and x years. */
+      // get current year.
+      const currentYear = new Date().getFullYear();
+
+      // set the date for Jan.31 of the current year.
+      const currentYearJan31 = new Date(currentYear, 0, 31);
+
+      // set the date five years previous from the current date on Jan.1
+      const fiveYearsAgoJan1 = new Date(currentYear - 5, 0, 1);
+
+      // format dates as strings in the 'YYYY-MM-DD' format as that's what is in the db.
+      const formattedCurrentYearJan31 = currentYearJan31
+        .toISOString()
+        .split("T")[0];
+      const formattedFiveYearsAgoJan1 = fiveYearsAgoJan1
+        .toISOString()
+        .split("T")[0];
+
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
         Owner.findAndCountAll({
           limit: req.query.limit,
           offset: req.skip,
-          subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
           include: [
-            {
-              model: Address,
-            },
             {
               model: Dog,
               where: {
                 expiryDate: {
-                  [Op.lte]: Date.now(),
+                  [Op.gt]: formattedFiveYearsAgoJan1,
+                  [Op.lte]: formattedCurrentYearJan31,
                 },
+                [Op.or]: [
+                  { tagRequired: null },
+                  {
+                    [Op.and]: [
+                      { tagRequired: { [Op.notLike]: "%deceased%" } },
+                      { tagRequired: { [Op.notLike]: "%moved%" } },
+                    ],
+                  },
+                ],
               },
+              required: true, // INNER JOIN
+            },
+            {
+              model: Address,
+              required: true, // INNER JOIN
             },
           ],
-          // group on first name because owners will appear more than once
-          // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {

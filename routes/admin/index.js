@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 // models.
 const User = require("../../models/admin/user");
+const Role = require("../../models/admin/role");
 const UserRole = require("../../models/admin/userRole");
 const Dropdown = require("../../models/dropdownManager/dropdown");
 // sequelize.
@@ -70,10 +71,18 @@ router.get(
         }
       }
 
+      var roleList = await Role.findAll({});
+
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
         // get Users.
         User.findAndCountAll({
+          include: [
+            {
+              model: Role,
+              through: UserRole,
+            },
+          ],
           limit: req.query.limit,
           offset: req.skip,
         })
@@ -88,6 +97,7 @@ router.get(
               email: req.session.email,
               auth: req.session.auth, // authorization.
               data: results.rows,
+              roleList: roleList,
               filterOptions: filterOptions,
               activeUsers: activeUsers,
               currentPage: req.query.page,
@@ -204,6 +214,38 @@ router.get(
   }
 );
 
+/* POST /admin */
+router.post("/", async (req, res, next) => {
+  // server side validation.
+  const errors = validationResult(req);
+
+  // if errors is NOT empty (if there are errors...)
+  if (!errors.isEmpty()) {
+    return res.render("admin/index", {
+      title: "BWG | Admin Panel",
+      message: "Error!",
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+    });
+  } else {
+    // create userRole.
+    UserRole.create({
+      userId: req.body.id,
+      roleId: req.body.roleId,
+    })
+      .then(() => {
+        return res.redirect(req.headers.referer);
+      })
+      .catch((err) => {
+        return res.render("admin/index", {
+          title: "BWG | Admin Panel",
+          message: "Page Error!",
+          auth: req.session.auth, // authorization.
+        });
+      });
+  }
+});
+
 /* GET /admin/removeUser/:id */
 router.get("/removeUser/:id", async (req, res, next) => {
   // delete user.
@@ -224,6 +266,46 @@ router.get("/removeUser/:id", async (req, res, next) => {
     .then(() => {
       return res.redirect("/admin");
     });
+});
+
+/* REVOKE /admin/:userId/revoke/:roleId */
+router.get("/:userId/revoke/:roleId", (req, res, next) => {
+  // server side validation.
+  const errors = validationResult(req);
+
+  // if errors is NOT empty (if there are errors...)
+  if (!errors.isEmpty()) {
+    return res.render("admin/index", {
+      title: "BWG | Admin Panel",
+      message: messages,
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+    });
+  } else {
+    UserRole.destroy({
+      where: {
+        [Op.and]: [
+          {
+            userId: req.params.userId,
+          },
+          {
+            roleId: req.params.roleId,
+          },
+        ],
+      },
+    })
+      // redirect to same page.
+      .then(() => {
+        return res.redirect(req.headers.referer);
+      })
+      .catch((err) => {
+        return res.render("admin/index", {
+          title: "BWG | Admin Panel",
+          message: "Page Error!",
+          auth: req.session.auth, // authorization.
+        });
+      });
+  }
 });
 
 module.exports = router;
