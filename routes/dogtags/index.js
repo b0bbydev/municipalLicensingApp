@@ -935,16 +935,36 @@ router.get(
         },
       });
 
+      /* logic for getting expired tags between x and x years. */
+      // get current year.
+      const currentYear = new Date().getFullYear();
+
+      // set the date for Jan.31 of the current year.
+      const currentYearJan31 = new Date(currentYear, 0, 31);
+
+      // set the date five years previous from the current date on Jan.1
+      const fiveYearsAgoJan1 = new Date(currentYear - 5, 0, 1);
+
+      // format dates as strings in the 'YYYY-MM-DD' format as that's what is in the db.
+      const formattedCurrentYearJan31 = currentYearJan31
+        .toISOString()
+        .split("T")[0];
+      const formattedFiveYearsAgoJan1 = fiveYearsAgoJan1
+        .toISOString()
+        .split("T")[0];
+
       // if there are no filter parameters.
       if (!req.query.filterCategory || !req.query.filterValue) {
         Owner.findAndCountAll({
+          limit: req.query.limit,
+          offset: req.skip,
           include: [
             {
               model: Dog,
               where: {
                 expiryDate: {
-                  [Op.gt]: "2019-01-01",
-                  [Op.lte]: "2024-01-31",
+                  [Op.gt]: formattedFiveYearsAgoJan1,
+                  [Op.lte]: formattedCurrentYearJan31,
                 },
                 [Op.or]: [
                   { tagRequired: null },
