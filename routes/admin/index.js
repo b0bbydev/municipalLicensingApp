@@ -71,6 +71,7 @@ router.get(
         }
       }
 
+      // get the role list for the modal.
       var roleList = await Role.findAll({});
 
       // if there are no filter parameters.

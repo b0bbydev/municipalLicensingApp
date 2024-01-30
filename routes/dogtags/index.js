@@ -976,11 +976,13 @@ router.get(
                   },
                 ],
               },
-              required: true, // INNER JOIN
+              // makes the query an inner join.
+              required: true,
             },
             {
               model: Address,
-              required: true, // INNER JOIN
+              // makes the query an inner join.
+              required: true,
             },
           ],
           group: ["Owner.ownerID"],
@@ -1047,7 +1049,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1105,7 +1107,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1174,7 +1176,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "AdditionalOwner.firstName",
+          group: "AdditionalOwner.ownerID",
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1242,7 +1244,7 @@ router.get(
             ],
             // group on first name because owners will appear more than once
             // depending on if they have more than 1 dog that is expired.
-            group: "firstName",
+            group: ["Owner.ownerID"],
             order: [["ownerID", "ASC"]],
           })
             .then((results) => {
@@ -1312,7 +1314,7 @@ router.get(
             ],
             // group on first name because owners will appear more than once
             // depending on if they have more than 1 dog that is expired.
-            group: "firstName",
+            group: ["Owner.ownerID"],
             order: [["ownerID", "ASC"]],
           })
             .then((results) => {
@@ -1378,7 +1380,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1439,7 +1441,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1535,7 +1537,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1599,7 +1601,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1657,7 +1659,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1726,7 +1728,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "AdditionalOwner.firstName",
+          group: "AdditionalOwner.ownerID",
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1794,7 +1796,7 @@ router.get(
             ],
             // group on first name because owners will appear more than once
             // depending on if they have more than 1 dog that is expired.
-            group: "firstName",
+            group: ["Owner.ownerID"],
             order: [["ownerID", "ASC"]],
           })
             .then((results) => {
@@ -1864,7 +1866,7 @@ router.get(
             ],
             // group on first name because owners will appear more than once
             // depending on if they have more than 1 dog that is expired.
-            group: "firstName",
+            group: ["Owner.ownerID"],
             order: [["ownerID", "ASC"]],
           })
             .then((results) => {
@@ -1930,7 +1932,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
@@ -1991,7 +1993,7 @@ router.get(
           ],
           // group on first name because owners will appear more than once
           // depending on if they have more than 1 dog that is expired.
-          group: "firstName",
+          group: ["Owner.ownerID"],
           order: [["ownerID", "ASC"]],
         })
           .then((results) => {
