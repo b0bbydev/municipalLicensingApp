@@ -2,8 +2,8 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
-const HawkerPeddlerApplicant = require("../../models/hawkerPeddler/hawkerPeddlerApplicant");
-const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawkerPeddlerApplicantAddress");
+const HawkerPeddlerOperator = require("../../models/hawkerPeddler/hawkerPeddlerOperator");
+const HawkerPeddlerOperatorAddress = require("../../models/hawkerPeddler/hawkerPeddleOperatorAddress");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // express-validate.
@@ -39,13 +39,13 @@ router.get(
         order: [["dropdownValue", "ASC"]],
       });
 
-      HawkerPeddlerApplicant.findOne({
+      HawkerPeddlerOperator.findOne({
         where: {
-          hawkerPeddlerApplicantID: req.params.id,
+          hawkerPeddlerOperatorID: req.params.id,
         },
         include: [
           {
-            model: HawkerPeddlerApplicantAddress,
+            model: HawkerPeddlerOperatorAddress,
           },
         ],
       })
@@ -63,10 +63,10 @@ router.get(
               phoneNumber: results.phoneNumber,
               email: results.email,
               streetNumber:
-                results.hawkerPeddlerApplicantAddresses[0].streetNumber,
-              streetName: results.hawkerPeddlerApplicantAddresses[0].streetName,
-              town: results.hawkerPeddlerApplicantAddresses[0].town,
-              postalCode: results.hawkerPeddlerApplicantAddresses[0].postalCode,
+                results.hawkerPeddlerOperatorAddresses[0].streetNumber,
+              streetName: results.hawkerPeddlerOperatorAddresses[0].streetName,
+              town: results.hawkerPeddlerOperatorAddresses[0].town,
+              postalCode: results.hawkerPeddlerOperatorAddresses[0].postalCode,
             },
           });
         })
@@ -167,9 +167,9 @@ router.post(
       let newData = {};
 
       // get current data.
-      HawkerPeddlerApplicant.findOne({
+      HawkerPeddlerOperator.findOne({
         where: {
-          hawkerPeddlerApplicantID: req.params.id,
+          hawkerPeddlerOperatorID: req.params.id,
         },
       })
         .then((results) => {
@@ -192,7 +192,7 @@ router.post(
 
           // compare the two objects to check if they contain equal properties. If NOT (false), then proceed with update.
           if (!funcHelpers.areObjectsEqual(currentData, newData)) {
-            HawkerPeddlerApplicant.update(
+            HawkerPeddlerOperator.update(
               {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
@@ -201,7 +201,7 @@ router.post(
               },
               {
                 where: {
-                  hawkerPeddlerApplicantID: req.params.id,
+                  hawkerPeddlerOperatorID: req.params.id,
                 },
               }
             );
@@ -214,9 +214,9 @@ router.post(
           let newData = {};
 
           // get current data.
-          HawkerPeddlerApplicantAddress.findOne({
+          HawkerPeddlerOperatorAddress.findOne({
             where: {
-              hawkerPeddlerApplicantID: req.params.id,
+              hawkerPeddlerOperatorID: req.params.id,
             },
           }).then((results) => {
             currentData = {
@@ -237,7 +237,7 @@ router.post(
             // compare the two objects to check if they contain equal properties. If NOT, then proceed with update.
             if (!funcHelpers.areObjectsEqual(currentData, newData)) {
               // update address.
-              HawkerPeddlerApplicantAddress.update(
+              HawkerPeddlerOperatorAddress.update(
                 {
                   streetNumber: req.body.streetNumber,
                   streetName: req.body.streetName,
@@ -246,7 +246,7 @@ router.post(
                 },
                 {
                   where: {
-                    hawkerPeddlerApplicantID: req.params.id,
+                    hawkerPeddlerOperatorID: req.params.id,
                   },
                 }
               );
@@ -261,7 +261,7 @@ router.post(
         .catch((err) => {
           return res.render("hawkerPeddler/editOperator", {
             title: "BWG | Edit Operator",
-            message: "Page Error!",
+            message: "Page Error!" + err,
             auth: req.session.auth, // authorization.
           });
         });

@@ -119,7 +119,7 @@
           >{{this.licenseNumber}}</a></td>
         <td style="width: 6%;">{{this.issueDate}}</td>
         <td style="width: 6.1%;">{{this.expiryDate}}</td>
-        <td style="width: 12.5%;">
+        <td style="width: 18%;">
           <a
             class="btn btn-sm btn-secondary"
             href="/hawkerPeddler/editBusiness/{{this.hawkerPeddlerBusinessID}}"
@@ -130,6 +130,20 @@
             data-bs-toggle="modal"
             data-bs-target="#hawkerPeddlerDocumentationModal-{{this.hawkerPeddlerBusinessID}}"
           >Documentation</a>
+          |
+          <a
+            class="btn btn-sm btn-secondary my-1"
+            data-bs-toggle="modal"
+            data-bs-target="#hawkerPeddlerRenewModal-{{this.hawkerPeddlerBusinessID}}"
+          >Renew</a>
+          <!-- Print to Filehold -->
+          
+            <a
+              href="/hawkerPeddler/printLicense/{{this.hawkerPeddlerBusinessID}}"
+              title="Print License"
+            ><i class="icon-blue bi bi-printer-fill ms-1"></i>
+            </a>
+          
         </td>
       </tr>
       <!-- Documentation Modal -->
@@ -195,6 +209,81 @@
                   class="btn btn-secondary"
                   data-bs-dismiss="modal"
                 >Close</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Renew Modal -->
+      <div
+        class="modal fade"
+        id="hawkerPeddlerRenewModal-{{this.hawkerPeddlerBusinessID}}"
+        tabindex="-1"
+        aria-labelledby="Hawker Peddler Renewal Modal"
+        aria-hidden="true"
+        >
+        <form method="POST">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Renew Hawker & Peddler License</h5>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <!-- Need to get ID from form to update, but don't need user to see it - set display: none; -->
+                <div class="row" style="display: none;">
+                  <div class="col">
+                    <label
+                      for="Hawker Peddler Business ID"
+                      class="form-label"
+                    >Hawker Peddler Business ID</label>
+                    <input
+                      class="form-control"
+                      placeholder="Hawker Peddler Business ID"
+                      value="{{this.hawkerPeddlerBusinessID}}"
+                      name="hawkerPeddlerBusinessID"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="Business Name" class="form-label">Business Name</label>
+                    <input
+                      class="form-control"
+                      placeholder="Business Name"
+                      value="{{this.businessName}}"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col">
+                    <label for="License Number" class="form-label">License
+                      Number</label>
+                    <input
+                      class="form-control"
+                      placeholder="New License Number"
+                      name="licenseNumber"
+                    />
+                  </div>
+                </div>
+                <p class="mt-4 mb-0 fst-italic">This license will expire on
+                  <strong>{{formatDate ../modalExpiryDate}}</strong>
+                  after renewal</p>
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-bs-dismiss="modal"
+                >Close</button>
+                <button type="submit" class="btn btn-primary">Submit Renewal</button>
               </div>
             </div>
           </div>

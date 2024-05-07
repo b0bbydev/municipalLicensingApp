@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
-const HawkerPeddlerApplicantAddressHistory = require("../../models/hawkerPeddler/hawkerPeddlerApplicantAddressHistory");
+const HawkerPeddlerOperatorAddressHistory = require("../../models/hawkerPeddler/hawkerPeddlerOperatorAddressHistory");
 // helpers.
 const funcHelpers = require("../../config/funcHelpers");
 // sequelize.
@@ -11,7 +11,7 @@ const Op = Sequelize.Op;
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
-/* GET /hawkerPeddler/applicantAddressHistory/:id */
+/* GET /hawkerPeddler/OperatorAddressHistory/:id */
 router.get(
   "/:id",
   body("filterCategory")
@@ -41,8 +41,8 @@ router.get(
 
     // if errors is NOT empty (if there are errors...)
     if (!errors.isEmpty()) {
-      return res.render("hawkerPeddler/applicantAddressHistory", {
-        title: "BWG | Applicant Address History",
+      return res.render("hawkerPeddler/operatorAddressHistory", {
+        title: "BWG | Operator Address History",
         message: "Page Error!",
         auth: req.session.auth, // authorization.
       });
@@ -54,37 +54,37 @@ router.get(
 
       // if there are no filter parameters.
       if (!req.query.filterMonth && !req.query.filterYear) {
-        HawkerPeddlerApplicantAddressHistory.findAndCountAll({
+        HawkerPeddlerOperatorAddressHistory.findAndCountAll({
           where: {
-            hawkerPeddlerApplicantID: req.params.id,
+            hawkerPeddlerOperatorID: req.params.id,
           },
           order: [["lastModified", "DESC"]],
         })
           .then((results) => {
-            return res.render("hawkerPeddler/applicantAddressHistory", {
-              title: "BWG | Applicant Address History",
+            return res.render("hawkerPeddler/operatorAddressHistory", {
+              title: "BWG | Operator Address History",
               message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               monthDropdownValues: monthDropdownValues,
               yearDropdownValues: yearDropdownValues,
               data: results.rows,
-              hawkerPeddlerApplicantID: req.params.id,
+              hawkerPeddlerOperatorID: req.params.id,
             });
           })
           .catch((err) => {
-            return res.render("hawkerPeddler/applicantAddressHistory", {
-              title: "BWG | Applicant Address History",
+            return res.render("hawkerPeddler/operatorAddressHistory", {
+              title: "BWG | Operator Address History",
               message: "Page Error!",
               auth: req.session.auth, // authorization.
             });
           });
         // both year and month filter.
       } else if (req.query.filterMonth && req.query.filterYear) {
-        HawkerPeddlerApplicantAddressHistory.findAndCountAll({
+        HawkerPeddlerOperatorAddressHistory.findAndCountAll({
           where: {
             [Op.and]: [
-              { hawkerPeddlerApplicantID: req.params.id },
+              { hawkerPeddlerOperatorID: req.params.id },
               Sequelize.where(
                 Sequelize.fn("year", Sequelize.col("lastModified")),
                 [req.query.filterYear]
@@ -98,22 +98,22 @@ router.get(
           order: [["lastModified", "DESC"]],
         })
           .then((results) => {
-            return res.render("hawkerPeddler/applicantAddressHistory", {
-              title: "BWG | Applicant Address History",
+            return res.render("hawkerPeddler/operatorAddressHistory", {
+              title: "BWG | Operator Address History",
               message: messages,
               email: req.session.email,
               auth: req.session.auth, // authorization.
               monthDropdownValues: monthDropdownValues,
               yearDropdownValues: yearDropdownValues,
               data: results.rows,
-              hawkerPeddlerApplicantID: req.params.id,
+              hawkerPeddlerOperatorID: req.params.id,
               filterMonth: req.query.filterMonth,
               filterYear: req.query.filterYear,
             });
           })
           .catch((err) => {
-            return res.render("hawkerPeddler/applicantAddressHistory", {
-              title: "BWG | Applicant Address History",
+            return res.render("hawkerPeddler/operatorAddressHistory", {
+              title: "BWG | Operator Address History",
               message: "Page Error!",
               auth: req.session.auth, // authorization.
             });
@@ -122,11 +122,11 @@ router.get(
       } else if (req.query.filterMonth || req.query.filterYear) {
         /* IF ONLY YEAR. */
         if (!req.query.filterMonth) {
-          HawkerPeddlerApplicantAddressHistory.findAndCountAll({
+          HawkerPeddlerOperatorAddressHistory.findAndCountAll({
             where: {
-              // where hawkerPeddlerApplicantID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              // where hawkerPeddlerOperatorID = req.params.id AND year(lastModifed) = req.query.filterYear.
               [Op.and]: [
-                { hawkerPeddlerApplicantID: req.params.id },
+                { hawkerPeddlerOperatorID: req.params.id },
                 Sequelize.where(
                   Sequelize.fn("year", Sequelize.col("lastModified")),
                   [req.query.filterYear]
@@ -136,33 +136,33 @@ router.get(
             order: [["lastModified", "DESC"]],
           })
             .then((results) => {
-              return res.render("hawkerPeddler/applicantAddressHistory", {
-                title: "BWG | Applicant Address History",
+              return res.render("hawkerPeddler/oepratorAddressHistory", {
+                title: "BWG | Operator Address History",
                 message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 monthDropdownValues: monthDropdownValues,
                 yearDropdownValues: yearDropdownValues,
                 data: results.rows,
-                hawkerPeddlerApplicantID: req.params.id,
+                hawkerPeddlerOperatorID: req.params.id,
                 filterMonth: req.query.filterMonth,
                 filterYear: req.query.filterYear,
               });
             })
             .catch((err) => {
-              return res.render("hawkerPeddler/applicantAddressHistory", {
-                title: "BWG | Applicant Address History",
+              return res.render("hawkerPeddler/operatorAddressHistory", {
+                title: "BWG | Operator Address History",
                 message: "Page Error!",
                 auth: req.session.auth, // authorization.
               });
             });
           /* IF ONLY MONTH. */
         } else if (!req.query.filterYear) {
-          HawkerPeddlerApplicantAddressHistory.findAndCountAll({
+          HawkerPeddlerOperatorAddressHistory.findAndCountAll({
             where: {
-              // where hawkerPeddlerApplicantID = req.params.id AND year(lastModifed) = req.query.filterYear.
+              // where hawkerPeddlerOperatorID = req.params.id AND year(lastModifed) = req.query.filterYear.
               [Op.and]: [
-                { hawkerPeddlerApplicantID: req.params.id },
+                { hawkerPeddlerOperatorID: req.params.id },
                 Sequelize.where(
                   Sequelize.fn("month", Sequelize.col("lastModified")),
                   [funcHelpers.monthToNumber(req.query.filterMonth)]
@@ -172,22 +172,22 @@ router.get(
             order: [["lastModified", "DESC"]],
           })
             .then((results) => {
-              return res.render("hawkerPeddler/applicantAddressHistory", {
-                title: "BWG | Applicant Address History",
+              return res.render("hawkerPeddler/operatorAddressHistory", {
+                title: "BWG | Operator Address History",
                 message: messages,
                 email: req.session.email,
                 auth: req.session.auth, // authorization.
                 monthDropdownValues: monthDropdownValues,
                 yearDropdownValues: yearDropdownValues,
                 data: results.rows,
-                hawkerPeddlerApplicantID: req.params.id,
+                hawkerPeddlerOperatorID: req.params.id,
                 filterMonth: req.query.filterMonth,
                 filterYear: req.query.filterYear,
               });
             })
             .catch((err) => {
-              return res.render("hawkerPeddler/applicantAddressHistory", {
-                title: "BWG | Applicant Address History",
+              return res.render("hawkerPeddler/operatorAddressHistory", {
+                title: "BWG | Operator Address History",
                 message: "Page Error!",
                 auth: req.session.auth, // authorization.
               });

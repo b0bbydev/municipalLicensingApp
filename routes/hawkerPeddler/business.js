@@ -3,8 +3,8 @@ var router = express.Router();
 // models.
 const HawkerPeddlerPropertyOwner = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwner");
 const HawkerPeddlerPropertyOwnerAddress = require("../../models/hawkerPeddler/hawkerPeddlerPropertyOwnerAddress");
-const HawkerPeddlerApplicant = require("../../models/hawkerPeddler/hawkerPeddlerApplicant");
-const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawkerPeddlerApplicantAddress");
+const HawkerPeddlerOperator = require("../../models/hawkerPeddler/hawkerPeddlerOperator");
+const HawkerPeddlerOperatorAddress = require("../../models/hawkerPeddler/hawkerPeddleOperatorAddress");
 // express-validate.
 const { body, param, validationResult } = require("express-validator");
 
@@ -56,10 +56,10 @@ router.get(
             hawkerPeddlerBusinessID: req.params.id,
           },
         }),
-        HawkerPeddlerApplicant.findAndCountAll({
+        HawkerPeddlerOperator.findAndCountAll({
           include: [
             {
-              model: HawkerPeddlerApplicantAddress,
+              model: HawkerPeddlerOperatorAddress,
             },
           ],
           where: {
@@ -75,9 +75,9 @@ router.get(
             auth: req.session.auth, // authorization.
             modalExpiryDate: modalExpiryDate,
             propertyOwners: data[0].rows,
-            applicants: data[1].rows,
+            operators: data[1].rows,
             propertyOwnersCount: "Records returned: " + data[0].count,
-            applicantsCount: "Records returned: " + data[1].count,
+            operatorsCount: "Records returned: " + data[1].count,
           });
         })
         .catch((err) => {
@@ -91,7 +91,7 @@ router.get(
   }
 );
 
-/* POST /hawkerPeddler/applicant - renews license. */
+/* POST /hawkerPeddler/operator - renews license. */
 router.post("/:id", async (req, res, next) => {
   // server side validation.
   const errors = validationResult(req);
@@ -118,7 +118,7 @@ router.post("/:id", async (req, res, next) => {
     }
 
     // update license.
-    HawkerPeddlerApplicant.update(
+    HawkerPeddlerOperator.update(
       {
         issueDate: issueDate,
         expiryDate: expiryDate,
@@ -126,7 +126,7 @@ router.post("/:id", async (req, res, next) => {
       },
       {
         where: {
-          hawkerPeddlerApplicantID: req.body.hawkerPeddlerApplicantID,
+          hawkerPeddlerOperatorID: req.body.hawkerPeddlerOperatorID,
         },
       }
     )

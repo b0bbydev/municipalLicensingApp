@@ -4,8 +4,8 @@ var router = express.Router();
 const Dropdown = require("../../models/dropdownManager/dropdown");
 const HawkerPeddlerBusiness = require("../../models/hawkerPeddler/hawkerPeddlerBusiness");
 const HawkerPeddlerBusinessAddress = require("../../models/hawkerPeddler/hawkerPeddlerBusinessAddress");
-const HawkerPeddlerApplicant = require("../../models/hawkerPeddler/hawkerPeddlerApplicant");
-const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawkerPeddlerApplicantAddress");
+const HawkerPeddlerOperator = require("../../models/hawkerPeddler/hawkerPeddlerOperator");
+const HawkerPeddlerOperatorAddress = require("../../models/hawkerPeddler/hawkerPeddleOperatorAddress");
 // sequelize.
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -22,6 +22,18 @@ router.get("/", async (req, res, next) => {
   let messages = req.session.messages || [];
   // clear session messages
   req.session.messages = [];
+
+  // get current date.
+  var issueDate = new Date();
+  // init expiryDate.
+  var modalExpiryDate = new Date();
+
+  // if issueDate is in November or December.
+  if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+    modalExpiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+  } else {
+    modalExpiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+  }
 
   // get filtering options.
   var filterOptions = await Dropdown.findAll({
@@ -41,6 +53,9 @@ router.get("/", async (req, res, next) => {
         {
           model: HawkerPeddlerBusinessAddress,
         },
+        {
+          model: HawkerPeddlerOperator,
+        },
       ],
     })
       .then((results) => {
@@ -55,6 +70,7 @@ router.get("/", async (req, res, next) => {
           auth: req.session.auth, // authorization.
           data: results.rows,
           filterOptions: filterOptions,
+          modalExpiryDate: modalExpiryDate,
           currentPage: req.query.page,
           pageCount,
           itemCount,
@@ -67,7 +83,7 @@ router.get("/", async (req, res, next) => {
       .catch((err) => {
         return res.render("hawkerPeddler/index", {
           title: "BWG | Hawker & Peddler Licensing",
-          message: "Page Error!" + err,
+          message: "Page Error!",
           auth: req.session.auth, // authorization.
         });
       });
@@ -120,7 +136,7 @@ router.get("/", async (req, res, next) => {
   } else if (req.query.filterCategory === "Operator Name") {
     // checks to see if input contains more than 1 word. i.e: "firstName + lastName"
     if (req.query.filterValue.trim().indexOf(" ") != -1) {
-      HawkerPeddlerApplicant.findAndCountAll({
+      HawkerPeddlerOperator.findAndCountAll({
         limit: req.query.limit,
         offset: req.skip,
         subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
@@ -137,7 +153,7 @@ router.get("/", async (req, res, next) => {
         ),
         include: [
           {
-            model: HawkerPeddlerApplicantAddress,
+            model: HawkerPeddlerOperatorAddress,
           },
         ],
       })
@@ -172,7 +188,7 @@ router.get("/", async (req, res, next) => {
           });
         });
     } else {
-      HawkerPeddlerApplicant.findAndCountAll({
+      HawkerPeddlerOperator.findAndCountAll({
         limit: req.query.limit,
         offset: req.skip,
         subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
@@ -188,7 +204,7 @@ router.get("/", async (req, res, next) => {
         },
         include: [
           {
-            model: HawkerPeddlerApplicantAddress,
+            model: HawkerPeddlerOperatorAddress,
           },
         ],
       })
@@ -224,7 +240,7 @@ router.get("/", async (req, res, next) => {
         });
     }
   } else if (req.query.filterCategory === "Operator Address") {
-    HawkerPeddlerApplicant.findAndCountAll({
+    HawkerPeddlerOperator.findAndCountAll({
       limit: req.query.limit,
       offset: req.skip,
       subQuery: false, // adding this gets rid of the 'unknown column' error caused when adding limit & offset.
@@ -242,7 +258,7 @@ router.get("/", async (req, res, next) => {
       ),
       include: [
         {
-          model: HawkerPeddlerApplicantAddress,
+          model: HawkerPeddlerOperatorAddress,
         },
       ],
     })
@@ -363,7 +379,7 @@ router.get(
             model: HawkerPeddlerBusinessAddress,
           },
           {
-            model: HawkerPeddlerApplicant,
+            model: HawkerPeddlerOperator,
           },
         ],
       })
@@ -377,10 +393,14 @@ router.get(
             auth: req.session.auth, // authorization.
             // data to populate form with.
             data: {
-              applicantName:
-                results.hawkerPeddlerApplicants[0].firstName +
-                " " +
-                results.hawkerPeddlerApplicants[0].lastName,
+              // if the array doesn't exist or is empty, set operatorName to an empty string.
+              operatorName:
+                results.HawkerPeddlerOperators &&
+                results.HawkerPeddlerOperators.length > 0
+                  ? results.HawkerPeddlerOperators[0].firstName +
+                    " " +
+                    results.HawkerPeddlerOperators[0].lastName
+                  : "",
               businessName: results.businessName,
               streetNumber:
                 results.hawkerPeddlerBusinessAddresses[0].streetNumber,
@@ -396,12 +416,65 @@ router.get(
         .catch((err) => {
           return res.render("hawkerPeddler/printLicense", {
             title: "BWG | Print License",
-            message: "Page Error!",
+            message: "Page Error!" + err,
             auth: req.session.auth, // authorization.
           });
         });
     }
   }
 );
+
+/* POST /hawkerPeddler - renews license. */
+router.post("/", async (req, res, next) => {
+  // server side validation.
+  const errors = validationResult(req);
+
+  // if errors is NOT empty (if there are errors...).
+  if (!errors.isEmpty()) {
+    return res.render("hawkerPeddler/business", {
+      title: "BWG | Hawker & Peddler Licensing",
+      message: "Page Error!",
+      email: req.session.email,
+      auth: req.session.auth, // authorization.
+    });
+  } else {
+    // get current date for automatic population of license.
+    var issueDate = new Date();
+    // init expiryDate.
+    var expiryDate = new Date();
+
+    // if issueDate is in November or December.
+    if (issueDate.getMonth() === 10 || issueDate.getMonth() === 11) {
+      expiryDate = new Date(issueDate.getFullYear() + 2, 0, 31);
+    } else {
+      expiryDate = new Date(issueDate.getFullYear() + 1, 0, 31); // year, month (jan = 0), day
+    }
+
+    // update license.
+    HawkerPeddlerBusiness.update(
+      {
+        issueDate: issueDate,
+        expiryDate: expiryDate,
+        licenseNumber: req.body.licenseNumber,
+      },
+      {
+        where: {
+          hawkerPeddlerBusinessID: req.body.hawkerPeddlerBusinessID,
+        },
+      }
+    )
+      .then(() => {
+        return res.redirect("/hawkerPeddler");
+      })
+      // catch any scary errors and render page error.
+      .catch((err) => {
+        return res.render("hawkerPeddler", {
+          title: "BWG | Hawker & Peddler Licensing",
+          message: "Page Error!",
+          auth: req.session.auth, // authorization.
+        });
+      });
+  }
+});
 
 module.exports = router;
