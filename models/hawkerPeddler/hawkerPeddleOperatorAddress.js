@@ -2,12 +2,12 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
-const HawkerPeddlerApplicant = require("./hawkerPeddlerApplicant");
+const HawkerPeddlerOperator = require("./hawkerPeddlerOperator");
 
-const HawkerPeddlerApplicantAddress = sequelize.define(
-  "hawkerPeddlerApplicantAddress",
+const HawkerPeddlerOperatorAddress = sequelize.define(
+  "hawkerPeddlerOperatorAddress",
   {
-    hawkerPeddlerApplicantAddressID: {
+    hawkerPeddlerOperatorAddressID: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
@@ -36,8 +36,8 @@ const HawkerPeddlerApplicantAddress = sequelize.define(
   }
 );
 
-HawkerPeddlerApplicant.hasMany(HawkerPeddlerApplicantAddress, {
-  foreignKey: "hawkerPeddlerApplicantID",
+HawkerPeddlerOperator.hasMany(HawkerPeddlerOperatorAddress, {
+  foreignKey: "hawkerPeddlerOperatorID",
 });
 
-module.exports = HawkerPeddlerApplicantAddress;
+module.exports = HawkerPeddlerOperatorAddress;

@@ -2,8 +2,8 @@ var express = require("express");
 var router = express.Router();
 // models.
 const Dropdown = require("../../models/dropdownManager/dropdown");
-const HawkerPeddlerApplicant = require("../../models/hawkerPeddler/hawkerPeddlerApplicant");
-const HawkerPeddlerApplicantAddress = require("../../models/hawkerPeddler/hawkerPeddlerApplicantAddress");
+const HawkerPeddlerOperator = require("../../models/hawkerPeddler/hawkerPeddlerOperator");
+const HawkerPeddlerOperatorAddress = require("../../models/hawkerPeddler/hawkerPeddleOperatorAddress");
 // express-validate.
 const { body, validationResult } = require("express-validator");
 
@@ -110,14 +110,14 @@ router.post(
         },
       });
     } else {
-      HawkerPeddlerApplicant.create(
+      HawkerPeddlerOperator.create(
         {
           firstName: req.body.firstName,
           lastName: req.body.lastName,
           phoneNumber: req.body.phoneNumber,
           email: req.body.email,
           hawkerPeddlerBusinessID: req.session.hawkerPeddlerBusinessID,
-          hawkerPeddlerApplicantAddresses: [
+          hawkerPeddlerOperatorAddresses: [
             {
               streetNumber: req.body.streetNumber,
               streetName: req.body.streetName,
@@ -127,7 +127,7 @@ router.post(
           ],
         },
         {
-          include: [HawkerPeddlerApplicantAddress],
+          include: [HawkerPeddlerOperatorAddress],
         }
       )
         .then(() => {

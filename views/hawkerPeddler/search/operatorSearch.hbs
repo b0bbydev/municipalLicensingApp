@@ -85,7 +85,7 @@
           >{{this.firstName}} {{this.lastName}}</a></td>
         <td>{{this.phoneNumber}}</td>
         <td>{{this.email}}</td>
-        {{#each hawkerPeddlerApplicantAddresses}}
+        {{#each hawkerPeddlerOperatorAddresses}}
           <td>{{this.streetNumber}}
             {{this.streetName}},
             {{this.town}}
@@ -94,7 +94,7 @@
         <td>{{this.licenseNumber}}</td>
         <td><a
             class="btn btn-sm btn-secondary"
-            href="/hawkerPeddler/editOperator/{{this.hawkerPeddlerApplicantID}}"
+            href="/hawkerPeddler/editOperator/{{this.hawkerPeddlerOperatorID}}"
           >Edit</a></td>
       </tr>
     {{/each}}

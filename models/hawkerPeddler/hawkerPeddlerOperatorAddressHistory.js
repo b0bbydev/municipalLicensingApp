@@ -2,13 +2,13 @@
 const Sequelize = require("sequelize");
 // db.
 const sequelize = require("../../config/sequelizeConfig");
-const HawkerPeddlerApplicant = require("./hawkerPeddlerApplicant");
-const HawkerPeddlerApplicantAddress = require("./hawkerPeddlerApplicantAddress");
+const HawkerPeddlerOperator = require("./hawkerPeddlerOperator");
+const HawkerPeddlerOperatorAddress = require("./hawkerPeddleOperatorAddress");
 
-const HawkerPeddlerApplicantAddressHistory = sequelize.define(
-  "hawkerPeddlerApplicantAddressHistory",
+const HawkerPeddlerOperatorAddressHistory = sequelize.define(
+  "HawkerPeddlerOperatorAddressHistory",
   {
-    hawkerPeddlerApplicantAddressHistoryID: {
+    hawkerPeddlerOperatorAddressHistoryID: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
@@ -50,12 +50,12 @@ const HawkerPeddlerApplicantAddressHistory = sequelize.define(
   }
 );
 
-HawkerPeddlerApplicant.hasMany(HawkerPeddlerApplicantAddressHistory, {
-  foreignKey: "hawkerPeddlerApplicantID",
+HawkerPeddlerOperator.hasMany(HawkerPeddlerOperatorAddressHistory, {
+  foreignKey: "hawkerPeddlerOperatorID",
 });
 
-HawkerPeddlerApplicantAddress.hasMany(HawkerPeddlerApplicantAddressHistory, {
-  foreignKey: "hawkerPeddlerApplicantAddressID",
+HawkerPeddlerOperatorAddress.hasMany(HawkerPeddlerOperatorAddressHistory, {
+  foreignKey: "hawkerPeddlerOperatorAddressID",
 });
 
-module.exports = HawkerPeddlerApplicantAddressHistory;
+module.exports = HawkerPeddlerOperatorAddressHistory;
